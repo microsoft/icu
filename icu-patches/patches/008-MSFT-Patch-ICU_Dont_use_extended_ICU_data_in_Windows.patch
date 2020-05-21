@@ -1,0 +1,36 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
+Date: Mon, 6 Apr 2020 10:42:14 -0700
+Subject: [PATCH] Don't use extended ICU data package for MS-ICU.
+
+We don't use the "extend ICU Data" in the Windows OS build of
+MS-ICU at all. We only use the "common ICU data".
+
+We make this function a no-op in order to avoid wasting cycles,
+but more importantly, so that we don't go looking around for
+the versioned data file (icudt64l.dat) after we've already
+loaded the versioned common data file.
+---
+ icu/icu/icu4c/source/common/udata.cpp | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/icu/icu/icu4c/source/common/udata.cpp b/icu/icu/icu4c/source/common/udata.cpp
+index bf7025a8..921067d4 100644
+--- a/icu/icu/icu4c/source/common/udata.cpp
++++ b/icu/icu/icu4c/source/common/udata.cpp
+@@ -816,6 +816,12 @@ openCommonData(const char *path,          /*  Path from OpenChoice?          */
+  *----------------------------------------------------------------------*/
+ static UBool extendICUData(UErrorCode *pErr)
+ {
++#if defined(ICU_DATA_DIR_WINDOWS)
++    // For the Windows OS build of MS-ICU, we only have one data package, and don't use the extended data at all.
++    (void)pErr; // suppress unused variable.
++    return FALSE;
++#endif
++
+     UDataMemory   *pData;
+     UDataMemory   copyPData;
+     UBool         didUpdate = FALSE;
+-- 
+2.23.0.vfs.1.1.63.g5a5ad7f
+

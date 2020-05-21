@@ -1,0 +1,52 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+ceb{
+    Languages{
+        ceb{"Cebuano"}
+        de{"Aleman"}
+        en{"Ingles"}
+        es{"Espanyol"}
+        fr{"Pransesa"}
+        it{"Italiano"}
+        ja{"Nipponggo"}
+        pt{"Portuguese"}
+        ru{"Ruso"}
+        und{"Wala Mailhing Pinulongan"}
+        zh{"Intsik"}
+    }
+    Scripts{
+        Arab{"Arabo"}
+        Cyrl{"Sirilisko"}
+        Hans{"Pinasimple"}
+        Hant{"Tradisyonal"}
+        Latn{"Latin"}
+        Zxxx{"Dili-sinulat"}
+        Zzzz{"Wala Mailihing Alpabeto"}
+    }
+    Scripts%stand-alone{
+        Hans{"Pinasimpleng Han"}
+        Hant{"Tradisyonal nga Han"}
+    }
+    Types{
+        calendar{
+            gregorian{"Gregorian nga Kalendaryo"}
+        }
+        collation{
+            standard{"Standard nga Paagi sa Pagpihig"}
+        }
+        numbers{
+            latn{"Kasadpanhong mga Digit"}
+        }
+    }
+    Version{"2.1.50.6"}
+    codePatterns{
+        language{"Pinulongan: {0}"}
+        script{"Alpabeto {0}"}
+        territory{"Rehiyon {0}"}
+    }
+    localeDisplayPattern{
+        keyTypePattern{"{0}: {1}"}
+        pattern{"{0} ({1})"}
+        separator{"{0}, {1}"}
+    }
+}

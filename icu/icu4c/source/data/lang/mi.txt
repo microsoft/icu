@@ -1,0 +1,52 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+mi{
+    Languages{
+        de{"Tiamana"}
+        en{"Ingarihi"}
+        es{"Paniora"}
+        fr{"Wīwī"}
+        it{"Ītariana"}
+        ja{"Hapanihi"}
+        mi{"Māori"}
+        pt{"Pōtikī"}
+        ru{"Ruhiana"}
+        und{"Reo Tē Mōhiotia"}
+        zh{"Hainamana"}
+    }
+    Scripts{
+        Arab{"Arapika"}
+        Cyrl{"Hīririki"}
+        Hans{"Māmā"}
+        Hant{"Tukuiho"}
+        Latn{"Rātina"}
+        Zxxx{"Tuhikore"}
+        Zzzz{"Momotuhi Tē Mōhiotia"}
+    }
+    Scripts%stand-alone{
+        Hans{"Hana Māmā"}
+        Hant{"Hana Tukuiho"}
+    }
+    Types{
+        calendar{
+            gregorian{"Maramataka Pākehā"}
+        }
+        collation{
+            standard{"Raupapa Kōmaka Arowhānui"}
+        }
+        numbers{
+            latn{"Ngā Mati Pākehā"}
+        }
+    }
+    Version{"2.1.50.6"}
+    codePatterns{
+        language{"{0}"}
+        script{"{0}"}
+        territory{"{0}"}
+    }
+    localeDisplayPattern{
+        keyTypePattern{"{0}: {1}"}
+        pattern{"{0} ({1})"}
+        separator{"{0}, {1}"}
+    }
+}

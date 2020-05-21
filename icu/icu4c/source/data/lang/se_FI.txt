@@ -1,0 +1,48 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+se_FI{
+    Languages{
+        ace{"ačehgiella"}
+        be{"vilgesruoššagiella"}
+        bn{"bengalagiella"}
+        fj{"fižigiella"}
+        hy{"armenagiella"}
+        kk{"kazakhgiella"}
+        km{"kambožagiella"}
+        ne{"nepalagiella"}
+        pa{"panjabagiella"}
+        swb{"komoragiella"}
+        th{"thaigiella"}
+        vi{"vietnamagiella"}
+    }
+    Scripts{
+        Arab{"arábalaš"}
+        Hani{"kiinnálaš"}
+        Hans{"álkes kiinnálaš"}
+        Hant{"árbevirolaš kiinnálaš"}
+        Zxxx{"orrut čállojuvvot"}
+        Zzzz{"dovdameahttun čállin"}
+    }
+    Scripts%stand-alone{
+        Hans{"álkes kiinnálaš"}
+        Hant{"árbevirolaš kiinnálaš"}
+    }
+    Types{
+        calendar{
+            buddhist{"buddhista kaleandar"}
+            chinese{"kiinná kaleandar"}
+            coptic{"koptalaš kaleandar"}
+            dangi{"dangi kaleandar"}
+            ethiopic{"etiohpalaš kaleandar"}
+            ethiopic-amete-alem{"etiohpalaš-amete-alem kaleandar"}
+            gregorian{"gregorialaš kalendar"}
+        }
+        numbers{
+            fullwide{"fullwide"}
+        }
+    }
+    Version{"2.1.50.6"}
+    codePatterns{
+        script{"čállin: {0}"}
+    }
+}

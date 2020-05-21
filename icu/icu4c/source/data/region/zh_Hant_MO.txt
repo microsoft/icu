@@ -1,0 +1,9 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+zh_Hant_MO{
+    %%Parent{"zh_Hant_HK"}
+    Countries{
+        MO{"澳門特別行政區"}
+    }
+    Version{"2.1.50.6"}
+}

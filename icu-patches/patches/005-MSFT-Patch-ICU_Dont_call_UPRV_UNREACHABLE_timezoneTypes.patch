@@ -1,0 +1,32 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
+Date: Sun, 27 Oct 2019 19:08:26 -0700
+Subject: [PATCH] Don't call abort when timezoneTypes.res can't be loaded.
+
+---
+ icu/icu/icu4c/source/common/uloc_keytype.cpp | 9 ++++++++-
+ 1 file changed, 8 insertions(+), 1 deletion(-)
+
+diff --git a/icu/icu/icu4c/source/common/uloc_keytype.cpp b/icu/icu/icu4c/source/common/uloc_keytype.cpp
+index 019da058..82880a21 100644
+--- a/icu/icu/icu4c/source/common/uloc_keytype.cpp
++++ b/icu/icu/icu4c/source/common/uloc_keytype.cpp
+@@ -172,7 +172,14 @@ initFromResourceBundle(UErrorCode& sts) {
+         LocalUResourceBundlePointer typeMapResByKey(ures_getByKey(typeMapRes.getAlias(), legacyKeyId, NULL, &tmpSts));
+         if (U_FAILURE(tmpSts)) {
+             // type map for each key must exist
+-            UPRV_UNREACHABLE;
++
++            // Note: The used to call `U_ASSERT(FALSE)` here, but this was changed in ICU-20074
++            // to unconditionally call the macro `UPRV_UNREACHABLE` instead.
++            // However, it is possible to reach this code path if 'timezoneTypes.res' can't be found or loaded.
++            // In this case the code actually can carry on (it shouldn't be a fatal error), it just means that
++            // we lose the ability to convert BCP47 timezone identifiers (which aren't commonly used). 
++            U_ASSERT(FALSE);
++
+         } else {
+             LocalUResourceBundlePointer typeMapEntry;
+ 
+-- 
+2.22.0.vfs.1.1.57.gbaf16c8
+

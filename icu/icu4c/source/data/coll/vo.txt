@@ -1,0 +1,15 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+vo{
+    Version{"2.1.50.6"}
+    collations{
+        standard{
+            Sequence{
+                "&A<ä<<<Ä"
+                "&O<ö<<<Ö"
+                "&U<ü<<<Ü"
+            }
+            Version{"35.1"}
+        }
+    }
+}

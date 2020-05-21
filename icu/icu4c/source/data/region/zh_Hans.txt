@@ -1,0 +1,8 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+zh_Hans{
+    Countries{
+        PS{"巴勒斯坦权力机构"}
+    }
+    Version{"2.1.50.6"}
+}

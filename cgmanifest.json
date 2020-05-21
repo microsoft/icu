@@ -1,0 +1,14 @@
+{
+  "Registrations": [
+    {
+      "component": {
+        "type": "git",
+        "git": {
+          "repositoryUrl": "https://github.com/unicode-org/icu",
+          "commitHash": "d4cb28ce9ceda0c8e7656be4d51e0b0d95685fd1"
+        }
+      }
+    }
+  ],
+  "Version": 1
+}

@@ -1,0 +1,21 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+en_AU{
+    %%Parent{"en_001"}
+    Languages{
+        bn{"Bengali"}
+        frc{"frc"}
+        lou{"lou"}
+    }
+    Scripts{
+        Beng{"Bengali"}
+        Thai{"Thai"}
+    }
+    Types{
+        calendar{
+            dangi{"Korean Calendar"}
+            ethiopic{"Ethiopian Calendar"}
+        }
+    }
+    Version{"2.1.50.6"}
+}

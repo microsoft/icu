@@ -1,0 +1,11 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+sa{
+    Languages{
+        ace{"अचिनीस्"}
+        ach{"अचोलि"}
+        anp{"अङ्गिक"}
+        sa{"संस्कृत भाषा"}
+    }
+    Version{"2.1.50.6"}
+}
