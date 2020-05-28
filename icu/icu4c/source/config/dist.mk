@@ -67,10 +67,8 @@ $(DISTY_FILE_TGZ) $(DISTY_FILE_ZIP) $(DISTY_DATA_ZIP):  $(DISTY_DAT) $(DISTY_TMP
 	@echo Export icu4c@$(GITVER) to "$(DISTY_TMP)/icu"
 	-$(RMV) $(DISTY_FILE) $(DISTY_TMP)
 	$(MKINSTALLDIRS) $(DISTY_TMP)
-	# MSFT-PATCH: Adjust the path for the MSCodeHub repo location.
-	# MSFT-TODO: This will need to be changed later to handle GitHub.
-	#( cd $(ICU4CTOP)/.. && git archive --format=tar --prefix=icu/ HEAD:icu4c/ ) | ( cd "$(DISTY_TMP)" && tar xf - )
-	( cd $(ICU4CTOP)/../../.. && git archive --format=tar --prefix=icu/ HEAD:icu/icu/icu4c/ ) | ( cd "$(DISTY_TMP)" && tar xf - )
+	# MSFT-PATCH: Adjust the path for the GitHub repo location.
+	( cd $(ICU4CTOP)/../.. && git archive --format=tar --prefix=icu/ HEAD:icu/icu4c/ ) | ( cd "$(DISTY_TMP)" && tar xf - )
 	( cd $(DISTY_TMP)/icu/source ; zip -rlq $(DISTY_DATA_ZIP) data )
 	$(MKINSTALLDIRS) $(DISTY_IN)
 	echo DISTY_DAT=$(DISTY_DAT)

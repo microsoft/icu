@@ -1,20 +1,37 @@
 jobs:
 #-------------------------------------------------------------------------
-- job: ICU4C_Clang_Ubuntu_1604
-  displayName: 'C: Linux Clang (Ubuntu 16.04)'
+- job: ICU4C_MakeDist_Clang_Ubuntu_1804
+  displayName: 'C: MakeDist Linux Clang (Ubuntu 18.04)'
   timeoutInMinutes: 30
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-18.04'
   steps:
     - checkout: self
       lfs: true
       fetchDepth: 1
     - script: |
-        cd icu/icu4c/source && ./runConfigureICU Linux && make -j2 check
+        cd icu/icu4c/source && ./runConfigureICU Linux --disable-layout --disable-layoutex && make -j2 check
       displayName: 'Build and Test'
       env:
         CC: clang
         CXX: clang++
+    - script: |
+        cd icu/icu4c/source && make dist && ls -al dist
+      displayName: 'Make dist'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifacts: icu4c-src.tgz'
+      inputs:
+        PathtoPublish: 'icu/icu4c/source/dist/icu4c-src.tgz'
+        ArtifactName: '$(Build.BuildNumber)_ICU4C_icu4c-src_tgz'
+    - script: |
+        cd icu/icu4c/source/dist
+        timestampVar=`date +%s`
+        mkdir /tmp/icu-$timestampVar
+        tar zxf icu4c-src.tgz -C /tmp/icu-$timestampVar
+        cd /tmp/icu-$timestampVar/icu/source
+        ./runConfigureICU Linux --disable-layout --disable-layoutex && make -j$(nproc) check
+      displayName: 'Build and Test MakeDist tarball'
+
 #
 # Disabled until we pick up ICU 67.
 #-------------------------------------------------------------------------
