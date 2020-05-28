@@ -1,0 +1,36 @@
+# This file contains the version of ICU in the repo, which is
+# primarily used for versioning pre-built binary downloads.
+#
+# ICU Version Number Schema:
+#
+# The ICU version number has 4 parts:
+#   Major . Minor . Patch-level . Build-level
+#
+# Each of these is a uint8_t value, which gives a range of 0-255.
+# 
+# The upstream ICU library reserves the right to use the Major, Minor,
+# and Patch-level version parts in releases, but leaves the Build-level
+# part for "client" usage.
+#
+# We use/set the "build-level" part in order to have a consistent
+# version number across different packaging mechanisms that might be
+# used (Ex: VPack, Nuget, Tarball, etc.)
+#
+# Each time a new set of packages needs to be produced, we increment
+# the build-level version number by 1.
+#
+# When a new version of ICU is ingested, this will update/change the
+# Major and Minor versions, and we will reset the build-level version
+# part back to 0.
+#
+# In order to keep track of what exact version of ICU was ingested,
+# the variable "ICU_upstream_hash" records the SHA1 hash from the upstream
+# maint/maint-* branch when a new version is ingested. This shouldn't be
+# changed or modified unless a new version is being ingested.
+#
+# This makes it easier to tell if a post-release fix in the upstream
+# maint/maint-* branch needs to be cherry-picked into this repo.
+#
+
+ICU_version = 64.2.0.1
+ICU_upstream_hash = d4cb28ce9ceda0c8e7656be4d51e0b0d95685fd1
