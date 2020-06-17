@@ -1,0 +1,35 @@
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemDefinitionGroup>
+    <!--
+      Note: We only link to the Data (icudt), Common (icuuc) and i18n (icuin) libraries by default,
+            as that is what is present/available in the Windows OS version of ICU4C.
+      Note:
+          v140 is the Visual Studio 2015 toolset.
+          v141 is the Visual Studio 2017 toolset.
+          v142 is the Visual Studio 2019 toolset.
+    -->
+    <Link>
+      <!-- Note: The ICU VS Solutions use the convention 'Win32'=='x86', so we use that that here as well. -->
+      <AdditionalDependencies Condition="'$(Platform)' == 'x64'">$(MSBuildThisFileDirectory)lib\win-x64\Release\v141\icudt.lib;$(MSBuildThisFileDirectory)lib\win-x64\Release\v141\icuuc.lib;$(MSBuildThisFileDirectory)lib\win-x64\Release\v141\icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Platform)' == 'x86' or '$(Platform)' == 'Win32'">$(MSBuildThisFileDirectory)lib\win-x86\Release\v141\icudt.lib;$(MSBuildThisFileDirectory)lib\win-x86\Release\v141\icuuc.lib;$(MSBuildThisFileDirectory)lib\win-x86\Release\v141\icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+
+      <AdditionalLibraryDirectories Condition="'$(Platform)' == 'x64'">$(MSBuildThisFileDirectory)lib\win-x86\Release\v141;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Platform)' == 'x86' or '$(Platform)' == 'Win32'">$(MSBuildThisFileDirectory)lib\win-x86\Release\v141;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+    </Link>
+    <ClCompile>
+      <!-- ICU4C public header files -->
+      <AdditionalIncludeDirectories>$(MSBuildThisFileDirectory)include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <!-- Files to copy for runtime -->
+  <ItemGroup Condition="'$(Platform)' == 'x64'">
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\icudt*.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\icuuc*.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\icuin*.dll" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(Platform)' == 'x86' or '$(Platform)' == 'Win32'">
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\icudt*.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\icuuc*.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\icuin*.dll" />
+  </ItemGroup>
+</Project>

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>Microsoft</authors>
+    <owners>Microsoft,msicu</owners>
+    <license type="file">LICENSE</license>
+    <projectUrl>https://github.com/microsoft/icu</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <summary>Pre-built Windows binaries of ICU4C</summary>
+    <description>ICU4C is a mature, widely used set of C/C++ libraries providing Unicode and Globalization support for software applications.
+
+This package contains pre-built binaries of ICU4C for Windows from the MS-ICU repo. MS-ICU is a modified version of ICU4C with changes for security purposes, maintenance, data changes for Microsoft usage, as well as minor changes for the Windows OS build of ICU4C.
+
+These binaries are built using the MSVC compiler and require the VC Redist to be installed.
+
+Note: In order to have binary compatibility between versions see: https://aka.ms/icu-binary-compatibility
+    </description>
+    <releaseNotes>https://aka.ms/ms-icu-nuget-release-notes</releaseNotes>
+    <copyright>Copyright Microsoft Corporation. All rights reserved.</copyright>
+    <tags>native nativepackage icu icu4c Unicode c++ cpp oss opensource</tags>
+  </metadata>
+</package>
