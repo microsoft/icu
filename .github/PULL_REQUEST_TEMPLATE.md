@@ -12,7 +12,7 @@ Please note that this is a fork of ICU that contains changes for the following:
 
 Before creating any pull request, please ensure that your change is related to one of the above reasons.
 
-Any other changes, bug fixes, improvements, enhancements, etc. should be made in the upstream project here:
+Most other changes, bug fixes, improvements, enhancements, etc. should be made in the upstream project here:
 https://github.com/unicode-org/icu
 
 -->
