@@ -17,7 +17,7 @@ param(
 $icuVersionData = Get-Content $icuVersionFile -Raw | ConvertFrom-StringData
 
 if (!$icuVersionData.ICU_version) {
-    throw "Error: The ICU Version is empty!";
+    throw "Error: The ICU Version is empty! (using the file: $icuVersionFile)";
 }
 
 Write-Host "ICU Version =" $icuVersionData.ICU_version
