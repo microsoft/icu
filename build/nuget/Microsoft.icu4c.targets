@@ -10,11 +10,11 @@
     -->
     <Link>
       <!-- Note: The ICU VS Solutions use the convention 'Win32'=='x86', so we use that that here as well. -->
-      <AdditionalDependencies Condition="'$(Platform)' == 'x64'">$(MSBuildThisFileDirectory)lib\win-x64\Release\v141\icudt.lib;$(MSBuildThisFileDirectory)lib\win-x64\Release\v141\icuuc.lib;$(MSBuildThisFileDirectory)lib\win-x64\Release\v141\icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalDependencies Condition="'$(Platform)' == 'x86' or '$(Platform)' == 'Win32'">$(MSBuildThisFileDirectory)lib\win-x86\Release\v141\icudt.lib;$(MSBuildThisFileDirectory)lib\win-x86\Release\v141\icuuc.lib;$(MSBuildThisFileDirectory)lib\win-x86\Release\v141\icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Platform)' == 'x64'">$(MSBuildThisFileDirectory)lib\x64\Release\icudt.lib;$(MSBuildThisFileDirectory)lib\x64\Release\icuuc.lib;$(MSBuildThisFileDirectory)lib\x64\Release\icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies Condition="'$(Platform)' == 'x86' or '$(Platform)' == 'Win32'">$(MSBuildThisFileDirectory)lib\x86\Release\icudt.lib;$(MSBuildThisFileDirectory)lib\x86\Release\icuuc.lib;$(MSBuildThisFileDirectory)lib\x86\Release\icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
 
-      <AdditionalLibraryDirectories Condition="'$(Platform)' == 'x64'">$(MSBuildThisFileDirectory)lib\win-x86\Release\v141;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="'$(Platform)' == 'x86' or '$(Platform)' == 'Win32'">$(MSBuildThisFileDirectory)lib\win-x86\Release\v141;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Platform)' == 'x64'">$(MSBuildThisFileDirectory)lib\x86\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Platform)' == 'x86' or '$(Platform)' == 'Win32'">$(MSBuildThisFileDirectory)lib\x86\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
       <!-- ICU4C public header files -->
@@ -23,13 +23,13 @@
   </ItemDefinitionGroup>
   <!-- Files to copy for runtime -->
   <ItemGroup Condition="'$(Platform)' == 'x64'">
-    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\icudt*.dll" />
-    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\icuuc*.dll" />
-    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x64\native\icuin*.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\x64\native\icudt*.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\x64\native\icuuc*.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\x64\native\icuin*.dll" />
   </ItemGroup>
   <ItemGroup Condition="'$(Platform)' == 'x86' or '$(Platform)' == 'Win32'">
-    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\icudt*.dll" />
-    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\icuuc*.dll" />
-    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\win-x86\native\icuin*.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\x86\native\icudt*.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\x86\native\icuuc*.dll" />
+    <ReferenceCopyLocalPaths Include="$(MSBuildThisFileDirectory)..\..\runtimes\x86\native\icuin*.dll" />
   </ItemGroup>
 </Project>
