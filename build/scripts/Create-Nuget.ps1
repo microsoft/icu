@@ -72,18 +72,18 @@ foreach ($arch in $architectures)
     
     # Import Libs and PDBs
     $libInput = "$icuBinaries\$arch\lib"
-    $libOuput = "$outputNugetLocation\build\native\lib\$arch\Release"
-    Copy-Item "$libInput\*.lib" -Destination $libOuput -Recurse
-    Copy-Item "$libInput\*.pdb" -Destination $libOuput -Recurse
+    $libOutput = "$outputNugetLocation\build\native\lib\$arch\Release"
+    Copy-Item "$libInput\*.lib" -Destination $libOutput -Recurse
+    Copy-Item "$libInput\*.pdb" -Destination $libOutput -Recurse
     
     # Compiled DLLs and EXEs
     $dllInput = "$icuBinaries\$arch\bin\signed"
     if ($codeSigned) {
         $dllInput = "$icuBinaries\$arch\bin\signed"
     }
-    $dllOuput = "$outputNugetLocation\runtimes\$arch\native"
-    Copy-Item "$dllInput\*.dll" -Destination $dllOuput -Recurse
-    Copy-Item "$dllInput\*.exe" -Destination $dllOuput -Recurse
+    $dllOutput = "$outputNugetLocation\runtimes\$arch\native"
+    Copy-Item "$dllInput\*.dll" -Destination $dllOutput -Recurse
+    Copy-Item "$dllInput\*.exe" -Destination $dllOutput -Recurse
 }
 
 # Copy the headers
