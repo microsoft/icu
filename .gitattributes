@@ -9,7 +9,6 @@
 *.c text diff=cpp
 *.cc text diff=cpp
 *.classpath text
-*.cmd text
 *.cpp text diff=cpp
 *.css text diff=css
 *.dsp text
