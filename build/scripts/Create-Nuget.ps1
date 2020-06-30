@@ -22,15 +22,15 @@
 #>
 param(
     [Parameter(Mandatory=$true)]
-    [ValidateScript({Test-Path $_ -PathType 'Container'})]
+    [ValidateScript({Test-Path $_ -PathType Container})]
     [string]$sourceRoot,
 
     [Parameter(Mandatory=$true)]
-    [ValidateScript({Test-Path $_ -PathType 'Container'})]
+    [ValidateScript({Test-Path $_ -PathType Container})]
     [string]$icuBinaries,
 
     [Parameter(Mandatory=$true)]
-    [ValidateScript({Test-Path $_ -PathType 'Container'})]
+    [ValidateScript({Test-Path $_ -PathType Container})]
     [string]$icuHeaders,
 
     [Parameter(Mandatory=$true)]
@@ -41,11 +41,6 @@ param(
     [bool]$codeSigned
 )
 
-# We should already have the nugetPackageVersion set as an environment variable in Set-ICUVersion.ps1.
-if (!(Test-Path 'env:nugetPackageVersion')) {
-    throw "Error: The nugetPackageVersion environment variable is not set."
-}
-
 $icuSource = Resolve-Path "$sourceRoot\icu\icu4c"
 
 # Create the output folder.
@@ -54,26 +49,26 @@ if (Test-Path $outputNugetLocation -PathType Container) {
     throw "Error: The output path $outputNugetLocation path already exists! I don't want to over-write any existing files."
 }
 # Note: We store the return value from New-Item in order to suppress the Cmdlet output to stdout.
-Write-Host "Creating folder for the Nuget package..."
-$ret = New-Item -Path $outputNugetLocation -ItemType "Directory"
+Write-Host 'Creating folder for the Nuget package...'
+$ret = New-Item -Path $outputNugetLocation -ItemType Directory
 
 # Read in the various arch from the names of the folders (x64, x86, ARM, or ARM64).
 $architectures = Get-ChildItem -Path $icuBinaries | Where-Object {$_.PSIsContainer} | ForEach-Object {$_.Name}
 
 # Create the folder structure for the Nuget
-Write-Host "Creating folders"
-$ret = New-Item -Path "$outputNugetLocation\build" -ItemType "Directory"
-$ret = New-Item -Path "$outputNugetLocation\build\native" -ItemType "Directory"
-$ret = New-Item -Path "$outputNugetLocation\build\native\include" -ItemType "Directory"
-$ret = New-Item -Path "$outputNugetLocation\build\native\lib" -ItemType "Directory"
-$ret = New-Item -Path "$outputNugetLocation\runtimes" -ItemType "Directory"
+Write-Host 'Creating folders'
+$ret = New-Item -Path "$outputNugetLocation\build" -ItemType Directory
+$ret = New-Item -Path "$outputNugetLocation\build\native" -ItemType Directory
+$ret = New-Item -Path "$outputNugetLocation\build\native\include" -ItemType Directory
+$ret = New-Item -Path "$outputNugetLocation\build\native\lib" -ItemType Directory
+$ret = New-Item -Path "$outputNugetLocation\runtimes" -ItemType Directory
 
 foreach ($arch in $architectures)
 {
-    $ret = New-Item -Path "$outputNugetLocation\runtimes\$arch" -ItemType "Directory"
-    $ret = New-Item -Path "$outputNugetLocation\runtimes\$arch\native" -ItemType "Directory"
-    $ret = New-Item -Path "$outputNugetLocation\build\native\lib\$arch" -ItemType "Directory"
-    $ret = New-Item -Path "$outputNugetLocation\build\native\lib\$arch\Release" -ItemType "Directory"
+    $ret = New-Item -Path "$outputNugetLocation\runtimes\$arch" -ItemType Directory
+    $ret = New-Item -Path "$outputNugetLocation\runtimes\$arch\native" -ItemType Directory
+    $ret = New-Item -Path "$outputNugetLocation\build\native\lib\$arch" -ItemType Directory
+    $ret = New-Item -Path "$outputNugetLocation\build\native\lib\$arch\Release" -ItemType Directory
     
     # Import Libs and PDBs
     $libInput = "$icuBinaries\$arch\lib"
@@ -92,11 +87,11 @@ foreach ($arch in $architectures)
 }
 
 # Copy the headers
-$ret = New-Item -Path "$outputNugetLocation\build\native\include\unicode" -ItemType "Directory"
+$ret = New-Item -Path "$outputNugetLocation\build\native\include\unicode" -ItemType Directory
 Copy-Item "$icuHeaders\*.h" -Destination "$outputNugetLocation\build\native\include\unicode" -Recurse
 
 # Add the License file
-Write-Host "Copying the License file into the Nuget location."
+Write-Host 'Copying the License file into the Nuget location.'
 $licenseFile = Resolve-Path "$icuSource\LICENSE"
 Copy-Item $licenseFile -Destination "$outputNugetLocation\LICENSE"
 
@@ -111,5 +106,5 @@ $nuspecFileContent | Set-Content "$outputNugetLocation\Microsoft.icu4c.win.nuspe
 
 # Actually do the "nuget pack" operation
 $nugetCmd = ("nuget pack $outputNugetLocation\Microsoft.icu4c.win.nuspec -BasePath $outputNugetLocation -OutputDirectory $output")
-Write-Host "Executing: $nugetCmd"
+Write-Host 'Executing: ' $nugetCmd
 &cmd /c $nugetCmd
