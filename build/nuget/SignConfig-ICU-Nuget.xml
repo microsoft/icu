@@ -3,7 +3,7 @@
 
   <job platform="AnyCPU" configuration="Release" certSubject="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
    dest="__OUTPATHROOT__\signed" jobname="Code Sign MS-ICU Nuget" approvers="">
-    <file src="__INPATHROOT__\Microsoft.icu4c.*.nupkg" signType="Nuget" />
+    <file src="__INPATHROOT__\Microsoft.icu.*.nupkg" signType="Nuget" />
   </job>
   
 </SignConfigXML>
