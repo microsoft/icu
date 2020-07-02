@@ -79,6 +79,7 @@ static void U_CALLCONV umtx_init() {
 }
 U_CDECL_END
 
+
 std::mutex *UMutex::getMutex() {
     std::mutex *retPtr = fMutex.load(std::memory_order_acquire);
     if (retPtr == nullptr) {
@@ -92,6 +93,7 @@ std::mutex *UMutex::getMutex() {
             gListHead = this;
         }
     }
+    U_ASSERT(retPtr != nullptr);
     return retPtr;
 }
 

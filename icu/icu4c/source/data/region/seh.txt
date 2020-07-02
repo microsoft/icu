@@ -127,7 +127,6 @@ seh{
         MD{"Moldávia"}
         MG{"Madagascar"}
         MH{"Ilhas Marshall"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Mianmar"}
         MN{"Mongólia"}
@@ -226,5 +225,5 @@ seh{
         ZM{"Zâmbia"}
         ZW{"Zimbábue"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

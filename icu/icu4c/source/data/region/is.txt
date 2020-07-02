@@ -176,7 +176,7 @@ is{
         MC{"Mónakó"}
         MD{"Moldóva"}
         ME{"Svartfjallaland"}
-        MF{"St. Martin"}
+        MF{"Saint-Martin"}
         MG{"Madagaskar"}
         MH{"Marshalleyjar"}
         MK{"Norður-Makedónía"}
@@ -291,5 +291,5 @@ is{
         ZW{"Simbabve"}
         ZZ{"Óþekkt svæði"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -331,7 +331,6 @@ az{
         no{"norveç"}
         nog{"noqay"}
         non{"qədim nors"}
-        nqo{"nqo"}
         nr{"cənubi ndebele"}
         nso{"şimal soto"}
         nus{"nuer"}
@@ -720,7 +719,7 @@ az{
             tibt{"Tibet Rəqəmləri"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — Bütün"}
         category-list{"{0}: {1}"}

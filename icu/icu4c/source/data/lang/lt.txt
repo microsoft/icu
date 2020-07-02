@@ -711,6 +711,7 @@ lt{
         Merc{"Merojitų rankraštinis"}
         Mero{"meroitik"}
         Mlym{"malajalių"}
+        Modi{"Modi"}
         Mong{"mongolų"}
         Moon{"mūn"}
         Mroo{"Mro"}
@@ -998,7 +999,7 @@ lt{
         VALENCIA{"Valenciečiai"}
         WADEGILE{"Wade-Giles Romanization"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} – visi"}
         category-list{"{0}: {1}"}

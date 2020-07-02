@@ -177,7 +177,6 @@ fy{
         MF{"Saint-Martin"}
         MG{"Madeiaskar"}
         MH{"Marshalleilannen"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Myanmar (Birma)"}
         MN{"Mongolië"}
@@ -288,5 +287,5 @@ fy{
         ZW{"Zimbabwe"}
         ZZ{"Unbekend gebiet"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

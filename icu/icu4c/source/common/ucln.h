@@ -88,8 +88,4 @@ U_CAPI void U_EXPORT2 ucln_registerCleanup(ECleanupLibraryType type,
  */
 U_CAPI void U_EXPORT2 ucln_cleanupOne(ECleanupLibraryType type);
 
-
-// For tracking if u_cleanup has been called, and how many times.
-extern int32_t cleanup_count;
-
 #endif

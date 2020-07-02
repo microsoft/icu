@@ -43,6 +43,8 @@
     <alias from="iw" to="he"/>
     <alias from="iw_IL" to="he_IL"/>
     <alias from="ja_JP_TRADITIONAL" to="ja_JP" rbpath="/calendar/default" value="japanese"/>
+    <alias from="ks_IN" to="ks_Arab_IN"/>
+    <alias from="mni_IN" to="mni_Beng_IN"/>
     <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
     <alias from="jv_Latn" to="jv"/>
     <!-- jv_Latn_ID is the locale name in NLS while jv_ID is the locale name in ICU. This alias serves as a mapping between them. -->
@@ -61,13 +63,19 @@
     <!-- Maori does not have a suppress script. -->
     <alias from="mi_Latn_NZ" to="mi_NZ"/>
     <alias from="mo" to="ro"/>
+    <alias from="no" to="nb"/>
     <alias from="no_NO" to="nb_NO"/>
     <alias from="no_NO_NY" to="nn_NO"/>
-    <alias from="no" to="nb"/>
     <alias from="pa_IN" to="pa_Guru_IN"/>
     <alias from="pa_PK" to="pa_Arab_PK"/>
+    <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
+    <alias from="pcm_Latn" to="pcm"/>
+    <!-- Nigerian Pidgin does not have a suppress script. pcm_Latn_NG is the locale name in NLS while pcm_NG is the locale name in ICU. -->
+    <alias from="pcm_Latn_NG" to="pcm_NG"/>
     <alias from="prs" to="fa"/>
     <alias from="prs_AF" to="fa_AF"/>
+    <alias from="sat_IN" to="sat_Olck_IN"/>
+    <alias from="sd_PK" to="sd_Arab_PK"/>
     <!-- qut is the former name of the NLS locale quc. -->
     <alias from="qut" to="quc"/>
     <alias from="qut_Latn" to="quc"/>
@@ -92,6 +100,7 @@
     <alias from="sr_Cyrl_CS" to="sr_Cyrl_RS"/>
     <alias from="sr_Latn_YU" to="sr_Latn_RS"/>
     <alias from="sr_Latn_CS" to="sr_Latn_RS"/>
+    <alias from="su_ID" to="su_Latn_ID"/>
     <alias from="th_TH_TRADITIONAL" to="th_TH" rbpath="/calendar/default" value="buddhist"/>
     <alias from="tl" to="fil"/>
     <alias from="tl_PH" to="fil_PH"/>

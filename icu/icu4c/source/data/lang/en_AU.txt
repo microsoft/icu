@@ -2,6 +2,9 @@
 // License & terms of use: http://www.unicode.org/copyright.html#License
 en_AU{
     %%Parent{"en_001"}
+    Keys{
+        colCaseFirst{"Upper case / Lower case Ordering"}
+    }
     Languages{
         bn{"Bengali"}
         frc{"frc"}
@@ -9,7 +12,6 @@ en_AU{
     }
     Scripts{
         Beng{"Bengali"}
-        Thai{"Thai"}
     }
     Types{
         calendar{
@@ -17,5 +19,5 @@ en_AU{
             ethiopic{"Ethiopian Calendar"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

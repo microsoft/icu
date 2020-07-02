@@ -104,7 +104,6 @@ zu{
         ES{"i-Spain"}
         ET{"i-Ethiopia"}
         EU{"i-European Union"}
-        EZ{"EZ"}
         FI{"i-Finland"}
         FJ{"i-Fiji"}
         FK{"i-Falkland Islands"}
@@ -131,7 +130,7 @@ zu{
         GW{"i-Guinea-Bissau"}
         GY{"i-Guyana"}
         HK{"i-Hong Kong SAR China"}
-        HM{"i-Heard Island ne-McDonald Islands"}
+        HM{"I-Heard & McDonald Island"}
         HN{"i-Honduras"}
         HR{"i-Croatia"}
         HT{"i-Haiti"}
@@ -269,7 +268,7 @@ zu{
         TZ{"i-Tanzania"}
         UA{"i-Ukraine"}
         UG{"i-Uganda"}
-        UM{"i-U.S. Minor Outlying Islands"}
+        UM{"I-U.S. Outlying Islands"}
         UN{"I-United Nations"}
         US{"i-United States"}
         UY{"i-Uruguay"}
@@ -291,5 +290,5 @@ zu{
         ZW{"iZimbabwe"}
         ZZ{"iSifunda esingaziwa"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

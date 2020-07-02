@@ -31,7 +31,7 @@ sw{
         151{"Ulaya ya Mashariki"}
         154{"Ulaya ya Kaskazini"}
         155{"Ulaya ya Magharibi"}
-        202{"Afrika Kusine mwa Jangwa la Sahara"}
+        202{"Afrika Kusini mwa Jangwa la Sahara"}
         419{"Amerika ya Kilatini"}
         AC{"Kisiwa cha Ascension"}
         AD{"Andorra"}
@@ -104,7 +104,7 @@ sw{
         ES{"Uhispania"}
         ET{"Ethiopia"}
         EU{"Umoja wa Ulaya"}
-        EZ{"EZ"}
+        EZ{"Jumuiya ya Ulaya"}
         FI{"Ufini"}
         FJ{"Fiji"}
         FK{"Visiwa vya Falkland"}
@@ -183,7 +183,7 @@ sw{
         ML{"Mali"}
         MM{"Myanmar (Burma)"}
         MN{"Mongolia"}
-        MO{"Macau SAR China"}
+        MO{"Makau SAR China"}
         MP{"Visiwa vya Mariana vya Kaskazini"}
         MQ{"Martinique"}
         MR{"Moritania"}
@@ -291,5 +291,5 @@ sw{
         ZW{"Zimbabwe"}
         ZZ{"Eneo lisilojulikana"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -540,7 +540,7 @@ ucnv_deleteSharedConverterData(UConverterSharedData * deadSharedData)
 
 /**
  * Load a non-algorithmic converter.
- * If pkg==NULL, then this function must be called inside umtx_lock(&cnvCacheMutex).
+ * If pkg==NULL, then this function must be called inside umtx_lock(cnvCacheMutex()).
  */
 UConverterSharedData *
 ucnv_load(UConverterLoadArgs *pArgs, UErrorCode *err) {
@@ -583,7 +583,7 @@ ucnv_load(UConverterLoadArgs *pArgs, UErrorCode *err) {
 /**
  * Unload a non-algorithmic converter.
  * It must be sharedData->isReferenceCounted
- * and this function must be called inside umtx_lock(&cnvCacheMutex).
+ * and this function must be called inside umtx_lock(cnvCacheMutex()).
  */
 U_CAPI void
 ucnv_unload(UConverterSharedData *sharedData) {

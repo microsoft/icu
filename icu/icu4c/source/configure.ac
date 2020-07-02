@@ -903,6 +903,14 @@ else
 fi
 AC_SUBST(U_HAVE_STRTOD_L)
 
+# Check if C++17 std::string_view is available.
+AC_LANG_PUSH([C++])
+AC_CHECK_TYPE(std::string_view, [], [], [[#include <string_view>]])
+if test "x$ac_cv_type_std__string_view" = xyes; then :
+  CONFIG_CPPFLAGS="${CONFIG_CPPFLAGS} -DU_HAVE_STRING_VIEW=1"
+fi
+AC_LANG_POP([C++])
+
 # Checks for typedefs
 AC_CHECK_TYPE(int8_t,signed char)
 AC_CHECK_TYPE(uint8_t,unsigned char)
@@ -1123,6 +1131,19 @@ AC_ARG_ENABLE(tools,
 		esac],
 	tools=true)
 ICU_CONDITIONAL(TOOLS, test "$tools" = true)
+
+# Enable/disable fuzzer target tests.
+AC_ARG_ENABLE(fuzzer,
+	[  --enable-fuzzer        build ICU's fuzzer test targets [default=no]],
+	[case "${enableval}" in
+		yes) fuzzer=true ;;
+		no)  fuzzer=false ;;
+		*) AC_MSG_ERROR(bad value ${enableval} for --enable-fuzzer) ;;
+		esac],
+	fuzzer=false)
+ICU_CONDITIONAL(FUZZER, test "$fuzzer" = true)
+
+ICU_CONDITIONAL(DATA, test "$tools" = true || test "$cross_compiling" = "yes")
 
 AC_ARG_WITH(data-packaging,
 	[  --with-data-packaging     specify how to package ICU data. Possible values:
@@ -1388,6 +1409,7 @@ AC_CONFIG_FILES([icudefs.mk \
 		test/perf/utfperf/Makefile \
 		test/perf/utrie2perf/Makefile \
 		test/perf/leperf/Makefile \
+		test/fuzzer/Makefile \
 		samples/Makefile samples/date/Makefile \
 		samples/cal/Makefile samples/layout/Makefile])
 AC_OUTPUT
@@ -1400,7 +1422,8 @@ else
     if test -f "$srcdir/data/locales/root.txt";
     then
         echo "Spawning Python to generate data/rules.mk..."
-        PYTHONPATH="$srcdir/data" $PYTHON -m buildtool \
+        PYTHONPATH="$srcdir/python" \
+            $PYTHON -m icutools.databuilder \
             --mode gnumake \
             --seqmode parallel \
             --src_dir "$srcdir/data" \
@@ -1415,7 +1438,8 @@ else
       touch data/rules.mk
     fi
     echo "Spawning Python to generate test/testdata/rules.mk..."
-    PYTHONPATH="$srcdir/test/testdata:$srcdir/data" $PYTHON -m buildtool \
+    PYTHONPATH="$srcdir/python" \
+        $PYTHON -m icutools.databuilder \
         --mode gnumake \
         --seqmode parallel \
         --src_dir "$srcdir/test/testdata" \

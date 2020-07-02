@@ -4,5 +4,5 @@ se_SE{
     Countries{
         PS{"den palestinska myndigheten"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

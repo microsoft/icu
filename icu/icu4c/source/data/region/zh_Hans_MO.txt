@@ -4,5 +4,5 @@ zh_Hans_MO{
     Countries{
         MO{"澳门特别行政区"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

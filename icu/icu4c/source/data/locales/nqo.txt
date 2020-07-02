@@ -7,7 +7,7 @@ nqo{
         default{"latn"}
         native{"nkoo"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     layout{
         characters{"right-to-left"}
         lines{"top-to-bottom"}

@@ -433,7 +433,6 @@ gsw{
     }
     Scripts{
         Arab{"Arabisch"}
-        Armi{"Armi"}
         Armn{"Armenisch"}
         Avst{"Aveschtisch"}
         Bali{"Balinesisch"}
@@ -447,7 +446,6 @@ gsw{
         Buhd{"Buhid"}
         Cans{"UCAS"}
         Cari{"Karisch"}
-        Cham{"Cham"}
         Cher{"Cherokee"}
         Cirt{"Cirth"}
         Copt{"Koptisch"}
@@ -603,7 +601,7 @@ gsw{
         SOLBA{"Solbica-Mundart"}
         TARASK{"Taraskievica-Rächtschriibig"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     codePatterns{
         language{"Schpraach: {0}"}
         script{"Schrift: {0}"}

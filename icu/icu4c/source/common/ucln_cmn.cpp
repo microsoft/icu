@@ -31,7 +31,6 @@
 static cleanupFunc *gCommonCleanupFunctions[UCLN_COMMON_COUNT];
 static cleanupFunc *gLibCleanupFunctions[UCLN_COMMON];
 
-int32_t cleanup_count = 0;
 
 /************************************************
  The cleanup order is important in this function.
@@ -42,7 +41,6 @@ uprv_u_cleanup(void)
 {
     UTRACE_ENTRY_OC(UTRACE_U_CLEANUP);
     icu::umtx_lock(NULL);     /* Force a memory barrier, so that we are sure to see   */
-    cleanup_count++;
     icu::umtx_unlock(NULL);   /*   all state left around by any other threads.        */
 
     ucln_lib_cleanup();
@@ -52,15 +50,6 @@ uprv_u_cleanup(void)
 /*#if U_ENABLE_TRACING*/
     utrace_cleanup();
 /*#endif*/
-}
-
-U_CAPI void U_EXPORT2 ucln_cleanupOne(ECleanupLibraryType libType) 
-{
-    if (gLibCleanupFunctions[libType])
-    {
-        gLibCleanupFunctions[libType]();
-        gLibCleanupFunctions[libType] = NULL;
-    }
 }
 
 U_CAPI void U_EXPORT2
@@ -86,6 +75,15 @@ u_cleanup(void)
 #else
     uprv_u_cleanup();
 #endif
+}
+
+U_CAPI void U_EXPORT2 ucln_cleanupOne(ECleanupLibraryType libType) 
+{
+    if (gLibCleanupFunctions[libType])
+    {
+        gLibCleanupFunctions[libType]();
+        gLibCleanupFunctions[libType] = NULL;
+    }
 }
 
 U_CFUNC void

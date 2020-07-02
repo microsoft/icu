@@ -345,10 +345,6 @@ uz_Cyrl{
         Zyyy{"Умумий"}
         Zzzz{"Номаълум шрифт"}
     }
-    Scripts%stand-alone{
-        Hans{"Соддалаштирилган"}
-        Hant{"Анъанавий"}
-    }
     Types{
         calendar{
             gregorian{"Григориан календари"}
@@ -396,7 +392,7 @@ uz_Cyrl{
             tibt{"Тибет рақамлари"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     codePatterns{
         language{"Тил: {0}"}
         script{"{0}"}

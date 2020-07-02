@@ -2,8 +2,7 @@
 // License & terms of use: http://www.unicode.org/copyright.html#License
 mn_MN{
     Countries{
-        MK{"Хойд Македон"}
         PS{"Палестины засаг захиргаа"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

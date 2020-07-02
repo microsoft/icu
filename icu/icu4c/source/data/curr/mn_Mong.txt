@@ -76,5 +76,5 @@ mn_Mong{
             one{"ам. доллар"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

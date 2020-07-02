@@ -103,7 +103,7 @@ nb{
         ER{"Eritrea"}
         ES{"Spania"}
         ET{"Etiopia"}
-        EU{"EU"}
+        EU{"Den europeiske union"}
         EZ{"eurosonen"}
         FI{"Finland"}
         FJ{"Fiji"}
@@ -291,5 +291,5 @@ nb{
         ZW{"Zimbabwe"}
         ZZ{"ukjent område"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

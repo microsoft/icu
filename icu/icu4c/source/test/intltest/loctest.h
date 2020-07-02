@@ -69,6 +69,8 @@ public:
     void Test4147315(void);
     void Test4147317(void);
     void Test4147552(void);
+
+    void Test20639_DeprecatesISO3Language();
     
     void TestVariantParsing(void);
 
@@ -105,6 +107,8 @@ public:
 
     void TestCanonicalization(void);
 
+    void TestCanonicalize(void);
+
 #if !UCONFIG_NO_FORMATTING
     static UDate date(int32_t y, int32_t m, int32_t d, int32_t hr = 0, int32_t min = 0, int32_t sec = 0);
 #endif
@@ -117,6 +121,8 @@ public:
     void TestBug13277();
     void TestBug13554();
     void TestBug20410();
+    void TestBug20900();
+    void TestConstructorAcceptsBCP47();
 
     void TestAddLikelySubtags();
     void TestMinimizeSubtags();
@@ -124,6 +130,7 @@ public:
 
     void TestForLanguageTag();
     void TestToLanguageTag();
+    void TestToLanguageTagOmitTrue();
 
     void TestMoveAssign();
     void TestMoveCtor();
@@ -138,6 +145,12 @@ public:
     void TestUndScript();
     void TestUndRegion();
     void TestUndCAPI();
+    void TestRangeIterator();
+    void TestPointerConvertingIterator();
+    void TestTagConvertingIterator();
+    void TestCapturingTagConvertingIterator();
+    void TestSetUnicodeKeywordValueInLongLocale();
+    void TestSetUnicodeKeywordValueNullInLongLocale();
 
 private:
     void _checklocs(const char* label,

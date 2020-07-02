@@ -71,6 +71,7 @@
  */
 U_STABLE const char* U_EXPORT2 u_getDataDirectory(void);
 
+
 /** 
  * Set the ICU data directory. 
  * The data directory is where common format ICU data files (.dat files)

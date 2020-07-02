@@ -127,7 +127,6 @@ saq{
         MD{"Moldova"}
         MG{"Bukini"}
         MH{"Visiwa vya Marshal"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Myama"}
         MN{"Mongolia"}
@@ -227,5 +226,5 @@ saq{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

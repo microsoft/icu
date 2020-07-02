@@ -279,7 +279,7 @@ sv{
         kgp{"kaingang"}
         kha{"khasi"}
         kho{"khotanesiska"}
-        khq{"Timbuktu-songhoy"}
+        khq{"Timbuktu-songhai"}
         khw{"khowar"}
         ki{"kikuyu"}
         kiu{"kirmanjki"}
@@ -311,7 +311,7 @@ sv{
         kut{"kutenaj"}
         kv{"kome"}
         kw{"korniska"}
-        ky{"kirgisiska"}
+        ky{"kirgiziska"}
         la{"latin"}
         lad{"ladino"}
         lag{"langi"}
@@ -489,7 +489,7 @@ sv{
         seh{"sena"}
         sei{"seri"}
         sel{"selkup"}
-        ses{"Gao-songhay"}
+        ses{"Gao-songhai"}
         sg{"sango"}
         sga{"forniriska"}
         sgs{"samogitiska"}
@@ -626,6 +626,7 @@ sv{
         Aghb{"kaukasiska albanska"}
         Ahom{"ahom"}
         Arab{"arabiska"}
+        Aran{"nastaliq"}
         Armi{"imperisk arameiska"}
         Armn{"armeniska"}
         Avst{"avestiska"}
@@ -652,6 +653,7 @@ sv{
         Cyrl{"kyrilliska"}
         Cyrs{"fornkyrkoslavisk kyrilliska"}
         Deva{"devanagari"}
+        Dogr{"dogriska"}
         Dsrt{"deseret"}
         Dupl{"Duployéstenografiska"}
         Egyd{"demotiska"}
@@ -713,10 +715,12 @@ sv{
         Lyci{"lykiska"}
         Lydi{"lydiska"}
         Mahj{"mahajaniska"}
+        Maka{"makasariska"}
         Mand{"mandaéiska"}
         Mani{"manikeanska"}
         Marc{"marchenska"}
         Maya{"mayahieroglyfer"}
+        Medf{"medefaidrin"}
         Mend{"mende"}
         Merc{"kursiv-meroitiska"}
         Mero{"meroitiska"}
@@ -751,6 +755,7 @@ sv{
         Phnx{"feniciska"}
         Plrd{"pollardtecken"}
         Prti{"tidig parthianska"}
+        Qaag{"zawgyi"}
         Rjng{"rejang"}
         Rohg{"hanifiska"}
         Roro{"rongo-rongo"}
@@ -1006,11 +1011,15 @@ sv{
         1994{"1994 års resisk stavning"}
         1996{"1996 års reformerad tysk stavning"}
         ABL1943{"1943 års stavning"}
+        AKUAPEM{"akapuem (twi)"}
         ALALC97{"1997 års ALA-LC"}
         ALUKU{"Aluku-dialekt"}
         AO1990{"stavning enligt 1990 års överenskommelse"}
+        ARANES{"aranesiska (occitanska)"}
         AREVELA{"östarmeniska"}
         AREVMDA{"västarmeniska"}
+        ASANTE{"asante (twi)"}
+        AUVERN{"auvergniska (occitanska)"}
         BAKU1926{"1926 års stavning"}
         BALANKA{"balanka-dialekt"}
         BARLA{"barlavento-dialekt"}
@@ -1020,14 +1029,22 @@ sv{
         BISKE{"Bila-dialekt"}
         BOHORIC{"Bohorič-alfabetet"}
         BOONT{"boontling"}
+        CISAUP{"cisalpinska (occitanska)"}
         COLB1945{"stavning enligt 1945 års konvention mellan Portugal och Brasilien"}
         CORNU{"kornisk engelska"}
+        CREISS{"croissant-occitanska"}
         DAJNKO{"Dajnko-alfabetet"}
         EKAVSK{"ekavisk dialekt"}
         EMODENG{"tidig modern engelska"}
         FONIPA{"internationell fonetisk notation - IPA"}
+        FONKIRSH{"Kirshenbaums fonetiska alfabet"}
+        FONNAPA{"nordamerikanskt fonetiskt alfabet"}
         FONUPA{"uralisk fonetisk notation"}
         FONXSAMP{"X-SAMPA fonetisk notation"}
+        GASCON{"Gascogne-occitanska"}
+        GRCLASS{"klassisk occitanska"}
+        GRITAL{"italiensk-inspirerad occitanska"}
+        GRMISTR{"Mistral-occitanska"}
         HEPBURN{"Hepburn"}
         HOGNORSK{"högnorsk dialekt"}
         HSISTEMO{"h-system"}
@@ -1040,6 +1057,8 @@ sv{
         KOCIEWIE{"kociewiska"}
         KSCOR{"standardstavning"}
         LAUKIKA{"laukika-dialekt"}
+        LEMOSIN{"Limousin-occitanska"}
+        LENGADOC{"languedociska"}
         LIPAW{"Lipovaz-dialekt"}
         LUNA1918{"1918 års stavning"}
         METELKO{"Metelko-alfabetet"}
@@ -1047,6 +1066,7 @@ sv{
         NDYUKA{"Ndyuka-dialekt"}
         NEDIS{"natisonsk dialekt"}
         NEWFOUND{"Newfoundland-engelska"}
+        NICARD{"Nice-occitanska"}
         NJIVA{"Njiva-dialekt"}
         NULIK{"nulik-stavning"}
         OSOJS{"Osojane-dialekt"}
@@ -1059,6 +1079,7 @@ sv{
         PINYIN{"pinyin"}
         POLYTON{"polytonisk stavning"}
         POSIX{"Posix"}
+        PROVENC{"provensalska"}
         PUTER{"puter-dialekt"}
         REVISED{"reformerad stavning"}
         RIGIK{"klassisk volapük"}
@@ -1082,10 +1103,11 @@ sv{
         VAIDIKA{"vedisk dialekt"}
         VALENCIA{"valensisk dialekt"}
         VALLADER{"vallader-dialekt"}
+        VIVARAUP{"vivaroalpinska (occitanska)"}
         WADEGILE{"Wade-Giles"}
         XSISTEMO{"x-system"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} – alla"}
         category-list{"{0}: {1}"}

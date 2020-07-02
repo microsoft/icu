@@ -127,7 +127,6 @@ ak{
         MD{"Mɔldova"}
         MG{"Madagaska"}
         MH{"Marshall Islands"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Miyanma"}
         MN{"Mɔngolia"}
@@ -227,5 +226,5 @@ ak{
         ZM{"Zambia"}
         ZW{"Zembabwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

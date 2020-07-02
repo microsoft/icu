@@ -22,7 +22,6 @@
 #include <iostream>
 #include <list>
 #include <string>
-#include <vector>
 
 #include <assert.h>
 #include "genrb.h"
@@ -85,8 +84,7 @@ enum
     WRITE_POOL_BUNDLE,
     USE_POOL_BUNDLE,
     INCLUDE_UNIHAN_COLL,
-    FILTERDIR,
-    FILELIST
+    FILTERDIR
 };
 
 UOption options[]={
@@ -113,7 +111,6 @@ UOption options[]={
                       UOPTION_DEF("usePoolBundle", '\x01', UOPT_OPTIONAL_ARG),/* 20 */
                       UOPTION_DEF("includeUnihanColl", '\x01', UOPT_NO_ARG),/* 21 */ /* temporary, don't display in usage info */
                       UOPTION_DEF("filterDir", '\x01', UOPT_OPTIONAL_ARG), /* 22 */
-                      UOPTION_DEF("fileList", '\x01', UOPT_REQUIRES_ARG), /* 23 */
                   };
 
 static     UBool       write_java = FALSE;
@@ -134,7 +131,6 @@ main(int argc,
     const char *outputDir = NULL; /* NULL = no output directory, use current */
     const char *inputDir  = NULL;
     const char *filterDir = NULL;
-    const char *fileList  = NULL;
     const char *encoding  = "";
     int         i;
     UBool illegalArg = FALSE;
@@ -149,13 +145,8 @@ main(int argc,
     if(argc<0) {
         fprintf(stderr, "%s: error in command line argument \"%s\"\n", argv[0], argv[-argc]);
         illegalArg = TRUE;
-    } else {
-        if(options[FILELIST].doesOccur && argc!=1) {
-            fprintf(stderr, "%s: cannot combine --fileList with command line list\n", argv[0]);
-            illegalArg = TRUE;
-        } else if (!options[FILELIST].doesOccur && argc<2) {
-            illegalArg = TRUE;
-        }
+    } else if(argc<2) {
+        illegalArg = TRUE;
     }
     if(options[WRITE_POOL_BUNDLE].doesOccur && options[USE_POOL_BUNDLE].doesOccur) {
         fprintf(stderr, "%s: cannot combine --writePoolBundle and --usePoolBundle\n", argv[0]);
@@ -214,10 +205,10 @@ main(int argc,
                 "\t-c or --copyright        include copyright notice\n");
         fprintf(stderr,
                 "\t-e or --encoding         encoding of source files\n"
-                "\t-d of --destdir          destination directory, followed by the path, defaults to %s\n"
-                "\t-s or --sourcedir        source directory for files followed by path, defaults to %s\n"
+                "\t-d or --destdir          destination directory, followed by the path, defaults to '%s'\n"
+                "\t-s or --sourcedir        source directory for files followed by path, defaults to '%s'\n"
                 "\t-i or --icudatadir       directory for locating any needed intermediate data files,\n"
-                "\t                         followed by path, defaults to %s\n",
+                "\t                         followed by path, defaults to '%s'\n",
                 u_getDataDirectory(), u_getDataDirectory(), u_getDataDirectory());
         fprintf(stderr,
                 "\t-j or --write-java       write a Java ListResourceBundle for ICU4J, followed by optional encoding\n"
@@ -249,10 +240,7 @@ main(int argc,
                 "\t                           (--writePoolBundle and --usePoolBundle cannot be combined)\n");
         fprintf(stderr,
                 "\t      --filterDir          Input directory where filter files are available.\n"
-                "\t                           For more on filter files, see Python buildtool.\n");
-        fprintf(stderr,
-                "\t      --fileList           Read the list of resource bundle source files from a file.\n"
-                "\t                           When this option is specified there should be no [FILES] specified on the command line.\n");
+                "\t                           For more on filter files, see ICU Data Build Tool.\n");
 
         return illegalArg ? U_ILLEGAL_ARGUMENT_ERROR : U_ZERO_ERROR;
     }
@@ -281,10 +269,6 @@ main(int argc,
 
     if (options[FILTERDIR].doesOccur) {
         filterDir = options[FILTERDIR].value;
-    }
-
-    if(options[FILELIST].doesOccur) {
-        fileList = options[FILELIST].value;
     }
 
     if(options[ENCODING].doesOccur) {
@@ -536,36 +520,13 @@ main(int argc,
                 "is about 300kB larger than the ucadata-implicithan.icu version.");
     }
 
-    // MSFT-Change: Work around command-line limits on Windows.
-    std::vector<std::string> list; // List of resource bundle source input files.
-
-    if(fileList) {
-        std::ifstream f(fileList);
-        if (f.fail()) {
-            std::cerr << argv[0] << " error: unable to open " << fileList << std::endl;
-            return U_FILE_ACCESS_ERROR;
-        }
-        std::string currentLine;
-        while (std::getline(f, currentLine)) {
-            // Ignore # comments and empty lines
-            if (currentLine.empty() || currentLine[0] == '#') {
-                continue;
-            }
-            list.push_back(currentLine);
-        }
-    } else {
-        for(i = 1; i < argc; ++i) {
-            list.push_back(argv[i]);
-        }
-    }    
-
-    if(list.size() > 1) {
-        printf("%s number of files: %zu\n", argv[0], list.size());
+    if((argc-1)!=1) {
+        printf("genrb number of files: %d\n", argc - 1);
     }
-
-    for(std::string& str : list) {
+    /* generate the binary files */
+    for(i = 1; i < argc; ++i) {
         status = U_ZERO_ERROR;
-        arg    = getLongPathname(str.c_str());
+        arg    = getLongPathname(argv[i]);
 
         CharString theCurrentFileName;
         if (inputDir) {

@@ -4,7 +4,7 @@ aa{
     AuxExemplarCharacters{"[j p v z]"}
     ExemplarCharacters{"[a b c d e f g h i k l m n o q r s t u w x y]"}
     ExemplarCharactersIndex{"[A B C D E F G H I K L M N O Q R S T U W X Y]"}
-    Version{"2.1.50.6"}
+    Version{"37"}
     calendar{
         gregorian{
             DateTimePatterns{

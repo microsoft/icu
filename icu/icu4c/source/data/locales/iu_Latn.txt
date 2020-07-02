@@ -4,7 +4,7 @@ iu_Latn{
     %%Parent{"root"}
     AuxExemplarCharacters{"[b c d e f h o w x y z]"}
     ExemplarCharacters{"[a g i j k l ł m n {ng} {nng} p q r s t u v]"}
-    Version{"2.1.50.6"}
+    Version{"37"}
     layout{
         characters{"left-to-right"}
         lines{"top-to-bottom"}

@@ -177,7 +177,6 @@ dsb{
         MF{"St. Martin"}
         MG{"Madagaskar"}
         MH{"Marshallowe kupy"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Myanmar"}
         MN{"Mongolska"}
@@ -288,5 +287,5 @@ dsb{
         ZW{"Simbabwe"}
         ZZ{"njeznaty region"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

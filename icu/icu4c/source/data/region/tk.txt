@@ -249,7 +249,7 @@ tk{
         SV{"Salwador"}
         SX{"Sint-Marten"}
         SY{"Siriýa"}
-        SZ{"Swazilend"}
+        SZ{"Eswatini"}
         TA{"Tristan-da-Kunýa"}
         TC{"Terks we Kaýkos adalary"}
         TD{"Çad"}
@@ -291,5 +291,5 @@ tk{
         ZW{"Zimbabwe"}
         ZZ{"Näbelli sebit"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -4,5 +4,5 @@ quc{
     Countries{
         MK{"Macedonia del Norte"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

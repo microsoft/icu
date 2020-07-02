@@ -69,6 +69,7 @@ ka{
         byn{"ბილინი"}
         ca{"კატალანური"}
         cay{"კაიუგა"}
+        ccp{"ჩაკმა"}
         ce{"ჩეჩნური"}
         ceb{"სებუანო"}
         cgg{"ჩიგა"}
@@ -709,7 +710,7 @@ ka{
             tibt{"ტიბეტური ციფრები"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — ყველა"}
         category-list{"{0}: {1}"}

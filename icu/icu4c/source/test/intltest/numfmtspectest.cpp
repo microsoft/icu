@@ -131,7 +131,6 @@ void NumberFormatSpecificationTest::TestRounding() {
 }
 
 void NumberFormatSpecificationTest::TestSignificantDigits() {
-    assertPatternFr("1230", 1234.0, "@@@", TRUE);
     /* MSFT Change: Begin */
     assertPatternFr("1 234", 1234.0, "@,@@@", TRUE);
     assertPatternFr("1 235 000", 1234567.0, "@,@@@", TRUE);

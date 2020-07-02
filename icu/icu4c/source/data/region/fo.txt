@@ -179,7 +179,6 @@ fo{
         MF{"St-Martin"}
         MG{"Madagaskar"}
         MH{"Marshalloyggjar"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Myanmar (Burma)"}
         MN{"Mongolia"}
@@ -249,7 +248,7 @@ fo{
         SV{"El Salvador"}
         SX{"Sint Maarten"}
         SY{"Sýria"}
-        SZ{"Svasiland"}
+        SZ{"Esvatini"}
         TA{"Tristan da Cunha"}
         TC{"Turks- og Caicosoyggjar"}
         TD{"Kjad"}
@@ -291,5 +290,5 @@ fo{
         ZW{"Simbabvi"}
         ZZ{"ókent øki"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

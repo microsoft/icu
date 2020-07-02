@@ -127,7 +127,6 @@ bm{
         MD{"Molidavi"}
         MG{"Madagasikari"}
         MH{"Marisali Gun"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Myanimari"}
         MN{"Moŋoli"}
@@ -227,5 +226,5 @@ bm{
         ZM{"Zanbi"}
         ZW{"Zimbabuwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

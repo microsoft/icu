@@ -82,6 +82,7 @@ mr{
         cad{"कॅड्डो"}
         car{"कॅरिब"}
         cch{"अत्सम"}
+        ccp{"चाकमा"}
         ce{"चेचेन"}
         ceb{"सिबुआनो"}
         cgg{"किगा"}
@@ -807,7 +808,7 @@ mr{
         PINYIN{"पिनयिन रोमनायझेशन"}
         WADEGILE{"वादे-गिलेस रोमनायझेशन"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — सर्व"}
         category-list{"{0}: {1}"}

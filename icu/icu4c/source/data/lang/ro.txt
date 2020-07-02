@@ -3,22 +3,22 @@
 ro{
     Keys{
         cf{"Format monedă"}
-        colAlternate{"Ordonare cu simbolurile ignorate"}
-        colBackwards{"Ordonare inversă după accent"}
-        colCaseFirst{"Ordonare după majuscule/minuscule"}
-        colCaseLevel{"Ordonare care ține seama de majuscule/minuscule"}
-        colNormalization{"Ordonare normalizată"}
-        colNumeric{"Ordonare numerică"}
-        colStrength{"Puterea ordonării"}
+        colAlternate{"sortare cu ignorarea simbolurilo"}
+        colBackwards{"sortare inversă după accent"}
+        colCaseFirst{"sortare după majuscule/minuscule"}
+        colCaseLevel{"sortare care ține seama de majuscule/minuscule"}
+        colNormalization{"sortare normalizată"}
+        colNumeric{"sortare numerică"}
+        colStrength{"puterea sortării"}
         collation{"ordine de sortare"}
         currency{"monedă"}
         hc{"ciclu orar (12 sau 24)"}
         lb{"stil de întrerupere a liniei"}
         ms{"sistem de unități de măsură"}
         numbers{"numere"}
-        timezone{"Fusul orar"}
-        va{"Varianta locală"}
-        x{"Utilizare privată"}
+        timezone{"fus orar"}
+        va{"variantă locală"}
+        x{"utilizare privată"}
     }
     Languages{
         aa{"afar"}
@@ -400,7 +400,6 @@ ro{
         ro{"română"}
         rof{"rombo"}
         rom{"romani"}
-        root{"root"}
         ru{"rusă"}
         rup{"aromână"}
         rw{"kinyarwanda"}
@@ -537,6 +536,7 @@ ro{
     }
     Scripts{
         Arab{"arabă"}
+        Aran{"nastaaliq"}
         Armn{"armeană"}
         Bali{"balineză"}
         Beng{"bengaleză"}
@@ -588,9 +588,12 @@ ro{
         Maya{"hieroglife maya"}
         Mlym{"malayalam"}
         Mong{"mongolă"}
+        Mtei{"meitei mayek"}
         Mymr{"birmană"}
+        Olck{"ol chiki"}
         Orya{"oriya"}
         Phnx{"feniciană"}
+        Qaag{"zawgyi"}
         Runr{"runică"}
         Sinh{"singaleză"}
         Syrc{"siriacă"}
@@ -765,7 +768,7 @@ ro{
         SCOTLAND{"engleză standard scoțiană"}
         WADEGILE{"Wade-Giles"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} – toate"}
         category-list{"{0}: {1}"}
@@ -786,5 +789,10 @@ ro{
         language{"Limbă: {0}"}
         script{"Scriere: {0}"}
         territory{"Regiune: {0}"}
+    }
+    localeDisplayPattern{
+        keyTypePattern{"{0}: {1}"}
+        pattern{"{0} ({1})"}
+        separator{"{0}, {1}"}
     }
 }

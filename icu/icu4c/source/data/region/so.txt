@@ -82,7 +82,7 @@ so{
         CL{"Jili"}
         CM{"Kaameruun"}
         CN{"Shiinaha"}
-        CO{"Kolombiya"}
+        CO{"Koloombiya"}
         CP{"Jasiiradda Kilibarton"}
         CR{"Kosta Riika"}
         CU{"Kuuba"}
@@ -291,5 +291,5 @@ so{
         ZW{"Simbaabwe"}
         ZZ{"Gobol aan la aqoonin amase aan saxnayn"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -5,5 +5,5 @@ gsw_FR{
         FR{"Frànkrisch"}
         PS{"Autorité palestinienne"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

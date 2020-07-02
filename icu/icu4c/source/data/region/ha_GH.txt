@@ -4,5 +4,5 @@ ha_GH{
     Countries{
         PS{"Hukumar Falasɗinawan"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

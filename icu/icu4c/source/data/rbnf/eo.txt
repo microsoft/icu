@@ -40,5 +40,5 @@ eo{
             "0: =%spellout-cardinal=a;",
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

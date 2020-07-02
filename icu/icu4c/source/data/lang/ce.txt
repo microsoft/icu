@@ -428,10 +428,6 @@ ce{
         Zyyy{"массара а тӀеэцна"}
         Zzzz{"доьвзуш доцу йоза"}
     }
-    Scripts%stand-alone{
-        Hans{"атта китайн"}
-        Hant{"ламастан китайн"}
-    }
     Types{
         calendar{
             gregorian{"григорианан"}
@@ -440,7 +436,7 @@ ce{
             persian{"гӀажарийн"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     codePatterns{
         language{"Мотт: {0}"}
         script{"Скрипт: {0}"}

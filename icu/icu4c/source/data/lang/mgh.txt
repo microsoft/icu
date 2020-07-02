@@ -47,5 +47,5 @@ mgh{
         zh{"Ichina"}
         zu{"Izulu"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

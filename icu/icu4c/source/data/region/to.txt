@@ -31,6 +31,7 @@ to{
         151{"ʻEulope fakahahake"}
         154{"ʻEulope fakatokelau"}
         155{"ʻEulope fakahihifo"}
+        202{"ʻAfilika fakasahala-tonga"}
         419{"ʻAmelika fakalatina"}
         AC{"Motu ʻAsenisini"}
         AD{"ʻAnitola"}
@@ -248,7 +249,7 @@ to{
         SV{"ʻEle Salavatoa"}
         SX{"Sā Mātini (fakahōlani)"}
         SY{"Sīlia"}
-        SZ{"Suasilani"}
+        SZ{"ʻEsuatini"}
         TA{"Tulisitani ta Kunuha"}
         TC{"ʻOtumotu Tuki mo Kaikosi"}
         TD{"Sāti"}
@@ -257,7 +258,7 @@ to{
         TH{"Tailani"}
         TJ{"Tasikitani"}
         TK{"Tokelau"}
-        TL{"Timoa hahake"}
+        TL{"Timoa fakahahake"}
         TM{"Tūkimenisitani"}
         TN{"Tunīsia"}
         TO{"Tonga"}
@@ -290,5 +291,5 @@ to{
         ZW{"Simipapuei"}
         ZZ{"Potu fonua taʻeʻiloa pe hala"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

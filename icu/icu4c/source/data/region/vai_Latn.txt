@@ -127,7 +127,6 @@ vai_Latn{
         MD{"Mɔlidova"}
         MG{"Madagasita"}
         MH{"Masha Tiŋŋɛ"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Miyamaha"}
         MN{"Mɔngoliya"}
@@ -227,5 +226,5 @@ vai_Latn{
         ZM{"Zambiya"}
         ZW{"Zimbabhuwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

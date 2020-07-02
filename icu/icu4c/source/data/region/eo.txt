@@ -129,7 +129,6 @@ eo{
         MD{"Moldavujo"}
         MG{"Madagaskaro"}
         MH{"Marŝaloj"}
-        MK{"MK"}
         ML{"Malio"}
         MM{"Mjanmao"}
         MN{"Mongolujo"}
@@ -226,5 +225,5 @@ eo{
         ZM{"Zambio"}
         ZW{"Zimbabvo"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

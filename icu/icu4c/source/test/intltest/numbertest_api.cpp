@@ -16,6 +16,9 @@
 #include "number_utils.h"
 #include "numbertest.h"
 #include "unicode/utypes.h"
+#include "number_utypes.h"
+
+using number::impl::UFormattedNumberData;
 
 // Horrible workaround for the lack of a status code in the constructor...
 // (Also affects numbertest_range.cpp)
@@ -33,6 +36,7 @@ NumberFormatterApiTest::NumberFormatterApiTest(UErrorCode& status)
           ESP(u"ESP", status),
           PTE(u"PTE", status),
           RON(u"RON", status),
+          CNY(u"CNY", status),
           FRENCH_SYMBOLS(Locale::getFrench(), status),
           SWISS_SYMBOLS(Locale("de-CH"), status),
           MYANMAR_SYMBOLS(Locale("my"), status) {
@@ -86,9 +90,12 @@ void NumberFormatterApiTest::runIndexedTest(int32_t index, UBool exec, const cha
         // TODO: Add this method if currency symbols override support is added.
         //TESTCASE_AUTO(symbolsOverride);
         TESTCASE_AUTO(sign);
+        TESTCASE_AUTO(signNearZero);
+        TESTCASE_AUTO(signCoverage);
         TESTCASE_AUTO(decimal);
         TESTCASE_AUTO(scale);
         TESTCASE_AUTO(locale);
+        TESTCASE_AUTO(skeletonUserGuideExamples);
         TESTCASE_AUTO(formatTypes);
         TESTCASE_AUTO(fieldPositionLogic);
         TESTCASE_AUTO(fieldPositionCoverage);
@@ -102,12 +109,14 @@ void NumberFormatterApiTest::runIndexedTest(int32_t index, UBool exec, const cha
         TESTCASE_AUTO(copyMove);
         TESTCASE_AUTO(localPointerCAPI);
         TESTCASE_AUTO(toObject);
+        TESTCASE_AUTO(toDecimalNumber);
     TESTCASE_AUTO_END;
 }
 
 void NumberFormatterApiTest::notationSimple() {
     assertFormatDescending(
             u"Basic",
+            u"",
             u"",
             NumberFormatter::with(),
             Locale::getEnglish(),
@@ -124,6 +133,7 @@ void NumberFormatterApiTest::notationSimple() {
     assertFormatDescendingBig(
             u"Big Simple",
             u"notation-simple",
+            u"",
             NumberFormatter::with().notation(Notation::simple()),
             Locale::getEnglish(),
             u"87,650,000",
@@ -139,6 +149,7 @@ void NumberFormatterApiTest::notationSimple() {
     assertFormatSingle(
             u"Basic with Negative Sign",
             u"",
+            u"",
             NumberFormatter::with(),
             Locale::getEnglish(),
             -9876543.21,
@@ -150,6 +161,7 @@ void NumberFormatterApiTest::notationScientific() {
     assertFormatDescending(
             u"Scientific",
             u"scientific",
+            u"E0",
             NumberFormatter::with().notation(Notation::scientific()),
             Locale::getEnglish(),
             u"8.765E4",
@@ -165,6 +177,7 @@ void NumberFormatterApiTest::notationScientific() {
     assertFormatDescending(
             u"Engineering",
             u"engineering",
+            u"EE0",
             NumberFormatter::with().notation(Notation::engineering()),
             Locale::getEnglish(),
             u"87.65E3",
@@ -180,6 +193,7 @@ void NumberFormatterApiTest::notationScientific() {
     assertFormatDescending(
             u"Scientific sign always shown",
             u"scientific/sign-always",
+            u"E+!0",
             NumberFormatter::with().notation(
                     Notation::scientific().withExponentSignDisplay(UNumberSignDisplay::UNUM_SIGN_ALWAYS)),
             Locale::getEnglish(),
@@ -195,7 +209,8 @@ void NumberFormatterApiTest::notationScientific() {
 
     assertFormatDescending(
             u"Scientific min exponent digits",
-            u"scientific/+ee",
+            u"scientific/*ee",
+            u"E00",
             NumberFormatter::with().notation(Notation::scientific().withMinExponentDigits(2)),
             Locale::getEnglish(),
             u"8.765E04",
@@ -211,16 +226,36 @@ void NumberFormatterApiTest::notationScientific() {
     assertFormatSingle(
             u"Scientific Negative",
             u"scientific",
+            u"E0",
             NumberFormatter::with().notation(Notation::scientific()),
             Locale::getEnglish(),
             -1000000,
             u"-1E6");
+
+    assertFormatSingle(
+            u"Scientific Infinity",
+            u"scientific",
+            u"E0",
+            NumberFormatter::with().notation(Notation::scientific()),
+            Locale::getEnglish(),
+            -uprv_getInfinity(),
+            u"-∞");
+
+    assertFormatSingle(
+            u"Scientific NaN",
+            u"scientific",
+            u"E0",
+            NumberFormatter::with().notation(Notation::scientific()),
+            Locale::getEnglish(),
+            uprv_getNaN(),
+            u"NaN");
 }
 
 void NumberFormatterApiTest::notationCompact() {
     assertFormatDescending(
             u"Compact Short",
             u"compact-short",
+            u"K",
             NumberFormatter::with().notation(Notation::compactShort()),
             Locale::getEnglish(),
             u"88K",
@@ -236,6 +271,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatDescending(
             u"Compact Long",
             u"compact-long",
+            u"KK",
             NumberFormatter::with().notation(Notation::compactLong()),
             Locale::getEnglish(),
             u"88 thousand",
@@ -251,6 +287,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatDescending(
             u"Compact Short Currency",
             u"compact-short currency/USD",
+            u"K currency/USD",
             NumberFormatter::with().notation(Notation::compactShort()).unit(USD),
             Locale::getEnglish(),
             u"$88K",
@@ -266,6 +303,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatDescending(
             u"Compact Short with ISO Currency",
             u"compact-short currency/USD unit-width-iso-code",
+            u"K currency/USD unit-width-iso-code",
             NumberFormatter::with().notation(Notation::compactShort())
                     .unit(USD)
                     .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_ISO_CODE),
@@ -283,6 +321,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatDescending(
             u"Compact Short with Long Name Currency",
             u"compact-short currency/USD unit-width-full-name",
+            u"K currency/USD unit-width-full-name",
             NumberFormatter::with().notation(Notation::compactShort())
                     .unit(USD)
                     .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME),
@@ -302,6 +341,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatDescending(
             u"Compact Long Currency",
             u"compact-long currency/USD",
+            u"KK currency/USD",
             NumberFormatter::with().notation(Notation::compactLong()).unit(USD),
             Locale::getEnglish(),
             u"$88K", // should be something like "$88 thousand"
@@ -319,6 +359,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatDescending(
             u"Compact Long with ISO Currency",
             u"compact-long currency/USD unit-width-iso-code",
+            u"KK currency/USD unit-width-iso-code",
             NumberFormatter::with().notation(Notation::compactLong())
                     .unit(USD)
                     .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_ISO_CODE),
@@ -337,6 +378,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatDescending(
             u"Compact Long with Long Name Currency",
             u"compact-long currency/USD unit-width-full-name",
+            u"KK currency/USD unit-width-full-name",
             NumberFormatter::with().notation(Notation::compactLong())
                     .unit(USD)
                     .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME),
@@ -354,6 +396,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatSingle(
             u"Compact Plural One",
             u"compact-long",
+            u"KK",
             NumberFormatter::with().notation(Notation::compactLong()),
             Locale::createFromName("es"),
             1000000,
@@ -362,6 +405,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatSingle(
             u"Compact Plural Other",
             u"compact-long",
+            u"KK",
             NumberFormatter::with().notation(Notation::compactLong()),
             Locale::createFromName("es"),
             2000000,
@@ -370,6 +414,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatSingle(
             u"Compact with Negative Sign",
             u"compact-short",
+            u"K",
             NumberFormatter::with().notation(Notation::compactShort()),
             Locale::getEnglish(),
             -9876543.21,
@@ -378,6 +423,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatSingle(
             u"Compact Rounding",
             u"compact-short",
+            u"K",
             NumberFormatter::with().notation(Notation::compactShort()),
             Locale::getEnglish(),
             990000,
@@ -386,6 +432,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatSingle(
             u"Compact Rounding",
             u"compact-short",
+            u"K",
             NumberFormatter::with().notation(Notation::compactShort()),
             Locale::getEnglish(),
             999000,
@@ -394,6 +441,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatSingle(
             u"Compact Rounding",
             u"compact-short",
+            u"K",
             NumberFormatter::with().notation(Notation::compactShort()),
             Locale::getEnglish(),
             999900,
@@ -402,6 +450,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatSingle(
             u"Compact Rounding",
             u"compact-short",
+            u"K",
             NumberFormatter::with().notation(Notation::compactShort()),
             Locale::getEnglish(),
             9900000,
@@ -410,6 +459,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatSingle(
             u"Compact Rounding",
             u"compact-short",
+            u"K",
             NumberFormatter::with().notation(Notation::compactShort()),
             Locale::getEnglish(),
             9990000,
@@ -418,6 +468,7 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatSingle(
             u"Compact in zh-Hant-HK",
             u"compact-short",
+            u"K",
             NumberFormatter::with().notation(Notation::compactShort()),
             Locale("zh-Hant-HK"),
             1e7,
@@ -426,10 +477,29 @@ void NumberFormatterApiTest::notationCompact() {
     assertFormatSingle(
             u"Compact in zh-Hant",
             u"compact-short",
+            u"K",
             NumberFormatter::with().notation(Notation::compactShort()),
             Locale("zh-Hant"),
             1e7,
             u"1000\u842C");
+
+    assertFormatSingle(
+            u"Compact Infinity",
+            u"compact-short",
+            u"K",
+            NumberFormatter::with().notation(Notation::compactShort()),
+            Locale::getEnglish(),
+            -uprv_getInfinity(),
+            u"-∞");
+
+    assertFormatSingle(
+            u"Compact NaN",
+            u"compact-short",
+            u"K",
+            NumberFormatter::with().notation(Notation::compactShort()),
+            Locale::getEnglish(),
+            uprv_getNaN(),
+            u"NaN");
 
     // NOTE: There is no API for compact custom data in C++
     // and thus no "Compact Somali No Figure" test
@@ -439,6 +509,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatDescending(
             u"Meters Short and unit() method",
             u"measure-unit/length-meter",
+            u"unit/meter",
             NumberFormatter::with().unit(MeasureUnit::getMeter()),
             Locale::getEnglish(),
             u"87,650 m",
@@ -454,6 +525,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatDescending(
             u"Meters Long and adoptUnit() method",
             u"measure-unit/length-meter unit-width-full-name",
+            u"unit/meter unit-width-full-name",
             NumberFormatter::with().adoptUnit(new MeasureUnit(METER))
                     .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME),
             Locale::getEnglish(),
@@ -470,6 +542,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatDescending(
             u"Compact Meters Long",
             u"compact-long measure-unit/length-meter unit-width-full-name",
+            u"KK unit/meter unit-width-full-name",
             NumberFormatter::with().notation(Notation::compactLong())
                     .unit(METER)
                     .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME),
@@ -503,6 +576,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatSingle(
             u"Meters with Negative Sign",
             u"measure-unit/length-meter",
+            u"unit/meter",
             NumberFormatter::with().unit(METER),
             Locale::getEnglish(),
             -9876543.21,
@@ -512,6 +586,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatSingle(
             u"Interesting Data Fallback 1",
             u"measure-unit/duration-day unit-width-full-name",
+            u"unit/day unit-width-full-name",
             NumberFormatter::with().unit(DAY).unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME),
             Locale::createFromName("brx"),
             5.43,
@@ -521,6 +596,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatSingle(
             u"Interesting Data Fallback 2",
             u"measure-unit/duration-day unit-width-narrow",
+            u"unit/day unit-width-narrow",
             NumberFormatter::with().unit(DAY).unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_NARROW),
             Locale::createFromName("brx"),
             5.43,
@@ -531,15 +607,17 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatSingle(
             u"Interesting Data Fallback 3",
             u"measure-unit/area-square-meter unit-width-narrow",
+            u"unit/square-meter unit-width-narrow",
             NumberFormatter::with().unit(SQUARE_METER).unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_NARROW),
             Locale::createFromName("en-GB"),
             5.43,
-            u"5.43 m²");
+            u"5.43m²");
 
     // Try accessing a narrow unit directly from root.
     assertFormatSingle(
             u"Interesting Data Fallback 4",
             u"measure-unit/area-square-meter unit-width-narrow",
+            u"unit/square-meter unit-width-narrow",
             NumberFormatter::with().unit(SQUARE_METER).unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_NARROW),
             Locale::createFromName("root"),
             5.43,
@@ -550,6 +628,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatSingle(
             u"Difference between Narrow and Short (Narrow Version)",
             u"measure-unit/temperature-fahrenheit unit-width-narrow",
+            u"unit/fahrenheit unit-width-narrow",
             NumberFormatter::with().unit(FAHRENHEIT).unitWidth(UNUM_UNIT_WIDTH_NARROW),
             Locale("es-US"),
             5.43,
@@ -558,6 +637,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatSingle(
             u"Difference between Narrow and Short (Short Version)",
             u"measure-unit/temperature-fahrenheit unit-width-short",
+            u"unit/fahrenheit unit-width-short",
             NumberFormatter::with().unit(FAHRENHEIT).unitWidth(UNUM_UNIT_WIDTH_SHORT),
             Locale("es-US"),
             5.43,
@@ -566,6 +646,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatSingle(
             u"MeasureUnit form without {0} in CLDR pattern",
             u"measure-unit/temperature-kelvin unit-width-full-name",
+            u"unit/kelvin unit-width-full-name",
             NumberFormatter::with().unit(KELVIN).unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME),
             Locale("es-MX"),
             1,
@@ -574,6 +655,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatSingle(
             u"MeasureUnit form without {0} in CLDR pattern and wide base form",
             u"measure-unit/temperature-kelvin .00000000000000000000 unit-width-full-name",
+            u"unit/kelvin .00000000000000000000 unit-width-full-name",
             NumberFormatter::with().precision(Precision::fixedFraction(20))
                     .unit(KELVIN)
                     .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME),
@@ -584,6 +666,7 @@ void NumberFormatterApiTest::unitMeasure() {
     assertFormatSingle(
             u"Person unit not in short form",
             u"measure-unit/duration-year-person unit-width-full-name",
+            u"unit/year-person unit-width-full-name",
             NumberFormatter::with().unit(MeasureUnit::getYearPerson())
                     .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME),
             Locale("es-MX"),
@@ -595,6 +678,7 @@ void NumberFormatterApiTest::unitCompoundMeasure() {
     assertFormatDescending(
             u"Meters Per Second Short (unit that simplifies) and perUnit method",
             u"measure-unit/length-meter per-measure-unit/duration-second",
+            u"unit/meter-per-second",
             NumberFormatter::with().unit(METER).perUnit(SECOND),
             Locale::getEnglish(),
             u"87,650 m/s",
@@ -610,6 +694,7 @@ void NumberFormatterApiTest::unitCompoundMeasure() {
     assertFormatDescending(
             u"Pounds Per Square Mile Short (secondary unit has per-format) and adoptPerUnit method",
             u"measure-unit/mass-pound per-measure-unit/area-square-mile",
+            u"unit/pound-per-square-mile",
             NumberFormatter::with().unit(POUND).adoptPerUnit(new MeasureUnit(SQUARE_MILE)),
             Locale::getEnglish(),
             u"87,650 lb/mi²",
@@ -625,6 +710,7 @@ void NumberFormatterApiTest::unitCompoundMeasure() {
     assertFormatDescending(
             u"Joules Per Furlong Short (unit with no simplifications or special patterns)",
             u"measure-unit/energy-joule per-measure-unit/length-furlong",
+            u"unit/joule-per-furlong",
             NumberFormatter::with().unit(JOULE).perUnit(FURLONG),
             Locale::getEnglish(),
             u"87,650 J/fur",
@@ -636,11 +722,29 @@ void NumberFormatterApiTest::unitCompoundMeasure() {
             u"0.08765 J/fur",
             u"0.008765 J/fur",
             u"0 J/fur");
+
+    // TODO(ICU-20941): Support constructions such as this one.
+    // assertFormatDescending(
+    //         u"Joules Per Furlong Short with unit identifier via API",
+    //         u"measure-unit/energy-joule per-measure-unit/length-furlong",
+    //         u"unit/joule-per-furlong",
+    //         NumberFormatter::with().unit(MeasureUnit::forIdentifier("joule-per-furlong", status)),
+    //         Locale::getEnglish(),
+    //         u"87,650 J/fur",
+    //         u"8,765 J/fur",
+    //         u"876.5 J/fur",
+    //         u"87.65 J/fur",
+    //         u"8.765 J/fur",
+    //         u"0.8765 J/fur",
+    //         u"0.08765 J/fur",
+    //         u"0.008765 J/fur",
+    //         u"0 J/fur");
 }
 
 void NumberFormatterApiTest::unitCurrency() {
     assertFormatDescending(
             u"Currency",
+            u"currency/GBP",
             u"currency/GBP",
             NumberFormatter::with().unit(GBP),
             Locale::getEnglish(),
@@ -657,6 +761,7 @@ void NumberFormatterApiTest::unitCurrency() {
     assertFormatDescending(
             u"Currency ISO",
             u"currency/GBP unit-width-iso-code",
+            u"currency/GBP unit-width-iso-code",
             NumberFormatter::with().unit(GBP).unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_ISO_CODE),
             Locale::getEnglish(),
             u"GBP 87,650.00",
@@ -672,6 +777,7 @@ void NumberFormatterApiTest::unitCurrency() {
     assertFormatDescending(
             u"Currency Long Name",
             u"currency/GBP unit-width-full-name",
+            u"currency/GBP unit-width-full-name",
             NumberFormatter::with().unit(GBP).unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME),
             Locale::getEnglish(),
             u"87,650.00 British pounds",
@@ -686,6 +792,7 @@ void NumberFormatterApiTest::unitCurrency() {
 
     assertFormatDescending(
             u"Currency Hidden",
+            u"currency/GBP unit-width-hidden",
             u"currency/GBP unit-width-hidden",
             NumberFormatter::with().unit(GBP).unitWidth(UNUM_UNIT_WIDTH_HIDDEN),
             Locale::getEnglish(),
@@ -717,6 +824,7 @@ void NumberFormatterApiTest::unitCurrency() {
     assertFormatSingle(
             u"Currency with Negative Sign",
             u"currency/GBP",
+            u"currency/GBP",
             NumberFormatter::with().unit(GBP),
             Locale::getEnglish(),
             -9876543.21,
@@ -727,6 +835,7 @@ void NumberFormatterApiTest::unitCurrency() {
     assertFormatSingle(
             u"Currency Difference between Narrow and Short (Narrow Version)",
             u"currency/USD unit-width-narrow",
+            u"currency/USD unit-width-narrow",
             NumberFormatter::with().unit(USD).unitWidth(UNUM_UNIT_WIDTH_NARROW),
             Locale("en-CA"),
             5.43,
@@ -734,6 +843,7 @@ void NumberFormatterApiTest::unitCurrency() {
 
     assertFormatSingle(
             u"Currency Difference between Narrow and Short (Short Version)",
+            u"currency/USD unit-width-short",
             u"currency/USD unit-width-short",
             NumberFormatter::with().unit(USD).unitWidth(UNUM_UNIT_WIDTH_SHORT),
             Locale("en-CA"),
@@ -743,6 +853,7 @@ void NumberFormatterApiTest::unitCurrency() {
     assertFormatSingle(
             u"Currency-dependent format (Control)",
             u"currency/USD unit-width-short",
+            u"currency/USD unit-width-short",
             NumberFormatter::with().unit(USD).unitWidth(UNUM_UNIT_WIDTH_SHORT),
             Locale("ca"),
             444444.55,
@@ -751,6 +862,7 @@ void NumberFormatterApiTest::unitCurrency() {
     assertFormatSingle(
             u"Currency-dependent format (Test)",
             u"currency/ESP unit-width-short",
+            u"currency/ESP unit-width-short",
             NumberFormatter::with().unit(ESP).unitWidth(UNUM_UNIT_WIDTH_SHORT),
             Locale("ca"),
             444444.55,
@@ -758,6 +870,7 @@ void NumberFormatterApiTest::unitCurrency() {
 
     assertFormatSingle(
             u"Currency-dependent symbols (Control)",
+            u"currency/USD unit-width-short",
             u"currency/USD unit-width-short",
             NumberFormatter::with().unit(USD).unitWidth(UNUM_UNIT_WIDTH_SHORT),
             Locale("pt-PT"),
@@ -769,6 +882,7 @@ void NumberFormatterApiTest::unitCurrency() {
     assertFormatSingle(
             u"Currency-dependent symbols (Test Short)",
             u"currency/PTE unit-width-short",
+            u"currency/PTE unit-width-short",
             NumberFormatter::with().unit(PTE).unitWidth(UNUM_UNIT_WIDTH_SHORT),
             Locale("pt-PT"),
             444444.55,
@@ -776,6 +890,7 @@ void NumberFormatterApiTest::unitCurrency() {
 
     assertFormatSingle(
             u"Currency-dependent symbols (Test Narrow)",
+            u"currency/PTE unit-width-narrow",
             u"currency/PTE unit-width-narrow",
             NumberFormatter::with().unit(PTE).unitWidth(UNUM_UNIT_WIDTH_NARROW),
             Locale("pt-PT"),
@@ -785,6 +900,7 @@ void NumberFormatterApiTest::unitCurrency() {
     assertFormatSingle(
             u"Currency-dependent symbols (Test ISO Code)",
             u"currency/PTE unit-width-iso-code",
+            u"currency/PTE unit-width-iso-code",
             NumberFormatter::with().unit(PTE).unitWidth(UNUM_UNIT_WIDTH_ISO_CODE),
             Locale("pt-PT"),
             444444.55,
@@ -793,16 +909,27 @@ void NumberFormatterApiTest::unitCurrency() {
     assertFormatSingle(
             u"Plural form depending on visible digits (ICU-20499)",
             u"currency/RON unit-width-full-name",
+            u"currency/RON unit-width-full-name",
             NumberFormatter::with().unit(RON).unitWidth(UNUM_UNIT_WIDTH_FULL_NAME),
             Locale("ro-RO"),
             24,
             u"24,00 lei românești");
+
+    assertFormatSingle(
+            u"Currency spacing in suffix (ICU-20954)",
+            u"currency/CNY",
+            u"currency/CNY",
+            NumberFormatter::with().unit(CNY),
+            Locale("lu"),
+            123.12,
+            u"123,12 CN¥");
 }
 
 void NumberFormatterApiTest::unitPercent() {
     assertFormatDescending(
             u"Percent",
             u"percent",
+            u"%",
             NumberFormatter::with().unit(NoUnit::percent()),
             Locale::getEnglish(),
             u"87,650%",
@@ -817,6 +944,7 @@ void NumberFormatterApiTest::unitPercent() {
 
     assertFormatDescending(
             u"Permille",
+            u"permille",
             u"permille",
             NumberFormatter::with().unit(NoUnit::permille()),
             Locale::getEnglish(),
@@ -833,6 +961,7 @@ void NumberFormatterApiTest::unitPercent() {
     assertFormatSingle(
             u"NoUnit Base",
             u"base-unit",
+            u"",
             NumberFormatter::with().unit(NoUnit::base()),
             Locale::getEnglish(),
             51423,
@@ -841,6 +970,7 @@ void NumberFormatterApiTest::unitPercent() {
     assertFormatSingle(
             u"Percent with Negative Sign",
             u"percent",
+            u"%",
             NumberFormatter::with().unit(NoUnit::percent()),
             Locale::getEnglish(),
             -98.7654321,
@@ -878,6 +1008,7 @@ void NumberFormatterApiTest::roundingFraction() {
     assertFormatDescending(
             u"Integer",
             u"precision-integer",
+            u".",
             NumberFormatter::with().precision(Precision::integer()),
             Locale::getEnglish(),
             u"87,650",
@@ -893,6 +1024,7 @@ void NumberFormatterApiTest::roundingFraction() {
     assertFormatDescending(
             u"Fixed Fraction",
             u".000",
+            u".000",
             NumberFormatter::with().precision(Precision::fixedFraction(3)),
             Locale::getEnglish(),
             u"87,650.000",
@@ -907,6 +1039,7 @@ void NumberFormatterApiTest::roundingFraction() {
 
     assertFormatDescending(
             u"Min Fraction",
+            u".0*",
             u".0+",
             NumberFormatter::with().precision(Precision::minFraction(1)),
             Locale::getEnglish(),
@@ -923,6 +1056,7 @@ void NumberFormatterApiTest::roundingFraction() {
     assertFormatDescending(
             u"Max Fraction",
             u".#",
+            u".#",
             NumberFormatter::with().precision(Precision::maxFraction(1)),
             Locale::getEnglish(),
             u"87,650",
@@ -937,6 +1071,7 @@ void NumberFormatterApiTest::roundingFraction() {
 
     assertFormatDescending(
             u"Min/Max Fraction",
+            u".0##",
             u".0##",
             NumberFormatter::with().precision(Precision::minMaxFraction(1, 3)),
             Locale::getEnglish(),
@@ -955,6 +1090,7 @@ void NumberFormatterApiTest::roundingFigures() {
     assertFormatSingle(
             u"Fixed Significant",
             u"@@@",
+            u"@@@",
             NumberFormatter::with().precision(Precision::fixedSignificantDigits(3)),
             Locale::getEnglish(),
             -98,
@@ -962,6 +1098,7 @@ void NumberFormatterApiTest::roundingFigures() {
 
     assertFormatSingle(
             u"Fixed Significant Rounding",
+            u"@@@",
             u"@@@",
             NumberFormatter::with().precision(Precision::fixedSignificantDigits(3)),
             Locale::getEnglish(),
@@ -971,6 +1108,7 @@ void NumberFormatterApiTest::roundingFigures() {
     assertFormatSingle(
             u"Fixed Significant Zero",
             u"@@@",
+            u"@@@",
             NumberFormatter::with().precision(Precision::fixedSignificantDigits(3)),
             Locale::getEnglish(),
             0,
@@ -978,6 +1116,7 @@ void NumberFormatterApiTest::roundingFigures() {
 
     assertFormatSingle(
             u"Min Significant",
+            u"@@*",
             u"@@+",
             NumberFormatter::with().precision(Precision::minSignificantDigits(2)),
             Locale::getEnglish(),
@@ -987,6 +1126,7 @@ void NumberFormatterApiTest::roundingFigures() {
     assertFormatSingle(
             u"Max Significant",
             u"@###",
+            u"@###",
             NumberFormatter::with().precision(Precision::maxSignificantDigits(4)),
             Locale::getEnglish(),
             98.7654321,
@@ -994,6 +1134,7 @@ void NumberFormatterApiTest::roundingFigures() {
 
     assertFormatSingle(
             u"Min/Max Significant",
+            u"@@@#",
             u"@@@#",
             NumberFormatter::with().precision(Precision::minMaxSignificantDigits(3, 4)),
             Locale::getEnglish(),
@@ -1003,6 +1144,7 @@ void NumberFormatterApiTest::roundingFigures() {
     assertFormatSingle(
             u"Fixed Significant on zero with lots of integer width",
             u"@ integer-width/+000",
+            u"@ 000",
             NumberFormatter::with().precision(Precision::fixedSignificantDigits(1))
                     .integerWidth(IntegerWidth::zeroFillTo(3)),
             Locale::getEnglish(),
@@ -1011,6 +1153,7 @@ void NumberFormatterApiTest::roundingFigures() {
 
     assertFormatSingle(
             u"Fixed Significant on zero with zero integer width",
+            u"@ integer-width/*",
             u"@ integer-width/+",
             NumberFormatter::with().precision(Precision::fixedSignificantDigits(1))
                     .integerWidth(IntegerWidth::zeroFillTo(0)),
@@ -1022,6 +1165,7 @@ void NumberFormatterApiTest::roundingFigures() {
 void NumberFormatterApiTest::roundingFractionFigures() {
     assertFormatDescending(
             u"Basic Significant", // for comparison
+            u"@#",
             u"@#",
             NumberFormatter::with().precision(Precision::maxSignificantDigits(2)),
             Locale::getEnglish(),
@@ -1037,6 +1181,7 @@ void NumberFormatterApiTest::roundingFractionFigures() {
 
     assertFormatDescending(
             u"FracSig minMaxFrac minSig",
+            u".0#/@@@*",
             u".0#/@@@+",
             NumberFormatter::with().precision(Precision::minMaxFraction(1, 2).withMinDigits(3)),
             Locale::getEnglish(),
@@ -1053,6 +1198,7 @@ void NumberFormatterApiTest::roundingFractionFigures() {
     assertFormatDescending(
             u"FracSig minMaxFrac maxSig A",
             u".0##/@#",
+            u".0##/@#",
             NumberFormatter::with().precision(Precision::minMaxFraction(1, 3).withMaxDigits(2)),
             Locale::getEnglish(),
             u"88,000.0", // maxSig beats maxFrac
@@ -1068,6 +1214,7 @@ void NumberFormatterApiTest::roundingFractionFigures() {
     assertFormatDescending(
             u"FracSig minMaxFrac maxSig B",
             u".00/@#",
+            u".00/@#",
             NumberFormatter::with().precision(Precision::fixedFraction(2).withMaxDigits(2)),
             Locale::getEnglish(),
             u"88,000.00", // maxSig beats maxFrac
@@ -1082,6 +1229,7 @@ void NumberFormatterApiTest::roundingFractionFigures() {
 
     assertFormatSingle(
             u"FracSig with trailing zeros A",
+            u".00/@@@*",
             u".00/@@@+",
             NumberFormatter::with().precision(Precision::fixedFraction(2).withMinDigits(3)),
             Locale::getEnglish(),
@@ -1090,6 +1238,7 @@ void NumberFormatterApiTest::roundingFractionFigures() {
 
     assertFormatSingle(
             u"FracSig with trailing zeros B",
+            u".00/@@@*",
             u".00/@@@+",
             NumberFormatter::with().precision(Precision::fixedFraction(2).withMinDigits(3)),
             Locale::getEnglish(),
@@ -1101,6 +1250,7 @@ void NumberFormatterApiTest::roundingOther() {
     assertFormatDescending(
             u"Rounding None",
             u"precision-unlimited",
+            u".+",
             NumberFormatter::with().precision(Precision::unlimited()),
             Locale::getEnglish(),
             u"87,650",
@@ -1115,6 +1265,7 @@ void NumberFormatterApiTest::roundingOther() {
 
     assertFormatDescending(
             u"Increment",
+            u"precision-increment/0.5",
             u"precision-increment/0.5",
             NumberFormatter::with().precision(Precision::increment(0.5).withMinFraction(1)),
             Locale::getEnglish(),
@@ -1131,6 +1282,7 @@ void NumberFormatterApiTest::roundingOther() {
     assertFormatDescending(
             u"Increment with Min Fraction",
             u"precision-increment/0.50",
+            u"precision-increment/0.50",
             NumberFormatter::with().precision(Precision::increment(0.5).withMinFraction(2)),
             Locale::getEnglish(),
             u"87,650.00",
@@ -1145,6 +1297,7 @@ void NumberFormatterApiTest::roundingOther() {
 
     assertFormatDescending(
             u"Strange Increment",
+            u"precision-increment/3.140",
             u"precision-increment/3.140",
             NumberFormatter::with().precision(Precision::increment(3.14).withMinFraction(3)),
             Locale::getEnglish(),
@@ -1161,6 +1314,7 @@ void NumberFormatterApiTest::roundingOther() {
     assertFormatDescending(
             u"Increment Resolving to Power of 10",
             u"precision-increment/0.010",
+            u"precision-increment/0.010",
             NumberFormatter::with().precision(Precision::increment(0.01).withMinFraction(3)),
             Locale::getEnglish(),
             u"87,650.000",
@@ -1175,6 +1329,7 @@ void NumberFormatterApiTest::roundingOther() {
 
     assertFormatDescending(
             u"Currency Standard",
+            u"currency/CZK precision-currency-standard",
             u"currency/CZK precision-currency-standard",
             NumberFormatter::with().precision(Precision::currency(UCurrencyUsage::UCURR_USAGE_STANDARD))
                     .unit(CZK),
@@ -1192,6 +1347,7 @@ void NumberFormatterApiTest::roundingOther() {
     assertFormatDescending(
             u"Currency Cash",
             u"currency/CZK precision-currency-cash",
+            u"currency/CZK precision-currency-cash",
             NumberFormatter::with().precision(Precision::currency(UCurrencyUsage::UCURR_USAGE_CASH))
                     .unit(CZK),
             Locale::getEnglish(),
@@ -1207,6 +1363,7 @@ void NumberFormatterApiTest::roundingOther() {
 
     assertFormatDescending(
             u"Currency Cash with Nickel Rounding",
+            u"currency/CAD precision-currency-cash",
             u"currency/CAD precision-currency-cash",
             NumberFormatter::with().precision(Precision::currency(UCurrencyUsage::UCURR_USAGE_CASH))
                     .unit(CAD),
@@ -1224,6 +1381,7 @@ void NumberFormatterApiTest::roundingOther() {
     assertFormatDescending(
             u"Currency not in top-level fluent chain",
             u"precision-integer", // calling .withCurrency() applies currency rounding rules immediately
+            u".",
             NumberFormatter::with().precision(
                     Precision::currency(UCurrencyUsage::UCURR_USAGE_CASH).withCurrency(CZK)),
             Locale::getEnglish(),
@@ -1241,6 +1399,7 @@ void NumberFormatterApiTest::roundingOther() {
     assertFormatDescending(
             u"Rounding Mode CEILING",
             u"precision-integer rounding-mode-ceiling",
+            u". rounding-mode-ceiling",
             NumberFormatter::with().precision(Precision::integer()).roundingMode(UNUM_ROUND_CEILING),
             Locale::getEnglish(),
             u"87,650",
@@ -1252,12 +1411,37 @@ void NumberFormatterApiTest::roundingOther() {
             u"1",
             u"1",
             u"0");
+
+    assertFormatSingle(
+            u"ICU-20974 Double.MIN_NORMAL",
+            u"scientific",
+            u"E0",
+            NumberFormatter::with().notation(Notation::scientific()),
+            Locale::getEnglish(),
+            DBL_MIN,
+            u"2.225074E-308");
+
+#ifndef DBL_TRUE_MIN
+#define DBL_TRUE_MIN 4.9E-324
+#endif
+
+    // Note: this behavior is intentionally different from Java; see
+    // https://github.com/google/double-conversion/issues/126
+    assertFormatSingle(
+            u"ICU-20974 Double.MIN_VALUE",
+            u"scientific",
+            u"E0",
+            NumberFormatter::with().notation(Notation::scientific()),
+            Locale::getEnglish(),
+            DBL_TRUE_MIN,
+            u"5E-324");
 }
 
 void NumberFormatterApiTest::grouping() {
     assertFormatDescendingBig(
             u"Western Grouping",
             u"group-auto",
+            u"",
             NumberFormatter::with().grouping(UNUM_GROUPING_AUTO),
             Locale::getEnglish(),
             u"87,650,000",
@@ -1273,6 +1457,7 @@ void NumberFormatterApiTest::grouping() {
     assertFormatDescendingBig(
             u"Indic Grouping",
             u"group-auto",
+            u"",
             NumberFormatter::with().grouping(UNUM_GROUPING_AUTO),
             Locale("en-IN"),
             u"8,76,50,000",
@@ -1288,6 +1473,7 @@ void NumberFormatterApiTest::grouping() {
     assertFormatDescendingBig(
             u"Western Grouping, Min 2",
             u"group-min2",
+            u",?",
             NumberFormatter::with().grouping(UNUM_GROUPING_MIN2),
             Locale::getEnglish(),
             u"87,650,000",
@@ -1303,6 +1489,7 @@ void NumberFormatterApiTest::grouping() {
     assertFormatDescendingBig(
             u"Indic Grouping, Min 2",
             u"group-min2",
+            u",?",
             NumberFormatter::with().grouping(UNUM_GROUPING_MIN2),
             Locale("en-IN"),
             u"8,76,50,000",
@@ -1318,6 +1505,7 @@ void NumberFormatterApiTest::grouping() {
     assertFormatDescendingBig(
             u"No Grouping",
             u"group-off",
+            u",_",
             NumberFormatter::with().grouping(UNUM_GROUPING_OFF),
             Locale("en-IN"),
             u"87650000",
@@ -1333,6 +1521,7 @@ void NumberFormatterApiTest::grouping() {
     assertFormatDescendingBig(
             u"Indic locale with THOUSANDS grouping",
             u"group-thousands",
+            u"group-thousands",
             NumberFormatter::with().grouping(UNUM_GROUPING_THOUSANDS),
             Locale("en-IN"),
             u"87,650,000",
@@ -1345,17 +1534,19 @@ void NumberFormatterApiTest::grouping() {
             u"8.765",
             u"0");
 
-    // NOTE: Hungarian is interesting because it has minimumGroupingDigits=4 in locale data
+    // NOTE: Polish is interesting because it has minimumGroupingDigits=2 in locale data
+    // (Most locales have either 1 or 2)
     // If this test breaks due to data changes, find another locale that has minimumGroupingDigits.
     assertFormatDescendingBig(
-            u"Hungarian Grouping",
+            u"Polish Grouping",
             u"group-auto",
+            u"",
             NumberFormatter::with().grouping(UNUM_GROUPING_AUTO),
-            Locale("hu"),
+            Locale("pl"),
             u"87 650 000",
             u"8 765 000",
-            u"876500",
-            u"87650",
+            u"876 500",
+            u"87 650",
             u"8765",
             u"876,5",
             u"87,65",
@@ -1363,14 +1554,15 @@ void NumberFormatterApiTest::grouping() {
             u"0");
 
     assertFormatDescendingBig(
-            u"Hungarian Grouping, Min 2",
+            u"Polish Grouping, Min 2",
             u"group-min2",
+            u",?",
             NumberFormatter::with().grouping(UNUM_GROUPING_MIN2),
-            Locale("hu"),
+            Locale("pl"),
             u"87 650 000",
             u"8 765 000",
-            u"876500",
-            u"87650",
+            u"876 500",
+            u"87 650",
             u"8765",
             u"876,5",
             u"87,65",
@@ -1378,10 +1570,11 @@ void NumberFormatterApiTest::grouping() {
             u"0");
 
     assertFormatDescendingBig(
-            u"Hungarian Grouping, Always",
+            u"Polish Grouping, Always",
             u"group-on-aligned",
+            u",!",
             NumberFormatter::with().grouping(UNUM_GROUPING_ON_ALIGNED),
-            Locale("hu"),
+            Locale("pl"),
             u"87 650 000",
             u"8 765 000",
             u"876 500",
@@ -1397,6 +1590,7 @@ void NumberFormatterApiTest::grouping() {
     assertFormatDescendingBig(
             u"Bulgarian Currency Grouping",
             u"currency/USD group-auto",
+            u"currency/USD",
             NumberFormatter::with().grouping(UNUM_GROUPING_AUTO).unit(USD),
             Locale("bg"),
             u"87650000,00 щ.д.",
@@ -1412,6 +1606,7 @@ void NumberFormatterApiTest::grouping() {
     assertFormatDescendingBig(
             u"Bulgarian Currency Grouping, Always",
             u"currency/USD group-on-aligned",
+            u"currency/USD ,!",
             NumberFormatter::with().grouping(UNUM_GROUPING_ON_ALIGNED).unit(USD),
             Locale("bg"),
             u"87 650 000,00 щ.д.",
@@ -1428,6 +1623,7 @@ void NumberFormatterApiTest::grouping() {
     macros.grouper = Grouper(4, 1, 3, UNUM_GROUPING_COUNT);
     assertFormatDescendingBig(
             u"Custom Grouping via Internal API",
+            nullptr,
             nullptr,
             NumberFormatter::with().macros(macros),
             Locale::getEnglish(),
@@ -1446,6 +1642,7 @@ void NumberFormatterApiTest::padding() {
     assertFormatDescending(
             u"Padding",
             nullptr,
+            nullptr,
             NumberFormatter::with().padding(Padder::none()),
             Locale::getEnglish(),
             u"87,650",
@@ -1460,6 +1657,7 @@ void NumberFormatterApiTest::padding() {
 
     assertFormatDescending(
             u"Padding",
+            nullptr,
             nullptr,
             NumberFormatter::with().padding(
                     Padder::codePoints(
@@ -1478,6 +1676,7 @@ void NumberFormatterApiTest::padding() {
     assertFormatDescending(
             u"Padding with code points",
             nullptr,
+            nullptr,
             NumberFormatter::with().padding(
                     Padder::codePoints(
                             0x101E4, 8, PadPosition::UNUM_PAD_AFTER_PREFIX)),
@@ -1494,6 +1693,7 @@ void NumberFormatterApiTest::padding() {
 
     assertFormatDescending(
             u"Padding with wide digits",
+            nullptr,
             nullptr,
             NumberFormatter::with().padding(
                             Padder::codePoints(
@@ -1512,6 +1712,7 @@ void NumberFormatterApiTest::padding() {
 
     assertFormatDescending(
             u"Padding with currency spacing",
+            nullptr,
             nullptr,
             NumberFormatter::with().padding(
                             Padder::codePoints(
@@ -1532,6 +1733,7 @@ void NumberFormatterApiTest::padding() {
     assertFormatSingle(
             u"Pad Before Prefix",
             nullptr,
+            nullptr,
             NumberFormatter::with().padding(
                     Padder::codePoints(
                             '*', 8, PadPosition::UNUM_PAD_BEFORE_PREFIX)),
@@ -1541,6 +1743,7 @@ void NumberFormatterApiTest::padding() {
 
     assertFormatSingle(
             u"Pad After Prefix",
+            nullptr,
             nullptr,
             NumberFormatter::with().padding(
                     Padder::codePoints(
@@ -1552,6 +1755,7 @@ void NumberFormatterApiTest::padding() {
     assertFormatSingle(
             u"Pad Before Suffix",
             nullptr,
+            nullptr,
             NumberFormatter::with().padding(
                     Padder::codePoints(
                             '*', 8, PadPosition::UNUM_PAD_BEFORE_SUFFIX)).unit(NoUnit::percent()),
@@ -1562,6 +1766,7 @@ void NumberFormatterApiTest::padding() {
     assertFormatSingle(
             u"Pad After Suffix",
             nullptr,
+            nullptr,
             NumberFormatter::with().padding(
                     Padder::codePoints(
                             '*', 8, PadPosition::UNUM_PAD_AFTER_SUFFIX)).unit(NoUnit::percent()),
@@ -1571,6 +1776,7 @@ void NumberFormatterApiTest::padding() {
 
     assertFormatSingle(
             u"Currency Spacing with Zero Digit Padding Broken",
+            nullptr,
             nullptr,
             NumberFormatter::with().padding(
                             Padder::codePoints(
@@ -1586,6 +1792,7 @@ void NumberFormatterApiTest::integerWidth() {
     assertFormatDescending(
             u"Integer Width Default",
             u"integer-width/+0",
+            u"0",
             NumberFormatter::with().integerWidth(IntegerWidth::zeroFillTo(1)),
             Locale::getEnglish(),
             u"87,650",
@@ -1600,6 +1807,7 @@ void NumberFormatterApiTest::integerWidth() {
 
     assertFormatDescending(
             u"Integer Width Zero Fill 0",
+            u"integer-width/*",
             u"integer-width/+",
             NumberFormatter::with().integerWidth(IntegerWidth::zeroFillTo(0)),
             Locale::getEnglish(),
@@ -1611,11 +1819,12 @@ void NumberFormatterApiTest::integerWidth() {
             u".8765",
             u".08765",
             u".008765",
-            u""); // TODO: Avoid the empty string here?
+            u"0");  // see ICU-20844
 
     assertFormatDescending(
             u"Integer Width Zero Fill 3",
             u"integer-width/+000",
+            u"000",
             NumberFormatter::with().integerWidth(IntegerWidth::zeroFillTo(3)),
             Locale::getEnglish(),
             u"87,650",
@@ -1630,6 +1839,7 @@ void NumberFormatterApiTest::integerWidth() {
 
     assertFormatDescending(
             u"Integer Width Max 3",
+            u"integer-width/##0",
             u"integer-width/##0",
             NumberFormatter::with().integerWidth(IntegerWidth::zeroFillTo(1).truncateAt(3)),
             Locale::getEnglish(),
@@ -1646,6 +1856,7 @@ void NumberFormatterApiTest::integerWidth() {
     assertFormatDescending(
             u"Integer Width Fixed 2",
             u"integer-width/00",
+            u"integer-width/00",
             NumberFormatter::with().integerWidth(IntegerWidth::zeroFillTo(2).truncateAt(2)),
             Locale::getEnglish(),
             u"50",
@@ -1658,8 +1869,63 @@ void NumberFormatterApiTest::integerWidth() {
             u"00.008765",
             u"00");
 
+    assertFormatDescending(
+            u"Integer Width Compact",
+            u"compact-short integer-width/000",
+            u"compact-short integer-width/000",
+            NumberFormatter::with()
+                .notation(Notation::compactShort())
+                .integerWidth(IntegerWidth::zeroFillTo(3).truncateAt(3)),
+            Locale::getEnglish(),
+            u"088K",
+            u"008.8K",
+            u"876",
+            u"088",
+            u"008.8",
+            u"000.88",
+            u"000.088",
+            u"000.0088",
+            u"000");
+
+    assertFormatDescending(
+            u"Integer Width Scientific",
+            u"scientific integer-width/000",
+            u"scientific integer-width/000",
+            NumberFormatter::with()
+                .notation(Notation::scientific())
+                .integerWidth(IntegerWidth::zeroFillTo(3).truncateAt(3)),
+            Locale::getEnglish(),
+            u"008.765E4",
+            u"008.765E3",
+            u"008.765E2",
+            u"008.765E1",
+            u"008.765E0",
+            u"008.765E-1",
+            u"008.765E-2",
+            u"008.765E-3",
+            u"000E0");
+
+    assertFormatDescending(
+            u"Integer Width Engineering",
+            u"engineering integer-width/000",
+            u"engineering integer-width/000",
+            NumberFormatter::with()
+                .notation(Notation::engineering())
+                .integerWidth(IntegerWidth::zeroFillTo(3).truncateAt(3)),
+            Locale::getEnglish(),
+            u"087.65E3",
+            u"008.765E3",
+            u"876.5E0",
+            u"087.65E0",
+            u"008.765E0",
+            u"876.5E-3",
+            u"087.65E-3",
+            u"008.765E-3",
+            u"000E0");
+
     assertFormatSingle(
             u"Integer Width Remove All A",
+            u"integer-width/00",
             u"integer-width/00",
             NumberFormatter::with().integerWidth(IntegerWidth::zeroFillTo(2).truncateAt(2)),
             "en",
@@ -1669,6 +1935,7 @@ void NumberFormatterApiTest::integerWidth() {
     assertFormatSingle(
             u"Integer Width Remove All B",
             u"integer-width/00",
+            u"integer-width/00",
             NumberFormatter::with().integerWidth(IntegerWidth::zeroFillTo(2).truncateAt(2)),
             "en",
             25000,
@@ -1676,6 +1943,7 @@ void NumberFormatterApiTest::integerWidth() {
 
     assertFormatSingle(
             u"Integer Width Remove All B, Bytes Mode",
+            u"integer-width/00",
             u"integer-width/00",
             NumberFormatter::with().integerWidth(IntegerWidth::zeroFillTo(2).truncateAt(2)),
             "en",
@@ -1687,6 +1955,7 @@ void NumberFormatterApiTest::integerWidth() {
 void NumberFormatterApiTest::symbols() {
     assertFormatDescending(
             u"French Symbols with Japanese Data 1",
+            nullptr,
             nullptr,
             NumberFormatter::with().symbols(FRENCH_SYMBOLS),
             Locale::getJapan(),
@@ -1705,6 +1974,7 @@ void NumberFormatterApiTest::symbols() {
     assertFormatSingle(
             u"French Symbols with Japanese Data 2",
             nullptr,
+            nullptr,
             NumberFormatter::with().notation(Notation::compactShort()).symbols(FRENCH_SYMBOLS),
             Locale::getJapan(),
             12345,
@@ -1712,6 +1982,7 @@ void NumberFormatterApiTest::symbols() {
 
     assertFormatDescending(
             u"Latin Numbering System with Arabic Data",
+            u"currency/USD latin",
             u"currency/USD latin",
             NumberFormatter::with().adoptSymbols(new NumberingSystem(LATN)).unit(USD),
             Locale("ar"),
@@ -1727,6 +1998,7 @@ void NumberFormatterApiTest::symbols() {
 
     assertFormatDescending(
             u"Math Numbering System with French Data",
+            u"numbering-system/mathsanb",
             u"numbering-system/mathsanb",
             NumberFormatter::with().adoptSymbols(new NumberingSystem(MATHSANB)),
             Locale::getFrench(),
@@ -1745,6 +2017,7 @@ void NumberFormatterApiTest::symbols() {
     assertFormatSingle(
             u"Swiss Symbols (used in documentation)",
             nullptr,
+            nullptr,
             NumberFormatter::with().symbols(SWISS_SYMBOLS),
             Locale::getEnglish(),
             12345.67,
@@ -1752,6 +2025,7 @@ void NumberFormatterApiTest::symbols() {
 
     assertFormatSingle(
             u"Myanmar Symbols (used in documentation)",
+            nullptr,
             nullptr,
             NumberFormatter::with().symbols(MYANMAR_SYMBOLS),
             Locale::getEnglish(),
@@ -1763,6 +2037,7 @@ void NumberFormatterApiTest::symbols() {
     assertFormatSingle(
             u"Currency symbol should precede number in ar with NS latn",
             u"currency/USD latin",
+            u"currency/USD latin",
             NumberFormatter::with().adoptSymbols(new NumberingSystem(LATN)).unit(USD),
             Locale("ar"),
             12345.67,
@@ -1770,6 +2045,7 @@ void NumberFormatterApiTest::symbols() {
 
     assertFormatSingle(
             u"Currency symbol should precede number in ar@numbers=latn",
+            u"currency/USD",
             u"currency/USD",
             NumberFormatter::with().unit(USD),
             Locale("ar@numbers=latn"),
@@ -1779,6 +2055,7 @@ void NumberFormatterApiTest::symbols() {
     assertFormatSingle(
             u"Currency symbol should follow number in ar-EG with NS arab",
             u"currency/USD",
+            u"currency/USD",
             NumberFormatter::with().unit(USD),
             Locale("ar-EG"),
             12345.67,
@@ -1787,6 +2064,7 @@ void NumberFormatterApiTest::symbols() {
     assertFormatSingle(
             u"Currency symbol should follow number in ar@numbers=arab",
             u"currency/USD",
+            u"currency/USD",
             NumberFormatter::with().unit(USD),
             Locale("ar@numbers=arab"),
             12345.67,
@@ -1794,6 +2072,7 @@ void NumberFormatterApiTest::symbols() {
 
     assertFormatSingle(
             u"NumberingSystem in API should win over @numbers keyword",
+            u"currency/USD latin",
             u"currency/USD latin",
             NumberFormatter::with().adoptSymbols(new NumberingSystem(LATN)).unit(USD),
             Locale("ar@numbers=arab"),
@@ -1813,10 +2092,17 @@ void NumberFormatterApiTest::symbols() {
     UnlocalizedNumberFormatter f = NumberFormatter::with().symbols(symbols);
     symbols.setSymbol(DecimalFormatSymbols::ENumberFormatSymbol::kGroupingSeparatorSymbol, u"!", status);
     assertFormatSingle(
-            u"Symbols object should be copied", nullptr, f, Locale::getEnglish(), 12345.67, u"12’345.67");
+            u"Symbols object should be copied",
+            nullptr,
+            nullptr,
+            f,
+            Locale::getEnglish(),
+            12345.67,
+            u"12’345.67");
 
     assertFormatSingle(
             u"The last symbols setter wins",
+            u"latin",
             u"latin",
             NumberFormatter::with().symbols(symbols).adoptSymbols(new NumberingSystem(LATN)),
             Locale::getEnglish(),
@@ -1825,6 +2111,7 @@ void NumberFormatterApiTest::symbols() {
 
     assertFormatSingle(
             u"The last symbols setter wins",
+            nullptr,
             nullptr,
             NumberFormatter::with().adoptSymbols(new NumberingSystem(LATN)).symbols(symbols),
             Locale::getEnglish(),
@@ -1849,6 +2136,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Auto Positive",
             u"sign-auto",
+            u"",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_AUTO),
             Locale::getEnglish(),
             444444,
@@ -1857,6 +2145,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Auto Negative",
             u"sign-auto",
+            u"",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_AUTO),
             Locale::getEnglish(),
             -444444,
@@ -1865,6 +2154,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Auto Zero",
             u"sign-auto",
+            u"",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_AUTO),
             Locale::getEnglish(),
             0,
@@ -1873,6 +2163,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Always Positive",
             u"sign-always",
+            u"+!",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ALWAYS),
             Locale::getEnglish(),
             444444,
@@ -1881,6 +2172,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Always Negative",
             u"sign-always",
+            u"+!",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ALWAYS),
             Locale::getEnglish(),
             -444444,
@@ -1889,6 +2181,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Always Zero",
             u"sign-always",
+            u"+!",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ALWAYS),
             Locale::getEnglish(),
             0,
@@ -1897,6 +2190,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Never Positive",
             u"sign-never",
+            u"+_",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_NEVER),
             Locale::getEnglish(),
             444444,
@@ -1905,6 +2199,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Never Negative",
             u"sign-never",
+            u"+_",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_NEVER),
             Locale::getEnglish(),
             -444444,
@@ -1913,6 +2208,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Never Zero",
             u"sign-never",
+            u"+_",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_NEVER),
             Locale::getEnglish(),
             0,
@@ -1921,6 +2217,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting Positive",
             u"currency/USD sign-accounting",
+            u"currency/USD ()",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING).unit(USD),
             Locale::getEnglish(),
             444444,
@@ -1929,6 +2226,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting Negative",
             u"currency/USD sign-accounting",
+            u"currency/USD ()",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING).unit(USD),
             Locale::getEnglish(),
             -444444,
@@ -1937,6 +2235,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting Zero",
             u"currency/USD sign-accounting",
+            u"currency/USD ()",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING).unit(USD),
             Locale::getEnglish(),
             0,
@@ -1945,6 +2244,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting-Always Positive",
             u"currency/USD sign-accounting-always",
+            u"currency/USD ()!",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING_ALWAYS).unit(USD),
             Locale::getEnglish(),
             444444,
@@ -1953,6 +2253,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting-Always Negative",
             u"currency/USD sign-accounting-always",
+            u"currency/USD ()!",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING_ALWAYS).unit(USD),
             Locale::getEnglish(),
             -444444,
@@ -1961,6 +2262,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting-Always Zero",
             u"currency/USD sign-accounting-always",
+            u"currency/USD ()!",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING_ALWAYS).unit(USD),
             Locale::getEnglish(),
             0,
@@ -1969,6 +2271,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Except-Zero Positive",
             u"sign-except-zero",
+            u"+?",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_EXCEPT_ZERO),
             Locale::getEnglish(),
             444444,
@@ -1977,6 +2280,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Except-Zero Negative",
             u"sign-except-zero",
+            u"+?",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_EXCEPT_ZERO),
             Locale::getEnglish(),
             -444444,
@@ -1985,6 +2289,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Except-Zero Zero",
             u"sign-except-zero",
+            u"+?",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_EXCEPT_ZERO),
             Locale::getEnglish(),
             0,
@@ -1993,6 +2298,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting-Except-Zero Positive",
             u"currency/USD sign-accounting-except-zero",
+            u"currency/USD ()?",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING_EXCEPT_ZERO).unit(USD),
             Locale::getEnglish(),
             444444,
@@ -2001,6 +2307,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting-Except-Zero Negative",
             u"currency/USD sign-accounting-except-zero",
+            u"currency/USD ()?",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING_EXCEPT_ZERO).unit(USD),
             Locale::getEnglish(),
             -444444,
@@ -2009,6 +2316,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting-Except-Zero Zero",
             u"currency/USD sign-accounting-except-zero",
+            u"currency/USD ()?",
             NumberFormatter::with().sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING_EXCEPT_ZERO).unit(USD),
             Locale::getEnglish(),
             0,
@@ -2017,6 +2325,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting Negative Hidden",
             u"currency/USD unit-width-hidden sign-accounting",
+            u"currency/USD unit-width-hidden ()",
             NumberFormatter::with()
                     .sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING)
                     .unit(USD)
@@ -2028,6 +2337,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting Negative Narrow",
             u"currency/USD unit-width-narrow sign-accounting",
+            u"currency/USD unit-width-narrow ()",
             NumberFormatter::with()
                 .sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING)
                 .unit(USD)
@@ -2039,6 +2349,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting Negative Short",
             u"currency/USD sign-accounting",
+            u"currency/USD ()",
             NumberFormatter::with()
                 .sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING)
                 .unit(USD)
@@ -2050,6 +2361,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting Negative Iso Code",
             u"currency/USD unit-width-iso-code sign-accounting",
+            u"currency/USD unit-width-iso-code ()",
             NumberFormatter::with()
                 .sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING)
                 .unit(USD)
@@ -2063,6 +2375,7 @@ void NumberFormatterApiTest::sign() {
     assertFormatSingle(
             u"Sign Accounting Negative Full Name",
             u"currency/USD unit-width-full-name sign-accounting",
+            u"currency/USD unit-width-full-name ()",
             NumberFormatter::with()
                 .sign(UNumberSignDisplay::UNUM_SIGN_ACCOUNTING)
                 .unit(USD)
@@ -2072,10 +2385,87 @@ void NumberFormatterApiTest::sign() {
             u"-444,444.00 US dollars");
 }
 
+void NumberFormatterApiTest::signNearZero() {
+    // https://unicode-org.atlassian.net/browse/ICU-20709
+    IcuTestErrorCode status(*this, "signNearZero");
+    const struct TestCase {
+        UNumberSignDisplay sign;
+        double input;
+        const char16_t* expected;
+    } cases[] = {
+        { UNUM_SIGN_AUTO,  1.1, u"1" },
+        { UNUM_SIGN_AUTO,  0.9, u"1" },
+        { UNUM_SIGN_AUTO,  0.1, u"0" },
+        { UNUM_SIGN_AUTO, -0.1, u"-0" }, // interesting case
+        { UNUM_SIGN_AUTO, -0.9, u"-1" },
+        { UNUM_SIGN_AUTO, -1.1, u"-1" },
+        { UNUM_SIGN_ALWAYS,  1.1, u"+1" },
+        { UNUM_SIGN_ALWAYS,  0.9, u"+1" },
+        { UNUM_SIGN_ALWAYS,  0.1, u"+0" },
+        { UNUM_SIGN_ALWAYS, -0.1, u"-0" },
+        { UNUM_SIGN_ALWAYS, -0.9, u"-1" },
+        { UNUM_SIGN_ALWAYS, -1.1, u"-1" },
+        { UNUM_SIGN_EXCEPT_ZERO,  1.1, u"+1" },
+        { UNUM_SIGN_EXCEPT_ZERO,  0.9, u"+1" },
+        { UNUM_SIGN_EXCEPT_ZERO,  0.1, u"0" }, // interesting case
+        { UNUM_SIGN_EXCEPT_ZERO, -0.1, u"0" }, // interesting case
+        { UNUM_SIGN_EXCEPT_ZERO, -0.9, u"-1" },
+        { UNUM_SIGN_EXCEPT_ZERO, -1.1, u"-1" },
+    };
+    for (auto& cas : cases) {
+        auto sign = cas.sign;
+        auto input = cas.input;
+        auto expected = cas.expected;
+        auto actual = NumberFormatter::with()
+            .sign(sign)
+            .precision(Precision::integer())
+            .locale(Locale::getUS())
+            .formatDouble(input, status)
+            .toString(status);
+        assertEquals(
+            DoubleToUnicodeString(input) + " @ SignDisplay " + Int64ToUnicodeString(sign),
+            expected, actual);
+    }
+}
+
+void NumberFormatterApiTest::signCoverage() {
+    // https://unicode-org.atlassian.net/browse/ICU-20708
+    IcuTestErrorCode status(*this, "signCoverage");
+    const struct TestCase {
+        UNumberSignDisplay sign;
+        const char16_t* expectedStrings[8];
+    } cases[] = {
+        { UNUM_SIGN_AUTO, {        u"-∞", u"-1", u"-0",  u"0",  u"1",  u"∞",  u"NaN", u"-NaN" } },
+        { UNUM_SIGN_ALWAYS, {      u"-∞", u"-1", u"-0", u"+0", u"+1", u"+∞", u"+NaN", u"-NaN" } },
+        { UNUM_SIGN_NEVER, {        u"∞",  u"1",  u"0",  u"0",  u"1",  u"∞",  u"NaN",  u"NaN" } },
+        { UNUM_SIGN_EXCEPT_ZERO, { u"-∞", u"-1",  u"0",  u"0", u"+1", u"+∞",  u"NaN",  u"NaN" } },
+    };
+    double negNaN = std::copysign(uprv_getNaN(), -0.0);
+    const double inputs[] = {
+        -uprv_getInfinity(), -1, -0.0, 0, 1, uprv_getInfinity(), uprv_getNaN(), negNaN
+    };
+    for (auto& cas : cases) {
+        auto sign = cas.sign;
+        for (int32_t i = 0; i < UPRV_LENGTHOF(inputs); i++) {
+            auto input = inputs[i];
+            auto expected = cas.expectedStrings[i];
+            auto actual = NumberFormatter::with()
+                .sign(sign)
+                .locale(Locale::getUS())
+                .formatDouble(input, status)
+                .toString(status);
+            assertEquals(
+                DoubleToUnicodeString(input) + " " + Int64ToUnicodeString(sign),
+                expected, actual);
+        }
+    }
+}
+
 void NumberFormatterApiTest::decimal() {
     assertFormatDescending(
             u"Decimal Default",
             u"decimal-auto",
+            u"",
             NumberFormatter::with().decimal(UNumberDecimalSeparatorDisplay::UNUM_DECIMAL_SEPARATOR_AUTO),
             Locale::getEnglish(),
             u"87,650",
@@ -2090,6 +2480,7 @@ void NumberFormatterApiTest::decimal() {
 
     assertFormatDescending(
             u"Decimal Always Shown",
+            u"decimal-always",
             u"decimal-always",
             NumberFormatter::with().decimal(UNumberDecimalSeparatorDisplay::UNUM_DECIMAL_SEPARATOR_ALWAYS),
             Locale::getEnglish(),
@@ -2108,6 +2499,7 @@ void NumberFormatterApiTest::scale() {
     assertFormatDescending(
             u"Multiplier None",
             u"scale/1",
+            u"",
             NumberFormatter::with().scale(Scale::none()),
             Locale::getEnglish(),
             u"87,650",
@@ -2123,6 +2515,7 @@ void NumberFormatterApiTest::scale() {
     assertFormatDescending(
             u"Multiplier Power of Ten",
             u"scale/1000000",
+            u"scale/1E6",
             NumberFormatter::with().scale(Scale::powerOfTen(6)),
             Locale::getEnglish(),
             u"87,650,000,000",
@@ -2137,6 +2530,7 @@ void NumberFormatterApiTest::scale() {
 
     assertFormatDescending(
             u"Multiplier Arbitrary Double",
+            u"scale/5.2",
             u"scale/5.2",
             NumberFormatter::with().scale(Scale::byDouble(5.2)),
             Locale::getEnglish(),
@@ -2153,6 +2547,7 @@ void NumberFormatterApiTest::scale() {
     assertFormatDescending(
             u"Multiplier Arbitrary BigDecimal",
             u"scale/5.2",
+            u"scale/5.2",
             NumberFormatter::with().scale(Scale::byDecimal({"5.2", -1})),
             Locale::getEnglish(),
             u"455,780",
@@ -2167,6 +2562,7 @@ void NumberFormatterApiTest::scale() {
 
     assertFormatDescending(
             u"Multiplier Arbitrary Double And Power Of Ten",
+            u"scale/5200",
             u"scale/5200",
             NumberFormatter::with().scale(Scale::byDoubleAndPowerOfTen(5.2, 3)),
             Locale::getEnglish(),
@@ -2183,6 +2579,7 @@ void NumberFormatterApiTest::scale() {
     assertFormatDescending(
             u"Multiplier Zero",
             u"scale/0",
+            u"scale/0",
             NumberFormatter::with().scale(Scale::byDouble(0)),
             Locale::getEnglish(),
             u"0",
@@ -2198,6 +2595,7 @@ void NumberFormatterApiTest::scale() {
     assertFormatSingle(
             u"Multiplier Skeleton Scientific Notation and Percent",
             u"percent scale/1E2",
+            u"%x100",
             NumberFormatter::with().unit(NoUnit::percent()).scale(Scale::powerOfTen(2)),
             Locale::getEnglish(),
             0.5,
@@ -2205,6 +2603,7 @@ void NumberFormatterApiTest::scale() {
 
     assertFormatSingle(
             u"Negative Multiplier",
+            u"scale/-5.2",
             u"scale/-5.2",
             NumberFormatter::with().scale(Scale::byDouble(-5.2)),
             Locale::getEnglish(),
@@ -2214,6 +2613,7 @@ void NumberFormatterApiTest::scale() {
     assertFormatSingle(
             u"Negative One Multiplier",
             u"scale/-1",
+            u"scale/-1",
             NumberFormatter::with().scale(Scale::byDouble(-1)),
             Locale::getEnglish(),
             444444,
@@ -2222,6 +2622,7 @@ void NumberFormatterApiTest::scale() {
     assertFormatSingle(
             u"Two-Type Multiplier with Overlap",
             u"scale/10000",
+            u"scale/1E4",
             NumberFormatter::with().scale(Scale::byDoubleAndPowerOfTen(100, 2)),
             Locale::getEnglish(),
             2,
@@ -2236,6 +2637,53 @@ void NumberFormatterApiTest::locale() {
     /* MSFT Change: Begin */
     assertEquals("Locale withLocale()", u"1\u00a0234", actual);
     /* MSFT Change: End */
+}
+
+void NumberFormatterApiTest::skeletonUserGuideExamples() {
+    IcuTestErrorCode status(*this, "skeletonUserGuideExamples");
+
+    // Test the skeleton examples in userguide/format_parse/numbers/skeletons.md
+    struct TestCase {
+        const char16_t* skeleton;
+        const char16_t* conciseSkeleton;
+        double input;
+        const char16_t* expected;
+    } cases[] = {
+        {u"percent", u"%", 25, u"25%"},
+        {u".00", u".00", 25, u"25.00"},
+        {u"percent .00", u"% .00", 25, u"25.00%"},
+        {u"scale/100", u"scale/100", 0.3, u"30"},
+        {u"percent scale/100", u"%x100", 0.3, u"30%"},
+        {u"measure-unit/length-meter", u"unit/meter", 5, u"5 m"},
+        {u"measure-unit/length-meter unit-width-full-name", u"unit/meter unit-width-full-name", 5, u"5 meters"},
+        {u"currency/CAD", u"currency/CAD", 10, u"CA$10.00"},
+        {u"currency/CAD unit-width-narrow", u"currency/CAD unit-width-narrow", 10, u"$10.00"},
+        {u"compact-short", u"K", 5000, u"5K"},
+        {u"compact-long", u"KK", 5000, u"5 thousand"},
+        {u"compact-short currency/CAD", u"K currency/CAD", 5000, u"CA$5K"},
+        {u"", u"", 5000, u"5,000"},
+        {u"group-min2", u",?", 5000, u"5000"},
+        {u"group-min2", u",?", 15000, u"15,000"},
+        {u"sign-always", u"+!", 60, u"+60"},
+        {u"sign-always", u"+!", 0, u"+0"},
+        {u"sign-except-zero", u"+?", 60, u"+60"},
+        {u"sign-except-zero", u"+?", 0, u"0"},
+        {u"sign-accounting currency/CAD", u"() currency/CAD", -40, u"(CA$40.00)"}
+    };
+
+    for (const auto& cas : cases) {
+        status.setScope(cas.skeleton);
+        FormattedNumber actual = NumberFormatter::forSkeleton(cas.skeleton, status)
+            .locale("en-US")
+            .formatDouble(cas.input, status);
+        assertEquals(cas.skeleton, cas.expected, actual.toTempString(status));
+        status.errIfFailureAndReset();
+        FormattedNumber actualConcise = NumberFormatter::forSkeleton(cas.conciseSkeleton, status)
+            .locale("en-US")
+            .formatDouble(cas.input, status);
+        assertEquals(cas.conciseSkeleton, cas.expected, actualConcise.toTempString(status));
+        status.errIfFailureAndReset();
+    }
 }
 
 void NumberFormatterApiTest::formatTypes() {
@@ -2268,6 +2716,7 @@ void NumberFormatterApiTest::fieldPositionLogic() {
     FormattedNumber fmtd = assertFormatSingle(
             message,
             u"",
+            u"",
             NumberFormatter::with(),
             Locale::getEnglish(),
             -9876543210.12,
@@ -2290,9 +2739,10 @@ void NumberFormatterApiTest::fieldPositionLogic() {
             UPRV_LENGTHOF(expectedFieldPositions));
 
     // Test the iteration functionality of nextFieldPosition
-    FieldPosition actual = {UNUM_GROUPING_SEPARATOR_FIELD};
+    ConstrainedFieldPosition actual;
+    actual.constrainField(UFIELD_CATEGORY_NUMBER, UNUM_GROUPING_SEPARATOR_FIELD);
     int32_t i = 1;
-    while (fmtd.nextFieldPosition(actual, status)) {
+    while (fmtd.nextPosition(actual, status)) {
         UFieldPosition expected = expectedFieldPositions[i++];
         assertEquals(
                 UnicodeString(u"Next for grouping, field, case #") + Int64ToUnicodeString(i),
@@ -2301,18 +2751,19 @@ void NumberFormatterApiTest::fieldPositionLogic() {
         assertEquals(
                 UnicodeString(u"Next for grouping, begin index, case #") + Int64ToUnicodeString(i),
                 expected.beginIndex,
-                actual.getBeginIndex());
+                actual.getStart());
         assertEquals(
                 UnicodeString(u"Next for grouping, end index, case #") + Int64ToUnicodeString(i),
                 expected.endIndex,
-                actual.getEndIndex());
+                actual.getLimit());
     }
     assertEquals(u"Should have seen all grouping separators", 4, i);
 
     // Make sure strings without fraction do not contain fraction field
-    actual = {UNUM_FRACTION_FIELD};
+    actual.reset();
+    actual.constrainField(UFIELD_CATEGORY_NUMBER, UNUM_FRACTION_FIELD);
     fmtd = NumberFormatter::withLocale("en").formatInt(5, status);
-    assertFalse(u"No fraction part in an integer", fmtd.nextFieldPosition(actual, status));
+    assertFalse(u"No fraction part in an integer", fmtd.nextPosition(actual, status));
 }
 
 void NumberFormatterApiTest::fieldPositionCoverage() {
@@ -2323,6 +2774,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"measure-unit/temperature-fahrenheit",
+                u"unit/fahrenheit",
                 NumberFormatter::with().unit(FAHRENHEIT),
                 Locale::getEnglish(),
                 68,
@@ -2343,6 +2795,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"measure-unit/temperature-fahrenheit per-measure-unit/duration-day",
+                u"unit/fahrenheit-per-day",
                 NumberFormatter::with().unit(FAHRENHEIT).perUnit(DAY),
                 Locale::getEnglish(),
                 68,
@@ -2364,6 +2817,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"measure-unit/length-meter unit-width-full-name",
+                u"unit/meter unit-width-full-name",
                 NumberFormatter::with().unit(METER).unitWidth(UNUM_UNIT_WIDTH_FULL_NAME),
                 Locale::getEnglish(),
                 68,
@@ -2385,6 +2839,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"measure-unit/length-meter per-measure-unit/duration-second unit-width-full-name",
+                u"unit/meter-per-second unit-width-full-name",
                 NumberFormatter::with().unit(METER).perUnit(SECOND).unitWidth(UNUM_UNIT_WIDTH_FULL_NAME),
                 "ky", // locale with the interesting data
                 68,
@@ -2406,6 +2861,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"measure-unit/temperature-fahrenheit unit-width-full-name",
+                u"unit/fahrenheit unit-width-full-name",
                 NumberFormatter::with().unit(FAHRENHEIT).unitWidth(UNUM_UNIT_WIDTH_FULL_NAME),
                 "vi", // locale with the interesting data
                 68,
@@ -2430,6 +2886,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"measure-unit/temperature-kelvin",
+                u"unit/kelvin",
                 NumberFormatter::with().unit(KELVIN),
                 "fa", // locale with the interesting data
                 68,
@@ -2450,6 +2907,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"compact-short",
+                u"K",
                 NumberFormatter::with().notation(Notation::compactShort()),
                 Locale::getUS(),
                 65000,
@@ -2470,6 +2928,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"compact-long",
+                u"KK",
                 NumberFormatter::with().notation(Notation::compactLong()),
                 Locale::getUS(),
                 65000,
@@ -2490,6 +2949,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"compact-long",
+                u"KK",
                 NumberFormatter::with().notation(Notation::compactLong()),
                 "fil",  // locale with interesting data
                 6000,
@@ -2510,6 +2970,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"compact-long",
+                u"KK",
                 NumberFormatter::with().notation(Notation::compactLong()),
                 "he",  // locale with interesting data
                 6000,
@@ -2530,6 +2991,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"compact-short currency/USD",
+                u"K currency/USD",
                 NumberFormatter::with().notation(Notation::compactShort()).unit(USD),
                 "sr_Latn",  // locale with interesting data
                 65000,
@@ -2550,6 +3012,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         const char16_t* message = u"Currency long name fields";
         FormattedNumber result = assertFormatSingle(
                 message,
+                u"currency/USD unit-width-full-name",
                 u"currency/USD unit-width-full-name",
                 NumberFormatter::with().unit(USD)
                     .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME),
@@ -2575,6 +3038,7 @@ void NumberFormatterApiTest::fieldPositionCoverage() {
         FormattedNumber result = assertFormatSingle(
                 message,
                 u"compact-long measure-unit/length-meter unit-width-full-name",
+                u"KK unit/meter unit-width-full-name",
                 NumberFormatter::with().notation(Notation::compactLong())
                     .unit(METER)
                     .unitWidth(UNUM_UNIT_WIDTH_FULL_NAME),
@@ -2611,10 +3075,18 @@ void NumberFormatterApiTest::toFormat() {
             dynamic_cast<LocalizedNumberFormatterAsFormat*>(format.getAlias())->getNumberFormatter()
                     .toSkeleton(status));
 
+    UFormattedNumberData result;
+    result.quantity.setToDouble(514.23);
+    lnf.formatImpl(&result, status);
     FieldPositionIterator fpi1;
-    lnf.formatDouble(514.23, status).getAllFieldPositions(fpi1, status);
+    {
+        FieldPositionIteratorHandler fpih(&fpi1, status);
+        result.getAllFieldPositions(fpih, status);
+    }
+
     FieldPositionIterator fpi2;
     format->format(514.23, sb.remove(), &fpi2, status);
+
     assertTrue("Should produce same field position iterator", fpi1 == fpi2);
 }
 
@@ -2666,19 +3138,20 @@ void NumberFormatterApiTest::errors() {
             "Terminal toSkeleton on error object should be bogus",
             output.isBogus());
 
-    // FieldPosition
+    // FieldPosition (constrained category)
     status = U_ZERO_ERROR;
-    FieldPosition fp;
-    fn.nextFieldPosition(fp, status);
+    ConstrainedFieldPosition fp;
+    fp.constrainCategory(UFIELD_CATEGORY_NUMBER);
+    fn.nextPosition(fp, status);
     assertEquals(
             "Should fail on FieldPosition terminal method with correct error code",
             U_NUMBER_ARG_OUTOFBOUNDS_ERROR,
             status);
 
-    // FieldPositionIterator
+    // FieldPositionIterator (no constraints)
     status = U_ZERO_ERROR;
-    FieldPositionIterator fpi;
-    fn.getAllFieldPositions(fpi, status);
+    fp.reset();
+    fn.nextPosition(fp, status);
     assertEquals(
             "Should fail on FieldPositoinIterator terminal method with correct error code",
             U_NUMBER_ARG_OUTOFBOUNDS_ERROR,
@@ -2717,7 +3190,7 @@ void NumberFormatterApiTest::validRanges() {
 
 #define EXPECTED_MAX_INT_FRAC_SIG 999
 
-#define VALID_RANGE_ASSERT(status, method, lowerBound, argument) { \
+#define VALID_RANGE_ASSERT(status, method, lowerBound, argument) UPRV_BLOCK_MACRO_BEGIN { \
     UErrorCode expectedStatus = ((lowerBound <= argument) && (argument <= EXPECTED_MAX_INT_FRAC_SIG)) \
         ? U_ZERO_ERROR \
         : U_NUMBER_ARG_OUTOFBOUNDS_ERROR; \
@@ -2726,17 +3199,17 @@ void NumberFormatterApiTest::validRanges() {
             + Int64ToUnicodeString(argument), \
         expectedStatus, \
         status); \
-}
+} UPRV_BLOCK_MACRO_END
 
-#define VALID_RANGE_ONEARG(setting, method, lowerBound) { \
+#define VALID_RANGE_ONEARG(setting, method, lowerBound) UPRV_BLOCK_MACRO_BEGIN { \
     for (int32_t argument = -2; argument <= EXPECTED_MAX_INT_FRAC_SIG + 2; argument++) { \
         UErrorCode status = U_ZERO_ERROR; \
         NumberFormatter::with().setting(method(argument)).copyErrorTo(status); \
         VALID_RANGE_ASSERT(status, method, lowerBound, argument); \
     } \
-}
+} UPRV_BLOCK_MACRO_END
 
-#define VALID_RANGE_TWOARGS(setting, method, lowerBound) { \
+#define VALID_RANGE_TWOARGS(setting, method, lowerBound) UPRV_BLOCK_MACRO_BEGIN { \
     for (int32_t argument = -2; argument <= EXPECTED_MAX_INT_FRAC_SIG + 2; argument++) { \
         UErrorCode status = U_ZERO_ERROR; \
         /* Pass EXPECTED_MAX_INT_FRAC_SIG as the second argument so arg1 <= arg2 in expected cases */ \
@@ -2752,7 +3225,7 @@ void NumberFormatterApiTest::validRanges() {
             U_NUMBER_ARG_OUTOFBOUNDS_ERROR, \
             status); \
     } \
-}
+} UPRV_BLOCK_MACRO_END
 
     VALID_RANGE_ONEARG(precision, Precision::fixedFraction, 0);
     VALID_RANGE_ONEARG(precision, Precision::minFraction, 0);
@@ -2931,10 +3404,26 @@ void NumberFormatterApiTest::toObject() {
     }
 }
 
+void NumberFormatterApiTest::toDecimalNumber() {
+    IcuTestErrorCode status(*this, "toDecimalNumber");
+    FormattedNumber fn = NumberFormatter::withLocale("bn-BD")
+        .scale(Scale::powerOfTen(2))
+        .precision(Precision::maxSignificantDigits(5))
+        .formatDouble(9.87654321e12, status);
+    assertEquals("Should have expected localized string result",
+        u"৯৮,৭৬,৫০,০০,০০,০০,০০০", fn.toString(status));
+    assertEquals(u"Should have expected toDecimalNumber string result",
+        "9.8765E+14", fn.toDecimalNumber<std::string>(status).c_str());
+}
 
-void NumberFormatterApiTest::assertFormatDescending(const char16_t* umessage, const char16_t* uskeleton,
-                                                    const UnlocalizedNumberFormatter& f, Locale locale,
-                                                    ...) {
+
+void NumberFormatterApiTest::assertFormatDescending(
+        const char16_t* umessage,
+        const char16_t* uskeleton,
+        const char16_t* conciseSkeleton,
+        const UnlocalizedNumberFormatter& f,
+        Locale locale,
+        ...) {
     va_list args;
     va_start(args, locale);
     UnicodeString message(TRUE, umessage, -1);
@@ -2968,14 +3457,34 @@ void NumberFormatterApiTest::assertFormatDescending(const char16_t* umessage, co
             UnicodeString actual3 = l3.formatDouble(d, status).toString(status);
             assertEquals(message + ": Skeleton Path: '" + normalized + "': " + d, expecteds[i], actual3);
         }
+        // Concise skeletons should have same output, and usually round-trip to the normalized skeleton.
+        // If the concise skeleton starts with '~', disable the round-trip check.
+        bool shouldRoundTrip = true;
+        if (conciseSkeleton[0] == u'~') {
+            conciseSkeleton++;
+            shouldRoundTrip = false;
+        }
+        LocalizedNumberFormatter l4 = NumberFormatter::forSkeleton(conciseSkeleton, status).locale(locale);
+        if (shouldRoundTrip) {
+            assertEquals(message + ": Concise Skeleton:", normalized, l4.toSkeleton(status));
+        }
+        for (int32_t i = 0; i < 9; i++) {
+            double d = inputs[i];
+            UnicodeString actual4 = l4.formatDouble(d, status).toString(status);
+            assertEquals(message + ": Concise Skeleton Path: '" + normalized + "': " + d, expecteds[i], actual4);
+        }
     } else {
         assertUndefinedSkeleton(f);
     }
 }
 
-void NumberFormatterApiTest::assertFormatDescendingBig(const char16_t* umessage, const char16_t* uskeleton,
-                                                       const UnlocalizedNumberFormatter& f, Locale locale,
-                                                       ...) {
+void NumberFormatterApiTest::assertFormatDescendingBig(
+        const char16_t* umessage,
+        const char16_t* uskeleton,
+        const char16_t* conciseSkeleton,
+        const UnlocalizedNumberFormatter& f,
+        Locale locale,
+        ...) {
     va_list args;
     va_start(args, locale);
     UnicodeString message(TRUE, umessage, -1);
@@ -3009,15 +3518,36 @@ void NumberFormatterApiTest::assertFormatDescendingBig(const char16_t* umessage,
             UnicodeString actual3 = l3.formatDouble(d, status).toString(status);
             assertEquals(message + ": Skeleton Path: '" + normalized + "': " + d, expecteds[i], actual3);
         }
+        // Concise skeletons should have same output, and usually round-trip to the normalized skeleton.
+        // If the concise skeleton starts with '~', disable the round-trip check.
+        bool shouldRoundTrip = true;
+        if (conciseSkeleton[0] == u'~') {
+            conciseSkeleton++;
+            shouldRoundTrip = false;
+        }
+        LocalizedNumberFormatter l4 = NumberFormatter::forSkeleton(conciseSkeleton, status).locale(locale);
+        if (shouldRoundTrip) {
+            assertEquals(message + ": Concise Skeleton:", normalized, l4.toSkeleton(status));
+        }
+        for (int32_t i = 0; i < 9; i++) {
+            double d = inputs[i];
+            UnicodeString actual4 = l4.formatDouble(d, status).toString(status);
+            assertEquals(message + ": Concise Skeleton Path: '" + normalized + "': " + d, expecteds[i], actual4);
+        }
     } else {
         assertUndefinedSkeleton(f);
     }
 }
 
 FormattedNumber
-NumberFormatterApiTest::assertFormatSingle(const char16_t* umessage, const char16_t* uskeleton,
-                                           const UnlocalizedNumberFormatter& f, Locale locale,
-                                           double input, const UnicodeString& expected) {
+NumberFormatterApiTest::assertFormatSingle(
+        const char16_t* umessage,
+        const char16_t* uskeleton,
+        const char16_t* conciseSkeleton,
+        const UnlocalizedNumberFormatter& f,
+        Locale locale,
+        double input,
+        const UnicodeString& expected) {
     UnicodeString message(TRUE, umessage, -1);
     const LocalizedNumberFormatter l1 = f.threshold(0).locale(locale); // no self-regulation
     const LocalizedNumberFormatter l2 = f.threshold(1).locale(locale); // all self-regulation
@@ -3039,6 +3569,19 @@ NumberFormatterApiTest::assertFormatSingle(const char16_t* umessage, const char1
         LocalizedNumberFormatter l3 = NumberFormatter::forSkeleton(normalized, status).locale(locale);
         UnicodeString actual3 = l3.formatDouble(input, status).toString(status);
         assertEquals(message + ": Skeleton Path: '" + normalized + "': " + input, expected, actual3);
+        // Concise skeletons should have same output, and usually round-trip to the normalized skeleton.
+        // If the concise skeleton starts with '~', disable the round-trip check.
+        bool shouldRoundTrip = true;
+        if (conciseSkeleton[0] == u'~') {
+            conciseSkeleton++;
+            shouldRoundTrip = false;
+        }
+        LocalizedNumberFormatter l4 = NumberFormatter::forSkeleton(conciseSkeleton, status).locale(locale);
+        if (shouldRoundTrip) {
+            assertEquals(message + ": Concise Skeleton:", normalized, l4.toSkeleton(status));
+        }
+        UnicodeString actual4 = l4.formatDouble(input, status).toString(status);
+        assertEquals(message + ": Concise Skeleton Path: '" + normalized + "': " + input, expected, actual4);
     } else {
         assertUndefinedSkeleton(f);
     }
@@ -3055,8 +3598,10 @@ void NumberFormatterApiTest::assertUndefinedSkeleton(const UnlocalizedNumberForm
 }
 
 void NumberFormatterApiTest::assertNumberFieldPositions(
-        const char16_t* message, const FormattedNumber& formattedNumber,
-        const UFieldPosition* expectedFieldPositions, int32_t length) {
+        const char16_t* message,
+        const FormattedNumber& formattedNumber,
+        const UFieldPosition* expectedFieldPositions,
+        int32_t length) {
     IcuTestErrorCode status(*this, "assertNumberFieldPositions");
 
     // Check FormattedValue functions
@@ -3067,64 +3612,6 @@ void NumberFormatterApiTest::assertNumberFieldPositions(
         UFIELD_CATEGORY_NUMBER,
         expectedFieldPositions,
         length);
-
-    // Check FormattedNumber-specific functions
-    UnicodeString baseMessage = UnicodeString(message) + u": " + formattedNumber.toString(status) + u": ";
-    FieldPositionIterator fpi;
-    formattedNumber.getAllFieldPositions(fpi, status);
-    int32_t i = 0;
-    FieldPosition actual;
-    while (fpi.next(actual)) {
-        UFieldPosition expected = expectedFieldPositions[i++];
-        assertEquals(
-                baseMessage + UnicodeString(u"Field, case #") + Int64ToUnicodeString(i),
-                expected.field,
-                actual.getField());
-        assertEquals(
-                baseMessage + UnicodeString(u"Iterator, begin, case #") + Int64ToUnicodeString(i),
-                expected.beginIndex,
-                actual.getBeginIndex());
-        assertEquals(
-                baseMessage + UnicodeString(u"Iterator, end, case #") + Int64ToUnicodeString(i),
-                expected.endIndex,
-                actual.getEndIndex());
-
-        // Check for the first location of the field
-        FieldPosition actual2(expected.field);
-        // Fast-forward the field to skip previous occurrences of the field:
-        actual2.setBeginIndex(expected.beginIndex);
-        actual2.setEndIndex(expected.beginIndex);
-        UBool found = formattedNumber.nextFieldPosition(actual2, status);
-        assertEquals(
-                baseMessage + UnicodeString(u"Next, found first, case #") + Int64ToUnicodeString(i),
-                (UBool) TRUE,
-                found);
-        assertEquals(
-                baseMessage + UnicodeString(u"Next, begin, case #") + Int64ToUnicodeString(i),
-                expected.beginIndex,
-                actual2.getBeginIndex());
-        assertEquals(
-                baseMessage + UnicodeString(u"Next, end, case #") + Int64ToUnicodeString(i),
-                expected.endIndex,
-                actual2.getEndIndex());
-
-        // The next position should be empty unless the field occurs again
-        UBool occursAgain = false;
-        for (int32_t j=i; j<length; j++) {
-            if (expectedFieldPositions[j].field == expected.field) {
-                occursAgain = true;
-                break;
-            }
-        }
-        if (!occursAgain) {
-            found = formattedNumber.nextFieldPosition(actual2, status);
-            assertEquals(
-                    baseMessage + UnicodeString(u"Next, found second, case #") + Int64ToUnicodeString(i),
-                    (UBool) FALSE,
-                    found);
-        }
-    }
-    assertEquals(baseMessage + u"Should have seen every field position", length, i);
 }
 
 

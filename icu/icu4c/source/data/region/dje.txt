@@ -126,7 +126,6 @@ dje{
         MD{"Moldovi"}
         MG{"Madagascar"}
         MH{"Maršal gungey"}
-        MK{"MK"}
         ML{"Maali"}
         MM{"Maynamar"}
         MN{"Mongooli"}
@@ -226,5 +225,5 @@ dje{
         ZM{"Zambi"}
         ZW{"Zimbabwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

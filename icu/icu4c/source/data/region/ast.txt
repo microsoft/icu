@@ -178,7 +178,6 @@ ast{
         MF{"Saint Martin"}
         MG{"Madagascar"}
         MH{"Islles Marshall"}
-        MK{"MK"}
         ML{"Malí"}
         MM{"Myanmar (Birmania)"}
         MN{"Mongolia"}
@@ -290,5 +289,5 @@ ast{
         ZW{"Zimbabue"}
         ZZ{"Rexón desconocida"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

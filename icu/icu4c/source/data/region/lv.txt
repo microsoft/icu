@@ -183,7 +183,7 @@ lv{
         ML{"Mali"}
         MM{"Mjanma (Birma)"}
         MN{"Mongolija"}
-        MO{"Ķīnas īpašās pārvaldes apgabals Makao"}
+        MO{"ĶTR īpašais administratīvais reģions Makao"}
         MP{"Ziemeļu Marianas salas"}
         MQ{"Martinika"}
         MR{"Mauritānija"}
@@ -249,7 +249,7 @@ lv{
         SV{"Salvadora"}
         SX{"Sintmārtena"}
         SY{"Sīrija"}
-        SZ{"Svazilenda"}
+        SZ{"Svatini"}
         TA{"Tristana da Kuņas salas"}
         TC{"Tērksas un Kaikosas salas"}
         TD{"Čada"}
@@ -291,5 +291,5 @@ lv{
         ZW{"Zimbabve"}
         ZZ{"nezināms reģions"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

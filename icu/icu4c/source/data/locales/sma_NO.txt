@@ -3,5 +3,5 @@
 sma_NO{
     ExemplarCharacters{"[a å æ b d e f g h i j k l m n o ø p r s t u v y]"}
     ExemplarCharactersIndex{"[A Å Æ B D E F G H I J K L M N O Ø P R S T U V Y]"}
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

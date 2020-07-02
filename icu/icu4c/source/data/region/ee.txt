@@ -175,7 +175,6 @@ ee{
         MF{"Saint Martin nutome"}
         MG{"Madagaska nutome"}
         MH{"Marshal ƒudomekpowo nutome"}
-        MK{"MK"}
         ML{"Mali nutome"}
         MM{"Myanmar (Burma) nutome"}
         MN{"Mongolia nutome"}
@@ -282,5 +281,5 @@ ee{
         ZW{"Zimbabwe nutome"}
         ZZ{"nutome manya"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -10,7 +10,7 @@ quc{
         "[A Ä {Bʼ} {CH} {CHʼ} E I J K {Kʼ} L M N O P Q {Qʼ} R S T {TZ} {TZʼ} {Tʼ} U V"
         " W X Y]"
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     layout{
         characters{"left-to-right"}
         lines{"top-to-bottom"}

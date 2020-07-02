@@ -215,7 +215,7 @@ hr{
         PH{"Filipini"}
         PK{"Pakistan"}
         PL{"Poljska"}
-        PM{"Sveti Petar i Mikelon"}
+        PM{"Saint-Pierre-et-Miquelon"}
         PN{"Otoci Pitcairn"}
         PR{"Portoriko"}
         PS{"Palestinska Samouprava"}
@@ -249,7 +249,7 @@ hr{
         SV{"Salvador"}
         SX{"Sint Maarten"}
         SY{"Sirija"}
-        SZ{"Svazi"}
+        SZ{"Esvatini"}
         TA{"Tristan da Cunha"}
         TC{"Otoci Turks i Caicos"}
         TD{"Čad"}
@@ -291,5 +291,5 @@ hr{
         ZW{"Zimbabve"}
         ZZ{"nepoznato područje"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

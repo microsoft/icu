@@ -249,7 +249,7 @@ gd{
         SV{"An Salbhador"}
         SX{"Sint Maarten"}
         SY{"Siridhea"}
-        SZ{"Dùthaich nan Suasaidh"}
+        SZ{"eSwatini"}
         TA{"Tristan da Cunha"}
         TC{"Na h-Eileanan Turcach is Caiceo"}
         TD{"An t-Seàd"}
@@ -291,5 +291,5 @@ gd{
         ZW{"An t-Sìombab"}
         ZZ{"Roinn-dùthcha neo-aithnichte"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

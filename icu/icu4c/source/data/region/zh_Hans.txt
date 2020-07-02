@@ -4,5 +4,5 @@ zh_Hans{
     Countries{
         PS{"巴勒斯坦权力机构"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -58,6 +58,7 @@ km{
         bug{"ប៊ុកហ្គី"}
         byn{"ប្ល៊ីន"}
         ca{"កាតាឡាន"}
+        ccp{"ចាក់ម៉ា"}
         ce{"ឈីឆេន"}
         ceb{"ស៊ីប៊ូអាណូ"}
         cgg{"ឈីហ្គា"}
@@ -521,7 +522,7 @@ km{
             tibt{"លេខទីបេ"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — ទាំងអស់"}
         category-list{"{0}: {1}"}

@@ -78,7 +78,7 @@ UnicodeStringTest::TestBasicManipulation()
     UnicodeString   expectedValue;
     UnicodeString   *c;
 
-    c=(UnicodeString *)test1.clone();
+    c=test1.clone();
     test1.insert(24, "good ");
     expectedValue = "Now is the time for all good men to come swiftly to the aid of the party.\n";
     if (test1 != expectedValue)
@@ -1255,7 +1255,7 @@ UnicodeStringTest::TestStackAllocation()
         errln("UnicodeString.setTo(readonly alias) does not alias correctly");
     }
 
-    UnicodeString *c=(UnicodeString *)test->clone();
+    UnicodeString *c=test->clone();
 
     workingBuffer[1] = 0x109;
     if(test->charAt(1) != 0x109) {

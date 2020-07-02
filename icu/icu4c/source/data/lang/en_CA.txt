@@ -2,6 +2,9 @@
 // License & terms of use: http://www.unicode.org/copyright.html#License
 en_CA{
     %%Parent{"en_001"}
+    Keys{
+        colNormalization{"Normalized Sorting"}
+    }
     Languages{
         bn{"Bengali"}
         mfe{"Mauritian"}
@@ -20,5 +23,5 @@ en_CA{
             upper{"To Upper Case"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

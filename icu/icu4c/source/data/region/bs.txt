@@ -112,7 +112,7 @@ bs{
         FO{"Farska ostrva"}
         FR{"Francuska"}
         GA{"Gabon"}
-        GB{"Velika Britanija"}
+        GB{"Ujedinjeno Kraljevstvo"}
         GD{"Grenada"}
         GE{"Gruzija"}
         GF{"Francuska Gvajana"}
@@ -249,7 +249,7 @@ bs{
         SV{"Salvador"}
         SX{"Sint Marten"}
         SY{"Sirija"}
-        SZ{"Svazilend"}
+        SZ{"Esvatini"}
         TA{"Tristan da Cunha"}
         TC{"Ostrva Turks i Kaikos"}
         TD{"Čad"}
@@ -271,7 +271,7 @@ bs{
         UG{"Uganda"}
         UM{"Američka Vanjska Ostrva"}
         UN{"Ujedinjene Nacije"}
-        US{"Sjedinjene Američke Države"}
+        US{"Sjedinjene Države"}
         UY{"Urugvaj"}
         UZ{"Uzbekistan"}
         VA{"Vatikan"}
@@ -291,5 +291,5 @@ bs{
         ZW{"Zimbabve"}
         ZZ{"Nepoznata oblast"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

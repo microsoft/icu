@@ -12,5 +12,5 @@ wal{
         native{"latn"}
         traditional{"ethi"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -249,7 +249,7 @@ sk{
         SV{"Salvádor"}
         SX{"Svätý Martin (hol.)"}
         SY{"Sýria"}
-        SZ{"Svazijsko"}
+        SZ{"Eswatini"}
         TA{"Tristan da Cunha"}
         TC{"Turks a Caicos"}
         TD{"Čad"}
@@ -291,5 +291,5 @@ sk{
         ZW{"Zimbabwe"}
         ZZ{"neznámy región"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

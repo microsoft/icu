@@ -130,7 +130,7 @@ az{
         GU{"Quam"}
         GW{"Qvineya-Bisau"}
         GY{"Qayana"}
-        HK{"Honq Konq Xüsusi İnzibati Ərazi Çin"}
+        HK{"Honq Konq Xüsusi İnzibati Rayonu Çin"}
         HM{"Herd və Makdonald adaları"}
         HN{"Honduras"}
         HR{"Xorvatiya"}
@@ -183,7 +183,7 @@ az{
         ML{"Mali"}
         MM{"Myanma"}
         MN{"Monqolustan"}
-        MO{"Makao Xüsusi İnzibati Ərazi Çin"}
+        MO{"Makao XİR Çin"}
         MP{"Şimali Marian adaları"}
         MQ{"Martinik"}
         MR{"Mavritaniya"}
@@ -291,5 +291,5 @@ az{
         ZW{"Zimbabve"}
         ZZ{"Naməlum Region"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

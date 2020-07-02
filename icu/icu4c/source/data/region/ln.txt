@@ -132,7 +132,6 @@ ln{
         ME{"Monténégro"}
         MG{"Madagasikari"}
         MH{"Bisanga bya Marishalɛ"}
-        MK{"MK"}
         ML{"Malí"}
         MM{"Birmanie"}
         MN{"Mongolí"}
@@ -234,5 +233,5 @@ ln{
         ZM{"Zambi"}
         ZW{"Zimbabwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

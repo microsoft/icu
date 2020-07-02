@@ -515,14 +515,13 @@ chr{
             tibt{"ᏘᏇᏔᏂ ᏗᏎᏍᏗ"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — ᏂᎦᏓ"}
         category-list{"{0}: {1}"}
         compatibility{"{0} — ᎤᏠᏯᏉᏗᏙᎵᎩ"}
         enclosed{"{0} — ᎠᏠᏯᏍᏔᏅ"}
         extended{"{0} — ᎦᏅᎯᏓ"}
-        historic{"{0} — ᎤᎵᏍᎨᏗ ᏂᏧᎵᏍᏔᏅᏍᏔᏅ"}
         miscellaneous{"{0} — ᏧᏓᎴᏅᏛ"}
         other{"{0} — ᏐᎢ"}
         scripts{"ᏗᎧᏁᎢᏍᏗ — {0}"}

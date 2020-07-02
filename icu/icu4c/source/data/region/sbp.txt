@@ -127,7 +127,6 @@ sbp{
         MD{"Molidova"}
         MG{"Bukini"}
         MH{"Figunguli ifya Malishali"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Muyama"}
         MN{"Mongoliya"}
@@ -227,5 +226,5 @@ sbp{
         ZM{"Sambiya"}
         ZW{"Simbabwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

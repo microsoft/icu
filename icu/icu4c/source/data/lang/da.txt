@@ -91,6 +91,7 @@ da{
         car{"caribisk"}
         cay{"cayuga"}
         cch{"atsam"}
+        ccp{"chakma"}
         ce{"tjetjensk"}
         ceb{"cebuano"}
         cgg{"chiga"}
@@ -538,6 +539,7 @@ da{
     Scripts{
         Afak{"afaka"}
         Arab{"arabisk"}
+        Aran{"nastaliq"}
         Armi{"armi"}
         Armn{"armensk"}
         Avst{"avestansk"}
@@ -648,6 +650,7 @@ da{
         Phnx{"fønikisk"}
         Plrd{"pollardtegn"}
         Prti{"prti"}
+        Qaag{"zawgyi"}
         Rjng{"rejang"}
         Roro{"rongo-rongo"}
         Runr{"runer"}
@@ -901,7 +904,6 @@ da{
         KSCOR{"standardortografi"}
         LAUKIKA{"laukika"}
         LIPAW{"lipovaz"}
-        LUNA1918{"LUNA1918"}
         METELKO{"Metelko-alfabet"}
         MONOTON{"monotonisk"}
         NDYUKA{"Ndyuka-dialekt"}
@@ -910,19 +912,15 @@ da{
         NULIK{"moderne volapük"}
         OSOJS{"Oseacco-/Osojane-dialekt"}
         PAMAKA{"Pamaka-dialekt"}
-        PETR1708{"PETR1708"}
         PINYIN{"pinyin"}
         POLYTON{"polytonisk"}
         POSIX{"computer"}
-        PUTER{"PUTER"}
         REVISED{"revideret retskrivning"}
         RIGIK{"klassisk volapük"}
         ROZAJ{"Resi"}
-        RUMGR{"RUMGR"}
         SAAHO{"saho"}
         SCOTLAND{"skotsk standardengelsk"}
         SCOUSE{"scouse"}
-        SOLBA{"SOLBA"}
         SURMIRAN{"surmiran"}
         SURSILV{"sursilv"}
         SUTSILV{"sutsilv"}
@@ -935,7 +933,7 @@ da{
         VALLADER{"vallader"}
         WADEGILE{"Wade-Giles"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} – alle"}
         category-list{"{0}: {1}"}

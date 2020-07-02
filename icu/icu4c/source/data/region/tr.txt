@@ -77,7 +77,7 @@ tr{
         CF{"Orta Afrika Cumhuriyeti"}
         CG{"Kongo - Brazavil"}
         CH{"İsviçre"}
-        CI{"Fildişi Sahili"}
+        CI{"Côte d’Ivoire"}
         CK{"Cook Adaları"}
         CL{"Şili"}
         CM{"Kamerun"}
@@ -224,7 +224,7 @@ tr{
         PY{"Paraguay"}
         QA{"Katar"}
         QO{"Uzak Okyanusya"}
-        RE{"Réunion"}
+        RE{"Reunion"}
         RO{"Romanya"}
         RS{"Sırbistan"}
         RU{"Rusya"}
@@ -245,7 +245,7 @@ tr{
         SO{"Somali"}
         SR{"Surinam"}
         SS{"Güney Sudan"}
-        ST{"São Tomé ve Príncipe"}
+        ST{"Sao Tome ve Principe"}
         SV{"El Salvador"}
         SX{"Sint Maarten"}
         SY{"Suriye"}
@@ -291,5 +291,5 @@ tr{
         ZW{"Zimbabve"}
         ZZ{"Bilinmeyen Bölge"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

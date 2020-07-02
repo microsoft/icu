@@ -53,6 +53,8 @@ ig{
         Cyrl{"Mkpụrụ Okwu Cyrillic"}
         Hans{"Nke dị mfe"}
         Hant{"Izugbe"}
+        Jpan{"Japanese"}
+        Kore{"Korea"}
         Latn{"Latin"}
         Zxxx{"Edeghị ede"}
         Zzzz{"Mkpụrụ okwu amaghị"}
@@ -64,6 +66,7 @@ ig{
     Types{
         calendar{
             gregorian{"Kalenda Gregory"}
+            iso8601{"Kalenda ISO-8601"}
         }
         collation{
             standard{"Usoro Nhazi"}
@@ -72,15 +75,10 @@ ig{
             latn{"Ọnụ Ọgụgụ Mpaghara Ọdịda Anyanwụ"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     codePatterns{
         language{"Asụsụ: {0}"}
         script{"Mkpụrụ Okwu: {0}"}
         territory{"Mpaghara: {0}"}
-    }
-    localeDisplayPattern{
-        keyTypePattern{"{0}: {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }
