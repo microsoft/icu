@@ -13,28 +13,29 @@ The modifications are generally for the following reasons:
  - Changes to the fr-FR locale to use NBSP instead of NNBSP (U+00a0
    instead of U+202F) for NLS compatibility.
  - Removal of the yue-* locales.
+
 ---
  icu/icu/icu4c/source/test/cintltst/cldrtest.c | 29 ++++++++-
  icu/icu/icu4c/source/test/cintltst/cloctst.c  |  6 +-
  icu/icu/icu4c/source/test/cintltst/cnmdptst.c |  6 +-
- icu/icu/icu4c/source/test/cintltst/creststn.c |  2 +-
  .../icu4c/source/test/intltest/apicoll.cpp    | 24 +++----
  .../icu4c/source/test/intltest/dtptngts.cpp   | 19 +++++-
  .../icu4c/source/test/intltest/locnmtst.cpp   |  8 ++-
  .../source/test/intltest/numbertest_api.cpp   | 16 +++--
+ .../intltest/numbertest_decimalquantity.cpp   | 10 +--
  .../source/test/intltest/numbertest_range.cpp | 12 ++--
- .../source/test/intltest/numfmtspectest.cpp   | 64 +++++++++++--------
+ .../source/test/intltest/numfmtspectest.cpp   | 65 +++++++++++--------
  .../icu4c/source/test/intltest/numfmtst.cpp   | 16 +++--
  .../icu4c/source/test/intltest/numrgts.cpp    | 28 +++++---
  .../icu4c/source/test/intltest/tsmthred.cpp   |  6 +-
- .../numberformattestspecification.txt         | 32 +++++-----
- 14 files changed, 179 insertions(+), 89 deletions(-)
+ .../numberformattestspecification.txt         | 32 ++++-----
+ 14 files changed, 184 insertions(+), 93 deletions(-)
 
 diff --git a/icu/icu/icu4c/source/test/cintltst/cldrtest.c b/icu/icu/icu4c/source/test/cintltst/cldrtest.c
-index 1c0f8e28..7b21e019 100644
+index 87ae093c..9d5f0e1f 100644
 --- a/icu/icu/icu4c/source/test/cintltst/cldrtest.c
 +++ b/icu/icu/icu4c/source/test/cintltst/cldrtest.c
-@@ -957,6 +957,26 @@ static void VerifyTranslation(void) {
+@@ -958,6 +958,26 @@ static void VerifyTranslation(void) {
          //else if (uprv_strncmp(currLoc,"bem",3) == 0 || uprv_strncmp(currLoc,"mgo",3) == 0 || uprv_strncmp(currLoc,"nl",2) == 0) {
          //    log_verbose("skipping test for %s, some month and country names known to use aux exemplars\n", currLoc);
          //}
@@ -61,7 +62,7 @@ index 1c0f8e28..7b21e019 100644
          else {
              UChar langBuffer[128];
              int32_t langSize;
-@@ -1231,7 +1251,14 @@ static void TestExemplarSet(void){
+@@ -1232,7 +1252,14 @@ static void TestExemplarSet(void){
              }
  
              if (existsInScript == FALSE){
@@ -78,10 +79,10 @@ index 1c0f8e28..7b21e019 100644
          }
          assertTrue("case-folded is a superset",
 diff --git a/icu/icu/icu4c/source/test/cintltst/cloctst.c b/icu/icu/icu4c/source/test/cintltst/cloctst.c
-index 4809f5cb..027c84dc 100644
+index 22a05055..2a228274 100644
 --- a/icu/icu/icu4c/source/test/cintltst/cloctst.c
 +++ b/icu/icu/icu4c/source/test/cintltst/cloctst.c
-@@ -1062,8 +1062,10 @@ typedef struct {
+@@ -1134,8 +1134,10 @@ typedef struct {
  
  static const DisplayNameBracketsItem displayNameBracketsItems[] = {
      { "en", "CC", "en_CC",      "Cocos (Keeling) Islands",  "English (Cocos [Keeling] Islands)"  },
@@ -95,10 +96,10 @@ index 4809f5cb..027c84dc 100644
      { "zh", "CG", "fr_CG",      "\\u521A\\u679C\\uFF08\\u5E03\\uFF09",                             "\\u6CD5\\u8BED\\uFF08\\u521A\\u679C\\uFF3B\\u5E03\\uFF3D\\uFF09" },
      { NULL, NULL, NULL,         NULL,                       NULL                                 }
 diff --git a/icu/icu/icu4c/source/test/cintltst/cnmdptst.c b/icu/icu/icu4c/source/test/cintltst/cnmdptst.c
-index 1af298e1..bfa2aa99 100644
+index a40db7c4..195df79b 100644
 --- a/icu/icu/icu4c/source/test/cintltst/cnmdptst.c
 +++ b/icu/icu/icu4c/source/test/cintltst/cnmdptst.c
-@@ -476,10 +476,12 @@ static void TestCurrencyObject(void)
+@@ -478,10 +478,12 @@ static void TestCurrencyObject(void)
          "JPY",
      };
  
@@ -113,21 +114,8 @@ index 1af298e1..bfa2aa99 100644
  
      log_verbose("\nTesting the number format with different currency codes\n");
      for(i=0; i < 2; i++)
-diff --git a/icu/icu/icu4c/source/test/cintltst/creststn.c b/icu/icu/icu4c/source/test/cintltst/creststn.c
-index a19723ba..ae756a89 100644
---- a/icu/icu/icu4c/source/test/cintltst/creststn.c
-+++ b/icu/icu/icu4c/source/test/cintltst/creststn.c
-@@ -2137,7 +2137,7 @@ static void TestFallback()
-         UResourceBundle* tResB;
-         UResourceBundle* zoneResource;
-         const UChar* version = NULL;
--        static const UChar versionStr[] = { 0x0032, 0x002E, 0x0031, 0x002E, 0x0034, 0x0037, 0x002E, 0x0038, 0x0032, 0x0000}; // 2.1.47.82 in nn_NO
-+        static const UChar versionStr[] = { 0x0032, 0x002E, 0x0031, 0x002E, 0x0035, 0x0030, 0x002E, 0x0036, 0x0000}; // 2.1.50.6 in nn_NO
- 
-         if(err != U_ZERO_ERROR){
-             log_data_err("Expected U_ZERO_ERROR when trying to test no_NO_NY aliased to nn_NO for Version err=%s\n",u_errorName(err));
 diff --git a/icu/icu/icu4c/source/test/intltest/apicoll.cpp b/icu/icu/icu4c/source/test/intltest/apicoll.cpp
-index b08211a1..92edc83f 100644
+index 88eefa92..249d9874 100644
 --- a/icu/icu/icu4c/source/test/intltest/apicoll.cpp
 +++ b/icu/icu/icu4c/source/test/intltest/apicoll.cpp
 @@ -1664,18 +1664,20 @@ void CollationAPITest::TestGetLocale() {
@@ -163,14 +151,14 @@ index b08211a1..92edc83f 100644
  
    u_unescape(rules, rlz, 256);
 diff --git a/icu/icu/icu4c/source/test/intltest/dtptngts.cpp b/icu/icu/icu4c/source/test/intltest/dtptngts.cpp
-index 800aba7b..f77831cd 100644
+index 3a0f9edb..65e33cc3 100644
 --- a/icu/icu/icu4c/source/test/intltest/dtptngts.cpp
 +++ b/icu/icu/icu4c/source/test/intltest/dtptngts.cpp
-@@ -1334,7 +1334,24 @@ void IntlTestDateTimePatternGeneratorAPI::testJjMapping() {
-                      jcBuf[1] = 0;
+@@ -1396,7 +1396,24 @@ void IntlTestDateTimePatternGeneratorAPI::testJjMapping() {
                       shortPattern.extract(0, shortPattern.length(), spBuf, 32);
+                      jPattern.extract(0, jPattern.length(), jpBuf, 32);
                       const char* dfmtCalType = (dfmt->getCalendar())->getType();
--                     errln("ERROR: locale %s, expected j resolved char %s to occur in short time pattern %s for %s", localeID, jcBuf, spBuf, dfmtCalType);
+-                     errln("ERROR: locale %s, expected j resolved char %s to occur in short time pattern '%s' for %s (best pattern: '%s')", localeID, jcBuf, spBuf, dfmtCalType, jpBuf);
 +                     /* MSFT Change: Begin */
 +                     if (
 +                        uprv_strncmp(localeID, "byn", 3) == 0 || uprv_strncmp(localeID, "byn_ER", 6) == 0   ||
@@ -193,10 +181,10 @@ index 800aba7b..f77831cd 100644
                   break;
               }
 diff --git a/icu/icu/icu4c/source/test/intltest/locnmtst.cpp b/icu/icu/icu4c/source/test/intltest/locnmtst.cpp
-index a9ed5e64..4bba7fa1 100644
+index 26f730d4..f9594600 100644
 --- a/icu/icu/icu4c/source/test/intltest/locnmtst.cpp
 +++ b/icu/icu/icu4c/source/test/intltest/locnmtst.cpp
-@@ -69,10 +69,14 @@ void LocaleDisplayNamesTest::runIndexedTest(int32_t index, UBool exec, const cha
+@@ -68,10 +68,14 @@ void LocaleDisplayNamesTest::runIndexedTest(int32_t index, UBool exec, const cha
      switch (index) {
  #if !UCONFIG_NO_FORMATTING
          TESTCASE(0, TestCreate);
@@ -214,10 +202,10 @@ index a9ed5e64..4bba7fa1 100644
          TESTCASE(6, TestUldnComponents);
          TESTCASE(7, TestRootEtc);
 diff --git a/icu/icu/icu4c/source/test/intltest/numbertest_api.cpp b/icu/icu/icu4c/source/test/intltest/numbertest_api.cpp
-index 68a0e7ba..4efb6e0a 100644
+index c586603b..f85a9c49 100644
 --- a/icu/icu/icu4c/source/test/intltest/numbertest_api.cpp
 +++ b/icu/icu/icu4c/source/test/intltest/numbertest_api.cpp
-@@ -1690,8 +1690,10 @@ void NumberFormatterApiTest::symbols() {
+@@ -1959,8 +1959,10 @@ void NumberFormatterApiTest::symbols() {
              nullptr,
              NumberFormatter::with().symbols(FRENCH_SYMBOLS),
              Locale::getJapan(),
@@ -230,7 +218,7 @@ index 68a0e7ba..4efb6e0a 100644
              u"876,5",
              u"87,65",
              u"8,765",
-@@ -1728,8 +1730,10 @@ void NumberFormatterApiTest::symbols() {
+@@ -2000,8 +2002,10 @@ void NumberFormatterApiTest::symbols() {
              u"numbering-system/mathsanb",
              NumberFormatter::with().adoptSymbols(new NumberingSystem(MATHSANB)),
              Locale::getFrench(),
@@ -243,7 +231,7 @@ index 68a0e7ba..4efb6e0a 100644
              u"𝟴𝟳𝟲,𝟱",
              u"𝟴𝟳,𝟲𝟱",
              u"𝟴,𝟳𝟲𝟱",
-@@ -2229,7 +2233,9 @@ void NumberFormatterApiTest::locale() {
+@@ -2630,7 +2634,9 @@ void NumberFormatterApiTest::locale() {
      UErrorCode status = U_ZERO_ERROR;
      UnicodeString actual = NumberFormatter::withLocale(Locale::getFrench()).formatInt(1234, status)
              .toString(status);
@@ -253,7 +241,46 @@ index 68a0e7ba..4efb6e0a 100644
 +    /* MSFT Change: End */
  }
  
- void NumberFormatterApiTest::formatTypes() {
+ void NumberFormatterApiTest::skeletonUserGuideExamples() {
+diff --git a/icu/icu/icu4c/source/test/intltest/numbertest_decimalquantity.cpp b/icu/icu/icu4c/source/test/intltest/numbertest_decimalquantity.cpp
+index 8cb0ac0d..1d3def4f 100644
+--- a/icu/icu/icu4c/source/test/intltest/numbertest_decimalquantity.cpp
++++ b/icu/icu/icu4c/source/test/intltest/numbertest_decimalquantity.cpp
+@@ -483,17 +483,18 @@ void DecimalQuantityTest::testCompactDecimalSuppressedExponent() {
+         int32_t expectedSuppressedExponent;
+     } cases[] = {
+         // unlocalized formatter skeleton, input, string output, long output, double output, BigDecimal output, plain string, suppressed exponent
+-        {u"",              123456789, u"123 456 789",  123456789L, 123456789.0, u"123456789", 0},
++        /* MSFT Change: Begin */
++        {u"",              123456789, u"123\u00A0456\u00A0789",  123456789L, 123456789.0, u"123456789", 0},
+         {u"compact-long",  123456789, u"123 millions", 123000000L, 123000000.0, u"123000000", 6},
+         {u"compact-short", 123456789, u"123 M",        123000000L, 123000000.0, u"123000000", 6},
+         {u"scientific",    123456789, u"1,234568E8",   123456800L, 123456800.0, u"123456800", 8},
+ 
+-        {u"",              1234567, u"1 234 567",   1234567L, 1234567.0, u"1234567", 0},
++        {u"",              1234567, u"1\u00A0234\u00A0567",   1234567L, 1234567.0, u"1234567", 0},
+         {u"compact-long",  1234567, u"1,2 million", 1200000L, 1200000.0, u"1200000", 6},
+         {u"compact-short", 1234567, u"1,2 M",       1200000L, 1200000.0, u"1200000", 6},
+         {u"scientific",    1234567, u"1,234567E6",  1234567L, 1234567.0, u"1234567", 6},
+ 
+-        {u"",              123456, u"123 456",   123456L, 123456.0, u"123456", 0},
++        {u"",              123456, u"123\u00A0456",   123456L, 123456.0, u"123456", 0},
+         {u"compact-long",  123456, u"123 mille", 123000L, 123000.0, u"123000", 3},
+         {u"compact-short", 123456, u"123 k",     123000L, 123000.0, u"123000", 3},
+         {u"scientific",    123456, u"1,23456E5", 123456L, 123456.0, u"123456", 5},
+@@ -523,10 +524,11 @@ void DecimalQuantityTest::testCompactDecimalSuppressedExponent() {
+         {u"compact-short", 999.9, u"1 k",       1000L, 1000.0, u"1000",  3},
+         {u"scientific",    999.9, u"9,999E2",   999L,  999.9,  u"999.9", 2},
+ 
+-        {u"",              1000.0, u"1 000",     1000L, 1000.0, u"1000", 0},
++        {u"",              1000.0, u"1\u00A0000",     1000L, 1000.0, u"1000", 0},
+         {u"compact-long",  1000.0, u"1 millier", 1000L, 1000.0, u"1000", 3},
+         {u"compact-short", 1000.0, u"1 k",       1000L, 1000.0, u"1000", 3},
+         {u"scientific",    1000.0, u"1E3",       1000L, 1000.0, u"1000", 3},
++        /* MSFT Change: End */
+     };
+     for (const auto& cas : cases) {
+         // test the helper methods used to compute plural operand values
 diff --git a/icu/icu/icu4c/source/test/intltest/numbertest_range.cpp b/icu/icu/icu4c/source/test/intltest/numbertest_range.cpp
 index 75816ba9..fe22e348 100644
 --- a/icu/icu/icu4c/source/test/intltest/numbertest_range.cpp
@@ -278,7 +305,7 @@ index 75816ba9..fe22e348 100644
      assertFormatRange(
          u"Locale with custom range separator",
 diff --git a/icu/icu/icu4c/source/test/intltest/numfmtspectest.cpp b/icu/icu/icu4c/source/test/intltest/numfmtspectest.cpp
-index 99af1c27..8725ed34 100644
+index 99af1c27..3dc0e5b8 100644
 --- a/icu/icu/icu4c/source/test/intltest/numfmtspectest.cpp
 +++ b/icu/icu/icu4c/source/test/intltest/numfmtspectest.cpp
 @@ -89,14 +89,16 @@ void NumberFormatSpecificationTest::runIndexedTest(
@@ -314,7 +341,7 @@ index 99af1c27..8725ed34 100644
  }
  
  void NumberFormatSpecificationTest::TestRounding() {
-@@ -121,20 +125,24 @@ void NumberFormatSpecificationTest::TestRounding() {
+@@ -121,20 +125,23 @@ void NumberFormatSpecificationTest::TestRounding() {
      assertPatternFr("8", 10.0, "4", TRUE);
      assertPatternFr("99,90", 99.0, "2.70", TRUE);
      assertPatternFr("273,00", 272.0, "2.73", TRUE);
@@ -325,7 +352,7 @@ index 99af1c27..8725ed34 100644
  }
  
  void NumberFormatSpecificationTest::TestSignificantDigits() {
-     assertPatternFr("1230", 1234.0, "@@@", TRUE);
+-    assertPatternFr("1230", 1234.0, "@@@", TRUE);
 -    assertPatternFr("1\\u202F234", 1234.0, "@,@@@", TRUE);
 -    assertPatternFr("1\\u202F235\\u202F000", 1234567.0, "@,@@@", TRUE);
 -    assertPatternFr("1\\u202F234\\u202F567", 1234567.0, "@@@@,@@@", TRUE);
@@ -349,7 +376,7 @@ index 99af1c27..8725ed34 100644
  }
  
  void NumberFormatSpecificationTest::TestScientificNotation() {
-@@ -159,8 +167,10 @@ void NumberFormatSpecificationTest::TestPercent() {
+@@ -159,8 +166,10 @@ void NumberFormatSpecificationTest::TestPercent() {
      assertPatternFr("p%p57,3", 0.573, "p%p0.0", TRUE);
      assertPatternFr("p%p0,6", 0.573, "p'%'p0.0", TRUE);
      assertPatternFr("%3,260", 0.0326, "%@@@@", TRUE);
@@ -362,7 +389,7 @@ index 99af1c27..8725ed34 100644
      assertPatternFr("%16,3E3", 162.55, "%##0.00E0", TRUE);
  }
  
-@@ -170,18 +180,22 @@ void NumberFormatSpecificationTest::TestPerMilli() {
+@@ -170,18 +179,22 @@ void NumberFormatSpecificationTest::TestPerMilli() {
      assertPatternFr("p\\u2030p573,0", 0.573, "p\\u2030p0.0", TRUE);
      assertPatternFr("p\\u2030p0,6", 0.573, "p'\\u2030'p0.0", TRUE);
      assertPatternFr("\\u203032,60", 0.0326, "\\u2030@@@@", TRUE);
@@ -394,10 +421,10 @@ index 99af1c27..8725ed34 100644
      assertPatternFr("EUR *433,00", 433.0, "\\u00a4\\u00a4 **####0.00");
      assertPatternFr("EUR *433,00", 433.0, "\\u00a4\\u00a4 **#######0");
 diff --git a/icu/icu/icu4c/source/test/intltest/numfmtst.cpp b/icu/icu/icu4c/source/test/intltest/numfmtst.cpp
-index 5c0e8490..f964127b 100644
+index 5a26a7a5..b61bf526 100644
 --- a/icu/icu/icu4c/source/test/intltest/numfmtst.cpp
 +++ b/icu/icu/icu4c/source/test/intltest/numfmtst.cpp
-@@ -188,7 +188,9 @@ void NumberFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &n
+@@ -199,7 +199,9 @@ void NumberFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &n
    TESTCASE_AUTO(Test11640_getAffixes);
    TESTCASE_AUTO(Test11649_toPatternWithMultiCurrency);
    TESTCASE_AUTO(Test13327_numberingSystemBufferOverflow);
@@ -408,7 +435,7 @@ index 5c0e8490..f964127b 100644
    TESTCASE_AUTO(Test11735_ExceptionIssue);
    TESTCASE_AUTO(Test11035_FormatCurrencyAmount);
    TESTCASE_AUTO(Test11318_DoubleConversion);
-@@ -1004,19 +1006,21 @@ void NumberFormatTest::TestCurrencyObject() {
+@@ -1019,19 +1021,21 @@ void NumberFormatTest::TestCurrencyObject() {
          return;
      }
  
@@ -436,7 +463,7 @@ index 5c0e8490..f964127b 100644
      delete fmt;
  }
 diff --git a/icu/icu/icu4c/source/test/intltest/numrgts.cpp b/icu/icu/icu4c/source/test/intltest/numrgts.cpp
-index fe244baf..2c12629a 100644
+index 7bdb5f86..49a7cf18 100644
 --- a/icu/icu/icu4c/source/test/intltest/numrgts.cpp
 +++ b/icu/icu/icu4c/source/test/intltest/numrgts.cpp
 @@ -548,10 +548,12 @@ void NumberFormatRegressionTest::Test4086575(void)
@@ -479,7 +506,7 @@ index fe244baf..2c12629a 100644
      UnicodeString cc1(c1, 10, 10);
      if (buffer != cc1)
          errln("nf : " + buffer); // Expect (1 234,00)
-@@ -898,20 +904,22 @@ void NumberFormatRegressionTest::Test4070798 (void)
+@@ -896,20 +902,22 @@ void NumberFormatRegressionTest::Test4070798 (void)
      NumberFormat *formatter;
      UnicodeString tempString;
      
@@ -509,7 +536,7 @@ index fe244baf..2c12629a 100644
      UnicodeString expectedCurrency(chars2, 10, 10);
      UnicodeString expectedPercent(chars3, 10, 10);
 diff --git a/icu/icu/icu4c/source/test/intltest/tsmthred.cpp b/icu/icu/icu4c/source/test/intltest/tsmthred.cpp
-index 396c490f..c67eb9fa 100644
+index 98e04869..b43ca33e 100644
 --- a/icu/icu/icu4c/source/test/intltest/tsmthred.cpp
 +++ b/icu/icu/icu4c/source/test/intltest/tsmthred.cpp
 @@ -518,13 +518,15 @@ class FormatThreadTest : public SimpleThread
@@ -531,10 +558,10 @@ index 396c490f..c67eb9fa 100644
          int32_t kPercentFormatTestDataLength = UPRV_LENGTHOF(kPercentFormatTestData);
          int32_t iteration;
 diff --git a/icu/icu/icu4c/source/test/testdata/numberformattestspecification.txt b/icu/icu/icu4c/source/test/testdata/numberformattestspecification.txt
-index b48cc6c3..8e7b415a 100644
+index aa4fa3c3..9a98ec87 100644
 --- a/icu/icu/icu4c/source/test/testdata/numberformattestspecification.txt
 +++ b/icu/icu/icu4c/source/test/testdata/numberformattestspecification.txt
-@@ -34,14 +34,14 @@ set format 1234.567
+@@ -33,14 +33,14 @@ set format 1234.567
  begin
  pattern	output	breaks
  // K does not use \u202f narrow space
@@ -552,7 +579,7 @@ index b48cc6c3..8e7b415a 100644
  'tick''bitten '0.00	tick'bitten 1234,57
  'tick' 'bitten '0.00	tick bitten 1234,57
  
-@@ -152,7 +152,7 @@ pattern	format	output	breaks
+@@ -151,7 +151,7 @@ pattern	format	output	breaks
  4	10.0	8	K
  2.70	99.0	99,90	K
  2.73	272.0	273,00	K
@@ -561,7 +588,7 @@ index b48cc6c3..8e7b415a 100644
  
  test significant digits
  set locale en
-@@ -236,9 +236,9 @@ pattern	format	output	breaks
+@@ -235,9 +235,9 @@ pattern	format	output	breaks
  p%p0.0	0.573	p%p57,3
  p'%'p0.0	0.573	p%p0,6
  %@@@@	0.0326	%3,260	K
@@ -573,7 +600,7 @@ index b48cc6c3..8e7b415a 100644
  // JDK gives %16,255E3
  %##0.00E0	162.55	%16,3E3	K
  
-@@ -251,8 +251,8 @@ pattern	format	output	breaks
+@@ -250,8 +250,8 @@ pattern	format	output	breaks
  p\u2030p0.0	0.573	p\u2030p573,0
  p'\u2030'p0.0	0.573	p\u2030p0,6
  \u2030@@@@	0.0326	\u203032,60	K
@@ -584,7 +611,7 @@ index b48cc6c3..8e7b415a 100644
  // JDK gives \u2030162,55E3
  \u2030##0.00E0	162.55	\u2030163E3	K
  
-@@ -261,13 +261,13 @@ set locale fr_FR
+@@ -260,13 +260,13 @@ set locale fr_FR
  begin
  pattern	format	output	breaks
  // JDK does not seem to support padding
@@ -603,8 +630,8 @@ index b48cc6c3..8e7b415a 100644
 +####,##0$*x;n#'*'	-1234	n1\u00a0234*xx	K
  *y%4.2######	4.33	yyyy%432,6	K
  // In J ICU adds padding as if 'EUR' is only 2 chars (2 * 0xa4)
- \u00a4\u00a4 **####0.00	433.0	EUR *433,00	HK
-@@ -290,10 +290,10 @@ set format 1234.567
+ \u00a4\u00a4 **####0.00	433.0	EUR *433,00	K
+@@ -288,10 +288,10 @@ set format 1234.567
  begin
  pattern	currency	output	breaks
  // JDK gives shows EUR instead of the euro symbol in this case
