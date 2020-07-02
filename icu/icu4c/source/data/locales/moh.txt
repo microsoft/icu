@@ -7,7 +7,26 @@ moh{
         " {ì\\:} k n o ó ò {o\\:} {ó\\:} {ò\\:} r s t w y ʼ]"
     }
     ExemplarCharactersIndex{"[A E H I K N O R S T W Y]"}
-    Version{"2.1.50.6"}
+    Version{"37"}
+    calendar{
+        gregorian{
+            DateTimePatterns{
+                "h:mm:ss a zzzz",
+                "h:mm:ss a z",
+                "h:mm:ss a",
+                "h:mm a",
+                "y MMMM d, EEEE",
+                "y MMMM d",
+                "y MMM d",
+                "y-MM-dd",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+            }
+        }
+    }
     layout{
         characters{"left-to-right"}
         lines{"top-to-bottom"}

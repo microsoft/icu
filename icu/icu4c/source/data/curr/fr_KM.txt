@@ -7,5 +7,5 @@ fr_KM{
             "franc comorien",
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

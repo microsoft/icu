@@ -177,7 +177,6 @@ ksh{
         MF{"de Zint-Määtes-Ensel"}
         MG{"Maddajaska"}
         MH{"de Machschall-Enselle"}
-        MK{"MK"}
         ML{"Maali"}
         MM{"Birma"}
         MN{"Mongjolei"}
@@ -288,5 +287,5 @@ ksh{
         ZW{"Simbabwe"}
         ZZ{"- Jähjend onbikannt -"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

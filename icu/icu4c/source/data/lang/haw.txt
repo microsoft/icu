@@ -31,5 +31,5 @@ haw{
         vi{"Wiekanama"}
         zh{"Pākē"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -4,5 +4,5 @@ pt_BR{
     Countries{
         PS{"Autoridade Palestina"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

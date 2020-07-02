@@ -4,5 +4,5 @@ ee_GH{
     Countries{
         PS{"Palestinian Authority"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

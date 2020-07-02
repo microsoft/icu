@@ -19,7 +19,7 @@ sl{
         numbers{"številke"}
         timezone{"Časovni pas"}
         va{"Različica območnih nastavitev"}
-        x{"Private-Use"}
+        x{"Zasebna-uporaba"}
     }
     Languages{
         aa{"afarščina"}
@@ -527,7 +527,6 @@ sl{
         Bugi{"buginski"}
         Buhd{"buhidski"}
         Cans{"poenotena zlogovna pisava kanadskih staroselcev"}
-        Cham{"Cham"}
         Cher{"čerokeški"}
         Cirt{"kirt"}
         Copt{"koptski"}
@@ -636,10 +635,6 @@ sl{
         Zxxx{"nenapisano"}
         Zyyy{"splošno"}
         Zzzz{"neznan ali neveljaven zapis"}
-    }
-    Scripts%stand-alone{
-        Hans{"poenostavljena pisava han"}
-        Hant{"tradicionalna pisava han"}
     }
     Scripts%variant{
         Arab{"perzijskoarabski"}
@@ -856,7 +851,7 @@ sl{
         VALENCIA{"valencijski pravopis"}
         WADEGILE{"romanizacija Wade-Giles"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} – vse"}
         category-list{"{0}: {1}"}

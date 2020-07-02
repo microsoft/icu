@@ -249,7 +249,7 @@ af{
         SV{"El Salvador"}
         SX{"Sint Maarten"}
         SY{"Sirië"}
-        SZ{"Swaziland"}
+        SZ{"Eswatini"}
         TA{"Tristan da Cunha"}
         TC{"Turks- en Caicoseilande"}
         TD{"Tsjad"}
@@ -291,5 +291,5 @@ af{
         ZW{"Zimbabwe"}
         ZZ{"Onbekende gebied"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

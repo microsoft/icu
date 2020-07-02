@@ -1,0 +1,55 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+mni{
+    Languages{
+        de{"জর্মন"}
+        en{"ইংলিস"}
+        es{"স্পেনিস"}
+        fr{"ফ্রেঞ্চ"}
+        it{"ইটালিয়ান"}
+        ja{"জাপানিজ"}
+        mni{"মৈতৈলোন্"}
+        pt{"পোর্টুগিজ"}
+        ru{"রুসিয়ান"}
+        und{"মশকখংদবা লোল"}
+        zh{"চাইনিজ"}
+    }
+    Scripts{
+        Arab{"আরবিক"}
+        Beng{"বাংলা"}
+        Cyrl{"সিরিলিক"}
+        Hans{"সিমপ্লিফাইদ"}
+        Hant{"ত্রেদিস্নেল"}
+        Latn{"লেটিন"}
+        Mtei{"মেইটেই মায়েক"}
+        Zxxx{"ইদবা"}
+        Zzzz{"মশকখংদবা স্ক্রিপ্ট"}
+    }
+    Scripts%stand-alone{
+        Hans{"সিমপ্লিফাইদ চাইনিজ"}
+        Hant{"ত্রেদিস্নেল চাইনিজ"}
+    }
+    Types{
+        calendar{
+            gregorian{"গ্রিগোরিয়ান কেলেন্দর"}
+        }
+        collation{
+            standard{"ষ্টেন্দর্দ সোর্ট ওর্দর"}
+        }
+        numbers{
+            beng{"বাংলা দিজিট"}
+            latn{"ৱেস্তর্ন দিজিট"}
+        }
+    }
+    Version{"37"}
+    codePatterns{
+        language{"লোল: {0}"}
+        script{"স্ক্রিপ্ট: {0}"}
+        territory{"লমদম: {0}"}
+    }
+    localeDisplayPattern{
+        keyTypePattern{"{0}: {1}"}
+        pattern{"{0} ({1})"}
+        separator{"{0}, {1}"}
+    }
+}

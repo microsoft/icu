@@ -4,5 +4,5 @@ zh_Hans{
     Languages{
         ii{"彝语"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

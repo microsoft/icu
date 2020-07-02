@@ -245,7 +245,7 @@ ro{
         SO{"Somalia"}
         SR{"Suriname"}
         SS{"Sudanul de Sud"}
-        ST{"Sao Tome și Principe"}
+        ST{"São Tomé și Príncipe"}
         SV{"El Salvador"}
         SX{"Sint-Maarten"}
         SY{"Siria"}
@@ -291,5 +291,5 @@ ro{
         ZW{"Zimbabwe"}
         ZZ{"Regiune necunoscută"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

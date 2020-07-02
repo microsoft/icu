@@ -3,15 +3,14 @@
 en_GB{
     %%Parent{"en_001"}
     Countries{
-        BL{"St Barthélemy"}
-        KN{"St Kitts & Nevis"}
-        LC{"St Lucia"}
-        MF{"St Martin"}
-        PM{"St Pierre & Miquelon"}
-        SH{"St Helena"}
-        UM{"US Outlying Islands"}
-        VC{"St Vincent & Grenadines"}
-        VI{"US Virgin Islands"}
+        BQ{"Caribbean Netherlands"}
+        CD{"Congo - Kinshasa"}
+        CG{"Congo - Brazzaville"}
+        CV{"Cape Verde"}
+        HK{"Hong Kong SAR China"}
+        KR{"South Korea"}
+        MM{"Myanmar (Burma)"}
+        PS{"Palestinian Territories"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

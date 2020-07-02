@@ -175,7 +175,6 @@ se{
         MF{"Frankriikka Saint Martin"}
         MG{"Madagaskar"}
         MH{"Marshallsullot"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Burma"}
         MN{"Mongolia"}
@@ -283,5 +282,5 @@ se{
         ZW{"Zimbabwe"}
         ZZ{"dovdameahttun guovlu"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -455,7 +455,6 @@ it{
         ro{"rumeno"}
         rof{"rombo"}
         rom{"romani"}
-        root{"root"}
         rtm{"rotumano"}
         ru{"russo"}
         rue{"ruteno"}
@@ -617,6 +616,7 @@ it{
     Scripts{
         Afak{"afaka"}
         Arab{"arabo"}
+        Aran{"nastaliq"}
         Armi{"aramaico imperiale"}
         Armn{"armeno"}
         Avst{"avestico"}
@@ -727,6 +727,7 @@ it{
         Phnx{"fenicio"}
         Plrd{"fonetica di pollard"}
         Prti{"partico delle iscrizioni"}
+        Qaag{"zawgyi"}
         Rjng{"rejang"}
         Roro{"rongorongo"}
         Runr{"runico"}
@@ -995,7 +996,7 @@ it{
         VALENCIA{"valenziano"}
         WADEGILE{"romanizzazione Wade-Giles"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — Tutto"}
         category-list{"{0}: {1}"}

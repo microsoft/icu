@@ -533,7 +533,7 @@ sq{
             tibt{"shifra tibetiane"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — Të gjitha"}
         category-list{"{0}: {1}"}

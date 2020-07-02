@@ -1,7 +1,7 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html#License
 cu{
-    Version{"2.1.50.6"}
+    Version{"37"}
     collations{
         standard{
             Sequence{
@@ -25,7 +25,7 @@ cu{
                 "& Э < ѣ <<< Ѣ"
                 "& Ю < ѫ <<< Ѫ < я <<< Я < ꙗ <<< Ꙗ <<< ѧ <<< Ѧ < ѯ <<< Ѯ < ѱ <<< Ѱ < ѳ <<< Ѳ < ѵ <<< Ѵ"
             }
-            Version{"35.1"}
+            Version{"37"}
         }
     }
 }

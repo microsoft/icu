@@ -126,7 +126,6 @@ asa{
         MD{"Moldova"}
         MG{"Bukini"}
         MH{"Vithiwa vya Marshal"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Myama"}
         MN{"Mongolia"}
@@ -225,5 +224,5 @@ asa{
         ZM{"Dhambia"}
         ZW{"Dhimbabwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

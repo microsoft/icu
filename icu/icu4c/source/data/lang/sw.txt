@@ -17,8 +17,8 @@ sw{
         lb{"Mtindo wa Kukata Mstari"}
         ms{"Mfumo wa Vipimo"}
         numbers{"Nambari"}
-        timezone{"Ukanda Saa"}
-        va{"Tofauti ya Mandhari"}
+        timezone{"Saa za Eneo"}
+        va{"Lahaja za Lugha"}
         x{"Matumizi ya Kibinafsi"}
     }
     Languages{
@@ -79,6 +79,7 @@ sw{
         byn{"Kiblin"}
         byv{"Kimedumba"}
         ca{"Kikatalani"}
+        ccp{"Kichakma"}
         ce{"Kichechenia"}
         ceb{"Kichebuano"}
         cgg{"Kichiga"}
@@ -452,7 +453,7 @@ sw{
         Grek{"Kigiriki"}
         Gujr{"Kigujarati"}
         Guru{"Kigurmukhi"}
-        Hanb{"Hanb"}
+        Hanb{"Kihan chenye Bopomofo"}
         Hang{"Kihangul"}
         Hani{"Kihan"}
         Hans{"Rahisi"}
@@ -630,7 +631,7 @@ sw{
             vaii{"Dijiti za Vai"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — zote"}
         category-list{"{0}: {1}"}

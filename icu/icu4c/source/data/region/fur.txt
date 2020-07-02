@@ -174,7 +174,6 @@ fur{
         MF{"Sant Martin"}
         MG{"Madagascar"}
         MH{"Isulis Marshall"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Birmanie"}
         MN{"Mongolie"}
@@ -282,5 +281,5 @@ fur{
         ZW{"Zimbabwe"}
         ZZ{"Regjon no cognossude o no valide"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

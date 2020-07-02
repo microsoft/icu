@@ -422,7 +422,7 @@ fil{
         Grek{"Greek"}
         Gujr{"Gujarati"}
         Guru{"Gurmukhi"}
-        Hanb{"Hanb"}
+        Hanb{"Han na may Bopomofo"}
         Hang{"Hangul"}
         Hani{"Han"}
         Hans{"Pinasimple"}
@@ -636,7 +636,7 @@ fil{
         PINYIN{"Pinyin Romanization"}
         WADEGILE{"Wade-Giles Romanization"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — lahat"}
         category-list{"{0}: {1}"}
@@ -649,7 +649,7 @@ fil{
         scripts{"mga script — {0}"}
         strokes{
             one{"{0} stroke"}
-            other{"{0} strokes"}
+            other{"{0} (na) stroke"}
         }
     }
     codePatterns{

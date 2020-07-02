@@ -241,7 +241,7 @@ public:
         if (m == nullptr) { m = getMutex(); }
         m->lock();
     }
-    void unlock() { fMutex.load(std::memory_order_relaxed)->unlock(); };
+    void unlock() { fMutex.load(std::memory_order_relaxed)->unlock(); }
 
     static void cleanup();
 
@@ -256,7 +256,8 @@ private:
     static UMutex *gListHead;
 
     /** Out-of-line function to lazily initialize a UMutex on first use.
-     * Initial fast check is inline, in lock().
+     * Initial fast check is inline, in lock().  The returned value may never
+     * be nullptr.
      */
     std::mutex *getMutex();
 };

@@ -249,7 +249,7 @@ ga{
         SV{"an tSalvadóir"}
         SX{"Sint Maarten"}
         SY{"an tSiria"}
-        SZ{"an tSuasalainn"}
+        SZ{"eSuaitíní"}
         TA{"Tristan da Cunha"}
         TC{"Oileáin na dTurcach agus Caicos"}
         TD{"Sead"}
@@ -270,7 +270,7 @@ ga{
         UA{"an Úcráin"}
         UG{"Uganda"}
         UM{"Oileáin Imeallacha S.A.M."}
-        UN{"na Náisiúin Aontaiteh"}
+        UN{"na Náisiúin Aontaithe"}
         US{"Stáit Aontaithe Mheiriceá"}
         UY{"Uragua"}
         UZ{"an Úisbéiceastáin"}
@@ -291,5 +291,5 @@ ga{
         ZW{"an tSiombáib"}
         ZZ{"Réigiún Anaithnid"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -249,7 +249,7 @@ sl{
         SV{"Salvador"}
         SX{"Sint Maarten"}
         SY{"Sirija"}
-        SZ{"Svazi"}
+        SZ{"Esvatini"}
         TA{"Tristan da Cunha"}
         TC{"Otoki Turks in Caicos"}
         TD{"Čad"}
@@ -291,5 +291,5 @@ sl{
         ZW{"Zimbabve"}
         ZZ{"Neznano ali neveljavno območje"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -174,7 +174,7 @@ wo{
             latn{"Siifari Tugal"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     codePatterns{
         language{"{0}"}
         script{"{0}"}

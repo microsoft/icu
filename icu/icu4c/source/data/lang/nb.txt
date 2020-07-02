@@ -18,7 +18,7 @@ nb{
         ms{"målesystem"}
         numbers{"tall"}
         timezone{"tidssone"}
-        va{"Språkvariant"}
+        va{"språkvariant"}
         x{"privat bruk"}
     }
     Languages{
@@ -108,6 +108,7 @@ nb{
         car{"karibisk"}
         cay{"cayuga"}
         cch{"atsam"}
+        ccp{"chakma"}
         ce{"tsjetsjensk"}
         ceb{"cebuansk"}
         cgg{"kiga"}
@@ -624,6 +625,7 @@ nb{
         Aghb{"kaukasus-albansk"}
         Ahom{"ahom"}
         Arab{"arabisk"}
+        Aran{"nastaliq"}
         Armi{"arameisk"}
         Armn{"armensk"}
         Avst{"avestisk"}
@@ -740,6 +742,7 @@ nb{
         Phnx{"fønikisk"}
         Plrd{"pollard-fonetisk"}
         Prti{"inskripsjonsparthisk"}
+        Qaag{"zawgyi"}
         Rjng{"rejang"}
         Roro{"rongorongo"}
         Runr{"runer"}
@@ -1032,7 +1035,7 @@ nb{
         VALLADER{"vallader"}
         WADEGILE{"Wade-Giles-romanisering"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} – alt"}
         category-list{"{0}: {1}"}

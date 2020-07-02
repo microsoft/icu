@@ -5,5 +5,5 @@ zh_Hant_MO{
     Countries{
         MO{"澳門特別行政區"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

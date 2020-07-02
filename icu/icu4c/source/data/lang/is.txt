@@ -85,6 +85,7 @@ is{
         car{"karíbamál"}
         cay{"kajúga"}
         cch{"atsam"}
+        ccp{"tsjakma"}
         ce{"tsjetsjenska"}
         ceb{"kebúanó"}
         cgg{"kíga"}
@@ -184,7 +185,6 @@ is{
         gwi{"gvísín"}
         ha{"hása"}
         hai{"haída"}
-        hak{"hak"}
         haw{"havaíska"}
         he{"hebreska"}
         hi{"hindí"}
@@ -194,7 +194,6 @@ is{
         ho{"hírímótú"}
         hr{"króatíska"}
         hsb{"hásorbneska"}
-        hsn{"hsn"}
         ht{"haítíska"}
         hu{"ungverska"}
         hup{"húpa"}
@@ -328,7 +327,6 @@ is{
         myv{"ersja"}
         mzn{"masanderaní"}
         na{"nárúska"}
-        nan{"nan"}
         nap{"napólíska"}
         naq{"nama"}
         nb{"norskt bókmál"}
@@ -352,7 +350,7 @@ is{
         nus{"núer"}
         nv{"navahó"}
         nwc{"klassísk nevaríska"}
-        ny{"njanja; sísjeva; sjeva"}
+        ny{"nýanja"}
         nym{"njamvesí"}
         nyn{"nyankole"}
         nyo{"njóró"}
@@ -501,7 +499,6 @@ is{
         was{"vasjó"}
         wbp{"varlpiri"}
         wo{"volof"}
-        wuu{"wuu"}
         xal{"kalmúkska"}
         xh{"sósa"}
         xog{"sóga"}
@@ -726,7 +723,7 @@ is{
             vaii{"Vai-tölustafir"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — allt"}
         category-list{"{0}: {1}"}

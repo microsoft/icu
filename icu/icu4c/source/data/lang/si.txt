@@ -58,6 +58,7 @@ si{
         bug{"බුගිනීස්"}
         byn{"බ්ලින්"}
         ca{"කැටලන්"}
+        ccp{"චක්මා"}
         ce{"චෙච්නියානු"}
         ceb{"සෙබුඅනො"}
         cgg{"චිගා"}
@@ -523,7 +524,7 @@ si{
             tibt{"ටිබෙට ඉලක්කම්"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — සියල්ල"}
         category-list{"{0}: {1}"}

@@ -127,7 +127,6 @@ nd{
         MD{"Moldova"}
         MG{"Madagaska"}
         MH{"Marshall Islands"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Myanmar"}
         MN{"Mongolia"}
@@ -227,5 +226,5 @@ nd{
         ZM{"Zambiya"}
         ZW{"Zimbabwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

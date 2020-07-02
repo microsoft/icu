@@ -8,5 +8,5 @@ en_ZM{
             "Zambian Kwacha",
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

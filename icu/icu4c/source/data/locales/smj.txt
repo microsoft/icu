@@ -4,7 +4,7 @@ smj{
     AuxExemplarCharacters{"[c ñ ö q w x y z]"}
     ExemplarCharacters{"[a á å ä b d e f g h i j k l m n ń o p r s t u v]"}
     ExemplarCharactersIndex{"[A Á Å Ä B D E F G H I J K L M N Ń O P R S T U V]"}
-    Version{"2.1.50.6"}
+    Version{"37"}
     layout{
         characters{"left-to-right"}
         lines{"top-to-bottom"}

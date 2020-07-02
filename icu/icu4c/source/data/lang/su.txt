@@ -1,0 +1,52 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+su{
+    Languages{
+        de{"Jérman"}
+        en{"Inggris"}
+        es{"Spanyol"}
+        fr{"Prancis"}
+        it{"Italia"}
+        ja{"Jepang"}
+        pt{"Portugis"}
+        ru{"Rusia"}
+        su{"Basa Sunda"}
+        und{"Teu Dipikaterang"}
+        zh{"Tiongkok"}
+    }
+    Scripts{
+        Arab{"Basa Arab"}
+        Cyrl{"Sirilik"}
+        Hans{"Sederhana"}
+        Hant{"Tradisional"}
+        Latn{"Latin"}
+        Zxxx{"Non-tulisan"}
+        Zzzz{"Skrip Teu Dipikaterang"}
+    }
+    Scripts%stand-alone{
+        Hans{"Han Sederhana"}
+        Hant{"Han Tradisional"}
+    }
+    Types{
+        calendar{
+            gregorian{"Kalender Grégorian"}
+        }
+        collation{
+            standard{"Aturan Runtuyan Standar"}
+        }
+        numbers{
+            latn{"Digit Barat"}
+        }
+    }
+    Version{"37"}
+    codePatterns{
+        language{"Basa: {0}"}
+        script{"Skrip: {0}"}
+        territory{"Daérah: {0}"}
+    }
+    localeDisplayPattern{
+        keyTypePattern{"{0}: {1}"}
+        pattern{"{0} ({1})"}
+        separator{"{0}, {1}"}
+    }
+}

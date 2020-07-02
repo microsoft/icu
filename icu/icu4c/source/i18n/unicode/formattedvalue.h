@@ -9,7 +9,6 @@
 #if U_SHOW_CPLUSPLUS_API
 
 #if !UCONFIG_NO_FORMATTING
-#ifndef U_HIDE_DRAFT_API
 
 #include "unicode/appendable.h"
 #include "unicode/fpositer.h"
@@ -26,7 +25,6 @@ U_NAMESPACE_BEGIN
  * of APIs throughout ICU use these classes for expressing their localized output.
  */
 
-
 /**
  * Represents a span of a string containing a given field.
  *
@@ -38,7 +36,7 @@ U_NAMESPACE_BEGIN
  *
  * This class is not intended for public subclassing.
  *
- * @draft ICU 64
+ * @stable ICU 64
  */
 class U_I18N_API ConstrainedFieldPosition : public UMemory {
   public:
@@ -48,11 +46,11 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      *
      * By default, the ConstrainedFieldPosition has no iteration constraints.
      *
-     * @draft ICU 64
+     * @stable ICU 64
      */
     ConstrainedFieldPosition();
 
-    /** @draft ICU 64 */
+    /** @stable ICU 64 */
     ~ConstrainedFieldPosition();
 
     /**
@@ -61,7 +59,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      * - Removes any constraints that may have been set on the instance.
      * - Resets the iteration position.
      *
-     * @draft ICU 64
+     * @stable ICU 64
      */
     void reset();
 
@@ -85,7 +83,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      * does not generally have well-defined behavior.
      *
      * @param category The field category to fix when iterating.
-     * @draft ICU 64
+     * @stable ICU 64
      */
     void constrainCategory(int32_t category);
 
@@ -110,7 +108,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      *
      * @param category The field category to fix when iterating.
      * @param field The field to fix when iterating.
-     * @draft ICU 64
+     * @stable ICU 64
      */
     void constrainField(int32_t category, int32_t field);
 
@@ -121,7 +119,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      * FormattedValue#nextPosition returns TRUE.
      *
      * @return The field category saved in the instance.
-     * @draft ICU 64
+     * @stable ICU 64
      */
     inline int32_t getCategory() const {
         return fCategory;
@@ -134,7 +132,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      * FormattedValue#nextPosition returns TRUE.
      *
      * @return The field saved in the instance.
-     * @draft ICU 64
+     * @stable ICU 64
      */
     inline int32_t getField() const {
         return fField;
@@ -146,7 +144,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      * The return value is well-defined only after FormattedValue#nextPosition returns TRUE.
      *
      * @return The start index saved in the instance.
-     * @draft ICU 64
+     * @stable ICU 64
      */
     inline int32_t getStart() const {
         return fStart;
@@ -158,7 +156,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      * The return value is well-defined only after FormattedValue#nextPosition returns TRUE.
      *
      * @return The end index saved in the instance.
-     * @draft ICU 64
+     * @stable ICU 64
      */
     inline int32_t getLimit() const {
         return fLimit;
@@ -177,7 +175,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      * Users of FormattedValue should not need to call this method.
      *
      * @return The current iteration context from {@link #setInt64IterationContext}.
-     * @draft ICU 64
+     * @stable ICU 64
      */
     inline int64_t getInt64IterationContext() const {
         return fContext;
@@ -189,7 +187,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      * Intended to be used by FormattedValue implementations.
      *
      * @param context The new iteration context.
-     * @draft ICU 64
+     * @stable ICU 64
      */
     void setInt64IterationContext(int64_t context);
 
@@ -201,7 +199,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      *
      * @param category The category to test.
      * @param field The field to test.
-     * @draft ICU 64
+     * @stable ICU 64
      */
     UBool matchesField(int32_t category, int32_t field) const;
 
@@ -217,7 +215,7 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
      * @param field The new field.
      * @param start The new inclusive start index.
      * @param limit The new exclusive end index.
-     * @draft ICU 64
+     * @stable ICU 64
      */
     void setState(
         int32_t category,
@@ -234,16 +232,15 @@ class U_I18N_API ConstrainedFieldPosition : public UMemory {
     int8_t fConstraint = 0;
 };
 
-
 /**
  * An abstract formatted value: a string with associated field attributes.
  * Many formatters format to classes implementing FormattedValue.
  *
- * @draft ICU 64
+ * @stable ICU 64
  */
 class U_I18N_API FormattedValue /* not : public UObject because this is an interface/mixin class */ {
   public:
-    /** @draft ICU 64 */
+    /** @stable ICU 64 */
     virtual ~FormattedValue();
 
     /**
@@ -254,7 +251,7 @@ class U_I18N_API FormattedValue /* not : public UObject because this is an inter
      * @param status Set if an error occurs.
      * @return a UnicodeString containing the formatted string.
      *
-     * @draft ICU 64
+     * @stable ICU 64
      */
     virtual UnicodeString toString(UErrorCode& status) const = 0;
 
@@ -270,7 +267,7 @@ class U_I18N_API FormattedValue /* not : public UObject because this is an inter
      * @param status Set if an error occurs.
      * @return a temporary UnicodeString containing the formatted string.
      *
-     * @draft ICU 64
+     * @stable ICU 64
      */
     virtual UnicodeString toTempString(UErrorCode& status) const = 0;
 
@@ -282,7 +279,7 @@ class U_I18N_API FormattedValue /* not : public UObject because this is an inter
      * @param status Set if an error occurs.
      * @return The same Appendable, for chaining.
      *
-     * @draft ICU 64
+     * @stable ICU 64
      * @see Appendable
      */
     virtual Appendable& appendTo(Appendable& appendable, UErrorCode& status) const = 0;
@@ -307,15 +304,13 @@ class U_I18N_API FormattedValue /* not : public UObject because this is an inter
      * @return TRUE if a new occurrence of the field was found;
      *         FALSE otherwise or if an error was set.
      *
-     * @draft ICU 64
+     * @stable ICU 64
      */
     virtual UBool nextPosition(ConstrainedFieldPosition& cfpos, UErrorCode& status) const = 0;
 };
 
-
 U_NAMESPACE_END
 
-#endif  /* U_HIDE_DRAFT_API */
 #endif /* #if !UCONFIG_NO_FORMATTING */
 
 #endif /* U_SHOW_CPLUSPLUS_API */

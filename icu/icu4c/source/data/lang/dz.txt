@@ -219,7 +219,7 @@ dz{
             tibt{"ང་བཅས་ཀྱི་ཨང་ཡིག"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     codePatterns{
         language{"ཁ་སྐད་: {0}"}
         script{"ཡིག་གཟུགས་: {0}"}

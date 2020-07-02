@@ -2,26 +2,37 @@
 // License & terms of use: http://www.unicode.org/copyright.html#License
 ceb{
     Languages{
-        ceb{"Cebuano"}
+        ar{"Arabic"}
+        bn{"Bangla"}
+        ceb{"Binisaya"}
         de{"Aleman"}
         en{"Ingles"}
         es{"Espanyol"}
-        fr{"Pransesa"}
+        fr{"Pranses"}
+        hi{"Hindi"}
+        id{"Indonesian"}
         it{"Italiano"}
-        ja{"Nipponggo"}
+        ja{"Hinapon"}
+        ko{"Korean"}
+        nl{"Dutch"}
+        pl{"Polish"}
         pt{"Portuguese"}
         ru{"Ruso"}
-        und{"Wala Mailhing Pinulongan"}
-        zh{"Intsik"}
+        th{"Thai"}
+        tr{"Turkish"}
+        und{"Wala Mailhing Lengguwahe"}
+        zh{"Inintsik"}
     }
     Scripts{
         Arab{"Arabo"}
         Cyrl{"Sirilisko"}
         Hans{"Pinasimple"}
         Hant{"Tradisyonal"}
+        Jpan{"Hinapon"}
+        Kore{"Korean"}
         Latn{"Latin"}
-        Zxxx{"Dili-sinulat"}
-        Zzzz{"Wala Mailihing Alpabeto"}
+        Zxxx{"Dili Sinulat"}
+        Zzzz{"Wala Mailhing Script"}
     }
     Scripts%stand-alone{
         Hans{"Pinasimpleng Han"}
@@ -30,19 +41,20 @@ ceb{
     Types{
         calendar{
             gregorian{"Gregorian nga Kalendaryo"}
+            iso8601{"Kalendaryo sa ISO-8601"}
         }
         collation{
-            standard{"Standard nga Paagi sa Pagpihig"}
+            standard{"Tamdanang Paagi sa Paghan-ay"}
         }
         numbers{
-            latn{"Kasadpanhong mga Digit"}
+            latn{"Mga Western Digit"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     codePatterns{
-        language{"Pinulongan: {0}"}
-        script{"Alpabeto {0}"}
-        territory{"Rehiyon {0}"}
+        language{"Lengguwahe: {0}"}
+        script{"Script: {0}"}
+        territory{"Rehiyon: {0}"}
     }
     localeDisplayPattern{
         keyTypePattern{"{0}: {1}"}

@@ -291,5 +291,5 @@ pl{
         ZW{"Zimbabwe"}
         ZZ{"Nieznany region"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -173,13 +173,12 @@ initFromResourceBundle(UErrorCode& sts) {
         if (U_FAILURE(tmpSts)) {
             // type map for each key must exist
 
-            // Note: The used to call `U_ASSERT(FALSE)` here, but this was changed in ICU-20074
+            // Note: They used to call `U_ASSERT(FALSE)` here, but this was changed in ICU-20074
             // to unconditionally call the macro `UPRV_UNREACHABLE` instead.
             // However, it is possible to reach this code path if 'timezoneTypes.res' can't be found or loaded.
             // In this case the code actually can carry on (it shouldn't be a fatal error), it just means that
             // we lose the ability to convert BCP47 timezone identifiers (which aren't commonly used). 
             U_ASSERT(FALSE);
-
         } else {
             LocalUResourceBundlePointer typeMapEntry;
 

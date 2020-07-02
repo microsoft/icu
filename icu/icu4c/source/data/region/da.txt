@@ -141,7 +141,7 @@ da{
         IL{"Israel"}
         IM{"Isle of Man"}
         IN{"Indien"}
-        IO{"Det britiske territorium i Det Indiske Ocean"}
+        IO{"Det Britiske Territorium i Det Indiske Ocean"}
         IQ{"Irak"}
         IR{"Iran"}
         IS{"Island"}
@@ -253,7 +253,7 @@ da{
         TA{"Tristan da Cunha"}
         TC{"Turks- og Caicosøerne"}
         TD{"Tchad"}
-        TF{"De Franske Besiddelser i Det Sydlige Indiske Ocean"}
+        TF{"De Franske Besiddelser i Det Sydlige Indiske Ocean og Antarktis"}
         TG{"Togo"}
         TH{"Thailand"}
         TJ{"Tadsjikistan"}
@@ -291,5 +291,5 @@ da{
         ZW{"Zimbabwe"}
         ZZ{"Ukendt område"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

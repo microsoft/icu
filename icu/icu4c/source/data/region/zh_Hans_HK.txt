@@ -4,5 +4,5 @@ zh_Hans_HK{
     Countries{
         HK{"香港特别行政区"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

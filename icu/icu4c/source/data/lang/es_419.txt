@@ -2,12 +2,7 @@
 // License & terms of use: http://www.unicode.org/copyright.html#License
 es_419{
     Keys{
-        colAlternate{"orden ignorando símbolos"}
-        colBackwards{"orden de acentos con inversión"}
-        colCaseFirst{"orden de mayúsculas/minúsculas"}
-        colCaseLevel{"orden con distinción entre mayúsculas y minúsculas"}
-        lb{"salto de línea"}
-        ms{"sm"}
+        colNormalization{"orden normalizado"}
     }
     Languages{
         ace{"achenés"}
@@ -16,7 +11,6 @@ es_419{
         arp{"arapajó"}
         ars{"árabe de Néyed"}
         bla{"siksiká"}
-        ccp{"chakma"}
         eu{"vasco"}
         goh{"alemán de la alta edad antigua"}
         grc{"griego clásico"}
@@ -25,9 +19,9 @@ es_419{
         kbd{"cabardiano"}
         krc{"karachái-bálkaro"}
         lo{"laosiano"}
-        luo{"luo"}
         nr{"ndebele del sur"}
         nso{"sesotho del norte"}
+        pa{"panyabí"}
         prg{"prusiano antiguo"}
         rm{"retorrománico"}
         shu{"árabe (Chad)"}
@@ -37,8 +31,6 @@ es_419{
         syr{"siríaco"}
         tet{"tetun"}
         tyv{"tuvano"}
-        tzm{"tamazight del Marruecos Central"}
-        vai{"vai"}
         wal{"walamo"}
         wuu{"wu"}
         xal{"calmuco"}
@@ -50,10 +42,12 @@ es_419{
         Laoo{"lao"}
         Latn{"latín"}
         Mlym{"malayalam"}
+        Olck{"ol chiki"}
     }
     Types{
         calendar{
-            islamic-umalqura{"islamic-umalqura"}
+            islamic-rgsa{"calendario islámico (Arabia Saudita)"}
+            islamic-tbla{"calendario islámico tabular"}
         }
         colAlternate{
             non-ignorable{"ordenar símbolos"}
@@ -77,22 +71,13 @@ es_419{
             eor{"reglas de orden europeas"}
             phonebook{"orden de agenda telefónica"}
         }
-        lb{
-            loose{"salto de línea flexible"}
-            strict{"salto de línea estricto"}
-        }
-        ms{
-            metric{"Sistema Métrico de Unidades"}
-            uksystem{"sistema inglés"}
-            ussystem{"Sistema Anglosajón de Unidades"}
-        }
         numbers{
             tirh{"dígitos en tirh"}
             traditional{"números traducionales"}
             wara{"dígitos en Warang Citi"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         enclosed{"{0} — Adjunto"}
         extended{"{0} — Extendido"}

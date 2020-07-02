@@ -4,12 +4,12 @@ qu_BO{
     Currencies{
         BOB{
             "Bs",
-            "BOB",
+            "Boliviano",
         }
         PEN{
             "PEN",
-            "PEN",
+            "Sol Peruano",
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

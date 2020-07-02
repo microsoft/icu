@@ -4,13 +4,13 @@ af{
     Keys{
         calendar{"Kalender"}
         cf{"Geldeenheidformaat"}
-        colAlternate{"Ignoreer simboolsortering"}
-        colBackwards{"Omgekeerde aksentsortering"}
-        colCaseFirst{"Hoofletters/kleinletters-sortering"}
-        colCaseLevel{"Kassensitiewe sortering"}
-        colNormalization{"Genormaliseerde sortering"}
-        colNumeric{"Numeriese sortering"}
-        colStrength{"Sorteringssterkte"}
+        colAlternate{"Ignoreer simboolrangskikking"}
+        colBackwards{"Omgekeerde aksentrangskikking"}
+        colCaseFirst{"Hoofletter-/kleinletter-rangskikking"}
+        colCaseLevel{"Kassensitiewe rangskikking"}
+        colNormalization{"Genormaliseerde rangskikking"}
+        colNumeric{"Numeriese rangskikking"}
+        colStrength{"Rangskiksterkte"}
         collation{"Rangskikvolgorde"}
         currency{"Geldeenheid"}
         hc{"Uursiklus (12 vs 24)"}
@@ -69,6 +69,7 @@ af{
         bug{"Buginees"}
         byn{"Blin"}
         ca{"Katalaans"}
+        ccp{"Tsjaakma"}
         ce{"Tsjetsjeens"}
         ceb{"Cebuano"}
         cgg{"Kiga"}
@@ -269,7 +270,7 @@ af{
         naq{"Nama"}
         nb{"Boeknoors"}
         nd{"Noord-Ndebele"}
-        nds{"Lae Duits"}
+        nds{"Nederduits"}
         ne{"Nepalees"}
         new{"Newari"}
         ng{"Ndonga"}
@@ -387,7 +388,7 @@ af{
         ug{"Uighur"}
         uk{"Oekraïens"}
         umb{"Umbundu"}
-        und{"Onbekende of ongeldige taal"}
+        und{"Onbekende taal"}
         ur{"Oerdoe"}
         uz{"Oezbeeks"}
         vai{"Vai"}
@@ -411,7 +412,7 @@ af{
         yo{"Yoruba"}
         yue{"Kantonees"}
         zgh{"Standaard Marokkaanse Tamazight"}
-        zh{"Sjinees"}
+        zh{"Chinees"}
         zu{"Zoeloe"}
         zun{"Zuni"}
         zxx{"Geen taalinhoud nie"}
@@ -430,7 +431,7 @@ af{
         Grek{"Grieks"}
         Gujr{"Gudjarati"}
         Guru{"Gurmukhi"}
-        Hanb{"Hanb"}
+        Hanb{"Han met Bopomofo"}
         Hang{"Hangul"}
         Hani{"Han"}
         Hans{"Vereenvoudig"}
@@ -460,7 +461,7 @@ af{
         Zsye{"Emoji"}
         Zsym{"Simbole"}
         Zxxx{"Ongeskrewe"}
-        Zyyy{"Algemeen"}
+        Zyyy{"Gemeenskaplik"}
         Zzzz{"Onbekende skryfstelsel"}
     }
     Scripts%stand-alone{
@@ -608,19 +609,19 @@ af{
             vaii{"Vai-syfers"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
-        all{"{0} – Alle"}
+        all{"{0} – alle"}
         category-list{"{0}: {1}"}
-        compatibility{"{0} – Versoenbaarheid"}
-        enclosed{"{0} – Ingesluit"}
-        extended{"{0} – Uitgebreid"}
-        historic{"{0} – Histories"}
-        miscellaneous{"{0} – Allerlei"}
-        other{"{0} – Ander"}
-        scripts{"Skrifte – {0}"}
+        compatibility{"{0} – versoenbaarheid"}
+        enclosed{"{0} ingeslote"}
+        extended{"{0} – uitgebreid"}
+        historic{"{0} – histories"}
+        miscellaneous{"{0} – allerlei"}
+        other{"{0} – ander"}
+        scripts{"skrifte – {0}"}
         strokes{
-            one{"{0} hale"}
+            one{"{0} haal"}
             other{"{0} hale"}
         }
     }

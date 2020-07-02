@@ -127,7 +127,6 @@ agq{
         MD{"Mòodovà"}
         MG{"Màdàgasɨkà"}
         MH{"Chwɨlà fɨ Mashà"}
-        MK{"MK"}
         ML{"Malè"}
         MM{"Mǐanmà"}
         MN{"Mùŋgolìa"}
@@ -227,5 +226,5 @@ agq{
         ZM{"Zambìa"}
         ZW{"Zìmbagbɛ̀"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

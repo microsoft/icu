@@ -127,7 +127,6 @@ mua{
         MD{"Moldoviya"}
         MG{"Madagaskar"}
         MH{"Sǝr Marshall ma laŋne"}
-        MK{"MK"}
         ML{"Sǝr Mali"}
         MM{"Sǝr Myanmar"}
         MN{"Mongoliya"}
@@ -227,5 +226,5 @@ mua{
         ZM{"Zambiya"}
         ZW{"Zimbabwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

@@ -127,7 +127,6 @@ sg{
         MD{"Moldavùii"}
         MG{"Madagaskära"}
         MH{"Âzûâ Märshâl"}
-        MK{"MK"}
         ML{"Malïi"}
         MM{"Myämâra"}
         MN{"Mongolïi"}
@@ -227,5 +226,5 @@ sg{
         ZM{"Zambïi"}
         ZW{"Zimbäbwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

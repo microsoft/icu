@@ -11,7 +11,7 @@ mn_Mong{
         default{"latn"}
         native{"mong"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     layout{
         characters{"top-to-bottom"}
         lines{"left-to-right"}

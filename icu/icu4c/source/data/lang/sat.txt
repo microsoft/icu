@@ -1,0 +1,52 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html#License
+sat{
+    Languages{
+        de{"ᱡᱟᱨᱢᱟᱱ"}
+        en{"ᱟᱝᱜᱽᱨᱮᱡᱤ"}
+        es{"ᱮᱥᱯᱮᱱᱤᱥ"}
+        fr{"ᱯᱷᱨᱮᱧᱪ"}
+        it{"ᱤᱴᱟᱞᱤᱟᱱ"}
+        ja{"ᱡᱟᱯᱟᱱᱤ"}
+        pt{"ᱯᱩᱨᱛᱜᱟᱞᱤ"}
+        ru{"ᱨᱩᱥᱤᱭᱟᱱ"}
+        sat{"ᱥᱟᱱᱛᱟᱲᱤ"}
+        und{"ᱵᱟᱝ ᱩᱨᱩᱢ ᱯᱟᱹᱨᱥᱤ"}
+        zh{"ᱪᱟᱭᱱᱤᱡᱽ"}
+    }
+    Scripts{
+        Arab{"ᱟᱨᱵᱤᱠ"}
+        Cyrl{"ᱥᱤᱨᱤᱞᱤᱠ"}
+        Deva{"ᱫᱮᱣᱟᱱᱟᱜᱟᱨᱤ"}
+        Hans{"ᱥᱤᱢᱯᱞᱤᱯᱟᱭᱤᱰ"}
+        Hant{"ᱴᱨᱮᱰᱤᱥᱚᱱ"}
+        Latn{"ᱞᱮᱴᱤᱱ"}
+        Olck{"ᱚᱞ ᱪᱤᱠᱤ"}
+        Zxxx{"ᱵᱟᱝ ᱚᱞ ᱟᱠᱟᱱ"}
+        Zzzz{"ᱵᱟᱝ ᱩᱨᱩᱢ ᱪᱤᱠᱤ"}
+    }
+    Scripts%stand-alone{
+        Hans{"ᱥᱤᱢᱯᱞᱤᱯᱟᱭᱤᱰ ᱦᱟᱱ"}
+        Hant{"ᱴᱨᱮᱰᱤᱥᱚᱱ ᱦᱟᱱ"}
+    }
+    Types{
+        calendar{
+            gregorian{"ᱜᱨᱮᱜᱚᱨᱤᱭᱟᱱ ᱠᱟᱞᱮᱱᱰᱟᱨ"}
+        }
+        collation{
+            standard{"ᱮᱥᱴᱮᱱᱰᱟᱨᱰ ᱛᱷᱟᱨ ᱟᱸᱫᱮ"}
+        }
+        numbers{
+            latn{"ᱣᱮᱥᱴᱟᱨᱱ ᱮᱞ"}
+        }
+    }
+    Version{"37"}
+    codePatterns{
+        language{"ᱯᱟᱹᱨᱥᱤ: {0}"}
+        script{"ᱪᱤᱠᱤ/ᱦᱟᱨᱚᱯᱺ {0}"}
+        territory{"ᱴᱚᱴᱷᱟᱺ {0}"}
+    }
+    localeDisplayPattern{
+        keyTypePattern{"{0}: {1}"}
+    }
+}

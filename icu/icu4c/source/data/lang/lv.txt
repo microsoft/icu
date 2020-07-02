@@ -4,22 +4,22 @@ lv{
     Keys{
         calendar{"Kalendārs"}
         cf{"valūtas formāts"}
-        colAlternate{"Kārtošana, ignorējot simbolus"}
-        colBackwards{"Diakritisko zīmju kārtošana apgrieztā secībā"}
-        colCaseFirst{"Lielo/mazo burtu kārtošana"}
-        colCaseLevel{"Reģistrjutīgo rakstzīmju kārtošana"}
-        colNormalization{"Normalizētā kārtošana"}
-        colNumeric{"Kārtošana skaitliskā secībā"}
-        colStrength{"Kārtošanas pakāpe"}
+        colAlternate{"kārtošana, ignorējot simbolus"}
+        colBackwards{"akcentēto burtu kārtošana apgrieztā secībā"}
+        colCaseFirst{"kārtošana pēc lielajiem/mazajiem burtiem"}
+        colCaseLevel{"reģistrjutīga kārtošana"}
+        colNormalization{"normalizēta kārtošana"}
+        colNumeric{"kārtošana skaitliskā secībā"}
+        colStrength{"kārtošanas pakāpe"}
         collation{"kārtošanas secība"}
-        currency{"Valūta"}
+        currency{"valūta"}
         hc{"Stundu formāts (12 vai 24)"}
         lb{"Rindiņas pārtraukuma stils"}
         ms{"mērvienību sistēma"}
         numbers{"Cipari"}
-        timezone{"Laika josla"}
-        va{"Lokalizācijas variants"}
-        x{"Personīgai lietošanai"}
+        timezone{"laika josla"}
+        va{"lokalizācijas variants"}
+        x{"personīgai lietošanai"}
     }
     Languages{
         aa{"afāru"}
@@ -219,7 +219,7 @@ lv{
         iu{"inuītu"}
         ja{"japāņu"}
         jbo{"ložbans"}
-        jgo{"jgo"}
+        jgo{"ngomba"}
         jmc{"mačamu"}
         jpr{"jūdpersiešu"}
         jrb{"jūdarābu"}
@@ -310,7 +310,7 @@ lv{
         mg{"malagasu"}
         mga{"vidusīru"}
         mgh{"makua"}
-        mgo{"mgo"}
+        mgo{"metu"}
         mh{"māršaliešu"}
         mi{"maoru"}
         mic{"mikmaku"}
@@ -543,7 +543,7 @@ lv{
         Copt{"koptu"}
         Cyrl{"kirilica"}
         Cyrs{"senslāvu"}
-        Deva{"devānagāri"}
+        Deva{"dēvanāgari"}
         Egyd{"demotiskais raksts"}
         Egyh{"hierātiskais raksts"}
         Egyp{"ēģiptiešu hieroglifi"}
@@ -784,7 +784,7 @@ lv{
         VALENCIA{"valensiešu"}
         WADEGILE{"Veida-Džailza romanizācija"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — visas"}
         category-list{"{0}: {1}"}

@@ -175,7 +175,6 @@ wae{
         MF{"St. Martin"}
         MG{"Madagaskar"}
         MH{"Maršalinslä"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Burma"}
         MN{"Mongolei"}
@@ -283,5 +282,5 @@ wae{
         ZW{"Simbabwe"}
         ZZ{"Unbekannti Regio"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

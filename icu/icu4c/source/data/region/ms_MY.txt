@@ -4,5 +4,5 @@ ms_MY{
     Countries{
         PS{"Pihak Palestin"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

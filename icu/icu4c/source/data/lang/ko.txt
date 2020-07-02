@@ -556,6 +556,7 @@ ko{
         Afak{"아파카 문자"}
         Aghb{"코카시안 알바니아 문자"}
         Arab{"아랍 문자"}
+        Aran{"나스탈리크체"}
         Armi{"아랍제국 문자"}
         Armn{"아르메니아 문자"}
         Avst{"아베스타 문자"}
@@ -668,6 +669,7 @@ ko{
         Phnx{"페니키아 문자"}
         Plrd{"폴라드 표음 문자"}
         Prti{"명문 파라티아 문자"}
+        Qaag{"저지 문자"}
         Rjng{"레장 문자"}
         Roro{"롱고롱고"}
         Runr{"룬 문자"}
@@ -910,7 +912,7 @@ ko{
         VAIDIKA{"바이디카"}
         VALLADER{"발라더"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     characterLabelPattern{
         all{"{0} — 전체"}
         category-list{"{0}: {1}"}

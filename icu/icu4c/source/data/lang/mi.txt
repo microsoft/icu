@@ -38,11 +38,11 @@ mi{
             latn{"Ngā Mati Pākehā"}
         }
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     codePatterns{
-        language{"{0}"}
-        script{"{0}"}
-        territory{"{0}"}
+        language{"Reo: {0}"}
+        script{"Momotuhi: {0}"}
+        territory{"Rohe: {0}"}
     }
     localeDisplayPattern{
         keyTypePattern{"{0}: {1}"}

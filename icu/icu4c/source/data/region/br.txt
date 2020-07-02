@@ -249,7 +249,7 @@ br{
         SV{"Salvador"}
         SX{"Sint Maarten"}
         SY{"Siria"}
-        SZ{"Swaziland"}
+        SZ{"Eswatini"}
         TA{"Tristan da Cunha"}
         TC{"Inizi Turks ha Caicos"}
         TD{"Tchad"}
@@ -291,5 +291,5 @@ br{
         ZW{"Zimbabwe"}
         ZZ{"Rannved dianav"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

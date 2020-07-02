@@ -32,7 +32,7 @@ nso{
         }
         minimumGroupingDigits{"1"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     calendar{
         gregorian{
             AmPmMarkers{

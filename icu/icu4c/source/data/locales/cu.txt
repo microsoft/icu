@@ -18,13 +18,13 @@ cu{
         "[А Б В Г Д Є Ж Ѕ З И І К Л М Н Ѻ О П Р С Т Ꙋ Ф Х Ѡ Ѿ Ц Ч Ш Щ Ъ Ы Ь Ѣ Ю Ѫ Ꙗ Ѧ"
         " Ѯ Ѱ Ѳ Ѵ]"
     }
-    ExemplarCharactersNumbers{"[  \\- , % ‰ + 0 1 2 3 4 5 6 7 8 9]"}
-    ExemplarCharactersPunctuation{"[_ \\- ‐ – — ⹃ , ; \\: ! ? . ( ) ꙳ / ꙾]"}
+    ExemplarCharactersNumbers{"[  \\- ‑ , % ‰ + 0 1 2 3 4 5 6 7 8 9]"}
+    ExemplarCharactersPunctuation{"[_ \\- ‐ ‑ – — ⹃ , ; \\: ! ? . ( ) ꙳ / ꙾]"}
     NumberElements{
         default{"latn"}
         traditional{"cyrl"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
     layout{
         characters{"left-to-right"}
         lines{"top-to-bottom"}

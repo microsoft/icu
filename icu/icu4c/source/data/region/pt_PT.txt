@@ -45,6 +45,7 @@ pt_PT{
         MD{"Moldávia"}
         MG{"Madagáscar"}
         MK{"Macedónia do Norte"}
+        MO{"Macau, RAE da China"}
         MS{"Monserrate"}
         MU{"Maurícia"}
         MW{"Maláui"}
@@ -58,7 +59,7 @@ pt_PT{
         SM{"São Marinho"}
         SV{"Salvador"}
         SX{"São Martinho (Sint Maarten)"}
-        SZ{"Essuatíni"}
+        TF{"Territórios Austrais Franceses"}
         TJ{"Tajiquistão"}
         TK{"Toquelau"}
         TM{"Turquemenistão"}
@@ -71,5 +72,5 @@ pt_PT{
         YT{"Maiote"}
         ZW{"Zimbabué"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

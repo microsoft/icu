@@ -249,7 +249,7 @@ pt{
         SV{"El Salvador"}
         SX{"Sint Maarten"}
         SY{"Síria"}
-        SZ{"Suazilândia"}
+        SZ{"Essuatíni"}
         TA{"Tristão da Cunha"}
         TC{"Ilhas Turcas e Caicos"}
         TD{"Chade"}
@@ -291,5 +291,5 @@ pt{
         ZW{"Zimbábue"}
         ZZ{"Região desconhecida"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }

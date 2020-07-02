@@ -127,7 +127,6 @@ rn{
         MD{"Moludavi"}
         MG{"Madagasikari"}
         MH{"Izinga rya Marishari"}
-        MK{"MK"}
         ML{"Mali"}
         MM{"Birimaniya"}
         MN{"Mongoliya"}
@@ -227,5 +226,5 @@ rn{
         ZM{"Zambiya"}
         ZW{"Zimbabwe"}
     }
-    Version{"2.1.50.6"}
+    Version{"37"}
 }
