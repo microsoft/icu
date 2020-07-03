@@ -277,7 +277,37 @@ void CollationElementIterator::setText(const UnicodeString& source,
         return;
     }
 
-    string_ = source;
+    string_ = source; // NB: This makes a copy of the source string.
+    // We should check for OOM here.
+    // if (string_.isBogus() && !source.isBogus()) { status = U_MEMORY_ALLOCATION_ERROR; return; }
+    // TODO: This class predates the 2.4 change to UnicodeString's copy behavior. Can we just always just a readOnlyAlias?
+    const UChar *s = string_.getBuffer();
+    CollationIterator *newIter;
+    UBool numeric = rbc_->settings->isNumeric();
+    if (rbc_->settings->dontCheckFCD()) {
+        newIter = new UTF16CollationIterator(rbc_->data, numeric, s, s, s + string_.length());
+    } else {
+        newIter = new FCDUTF16CollationIterator(rbc_->data, numeric, s, s, s + string_.length());
+    }
+    if (newIter == NULL) {
+        status = U_MEMORY_ALLOCATION_ERROR;
+        return;
+    }
+    delete iter_;
+    iter_ = newIter;
+    otherHalf_ = 0;
+    dir_ = 0;
+}
+
+// Read only alias of the source string.
+void CollationElementIterator::setText(const UnicodeString& source, UBool /*readonly*/,
+                                       UErrorCode& status)
+{
+    if (U_FAILURE(status)) {
+        return;
+    }
+
+    string_.fastCopyFrom(source);
     const UChar *s = string_.getBuffer();
     CollationIterator *newIter;
     UBool numeric = rbc_->settings->isNumeric();
@@ -333,6 +363,16 @@ CollationElementIterator::CollationElementIterator(
                                                UErrorCode &status)
         : iter_(NULL), rbc_(coll), otherHalf_(0), dir_(0), offsets_(NULL) {
     setText(source, status);
+}
+
+// Read only alias of source string.
+CollationElementIterator::CollationElementIterator(
+                                               const UnicodeString &source,
+                                               UBool /*readOnly*/,
+                                               const RuleBasedCollator *coll,
+                                               UErrorCode &status)
+        : iter_(NULL), rbc_(coll), otherHalf_(0), dir_(0), offsets_(NULL) {
+    setText(source, true, status);
 }
 
 /** 

@@ -1646,6 +1646,18 @@ RuleBasedCollator::createCollationElementIterator(const CharacterIterator& sourc
     return cei;
 }
 
+CollationElementIterator *
+RuleBasedCollator::createCollationElementIteratorReadOnlyAlias(const UnicodeString& source) const {
+    UErrorCode errorCode = U_ZERO_ERROR;
+    if(!initMaxExpansions(errorCode)) { return NULL; }
+    CollationElementIterator *cei = new CollationElementIterator(source, TRUE, this, errorCode);
+    if(U_FAILURE(errorCode)) {
+        delete cei;
+        return NULL;
+    }
+    return cei;
+}
+
 int32_t
 RuleBasedCollator::getMaxExpansion(int32_t order) const {
     UErrorCode errorCode = U_ZERO_ERROR;

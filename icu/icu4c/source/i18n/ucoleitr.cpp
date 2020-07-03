@@ -289,8 +289,9 @@ ucol_openElements(const UCollator  *coll,
         return NULL;
     }
 
+    // Read only aliasing UnicodeString constructor.
     UnicodeString s((UBool)(textLength < 0), text, textLength);
-    CollationElementIterator *cei = rbc->createCollationElementIterator(s);
+    CollationElementIterator *cei = rbc->createCollationElementIteratorReadOnlyAlias(s);
     if (cei == NULL) {
         *status = U_MEMORY_ALLOCATION_ERROR;
         return NULL;
@@ -488,8 +489,10 @@ ucol_setText(      UCollationElements *elems,
         *status = U_ILLEGAL_ARGUMENT_ERROR;
         return;
     }
+
+    // Read only aliasing UnicodeString constructor.
     UnicodeString s((UBool)(textLength < 0), text, textLength);
-    return CollationElementIterator::fromUCollationElements(elems)->setText(s, *status);
+    return CollationElementIterator::fromUCollationElements(elems)->setText(s, TRUE, *status);
 }
 
 U_CAPI int32_t U_EXPORT2

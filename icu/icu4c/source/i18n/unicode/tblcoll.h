@@ -257,6 +257,23 @@ public:
     virtual CollationElementIterator* createCollationElementIterator(
                                          const CharacterIterator& source) const;
 
+#ifndef U_HIDE_INTERNAL_API
+     /**
+     * Creates a collation element iterator for the source string. The caller of
+     * this method is responsible for the memory management of the return
+     * pointer.
+     * The source string *MUST* outlive the returned object's lifetime.
+     *
+     * @param source the string over which the CollationElementIterator will
+     *        iterate.
+     * @return the collation element iterator of the source string using this as
+     *         the based Collator.
+     * @internal
+     */
+    virtual CollationElementIterator* createCollationElementIteratorReadOnlyAlias(
+                                           const UnicodeString& source) const;
+#endif
+
     // Make deprecated versions of Collator::compare() visible.
     using Collator::compare;
 
