@@ -10,11 +10,10 @@
     <Link>
       <AdditionalDependencies Condition="'$(Platform)' == 'ARM64'">$(MSBuildThisFileDirectory)lib\ARM64\Release\icudt.lib;$(MSBuildThisFileDirectory)lib\ARM64\Release\icuuc.lib;$(MSBuildThisFileDirectory)lib\ARM64\Release\icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalDependencies Condition="'$(Platform)' == 'x64'">$(MSBuildThisFileDirectory)lib\x64\Release\icudt.lib;$(MSBuildThisFileDirectory)lib\x64\Release\icuuc.lib;$(MSBuildThisFileDirectory)lib\x64\Release\icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      
       <AdditionalDependencies Condition="'$(Platform)' == 'x86' or '$(Platform)' == 'Win32'">$(MSBuildThisFileDirectory)lib\x86\Release\icudt.lib;$(MSBuildThisFileDirectory)lib\x86\Release\icuuc.lib;$(MSBuildThisFileDirectory)lib\x86\Release\icuin.lib;%(AdditionalDependencies)</AdditionalDependencies>
 
       <AdditionalLibraryDirectories Condition="'$(Platform)' == 'ARM64'">$(MSBuildThisFileDirectory)lib\ARM64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalLibraryDirectories Condition="'$(Platform)' == 'x64'">$(MSBuildThisFileDirectory)lib\x86\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories Condition="'$(Platform)' == 'x64'">$(MSBuildThisFileDirectory)lib\x64\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalLibraryDirectories Condition="'$(Platform)' == 'x86' or '$(Platform)' == 'Win32'">$(MSBuildThisFileDirectory)lib\x86\Release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <ClCompile>
