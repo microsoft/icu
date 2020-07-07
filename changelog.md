@@ -1,6 +1,6 @@
 # Changelog
 
-## ICU 67.1.0.x
+## ICU 67.1.0.1
 
 Changes/modifications compared to the upstream `maint/maint-67` branch.
 
