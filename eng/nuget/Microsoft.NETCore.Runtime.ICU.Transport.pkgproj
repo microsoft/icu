@@ -1,0 +1,38 @@
+<Project>
+  <Import Project="$(RepoRoot)\Directory.Build.props" />
+
+  <Import Project="$(NuGetPackageRoot)\microsoft.dotnet.build.tasks.packaging\$(MicrosoftDotNetBuildTasksPackagingVersion)\build\Microsoft.DotNet.Build.Tasks.Packaging.targets" />
+
+  <PropertyGroup>
+    <GitHubRepositoryName>icu</GitHubRepositoryName>
+    <RepositoryUrl>git://github.com/dotnet/icu</RepositoryUrl>
+    <ProjectUrl>https://github.com/dotnet/icu</ProjectUrl>
+    <LicenseUrl>https://github.com/dotnet/icu/blob/master/LICENSE</LicenseUrl>
+    <ReleaseNotes>https://go.microsoft.com/fwlink/?LinkID=799421</ReleaseNotes>
+
+    <PackageVersion>$(VersionPrefix)</PackageVersion>
+    <PackageDescriptionFile>$(MSBuildThisFileDirectory)/descriptions.json</PackageDescriptionFile>
+    <PackageLicenseFile>$(RepoRoot)/LICENSE</PackageLicenseFile>
+    <PackageIndexFile>$(MSBuildThisFileDirectory)/packageIndex.json</PackageIndexFile>
+
+    <!-- This is just a transport package, it shouldn't be shipping -->
+    <IsShipping>false</IsShipping>
+
+    <!-- This repo doesn't currently use the index so don't force it to be in sync -->
+    <SkipIndexCheck>true</SkipIndexCheck>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageIndex Include="$(PackageIndexFile)" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <File Include="$(PackageLicenseFile)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\version.txt" TargetPath="icu-version.txt" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-wasm\lib\*.a" TargetPath="runtimes\browser-wasm\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-wasm\include\**" TargetPath="runtimes\browser-wasm\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-wasm\share\**\*.dat" TargetPath="runtimes\browser-wasm\native\lib\icudt.dat" SkipPackageFileCheck="true" />
+  </ItemGroup>
+
+  <Import Project="$(RepoRoot)\Directory.Build.targets" />
+</Project>
