@@ -984,6 +984,8 @@ void CollationRegressionTest::Test4139572(/* char* par */)
 
     delete col;
 }
+
+#if 0
 /* HSYS : RuleBasedCollator::compare() performance enhancements
           compare() does not create CollationElementIterator() anymore.*/
 
@@ -1074,6 +1076,8 @@ void CollationRegressionTest::Test4146160(/* char* par */)
     delete mc;
 #endif
 }
+
+#endif
 
 void CollationRegressionTest::Test4179216() {
     // you can position a CollationElementIterator in the middle of
@@ -1472,7 +1476,7 @@ void CollationRegressionTest::runIndexedTest(int32_t index, UBool exec, const ch
     TESTCASE_AUTO(Test4133509);
     TESTCASE_AUTO(Test4139572);
     TESTCASE_AUTO(Test4141640);
-    TESTCASE_AUTO(Test4146160);
+//    TESTCASE_AUTO(Test4146160);
     TESTCASE_AUTO(Test4179216);
     TESTCASE_AUTO(TestT7189);
     TESTCASE_AUTO(TestCaseFirstCompression);

@@ -220,11 +220,13 @@ public:
     //
     void Test4141640(/* char* par */);
     
+#if 0
     // @bug 4146160
     //
     // RuleBasedCollator doesn't use getCollationElementIterator internally
     //
     void Test4146160(/* char* par */);
+#endif
 
     void Test4179216();
 
