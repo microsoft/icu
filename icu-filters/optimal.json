@@ -1,0 +1,124 @@
+{
+    "collationUCAData": "implicithan",
+    "strategy": "subtractive",
+    "localeFilter": {
+        "filterType": "locale",
+        "includeScripts": false,
+        "includeChildren": false,
+        "whitelist": [
+            "root",
+            "am_ET",
+            "ar_SA",
+            "bg_BG",
+            "bn_BD",
+            "bn_IN",
+            "ca_AD",
+            "ca_ES",
+            "cs_CZ",
+            "da_DK",
+            "de_DE",
+            "el_GR",
+            "en_GB",
+            "en_US",
+            "es_419",
+            "es_ES",
+            "et_EE",
+            "fa_IR",
+            "fi_FI",
+            "fil_PH",
+            "fr_FR",
+            "gu_IN",
+            "he_IL",
+            "hi_IN",
+            "hr_HR",
+            "hu_HU",
+            "id_ID",
+            "it_IT",
+            "kn_IN",
+            "ko_KR",
+            "ja_JP",
+            "lt_LT",
+            "lv_LV",
+            "ml_IN",
+            "mr_IN",
+            "ms_MY",
+            "nl_NL",
+            "pl_PL",
+            "pt_BR",
+            "pt_PT",
+            "ro_RO",
+            "ru_RU",
+            "sk_SK",
+            "sl_SI",
+            "sr_Cyrl_RS",
+            "sr_Latn_RS",
+            "sv_SE",
+            "sw_CD",
+            "sw_KE",
+            "sw_TZ",
+            "sw_UG",
+            "ta_IN",
+            "ta_LK",
+            "ta_MY",
+            "ta_SG",
+            "te_IN",
+            "th_TH",
+            "tr_TR",
+            "uk_UA",
+            "vi_VN",
+            "zh_Hans_CN",
+            "zh_Hant_TW"
+        ]
+    },
+    "featureFilters": {
+        "brkitr_dictionaries": "exclude",
+        "conversion_mappings": "exclude",
+        "confusables": "exclude",
+        "stringprep": "exclude",
+        "zone_tree": "exclude",
+        "zone_supplemental": "exclude",
+        "translit": "exclude",
+        "unames": "exclude",
+        "ulayout": "exclude",
+        "unit_tree": "exclude",
+        "rbnf_tree": "exclude",
+        "rbnf_index": "exclude",
+        "misc": {
+            "whitelist": [
+                "currencyNumericCodes",
+                "numberingSystems",
+                "icuver",
+                "langInfo",
+                "keyTypeData"
+            ]
+        },
+        "brkitr_rules": {
+            "whitelist": ["char"]
+        }
+    },
+    "resourceFilters": [
+        {
+            "categories": ["curr_tree"],
+            "rules": [
+                "-/CurrencyPlurals"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "rules": [
+                "-/characterLabel",
+                "-/measurementSystemNames",
+                "-/listPattern",
+                "-/fields",
+                "-/delimiters",
+                "-/NumberElements/*/patternsLong",
+                "-/NumberElements/*/patternsShort",
+                "-/NumberElements/minimalPairs",
+                "-/AuxExemplarCharacters",
+                "-/ExemplarCharacters",
+                "-/ExemplarCharactersNumbers",
+                "-/ExemplarCharactersPunctuation"
+            ]
+        }
+    ]
+}
