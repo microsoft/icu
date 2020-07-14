@@ -18,6 +18,7 @@
 #include "cmemory.h"
 #include "uassert.h"
 #include "ustr_imp.h"
+#include "cmemory.h"
 
 /* This hashtable is implemented as a double hash.  All elements are
  * stored in a single array with no secondary storage for collision
@@ -989,3 +990,432 @@ U_CAPI UBool U_EXPORT2
 uhash_compareLong(const UHashTok key1, const UHashTok key2) {
     return (UBool)(key1.integer == key2.integer);
 }
+
+// ------------------------------------------------------------------
+// Edits
+
+static void
+_int32hash_internalSetResizePolicy(Int32Hashtable *hash, enum UHashResizePolicy policy)
+{
+    U_ASSERT(hash != NULL);
+    U_ASSERT(((int32_t)policy) >= 0);
+    U_ASSERT(((int32_t)policy) < 3);
+    hash->lowWaterRatio = RESIZE_POLICY_RATIO_TABLE[policy * 2];
+    hash->highWaterRatio = RESIZE_POLICY_RATIO_TABLE[policy * 2 + 1];
+}
+
+static void
+_int32hash_allocate(Int32Hashtable *hash,
+                    int32_t primeIndex,
+                    UErrorCode *status)
+{
+    Int32HashElement *p, *limit;
+    if (U_FAILURE(*status)) { return; }
+    U_ASSERT(primeIndex >= 0 && primeIndex < PRIMES_LENGTH);
+
+    hash->primeIndex = static_cast<int8_t>(primeIndex);
+    hash->length = PRIMES[primeIndex];
+
+    p = hash->elements = (Int32HashElement *)
+        uprv_malloc(sizeof(Int32HashElement) * hash->length);
+
+    if (hash->elements == NULL) {
+        *status = U_MEMORY_ALLOCATION_ERROR;
+        return;
+    }
+
+    limit = p + hash->length;
+    while (p < limit) {
+        p->key = p->value = 0;
+        p->hashcode = HASH_EMPTY;
+        ++p;
+    }
+
+    hash->count = 0;
+    hash->lowWaterMark = (int32_t)(hash->length * hash->lowWaterRatio);
+    hash->highWaterMark = (int32_t)(hash->length * hash->highWaterRatio);
+}
+
+static Int32Hashtable*
+_int32hash_create(int32_t primeIndex, UErrorCode *status)
+{
+    if (U_FAILURE(*status)) { return nullptr; }
+
+    icu::LocalMemory<Int32Hashtable> result((Int32Hashtable *)uprv_malloc(sizeof(Int32Hashtable)));
+    if (result.getAlias() == nullptr) {
+        *status = U_MEMORY_ALLOCATION_ERROR;
+        return nullptr;
+    }
+
+    result->allocated = FALSE;
+    _int32hash_internalSetResizePolicy(result.getAlias(), U_GROW);
+    _int32hash_allocate(result.getAlias(), primeIndex, status);
+
+    if (U_FAILURE(*status)) {
+        return nullptr;
+    }
+
+    result->allocated = TRUE;
+
+    if (U_FAILURE(*status)) {
+        return nullptr;
+    }
+
+    return result.orphan();
+}
+
+U_CAPI Int32Hashtable *U_EXPORT2
+int32hash_openSize(int32_t size, UErrorCode *status)
+{
+    /* Find the smallest index i for which PRIMES[i] >= size. */
+    int32_t i = 0;
+    while (i < (PRIMES_LENGTH - 1) && PRIMES[i] < size)
+    {
+        ++i;
+    }
+    return _int32hash_create(i, status);
+}
+
+U_CAPI Int32Hashtable *U_EXPORT2
+int32hash_open(UErrorCode *status)
+{
+    return _int32hash_create(DEFAULT_PRIME_INDEX, status);
+}
+
+U_CAPI void U_EXPORT2
+int32hash_close(Int32Hashtable *hash)
+{
+    if (hash == nullptr) {
+        return;
+    }
+
+//    printf("\n DELETING HASH count=%d len=%d \n", hash->count, hash->length);
+
+    if (hash->elements != nullptr) {
+        uprv_free(hash->elements);
+        hash->elements = nullptr;
+    }
+    if (hash->allocated) {
+        uprv_free(hash);
+    }
+}
+
+//template<int32_t m>
+//static int32_t mod(int32_t x) { return x % m; }
+
+static constexpr int32_t mod7(int32_t x) { return x % 7; }
+static constexpr int32_t mod13(int32_t x) { return x % 13; }
+static constexpr int32_t mod31(int32_t x) { return x % 31; }
+static constexpr int32_t mod61(int32_t x) { return x % 61; }
+static constexpr int32_t mod127(int32_t x) { return x % 127; }
+static constexpr int32_t mod251(int32_t x) { return x % 251; }
+static constexpr int32_t mod509(int32_t x) { return x % 509; }
+static constexpr int32_t mod1021(int32_t x) { return x % 1021; }
+static constexpr int32_t mod2039(int32_t x) { return x % 2039; }
+static constexpr int32_t mod4093(int32_t x) { return x % 4093; }
+static constexpr int32_t mod8191(int32_t x) { return x % 8191; }
+static constexpr int32_t mod16381(int32_t x) { return x % 16381; }
+static constexpr int32_t mod32749(int32_t x) { return x % 32749; }
+static constexpr int32_t mod65521(int32_t x) { return x % 65521; }
+static constexpr int32_t mod131071(int32_t x) { return x % 131071; }
+static constexpr int32_t mod262139(int32_t x) { return x % 262139; }
+static constexpr int32_t mod524287(int32_t x) { return x % 524287; }
+static constexpr int32_t mod1048573(int32_t x) { return x % 1048573; }
+static constexpr int32_t mod2097143(int32_t x) { return x % 2097143; }
+static constexpr int32_t mod4194301(int32_t x) { return x % 4194301; }
+static constexpr int32_t mod8388593(int32_t x) { return x % 8388593; }
+static constexpr int32_t mod16777213(int32_t x) { return x % 16777213; }
+static constexpr int32_t mod33554393(int32_t x) { return x % 33554393; }
+static constexpr int32_t mod67108859(int32_t x) { return x % 67108859; }
+static constexpr int32_t mod134217689(int32_t x) { return x % 134217689; }
+static constexpr int32_t mod268435399(int32_t x) { return x % 268435399; }
+static constexpr int32_t mod536870909(int32_t x) { return x % 536870909; }
+static constexpr int32_t mod1073741789(int32_t x) { return x % 1073741789; }
+static constexpr int32_t mod2147483647(int32_t x) { return x % 2147483647; }
+
+static constexpr int32_t mod6(int32_t x) { return x % 6; }
+static constexpr int32_t mod12(int32_t x) { return x % 12; }
+static constexpr int32_t mod30(int32_t x) { return x % 30; }
+static constexpr int32_t mod60(int32_t x) { return x % 60; }
+static constexpr int32_t mod126(int32_t x) { return x % 126; }
+static constexpr int32_t mod250(int32_t x) { return x % 250; }
+static constexpr int32_t mod508(int32_t x) { return x % 508; }
+static constexpr int32_t mod1020(int32_t x) { return x % 1020; }
+static constexpr int32_t mod2038(int32_t x) { return x % 2038; }
+static constexpr int32_t mod4092(int32_t x) { return x % 4092; }
+static constexpr int32_t mod8190(int32_t x) { return x % 8190; }
+static constexpr int32_t mod16380(int32_t x) { return x % 16380; }
+static constexpr int32_t mod32748(int32_t x) { return x % 32748; }
+static constexpr int32_t mod65520(int32_t x) { return x % 65520; }
+static constexpr int32_t mod131070(int32_t x) { return x % 131070; }
+static constexpr int32_t mod262138(int32_t x) { return x % 262138; }
+static constexpr int32_t mod524286(int32_t x) { return x % 524286; }
+static constexpr int32_t mod1048572(int32_t x) { return x % 1048572; }
+static constexpr int32_t mod2097142(int32_t x) { return x % 2097142; }
+static constexpr int32_t mod4194300(int32_t x) { return x % 4194300; }
+static constexpr int32_t mod8388592(int32_t x) { return x % 8388592; }
+static constexpr int32_t mod16777212(int32_t x) { return x % 16777212; }
+static constexpr int32_t mod33554392(int32_t x) { return x % 33554392; }
+static constexpr int32_t mod67108858(int32_t x) { return x % 67108858; }
+static constexpr int32_t mod134217688(int32_t x) { return x % 134217688; }
+static constexpr int32_t mod268435398(int32_t x) { return x % 268435398; }
+static constexpr int32_t mod536870908(int32_t x) { return x % 536870908; }
+static constexpr int32_t mod1073741788(int32_t x) { return x % 1073741788; }
+static constexpr int32_t mod2147483646(int32_t x) { return x % 2147483646; }
+
+using mod_function = int32_t (*)(int32_t);
+
+static constexpr int32_t (*const mod_functions[])(int32_t) = {
+        &mod7, &mod13, &mod31, &mod61, &mod127, &mod251, &mod509, &mod1021, &mod2039, &mod4093, &mod8191, &mod16381, &mod32749,
+        &mod65521, &mod131071, &mod262139, &mod524287, &mod1048573, &mod2097143, &mod4194301, &mod8388593,
+        &mod16777213, &mod33554393, &mod67108859, &mod134217689, &mod268435399, &mod536870909,
+        &mod1073741789, &mod2147483647
+};
+
+static constexpr int32_t (*const jump_mod_functions[])(int32_t) = {
+    &mod6,
+    &mod12,
+    &mod30,
+    &mod60,
+    &mod126,
+    &mod250,
+    &mod508,
+    &mod1020,
+    &mod2038,
+    &mod4092,
+    &mod8190,
+    &mod16380,
+    &mod32748,
+    &mod65520,
+    &mod131070,
+    &mod262138,
+    &mod524286,
+    &mod1048572,
+    &mod2097142,
+    &mod4194300,
+    &mod8388592,
+    &mod16777212,
+    &mod33554392,
+    &mod67108858,
+    &mod134217688,
+    &mod268435398,
+    &mod536870908,
+    mod1073741788,
+    &mod2147483646
+};
+
+/*
+    Need to have a power-of-two size for the hash table for this to work.
+
+uint32_t index_for_hash(uint32_t K, uint32_t m)
+{
+    // 32 bits: 2654435769
+    // 64 bits: 11400714819323198485
+    
+    K ^= K >> (32 - m);
+    return (2654435769 * K) >> (32 - m);
+
+    //hash ^= hash >> shift_amount;
+    //return (11400714819323198485llu * hash) >> shift_amount;
+}
+*/
+
+static Int32HashElement *
+_int32hash_find(const Int32Hashtable *hash, int32_t key)
+{
+    int32_t firstDeleted = -1; /* assume invalid index */
+    int32_t theIndex, startIndex;
+    int32_t jump = 0; /* lazy evaluate */
+    int32_t tableHash;
+    Int32HashElement *elements = hash->elements;
+
+    int32_t hashcode = 0x7FFFFFFF & key; /* must be positive */
+    //startIndex = theIndex = (hashcode ^ 0x4000000) % hash->length;
+    startIndex = theIndex = mod_functions[hash->primeIndex](hashcode ^ 0x4000000);
+    //int32_t test = mod_functions[hash->primeIndex](hashcode);
+
+        do
+    {
+        Int32HashElement *t = &elements[theIndex];
+        tableHash = t->hashcode;
+        if (tableHash == hashcode) { /* quick check */
+            if (key == t->key) {
+                return t;
+            }
+        }
+        else if (!IS_EMPTY_OR_DELETED(tableHash))
+        {
+            /* We have hit a slot which contains a key-value pair,
+             * but for which the hash code does not match.  Keep
+             * looking.
+             */
+        }
+        else if (tableHash == HASH_EMPTY)
+        { /* empty, end o' the line */
+            break;
+        }
+        else if (firstDeleted < 0)
+        { /* remember first deleted */
+            firstDeleted = theIndex;
+        }
+        if (jump == 0)
+        { /* lazy compute jump */
+            /* The jump value must be relatively prime to the table
+             * length.  As long as the length is prime, then any value
+             * 1..length-1 will be relatively prime to it.
+             */
+            //jump = (hashcode % (hash->length - 1)) + 1;
+            jump = jump_mod_functions[hash->primeIndex](hashcode) + 1;
+        }
+        theIndex = (theIndex + jump) % hash->length;
+//        printf("\n HASH Collision. key=%d startIndex=%d jump=%d theIndex=%d\n", key, startIndex, jump, theIndex);
+    } while (theIndex != startIndex);
+
+    if (firstDeleted >= 0)
+    {
+        theIndex = firstDeleted; /* reset if had deleted slot */
+    }
+    else if (tableHash != HASH_EMPTY)
+    {
+        /* We get to this point if the hashtable is full (no empty or
+         * deleted slots), and we've failed to find a match.  THIS
+         * WILL NEVER HAPPEN as long as uhash_put() makes sure that
+         * count is always < length.
+         */
+        UPRV_UNREACHABLE;
+    }
+    return &(elements[theIndex]);
+}
+
+/**
+ * @return The requested item, or 0 if not found.
+ */
+U_CAPI int32_t U_EXPORT2
+int32hash_igeti(const Int32Hashtable *hash, int32_t key)
+{
+    return _int32hash_find(hash, key)->value;
+}
+
+static void
+_int32hash_rehash(Int32Hashtable *hash, UErrorCode *status)
+{
+    Int32HashElement *old = hash->elements;
+    int32_t oldLength = hash->length;
+    int32_t newPrimeIndex = hash->primeIndex;
+    int32_t i;
+
+    if (hash->count > hash->highWaterMark)
+    {
+        if (++newPrimeIndex >= PRIMES_LENGTH)
+        {
+            return;
+        }
+    }
+    else if (hash->count < hash->lowWaterMark)
+    {
+        if (--newPrimeIndex < 0)
+        {
+            return;
+        }
+    }
+    else
+    {
+        return;
+    }
+
+    _int32hash_allocate(hash, newPrimeIndex, status);
+
+    if (U_FAILURE(*status))
+    {
+        hash->elements = old;
+        hash->length = oldLength;
+        return;
+    }
+
+    for (i = oldLength - 1; i >= 0; --i)
+    {
+        if (!IS_EMPTY_OR_DELETED(old[i].hashcode))
+        {
+            Int32HashElement *e = _int32hash_find(hash, old[i].key);
+            U_ASSERT(e != NULL);
+            U_ASSERT(e->hashcode == HASH_EMPTY);
+            e->key = old[i].key;
+            e->value = old[i].value;
+            e->hashcode = old[i].hashcode;
+            ++hash->count;
+        }
+    }
+
+//    printf("\n RESIZING THE HASH:  %d to %d \n", oldLength, PRIMES[newPrimeIndex]);
+
+    uprv_free(old);
+}
+
+static int32_t
+_int32hash_setElement(Int32Hashtable* /*hash*/, Int32HashElement *e,
+                      int32_t hashcode,
+                      int32_t key, int32_t value)
+{
+
+    int32_t oldValue = e->value;
+    e->hashcode = hashcode;
+    e->key = key;
+    e->value = value;
+    return oldValue;
+}
+
+/**
+ * @return The previous value, or 0 if none.
+ */
+U_CAPI int32_t U_EXPORT2
+int32hash_iputi(Int32Hashtable *hash, int32_t key, int32_t value, UErrorCode *status)
+{
+    /* Put finds the position in the table for the new value.  If the
+     * key is already in the table, it is deleted, if there is a
+     * non-NULL keyDeleter.  Then the key, the hash and the value are
+     * all put at the position in their respective arrays.
+     */
+    Int32HashElement *e;
+
+    if (U_FAILURE(*status))
+    {
+        return 0;
+    }
+    U_ASSERT(hash != NULL);
+
+    if (hash->count > hash->highWaterMark)
+    {
+        _int32hash_rehash(hash, status);
+        if (U_FAILURE(*status))
+        {
+            return 0;
+        }
+    }
+
+    //int32_t hashcode = (*hash->keyHasher)(key);
+    int32_t hashcode = key;
+    e = _int32hash_find(hash, key);
+    U_ASSERT(e != NULL);
+
+    if (IS_EMPTY_OR_DELETED(e->hashcode))
+    {
+        /* Important: We must never actually fill the table up.  If we
+         * do so, then _int32hash_find() will call UPRV_UNREACHABLE.
+         */
+        ++hash->count;
+        if (hash->count == hash->length)
+        {
+            /* Don't allow count to reach length */
+            --hash->count;
+            *status = U_MEMORY_ALLOCATION_ERROR;
+            return 0;
+        }
+    }
+
+    /* We must in all cases handle storage properly.  If there was an
+     * old key, then it must be deleted (if the deleter != NULL).
+     * Make hashcodes stored in table positive.
+     */
+    return _int32hash_setElement(hash, e, hashcode & 0x7FFFFFFF, key, value);
+}
+

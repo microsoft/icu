@@ -715,4 +715,51 @@ U_NAMESPACE_END
 
 #endif
 
+// Edits
+
+struct Int32HashElement {
+    int32_t hashcode;
+    int32_t key;
+    int32_t value;
+};
+typedef struct Int32HashElement Int32HashElement;
+
+struct Int32Hashtable {
+    /* Main key-value pair storage array */
+    Int32HashElement *elements;
+
+    /* Size parameters */
+    int32_t     count;      /* The number of key-value pairs in this table.
+                             * 0 <= count <= length.  In practice we
+                             * never let count == length (see code). */
+    int32_t     length;     /* The physical size of the arrays hashes, keys
+                             * and values.  Must be prime. */
+
+    /* Rehashing thresholds */
+    int32_t     highWaterMark;  /* If count > highWaterMark, rehash */
+    int32_t     lowWaterMark;   /* If count < lowWaterMark, rehash */
+    float       highWaterRatio; /* 0..1; high water as a fraction of length */
+    float       lowWaterRatio;  /* 0..1; low water as a fraction of length */
+
+    int8_t      primeIndex;     /* Index into our prime table for length.
+                                 * length == PRIMES[primeIndex] */
+    UBool       allocated; /* Was this UHashtable allocated? */
+};
+typedef struct Int32Hashtable Int32Hashtable;
+
+U_CAPI Int32Hashtable *U_EXPORT2
+int32hash_open(UErrorCode *status);
+
+U_CAPI Int32Hashtable *U_EXPORT2
+int32hash_openSize(int32_t size, UErrorCode *status);
+
+U_CAPI void U_EXPORT2
+int32hash_close(Int32Hashtable *hash);
+
+U_CAPI int32_t U_EXPORT2
+int32hash_igeti(const Int32Hashtable *hash, int32_t key);
+
+U_CAPI int32_t U_EXPORT2
+int32hash_iputi(Int32Hashtable *hash, int32_t key, int32_t value, UErrorCode *status);
+
 #endif

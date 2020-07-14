@@ -62,7 +62,7 @@ CollationTailoring::~CollationTailoring() {
     ures_close(bundle);
     utrie2_close(trie);
     delete unsafeBackwardSet;
-    uhash_close(maxExpansions);
+    int32hash_close(maxExpansions);
     maxExpansionsInitOnce.reset();
 }
 

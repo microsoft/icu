@@ -81,7 +81,7 @@ struct U_I18N_API CollationTailoring : public SharedObject {
     UResourceBundle *bundle;
     UTrie2 *trie;
     UnicodeSet *unsafeBackwardSet;
-    mutable UHashtable *maxExpansions;
+    mutable Int32Hashtable *maxExpansions;
     mutable UInitOnce maxExpansionsInitOnce;
 
 private:

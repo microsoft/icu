@@ -436,7 +436,7 @@ namespace {
 
 class MaxExpSink : public ContractionsAndExpansions::CESink {
 public:
-    MaxExpSink(UHashtable *h, UErrorCode &ec) : maxExpansions(h), errorCode(ec) {}
+    MaxExpSink(Int32Hashtable *h, UErrorCode &ec) : maxExpansions(h), errorCode(ec) {}
     virtual ~MaxExpSink();
     virtual void handleCE(int64_t /*ce*/) {}
     virtual void handleExpansion(const int64_t ces[], int32_t length) {
@@ -459,13 +459,13 @@ public:
         } else {
             lastHalf |= 0xc0;  // old-style continuation CE
         }
-        if (count > uhash_igeti(maxExpansions, (int32_t)lastHalf)) {
-            uhash_iputi(maxExpansions, (int32_t)lastHalf, count, &errorCode);
+        if (count > int32hash_igeti(maxExpansions, (int32_t)lastHalf)) {
+            int32hash_iputi(maxExpansions, (int32_t)lastHalf, count, &errorCode);
         }
     }
 
 private:
-    UHashtable *maxExpansions;
+    Int32Hashtable *maxExpansions;
     UErrorCode &errorCode;
 };
 
@@ -473,16 +473,15 @@ MaxExpSink::~MaxExpSink() {}
 
 }  // namespace
 
-UHashtable *
+Int32Hashtable *
 CollationElementIterator::computeMaxExpansions(const CollationData *data, UErrorCode &errorCode) {
     if (U_FAILURE(errorCode)) { return NULL; }
-    UHashtable *maxExpansions = uhash_open(uhash_hashLong, uhash_compareLong,
-                                           uhash_compareLong, &errorCode);
+    Int32Hashtable *maxExpansions = int32hash_openSize(372, &errorCode);
     if (U_FAILURE(errorCode)) { return NULL; }
     MaxExpSink sink(maxExpansions, errorCode);
     ContractionsAndExpansions(NULL, NULL, &sink, TRUE).forData(data, errorCode);
     if (U_FAILURE(errorCode)) {
-        uhash_close(maxExpansions);
+        int32hash_close(maxExpansions);
         return NULL;
     }
     return maxExpansions;
@@ -494,10 +493,11 @@ CollationElementIterator::getMaxExpansion(int32_t order) const {
 }
 
 int32_t
-CollationElementIterator::getMaxExpansion(const UHashtable *maxExpansions, int32_t order) {
+CollationElementIterator::getMaxExpansion(const Int32Hashtable *maxExpansions, int32_t order)
+{
     if (order == 0) { return 1; }
     int32_t max;
-    if(maxExpansions != NULL && (max = uhash_igeti(maxExpansions, order)) != 0) {
+    if(maxExpansions != NULL && (max = int32hash_igeti(maxExpansions, order)) != 0) {
         return max;
     }
     if ((order & 0xc0) == 0xc0) {

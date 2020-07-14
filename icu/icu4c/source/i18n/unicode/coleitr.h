@@ -43,7 +43,7 @@
 #include "unicode/uobject.h"
 
 struct UCollationElements;
-struct UHashtable;
+struct Int32Hashtable;
 
 U_NAMESPACE_BEGIN
 
@@ -384,9 +384,9 @@ private:
     /** Normalizes dir_=1 (just after setOffset()) to dir_=0 (just after reset()). */
     inline int8_t normalizeDir() const { return dir_ == 1 ? 0 : dir_; }
 
-    static UHashtable *computeMaxExpansions(const CollationData *data, UErrorCode &errorCode);
+    static Int32Hashtable *computeMaxExpansions(const CollationData *data, UErrorCode &errorCode);
 
-    static int32_t getMaxExpansion(const UHashtable *maxExpansions, int32_t order);
+    static int32_t getMaxExpansion(const Int32Hashtable *maxExpansions, int32_t order);
 
     // CollationElementIterator private data members ----------------------------
 
