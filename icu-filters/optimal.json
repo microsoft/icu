@@ -89,6 +89,7 @@
                 "numberingSystems",
                 "icuver",
                 "langInfo",
+                "supplementalData",
                 "keyTypeData"
             ]
         },
