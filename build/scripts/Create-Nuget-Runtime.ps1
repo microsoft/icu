@@ -90,8 +90,8 @@ foreach ($arch in $architectures)
     # Create the version.txt file
     $versionTxtFile = "$stagingLocation\version.txt"
     $ret = New-Item -ItemType File -Force -Path $versionTxtFile
-    "MS-ICU = $env:ICUVersion" | Set-Content -Encoding UTF8NoBOM $versionTxtFile
-    "commit = $localSHA" | Add-Content -Encoding UTF8NoBOM $versionTxtFile
+    "MS-ICU = $env:ICUVersion" | Set-Content -Encoding UTF8 $versionTxtFile
+    "commit = $localSHA" | Add-Content -Encoding UTF8 $versionTxtFile
 
     # Update the placeholders in the template nuspec file.
     $runtimePackageId = "runtime.win-$arch.$packageName";
@@ -123,8 +123,8 @@ Copy-Item $licenseFile -Destination "$stagingLocation\LICENSE"
 # Create the version.txt file
 $versionTxtFile = "$stagingLocation\version.txt"
 $ret = New-Item -ItemType File -Force -Path $versionTxtFile
-"MS-ICU = $env:ICUVersion" | Set-Content -Encoding UTF8NoBOM $versionTxtFile
-"commit = $localSHA" | Add-Content -Encoding UTF8NoBOM $versionTxtFile
+"MS-ICU = $env:ICUVersion" | Set-Content -Encoding UTF8 $versionTxtFile
+"commit = $localSHA" | Add-Content -Encoding UTF8 $versionTxtFile
 
 # Create the runtime.json file
 $runtimeFile = "$stagingLocation\runtime.json"
@@ -138,7 +138,7 @@ foreach ($arch in $architectures)
     $outer = [pscustomobject]@{ "$packageName" = $inner }
     $rt.runtimes | add-member -membertype NoteProperty -name "win-$arch" -value $outer
 }
-$rt | ConvertTo-Json | Set-Content -Encoding UTF8NoBOM $runtimeFile
+$rt | ConvertTo-Json | Set-Content -Encoding UTF8 $runtimeFile
 
 # Update the placeholders in the template nuspec file.
 $runtimePackageId = "$packageName";
