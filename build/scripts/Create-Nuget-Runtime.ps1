@@ -138,7 +138,7 @@ foreach ($arch in $architectures)
     $outer = [pscustomobject]@{ "$packageName" = $inner }
     $rt.runtimes | add-member -membertype NoteProperty -name "win-$arch" -value $outer
 }
-$rt | ConvertTo-Json | Set-Content -Encoding UTF8 $runtimeFile
+$rt | ConvertTo-Json -Depth 8 | Set-Content -Encoding UTF8 $runtimeFile
 
 # Update the placeholders in the template nuspec file.
 $runtimePackageId = "$packageName";
