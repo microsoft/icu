@@ -83,6 +83,9 @@
         "unit_tree": "exclude",
         "rbnf_tree": "exclude",
         "rbnf_index": "exclude",
+        "cnvalias": "exclude",
+        "lang_tree": "exclude",
+        "region_tree": "exclude",
         "misc": {
             "whitelist": [
                 "currencyNumericCodes",
@@ -95,13 +98,20 @@
         },
         "brkitr_rules": {
             "whitelist": ["char"]
+        },
+        "brkitr_tree": {
+            "blacklist": ["en_US_POSIX"]
         }
     },
     "resourceFilters": [
         {
             "categories": ["curr_tree"],
             "rules": [
-                "-/CurrencyPlurals"
+                "-/Currencies%narrow",
+                "-/Currencies%formal",
+                "-/Currencies%variant",
+                "-/CurrencyPlurals",
+                "-/CurrencyUnitPatterns"
             ]
         },
         {
@@ -119,6 +129,58 @@
                 "-/ExemplarCharacters",
                 "-/ExemplarCharactersNumbers",
                 "-/ExemplarCharactersPunctuation"
+            ]
+        },
+        {
+            "categories": ["coll_tree"],
+            "files": {
+                "whitelist": ["zh"]
+            },
+            "rules": [
+                "-/*/unihan",
+                "-/*/big5han",
+                "-/*/gb2312han"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "blacklist": [
+                    "root",
+                    "am",
+                    "ar",
+                    "fa",
+                    "he",
+                    "hi",
+                    "ja",
+                    "ko",
+                    "th",
+                    "zh",
+                    "zh_Hant"
+                ]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic"
+            ]
+        },
+        {
+            "categories": ["misc"],
+            "files": {
+                "whitelist": ["supplementalData"]
+            },
+            "rules": [
+                "-/*",
+                "+/calendarData",
+                "+/calendarPreferenceData",
+                "+/cldrVersion",
+                "+/codeMappings",
+                "+/idValidity",
+                "+/timeData",
+                "+/weekData",
+                "+/weekData%variant"
             ]
         }
     ]
