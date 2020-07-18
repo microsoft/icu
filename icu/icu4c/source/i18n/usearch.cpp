@@ -320,6 +320,8 @@ inline uint16_t initializePatternCETable(UStringSearch *strsrch,
     uint32_t  offset      = 0;
     uint16_t  result      = 0;
     int32_t   ce;
+    int32_t   previousCE = UCOL_NULLORDER;
+    uint16_t  previousMaxExp = 0;
 
     while ((ce = ucol_next(coleiter, status)) != UCOL_NULLORDER &&
            U_SUCCESS(*status)) {
@@ -338,7 +340,18 @@ inline uint16_t initializePatternCETable(UStringSearch *strsrch,
             }
             cetable = temp;
         }
-        result += (uint16_t)(ucol_getMaxExpansion(coleiter, ce) - 1);
+        // will always be different the first time, as ce will never be UCOL_NULLORDER.
+        if (previousCE == ce)
+        {
+            result += previousMaxExp;
+        }
+        else
+        {
+            previousCE = ce;
+            previousMaxExp = (uint16_t)(ucol_getMaxExpansion(coleiter, ce) - 1);
+            result += previousMaxExp;
+        }
+        // result += (uint16_t)(ucol_getMaxExpansion(coleiter, ce) - 1);
     }
 
     cetable[offset]   = 0;
