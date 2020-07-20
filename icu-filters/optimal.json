@@ -185,6 +185,7 @@
                 "-/*/*",
                 "+/collations/default",
                 "+/collations/standard",
+                "+/collations/private-kana",
                 "-/UCARules"
             ]
         },
@@ -198,6 +199,7 @@
                 "+/calendarData",
                 "+/calendarPreferenceData",
                 "+/cldrVersion",
+                "+/measurementData",
                 "+/codeMappings",
                 "+/idValidity",
                 "+/timeData",
