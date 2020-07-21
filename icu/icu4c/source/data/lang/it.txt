@@ -804,7 +804,6 @@ it{
             iso8601{"Calendario ISO-8601"}
             japanese{"Calendario giapponese"}
             persian{"Calendario persiano"}
-            roc{"Calendario minguo"}
         }
         cf{
             account{"Formato valuta contabile"}

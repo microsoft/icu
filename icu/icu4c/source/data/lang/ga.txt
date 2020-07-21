@@ -463,7 +463,6 @@ ga{
             iso8601{"Féilire ISO-8601"}
             japanese{"Féilire Seapánach"}
             persian{"Féilire Peirseach"}
-            roc{"Féilire Téavánach"}
         }
         cf{
             account{"Formáid Airgeadra don Chuntasaíocht"}

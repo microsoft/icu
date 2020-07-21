@@ -813,7 +813,6 @@ et{
             iso8601{"ISO-8601 kalender"}
             japanese{"Jaapani kalender"}
             persian{"Pärsia kalender"}
-            roc{"Hiina Vabariigi kalender"}
         }
         cf{
             account{"arvelduse rahavorming"}

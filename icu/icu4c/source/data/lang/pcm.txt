@@ -295,7 +295,6 @@ pcm{
             iso8601{"ISO-8601 Kalẹ́nda"}
             japanese{"Japán Kalẹ́nda"}
             persian{"Pẹ́shia Kalẹ́nda"}
-            roc{"Ripọ́blík ọf Chaíná Kalẹ́nda"}
         }
         cf{
             account{"Akáunt To Ték Arénj Mọní"}

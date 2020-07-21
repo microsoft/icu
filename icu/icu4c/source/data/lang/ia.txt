@@ -445,7 +445,6 @@ ia{
             iso8601{"calendario ISO-8601"}
             japanese{"calendario japonese"}
             persian{"calendario persa"}
-            roc{"calendario del Republica de China"}
         }
         cf{
             account{"formato de moneta pro contabilitate"}

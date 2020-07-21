@@ -49,9 +49,6 @@ es_US{
         Telu{"telegu"}
     }
     Types{
-        calendar{
-            roc{"calendario minguo"}
-        }
         collation{
             ducet{"orden de clasificación de Unicode predeterminado"}
         }

@@ -1594,35 +1594,6 @@ vi{
                 }
             }
         }
-        roc{
-            DateTimePatterns{
-                "HH:mm:ss zzzz",
-                "HH:mm:ss z",
-                "HH:mm:ss",
-                "HH:mm",
-                "EEEE, 'ngày' dd MMMM 'năm' y G",
-                "'Ngày' dd 'tháng' M 'năm' y G",
-                "dd-MM-y G",
-                "dd/MM/y GGGGG",
-                "{1} {0}",
-                "{1} 'lúc' {0}",
-                "{1} 'lúc' {0}",
-                "{1} {0}",
-                "{1} {0}",
-            }
-            availableFormats{
-                M{"'tháng' L"}
-                MEd{"E, dd-M"}
-                Md{"dd-M"}
-                d{"'Ngày' dd"}
-            }
-            eras{
-                abbreviated{
-                    "Trước R.O.C",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"hoạt động"}

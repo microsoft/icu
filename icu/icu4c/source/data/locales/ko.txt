@@ -2100,29 +2100,6 @@ ko{
                 }
             }
         }
-        roc{
-            availableFormats{
-                GyMMM{"G y년 MMM"}
-                GyMMMEEEEd{"G y년 MMM d일 EEEE"}
-                GyMMMEd{"G y년 MMM d일 (E)"}
-                GyMMMd{"G y년 MMM d일"}
-                MMMEEEEd{"MMM d일 EEEE"}
-                MMMEd{"MMM d일 (E)"}
-                MMMMd{"MMMM d일"}
-                MMMd{"MMM d일"}
-                yyyyMMM{"G y년 MMM"}
-                yyyyMMMEEEEd{"G y년 MMM d일 EEEE"}
-                yyyyMMMEd{"G y년 MMM d일 (E)"}
-                yyyyMMMM{"G y년 MMMM"}
-                yyyyMMMd{"G y년 MMM d일"}
-            }
-            eras{
-                abbreviated{
-                    "중화민국전",
-                    "중화민국",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"활동"}

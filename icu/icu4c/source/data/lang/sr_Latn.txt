@@ -677,7 +677,6 @@ sr_Latn{
             iso8601{"ISO-8601 kalendar"}
             japanese{"japanski kalendar"}
             persian{"persijski kalendar"}
-            roc{"kalendar Republike Kine"}
         }
         cf{
             account{"računovodstveni format valute"}
