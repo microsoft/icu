@@ -2932,6 +2932,50 @@ static void TestUInt16Overflow(void) {
     uprv_free(pattern);
 }
 
+static void TestFreedInputText(void) {
+    UChar* pattern = NULL;
+    UChar* text = NULL;
+    pattern = (UChar*)uprv_malloc(sizeof(UChar) * (10));
+    text    = (UChar*)uprv_malloc(sizeof(UChar) * (10));
+    if (pattern == NULL || text == NULL)
+    {
+        log_err("Err: uprv_malloc returned NULL\n");
+        return;
+    }
+    u_uastrcpy(pattern, "abc");
+    u_uastrcpy(text,    "abc");
+
+    UErrorCode errorCode = U_ZERO_ERROR;
+    UStringSearch* usearch = usearch_open(pattern, -1, text, -1, "en-US", NULL, &errorCode);
+
+    if (U_SUCCESS(errorCode))
+    {
+        uprv_free(pattern);
+        uprv_free(text);
+
+        int32_t match = usearch_first(usearch, &errorCode);
+
+        // This will fail as the API requires the pattern string to outlive the UStringSearch object.
+
+        if (U_SUCCESS(errorCode))
+        {
+            if (match != 0)
+            {
+                log_err("Err: match was expected, got %d instead\n", match);
+            }
+        }
+        else
+        {
+            log_err("usearch_first error %s\n", u_errorName(errorCode));
+        }
+        usearch_close(usearch);
+    }
+    else
+    {
+        log_err("usearch_open error %s\n", u_errorName(errorCode));
+    }
+}
+
 static void TestPCEBuffer_100df(void) {
   UChar search[] =
     { 0x0020, 0x0020, 0x00df, 0x0020, 0x0041, 0x00df, 0x0020, 0x0061, 0x00df, 0x0020, 0x00c5, 0x00df, 0x0020, 0x212b, 0x00df, 0x0020, 0x0041, 0x030a, 0x00df, 0x0020, 0x00e5, 0x00df, 0x0020, 0x0061, 0x02da, 0x00df, 0x0020, 0x0061, 0x030a, 0x00df, 0x0020, 0xd8fa, 0xdeae, 0x00df, 0x0020, 0x2027, 0x00df }; /* 38 cp, 9 of them unpaired surrogates */
@@ -3108,6 +3152,7 @@ void addSearchTest(TestNode** root)
     addTest(root, &TestMatchFollowedByIgnorables, "tscoll/usrchtst/TestMatchFollowedByIgnorables");
     addTest(root, &TestIndicPrefixMatch, "tscoll/usrchtst/TestIndicPrefixMatch");
     addTest(root, &TestUInt16Overflow, "tscoll/usrchtst/TestUInt16Overflow");
+    addTest(root, &TestFreedInputText, "tscoll/usrchtst/TestFreedInputText");
 }
 
 #endif /* #if !UCONFIG_NO_COLLATION */
