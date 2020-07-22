@@ -14,7 +14,69 @@ variables:
 stages:
 - stage: Build
   jobs:
+  - job: BuildLinux
+    pool:
+      name: Azure Pipelines
+      vmImage: 'ubuntu-18.04'
+    workspace:
+      clean: all
+
+    # Note: We only have one distro for now, but this lets others be added more easily in the future.
+    strategy:
+      matrix:
+        centos:
+          distro: 'centos'
+
+    steps:
+      - checkout: self
+        lfs: true
+        fetchDepth: 1
+
+      - task: PowerShell@2
+        displayName: 'Set ICU Version'
+        inputs:
+          targetType: filePath
+          filePath: './build/scripts/Set-ICUVersion.ps1'
+          arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+
+      - task: Docker@2
+        displayName: 'Setup Docker Container: $(distro)'
+        inputs:
+          command: build
+          Dockerfile: 'build/dockerfiles/$(distro)/Dockerfile'
+          arguments: -t ms-icu-container
+
+      - script: |
+          mkdir /tmp/build-output && docker run --rm -v $(pwd):/src -v /tmp/build-output:/dist ms-icu-container /src/build/scripts/build-icu.sh
+        displayName: 'Build, test, and make install'
+
+      - script: |
+          cd /tmp/build-output && ls -Rl
+        displayName: 'DIAG: ls -Rl'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifacts'
+        inputs:
+          PathtoPublish: '/tmp/build-output/icu-binaries.tar.gz'
+          ArtifactName: 'linux_$(distro).tar.gz'
+
+      # Note: We only copy the .so files with the full version (ex: libicuuc.so.67.1.0.4)
+      - script: |
+          mkdir /tmp/icu-binaries
+          ls -al /tmp/build-output/icu/usr/local/lib/
+          cp /tmp/build-output/icu/usr/local/lib/libicudata.so.$(ICUVersion) /tmp/icu-binaries
+          cp /tmp/build-output/icu/usr/local/lib/libicui18n.so.$(ICUVersion) /tmp/icu-binaries
+          cp /tmp/build-output/icu/usr/local/lib/libicuuc.so.$(ICUVersion) /tmp/icu-binaries
+        displayName: 'Copy .so files'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish: binaries'
+        inputs:
+          PathtoPublish: '/tmp/icu-binaries'
+          ArtifactName: 'linux-x64'
+
   - job: BuildWindows
+    timeoutInMinutes: 30
     pool:
       name: Azure Pipelines
       vmImage: 'vs2017-win2016'
@@ -176,6 +238,7 @@ stages:
     name: Package ES CodeHub Lab E
   jobs:
   - job: CodeSignBits
+    timeoutInMinutes: 30
     workspace:
       clean: all
     
@@ -257,6 +320,7 @@ stages:
 
   jobs:
   - job: CreateNugetAndCodeSign
+    timeoutInMinutes: 30
     workspace:
       clean: all
     steps:
@@ -305,6 +369,12 @@ stages:
       displayName: 'Download win-ARM64'
       inputs:
         artifactName: 'win-ARM64'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\bits'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download linux-x64'
+      inputs:
+        artifactName: 'linux-x64'
         downloadPath: '$(Build.BINARIESDIRECTORY)\bits'
 
     # Symbols (PDBs)

@@ -8,6 +8,7 @@
     <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-x64*.nupkg" signType="Nuget" />
     <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-x86*.nupkg" signType="Nuget" />
     <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-arm64*.nupkg" signType="Nuget" />
+    <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.linux-x64*.nupkg" signType="Nuget" />
     <!-- Symbol packages -->
     <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-x64*.snupkg" signType="Nuget" />
     <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-x86*.snupkg" signType="Nuget" />
