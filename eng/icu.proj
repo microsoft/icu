@@ -2,7 +2,7 @@
   <!-- Only building for wasm is supported -->
   <Target Name="Build">
     <Exec WorkingDirectory="$(MSBuildThisFileDirectory)"
-          Command="make -f icu.mk all SHELL=/bin/bash"
+          Command="make -f icu.mk all ICU_TRACING=$(IcuTracing) SHELL=/bin/bash"
           IgnoreStandardErrorWarningFormat="true" />
   </Target>
   <Target Name="Restore" />

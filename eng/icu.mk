@@ -21,7 +21,8 @@ $(HOST_BUILDDIR)/.stamp-host: $(HOST_BUILDDIR)/.stamp-configure-host
 	touch $@
 
 $(HOST_BUILDDIR)/.stamp-configure-host: | $(HOST_BUILDDIR)
-	cd $(HOST_BUILDDIR) && $(TOP)/icu/icu4c/source/configure --prefix=$(HOST_BINDIR) --disable-icu-config
+	cd $(HOST_BUILDDIR) && $(TOP)/icu/icu4c/source/configure \
+	--prefix=$(HOST_BINDIR) --disable-icu-config --disable-icuio --disable-extras --disable-tests --disable-samples
 	touch $@
 
 $(WASM_BUILDDIR):
@@ -31,7 +32,37 @@ $(WASM_BUILDDIR):
 icu-wasm: $(WASM_BUILDDIR)/.stamp-configure-wasm
 	cd $(WASM_BUILDDIR) && $(MAKE) -j8 all && $(MAKE) install
 
+# Disable some features we don't need, see icu/icu4c/source/common/unicode/uconfig.h
+ICU_DEFINES= \
+	-DUCONFIG_NO_FILTERED_BREAK_ITERATION=1 \
+	-DUCONFIG_NO_REGULAR_EXPRESSIONS=1 \
+	-DUCONFIG_NO_TRANSLITERATION=1 \
+	-DUCONFIG_NO_FILE_IO=1 \
+	-DU_CHARSET_IS_UTF8=1 \
+	-DU_CHECK_DYLOAD=0 \
+	-DU_ENABLE_DYLOAD=0
+
+CONFIGURE_ADD_ARGS=
+ifeq ($(ICU_TRACING),true)
+    CONFIGURE_ADD_ARGS += --enable-tracing
+endif
+
 $(WASM_BUILDDIR)/.stamp-configure-wasm: $(HOST_BUILDDIR)/.stamp-host | $(WASM_BUILDDIR) check-env
-	cd $(WASM_BUILDDIR) && source $(EMSDK_PATH)/emsdk_env.sh && ICU_DATA_FILTER_FILE=$(ICU_FILTERS)/optimal.json \
-	emconfigure $(TOP)/icu/icu4c/source/configure --prefix=$(WASM_BINDIR) --enable-static --disable-shared CFLAGS="-Oz" CXXFLAGS="-Oz -Wno-sign-compare" --with-cross-build=$(HOST_BUILDDIR) --disable-icu-config --with-data-packaging=archive --disable-extras --disable-renaming
+	cd $(WASM_BUILDDIR) && source $(EMSDK_PATH)/emsdk_env.sh && \
+	ICU_DATA_FILTER_FILE=$(ICU_FILTERS)/optimal.json \
+	emconfigure $(TOP)/icu/icu4c/source/configure \
+	--prefix=$(WASM_BINDIR) \
+	--enable-static \
+	--disable-shared \
+	--disable-tests \
+	--disable-extras \
+	--disable-samples \
+	--disable-icuio \
+	--disable-renaming \
+	--disable-icu-config \
+	--with-cross-build=$(HOST_BUILDDIR) \
+	--with-data-packaging=archive \
+	$(CONFIGURE_ADD_ARGS) \
+	CFLAGS="-Oz $(ICU_DEFINES)" \
+	CXXFLAGS="-fno-exceptions -Oz -Wno-sign-compare $(ICU_DEFINES)"
 	touch $@

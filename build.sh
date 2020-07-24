@@ -12,5 +12,32 @@ while [[ -h $source ]]; do
   [[ $source != /* ]] && source="$scriptroot/$source"
 done
 
+usage()
+{
+  echo "Common settings:"
+  echo "  --tracing                  Enable ICU tracing"
+  echo "  --help                     Print help and exit (short: -h)"
+  echo ""
+}
+
+properties=
+
+while [[ $# > 0 ]]; do
+  opt="$(echo "${1/#--/-}" | awk '{print tolower($0)}')"
+  case "$opt" in
+    -help|-h)
+      usage
+      exit 0
+      ;;
+    -tracing)
+      properties="$properties /p:IcuTracing=true"
+      ;;
+    *)
+  esac
+  shift
+done
+
 scriptroot="$( cd -P "$( dirname "$source" )" && pwd )"
-"$scriptroot/eng/common/build.sh" --build --restore $@
+
+echo $tracing
+"$scriptroot/eng/common/build.sh" --build --restore $properties $@
