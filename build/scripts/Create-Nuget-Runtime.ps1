@@ -1,17 +1,20 @@
 <#
 .SYNOPSIS
-    This script sets up the folder structure for the Windows Runtime Nuget package, copies/prepares the contents,
-    and finally invokes the Nuget pack operation to create the package.
+    This script sets up the folder structure for the Runtime Nuget package,
+    it copies and prepares the contents, and finally invokes the Nuget pack
+    operation in order to create the package.
 
 .PARAMETER sourceRoot
     The path to the root/top-level source code folder. Must already exist.
 
 .PARAMETER icuBinaries
     The path to the location of the signed ICU binaries. Must already exist.
-    Under this path there should be one folder per-arch: x64, x86, ARM, or ARM64.
+    Under this path there should be one folder per runtime.
+    For example: "win-x64", "win-x86", "win-arm64", etc.
 
 .PARAMETER output
-    The path to the output location. This script will create a subfolder named "nuget" for the Nuget package(s).
+    The path to the output location. This script will create a subfolder
+    named "nuget" for the Nuget package(s).
 #>
 param(
     [Parameter(Mandatory=$true)]
@@ -59,13 +62,17 @@ $packageName = 'Microsoft.ICU.icu4c'
 
 $icuSource = Resolve-Path "$sourceRoot\icu\icu4c"
 
-# Read in the various arch from the names of the folders (x64, x86, ARM, or ARM64).
-$architectures = Get-ChildItem -Path $icuBinaries | Where-Object {$_.PSIsContainer} | ForEach-Object {$_.Name}
+#------------------------------------------------
+# Create each individual runtime package
 
-foreach ($arch in $architectures)
+# Read in the various runtime names from the names of the folders.
+# Make sure the runtime name is all lowercase.
+$runtimeIdentifiers = Get-ChildItem -Path $icuBinaries | Where-Object {$_.PSIsContainer} | ForEach-Object {$_.Name.ToLower()}
+
+foreach ($rid in $runtimeIdentifiers)
 {
     # Create the staging folder for the nuget contents.
-    $stagingLocation = "$output\nuget-win-$arch"
+    $stagingLocation = "$output\nuget-$rid"
 
     # Note: We store the return value from New-Item in order to suppress the Cmdlet output to stdout.
     Write-Host 'Creating staging folder for the Nuget package...'
@@ -74,13 +81,16 @@ foreach ($arch in $architectures)
     # Create the folder structure for the Runtime Nuget
     Write-Host 'Creating folders'
     $ret = New-Item -Path "$stagingLocation\runtimes" -ItemType Directory
-    $ret = New-Item -Path "$stagingLocation\runtimes\win-$arch" -ItemType Directory
-    $ret = New-Item -Path "$stagingLocation\runtimes\win-$arch\native" -ItemType Directory
+    $ret = New-Item -Path "$stagingLocation\runtimes\$rid" -ItemType Directory
+    $ret = New-Item -Path "$stagingLocation\runtimes\$rid\native" -ItemType Directory
     
-    # Compiled DLLs
-    $dllInput = "$icuBinaries\$arch\bin\signed"
-    $dllOutput = "$stagingLocation\runtimes\win-$arch\native"
-    Copy-Item "$dllInput\*.dll" -Destination $dllOutput -Recurse
+    if ($rid.StartsWith('win'))
+    {
+        # Compiled DLLs
+        $dllInput = "$icuBinaries\$rid\bin\signed"
+        $dllOutput = "$stagingLocation\runtimes\$rid\native"
+        Copy-Item "$dllInput\*.dll" -Destination $dllOutput -Recurse
+    }
 
     # Add the License file
     Write-Host 'Copying the License file into the Nuget location.'
@@ -94,8 +104,8 @@ foreach ($arch in $architectures)
     "commit = $localSHA" | Add-Content -Encoding UTF8 $versionTxtFile
 
     # Update the placeholders in the template nuspec file.
-    $runtimePackageId = "runtime.win-$arch.$packageName";
-    $nuspecFileContent = (Get-Content "$sourceRoot\build\nuget\Template-runtime-arch.nuspec")
+    $runtimePackageId = "runtime.$rid.$packageName";
+    $nuspecFileContent = (Get-Content "$sourceRoot\build\nuget\Template-runtime-rid.nuspec")
     $nuspecFileContent = $nuspecFileContent.replace('$runtimePackageId$', $runtimePackageId)
     $nuspecFileContent = $nuspecFileContent.replace('$version$', $packageVersion)
     $nuspecFileContent | Set-Content "$stagingLocation\$runtimePackageId.nuspec"
@@ -106,6 +116,7 @@ foreach ($arch in $architectures)
     &cmd /c $nugetCmd
 }
 
+#------------------------------------------------
 # Create the meta-package
 
 # Create the staging folder for the nuget contents.
@@ -126,25 +137,22 @@ $ret = New-Item -ItemType File -Force -Path $versionTxtFile
 "MS-ICU = $env:ICUVersion" | Set-Content -Encoding UTF8 $versionTxtFile
 "commit = $localSHA" | Add-Content -Encoding UTF8 $versionTxtFile
 
-# Create the runtime.json file
-$runtimeFile = "$stagingLocation\runtime.json"
-$ret = New-Item -ItemType File -Force -Path $runtimeFile
-
-$rt = [pscustomobject]@{ "runtimes" = [pscustomobject]@{} }
-foreach ($arch in $architectures)
+# Build up the list of runtime packages to add as dependencies to the meta package.
+$deps = ""
+foreach ($rid in $runtimeIdentifiers)
 {
-    $runtimePackageId = "runtime.win-$arch.$packageName";
-    $inner = [pscustomobject]@{ "$runtimePackageId" = "$packageVersion" }
-    $outer = [pscustomobject]@{ "$packageName" = $inner }
-    $rt.runtimes | add-member -membertype NoteProperty -name "win-$arch" -value $outer
+    $deps = $deps + "      <dependency id=`"runtime.$rid.$packageName`" version=`"$packageVersion`" />`r`n"
 }
-$rt | ConvertTo-Json -Depth 8 | Set-Content -Encoding UTF8 $runtimeFile
+
+Write-Host "Adding these runtime packages:"
+Write-Host $deps
 
 # Update the placeholders in the template nuspec file.
 $runtimePackageId = "$packageName";
-$nuspecFileContent = (Get-Content "$sourceRoot\build\nuget\Template-runtime.nuspec")
+$nuspecFileContent = (Get-Content "$sourceRoot\build\nuget\Template-runtime-meta.nuspec")
 $nuspecFileContent = $nuspecFileContent.replace('$runtimePackageId$', $runtimePackageId)
 $nuspecFileContent = $nuspecFileContent.replace('$version$', $packageVersion)
+$nuspecFileContent = $nuspecFileContent.replace('$deps$', $deps)
 $nuspecFileContent | Set-Content "$stagingLocation\$runtimePackageId.nuspec"
 
 # Actually do the "nuget pack" operation

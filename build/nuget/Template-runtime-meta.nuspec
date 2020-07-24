@@ -17,6 +17,9 @@ Note: In order to have binary compatibility between versions see: https://aka.ms
     <releaseNotes>https://aka.ms/ms-icu-nuget-release-notes</releaseNotes>
     <copyright>© Microsoft Corporation. All rights reserved.</copyright>
     <tags>native nativepackage icu icu4c</tags>
+    <dependencies>
+$deps$
+    </dependencies>
   </metadata>
 </package>
 
