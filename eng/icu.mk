@@ -33,5 +33,5 @@ icu-wasm: $(WASM_BUILDDIR)/.stamp-configure-wasm
 
 $(WASM_BUILDDIR)/.stamp-configure-wasm: $(HOST_BUILDDIR)/.stamp-host | $(WASM_BUILDDIR) check-env
 	cd $(WASM_BUILDDIR) && source $(EMSDK_PATH)/emsdk_env.sh && ICU_DATA_FILTER_FILE=$(ICU_FILTERS)/optimal.json \
-	emconfigure $(TOP)/icu/icu4c/source/configure --prefix=$(WASM_BINDIR) --enable-static --disable-shared CFLAGS="-g -Oz" CXXFLAGS="-g -Oz -Wno-sign-compare" --with-cross-build=$(HOST_BUILDDIR) --disable-icu-config --with-data-packaging=archive --disable-extras --disable-renaming
+	emconfigure $(TOP)/icu/icu4c/source/configure --prefix=$(WASM_BINDIR) --enable-static --disable-shared CFLAGS="-Oz" CXXFLAGS="-Oz -Wno-sign-compare" --with-cross-build=$(HOST_BUILDDIR) --disable-icu-config --with-data-packaging=archive --disable-extras --disable-renaming
 	touch $@
