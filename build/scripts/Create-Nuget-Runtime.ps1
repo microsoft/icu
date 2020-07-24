@@ -58,7 +58,7 @@ if (!(Test-Path 'env:nugetPackageVersion')) {
 }
 
 $packageVersion = "$env:nugetPackageVersion-alpha$env:BUILD_BUILDNUMBER"
-$packageName = 'Microsoft.ICU.icu4c'
+$packageName = 'Microsoft.ICU.icu4c.runtime'
 
 $icuSource = Resolve-Path "$sourceRoot\icu\icu4c"
 
