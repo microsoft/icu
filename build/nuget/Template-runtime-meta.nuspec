@@ -5,7 +5,6 @@
     <version>$version$</version>
     <authors>Microsoft</authors>
     <license type="file">LICENSE</license>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <projectUrl>https://github.com/microsoft/icu</projectUrl>
     <description>This package contains pre-built binaries of ICU4C using the Microsoft ICU (MS-ICU) repo on GitHub.
 
@@ -24,4 +23,3 @@ $deps$
     </dependencies>
   </metadata>
 </package>
-
