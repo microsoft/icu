@@ -5,7 +5,7 @@
     <version>$version$</version>
     <authors>Microsoft</authors>
     <license type="file">LICENSE</license>
-    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
     <projectUrl>https://github.com/microsoft/icu</projectUrl>
     <description>Internal implementation package not meant for direct consumption. Please do not reference directly.
 This package contains pre-built binaries of MS-ICU.
