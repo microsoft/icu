@@ -180,6 +180,112 @@
             ]
         },
         {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["ko"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/dangi"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["am"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/ethiopic",
+                "+/calendar/ethiopic-amete-alem"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["he"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/hebrew"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["ar"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/islamic"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["fa"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/persian",
+                "+/calendar/islamic"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["ja"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/japanese"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["hi"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/indian"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["zh_Hant"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/roc"
+            ]
+        },
+        {
             "categories": ["coll_tree"],
             "rules": [
                 "-/*/*",
@@ -203,8 +309,31 @@
                 "+/codeMappings",
                 "+/idValidity",
                 "+/timeData",
-                "+/weekData",
-                "+/weekData%variant"
+                "+/weekData"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": [
+                    "bn",
+                    "et",
+                    "gu",
+                    "kn",
+                    "ml",
+                    "mr",
+                    "ms",
+                    "no",
+                    "ta",
+                    "te"
+                ]
+            },
+            "rules": [
+                "-/*",
+                "+/%%ALIAS",
+                "+/LocaleScript",
+                "+/layout",
+                "+/Version"
             ]
         }
     ]
