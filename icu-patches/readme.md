@@ -4,14 +4,14 @@ This folder contains patches that are applied on top of the released version of 
 
 ## Approach
 
-Every patch is a maintenance burden. We strive to keep the patch count to a minimum. To that end, every patch should
-describe its reason for existence in its commit message.
+Every patch should be thought of as a maintenance burden. We generally want to keep the patch count to a minimum. To that end, every patch should describe its reason for existence.
 
-If an issue is already fixed upstream and we would obtain the fix simply by upgrading to a newer version of the library, then a patch file would, generally speaking, not be generated/created.
+If an issue has already been fixed upstream and we would obtain the fix by upgrading to a newer version of the library, then a patch file would (generally speaking), not be created, and the
+change from upstream would be cherry-picked as-is.
 
-Most of the patches are minor changes that are made in order to remove private, internal, or otherwise unwanted APIs from the SDK headers for the Windows OS version of ICU. (This version only exposes the public, stable, flat C API surface).
+The intent is to only keep patch files for things that will need to be continuously patched, even on newer versions. In other words, the patch files should be for changes that will be re-applied on every version update.
 
-The intent is to only keep patch files for things that will need to continuously be patched even on newer versions.
+Many of the patches are changes to remove private, internal, or otherwise unwanted APIs from the SDK headers for the Windows OS version of ICU. (The Windows OS version only exposes the public, stable, flat C API surface).
 
 *Any changes should be pursued upstream whenever possible.*
 
