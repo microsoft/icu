@@ -2133,8 +2133,8 @@ root{
             dayNames:alias{"/LOCALE/calendar/gregorian/dayNames"}
             eras{
                 abbreviated{
-                    "Before R.O.C.",
-                    "R.O.C.",
+                    "Before",
+                    "Taiwan",
                 }
                 narrow:alias{"/LOCALE/calendar/roc/eras/abbreviated"}
                 wide:alias{"/LOCALE/calendar/roc/eras/abbreviated"}

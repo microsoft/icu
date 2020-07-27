@@ -479,7 +479,6 @@ gl{
             iso8601{"calendario ISO-8601"}
             japanese{"calendario xaponés"}
             persian{"calendario persa"}
-            roc{"calendario Minguo"}
         }
         cf{
             account{"formato de moeda contable"}

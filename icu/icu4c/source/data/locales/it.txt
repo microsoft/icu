@@ -982,14 +982,6 @@ it{
                 "{1}, {0}",
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Prima di R.O.C.",
-                    "Minguo",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Attività"}

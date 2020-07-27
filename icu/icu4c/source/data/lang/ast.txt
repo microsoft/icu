@@ -807,7 +807,6 @@ ast{
             iso8601{"calendariu ISO-8601"}
             japanese{"calendariu xaponés"}
             persian{"calendariu persa"}
-            roc{"calendariu de la República de China"}
         }
         cf{
             account{"formatu monetariu contable"}

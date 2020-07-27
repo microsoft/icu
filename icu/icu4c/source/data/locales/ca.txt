@@ -1087,29 +1087,6 @@ ca{
                 }
             }
         }
-        roc{
-            DateTimePatterns{
-                "H:mm:ss zzzz",
-                "H:mm:ss z",
-                "H:mm:ss",
-                "H:mm",
-                "EEEE d MMMM 'de' y G",
-                "d MMMM 'de' y G",
-                "dd/MM/y G",
-                "dd/MM/y GGGGG",
-                "{1}, {0}",
-                "{1} 'a' 'les' {0}",
-                "{1} 'a' 'les' {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-            }
-            eras{
-                wide{
-                    "Abans de ROC",
-                    "ROC",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"activitats"}

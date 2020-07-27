@@ -481,7 +481,6 @@ fil{
             iso8601{"ISO-8601 na Kalendaryo"}
             japanese{"Kalendaryong Japanese"}
             persian{"Kalendaryong Persian"}
-            roc{"Kalendaryong Minguo"}
         }
         cf{
             account{"Format ng Pera sa Accounting"}

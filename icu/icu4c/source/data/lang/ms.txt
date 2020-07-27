@@ -520,7 +520,6 @@ ms{
             iso8601{"Kalendar ISO-8601"}
             japanese{"Kalendar Jepun"}
             persian{"Kalendar Parsi"}
-            roc{"Kalendar Minguo"}
         }
         cf{
             account{"Format Mata Wang Perakaunan"}

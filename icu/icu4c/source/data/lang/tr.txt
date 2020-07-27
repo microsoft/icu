@@ -812,7 +812,6 @@ tr{
             iso8601{"ISO-8601 Takvimi"}
             japanese{"Japon Takvimi"}
             persian{"İran Takvimi"}
-            roc{"Çin Cumhuriyeti Takvimi"}
         }
         cf{
             account{"Muhasebe Para Biçimi"}

@@ -456,7 +456,6 @@ uz{
             iso8601{"ISO-8601 taqvimi"}
             japanese{"yapon taqvimi"}
             persian{"fors taqvimi"}
-            roc{"Mingo taqvimi"}
         }
         cf{
             account{"moliyaviy valyuta formati"}

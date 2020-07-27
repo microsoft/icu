@@ -480,7 +480,6 @@ zu{
             iso8601{"ikhalenda le-ISO-8601"}
             japanese{"ikhalenda lesi-Japanese"}
             persian{"ikhalenda lesi-Persian"}
-            roc{"ikhalenda lesi-Minguo"}
         }
         cf{
             account{"Ifomethi yemali ye-Accounting"}

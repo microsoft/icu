@@ -310,7 +310,6 @@ hsb{
             iso8601{"protyka po iso-8601"}
             japanese{"japanska protyka"}
             persian{"persiska protyka"}
-            roc{"protyka republiki China"}
         }
         collation{
             ducet{"rjadowanski slěd po Unicode"}

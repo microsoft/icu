@@ -747,7 +747,6 @@ zh{
             iso8601{"国际标准历法"}
             japanese{"和历"}
             persian{"波斯历"}
-            roc{"民国纪年"}
         }
         cf{
             account{"会计货币格式"}

@@ -743,7 +743,6 @@ ko{
             iso8601{"ISO-8601 달력"}
             japanese{"일본력"}
             persian{"페르시안력"}
-            roc{"대만력"}
         }
         cf{
             account{"회계 통화 형식"}

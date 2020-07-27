@@ -1658,22 +1658,6 @@ bn{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "আগে R.O.C.",
-                    "মিঙ্গুয়া",
-                }
-                narrow{
-                    "আগে R.O.C.",
-                    "মিঙ্গুয়া",
-                }
-                wide{
-                    "আগে R.O.C.",
-                    "মিঙ্গুয়া",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"কার্যকলাপ"}

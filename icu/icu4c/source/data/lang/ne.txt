@@ -698,7 +698,6 @@ ne{
             iso8601{"ISO-8601 Calendar"}
             japanese{"जापानी पात्रो"}
             persian{"फारसी पात्रो"}
-            roc{"चिनियाँ गणतन्त्रको पात्रो"}
         }
         cf{
             account{"cf-account"}

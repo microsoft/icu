@@ -1726,22 +1726,6 @@ mk{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "пр. Р.К.",
-                    "мингуо",
-                }
-                narrow{
-                    "пр. Р.К.",
-                    "мингуо",
-                }
-                wide{
-                    "пред Р.К.",
-                    "мингуо",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"активности"}

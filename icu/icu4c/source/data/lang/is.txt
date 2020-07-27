@@ -601,7 +601,6 @@ is{
             iso8601{"ISO-8601 dagatal"}
             japanese{"Japanskt dagatal"}
             persian{"Persneskt dagatal"}
-            roc{"Minguo dagatal"}
         }
         cf{
             account{"Bókhaldsgjaldmiðill"}

@@ -788,7 +788,6 @@ gd{
             iso8601{"Mìosachan ISO-8601"}
             japanese{"Am Mìosachan Seapanach"}
             persian{"Am Mìosachan Pearsach"}
-            roc{"Mìosachan Poblachd na Sìne"}
         }
         cf{
             account{"Fòrmat airgeadra na cunntasachd"}

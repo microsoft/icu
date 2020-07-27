@@ -694,7 +694,6 @@ fy{
             islamic-civil{"Islamityske kalinder (cyclysk)"}
             japanese{"Japanske kalinder"}
             persian{"Perzyske kalinder"}
-            roc{"Kalinder fan de Sineeske Republyk"}
         }
         colAlternate{
             non-ignorable{"Symbolen sortearje"}

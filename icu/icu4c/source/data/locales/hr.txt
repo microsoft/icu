@@ -1404,20 +1404,6 @@ hr{
                 }
             }
         }
-        roc{
-            availableFormats{
-                M{"L."}
-                MMMEd{"E, d. MMM"}
-                MMMd{"d. MMM"}
-                d{"d."}
-            }
-            eras{
-                abbreviated{
-                    "prije R.O.C.",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktivnost"}

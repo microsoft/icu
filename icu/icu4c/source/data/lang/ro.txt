@@ -636,7 +636,6 @@ ro{
             iso8601{"calendar ISO-8601"}
             japanese{"calendar japonez"}
             persian{"calendar persan"}
-            roc{"calendarul Republicii Chineze"}
         }
         cf{
             account{"Format monedă contabilitate"}

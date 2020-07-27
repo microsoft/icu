@@ -637,7 +637,6 @@ br{
             iso8601{"deiziadur ISO-8601"}
             japanese{"deiziadur japanat"}
             persian{"deiziadur persek"}
-            roc{"deiziadur Republik Sina"}
         }
         cf{
             standard{"furmad moneiz standart"}

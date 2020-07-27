@@ -1511,22 +1511,6 @@ ro{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "î.R.C.",
-                    "R.C.",
-                }
-                narrow{
-                    "î.R.C.",
-                    "R.C.",
-                }
-                wide{
-                    "înainte de Republica China",
-                    "Republica China",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"activitate"}

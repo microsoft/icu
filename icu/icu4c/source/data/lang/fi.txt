@@ -833,7 +833,6 @@ fi{
             iso8601{"ISO 8601 -kalenteri"}
             japanese{"japanilainen kalenteri"}
             persian{"persialainen kalenteri"}
-            roc{"Kiinan tasavallan kalenteri"}
         }
         cf{
             account{"valuuttojen laskentatoimen esitysmuoto"}

@@ -592,7 +592,6 @@ cy{
             iso8601{"Calendr ISO-8601"}
             japanese{"Calendr Japan"}
             persian{"Calendr Persia"}
-            roc{"Calendr Gweriniaeth Tseina"}
         }
         cf{
             account{"Fformat Arian Cyfrifeg"}
