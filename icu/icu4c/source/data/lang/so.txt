@@ -431,7 +431,6 @@ so{
             iso8601{"Habeentiriska ISO-8601"}
             japanese{"Habeentiriska jabbaanka"}
             persian{"Habeentiriska Baarshiyaanka"}
-            roc{"Habeentiriska Minguwo"}
         }
         cf{
             account{"Habka Xisaabinta Lacagta"}

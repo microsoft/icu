@@ -820,7 +820,6 @@ nb{
             iso8601{"ISO 8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
-            roc{"minguo-kalender"}
         }
         cf{
             account{"valutaformat for regnskapsføring"}

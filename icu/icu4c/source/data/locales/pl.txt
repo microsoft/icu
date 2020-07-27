@@ -1468,22 +1468,6 @@ pl{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Przed ROC",
-                    "ROC",
-                }
-                narrow{
-                    "przed ROC",
-                    "ROC",
-                }
-                wide{
-                    "przed ROC",
-                    "ROC",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"czynności"}

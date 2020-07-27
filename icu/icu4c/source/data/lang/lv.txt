@@ -633,7 +633,6 @@ lv{
             iso8601{"ISO 8601 kalendārs"}
             japanese{"japāņu kalendārs"}
             persian{"persiešu kalendārs"}
-            roc{"Ķīnas Republikas kalendārs"}
         }
         cf{
             account{"uzskaites valūtas formāts"}

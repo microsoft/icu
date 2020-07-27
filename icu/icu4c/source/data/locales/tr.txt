@@ -1390,18 +1390,6 @@ tr{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Before R.O.C.",
-                    "Minguo",
-                }
-                wide{
-                    "R.O.C. Öncesi",
-                    "Minguo",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktivite"}

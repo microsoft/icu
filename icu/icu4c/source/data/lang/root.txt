@@ -1,6 +1,11 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html#License
 root{
+    Types{
+        calendar{
+            roc{"Taiwan Calendar"}
+        }
+    }
     Version{"37"}
     characterLabelPattern{
         all{"{0} — all"}

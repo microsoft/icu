@@ -268,7 +268,6 @@ kea{
             iso8601{"Kalendáriu ISO-8601"}
             japanese{"Kalendáriu japones"}
             persian{"Kalendáriu persa"}
-            roc{"Kalendáriu di Repúblika di Xina"}
         }
         cf{
             account{"Formatu di mueda kontabilístiku"}

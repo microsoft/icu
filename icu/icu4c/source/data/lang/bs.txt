@@ -684,7 +684,6 @@ bs{
             iso8601{"kalendar ISO-8601"}
             japanese{"japanski kalendar"}
             persian{"perzijski kalendar"}
-            roc{"kalendar Republike Kine"}
         }
         cf{
             account{"računovodstveni format valute"}

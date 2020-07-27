@@ -260,7 +260,6 @@ qu{
             iso8601{"ISO-8601 Intiwatana"}
             japanese{"Japones Intiwatana"}
             persian{"Persa Intiwatana"}
-            roc{"Minguo Intiwatana"}
         }
         cf{
             account{"Yupana Qullqi imayna kaynin"}

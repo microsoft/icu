@@ -836,7 +836,6 @@ sv{
             iso8601{"ISO 8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
-            roc{"kinesiska republikens kalender"}
         }
         cf{
             account{"redovisningsformat"}
