@@ -32,5 +32,5 @@
 # maint/maint-* branch needs to be cherry-picked into this repo.
 #
 
-ICU_version = 67.1.0.1
+ICU_version = 67.1.0.2
 ICU_upstream_hash = 125e29d54990e74845e1546851b5afa3efab06ce

@@ -1,5 +1,10 @@
 # Changelog
 
+## ICU 67.1.0.2
+
+Data changes:
+- Microsoft data changes for the Taiwan calendar. [#8](https://github.com/microsoft/icu/pull/8).
+
 ## ICU 67.1.0.1
 
 Changes/modifications compared to the upstream `maint/maint-67` branch.
