@@ -653,7 +653,6 @@ az{
             iso8601{"ISO-8601 Təqvimi"}
             japanese{"Yapon Təqvimi"}
             persian{"İran Təqvimi"}
-            roc{"Minquo Təqvimi"}
         }
         cf{
             account{"Uçot Valyuta Formatı"}

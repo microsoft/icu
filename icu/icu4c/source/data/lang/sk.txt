@@ -614,7 +614,6 @@ sk{
             iso8601{"kalendár ISO 8601"}
             japanese{"japonský kalendár"}
             persian{"perzský kalendár"}
-            roc{"čínsky republikánsky kalendár"}
         }
         cf{
             account{"účtovný formát meny"}

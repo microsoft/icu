@@ -727,7 +727,6 @@ da{
             iso8601{"ISO-8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
-            roc{"kalender for Republikken Kina"}
         }
         cf{
             account{"format for regnskabsvaluta"}

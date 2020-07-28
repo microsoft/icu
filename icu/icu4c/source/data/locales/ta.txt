@@ -1482,22 +1482,6 @@ ta{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "ROCக்கு முன்",
-                    "R.O.C.",
-                }
-                narrow{
-                    "ROCக்கு முன்",
-                    "R.O.C.",
-                }
-                wide{
-                    "R.O.C. -க்கு முன்பு",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"செயல்பாடுகள்"}

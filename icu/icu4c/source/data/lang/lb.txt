@@ -739,7 +739,6 @@ lb{
             iso8601{"ISO-8601-Kalenner"}
             japanese{"Japanesche Kalenner"}
             persian{"Persesche Kalenner"}
-            roc{"Kalenner vun der Republik China"}
         }
         collation{
             big5han{"Traditionellt Chinesesch - Big5"}

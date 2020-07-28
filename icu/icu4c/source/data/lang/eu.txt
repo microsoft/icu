@@ -473,7 +473,6 @@ eu{
             iso8601{"ISO-8601 egutegia"}
             japanese{"Japoniar egutegia"}
             persian{"Egutegi persiarra"}
-            roc{"Minguo egutegia"}
         }
         cf{
             account{"Kontabilitateko moneta-formatua"}

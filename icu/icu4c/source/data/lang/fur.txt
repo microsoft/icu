@@ -250,7 +250,6 @@ fur{
             islamic{"calendari islamic"}
             islamic-civil{"calendari islamic civîl"}
             japanese{"calendari gjaponês"}
-            roc{"calendari de Republiche di Cine"}
         }
         collation{
             big5han{"ordin cinês tradizionâl - Big5"}

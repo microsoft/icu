@@ -1193,22 +1193,6 @@ so{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Kahor R.O.C.",
-                    "Minguo",
-                }
-                narrow{
-                    "Kahor R.O.C.",
-                    "Minguo",
-                }
-                wide{
-                    "Kahor R.O.C.",
-                    "Minguo",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Waxqabad"}

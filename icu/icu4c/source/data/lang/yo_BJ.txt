@@ -96,7 +96,6 @@ yo_BJ{
             iso8601{"Kàlɛ́ńdà ISO-8601"}
             japanese{"Kàlɛ̀ńdà ti Jàpánù"}
             persian{"Kàlɛ̀ńdà Pásíànù"}
-            roc{"Kàlɛ̀ńdà Minguo"}
         }
         cf{
             account{"Ìgúnrégé Ìshirò Owó Kɔ́rɛ́ńsì"}

@@ -396,7 +396,6 @@ ksh{
             islamic-civil{"wältlesche islaamesche Kaländer"}
             japanese{"japaanesche Kaländer"}
             persian{"pärsesche Kaländer"}
-            roc{"rotschineesesche Kaländer"}
         }
         collation{
             big5han{"zoteert nohm tradizjonäll schineesesch Big5"}
