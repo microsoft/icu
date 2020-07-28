@@ -60,7 +60,7 @@ if (!(Test-Path 'env:nugetPackageVersion')) {
     throw "Error: The Nuget version environment variable is not set."
 }
 
-$packageName = 'Microsoft.ICU.icu4c.runtime'
+$packageName = 'Microsoft.ICU.ICU4C.Runtime'
 $packageVersion = "$env:nugetPackageVersion"
 
 if ($prerelease.IsPresent) {
