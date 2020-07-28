@@ -20,6 +20,7 @@ usage()
   echo ""
 }
 
+inner_args=
 properties=
 
 while [[ $# > 0 ]]; do
@@ -33,11 +34,12 @@ while [[ $# > 0 ]]; do
       properties="$properties /p:IcuTracing=true"
       ;;
     *)
+      inner_args="$inner_args $opt"
+      ;;
   esac
   shift
 done
 
 scriptroot="$( cd -P "$( dirname "$source" )" && pwd )"
 
-echo $tracing
-"$scriptroot/eng/common/build.sh" --build --restore $properties $@
+"$scriptroot/eng/common/build.sh" --build --restore $properties $inner_args
