@@ -27,7 +27,10 @@ param(
 
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [string]$output
+    [string]$output,
+
+    [Parameter(Mandatory=$false)]
+    [switch]$prerelease
 )
 
 Function Get-GitLocalRevision {
@@ -57,8 +60,12 @@ if (!(Test-Path 'env:nugetPackageVersion')) {
     throw "Error: The Nuget version environment variable is not set."
 }
 
-$packageVersion = "$env:nugetPackageVersion-alpha$env:BUILD_BUILDNUMBER"
 $packageName = 'Microsoft.ICU.icu4c.runtime'
+$packageVersion = "$env:nugetPackageVersion"
+
+if ($prerelease.IsPresent) {
+    $packageVersion = "$packageVersion-alpha$env:BUILD_BUILDNUMBER"
+}
 
 $icuSource = Resolve-Path "$sourceRoot\icu\icu4c"
 
