@@ -447,7 +447,6 @@ tk{
             iso8601{"ISO-8601 senenamasy"}
             japanese{"Ýapon senenamasy"}
             persian{"Pars senenamasy"}
-            roc{"Minguo senenamasy"}
         }
         cf{
             account{"Pul birliginiň buhgalterçilik formaty"}

@@ -827,7 +827,6 @@ zh_Hant{
             iso8601{"ISO 8601 國際曆法"}
             japanese{"日本曆"}
             persian{"波斯曆"}
-            roc{"民國曆"}
         }
         cf{
             account{"會計貨幣格式"}

@@ -291,7 +291,6 @@ jv{
             iso8601{"Tanggalan ISO-8601"}
             japanese{"Tanggalan Jepang"}
             persian{"Tanggalan Persia"}
-            roc{"Tanggalan Minguo"}
         }
         cf{
             account{"Format Mata Uang Akuntansi"}

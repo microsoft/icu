@@ -1756,22 +1756,6 @@ fr{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "av. RdC",
-                    "RdC",
-                }
-                narrow{
-                    "av. RdC",
-                    "RdC",
-                }
-                wide{
-                    "avant RdC",
-                    "RdC",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"activités"}

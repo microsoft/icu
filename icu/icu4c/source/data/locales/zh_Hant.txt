@@ -5811,20 +5811,6 @@ zh_Hant{
                 yyyyQQQ{"Gy年QQQ"}
                 yyyyQQQQ{"Gy年QQQQ"}
             }
-            eras{
-                abbreviated{
-                    "民國前",
-                    "民國",
-                }
-                narrow{
-                    "民國前",
-                    "民國",
-                }
-                wide{
-                    "民國前",
-                    "民國",
-                }
-            }
             intervalFormats{
                 Hmv{
                     H{"HH:mm–HH:mm [v]"}

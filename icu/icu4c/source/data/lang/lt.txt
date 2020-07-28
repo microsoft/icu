@@ -813,7 +813,6 @@ lt{
             iso8601{"ISO 8601 kalendorius"}
             japanese{"japonų kalendorius"}
             persian{"persų kalendorius"}
-            roc{"Kinijos Respublikos kalendorius"}
         }
         cf{
             account{"apskaitos valiutos formatas"}

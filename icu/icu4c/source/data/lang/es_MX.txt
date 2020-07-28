@@ -59,7 +59,6 @@ es_MX{
     Types{
         calendar{
             gregorian{"Calendario gregoriano"}
-            roc{"calendario minguo"}
         }
         collation{
             ducet{"orden de clasificación de Unicode predeterminado"}

@@ -794,7 +794,6 @@ to{
             iso8601{"faka-iso8601"}
             japanese{"fakasiapani"}
             persian{"fakapēsia"}
-            roc{"fakalepupelika siaina"}
         }
         cf{
             account{"anga paʻanga-kalake"}

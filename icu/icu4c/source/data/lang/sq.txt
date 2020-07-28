@@ -462,7 +462,6 @@ sq{
             iso8601{"kalendar ISO-8601"}
             japanese{"kalendar japonez"}
             persian{"kalendar persian"}
-            roc{"kalendar minguo (i Republikës së Kinës)"}
         }
         cf{
             account{"format valutor llogaritës"}

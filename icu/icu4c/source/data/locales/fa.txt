@@ -1941,22 +1941,6 @@ fa{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "قبل از R.O.C.",
-                    "تقویم مینگو",
-                }
-                narrow{
-                    "قبل از R.O.C.",
-                    "تقویم مینگو",
-                }
-                wide{
-                    "قبل از R.O.C.",
-                    "تقویم مینگو",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"فعالیت"}

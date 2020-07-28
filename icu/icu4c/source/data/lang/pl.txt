@@ -782,7 +782,6 @@ pl{
             iso8601{"kalendarz ISO-8601"}
             japanese{"kalendarz japoński"}
             persian{"kalendarz perski"}
-            roc{"kalendarz Republiki Chińskiej"}
         }
         cf{
             account{"księgowy format waluty"}

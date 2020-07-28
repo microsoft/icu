@@ -2191,56 +2191,6 @@ th{
                 }
             }
         }
-        roc{
-            DateTimePatterns{
-                "H นาฬิกา mm นาที ss วินาที zzzz",
-                "H นาฬิกา mm นาที ss วินาที z",
-                "HH:mm:ss",
-                "HH:mm",
-                "EEEEที่ d MMMM ปีGที่ y",
-                "d MMMM ปีG y",
-                "d MMM G y",
-                "d/M/y G",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-            }
-            availableFormats{
-                Ed{"E d"}
-                Gy{"ปีGที่ y"}
-                GyMMM{"MMM G y"}
-                GyMMMEd{"E d MMM G y"}
-                GyMMMd{"d MMM G y"}
-                H{"HH"}
-                Hm{"HH:mm"}
-                Hms{"HH:mm:ss"}
-                MEd{"E, d/M"}
-                MMMEd{"E d MMM"}
-                MMMd{"d MMM"}
-                Md{"d/M"}
-                h{"h a"}
-                hm{"h:mm a"}
-                hms{"h:mm:ss a"}
-                ms{"mm:ss"}
-                y{"ปีGที่ y"}
-                yyyy{"ปีGที่ y"}
-                yyyyM{"M/GGGGG y"}
-                yyyyMEd{"E d/M/GGGGG y"}
-                yyyyMMM{"MMM G y"}
-                yyyyMMMEd{"E d MMM G y"}
-                yyyyMMMd{"d MMM G y"}
-                yyyyMd{"d/M/GGGGG y"}
-                yyyyQQQ{"QQQ G y"}
-            }
-            eras{
-                abbreviated{
-                    "ปีก่อนไต้หวัน",
-                    "ไต้หวัน",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"กิจกรรม"}

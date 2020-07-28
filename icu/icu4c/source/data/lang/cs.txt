@@ -812,7 +812,6 @@ cs{
             iso8601{"Kalendář ISO-8601"}
             japanese{"Japonský kalendář"}
             persian{"Perský kalendář"}
-            roc{"Kalendář Čínské republiky"}
         }
         cf{
             account{"Účetní měnový formát"}

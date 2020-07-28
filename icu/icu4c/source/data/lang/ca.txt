@@ -775,7 +775,6 @@ ca{
             iso8601{"calendari ISO-8601"}
             japanese{"calendari japonès"}
             persian{"calendari persa"}
-            roc{"calendari de la República de Xina"}
         }
         cf{
             account{"format de moneda comptable"}

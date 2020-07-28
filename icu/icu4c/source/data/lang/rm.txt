@@ -572,7 +572,6 @@ rm{
             islamic{"chalender islamic"}
             islamic-civil{"chalender islamic civil"}
             japanese{"chalender giapunais"}
-            roc{"chalendar da la republica chinaisa"}
         }
         collation{
             big5han{"chinaisa tradiziunala - Big5"}

@@ -436,14 +436,6 @@ zh_Hant_HK{
                 }
             }
         }
-        roc{
-            availableFormats{
-                Ed{"d日E"}
-                MEd{"d-M（E）"}
-                Md{"d-M"}
-                yyyyMEd{"Gy/M/dE"}
-            }
-        }
     }
     characterLabel{
         arrows{"箭嘴"}

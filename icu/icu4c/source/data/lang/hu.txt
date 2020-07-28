@@ -694,7 +694,6 @@ hu{
             iso8601{"ISO-8601 naptár"}
             japanese{"Japán naptár"}
             persian{"Perzsa naptár"}
-            roc{"Kínai köztársasági naptár"}
         }
         cf{
             account{"Könyvelési pénznemformátum"}

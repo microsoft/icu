@@ -826,18 +826,6 @@ ug{
                 "{1}، {0}",
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Before R.O.C.",
-                    "مىنگو",
-                }
-                wide{
-                    "جۇڭخۇا مىنگودىن بۇرۇن",
-                    "مىنگو",
-                }
-            }
-        }
     }
     delimiters{
         alternateQuotationEnd{"‹"}

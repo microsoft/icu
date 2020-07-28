@@ -698,7 +698,6 @@ pt{
             iso8601{"Calendário ISO-8601"}
             japanese{"Calendário Japonês"}
             persian{"Calendário Persa"}
-            roc{"Calendário da República da China"}
         }
         cf{
             account{"Formato de moeda para contabilidade"}
