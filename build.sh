@@ -34,7 +34,7 @@ while [[ $# > 0 ]]; do
       properties="$properties /p:IcuTracing=true"
       ;;
     *)
-      inner_args="$inner_args $opt"
+      inner_args="$inner_args $1"
       ;;
   esac
   shift
@@ -42,4 +42,4 @@ done
 
 scriptroot="$( cd -P "$( dirname "$source" )" && pwd )"
 
-"$scriptroot/eng/common/build.sh" --build --restore $properties $inner_args
+"$scriptroot/eng/common/build.sh" --build --restore $inner_args $properties
