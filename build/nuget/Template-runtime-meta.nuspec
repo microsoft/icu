@@ -10,9 +10,10 @@
     <description>This package contains pre-built binaries of ICU4C using the Microsoft ICU (MS-ICU) repo on GitHub.
 
 ICU4C is a mature, widely used set of C/C++ libraries providing Unicode and Globalization support for software applications.
-The MS-ICU repo contains a modified version of ICU4C with changes for security, maintenance, and data changes for Microsoft usage.
 
-This runtime package only contains the common, i18n, and data libraries for ICU4C.
+The MS-ICU repo contains a modified version of ICU4C with changes needed for consumption inside various Microsoft products.
+
+This runtime package only contains the common and i18n libraries, along with the data library.
 
 Note: In order to have binary compatibility between versions see: https://aka.ms/icu-binary-compatibility
     </description>
