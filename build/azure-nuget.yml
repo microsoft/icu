@@ -8,7 +8,7 @@ name: $(BuildDefinitionName)-$(date:yyMM).$(date:dd)$(rev:rrr)
 
 # Code signing only runs on the MSCodeHub build pipeline.
 variables:
-  codeSign: ${{ eq(variables['System.TeamProject'],'OSS_github.com_Unicode-org') }}
+  codeSign: ${{ and(eq(variables['System.TeamProject'],'OSS_github.com_Unicode-org'), eq(variables['System.codeSign'], 'true')) }}
 
 stages:
 - stage: Build
