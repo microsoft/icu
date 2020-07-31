@@ -195,6 +195,7 @@ stages:
   dependsOn:
   - Build
   - CodeSignBinaries
+  condition: and(in(dependencies.Build.result, 'Succeeded'), in(dependencies.CodeSignBinaries.result, 'Succeeded', 'Skipped'))
   pool:
     name: Package ES CodeHub Lab E
   jobs:
@@ -259,6 +260,12 @@ stages:
         targetType: filePath
         filePath: './build/scripts/Create-Nuget-Runtime.ps1'
         arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -output $(BUILD.ArtifactStagingDirectory)\output -codesign $(codeSign)'
+
+    - powershell: |
+        Write-Host ""
+        Write-Host "$(BUILD.ArtifactStagingDirectory)"
+        Tree /F /A $(BUILD.ArtifactStagingDirectory)
+      displayName: 'DIAG: dir'
 
     # This "work-around" is unfortunately needed as the pipeline runs on x64/x86, but Nuget meta-packages are architecture neutral (AnyCPU).
     - powershell: |
