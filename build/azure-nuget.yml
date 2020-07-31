@@ -3,6 +3,13 @@
 # no PR triggers
 pr: none
 
+# We need to set the version for the PackageES builds.
+name: $(BuildDefinitionName)-$(date:yyMM).$(date:dd)$(rev:rrr)
+
+# Code signing only runs on the MSCodeHub build pipeline.
+variables:
+  codeSign: ${{ eq(variables['System.TeamProject'],'OSS_github.com_Unicode-org') }}
+
 stages:
 - stage: Build
   jobs:
@@ -40,6 +47,16 @@ stages:
         alertWarningLevel: 'Medium'
         failOnAlert: true
 
+    - powershell: |
+        $PublishBinariesName = ""
+        if ($env:codeSign -ieq 'true') {
+          $PublishBinariesName = "binaries-$env:BuildPlatform"
+        } else {
+          $PublishBinariesName = "win-$env:BuildPlatform"
+        }
+        Write-Host "##vso[task.setvariable variable=PublishBinariesName]$PublishBinariesName"
+      displayName: 'Set PublishBinariesName variable'
+
     - task: PowerShell@2
       displayName: 'Set ICU Version'
       inputs:
@@ -71,8 +88,9 @@ stages:
       displayName: 'Copy x64'
       inputs:
         Contents: |
-          icu\icu4c\bin64\*
-          icu\icu4c\lib64\*
+          icu\icu4c\bin64\icuuc*.dll
+          icu\icu4c\bin64\icuin*.dll
+          icu\icu4c\bin64\icudt*.dll
         TargetFolder: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
       condition: eq(variables['BuildPlatform'],'x64')
 
@@ -80,8 +98,9 @@ stages:
       displayName: 'Copy ARM64'
       inputs:
         Contents: |
-          icu\icu4c\binARM64\*
-          icu\icu4c\libARM64\*
+          icu\icu4c\binARM64\icuuc*.dll
+          icu\icu4c\binARM64\icuin*.dll
+          icu\icu4c\binARM64\icudt*.dll
         TargetFolder: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
       condition: eq(variables['BuildPlatform'],'ARM64')
 
@@ -89,8 +108,9 @@ stages:
       displayName: 'Copy x86'
       inputs:
         Contents: |
-          icu\icu4c\bin\*
-          icu\icu4c\lib\*
+          icu\icu4c\bin\icuuc*.dll
+          icu\icu4c\bin\icuin*.dll
+          icu\icu4c\bin\icudt*.dll
         TargetFolder: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
       condition: eq(variables['BuildPlatform'],'x86')
 
@@ -98,9 +118,10 @@ stages:
       displayName: 'Publish: binaries'
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
-        ArtifactName: 'binaries_$(BuildPlatform)'
+        ArtifactName: '$(PublishBinariesName)'
 
 - stage: CodeSignBinaries
+  condition: eq(variables.codeSign, true)
   dependsOn: Build
   pool:
     name: Package ES CodeHub Lab E
@@ -124,6 +145,7 @@ stages:
     - task: PkgESSetupBuild@10
       displayName: 'PkgES Setup Build'
       inputs:
+        useDfs: false
         productName: 'ms-icu-nuget'
         disableOutputRedirect: true
 
@@ -137,15 +159,17 @@ stages:
     - task: DownloadBuildArtifacts@0
       displayName: 'Download: Binaries'
       inputs:
-        artifactName: 'binaries_$(BuildPlatform)'
+        artifactName: 'binaries-$(BuildPlatform)'
         downloadPath: '$(Build.SOURCESDIRECTORY)\bits\$(BuildPlatform)'
 
-    - task: PowerShell@2
-      displayName: 'Copy Binaries for Signing'
-      inputs:
-        targetType: filePath
-        filePath: './build/scripts/Copy-ICU-Bits-For-Signing.ps1'
-        arguments: '-source "$(BUILD.SOURCESDIRECTORY)\bits\$(BuildPlatform)\binaries_$(BuildPlatform)" -output "$(BUILD.ArtifactStagingDirectory)\bits\$(BuildPlatform)" -arch "$(BuildPlatform)"'
+    - powershell: |
+        Write-Host ""
+        Write-Host "$(BUILD.BINARIESDIRECTORY)"
+        Tree /F /A $(BUILD.BINARIESDIRECTORY)
+        Write-Host ""
+        Write-Host "$(BUILD.SOURCESDIRECTORY)"
+        Tree /F /A $(BUILD.SOURCESDIRECTORY)
+      displayName: 'DIAG: dir'
 
     - task: PkgESCodeSign@10
       displayName: 'CodeSign MS-ICU DLLs copy'
