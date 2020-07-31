@@ -54,6 +54,7 @@ stages:
         } else {
           $PublishBinariesName = "win-$env:BuildPlatform"
         }
+        Write-Host PublishBinariesName = $PublishBinariesName
         Write-Host "##vso[task.setvariable variable=PublishBinariesName]$PublishBinariesName"
       displayName: 'Set PublishBinariesName variable'
 
@@ -163,24 +164,26 @@ stages:
       displayName: 'Download: Binaries'
       inputs:
         artifactName: 'binaries-$(BuildPlatform)'
-        downloadPath: '$(Build.SOURCESDIRECTORY)\bits\$(BuildPlatform)'
+        downloadPath: '$(Build.ArtifactStagingDirectory)\bits\$(BuildPlatform)'
 
     - powershell: |
         Write-Host ""
         Write-Host "$(BUILD.BINARIESDIRECTORY)"
         Tree /F /A $(BUILD.BINARIESDIRECTORY)
         Write-Host ""
-        Write-Host "$(BUILD.SOURCESDIRECTORY)"
-        Tree /F /A $(BUILD.SOURCESDIRECTORY)
+        Write-Host "$(BUILD.ArtifactStagingDirectory)"
+        Tree /F /A $(BUILD.ArtifactStagingDirectory)
       displayName: 'DIAG: dir'
 
     - task: PkgESCodeSign@10
       displayName: 'CodeSign MS-ICU DLLs'
+      env:
+        SYSTEM_ACCESSTOKEN: $(system.accesstoken)
       inputs:
         signConfigXml: 'build\nuget\SignConfig-ICU-Binaries-runtime.xml'
         signTimeOut: 30
-        inPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\$(BuildPlatform)\bin'
-        outPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\$(BuildPlatform)\bin'
+        inPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\$(BuildPlatform)'
+        outPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\$(BuildPlatform)'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: binaries signed'
@@ -265,6 +268,8 @@ stages:
 
     - task: PkgESCodeSign@10
       displayName: 'CodeSign MS-ICU Nuget'
+      env:
+          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
       inputs:
         signConfigXml: 'build\nuget\SignConfig-ICU-Nuget.xml'
         signTimeOut: 30
