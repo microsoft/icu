@@ -30,7 +30,7 @@ param(
     [string]$output,
 
     [Parameter(Mandatory=$false)]
-    [switch]$prerelease
+    [string]$codesign
 )
 
 Function Get-GitLocalRevision {
@@ -63,7 +63,7 @@ if (!(Test-Path 'env:nugetPackageVersion')) {
 $packageName = 'Microsoft.ICU.ICU4C.Runtime'
 $packageVersion = "$env:nugetPackageVersion"
 
-if ($prerelease.IsPresent) {
+if ($codesign -eq 'true') {
     $packageVersion = "$packageVersion-alpha$env:BUILD_BUILDNUMBER"
 }
 
@@ -94,7 +94,10 @@ foreach ($rid in $runtimeIdentifiers)
     if ($rid.StartsWith('win'))
     {
         # Compiled DLLs
-        $dllInput = "$icuBinaries\$rid\bin\signed"
+        $dllInput = "$icuBinaries\$rid\bin"
+        if ($codesign -eq 'true') {
+            $dllInput = "$icuBinaries\$rid\bin\signed"
+        }
         $dllOutput = "$stagingLocation\runtimes\$rid\native"
         Copy-Item "$dllInput\*.dll" -Destination $dllOutput -Recurse
     }

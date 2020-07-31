@@ -164,7 +164,7 @@ stages:
       displayName: 'Download: Binaries'
       inputs:
         artifactName: 'binaries-$(BuildPlatform)'
-        downloadPath: '$(Build.ArtifactStagingDirectory)\bits\$(BuildPlatform)'
+        downloadPath: '$(Build.ArtifactStagingDirectory)\bits'
 
     - powershell: |
         Write-Host ""
@@ -182,13 +182,13 @@ stages:
       inputs:
         signConfigXml: 'build\nuget\SignConfig-ICU-Binaries-runtime.xml'
         signTimeOut: 30
-        inPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\$(BuildPlatform)'
-        outPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\$(BuildPlatform)'
+        inPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
+        outPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: binaries signed'
       inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)\bits\$(BuildPlatform)'
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
         ArtifactName: 'win-$(BuildPlatform)'
 
 - stage: Nuget
@@ -258,7 +258,7 @@ stages:
       inputs:
         targetType: filePath
         filePath: './build/scripts/Create-Nuget-Runtime.ps1'
-        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -output $(BUILD.ArtifactStagingDirectory)\output'
+        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -output $(BUILD.ArtifactStagingDirectory)\output -codesign $(codeSign)'
 
     # This "work-around" is unfortunately needed as the pipeline runs on x64/x86, but Nuget meta-packages are architecture neutral (AnyCPU).
     - powershell: |
@@ -275,18 +275,20 @@ stages:
         signTimeOut: 30
         inPathRoot: '$(BUILD.ArtifactStagingDirectory)\output'
         outPathRoot: '$(BUILD.ArtifactStagingDirectory)\output'
+      condition: eq(variables.codeSign, true)
 
     - powershell: |
         $cmd = ('nuget verify -signature -CertificateFingerprint 3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE ' + $env:Build_ArtifactStagingDirectory + "\output\signed\*.nupkg")
         Write-Host "Executing: $cmd"
         &cmd /c $cmd
       displayName: 'Verify Nuget Package is Signed'
+      condition: eq(variables.codeSign, true)
 
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish: Signed Nuget'
+      displayName: 'Publish: Nuget Packages'
       inputs:
         PathtoPublish: '$(BUILD.ArtifactStagingDirectory)\output\signed'
-        ArtifactName: 'Signed_Nuget_Package'
+        ArtifactName: 'Nuget_Packages'
 
     - task: PkgESSerializeForPostBuild@10
       displayName: 'PkgES Post Build Serialization'
