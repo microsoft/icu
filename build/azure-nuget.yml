@@ -92,6 +92,7 @@ stages:
           icu\icu4c\bin64\icuin*.dll
           icu\icu4c\bin64\icudt*.dll
         TargetFolder: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
+        flattenFolders: true
       condition: eq(variables['BuildPlatform'],'x64')
 
     - task: CopyFiles@2
@@ -102,6 +103,7 @@ stages:
           icu\icu4c\binARM64\icuin*.dll
           icu\icu4c\binARM64\icudt*.dll
         TargetFolder: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
+        flattenFolders: true
       condition: eq(variables['BuildPlatform'],'ARM64')
 
     - task: CopyFiles@2
@@ -112,6 +114,7 @@ stages:
           icu\icu4c\bin\icuin*.dll
           icu\icu4c\bin\icudt*.dll
         TargetFolder: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
+        flattenFolders: true
       condition: eq(variables['BuildPlatform'],'x86')
 
     - task: PublishBuildArtifacts@1
@@ -172,7 +175,7 @@ stages:
       displayName: 'DIAG: dir'
 
     - task: PkgESCodeSign@10
-      displayName: 'CodeSign MS-ICU DLLs copy'
+      displayName: 'CodeSign MS-ICU DLLs'
       inputs:
         signConfigXml: 'build\nuget\SignConfig-ICU-Binaries-runtime.xml'
         signTimeOut: 30
@@ -200,7 +203,8 @@ stages:
     - task: PkgESSetupBuild@10
       displayName: 'PkgES Setup Build'
       inputs:
-        productName: 'ms-icu'
+        useDfs: false
+        productName: 'ms-icu-nuget'
         disableOutputRedirect: true
 
     - task: PowerShell@2
@@ -211,7 +215,7 @@ stages:
         arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
 
     - task: NuGetToolInstaller@1
-      displayName: 'Install NuGet '
+      displayName: 'Install NuGet'
 
     - powershell: |
         Write-Host ""
