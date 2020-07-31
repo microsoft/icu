@@ -8,7 +8,7 @@ name: $(BuildDefinitionName)-$(date:yyMM).$(date:dd)$(rev:rrr)
 
 # Code signing only runs on the MSCodeHub build pipeline.
 variables:
-  codeSign: ${{ and(eq(variables['System.TeamProject'],'OSS_github.com_Unicode-org'), eq(variables['System.codeSign'], 'true')) }}
+  codeSign: ${{ and(eq(variables['System.TeamProject'],'OSS_github.com_Unicode-org'), eq(variables['System.definitionId'], '1386')) }}
 
 stages:
 - stage: Build
@@ -259,7 +259,7 @@ stages:
       inputs:
         targetType: filePath
         filePath: './build/scripts/Create-Nuget-Runtime.ps1'
-        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -output $(BUILD.ArtifactStagingDirectory)\output -codesign $(codeSign)'
+        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -output $(BUILD.ArtifactStagingDirectory)\output\package -codesign $(codeSign)'
 
     - powershell: |
         Write-Host ""
@@ -281,12 +281,12 @@ stages:
       inputs:
         signConfigXml: 'build\nuget\SignConfig-ICU-Nuget.xml'
         signTimeOut: 30
-        inPathRoot: '$(BUILD.ArtifactStagingDirectory)\output'
-        outPathRoot: '$(BUILD.ArtifactStagingDirectory)\output'
+        inPathRoot: '$(BUILD.ArtifactStagingDirectory)\output\package'
+        outPathRoot: '$(BUILD.ArtifactStagingDirectory)\output\package'
       condition: and(succeeded(), eq(variables.codeSign, true))
 
     - powershell: |
-        $cmd = ('nuget verify -signature -CertificateFingerprint 3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE ' + $env:Build_ArtifactStagingDirectory + "\output\signed\*.nupkg")
+        $cmd = ('nuget verify -signature -CertificateFingerprint 3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE ' + $env:Build_ArtifactStagingDirectory + "\output\package\signed\*.nupkg")
         Write-Host "Executing: $cmd"
         &cmd /c $cmd
       displayName: 'Verify Nuget Package is Signed'
@@ -295,7 +295,7 @@ stages:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: Nuget Packages'
       inputs:
-        PathtoPublish: '$(BUILD.ArtifactStagingDirectory)\output\signed'
+        PathtoPublish: '$(BUILD.ArtifactStagingDirectory)\output\package'
         ArtifactName: 'Nuget_Packages'
 
     - task: PkgESSerializeForPostBuild@10
