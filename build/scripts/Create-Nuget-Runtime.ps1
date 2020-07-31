@@ -94,9 +94,13 @@ foreach ($rid in $runtimeIdentifiers)
     if ($rid.StartsWith('win'))
     {
         # Compiled DLLs
-        $dllInput = "$icuBinaries\$rid\bin"
+        $dllInput = "$icuBinaries\$rid"
+        # Depending on how the build artifacts were downloaded, there may or may not be a bin folder.
+        if (Test-Path "$dllInput\bin" -PathType Container) {
+            $dllInput = "$dllInput\bin"
+        }
         if ($codesign -eq 'true') {
-            $dllInput = "$icuBinaries\$rid\bin\signed"
+            $dllInput = "$dllInput\signed"
         }
         $dllOutput = "$stagingLocation\runtimes\$rid\native"
         Copy-Item "$dllInput\*.dll" -Destination $dllOutput -Recurse
