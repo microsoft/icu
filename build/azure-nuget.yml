@@ -125,7 +125,7 @@ stages:
         ArtifactName: '$(PublishBinariesName)'
 
 - stage: CodeSignBinaries
-  condition: eq(variables.codeSign, true)
+  condition: and(succeeded(), eq(variables.codeSign, true))
   dependsOn: Build
   pool:
     name: Package ES CodeHub Lab E
@@ -265,6 +265,7 @@ stages:
         Write-Host "Change to AnyCPU"
         Write-Host "##vso[task.setvariable variable=BuildPlatform]AnyCPU"
       displayName: 'Change BuildPlatform to AnyCPU for signing'
+      condition: and(succeeded(), eq(variables.codeSign, true))
 
     - task: PkgESCodeSign@10
       displayName: 'CodeSign MS-ICU Nuget'
@@ -275,14 +276,14 @@ stages:
         signTimeOut: 30
         inPathRoot: '$(BUILD.ArtifactStagingDirectory)\output'
         outPathRoot: '$(BUILD.ArtifactStagingDirectory)\output'
-      condition: eq(variables.codeSign, true)
+      condition: and(succeeded(), eq(variables.codeSign, true))
 
     - powershell: |
         $cmd = ('nuget verify -signature -CertificateFingerprint 3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE ' + $env:Build_ArtifactStagingDirectory + "\output\signed\*.nupkg")
         Write-Host "Executing: $cmd"
         &cmd /c $cmd
       displayName: 'Verify Nuget Package is Signed'
-      condition: eq(variables.codeSign, true)
+      condition: and(succeeded(), eq(variables.codeSign, true))
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: Nuget Packages'
