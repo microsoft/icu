@@ -148,6 +148,8 @@ stages:
       fetchDepth: 1
     - task: PkgESSetupBuild@10
       displayName: 'PkgES Setup Build'
+      env:
+          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
       inputs:
         useDfs: false
         productName: 'ms-icu-nuget'
@@ -198,14 +200,18 @@ stages:
   condition: and(in(dependencies.Build.result, 'Succeeded'), in(dependencies.CodeSignBinaries.result, 'Succeeded', 'Skipped'))
   pool:
     name: Package ES CodeHub Lab E
+
   jobs:
   - job: CreateNugetAndCodeSign
     steps:
     - checkout: self
       lfs: true
       fetchDepth: 1
+
     - task: PkgESSetupBuild@10
       displayName: 'PkgES Setup Build'
+      env:
+          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
       inputs:
         useDfs: false
         productName: 'ms-icu-nuget'
@@ -259,7 +265,7 @@ stages:
       inputs:
         targetType: filePath
         filePath: './build/scripts/Create-Nuget-Runtime.ps1'
-        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -output $(BUILD.ArtifactStagingDirectory)\output\package -codesign $(codeSign)'
+        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -output $(BUILD.ArtifactStagingDirectory)\output -codesign $(codeSign)'
 
     - powershell: |
         Write-Host ""
@@ -301,10 +307,14 @@ stages:
     - task: PkgESSerializeForPostBuild@10
       displayName: 'PkgES Post Build Serialization'
       continueOnError: true
+      env:
+          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
 
     - task: PkgESLateTasks@10
       displayName: 'PkgES Finalize and Cleanup'
+      env:
+          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
       inputs:
         enablePostBuild: false
-        dfsReleaseInPb: true
+        enableLatest: false
 

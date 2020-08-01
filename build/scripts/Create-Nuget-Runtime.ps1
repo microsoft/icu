@@ -125,7 +125,7 @@ foreach ($rid in $runtimeIdentifiers)
     $nuspecFileContent | Set-Content "$stagingLocation\$runtimePackageId.nuspec"
 
     # Actually do the "nuget pack" operation
-    $nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output")
+    $nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output\package")
     Write-Host 'Executing: ' $nugetCmd
     &cmd /c $nugetCmd
 }
@@ -170,6 +170,6 @@ $nuspecFileContent = $nuspecFileContent.replace('$deps$', $deps)
 $nuspecFileContent | Set-Content "$stagingLocation\$runtimePackageId.nuspec"
 
 # Actually do the "nuget pack" operation
-$nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output")
+$nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output\package")
 Write-Host 'Executing: ' $nugetCmd
 &cmd /c $nugetCmd
