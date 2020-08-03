@@ -8,7 +8,7 @@ name: $(BuildDefinitionName)-$(date:yyMM).$(date:dd)$(rev:rrr)
 
 # Code signing only runs on the MSCodeHub build pipeline.
 variables:
-  codeSign: ${{ and(eq(variables['System.TeamProject'],'OSS_github.com_Unicode-org'), eq(variables['System.definitionId'], '1386')) }}
+  codeSign: ${{ eq(variables['System.definitionId'], '1386') }}
 
 stages:
 - stage: Build
@@ -39,13 +39,6 @@ stages:
     - checkout: self
       lfs: true
       fetchDepth: 1
-
-    - task: ComponentGovernanceComponentDetection@0
-      inputs:
-        scanType: 'Register'
-        verbosity: 'Verbose'
-        alertWarningLevel: 'Medium'
-        failOnAlert: true
 
     - powershell: |
         $PublishBinariesName = ""
@@ -177,6 +170,13 @@ stages:
         Tree /F /A $(BUILD.ArtifactStagingDirectory)
       displayName: 'DIAG: dir'
 
+    - task: ComponentGovernanceComponentDetection@0
+      inputs:
+        scanType: 'Register'
+        verbosity: 'Verbose'
+        alertWarningLevel: 'Medium'
+        failOnAlert: true
+
     - task: PkgESCodeSign@10
       displayName: 'CodeSign MS-ICU DLLs'
       env:
@@ -216,6 +216,7 @@ stages:
         useDfs: false
         productName: 'ms-icu-nuget'
         disableOutputRedirect: true
+      condition: and(succeeded(), eq(variables.codeSign, true))
 
     - task: PowerShell@2
       displayName: 'Set Version'
@@ -309,6 +310,7 @@ stages:
       continueOnError: true
       env:
           SYSTEM_ACCESSTOKEN: $(system.accesstoken)
+      condition: and(succeeded(), eq(variables.codeSign, true))
 
     - task: PkgESLateTasks@10
       displayName: 'PkgES Finalize and Cleanup'
@@ -317,4 +319,4 @@ stages:
       inputs:
         enablePostBuild: false
         enableLatest: false
-
+      condition: and(succeeded(), eq(variables.codeSign, true))
