@@ -1,7 +1,6 @@
 <Project>
   <Import Project="$(RepoRoot)\Directory.Build.props" />
-
-  <Import Project="$(NuGetPackageRoot)\microsoft.dotnet.build.tasks.packaging\$(MicrosoftDotNetBuildTasksPackagingVersion)\build\Microsoft.DotNet.Build.Tasks.Packaging.targets" />
+  <Import Project="$(NuGetPackageRoot)\microsoft.dotnet.build.tasks.packaging\$(MicrosoftDotNetBuildTasksPackagingVersion)\build\Microsoft.DotNet.Build.Tasks.Packaging.props" />
 
   <PropertyGroup>
     <GitHubRepositoryName>icu</GitHubRepositoryName>
@@ -34,5 +33,6 @@
     <File Include="$(RepoRoot)\artifacts\bin\icu-wasm\share\**\*.dat" TargetPath="runtimes\browser-wasm\native\lib\icudt.dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
+  <Import Project="$(NuGetPackageRoot)\microsoft.dotnet.build.tasks.packaging\$(MicrosoftDotNetBuildTasksPackagingVersion)\build\Microsoft.DotNet.Build.Tasks.Packaging.targets" />
   <Import Project="$(RepoRoot)\Directory.Build.targets" />
 </Project>
