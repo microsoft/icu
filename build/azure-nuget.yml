@@ -9,6 +9,7 @@ name: $(BuildDefinitionName)-$(date:yyMM).$(date:dd)$(rev:rrr)
 # Code signing only runs on the MSCodeHub build pipeline.
 variables:
   codeSign: ${{ eq(variables['System.definitionId'], '1386') }}
+  BuildConfiguration: 'Release'
 
 stages:
 - stage: Build
