@@ -112,7 +112,7 @@ stages:
         flattenFolders: true
       condition: eq(variables['BuildPlatform'],'x86')
 
-    # This is a sanity check to ensure that build was okay and we have the real data DLL and not the stubdata DLL.
+    # This is a sanity check to ensure that we have the real data DLL and not the stubdata DLL.
     - powershell: |
         Write-Host 'Checking the size of the ICU data DLL...'
         if ((Get-Item "$(Build.ArtifactStagingDirectory)\$(BuildPlatform)\icudt*.dll").length -lt 5KB) {
@@ -301,11 +301,12 @@ stages:
         outPathRoot: '$(BUILD.ArtifactStagingDirectory)\output\package'
       condition: and(succeeded(), eq(variables.codeSign, true))
 
+    # This checks that all the Nuget packages are code-signed.
     - powershell: |
         $cmd = ('nuget verify -signature -CertificateFingerprint 3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE ' + $env:Build_ArtifactStagingDirectory + "\output\package\signed\*.nupkg")
         Write-Host "Executing: $cmd"
         &cmd /c $cmd
-      displayName: 'Verify Nuget Package is Signed'
+      displayName: 'Verify Nuget Packages are Code-Signed'
       condition: and(succeeded(), eq(variables.codeSign, true))
 
     - task: PublishBuildArtifacts@1
