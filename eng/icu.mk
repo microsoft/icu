@@ -5,7 +5,7 @@ HOST_BUILDDIR = $(TOP)/artifacts/obj/icu-host
 HOST_BINDIR = $(TOP)/artifacts/bin/icu-host
 WASM_BUILDDIR = $(TOP)/artifacts/obj/icu-wasm
 WASM_BINDIR = $(TOP)/artifacts/bin/icu-wasm
-ICU_FILTERS = $(TOP)/icu-filters
+ICU_FILTER = $(TOP)/icu-filters/optimal.json
 
 check-env:
 	@if [ -z "$(EMSDK_PATH)" ]; then echo "The EMSDK_PATH environment variable needs to set to the location of the emscripten SDK."; exit 1; fi
@@ -22,7 +22,7 @@ $(HOST_BUILDDIR)/.stamp-host: $(HOST_BUILDDIR)/.stamp-configure-host
 
 $(HOST_BUILDDIR)/.stamp-configure-host: | $(HOST_BUILDDIR)
 	cd $(HOST_BUILDDIR) && $(TOP)/icu/icu4c/source/configure \
-	--prefix=$(HOST_BINDIR) --disable-icu-config --disable-icuio --disable-extras --disable-tests --disable-samples
+	--prefix=$(HOST_BINDIR) --disable-icu-config --disable-extras --disable-tests --disable-samples
 	touch $@
 
 $(WASM_BUILDDIR):
@@ -47,9 +47,9 @@ ifeq ($(ICU_TRACING),true)
     CONFIGURE_ADD_ARGS += --enable-tracing
 endif
 
-$(WASM_BUILDDIR)/.stamp-configure-wasm: $(HOST_BUILDDIR)/.stamp-host | $(WASM_BUILDDIR) check-env
+$(WASM_BUILDDIR)/.stamp-configure-wasm: $(ICU_FILTER) $(HOST_BUILDDIR)/.stamp-host | $(WASM_BUILDDIR) check-env
 	cd $(WASM_BUILDDIR) && source $(EMSDK_PATH)/emsdk_env.sh && \
-	ICU_DATA_FILTER_FILE=$(ICU_FILTERS)/optimal.json \
+	ICU_DATA_FILTER_FILE=$(ICU_FILTER) \
 	emconfigure $(TOP)/icu/icu4c/source/configure \
 	--prefix=$(WASM_BINDIR) \
 	--enable-static \
