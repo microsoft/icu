@@ -42,13 +42,18 @@ foreach ($versionPart in $icuVersionArray) {
     }
 }
 
-# Edit the source file uvernum.h to set the macros U_ICU_VERSION and U_ICU_VERSION_BUILDLEVEL_NUM.
-# based on the values in the version.txt file.
+# Check that the values in the source file uvernum.h match the values in the version.txt file.
 $icuVersionHeader = (Get-Content "$PSScriptRoot\..\..\icu\icu4c\source\common\unicode\uvernum.h")
 $versionNumberDefine = '#define U_ICU_VERSION "'+ $ICUVersion +'"'
-$icuVersionHeader = $icuVersionHeader -replace('#define U_ICU_VERSION "[0-9\.]+"', $versionNumberDefine)
-$icuVersionHeader = $icuVersionHeader.replace('#define U_ICU_VERSION_BUILDLEVEL_NUM 0', '#define U_ICU_VERSION_BUILDLEVEL_NUM ' + $icuVersionArray[3])
-$icuVersionHeader | Set-Content "$PSScriptRoot\..\..\icu\icu4c\source\common\unicode\uvernum.h"
+if (!$icuVersionHeader -match $versionNumberDefine) {
+    Write-Host "Error: The ICU Version number in uvernum.h does not match the value in the version.txt file".
+    throw "Error: ICU Version number mismatch!"
+}
+$buildVersionNumberDefine = '#define U_ICU_VERSION_BUILDLEVEL_NUM '+ $icuVersionArray[3]
+if (!$icuVersionHeader -match $buildVersionNumberDefine) {
+    Write-Host "Error: The ICU Build Version number in uvernum.h does not match the value in the version.txt file".
+    throw "Error: ICU Version number mismatch!"
+}
 
 # Set the environment variable for the Nuget package to be the same as the ICU version (ex: 64.2.0.1)
 Write-Host 'Nuget Version = ' $ICUVersion
