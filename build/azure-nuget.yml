@@ -150,8 +150,6 @@ stages:
       fetchDepth: 1
     - task: PkgESSetupBuild@10
       displayName: 'PkgES Setup Build'
-      env:
-          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
       inputs:
         useDfs: false
         productName: 'ms-icu-nuget'
@@ -219,8 +217,6 @@ stages:
 
     - task: PkgESSetupBuild@10
       displayName: 'PkgES Setup Build'
-      env:
-          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
       inputs:
         useDfs: false
         productName: 'ms-icu-nuget'
@@ -318,14 +314,10 @@ stages:
     - task: PkgESSerializeForPostBuild@10
       displayName: 'PkgES Post Build Serialization'
       continueOnError: true
-      env:
-          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
       condition: and(succeeded(), eq(variables.codeSign, true))
 
     - task: PkgESLateTasks@10
       displayName: 'PkgES Finalize and Cleanup'
-      env:
-          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
       inputs:
         enablePostBuild: false
         enableLatest: false
