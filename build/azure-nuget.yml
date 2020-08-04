@@ -112,6 +112,14 @@ stages:
         flattenFolders: true
       condition: eq(variables['BuildPlatform'],'x86')
 
+    # This is a sanity check to ensure that build was okay and we have the real data DLL and not the stubdata DLL.
+    - powershell: |
+        Write-Host 'Checking the size of the ICU data DLL...'
+        if ((Get-Item "$(Build.ArtifactStagingDirectory)\$(BuildPlatform)\icudt*.dll").length -lt 5KB) {
+            throw 'Error: The ICU data DLL file appears to be too small.'
+        }
+      displayName: 'Check ICU Data DLL'
+
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: binaries'
       inputs:
