@@ -30,7 +30,7 @@ param(
     [string]$output,
 
     [Parameter(Mandatory=$false)]
-    [switch]$prerelease
+    [string]$codesign
 )
 
 Function Get-GitLocalRevision {
@@ -63,8 +63,8 @@ if (!(Test-Path 'env:nugetPackageVersion')) {
 $packageName = 'Microsoft.ICU.ICU4C.Runtime'
 $packageVersion = "$env:nugetPackageVersion"
 
-if ($prerelease.IsPresent) {
-    $packageVersion = "$packageVersion-alpha$env:BUILD_BUILDNUMBER"
+if ($codesign -eq 'false') {
+    $packageVersion = "$packageVersion-prerelease.$env:BUILD_BUILDID"
 }
 
 $icuSource = Resolve-Path "$sourceRoot\icu\icu4c"
@@ -94,7 +94,14 @@ foreach ($rid in $runtimeIdentifiers)
     if ($rid.StartsWith('win'))
     {
         # Compiled DLLs
-        $dllInput = "$icuBinaries\$rid\bin\signed"
+        $dllInput = "$icuBinaries\$rid"
+        # Depending on how the build artifacts were downloaded, there may or may not be a bin folder.
+        if (Test-Path "$dllInput\bin" -PathType Container) {
+            $dllInput = "$dllInput\bin"
+        }
+        if ($codesign -eq 'true') {
+            $dllInput = "$dllInput\signed"
+        }
         $dllOutput = "$stagingLocation\runtimes\$rid\native"
         Copy-Item "$dllInput\*.dll" -Destination $dllOutput -Recurse
     }
@@ -118,7 +125,7 @@ foreach ($rid in $runtimeIdentifiers)
     $nuspecFileContent | Set-Content "$stagingLocation\$runtimePackageId.nuspec"
 
     # Actually do the "nuget pack" operation
-    $nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output")
+    $nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output\package")
     Write-Host 'Executing: ' $nugetCmd
     &cmd /c $nugetCmd
 }
@@ -163,6 +170,6 @@ $nuspecFileContent = $nuspecFileContent.replace('$deps$', $deps)
 $nuspecFileContent | Set-Content "$stagingLocation\$runtimePackageId.nuspec"
 
 # Actually do the "nuget pack" operation
-$nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output")
+$nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output\package")
 Write-Host 'Executing: ' $nugetCmd
 &cmd /c $nugetCmd
