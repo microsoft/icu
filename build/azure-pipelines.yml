@@ -9,6 +9,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - script: |
         cd icu/icu4c/source && ./runConfigureICU Linux --disable-layout --disable-layoutex && make -j2 check
       displayName: 'Build and Test'
@@ -42,6 +48,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - script: |
         export CPPFLAGS="-Werror -Wall -Wextra -Wextra-semi -Wundef -Wnon-virtual-dtor" && cd icu/icu4c/source && ./runConfigureICU Linux && make -j2 tests
       displayName: 'Build only (WarningsAsErrors)'
@@ -59,6 +71,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - script: |
         cd icu/icu4c/source && \
         ICU_DATA_FILTER_FILE=../../../build/filters/test-data-filter.json ./runConfigureICU Linux && \
@@ -80,6 +98,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - script: |
         export CXXFLAGS="-std=c++14 -Winvalid-constexpr" && cd icu/icu4c/source && ./runConfigureICU --enable-debug --disable-release Linux --disable-layout --disable-layoutex && make -j2 check
       displayName: 'Build and Test C++14'
@@ -101,6 +125,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - task: VSBuild@1
       displayName: 'Build Solution'
       inputs:
@@ -139,6 +169,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - task: VSBuild@1
       displayName: 'Build Solution'
       inputs:
@@ -172,6 +208,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - task: VSBuild@1
       displayName: 'Build Solution'
       inputs:
@@ -217,6 +259,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - powershell: |
         $filterPath = $Env:BUILD_SOURCESDIRECTORY + "\build\filters\test-data-filter.json"
         $vstsCommandString = "vso[task.setvariable variable=ICU_DATA_FILTER_FILE]" + $filterPath
@@ -243,6 +291,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - task: VSBuild@1
       displayName: 'Build Solution'
       inputs:
@@ -267,6 +321,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - script: |
        choco install -y msys2
        rem refreshenv
