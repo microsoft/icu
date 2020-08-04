@@ -21,15 +21,15 @@ if (!$icuVersionData.ICU_version) {
 }
 
 Write-Host 'ICU Version = ' $icuVersionData.ICU_version
-$env:ICUVersion = $icuVersionData.ICU_version
+$ICUVersion = $icuVersionData.ICU_version
 
 # The Azure DevOps environment is a bit odd and requires doing the following
 # in order to persist variables from one build task to another build task.
-$vstsCommandString = 'vso[task.setvariable variable=ICUVersion]' + $icuVersionData.ICU_version
+$vstsCommandString = 'vso[task.setvariable variable=ICUVersion]' + $ICUVersion
 Write-Host "##$vstsCommandString"
 
 # Sanity check on the ICU version number
-$icuVersionArray = $env:ICUVersion.split('.')
+$icuVersionArray = $ICUVersion.split('.')
 if ($icuVersionArray.length -ne 4) {
     Write-Host "Error: The ICU version number ($env:ICUVersion) should have exactly 4 parts!".
     throw "Error: Invalid ICU version number!"
@@ -42,13 +42,15 @@ foreach ($versionPart in $icuVersionArray) {
     }
 }
 
-# Edit the source file uvernum.h to set the macro U_ICU_VERSION_BUILDLEVEL_NUM
-# to the build-level version read from the version.txt above.
+# Edit the source file uvernum.h to set the macros U_ICU_VERSION and U_ICU_VERSION_BUILDLEVEL_NUM.
+# based on the values in the version.txt file.
 $icuVersionHeader = (Get-Content "$PSScriptRoot\..\..\icu\icu4c\source\common\unicode\uvernum.h")
+$versionNumberDefine = '#define U_ICU_VERSION "'+ $ICUVersion +'"'
+$icuVersionHeader = $icuVersionHeader -replace('#define U_ICU_VERSION "[0-9\.]+"', $versionNumberDefine)
 $icuVersionHeader = $icuVersionHeader.replace('#define U_ICU_VERSION_BUILDLEVEL_NUM 0', '#define U_ICU_VERSION_BUILDLEVEL_NUM ' + $icuVersionArray[3])
 $icuVersionHeader | Set-Content "$PSScriptRoot\..\..\icu\icu4c\source\common\unicode\uvernum.h"
 
 # Set the environment variable for the Nuget package to be the same as the ICU version (ex: 64.2.0.1)
-Write-Host 'Nuget Version = ' $env:ICUVersion
-$vstsCommandString = 'vso[task.setvariable variable=nugetPackageVersion]' + $env:ICUVersion
+Write-Host 'Nuget Version = ' $ICUVersion
+$vstsCommandString = 'vso[task.setvariable variable=nugetPackageVersion]' + $ICUVersion
 Write-Host "##$vstsCommandString"
