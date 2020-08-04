@@ -50,7 +50,7 @@ if (!($icuVersionHeader -match $versionNumberDefine)) {
     throw "Error: ICU Version number mismatch!"
 }
 $buildVersionNumberDefine = '#define U_ICU_VERSION_BUILDLEVEL_NUM '+ $icuVersionArray[3]
-if ((!$icuVersionHeader -match $buildVersionNumberDefine)) {
+if (!($icuVersionHeader -match $buildVersionNumberDefine)) {
     Write-Host "Error: The ICU Build Version number in uvernum.h does not match the value in the version.txt file".
     throw "Error: ICU Version number mismatch!"
 }
