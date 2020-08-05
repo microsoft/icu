@@ -252,6 +252,8 @@ stages:
   condition: and(in(dependencies.Build.result, 'Succeeded'), in(dependencies.CodeSignBinaries.result, 'Succeeded', 'Skipped'))
   pool:
     name: Package ES CodeHub Lab E
+  variables:
+    BuildPlatform: AnyCPU
 
   jobs:
   - job: CreateNugetAndCodeSign
@@ -345,13 +347,6 @@ stages:
         Write-Host "$(BUILD.ArtifactStagingDirectory)"
         Tree /F /A $(BUILD.ArtifactStagingDirectory)
       displayName: 'DIAG: dir'
-
-    # This "work-around" is needed since the pipeline runs on x64/x86, but Nuget meta-packages are architecture neutral.
-    - powershell: |
-        Write-Host "Change to AnyCPU"
-        Write-Host "##vso[task.setvariable variable=BuildPlatform]AnyCPU"
-      displayName: 'Change BuildPlatform to AnyCPU for signing'
-      condition: and(succeeded(), eq(variables.codeSign, true))
 
     - task: PkgESCodeSign@10
       displayName: 'CodeSign MS-ICU Nuget'
