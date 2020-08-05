@@ -1,5 +1,14 @@
 # Changelog
 
+## ICU 67.1.0.3
+
+Code/general changes:
+- Enable building Nuget runtime package(s) for Windows containing pre-built binaries.
+- Statically link the VCRuntime, VCStartup, and STL, and dynamically link to the UCRT. [#10](https://github.com/microsoft/icu/pull/10)
+
+Data changes:
+- Fixes to the month names for the vai-Latn locale. [#19](https://github.com/microsoft/icu/pull/19).
+
 ## ICU 67.1.0.2
 
 Data changes:

@@ -35,5 +35,5 @@
 # in the header file "uvernum.h" whenever updated and/or changed.
 #
 
-ICU_version = 67.1.0.2
+ICU_version = 67.1.0.3
 ICU_upstream_hash = 125e29d54990e74845e1546851b5afa3efab06ce
