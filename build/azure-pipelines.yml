@@ -3,12 +3,20 @@ jobs:
 - job: ICU4C_MakeDist_Clang_Ubuntu_1804
   displayName: 'C: MakeDist Linux Clang (Ubuntu 18.04)'
   timeoutInMinutes: 30
+  workspace:
+      clean: all
   pool:
     vmImage: 'ubuntu-18.04'
   steps:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - script: |
         cd icu/icu4c/source && ./runConfigureICU Linux --disable-layout --disable-layoutex && make -j2 check
       displayName: 'Build and Test'
@@ -36,12 +44,20 @@ jobs:
 - job: ICU4C_Clang_Ubuntu_1604_WarningsAsErrors
   displayName: 'C: Linux Clang WarningsAsErrors (Ubuntu 16.04)'
   timeoutInMinutes: 30
+  workspace:
+      clean: all
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - script: |
         export CPPFLAGS="-Werror -Wall -Wextra -Wextra-semi -Wundef -Wnon-virtual-dtor" && cd icu/icu4c/source && ./runConfigureICU Linux && make -j2 tests
       displayName: 'Build only (WarningsAsErrors)'
@@ -53,12 +69,20 @@ jobs:
 - job: ICU4C_Clang_Ubuntu_TestDataFilter_1604
   displayName: 'C: Linux Clang TestDataFilter (Ubuntu 16.04)'
   timeoutInMinutes: 30
+  workspace:
+      clean: all
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - script: |
         cd icu/icu4c/source && \
         ICU_DATA_FILTER_FILE=../../../build/filters/test-data-filter.json ./runConfigureICU Linux && \
@@ -74,12 +98,20 @@ jobs:
 - job: ICU4C_Clang_Cpp14_Debug_Ubuntu_1804
   displayName: 'C: Linux Clang C++14 Debug (Ubuntu 18.04)'
   timeoutInMinutes: 30
+  workspace:
+      clean: all
   pool:
     vmImage: 'ubuntu-18.04'
   steps:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - script: |
         export CXXFLAGS="-std=c++14 -Winvalid-constexpr" && cd icu/icu4c/source && ./runConfigureICU --enable-debug --disable-release Linux --disable-layout --disable-layoutex && make -j2 check
       displayName: 'Build and Test C++14'
@@ -91,6 +123,8 @@ jobs:
 - job: ICU4C_MSVC_x64_Release_Distrelease
   displayName: 'C: MSVC 64-bit Release (VS 2017) + Distrelease'
   timeoutInMinutes: 30
+  workspace:
+      clean: all
   pool:
     vmImage: 'vs2017-win2016'
     demands: 
@@ -101,6 +135,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - task: VSBuild@1
       displayName: 'Build Solution'
       inputs:
@@ -129,6 +169,8 @@ jobs:
 - job: ICU4C_MSVC_x86_Release_Distrelease
   displayName: 'C: MSVC 32-bit Release (VS 2017) + Distrelease'
   timeoutInMinutes: 30
+  workspace:
+      clean: all
   pool:
     vmImage: 'vs2017-win2016'
     demands: 
@@ -139,6 +181,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - task: VSBuild@1
       displayName: 'Build Solution'
       inputs:
@@ -162,6 +210,8 @@ jobs:
 - job: ICU4C_MSVC_x64_ARM32_ARM64_Release_Distrelease
   displayName: 'C: MSVC x64 ARM32 ARM64 Release (VS 2017) + Distrelease ARM64'
   timeoutInMinutes: 60
+  workspace:
+      clean: all
   pool:
     vmImage: 'vs2017-win2016'
     demands: 
@@ -172,6 +222,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - task: VSBuild@1
       displayName: 'Build Solution'
       inputs:
@@ -207,6 +263,8 @@ jobs:
 - job: ICU4C_MSVC_x64_Release_TestDataFilter
   displayName: 'C: MSVC 64-bit Release TestDataFilter (VS 2017)'
   timeoutInMinutes: 30
+  workspace:
+      clean: all
   pool:
     vmImage: 'vs2017-win2016'
     demands: 
@@ -217,6 +275,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - powershell: |
         $filterPath = $Env:BUILD_SOURCESDIRECTORY + "\build\filters\test-data-filter.json"
         $vstsCommandString = "vso[task.setvariable variable=ICU_DATA_FILTER_FILE]" + $filterPath
@@ -233,6 +297,8 @@ jobs:
 - job: ICU4C_MSVC_x86_Debug
   displayName: 'C: MSVC 32-bit Debug (VS 2017)'
   timeoutInMinutes: 60
+  workspace:
+      clean: all
   pool:
     vmImage: 'vs2017-win2016'
     demands: 
@@ -243,6 +309,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - task: VSBuild@1
       displayName: 'Build Solution'
       inputs:
@@ -259,6 +331,8 @@ jobs:
 - job: ICU4C_MSYS2_GCC_x86_64_Release
   displayName: 'C: MSYS2 GCC x86_64 Release'
   timeoutInMinutes: 45
+  workspace:
+      clean: all
   pool:
     vmImage: 'vs2017-win2016'
     demands:
@@ -267,6 +341,12 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
     - script: |
        choco install -y msys2
        rem refreshenv
@@ -295,6 +375,8 @@ jobs:
 - job: ICU4C_Clang_MacOSX_WarningsAsErrors
   displayName: 'C: macOSX Clang WarningsAsErrors (Mojave 10.14)'
   timeoutInMinutes: 30
+  workspace:
+      clean: all
   pool:
     vmImage: 'macOS-10.14'
   steps:

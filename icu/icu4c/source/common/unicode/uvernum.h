@@ -79,7 +79,7 @@
  *  @stable ICU 4.0
  */
 #ifndef U_ICU_VERSION_BUILDLEVEL_NUM
-#define U_ICU_VERSION_BUILDLEVEL_NUM 0
+#define U_ICU_VERSION_BUILDLEVEL_NUM 2
 #endif
 
 /** Glued version suffix for renamers
@@ -139,7 +139,7 @@
  *  This value will change in the subsequent releases of ICU
  *  @stable ICU 2.4
  */
-#define U_ICU_VERSION "67.1"
+#define U_ICU_VERSION "67.1.0.2"
 
 /**
  * The current ICU library major version number as a string, for library name suffixes.
