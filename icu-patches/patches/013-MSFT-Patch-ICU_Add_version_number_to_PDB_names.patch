@@ -1,0 +1,81 @@
+From 10e8c3a2fe8e46f29cf8cdf93ae1d536ab093a46 Mon Sep 17 00:00:00 2001
+From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
+Date: Thu, 6 Aug 2020 14:32:17 -0700
+Subject: [PATCH] MSFT-Patch: Add the ICU major version number to the PDB
+ filename to match the DLL filename.
+
+---
+ icu/icu4c/source/common/common.vcxproj     | 4 ++--
+ icu/icu4c/source/i18n/i18n.vcxproj         | 4 ++--
+ icu/icu4c/source/stubdata/stubdata.vcxproj | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/icu/icu4c/source/common/common.vcxproj b/icu/icu4c/source/common/common.vcxproj
+index 5d9e70a..3ed76a8 100644
+--- a/icu/icu4c/source/common/common.vcxproj
++++ b/icu/icu4c/source/common/common.vcxproj
+@@ -76,7 +76,7 @@
+     </ClCompile>
+     <Link>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc67d.dll</OutputFile>
+-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuucd.pdb</ProgramDatabaseFile>
++      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc67d.pdb</ProgramDatabaseFile>
+       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuucd.lib</ImportLibrary>
+       <!-- This forces dynamic linking of the UCRT. -->
+       <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
+@@ -92,7 +92,7 @@
+     </ClCompile>
+     <Link>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc67.dll</OutputFile>
+-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc.pdb</ProgramDatabaseFile>
++      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc67.pdb</ProgramDatabaseFile>
+       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuuc.lib</ImportLibrary>
+       <!-- This forces dynamic linking of the UCRT. -->
+       <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
+diff --git a/icu/icu4c/source/i18n/i18n.vcxproj b/icu/icu4c/source/i18n/i18n.vcxproj
+index b6e539f..23ea405 100644
+--- a/icu/icu4c/source/i18n/i18n.vcxproj
++++ b/icu/icu4c/source/i18n/i18n.vcxproj
+@@ -78,7 +78,7 @@
+     <Link>
+       <AdditionalDependencies>icuucd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuin67d.dll</OutputFile>
+-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuind.pdb</ProgramDatabaseFile>
++      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin67d.pdb</ProgramDatabaseFile>
+       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuind.lib</ImportLibrary>
+       <!-- This forces dynamic linking of the UCRT. -->
+       <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
+@@ -95,7 +95,7 @@
+     <Link>
+       <AdditionalDependencies>icuuc.lib;%(AdditionalDependencies)</AdditionalDependencies>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuin67.dll</OutputFile>
+-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin.pdb</ProgramDatabaseFile>
++      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin67.pdb</ProgramDatabaseFile>
+       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuin.lib</ImportLibrary>
+       <!-- This forces dynamic linking of the UCRT. -->
+       <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
+diff --git a/icu/icu4c/source/stubdata/stubdata.vcxproj b/icu/icu4c/source/stubdata/stubdata.vcxproj
+index 5e25345..c4e413a 100644
+--- a/icu/icu4c/source/stubdata/stubdata.vcxproj
++++ b/icu/icu4c/source/stubdata/stubdata.vcxproj
+@@ -59,7 +59,7 @@
+       <PrecompiledHeaderOutputFile>$(OutDir)/icudt.pch</PrecompiledHeaderOutputFile>
+       <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
+       <ObjectFileName>$(OutDir)/</ObjectFileName>
+-      <ProgramDataBaseFileName>$(OutDir)/icudt.pdb</ProgramDataBaseFileName>
++      <ProgramDataBaseFileName>$(OutDir)/icudt67.pdb</ProgramDataBaseFileName>
+     </ClCompile>
+     <ResourceCompile>
+       <PreprocessorDefinitions>STUBDATA_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+@@ -73,7 +73,7 @@
+       <TurnOffAssemblyGeneration>true</TurnOffAssemblyGeneration>
+       <!-- Note: stubdata is somewhat odd in that it doesn't suffix the Debug output DLL/LIB with a "d" like common/i18n/etc. -->
+       <OutputFile>..\..\$(IcuBinOutputDir)\icudt67.dll</OutputFile>
+-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icudt.pdb</ProgramDatabaseFile>
++      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icudt67.pdb</ProgramDatabaseFile>
+       <ImportLibrary>..\..\$(IcuLibOutputDir)\icudt.lib</ImportLibrary>
+     </Link>
+   </ItemDefinitionGroup>
+-- 
+2.19.2
+
