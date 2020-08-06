@@ -1,5 +1,10 @@
 # Changelog
 
+## ICU 67.1.0.4
+
+Code/general changes:
+- Fixes the name of the dependent runtime Nuget packages for Windows.
+
 ## ICU 67.1.0.3
 
 Code/general changes:
