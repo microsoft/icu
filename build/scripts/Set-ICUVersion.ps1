@@ -28,6 +28,10 @@ $ICUVersion = $icuVersionData.ICU_version
 $vstsCommandString = 'vso[task.setvariable variable=ICUVersion]' + $ICUVersion
 Write-Host "##$vstsCommandString"
 
+# We also need to change the environment variable for the current PowerShell session
+# as this script may be called by other scripts.
+$env:ICUVersion = $ICUVersion
+
 # Sanity check on the ICU version number
 $icuVersionArray = $ICUVersion.split('.')
 if ($icuVersionArray.length -ne 4) {
