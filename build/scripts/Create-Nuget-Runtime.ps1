@@ -129,7 +129,7 @@ foreach ($rid in $runtimeIdentifiers)
     "commit = $localSHA" | Add-Content -Encoding UTF8 $versionTxtFile
 
     # Update the placeholders in the template nuspec file.
-    $runtimePackageId = "runtime.$rid.$packageName";
+    $runtimePackageId = "$packageName.$rid";
     $nuspecFileContent = (Get-Content "$sourceRoot\build\nuget\Template-runtime-rid.nuspec")
     $nuspecFileContent = $nuspecFileContent.replace('$runtimePackageId$', $runtimePackageId)
     $nuspecFileContent = $nuspecFileContent.replace('$version$', $packageVersion)
@@ -171,7 +171,7 @@ $ret = New-Item -ItemType File -Force -Path $versionTxtFile
 $deps = ""
 foreach ($rid in $runtimeIdentifiers)
 {
-    $deps = $deps + "      <dependency id=`"runtime.$rid.$packageName`" version=`"$packageVersion`" />`r`n"
+    $deps = $deps + "      <dependency id=`"$packageName.$rid`" version=`"$packageVersion`" />`r`n"
 }
 
 Write-Host "Adding these runtime packages as dependencies:"
