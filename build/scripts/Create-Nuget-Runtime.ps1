@@ -26,8 +26,15 @@ param(
     [string]$icuBinaries,
 
     [Parameter(Mandatory=$true)]
+    [ValidateScript({Test-Path $_ -PathType Container})]
+    [string]$icuSymbols,
+
+    [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
-    [string]$output
+    [string]$output,
+
+    [Parameter(Mandatory=$false)]
+    [string]$codesign
 )
 
 Function Get-GitLocalRevision {
@@ -57,8 +64,12 @@ if (!(Test-Path 'env:nugetPackageVersion')) {
     throw "Error: The Nuget version environment variable is not set."
 }
 
-$packageVersion = "$env:nugetPackageVersion-alpha$env:BUILD_BUILDNUMBER"
-$packageName = 'Microsoft.ICU.icu4c.runtime'
+$packageName = 'Microsoft.ICU.ICU4C.Runtime'
+$packageVersion = "$env:nugetPackageVersion"
+
+if ($codesign -eq 'false') {
+    $packageVersion = "$packageVersion-prerelease.$env:BUILD_BUILDID"
+}
 
 $icuSource = Resolve-Path "$sourceRoot\icu\icu4c"
 
@@ -71,6 +82,8 @@ $runtimeIdentifiers = Get-ChildItem -Path $icuBinaries | Where-Object {$_.PSIsCo
 
 foreach ($rid in $runtimeIdentifiers)
 {
+    Write-Host "`nWorking on the nuget package for '$rid'".
+
     # Create the staging folder for the nuget contents.
     $stagingLocation = "$output\nuget-$rid"
 
@@ -87,9 +100,21 @@ foreach ($rid in $runtimeIdentifiers)
     if ($rid.StartsWith('win'))
     {
         # Compiled DLLs
-        $dllInput = "$icuBinaries\$rid\bin\signed"
+        $dllInput = "$icuBinaries\$rid"
+        # Depending on how the build artifacts were downloaded, there may or may not be a bin folder.
+        if (Test-Path "$dllInput\bin" -PathType Container) {
+            $dllInput = "$dllInput\bin"
+        }
+        if ($codesign -eq 'true') {
+            $dllInput = "$dllInput\signed"
+        }
         $dllOutput = "$stagingLocation\runtimes\$rid\native"
         Copy-Item "$dllInput\*.dll" -Destination $dllOutput -Recurse
+
+        # If we have symbols, also add them to the package location as well.
+        if (Test-Path "$icuSymbols\symbols-$rid" -PathType Container) {
+            Copy-Item "$icuSymbols\symbols-$rid\*.pdb" -Destination $dllOutput -Recurse
+        }
     }
 
     # Add the License file
@@ -110,14 +135,19 @@ foreach ($rid in $runtimeIdentifiers)
     $nuspecFileContent = $nuspecFileContent.replace('$version$', $packageVersion)
     $nuspecFileContent | Set-Content "$stagingLocation\$runtimePackageId.nuspec"
 
+    # Output the folder contents for debugging the pipeline.
+    Write-Host "`nDIAG: tree /f /a $stagingLocation"
+    &cmd /c Tree /F /A $stagingLocation
+
     # Actually do the "nuget pack" operation
-    $nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output")
+    $nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output\package -Symbols -SymbolPackageFormat snupkg")
     Write-Host 'Executing: ' $nugetCmd
     &cmd /c $nugetCmd
 }
 
 #------------------------------------------------
 # Create the meta-package
+Write-Host "`nWorking on the nuget metapackage..."
 
 # Create the staging folder for the nuget contents.
 $stagingLocation = "$output\nuget"
@@ -144,7 +174,7 @@ foreach ($rid in $runtimeIdentifiers)
     $deps = $deps + "      <dependency id=`"runtime.$rid.$packageName`" version=`"$packageVersion`" />`r`n"
 }
 
-Write-Host "Adding these runtime packages:"
+Write-Host "Adding these runtime packages as dependencies:"
 Write-Host $deps
 
 # Update the placeholders in the template nuspec file.
@@ -156,6 +186,6 @@ $nuspecFileContent = $nuspecFileContent.replace('$deps$', $deps)
 $nuspecFileContent | Set-Content "$stagingLocation\$runtimePackageId.nuspec"
 
 # Actually do the "nuget pack" operation
-$nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output")
+$nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output\package")
 Write-Host 'Executing: ' $nugetCmd
 &cmd /c $nugetCmd

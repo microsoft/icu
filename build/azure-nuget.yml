@@ -1,0 +1,394 @@
+# Nuget Build Pipeline
+
+# no PR triggers
+pr: none
+
+# We need to set the version for the PackageES builds.
+name: $(BuildDefinitionName)-$(date:yyMM).$(date:dd)$(rev:rrr)
+
+# Code signing only runs on the MSCodeHub build pipeline.
+variables:
+  codeSign: ${{ eq(variables['System.definitionId'], '1386') }}
+  BuildConfiguration: 'Release'
+
+stages:
+- stage: Build
+  jobs:
+  - job: BuildWindows
+    pool:
+      name: Azure Pipelines
+      vmImage: 'vs2017-win2016'
+      demands:
+      - msbuild
+      - visualstudio
+    workspace:
+      clean: all
+
+    # Note: The VS uses "Win32" for 32-bit arch, but we use x86 in the pipeline.
+    # This matrix strategy lets us build the different architectures in parallel.
+    strategy:
+      matrix:
+        Win32:
+          BuildPlatform: 'x86'
+          IcuBuildPlatform: 'Win32'
+        Win64:
+          BuildPlatform: 'x64'
+          IcuBuildPlatform: 'x64'
+        ARM64:
+          BuildPlatform: 'ARM64'
+          IcuBuildPlatform: 'ARM64'
+    
+    steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+
+    - powershell: |
+        $PublishBinariesName = ""
+        if ($env:codeSign -ieq 'true') {
+          $PublishBinariesName = "binaries-$env:BuildPlatform"
+        } else {
+          $PublishBinariesName = "win-$env:BuildPlatform"
+        }
+        Write-Host PublishBinariesName = $PublishBinariesName
+        Write-Host "##vso[task.setvariable variable=PublishBinariesName]$PublishBinariesName"
+      displayName: 'Set PublishBinariesName variable'
+
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+
+    # The ARM/ARM64 builds for ICU require the x64 tools in order to cross-build.
+    - task: VSBuild@1
+      displayName: 'Build x64 first (Only if building ARM)'
+      inputs:
+        solution: icu/icu4c/source/allinone/allinone.sln
+        vsVersion: 15.0
+        msbuildArgs: '/p:SkipUWP=true'
+        platform: x64
+        configuration: Release
+      condition: eq(variables['IcuBuildPlatform'],'ARM64')
+
+    - task: VSBuild@1
+      displayName: 'Build $(BuildPlatform)'
+      inputs:
+        solution: icu/icu4c/source/allinone/allinone.sln
+        vsVersion: 15.0
+        msbuildArgs: '/p:SkipUWP=true'
+        platform: '$(IcuBuildPlatform)'
+        configuration: Release
+
+    # Binaries (DLLs)
+    - task: CopyFiles@2
+      displayName: 'Copy x64'
+      inputs:
+        Contents: |
+          icu\icu4c\bin64\icuuc*.dll
+          icu\icu4c\bin64\icuin*.dll
+          icu\icu4c\bin64\icudt*.dll
+        TargetFolder: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
+        flattenFolders: true
+      condition: eq(variables['BuildPlatform'],'x64')
+
+    - task: CopyFiles@2
+      displayName: 'Copy ARM64'
+      inputs:
+        Contents: |
+          icu\icu4c\binARM64\icuuc*.dll
+          icu\icu4c\binARM64\icuin*.dll
+          icu\icu4c\binARM64\icudt*.dll
+        TargetFolder: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
+        flattenFolders: true
+      condition: eq(variables['BuildPlatform'],'ARM64')
+
+    - task: CopyFiles@2
+      displayName: 'Copy x86'
+      inputs:
+        Contents: |
+          icu\icu4c\bin\icuuc*.dll
+          icu\icu4c\bin\icuin*.dll
+          icu\icu4c\bin\icudt*.dll
+        TargetFolder: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
+        flattenFolders: true
+      condition: eq(variables['BuildPlatform'],'x86')
+
+    # This is a sanity check to ensure that we have the real data DLL, and not the stubdata DLL.
+    - powershell: |
+        Write-Host 'Checking the size of the ICU data DLL...'
+        if ((Get-Item "$(Build.ArtifactStagingDirectory)\$(BuildPlatform)\icudt*.dll").length -lt 5KB) {
+            throw 'Error: The ICU data DLL file appears to be too small.'
+        }
+      displayName: 'Check ICU Data DLL'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish: binaries'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\$(BuildPlatform)'
+        ArtifactName: '$(PublishBinariesName)'
+
+    # Symbols (PDBs)
+    - task: CopyFiles@2
+      displayName: 'Copy symbols x64'
+      inputs:
+        Contents: |
+          icu\icu4c\lib64\icuuc*.pdb
+          icu\icu4c\lib64\icuin*.pdb
+          icu\icu4c\lib64\icudt*.pdb
+        TargetFolder: '$(Build.ArtifactStagingDirectory)\symbols-$(BuildPlatform)'
+        flattenFolders: true
+      condition: eq(variables['BuildPlatform'],'x64')
+
+    - task: CopyFiles@2
+      displayName: 'Copy symbols ARM64'
+      inputs:
+        Contents: |
+          icu\icu4c\libARM64\icuuc*.pdb
+          icu\icu4c\libARM64\icuin*.pdb
+          icu\icu4c\libARM64\icudt*.pdb
+        TargetFolder: '$(Build.ArtifactStagingDirectory)\symbols-$(BuildPlatform)'
+        flattenFolders: true
+      condition: eq(variables['BuildPlatform'],'ARM64')
+
+    - task: CopyFiles@2
+      displayName: 'Copy symbols x86'
+      inputs:
+        Contents: |
+          icu\icu4c\lib\icuuc*.pdb
+          icu\icu4c\lib\icuin*.pdb
+          icu\icu4c\lib\icudt*.pdb
+        TargetFolder: '$(Build.ArtifactStagingDirectory)\symbols-$(BuildPlatform)'
+        flattenFolders: true
+      condition: eq(variables['BuildPlatform'],'x86')
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish: symbols'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\symbols-$(BuildPlatform)'
+        ArtifactName: 'symbols-win-$(BuildPlatform)'
+
+- stage: CodeSignBinaries
+  condition: and(succeeded(), eq(variables.codeSign, true))
+  dependsOn: Build
+  pool:
+    name: Package ES CodeHub Lab E
+  jobs:
+  - job: CodeSignBits
+    workspace:
+      clean: all
+    
+    # This matrix strategy lets us code-sign the architectures in parallel.
+    strategy:
+      matrix:
+        Win32:
+          BuildPlatform: 'x86'
+        Win64:
+          BuildPlatform: 'x64'
+        ARM64:
+          BuildPlatform: 'ARM64'
+    
+    steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    - task: PkgESSetupBuild@10
+      displayName: 'PkgES Setup Build'
+      inputs:
+        useDfs: false
+        productName: 'ms-icu-nuget'
+        disableOutputRedirect: true
+
+    - task: PowerShell@2
+      displayName: 'Set Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download: Binaries'
+      inputs:
+        artifactName: 'binaries-$(BuildPlatform)'
+        downloadPath: '$(Build.ArtifactStagingDirectory)\bits'
+
+    - powershell: |
+        Write-Host ""
+        Write-Host "$(BUILD.BINARIESDIRECTORY)"
+        Tree /F /A $(BUILD.BINARIESDIRECTORY)
+        Write-Host ""
+        Write-Host "$(BUILD.ArtifactStagingDirectory)"
+        Tree /F /A $(BUILD.ArtifactStagingDirectory)
+      displayName: 'DIAG: dir'
+
+    - task: ComponentGovernanceComponentDetection@0
+      inputs:
+        scanType: 'Register'
+        verbosity: 'Verbose'
+        alertWarningLevel: 'Medium'
+        failOnAlert: true
+
+    - task: PkgESCodeSign@10
+      displayName: 'CodeSign MS-ICU DLLs'
+      env:
+        SYSTEM_ACCESSTOKEN: $(system.accesstoken)
+      inputs:
+        signConfigXml: 'build\nuget\SignConfig-ICU-Binaries-runtime.xml'
+        signTimeOut: 30
+        inPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
+        outPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish: binaries signed'
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
+        ArtifactName: 'win-$(BuildPlatform)'
+
+- stage: Nuget
+  dependsOn:
+  - Build
+  - CodeSignBinaries
+  condition: and(in(dependencies.Build.result, 'Succeeded'), in(dependencies.CodeSignBinaries.result, 'Succeeded', 'Skipped'))
+  pool:
+    name: Package ES CodeHub Lab E
+  variables:
+    BuildPlatform: AnyCPU
+
+  jobs:
+  - job: CreateNugetAndCodeSign
+    workspace:
+      clean: all
+    steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+
+    - task: PkgESSetupBuild@10
+      displayName: 'PkgES Setup Build'
+      inputs:
+        useDfs: false
+        productName: 'ms-icu-nuget'
+        disableOutputRedirect: true
+      condition: and(succeeded(), eq(variables.codeSign, true))
+
+    - task: PowerShell@2
+      displayName: 'Set Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+
+    - task: NuGetToolInstaller@1
+      displayName: 'Install NuGet'
+
+    - powershell: |
+        Write-Host ""
+        Write-Host "$(BUILD.BINARIESDIRECTORY)"
+        Tree /F /A $(BUILD.BINARIESDIRECTORY)
+      displayName: 'DIAG: dir'
+
+    # Binaries (DLLs)
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download win-x86'
+      inputs:
+        artifactName: 'win-x86'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\bits'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download win-x64'
+      inputs:
+        artifactName: 'win-x64'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\bits'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download win-ARM64'
+      inputs:
+        artifactName: 'win-ARM64'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\bits'
+
+    # Symbols (PDBs)
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download symbols-win-x86'
+      inputs:
+        artifactName: 'symbols-win-x86'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\symbols'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download symbols-win-x64'
+      inputs:
+        artifactName: 'symbols-win-x64'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\symbols'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download symbols-win-ARM64'
+      inputs:
+        artifactName: 'symbols-win-ARM64'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\symbols'
+
+    - powershell: |
+        Write-Host ""
+        Write-Host "$(BUILD.BINARIESDIRECTORY)"
+        Tree /F /A $(BUILD.BINARIESDIRECTORY)
+        Write-Host ""
+        Write-Host "$(BUILD.SOURCESDIRECTORY)"
+        Tree /F /A $(BUILD.SOURCESDIRECTORY)
+      displayName: 'DIAG: dir'
+
+    - task: PowerShell@2
+      displayName: 'Create MS-ICU Nuget'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Create-Nuget-Runtime.ps1'
+        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -icuSymbols "$(BUILD.BINARIESDIRECTORY)\symbols" -output $(BUILD.ArtifactStagingDirectory)\output -codesign $(codeSign)'
+
+    - powershell: |
+        Write-Host ""
+        Write-Host "$(BUILD.ArtifactStagingDirectory)"
+        Tree /F /A $(BUILD.ArtifactStagingDirectory)
+      displayName: 'DIAG: dir'
+
+    - task: PkgESCodeSign@10
+      displayName: 'CodeSign MS-ICU Nuget'
+      env:
+          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
+      inputs:
+        signConfigXml: 'build\nuget\SignConfig-ICU-Nuget.xml'
+        signTimeOut: 30
+        inPathRoot: '$(BUILD.ArtifactStagingDirectory)\output\package'
+        outPathRoot: '$(BUILD.ArtifactStagingDirectory)\output\package'
+      condition: and(succeeded(), eq(variables.codeSign, true))
+
+    # This checks that all the Nuget packages are signed.
+    - powershell: |
+        $cmd = ('nuget verify -signature -CertificateFingerprint 3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE ' + $env:Build_ArtifactStagingDirectory + "\output\package\signed\*.nupkg")
+        Write-Host "Executing: $cmd"
+        &cmd /c $cmd
+      displayName: 'Verify Nuget Packages are Signed'
+      condition: and(succeeded(), eq(variables.codeSign, true))
+
+    # Check that the Nuget Symbol packages are also signed.
+    - powershell: |
+        $cmd = ('nuget verify -signature -CertificateFingerprint 3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE ' + $env:Build_ArtifactStagingDirectory + "\output\package\signed\*.snupkg")
+        Write-Host "Executing: $cmd"
+        &cmd /c $cmd
+      displayName: 'Verify Nuget Symbol Packages are Signed'
+      condition: and(succeeded(), eq(variables.codeSign, true))
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish: Nuget Packages'
+      inputs:
+        PathtoPublish: '$(BUILD.ArtifactStagingDirectory)\output\package'
+        ArtifactName: 'Nuget_Packages'
+
+    - task: PkgESSerializeForPostBuild@10
+      displayName: 'PkgES Post Build Serialization'
+      continueOnError: true
+      condition: and(succeeded(), eq(variables.codeSign, true))
+
+    - task: PkgESLateTasks@10
+      displayName: 'PkgES Finalize and Cleanup'
+      inputs:
+        enablePostBuild: false
+        enableLatest: false
+      condition: and(succeeded(), eq(variables.codeSign, true))
