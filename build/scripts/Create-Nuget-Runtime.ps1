@@ -97,6 +97,8 @@ foreach ($rid in $runtimeIdentifiers)
     $ret = New-Item -Path "$stagingLocation\runtimes\$rid" -ItemType Directory
     $ret = New-Item -Path "$stagingLocation\runtimes\$rid\native" -ItemType Directory
     
+    $haveSymbols = 0
+
     if ($rid.StartsWith('win'))
     {
         # Compiled DLLs
@@ -114,7 +116,12 @@ foreach ($rid in $runtimeIdentifiers)
         # If we have symbols, also add them to the package location as well.
         if (Test-Path "$icuSymbols\symbols-$rid" -PathType Container) {
             Copy-Item "$icuSymbols\symbols-$rid\*.pdb" -Destination $dllOutput -Recurse
+            $haveSymbols = 1
         }
+    }
+    elseif ($rid.StartsWith('linux'))
+    {
+        Copy-Item "$icuBinaries\$rid\*.so*" -Destination "$stagingLocation\runtimes\$rid\native" -Recurse
     }
 
     # Add the License file
@@ -140,7 +147,10 @@ foreach ($rid in $runtimeIdentifiers)
     &cmd /c Tree /F /A $stagingLocation
 
     # Actually do the "nuget pack" operation
-    $nugetCmd = ("nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output\package -Symbols -SymbolPackageFormat snupkg")
+    $nugetCmd = "nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output\package"
+    if ($haveSymbols) {
+        $nugetCmd = "$nugetCmd -Symbols -SymbolPackageFormat snupkg"
+    }
     Write-Host 'Executing: ' $nugetCmd
     &cmd /c $nugetCmd
 }
