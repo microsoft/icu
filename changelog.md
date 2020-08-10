@@ -1,5 +1,12 @@
 # Changelog
 
+## ICU 67.1.0.5
+
+Code/general changes:
+- Enable building Linux x64 Nuget runtime package (for glibc based distros). [#27](https://github.com/microsoft/icu/pull/27)
+- Include the ICU major version number on PDB files (for common and i18n) to match the DLL filenames. [#26](https://github.com/microsoft/icu/pull/26)
+- Fix the build-time script Set-ICUVersion.ps1 to set the environment variable for the current session.
+
 ## ICU 67.1.0.4
 
 Code/general changes:
