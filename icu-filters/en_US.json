@@ -54,7 +54,6 @@
             "rules": [
                 "-/Currencies",
                 "+/Currencies/USD",
-                "+/Currencies/XXX",
                 "-/Currencies%narrow",
                 "-/Currencies%formal",
                 "-/Currencies%variant",
@@ -88,6 +87,9 @@
         },
         {
             "categories": ["locales_tree"],
+            "files": {
+                "blacklist": ["root"]
+            },
             "rules": [
                 "-/calendar/*",
                 "+/calendar/default",
@@ -101,7 +103,6 @@
                 "-/*/*",
                 "+/collations/default",
                 "+/collations/standard",
-                "+/collations/private-kana",
                 "-/UCARules"
             ]
         },

@@ -1,53 +1,86 @@
 {
     "collationUCAData": "implicithan",
     "localeFilter": {
-        "filterType": "language",
+        "filterType": "locale",
+        "includeScripts": false,	
+        "includeChildren": false,
         "whitelist": [
-            "ar",
-            "am",
-            "bg",
-            "bn",
-            "ca",
-            "cs",
-            "da",
-            "de",
-            "el",
-            "en",
-            "es",
-            "et",
-            "fa",
-            "fi",
-            "fil",
-            "fr",
-            "gu",
-            "he",
-            "hi",
-            "hr",
-            "hu",
-            "id",
-            "it",
-            "kn",
-            "lt",
-            "lv",
-            "ml",
-            "mr",
-            "ms",
-            "nl",
-            "no",
-            "pl",
-            "pt",
-            "ro",
-            "ru",
-            "sk",
-            "sl",
-            "sr",
-            "sv",
-            "sw",
-            "ta",
-            "te",
-            "tr",
-            "uk",
-            "vi"
+            "ar_SA",
+            "am_ET",
+            "bg_BG",
+            "bn_BD",
+            "bn_IN",
+            "ca_AD",
+            "ca_ES",
+            "cs_CZ",
+            "da_DK",
+            "de_AT",
+            "de_BE",
+            "de_CH",
+            "de_DE",
+            "de_IT",
+            "de_LI",
+            "de_LU",
+            "el_CY",
+            "el_GR",
+            "en_CA",
+            "en_GB",
+            "en_US",
+            "es_419",
+            "es_ES",
+            "es_MX",
+            "et_EE",
+            "fa_IR",
+            "fi_FI",
+            "fil_PH",
+            "fr_BE",
+            "fr_CA",
+            "fr_CH",
+            "fr_FR",
+            "gu_IN",
+            "he_IL",
+            "hi_IN",
+            "hr_BA",
+            "hr_HR",
+            "hu_HU",
+            "id_ID",
+            "it_CH",
+            "it_IT",
+            "kn_IN",
+            "lt_LT",
+            "lv_LV",
+            "ml_IN",
+            "mr_IN",
+            "ms_BN",
+            "ms_MY",
+            "ms_SG",
+            "nl_AW",
+            "nl_BE",
+            "nl_NL",
+            "pl_PL",
+            "pt_BR",
+            "pt_PT",
+            "ro_RO",
+            "ru_RU",
+            "sk_SK",
+            "sl_SI",
+            "sr_Cyrl_RS",
+            "sr_Latn_RS",
+            "sv_AX",
+            "sv_SE",
+            "sw_CD",
+            "sw_KE",
+            "sw_TZ",
+            "sw_UG",
+            "ta_IN",
+            "ta_LK",
+            "ta_MY",
+            "ta_SG",
+            "te_IN",
+            "tr_CY",
+            "tr_TR",
+            "uk_UA",
+            "vi_VN"
         ]
     },
     "featureFilters": {
@@ -142,114 +175,13 @@
         {
             "categories": ["locales_tree"],
             "files": {
-                "blacklist": [
-                    "root",
-                    "am",
-                    "ar",
-                    "fa",
-                    "he",
-                    "hi"
-                ]
+                "blacklist": ["root"]
             },
             "rules": [
                 "-/calendar/*",
                 "+/calendar/default",
                 "+/calendar/gregorian",
                 "+/calendar/generic"
-            ]
-        },
-        {
-            "categories": ["locales_tree"],
-            "files": {
-                "whitelist": ["am"]
-            },
-            "rules": [
-                "-/calendar/*",
-                "+/calendar/default",
-                "+/calendar/gregorian",
-                "+/calendar/generic",
-                "+/calendar/ethiopic",
-                "+/calendar/ethiopic-amete-alem"
-            ]
-        },
-        {
-            "categories": ["locales_tree"],
-            "files": {
-                "whitelist": ["he"]
-            },
-            "rules": [
-                "-/calendar/*",
-                "+/calendar/default",
-                "+/calendar/gregorian",
-                "+/calendar/generic",
-                "+/calendar/hebrew"
-            ]
-        },
-        {
-            "categories": ["locales_tree"],
-            "files": {
-                "whitelist": ["ar"]
-            },
-            "rules": [
-                "-/calendar/*",
-                "+/calendar/default",
-                "+/calendar/gregorian",
-                "+/calendar/generic",
-                "+/calendar/islamic"
-            ]
-        },
-        {
-            "categories": ["locales_tree"],
-            "files": {
-                "whitelist": ["fa"]
-            },
-            "rules": [
-                "-/calendar/*",
-                "+/calendar/default",
-                "+/calendar/gregorian",
-                "+/calendar/generic",
-                "+/calendar/persian",
-                "+/calendar/islamic"
-            ]
-        },
-        {
-            "categories": ["locales_tree"],
-            "files": {
-                "whitelist": ["hi"]
-            },
-            "rules": [
-                "-/calendar/*",
-                "+/calendar/default",
-                "+/calendar/gregorian",
-                "+/calendar/generic",
-                "+/calendar/indian"
-            ]
-        },
-        {
-            "categories": ["coll_tree"],
-            "rules": [
-                "-/*/*",
-                "+/collations/default",
-                "+/collations/standard",
-                "+/collations/private-kana",
-                "-/UCARules"
-            ]
-        },
-        {
-            "categories": ["misc"],
-            "files": {
-                "whitelist": ["supplementalData"]
-            },
-            "rules": [
-                "-/*",
-                "+/calendarData",
-                "+/calendarPreferenceData",
-                "+/cldrVersion",
-                "+/measurementData",
-                "+/codeMappings",
-                "+/idValidity",
-                "+/timeData",
-                "+/weekData"
             ]
         },
         {
@@ -274,6 +206,32 @@
                 "+/LocaleScript",
                 "+/layout",
                 "+/Version"
+            ]
+        },
+        {
+            "categories": ["coll_tree"],
+            "rules": [
+                "-/*/*",
+                "+/collations/default",
+                "+/collations/standard",
+                "-/UCARules"
+            ]
+        },
+        {
+            "categories": ["misc"],
+            "files": {
+                "whitelist": ["supplementalData"]
+            },
+            "rules": [
+                "-/*",
+                "+/calendarData",
+                "+/calendarPreferenceData",
+                "+/cldrVersion",
+                "+/measurementData",
+                "+/codeMappings",
+                "+/idValidity",
+                "+/timeData",
+                "+/weekData"
             ]
         }
     ]
