@@ -6,6 +6,7 @@ HOST_BINDIR = $(TOP)/artifacts/bin/icu-host
 WASM_BUILDDIR = $(TOP)/artifacts/obj/icu-wasm
 WASM_BINDIR = $(TOP)/artifacts/bin/icu-wasm
 ICU_FILTER = $(TOP)/icu-filters/optimal.json
+ICU_VER = 67
 
 check-env:
 	@if [ -z "$(EMSDK_PATH)" ]; then echo "The EMSDK_PATH environment variable needs to set to the location of the emscripten SDK."; exit 1; fi
@@ -31,6 +32,7 @@ $(WASM_BUILDDIR):
 .PHONY: icu-wasm
 icu-wasm: $(WASM_BUILDDIR)/.stamp-configure-wasm
 	cd $(WASM_BUILDDIR) && $(MAKE) -j8 all && $(MAKE) install
+	cp $(WASM_BUILDDIR)/data/out/icudt$(ICU_VER)l.dat $(WASM_BINDIR)/icudt_$(basename $(notdir $(ICU_FILTER))).dat
 
 # Disable some features we don't need, see icu/icu4c/source/common/unicode/uconfig.h
 ICU_DEFINES= \
@@ -48,6 +50,7 @@ ifeq ($(ICU_TRACING),true)
 endif
 
 $(WASM_BUILDDIR)/.stamp-configure-wasm: $(ICU_FILTER) $(HOST_BUILDDIR)/.stamp-host | $(WASM_BUILDDIR) check-env
+	rm -rf $(WASM_BUILDDIR)/data/out/tmp
 	cd $(WASM_BUILDDIR) && source $(EMSDK_PATH)/emsdk_env.sh && \
 	ICU_DATA_FILTER_FILE=$(ICU_FILTER) \
 	emconfigure $(TOP)/icu/icu4c/source/configure \
@@ -65,4 +68,3 @@ $(WASM_BUILDDIR)/.stamp-configure-wasm: $(ICU_FILTER) $(HOST_BUILDDIR)/.stamp-ho
 	$(CONFIGURE_ADD_ARGS) \
 	CFLAGS="-Oz $(ICU_DEFINES)" \
 	CXXFLAGS="-fno-exceptions -Oz -Wno-sign-compare $(ICU_DEFINES)"
-	touch $@

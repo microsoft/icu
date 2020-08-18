@@ -1,8 +1,11 @@
 <Project>
   <!-- Only building for wasm is supported -->
   <Target Name="Build">
+    <ItemGroup>
+      <IcuFilter Include="optimal;optimal_no_CJK;EFIGS;CJK" />
+    </ItemGroup>
     <Exec WorkingDirectory="$(MSBuildThisFileDirectory)"
-          Command="make -f icu.mk all ICU_TRACING=$(IcuTracing) SHELL=/bin/bash"
+          Command="make -f icu.mk all ICU_FILTER=$(MSBuildThisFileDirectory)/../icu-filters/%(IcuFilter.Identity).json ICU_TRACING=$(IcuTracing) SHELL=/bin/bash"
           IgnoreStandardErrorWarningFormat="true" />
   </Target>
   <Target Name="Restore" />

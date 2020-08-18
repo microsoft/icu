@@ -30,7 +30,7 @@
     <File Include="$(RepoRoot)\version.txt" TargetPath="icu-version.txt" SkipPackageFileCheck="true" />
     <File Include="$(RepoRoot)\artifacts\bin\icu-wasm\lib\*.a" TargetPath="runtimes\browser-wasm\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
     <File Include="$(RepoRoot)\artifacts\bin\icu-wasm\include\**" TargetPath="runtimes\browser-wasm\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-wasm\share\**\*.dat" TargetPath="runtimes\browser-wasm\native\lib\icudt.dat" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-wasm\*.dat" TargetPath="runtimes\browser-wasm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
   <Import Project="$(NuGetPackageRoot)\microsoft.dotnet.build.tasks.packaging\$(MicrosoftDotNetBuildTasksPackagingVersion)\build\Microsoft.DotNet.Build.Tasks.Packaging.targets" />
