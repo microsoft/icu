@@ -404,6 +404,18 @@ stages:
         artifactName: 'symbols-win-ARM64'
         downloadPath: '$(Build.BINARIESDIRECTORY)\symbols'
 
+    # Publish the Windows Symbols to MSCodeHub
+    - task: PublishSymbols@2
+      displayName: 'Publish Windows Symbols to MSCodeHub'
+      inputs:
+        symbolsFolder: '$(Build.BINARIESDIRECTORY)\symbols'
+        searchPattern: '**/*.pdb'
+        SymbolsMaximumWaitTime: 30
+        SymbolServerType: 'TeamServices'
+        SymbolsProduct: 'MS-ICU Nuget Windows binaries'
+        SymbolsVersion: '$(ICUVersion)'
+      condition: and(succeeded(), eq(variables.codeSign, true))
+
     - powershell: |
         Write-Host ""
         Write-Host "$(BUILD.BINARIESDIRECTORY)"
@@ -418,7 +430,7 @@ stages:
       inputs:
         targetType: filePath
         filePath: './build/scripts/Create-Nuget-Runtime.ps1'
-        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -icuSymbols "$(BUILD.BINARIESDIRECTORY)\symbols" -output $(BUILD.ArtifactStagingDirectory)\output -codesign $(codeSign)'
+        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -output $(BUILD.ArtifactStagingDirectory)\output -codesign $(codeSign)'
 
     - powershell: |
         Write-Host ""
@@ -443,14 +455,6 @@ stages:
         Write-Host "Executing: $cmd"
         &cmd /c $cmd
       displayName: 'Verify Nuget Packages are Signed'
-      condition: and(succeeded(), eq(variables.codeSign, true))
-
-    # Check that the Nuget Symbol packages are also signed.
-    - powershell: |
-        $cmd = ('nuget verify -signature -CertificateFingerprint 3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE ' + $env:Build_ArtifactStagingDirectory + "\output\package\signed\*.snupkg")
-        Write-Host "Executing: $cmd"
-        &cmd /c $cmd
-      displayName: 'Verify Nuget Symbol Packages are Signed'
       condition: and(succeeded(), eq(variables.codeSign, true))
 
     - task: PublishBuildArtifacts@1

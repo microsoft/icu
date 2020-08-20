@@ -15,6 +15,9 @@
 .PARAMETER output
     The path to the output location. This script will create a subfolder
     named "nuget" for the Nuget package(s).
+
+.PARAMETER codesign
+    A boolean value indicating if the Windows binaries are code signed.
 #>
 param(
     [Parameter(Mandatory=$true)]
@@ -24,10 +27,6 @@ param(
     [Parameter(Mandatory=$true)]
     [ValidateScript({Test-Path $_ -PathType Container})]
     [string]$icuBinaries,
-
-    [Parameter(Mandatory=$true)]
-    [ValidateScript({Test-Path $_ -PathType Container})]
-    [string]$icuSymbols,
 
     [Parameter(Mandatory=$true)]
     [ValidateNotNullOrEmpty()]
@@ -97,8 +96,6 @@ foreach ($rid in $runtimeIdentifiers)
     $ret = New-Item -Path "$stagingLocation\runtimes\$rid" -ItemType Directory
     $ret = New-Item -Path "$stagingLocation\runtimes\$rid\native" -ItemType Directory
     
-    $haveSymbols = 0
-
     if ($rid.StartsWith('win'))
     {
         # Compiled DLLs
@@ -112,12 +109,6 @@ foreach ($rid in $runtimeIdentifiers)
         }
         $dllOutput = "$stagingLocation\runtimes\$rid\native"
         Copy-Item "$dllInput\*.dll" -Destination $dllOutput -Recurse
-
-        # If we have symbols, also add them to the package location as well.
-        if (Test-Path "$icuSymbols\symbols-$rid" -PathType Container) {
-            Copy-Item "$icuSymbols\symbols-$rid\*.pdb" -Destination $dllOutput -Recurse
-            $haveSymbols = 1
-        }
     }
     elseif ($rid.StartsWith('linux'))
     {
@@ -148,9 +139,6 @@ foreach ($rid in $runtimeIdentifiers)
 
     # Actually do the "nuget pack" operation
     $nugetCmd = "nuget pack $stagingLocation\$runtimePackageId.nuspec -BasePath $stagingLocation -OutputDirectory $output\package"
-    if ($haveSymbols) {
-        $nugetCmd = "$nugetCmd -Symbols -SymbolPackageFormat snupkg"
-    }
     Write-Host 'Executing: ' $nugetCmd
     &cmd /c $nugetCmd
 }
@@ -187,12 +175,19 @@ foreach ($rid in $runtimeIdentifiers)
 Write-Host "Adding these runtime packages as dependencies:"
 Write-Host $deps
 
+# Add a link to the Nuget metapackage for downloading symbols if we're code-signing.
+$symbolsLink = ""
+if ($codesign -eq 'true') {
+    $symbolsLink = "`r`nTo download debugging symbols please see the page here:`r`n https://github.com/microsoft/icu/releases/tag/v$packageVersion"
+}
+
 # Update the placeholders in the template nuspec file.
 $runtimePackageId = "$packageName";
 $nuspecFileContent = (Get-Content "$sourceRoot\build\nuget\Template-runtime-meta.nuspec")
 $nuspecFileContent = $nuspecFileContent.replace('$runtimePackageId$', $runtimePackageId)
 $nuspecFileContent = $nuspecFileContent.replace('$version$', $packageVersion)
 $nuspecFileContent = $nuspecFileContent.replace('$deps$', $deps)
+$nuspecFileContent = $nuspecFileContent.replace('$symbolsLink$', $symbolsLink)
 $nuspecFileContent | Set-Content "$stagingLocation\$runtimePackageId.nuspec"
 
 # Actually do the "nuget pack" operation
