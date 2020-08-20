@@ -54,12 +54,6 @@ stages:
           cd /tmp/build-output && ls -Rl
         displayName: 'DIAG: ls -Rl'
 
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish Artifacts'
-        inputs:
-          PathtoPublish: '/tmp/build-output/icu-binaries.tar.gz'
-          ArtifactName: 'linux_$(distro).tar.gz'
-
       # Note: We only copy the .so files with the full version (ex: libicuuc.so.67.1.0.4)
       - script: |
           mkdir /tmp/icu-binaries
@@ -74,6 +68,20 @@ stages:
         inputs:
           PathtoPublish: '/tmp/icu-binaries'
           ArtifactName: 'linux-x64'
+
+      - script: |
+          mkdir /tmp/icu-symbols
+          ls -al /tmp/build-output/icu/usr/local/lib/
+          cp /tmp/build-output/icu/usr/local/lib/libicudata.so.$(ICUVersion).debug /tmp/icu-symbols
+          cp /tmp/build-output/icu/usr/local/lib/libicui18n.so.$(ICUVersion).debug /tmp/icu-symbols
+          cp /tmp/build-output/icu/usr/local/lib/libicuuc.so.$(ICUVersion).debug /tmp/icu-symbols
+        displayName: 'Copy debug symbols'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish: symbols'
+        inputs:
+          PathtoPublish: '/tmp/icu-symbols'
+          ArtifactName: 'symbols-linux-x64'
 
   - job: BuildWindows
     timeoutInMinutes: 30
