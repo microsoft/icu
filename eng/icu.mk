@@ -5,7 +5,7 @@ HOST_BUILDDIR = $(TOP)/artifacts/obj/icu-host
 HOST_BINDIR = $(TOP)/artifacts/bin/icu-host
 WASM_BUILDDIR = $(TOP)/artifacts/obj/icu-wasm
 WASM_BINDIR = $(TOP)/artifacts/bin/icu-wasm
-ICU_FILTER = $(TOP)/icu-filters/optimal.json
+ICU_FILTER = $(TOP)/icu-filters/icudt.json
 ICU_VER = 67
 
 check-env:
@@ -32,7 +32,7 @@ $(WASM_BUILDDIR):
 .PHONY: icu-wasm
 icu-wasm: $(WASM_BUILDDIR)/.stamp-configure-wasm
 	cd $(WASM_BUILDDIR) && $(MAKE) -j8 all && $(MAKE) install
-	cp $(WASM_BUILDDIR)/data/out/icudt$(ICU_VER)l.dat $(WASM_BINDIR)/icudt_$(basename $(notdir $(ICU_FILTER))).dat
+	cp $(WASM_BUILDDIR)/data/out/icudt$(ICU_VER)l.dat $(WASM_BINDIR)/$(basename $(notdir $(ICU_FILTER))).dat
 
 # Disable some features we don't need, see icu/icu4c/source/common/unicode/uconfig.h
 ICU_DEFINES= \
