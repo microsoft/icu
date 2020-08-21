@@ -2,7 +2,7 @@
   <!-- Only building for wasm is supported -->
   <Target Name="Build">
     <ItemGroup>
-      <IcuFilter Include="optimal;optimal_no_CJK;EFIGS;CJK" />
+      <IcuFilter Include="icudt;icudt_optimal_no_CJK;icudt_EFIGS;icudt_CJK" />
     </ItemGroup>
     <Exec WorkingDirectory="$(MSBuildThisFileDirectory)"
           Command="make -f icu.mk all ICU_FILTER=$(MSBuildThisFileDirectory)/../icu-filters/%(IcuFilter.Identity).json ICU_TRACING=$(IcuTracing) SHELL=/bin/bash"
