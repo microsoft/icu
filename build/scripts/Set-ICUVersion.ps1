@@ -50,12 +50,16 @@ foreach ($versionPart in $icuVersionArray) {
 $icuVersionHeader = (Get-Content "$PSScriptRoot\..\..\icu\icu4c\source\common\unicode\uvernum.h")
 $versionNumberDefine = '#define U_ICU_VERSION "'+ $ICUVersion +'"'
 if (!($icuVersionHeader -match $versionNumberDefine)) {
-    Write-Host "Error: The ICU Version number in uvernum.h does not match the value in the version.txt file".
+    Write-Host "Error: The ICU Version number (as a dotted-decimal string) in uvernum.h does not match the value in the version.txt file".
+    Write-Host "The uvernum.h file has the following instead:"
+    Write-Host $icuVersionHeader -match '#define U_ICU_VERSION "'
     throw "Error: ICU Version number mismatch!"
 }
 $buildVersionNumberDefine = '#define U_ICU_VERSION_BUILDLEVEL_NUM '+ $icuVersionArray[3]
 if (!($icuVersionHeader -match $buildVersionNumberDefine)) {
     Write-Host "Error: The ICU Build Version number in uvernum.h does not match the value in the version.txt file".
+    Write-Host "The uvernum.h file has the following instead:"
+    Write-Host $icuVersionHeader -match '#define U_ICU_VERSION_BUILDLEVEL_NUM "'
     throw "Error: ICU Version number mismatch!"
 }
 
