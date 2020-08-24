@@ -15,6 +15,7 @@ ICU4C is a mature, widely used set of C/C++ libraries providing Unicode and Glob
 The MS-ICU repo contains a modified version of ICU4C with changes needed for consumption inside various Microsoft products.
 
 This runtime package only contains the common and i18n libraries, along with the data library.
+$symbolsLink$
 
 Note: For binary compatibility between versions see the page here: https://aka.ms/icu-binary-compatibility
     </description>
