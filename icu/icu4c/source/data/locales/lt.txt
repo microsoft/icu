@@ -2622,22 +2622,6 @@ lt{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Prieš R.O.C.",
-                    "R.O.C.",
-                }
-                narrow{
-                    "Prieš R.O.C.",
-                    "R.O.C.",
-                }
-                wide{
-                    "Prieš R.O.C.",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"veikla"}

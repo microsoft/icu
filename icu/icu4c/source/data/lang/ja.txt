@@ -816,7 +816,6 @@ ja{
             iso8601{"ISO-8601"}
             japanese{"和暦"}
             persian{"ペルシア暦"}
-            roc{"中華民国暦"}
         }
         cf{
             account{"会計通貨フォーマット"}

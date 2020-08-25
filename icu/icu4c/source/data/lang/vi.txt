@@ -756,7 +756,6 @@ vi{
             iso8601{"Lịch ISO-8601"}
             japanese{"Lịch Nhật Bản"}
             persian{"Lịch Ba Tư"}
-            roc{"Lịch Trung Hoa Dân Quốc"}
         }
         cf{
             account{"Định dạng tiền tệ kế toán"}

@@ -1516,22 +1516,6 @@ fi{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "e. Kiinan tasav.",
-                    "Minguo",
-                }
-                narrow{
-                    "e. Kiinan tasav.",
-                    "Minguo",
-                }
-                wide{
-                    "ennen Kiinan tasavaltaa",
-                    "Minguo",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"toiminta"}

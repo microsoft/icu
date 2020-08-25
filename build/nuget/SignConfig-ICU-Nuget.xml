@@ -1,9 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <SignConfigXML>
-
   <job platform="AnyCPU" configuration="Release" certSubject="CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US"
    dest="__OUTPATHROOT__\signed" jobname="Code Sign MS-ICU Nuget" approvers="">
-    <file src="__INPATHROOT__\Microsoft.icu.*.nupkg" signType="Nuget" />
+    <!-- Metapackage -->
+    <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime*.nupkg" signType="Nuget" />
+    <!-- Binary packages -->
+    <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-x64*.nupkg" signType="Nuget" />
+    <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-x86*.nupkg" signType="Nuget" />
+    <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-arm64*.nupkg" signType="Nuget" />
+    <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.linux-x64*.nupkg" signType="Nuget" />
+    <!-- Symbol packages -->
+    <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-x64*.snupkg" signType="Nuget" />
+    <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-x86*.snupkg" signType="Nuget" />
+    <file src="__INPATHROOT__\Microsoft.ICU.ICU4C.Runtime.win-arm64*.snupkg" signType="Nuget" />
   </job>
-  
 </SignConfigXML>

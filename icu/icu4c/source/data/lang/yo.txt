@@ -295,7 +295,6 @@ yo{
             iso8601{"Kàlẹ́ńdà ISO-8601"}
             japanese{"Kàlẹ̀ńdà ti Jàpánù"}
             persian{"Kàlẹ̀ńdà Pásíànù"}
-            roc{"Kàlẹ̀ńdà Minguo"}
         }
         cf{
             account{"Ìgúnrégé Ìṣirò Owó Kọ́rẹ́ńsì"}

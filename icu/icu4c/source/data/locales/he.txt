@@ -2019,22 +2019,6 @@ he{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "לפני R.O.C",
-                    "R.O.C.",
-                }
-                narrow{
-                    "לפני R.O.C",
-                    "R.O.C.",
-                }
-                wide{
-                    "לפני הרפובליקה של סין",
-                    "לספירת הרפובליקה של סין",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"פעילויות"}

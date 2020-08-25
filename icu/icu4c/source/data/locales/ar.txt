@@ -1680,14 +1680,6 @@ ar{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Before R.O.C.",
-                    "جمهورية الصي",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"أنشطة"}

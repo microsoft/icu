@@ -1,5 +1,31 @@
 # Changelog
 
+## ICU 67.1.0.5
+
+Code/general changes:
+- Enable building Linux x64 Nuget runtime package (for glibc based distros). [#27](https://github.com/microsoft/icu/pull/27)
+- Include the ICU major version number on PDB files (for common and i18n) to match the DLL filenames. [#26](https://github.com/microsoft/icu/pull/26)
+- Fix the build-time script Set-ICUVersion.ps1 to set the environment variable for the current session.
+
+## ICU 67.1.0.4
+
+Code/general changes:
+- Fixes the name of the dependent runtime Nuget packages for Windows.
+
+## ICU 67.1.0.3
+
+Code/general changes:
+- Enable building Nuget runtime package(s) for Windows containing pre-built binaries.
+- Statically link the VCRuntime, VCStartup, and STL, and dynamically link to the UCRT. [#10](https://github.com/microsoft/icu/pull/10)
+
+Data changes:
+- Fixes to the month names for the vai-Latn locale. [#19](https://github.com/microsoft/icu/pull/19).
+
+## ICU 67.1.0.2
+
+Data changes:
+- Microsoft data changes for the Taiwan calendar. [#8](https://github.com/microsoft/icu/pull/8).
+
 ## ICU 67.1.0.1
 
 Changes/modifications compared to the upstream `maint/maint-67` branch.

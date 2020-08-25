@@ -748,7 +748,6 @@ id{
             iso8601{"Kalender ISO-8601"}
             japanese{"Kalender Jepang"}
             persian{"Kalender Persia"}
-            roc{"Kalender Min-guo"}
         }
         cf{
             account{"Format Mata Uang Akuntansi"}

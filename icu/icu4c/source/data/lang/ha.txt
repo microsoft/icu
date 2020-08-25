@@ -292,7 +292,6 @@ ha{
             iso8601{"Kalanda ISO-8601"}
             japanese{"Kalanda Jafan"}
             persian{"Kalanda Farisa"}
-            roc{"Kalandar kasar Sin"}
         }
         cf{
             account{"Tsarin Kudi na Kididdiga"}

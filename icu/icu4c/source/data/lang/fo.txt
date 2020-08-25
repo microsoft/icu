@@ -463,7 +463,6 @@ fo{
             iso8601{"ISO-8601 kalendari"}
             japanese{"japanskur kalendari"}
             persian{"persiskur kalendari"}
-            roc{"minguo kalendari"}
         }
         cf{
             account{"gjaldoyras roknskaparførsla format"}
