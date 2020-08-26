@@ -54,12 +54,6 @@ stages:
           cd /tmp/build-output && ls -Rl
         displayName: 'DIAG: ls -Rl'
 
-      - task: PublishBuildArtifacts@1
-        displayName: 'Publish Artifacts'
-        inputs:
-          PathtoPublish: '/tmp/build-output/icu-binaries.tar.gz'
-          ArtifactName: 'linux_$(distro).tar.gz'
-
       # Note: We only copy the .so files with the full version (ex: libicuuc.so.67.1.0.4)
       - script: |
           mkdir /tmp/icu-binaries
@@ -74,6 +68,20 @@ stages:
         inputs:
           PathtoPublish: '/tmp/icu-binaries'
           ArtifactName: 'linux-x64'
+
+      - script: |
+          mkdir /tmp/icu-symbols
+          ls -al /tmp/build-output/icu/usr/local/lib/
+          cp /tmp/build-output/icu/usr/local/lib/libicudata.so.$(ICUVersion).debug /tmp/icu-symbols
+          cp /tmp/build-output/icu/usr/local/lib/libicui18n.so.$(ICUVersion).debug /tmp/icu-symbols
+          cp /tmp/build-output/icu/usr/local/lib/libicuuc.so.$(ICUVersion).debug /tmp/icu-symbols
+        displayName: 'Copy debug symbols'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish: symbols'
+        inputs:
+          PathtoPublish: '/tmp/icu-symbols'
+          ArtifactName: 'symbols-linux-x64'
 
   - job: BuildWindows
     timeoutInMinutes: 30
@@ -410,7 +418,7 @@ stages:
       inputs:
         targetType: filePath
         filePath: './build/scripts/Create-Nuget-Runtime.ps1'
-        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -icuSymbols "$(BUILD.BINARIESDIRECTORY)\symbols" -output $(BUILD.ArtifactStagingDirectory)\output -codesign $(codeSign)'
+        arguments: '-sourceRoot $(BUILD.SOURCESDIRECTORY) -icuBinaries "$(BUILD.BINARIESDIRECTORY)\bits" -output $(BUILD.ArtifactStagingDirectory)\output -codesign $(codeSign)'
 
     - powershell: |
         Write-Host ""
@@ -437,19 +445,27 @@ stages:
       displayName: 'Verify Nuget Packages are Signed'
       condition: and(succeeded(), eq(variables.codeSign, true))
 
-    # Check that the Nuget Symbol packages are also signed.
-    - powershell: |
-        $cmd = ('nuget verify -signature -CertificateFingerprint 3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE ' + $env:Build_ArtifactStagingDirectory + "\output\package\signed\*.snupkg")
-        Write-Host "Executing: $cmd"
-        &cmd /c $cmd
-      displayName: 'Verify Nuget Symbol Packages are Signed'
-      condition: and(succeeded(), eq(variables.codeSign, true))
-
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: Nuget Packages'
       inputs:
         PathtoPublish: '$(BUILD.ArtifactStagingDirectory)\output\package'
         ArtifactName: 'Nuget_Packages'
+
+    # Publish the Windows Symbols to the public symbols server
+    - task: PublishSymbols@2
+      displayName: 'Publish Windows Symbols'
+      inputs:
+        symbolsFolder: '$(Build.BINARIESDIRECTORY)\symbols'
+        searchPattern: '**/*.pdb'
+        IndexSources: false
+        SymbolsMaximumWaitTime: 30
+        SymbolServerType: 'TeamServices'
+        SymbolsProduct: 'MS-ICU Nuget Windows binaries'
+        SymbolsVersion: '$(ICUVersion)'
+      condition: and(succeeded(), eq(variables.codeSign, true))
+      env:
+        ArtifactServices_Symbol_AccountName: microsoft
+        ArtifactServices_Symbol_UseAAD: true
 
     - task: PkgESSerializeForPostBuild@10
       displayName: 'PkgES Post Build Serialization'

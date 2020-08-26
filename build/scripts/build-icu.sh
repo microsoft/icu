@@ -1,34 +1,54 @@
 #!/bin/bash
 
-# echo commands when executing them
-set -x
+# -e            Exit immediately if a command exits with a non-zero status
+# -u            Treat unset variables as an error
+# -x            Echo commands when executing them
+# -o pipefile   All commands in a pipeline must pass with non-zero status
+set -euxo pipefail
 
 # Disable color output
 export TERM=xterm
 
+echo Building in: $(pwd)
+
+# Install ICU into this location
+export DESTDIR=/dist/icu
+
 # Number of CPU Cores to use for make
 export CPUCORES=$(nproc)
 
-echo Building in: $(pwd)
+# We want to produce debugging symbols for "release" builds, but we don't want to use
+# the "--enable-debug" option with runConfigureICU, as that will turn on all kinds of
+# debug asserts inside the ICU library code.
+DEFINES="-g"
+# Set for both C and C++
+export CFLAGS="$DEFINES"
+export CXXFLAGS="$DEFINES"
 
 # Configure ICU for building. Skip layout[ex] and samples
-/src/icu/icu4c/source/runConfigureICU Linux --disable-layout --disable-layoutex --disable-samples || exit 1
+/src/icu/icu4c/source/runConfigureICU Linux --disable-layout --disable-layoutex --disable-samples
 
-# Build, run the tests, then install into DESTDIR.
-make -j${CORES} check && make -j${CORES} DESTDIR=/dist/icu releaseDist || exit 1
+# Build and run the tests
+make -j${CPUCORES} check
 
-# Test that icuinfo works with the built libs in the installed location
-LD_LIBRARY_PATH=/dist/icu/usr/local/lib /dist/icu/usr/local/bin/icuinfo || exit 1
+# Install into DESTDIR.
+echo "Done building, installing into $DESTDIR ..."
+make -j${CPUCORES} DESTDIR=${DESTDIR} releaseDist
 
-# Copy OS Release (name of the distro) if it exists
-if [ -f /etc/os-release ];
-then
-    cat /etc/os-release
-    cp /etc/os-release /dist/icu
-fi
+# Split out the debugging symbols from the libs
+ls -al ${DESTDIR}/usr/local/lib
 
-# Copy the MS-ICU version number
-cp /src/version.txt /dist/icu
+for file in ${DESTDIR}/usr/local/lib/lib*.so*; do
+    if [[ -L "$file" ]]; then echo "Skipping symlink $file";
+    else
+        echo "Stripping symbols for $file"
+        objcopy --only-keep-debug "$file" "$file.debug"
+        objcopy --strip-debug "$file"
+        objcopy --add-gnu-debuglink="$file.debug" "$file"
+    fi
+done
 
-# Pack up the binaries into a tarball
-cd /dist && tar -czpf icu-binaries.tar.gz -C /dist/icu .
+ls -al ${DESTDIR}/usr/local/lib
+
+# Test that icuinfo works with the stripped libs in the installed location
+LD_LIBRARY_PATH=${DESTDIR}/usr/local/lib ${DESTDIR}/usr/local/bin/icuinfo
