@@ -1,5 +1,10 @@
 # Changelog
 
+## ICU 67.1.0.6
+
+Code/general changes:
+- Produce debugging symbols for MS-ICU Nuget package for both Windows and Linux. [#31](https://github.com/microsoft/icu/pull/31)
+
 ## ICU 67.1.0.5
 
 Code/general changes:
