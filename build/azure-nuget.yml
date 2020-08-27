@@ -10,6 +10,7 @@ name: $(BuildDefinitionName)-$(date:yyMM).$(date:dd)$(rev:rrr)
 variables:
   codeSign: ${{ eq(variables['System.definitionId'], '1386') }}
   BuildConfiguration: 'Release'
+  nugetPackageName: 'Microsoft.ICU.ICU4C.Runtime'
 
 stages:
 - stage: Build
@@ -81,7 +82,7 @@ stages:
         displayName: 'Publish: symbols'
         inputs:
           PathtoPublish: '/tmp/icu-symbols'
-          ArtifactName: 'symbols-linux-x64'
+          ArtifactName: 'Symbols-$(nugetPackageName).linux-x64'
 
   - job: BuildWindows
     timeoutInMinutes: 30

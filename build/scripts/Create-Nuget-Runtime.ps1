@@ -58,12 +58,16 @@ if (!($localSHA)) {
 if (!(Test-Path 'env:ICUVersion')) {
     throw "Error: The ICU version environment variable is not set."
 }
+# We should already have the Nuget package name set as a environment variable.
+if (!(Test-Path 'env:nugetPackageName')) {
+    throw "Error: The Nuget package name environment variable is not set."
+}
 # We should already have the Nuget version set as a environment variable.
 if (!(Test-Path 'env:nugetPackageVersion')) {
     throw "Error: The Nuget version environment variable is not set."
 }
 
-$packageName = 'Microsoft.ICU.ICU4C.Runtime'
+$packageName = "$env:nugetPackageName"
 $packageVersion = "$env:nugetPackageVersion"
 
 if ($codesign -eq 'false') {
