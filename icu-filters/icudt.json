@@ -198,6 +198,19 @@
         {
             "categories": ["locales_tree"],
             "files": {
+                "whitelist": ["ja"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/japanese"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
                 "whitelist": [
                     "bn",
                     "et",
