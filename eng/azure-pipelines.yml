@@ -41,7 +41,7 @@ stages:
         pool:
           name: Hosted Ubuntu 1604
         container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20200529220811-6a6da63
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20200827125937-9740252
         steps:
         - bash: |
             ./build.sh --ci --restore --build --pack --configuration $(_BuildConfig) $(_InternalBuildArgs)

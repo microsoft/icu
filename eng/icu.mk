@@ -68,3 +68,4 @@ $(WASM_BUILDDIR)/.stamp-configure-wasm: $(ICU_FILTER) $(HOST_BUILDDIR)/.stamp-ho
 	$(CONFIGURE_ADD_ARGS) \
 	CFLAGS="-Oz $(ICU_DEFINES)" \
 	CXXFLAGS="-fno-exceptions -Oz -Wno-sign-compare $(ICU_DEFINES)"
+	touch $@
