@@ -4,6 +4,8 @@
     <ItemGroup>
       <IcuFilter Include="icudt;icudt_no_CJK;icudt_EFIGS;icudt_CJK" />
     </ItemGroup>
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)\..\icu-filters\curr-root.txt" 
+          DestinationFiles="$(MSBuildThisFileDirectory)\..\icu\icu4c\source\data\curr\root.txt"/> 
     <Exec WorkingDirectory="$(MSBuildThisFileDirectory)"
           Command="make -f icu.mk all ICU_FILTER=$(MSBuildThisFileDirectory)/../icu-filters/%(IcuFilter.Identity).json ICU_TRACING=$(IcuTracing) SHELL=/bin/bash"
           IgnoreStandardErrorWarningFormat="true" />

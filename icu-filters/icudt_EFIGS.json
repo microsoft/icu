@@ -42,10 +42,7 @@
             ]
         },
         "curr_tree": {
-            "whitelist": [
-                "root", 
-                "en"
-            ]
+            "whitelist": ["root"]
         },
         "brkitr_dictionaries": "exclude",
         "brkitr_rules": {
@@ -58,12 +55,7 @@
             "rules": [
                 "-/Currencies",
                 "+/Currencies/USD",
-                "+/Currencies/EUR",
-                "-/Currencies%narrow",
-                "-/Currencies%formal",
-                "-/Currencies%variant",
-                "-/CurrencyPlurals",
-                "-/CurrencyUnitPatterns"
+                "+/Currencies/EUR"
             ]
         },
         {

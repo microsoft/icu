@@ -121,10 +121,7 @@
             ]
         },
         "curr_tree": {
-            "whitelist": [
-                "root", 
-                "en"
-            ]
+            "whitelist": ["root"]
         },
         "brkitr_dictionaries": "exclude",
         "brkitr_rules": {
@@ -132,33 +129,6 @@
         }
     },
     "resourceFilters": [
-        {
-            "categories": ["curr_tree"],
-            "rules": [
-                "-/Currencies",
-                "+/Currencies/BRL",
-                "+/Currencies/CNY",
-                "+/Currencies/EUR",
-                "+/Currencies/GBP",
-                "+/Currencies/ILS",
-                "+/Currencies/INR",
-                "+/Currencies/JPY",
-                "+/Currencies/KRW",
-                "+/Currencies/RUB",
-                "+/Currencies/THB",
-                "+/Currencies/TWD",
-                "+/Currencies/UAH",
-                "+/Currencies/USD",
-                "+/Currencies/VND",
-                "+/Currencies/SAR",
-                "+/Currencies/XXX",
-                "-/Currencies%narrow",
-                "-/Currencies%formal",
-                "-/Currencies%variant",
-                "-/CurrencyPlurals",
-                "-/CurrencyUnitPatterns"
-            ]
-        },
         {
             "categories": ["locales_tree"],
             "rules": [
