@@ -158,30 +158,6 @@
             ]
         },
         {
-            "categories": ["locales_tree"],
-            "files": {
-                "whitelist": [
-                    "bn",
-                    "et",
-                    "gu",
-                    "kn",
-                    "ml",
-                    "mr",
-                    "ms",
-                    "no",
-                    "ta",
-                    "te"
-                ]
-            },
-            "rules": [
-                "-/*",
-                "+/%%ALIAS",
-                "+/LocaleScript",
-                "+/layout",
-                "+/Version"
-            ]
-        },
-        {
             "categories": ["coll_tree"],
             "rules": [
                 "-/*/*",
