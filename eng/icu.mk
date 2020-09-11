@@ -30,7 +30,7 @@ $(WASM_BUILDDIR):
 	mkdir -p $@
 
 .PHONY: icu-wasm
-icu-wasm: $(WASM_BUILDDIR)/.stamp-configure-wasm
+icu-wasm: icu-wasm-configure
 	cd $(WASM_BUILDDIR) && $(MAKE) -j8 all && $(MAKE) install
 	cp $(WASM_BUILDDIR)/data/out/icudt$(ICU_VER)l.dat $(WASM_BINDIR)/$(basename $(notdir $(ICU_FILTER))).dat
 
@@ -49,7 +49,7 @@ ifeq ($(ICU_TRACING),true)
     CONFIGURE_ADD_ARGS += --enable-tracing
 endif
 
-$(WASM_BUILDDIR)/.stamp-configure-wasm: $(ICU_FILTER) $(HOST_BUILDDIR)/.stamp-host | $(WASM_BUILDDIR) check-env
+icu-wasm-configure: $(ICU_FILTER) $(HOST_BUILDDIR)/.stamp-host | $(WASM_BUILDDIR) check-env
 	rm -rf $(WASM_BUILDDIR)/data/out/tmp
 	cd $(WASM_BUILDDIR) && source $(EMSDK_PATH)/emsdk_env.sh && \
 	ICU_DATA_FILTER_FILE=$(ICU_FILTER) \
@@ -68,4 +68,3 @@ $(WASM_BUILDDIR)/.stamp-configure-wasm: $(ICU_FILTER) $(HOST_BUILDDIR)/.stamp-ho
 	$(CONFIGURE_ADD_ARGS) \
 	CFLAGS="-Oz $(ICU_DEFINES)" \
 	CXXFLAGS="-fno-exceptions -Oz -Wno-sign-compare $(ICU_DEFINES)"
-	touch $@
