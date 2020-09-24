@@ -4,10 +4,14 @@
     <ItemGroup>
       <IcuFilter Include="icudt;icudt_no_CJK;icudt_EFIGS;icudt_CJK" />
     </ItemGroup>
+    <PropertyGroup>
+      <Makefile>icu.wasm.mk</Makefile>
+      <Makefile Condition="'$(TargetOS)'=='iOS'">icu.ios.mk</Makefile>
+    </PropertyGroup>
     <Copy SourceFiles="$(MSBuildThisFileDirectory)\..\icu-filters\curr-root.txt" 
           DestinationFiles="$(MSBuildThisFileDirectory)\..\icu\icu4c\source\data\curr\root.txt"/> 
     <Exec WorkingDirectory="$(MSBuildThisFileDirectory)"
-          Command="make -f icu.mk all ICU_FILTER=$(MSBuildThisFileDirectory)/../icu-filters/%(IcuFilter.Identity).json ICU_TRACING=$(IcuTracing) SHELL=/bin/bash"
+          Command="make -f $(Makefile) all ARCH=$(TargetArchitecture) ICU_FILTER=$(MSBuildThisFileDirectory)/../icu-filters/%(IcuFilter.Identity).json ICU_TRACING=$(IcuTracing) SHELL=/bin/bash"
           IgnoreStandardErrorWarningFormat="true" />
   </Target>
   <Target Name="Restore" />
