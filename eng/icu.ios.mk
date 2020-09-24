@@ -96,5 +96,5 @@ $(IOS_BUILDDIR)/.stamp-configure-ios: $(ICU_FILTER) $(HOST_BUILDDIR)/.stamp-host
 	CFLAGS="-isysroot $(XCODE_SDK) -I$(XCODE_SDK)/usr/include/ -arch $(IOS_ARCH) -miphoneos-version-min=$(IOS_MIN_VERSION) -Oz $(ICU_DEFINES)" \
 	CXXFLAGS="-isysroot $(XCODE_SDK) -I$(XCODE_SDK)/usr/include/ -I./include/ -arch $(IOS_ARCH) -miphoneos-version-min=$(IOS_MIN_VERSION) -fno-exceptions -Oz -Wno-sign-compare $(ICU_DEFINES)" \
 	LDFLAGS="-L$(XCODE_SDK)/usr/lib/ -isysroot $(XCODE_SDK) -miphoneos-version-min=$(IOS_MIN_VERSION)"
-	touch $@
+
 

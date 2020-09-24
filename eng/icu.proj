@@ -7,6 +7,7 @@
     <PropertyGroup>
       <Makefile>icu.wasm.mk</Makefile>
       <Makefile Condition="'$(TargetOS)'=='iOS'">icu.ios.mk</Makefile>
+      <Makefile Condition="'$(TargetOS)'=='Android'">icu.android.mk</Makefile>
     </PropertyGroup>
     <Copy SourceFiles="$(MSBuildThisFileDirectory)\..\icu-filters\curr-root.txt" 
           DestinationFiles="$(MSBuildThisFileDirectory)\..\icu\icu4c\source\data\curr\root.txt"/> 
