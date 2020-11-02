@@ -471,7 +471,7 @@ stages:
         SymbolsVersion: '$(ICUVersion)'
       condition: and(succeeded(), eq(variables.codeSign, true))
       env:
-        ArtifactServices_Symbol_AccountName: microsoft
+        ArtifactServices_Symbol_AccountName: microsoftpublicsymbols
         ArtifactServices_Symbol_UseAAD: true
 
     - task: PkgESSerializeForPostBuild@10
