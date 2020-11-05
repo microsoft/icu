@@ -270,7 +270,6 @@ ksh{
         se{"Nood-Lappländesch"}
         ses{"Kojraboro Senni"}
         sg{"Sangjo"}
-        sh{"Särbokowatesch"}
         shi{"Taschelhittesch"}
         si{"Singjaleesesch"}
         sk{"ẞlovakesch"}

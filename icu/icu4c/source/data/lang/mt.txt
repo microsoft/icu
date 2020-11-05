@@ -385,7 +385,6 @@ mt{
         ses{"Koyraboro Senni"}
         sg{"Sango"}
         sga{"Irlandiż Antik"}
-        sh{"Serbo-Kroat"}
         shi{"Tachelhit"}
         shn{"Shan"}
         si{"Sinhala"}

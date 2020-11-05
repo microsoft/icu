@@ -479,7 +479,6 @@ ast{
         sg{"sango"}
         sga{"irlandés antiguu"}
         sgs{"samogitianu"}
-        sh{"serbo-croata"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"árabe chadianu"}

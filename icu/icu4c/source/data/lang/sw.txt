@@ -353,7 +353,6 @@ sw{
         seh{"Kisena"}
         ses{"Koyraboro Senni"}
         sg{"Kisango"}
-        sh{"Kiserbia-kroeshia"}
         shi{"Kitachelhit"}
         shn{"Kishan"}
         shu{"Kiarabu cha Chad"}

@@ -427,7 +427,6 @@ pt{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"irlandês arcaico"}
-        sh{"servo-croata"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"árabe chadiano"}

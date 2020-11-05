@@ -427,7 +427,6 @@ es{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"irlandés antiguo"}
-        sh{"serbocroata"}
         shi{"tashelhit"}
         shn{"shan"}
         shu{"árabe chadiano"}

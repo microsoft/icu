@@ -493,7 +493,6 @@ sv{
         sg{"sango"}
         sga{"forniriska"}
         sgs{"samogitiska"}
-        sh{"serbokroatiska"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"Tchad-arabiska"}

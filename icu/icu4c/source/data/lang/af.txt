@@ -333,7 +333,6 @@ af{
         seh{"Sena"}
         ses{"Koyraboro Senni"}
         sg{"Sango"}
-        sh{"Serwo-Kroaties"}
         shi{"Tachelhit"}
         shn{"Shan"}
         si{"Sinhala"}

@@ -324,7 +324,6 @@ fil{
         seh{"Sena"}
         ses{"Koyraboro Senni"}
         sg{"Sango"}
-        sh{"Serbo-Croatian"}
         shi{"Tachelhit"}
         shn{"Shan"}
         si{"Sinhala"}

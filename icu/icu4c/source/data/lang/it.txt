@@ -487,7 +487,6 @@ it{
         sg{"sango"}
         sga{"irlandese antico"}
         sgs{"samogitico"}
-        sh{"serbo-croato"}
         shi{"tashelhit"}
         shn{"shan"}
         shu{"arabo ciadiano"}

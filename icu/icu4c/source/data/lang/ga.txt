@@ -270,7 +270,6 @@ ga{
         ses{"Koyraboro Senni"}
         sg{"Sangóis"}
         sga{"Sean-Ghaeilge"}
-        sh{"Seirbea-Chróitis"}
         shi{"Tachelhit"}
         si{"Siolóinis"}
         sk{"Slóvaicis"}
