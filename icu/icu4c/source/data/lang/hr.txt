@@ -427,7 +427,6 @@ hr{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"staroirski"}
-        sh{"srpsko-hrvatski"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"čadski arapski"}

@@ -187,7 +187,6 @@ yo{
         seh{"Ṣẹnà"}
         ses{"Koiraboro Seni"}
         sg{"Sango"}
-        sh{"Èdè Serbo-Croatiani"}
         shi{"Taṣelíìtì"}
         si{"Èdè Sinhalese"}
         sk{"Èdè Slovaki"}

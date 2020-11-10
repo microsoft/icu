@@ -493,7 +493,6 @@ nl{
         sg{"Sango"}
         sga{"Oudiers"}
         sgs{"Samogitisch"}
-        sh{"Servo-Kroatisch"}
         shi{"Tashelhiyt"}
         shn{"Shan"}
         shu{"Tsjadisch Arabisch"}

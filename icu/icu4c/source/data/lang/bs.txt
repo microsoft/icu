@@ -421,7 +421,6 @@ bs{
         ses{"kojraboro seni"}
         sg{"sango"}
         sga{"staroirski"}
-        sh{"srpskohrvatski"}
         shi{"tahelhit"}
         shn{"šan"}
         shu{"čadski arapski"}

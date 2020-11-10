@@ -492,7 +492,6 @@ lt{
         sg{"sango"}
         sga{"senoji airių"}
         sgs{"žemaičių"}
-        sh{"serbų-kroatų"}
         shi{"tachelhitų"}
         shn{"šan"}
         shu{"chadian arabų"}

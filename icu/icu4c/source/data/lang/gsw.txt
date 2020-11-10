@@ -339,7 +339,6 @@ gsw{
         sel{"Selkupisch"}
         sg{"Sango"}
         sga{"Altirisch"}
-        sh{"Serbo-Kroatisch"}
         shn{"Schan-Schpraach"}
         si{"Singhalesisch"}
         sid{"Sidamo"}

@@ -483,7 +483,6 @@ et{
         sg{"sango"}
         sga{"vanaiiri"}
         sgs{"žemaidi"}
-        sh{"serbia-horvaadi"}
         shi{"šilha"}
         shn{"šani"}
         shu{"Tšaadi araabia"}

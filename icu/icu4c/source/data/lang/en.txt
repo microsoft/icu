@@ -511,7 +511,6 @@ en{
         sg{"Sango"}
         sga{"Old Irish"}
         sgs{"Samogitian"}
-        sh{"Serbo-Croatian"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Chadian Arabic"}
