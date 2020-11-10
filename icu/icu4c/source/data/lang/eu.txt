@@ -320,7 +320,6 @@ eu{
         seh{"senera"}
         ses{"koyraboro senni"}
         sg{"sango"}
-        sh{"serbokroaziera"}
         shi{"tachelhit"}
         shn{"shanera"}
         si{"sinhala"}

@@ -444,7 +444,6 @@ id{
         ses{"Koyraboro Senni"}
         sg{"Sango"}
         sga{"Irlandia Kuno"}
-        sh{"Serbo-Kroasia"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Arab Suwa"}

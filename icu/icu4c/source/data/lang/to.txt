@@ -481,7 +481,6 @@ to{
         sg{"lea fakasangikō"}
         sga{"lea fakaʻaelani-motuʻa"}
         sgs{"lea fakasamositia"}
-        sh{"lea fakakuloisia-sēpia"}
         shi{"lea fakataselihiti"}
         shn{"lea fakasiani"}
         shu{"lea fakaʻalepea-sāti"}

@@ -493,7 +493,6 @@ nb{
         sg{"sango"}
         sga{"gammelirsk"}
         sgs{"samogitisk"}
-        sh{"serbokroatisk"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"tsjadisk arabisk"}

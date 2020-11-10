@@ -425,7 +425,6 @@ ro{
         ses{"koyraboro Senni"}
         sg{"sango"}
         sga{"irlandeză veche"}
-        sh{"sârbo-croată"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"arabă ciadiană"}

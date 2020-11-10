@@ -493,7 +493,6 @@ tr{
         sg{"Sango"}
         sga{"Eski İrlandaca"}
         sgs{"Samogitçe"}
-        sh{"Sırp-Hırvat Dili"}
         shi{"Taşelit"}
         shn{"Shan dili"}
         shu{"Çad Arapçası"}
