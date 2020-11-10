@@ -408,7 +408,6 @@ sl{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"stara irščina"}
-        sh{"srbohrvaščina"}
         shi{"tahelitska berberščina"}
         shn{"šanščina"}
         si{"sinhalščina"}

@@ -411,7 +411,6 @@ sr_Latn{
         ses{"kojraboro seni"}
         sg{"sango"}
         sga{"staroirski"}
-        sh{"srpskohrvatski"}
         shi{"tašelhit"}
         shn{"šanski"}
         si{"sinhaleški"}

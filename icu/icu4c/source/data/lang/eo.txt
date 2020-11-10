@@ -108,7 +108,6 @@ eo{
         sa{"sanskrito"}
         sd{"sinda"}
         sg{"sangoa"}
-        sh{"serbo-Kroata"}
         si{"sinhala"}
         sk{"slovaka"}
         sl{"slovena"}

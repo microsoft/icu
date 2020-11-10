@@ -323,7 +323,6 @@ gl{
         seh{"sena"}
         ses{"koyraboro senni"}
         sg{"sango"}
-        sh{"serbocroata"}
         shi{"tachelhit"}
         shn{"shan"}
         si{"cingalés"}

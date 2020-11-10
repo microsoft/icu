@@ -73,7 +73,6 @@ yo{
         rw{"Èdè Ruwanda"}
         sa{"Èdè awon ara Indo"}
         sd{"Èdè Sindhi"}
-        sh{"Èdè Serbo-Croatiani"}
         si{"Èdè Sinhalese"}
         sk{"Èdè Slovaki"}
         sl{"Èdè Slovenia"}

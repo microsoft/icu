@@ -458,7 +458,6 @@ ca{
         ses{"songhai oriental"}
         sg{"sango"}
         sga{"irlandès antic"}
-        sh{"serbocroat"}
         shi{"taixelhit"}
         shn{"xan"}
         shu{"àrab txadià"}

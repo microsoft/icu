@@ -493,7 +493,6 @@ pl{
         sg{"sango"}
         sga{"staroirlandzki"}
         sgs{"żmudzki"}
-        sh{"serbsko-chorwacki"}
         shi{"tashelhiyt"}
         shn{"szan"}
         shu{"arabski (Czad)"}

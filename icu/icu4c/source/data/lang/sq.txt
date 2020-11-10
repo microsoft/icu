@@ -310,7 +310,6 @@ sq{
         seh{"senaisht"}
         ses{"senishte kojrabore"}
         sg{"sangoisht"}
-        sh{"serbo-kroatisht"}
         shi{"taçelitisht"}
         shn{"shanisht"}
         si{"sinhalisht"}

@@ -493,7 +493,6 @@ cs{
         sg{"sangština"}
         sga{"irština (stará)"}
         sgs{"žemaitština"}
-        sh{"srbochorvatština"}
         shi{"tašelhit"}
         shn{"šanština"}
         shu{"arabština (čadská)"}

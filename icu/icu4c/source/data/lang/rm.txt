@@ -338,7 +338,6 @@ rm{
         sel{"selkup"}
         sg{"sango"}
         sga{"irlandais vegl"}
-        sh{"serbo-croat"}
         shn{"shan"}
         si{"singalais"}
         sid{"sidamo"}

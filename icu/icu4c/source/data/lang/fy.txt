@@ -405,7 +405,6 @@ fy{
         ses{"Koyraboro Senni"}
         sg{"Sango"}
         sga{"Aldyrsk"}
-        sh{"Servokroatysk"}
         shi{"Tashelhiyt"}
         shn{"Shan"}
         shu{"Tsjadysk Arabysk"}

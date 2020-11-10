@@ -315,7 +315,6 @@ fo{
         seh{"sena"}
         ses{"koyraboro senni"}
         sg{"sango"}
-        sh{"serbokroatiskt"}
         shi{"tachelhit"}
         shn{"shan"}
         si{"singalesiskt"}

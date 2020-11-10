@@ -318,7 +318,6 @@ eu{
         seh{"senera"}
         ses{"koyraboro sennia"}
         sg{"sango"}
-        sh{"serbokroaziera"}
         shi{"tachelhita"}
         shn{"shanera"}
         si{"sinhala"}

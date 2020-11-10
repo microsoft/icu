@@ -422,7 +422,6 @@ sk{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"stará írčina"}
-        sh{"srbochorvátčina"}
         shi{"tachelhit"}
         shn{"šančina"}
         shu{"čadská arabčina"}
