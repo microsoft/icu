@@ -195,7 +195,6 @@ dsb{
         seh{"sena"}
         ses{"koyra senni"}
         sg{"sango"}
-        sh{"serbochorwatšćina"}
         shi{"tašelhit"}
         si{"singalšćina"}
         sk{"słowakšćina"}

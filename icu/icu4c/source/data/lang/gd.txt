@@ -470,7 +470,6 @@ gd{
         ses{"Koyraboro Senni"}
         sg{"Sango"}
         sga{"Seann-Ghaeilge"}
-        sh{"Sèirb-Chròthaisis"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Arabais Seàdach"}

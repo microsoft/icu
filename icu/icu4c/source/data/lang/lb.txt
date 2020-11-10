@@ -471,7 +471,6 @@ lb{
         sg{"Sango"}
         sga{"Aliresch"}
         sgs{"Samogitesch"}
-        sh{"Serbo-Kroatesch"}
         shi{"Taschelhit"}
         shn{"Schan-Sprooch"}
         shu{"Tschadesch-Arabesch"}

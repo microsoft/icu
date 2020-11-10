@@ -361,7 +361,6 @@ ms{
         seh{"Sena"}
         ses{"Koyraboro Senni"}
         sg{"Sango"}
-        sh{"SerboCroatia"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Arab Chadian"}

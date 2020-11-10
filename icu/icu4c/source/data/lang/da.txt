@@ -427,7 +427,6 @@ da{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"oldirsk"}
-        sh{"serbokroatisk"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"tchadisk arabisk"}

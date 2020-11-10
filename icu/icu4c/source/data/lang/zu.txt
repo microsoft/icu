@@ -326,7 +326,6 @@ zu{
         seh{"isi-Sena"}
         ses{"isi-Koyraboro Senni"}
         sg{"isi-Sango"}
-        sh{"isi-Serbo-Croatian"}
         shi{"isi-Tachelhit"}
         shn{"isi-Shan"}
         si{"isi-Sinhala"}
