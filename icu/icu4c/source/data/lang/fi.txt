@@ -493,7 +493,6 @@ fi{
         sg{"sango"}
         sga{"muinaisiiri"}
         sgs{"samogiitti"}
-        sh{"serbokroaatti"}
         shi{"tašelhit"}
         shn{"shan"}
         shu{"tšadinarabia"}

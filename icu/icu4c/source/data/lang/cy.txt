@@ -413,7 +413,6 @@ cy{
         sg{"Sango"}
         sga{"Hen Wyddeleg"}
         sgs{"Samogiteg"}
-        sh{"Serbo-Croateg"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Arabeg Chad"}

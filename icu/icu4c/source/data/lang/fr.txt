@@ -493,7 +493,6 @@ fr{
         sg{"sango"}
         sga{"ancien irlandais"}
         sgs{"samogitien"}
-        sh{"serbo-croate"}
         shi{"chleuh"}
         shn{"shan"}
         shu{"arabe tchadien"}

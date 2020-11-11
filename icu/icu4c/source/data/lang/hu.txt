@@ -427,7 +427,6 @@ hu{
         ses{"kojra-szenni"}
         sg{"szangó"}
         sga{"óír"}
-        sh{"szerbhorvát"}
         shi{"tachelhit"}
         shn{"san"}
         shu{"csádi arab"}

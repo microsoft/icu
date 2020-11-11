@@ -394,7 +394,6 @@ nn{
         ses{"Koyraboro Senni"}
         sg{"sango"}
         sga{"gammalirsk"}
-        sh{"serbokroatisk"}
         shi{"tachelhit"}
         shn{"shan"}
         si{"singalesisk"}

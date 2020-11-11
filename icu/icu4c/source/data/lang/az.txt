@@ -399,7 +399,6 @@ az{
         ses{"koyraboro senni"}
         sg{"sanqo"}
         sga{"qədim irland"}
-        sh{"serb-xorvat"}
         shi{"taçelit"}
         shn{"şan"}
         si{"sinhala"}

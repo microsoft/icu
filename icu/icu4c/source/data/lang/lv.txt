@@ -422,7 +422,6 @@ lv{
         ses{"koiraboro senni"}
         sg{"sango"}
         sga{"senīru"}
-        sh{"serbu–horvātu"}
         shi{"šilhu"}
         shn{"šanu"}
         shu{"Čadas arābu"}

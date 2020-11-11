@@ -415,7 +415,6 @@ is{
         ses{"koíraboró-senní"}
         sg{"sangó"}
         sga{"fornírska"}
-        sh{"serbókróatíska"}
         shi{"tachelhit"}
         shn{"sjan"}
         si{"singalíska"}

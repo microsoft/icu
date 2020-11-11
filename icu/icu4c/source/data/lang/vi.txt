@@ -456,7 +456,6 @@ vi{
         ses{"Tiếng Koyraboro Senni"}
         sg{"Tiếng Sango"}
         sga{"Tiếng Ai-len cổ"}
-        sh{"Tiếng Serbo-Croatia"}
         shi{"Tiếng Tachelhit"}
         shn{"Tiếng Shan"}
         shu{"Tiếng Ả-Rập Chad"}

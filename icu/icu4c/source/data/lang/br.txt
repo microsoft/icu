@@ -417,7 +417,6 @@ br{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"heniwerzhoneg"}
-        sh{"serb-kroateg"}
         shi{"tacheliteg"}
         shn{"shan"}
         shu{"arabeg Tchad"}

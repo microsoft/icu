@@ -492,7 +492,6 @@ de{
         sg{"Sango"}
         sga{"Altirisch"}
         sgs{"Samogitisch"}
-        sh{"Serbo-Kroatisch"}
         shi{"Taschelhit"}
         shn{"Schan"}
         shu{"Tschadisch-Arabisch"}

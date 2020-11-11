@@ -350,7 +350,6 @@ ga{
         ses{"ses"}
         sg{"Sangóis"}
         sga{"Sean-Ghaeilge"}
-        sh{"Seirbea-Chróitis"}
         shi{"Tachelhit"}
         shn{"shn"}
         si{"Siolóinis"}

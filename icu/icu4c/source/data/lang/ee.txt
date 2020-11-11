@@ -122,7 +122,6 @@ ee{
         sd{"sindhgbe"}
         se{"dziehe samigbe"}
         sg{"sangogbe"}
-        sh{"serbo-croatiagbe"}
         si{"sinhalgbe"}
         sk{"slovakiagbe"}
         sl{"sloveniagbe"}

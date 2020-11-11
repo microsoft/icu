@@ -12,7 +12,6 @@ de_AT{
         mus{"Muskogee-Sprache"}
         niu{"Niueanisch"}
         pag{"Pangasinensisch"}
-        sh{"Serbokroatisch"}
         szl{"Schlesisch"}
     }
     Version{"2.1.50.6"}
