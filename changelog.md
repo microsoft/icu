@@ -1,5 +1,10 @@
 # Changelog
 
+## ICU 64.2.0.3
+
+Data changes:
+- Microsoft data changes to revise language names. [#46](https://github.com/microsoft/icu/pull/46).
+
 ## ICU 64.2.0.2
 
 Data changes:
