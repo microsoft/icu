@@ -1,5 +1,14 @@
 # Changelog
 
+## ICU 67.1.0.7
+
+General changes:
+- Fix PDB symbol publishing to use public server instead of internal. [#42](https://github.com/microsoft/icu/pull/42).
+- CI build update to Component Governance task. [#40](https://github.com/microsoft/icu/pull/40).
+
+Data changes:
+- Microsoft data changes to revise language names. [#43](https://github.com/microsoft/icu/pull/43).
+
 ## ICU 67.1.0.6
 
 Code/general changes:

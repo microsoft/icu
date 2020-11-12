@@ -26,11 +26,16 @@ jobs:
     - script: |
         cd icu/icu4c/source && make dist && ls -al dist
       displayName: 'Make dist'
+    - script: |
+        mkdir /tmp/icu-tarball
+        cp icu/icu4c/source/dist/icu4c-src.tgz /tmp/icu-tarball
+        mv /tmp/icu-tarball/icu4c-src.tgz /tmp/icu-tarball/msicu-icu4c-v$(ICUVersion)-src.tgz
+      displayName: 'Rename source tarball'
     - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifacts: icu4c-src.tgz'
+      displayName: 'Publish: Source tarball'
       inputs:
-        PathtoPublish: 'icu/icu4c/source/dist/icu4c-src.tgz'
-        ArtifactName: '$(Build.BuildNumber)_ICU4C_icu4c-src_tgz'
+        PathtoPublish: '/tmp/icu-tarball'
+        ArtifactName: '$(Build.BuildNumber)_ICU4C_tarball'
     - script: |
         cd icu/icu4c/source/dist
         timestampVar=`date +%s`
@@ -38,7 +43,7 @@ jobs:
         tar zxf icu4c-src.tgz -C /tmp/icu-$timestampVar
         cd /tmp/icu-$timestampVar/icu/source
         ./runConfigureICU Linux --disable-layout --disable-layoutex && make -j$(nproc) check
-      displayName: 'Build and Test MakeDist tarball'
+      displayName: 'Build and Test MakeDist using source tarball'
 
 #-------------------------------------------------------------------------
 - job: ICU4C_Clang_Ubuntu_1604_WarningsAsErrors
