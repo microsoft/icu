@@ -78,16 +78,24 @@ public final class ConvertIcuDataTask extends Task {
 
     @SuppressWarnings("unused")
     public void setOutputDir(String path) {
-        // MSFT PATCH: Ant does not automagically convert arguments with type java.nio.file.Path.
-        // https://ant.apache.org/manual/develop.html
+        // Use String here since on some systems Ant doesn't support automatically converting Path instances.
         config.setOutputDir(Paths.get(path));
     }
 
     @SuppressWarnings("unused")
     public void setCldrDir(String path) {
-        // MSFT PATCH: Ant does not automagically convert arguments with type java.nio.file.Path.
-        // https://ant.apache.org/manual/develop.html
+        // Use String here since on some systems Ant doesn't support automatically converting Path instances.
         this.cldrPath = checkNotNull(Paths.get(path));
+    }
+
+    @SuppressWarnings("unused")
+    public void setIcuVersion(String icuVersion) {
+        config.setIcuVersion(icuVersion);
+    }
+
+    @SuppressWarnings("unused")
+    public void setIcuDataVersion(String icuDataVersion) {
+        config.setIcuDataVersion(icuDataVersion);
     }
 
     @SuppressWarnings("unused")
@@ -114,8 +122,7 @@ public final class ConvertIcuDataTask extends Task {
 
     @SuppressWarnings("unused")
     public void setSpecialsDir(String path) {
-        // MSFT PATCH: Ant does not automagically convert arguments with type java.nio.file.Path.
-        // https://ant.apache.org/manual/develop.html
+        // Use String here since on some systems Ant doesn't support automatically converting Path instances.
         config.setSpecialsDir(Paths.get(path));
     }
 
