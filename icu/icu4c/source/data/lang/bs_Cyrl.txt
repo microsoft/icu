@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 bs_Cyrl{
     %%Parent{"root"}
     Keys{
@@ -34,6 +35,7 @@ bs_Cyrl{
         ang{"староенглески"}
         anp{"ангика"}
         ar{"арапски"}
+        ar_001{"арапски (стандардни)"}
         arc{"армајски"}
         arn{"ароканијски"}
         arp{"арапахо"}
@@ -102,6 +104,7 @@ bs_Cyrl{
         dar{"даргва"}
         dav{"таита"}
         de{"њемачки"}
+        de_CH{"високи њемачки (Швицарска)"}
         del{"делавер"}
         den{"славски"}
         dgr{"догриб"}
@@ -318,6 +321,7 @@ bs_Cyrl{
         nia{"ниас"}
         niu{"ниуеан"}
         nl{"холандски"}
+        nl_BE{"фламански"}
         nmg{"квасио"}
         nn{"норвешки нинорск"}
         nnh{"нгиембун"}
@@ -364,6 +368,7 @@ bs_Cyrl{
         rm{"рето-романски"}
         rn{"рунди"}
         ro{"румунски"}
+        ro_MD{"молдавски"}
         rof{"ромбо"}
         rom{"романи"}
         root{"рут"}
@@ -389,6 +394,7 @@ bs_Cyrl{
         ses{"којраборо сени"}
         sg{"санго"}
         sga{"староирски"}
+        sh{"српскохрватски"}
         shi{"ташелхит"}
         shn{"шан"}
         si{"синхалски"}
@@ -486,10 +492,21 @@ bs_Cyrl{
         zen{"зенага"}
         zgh{"стандардни марокански тамазихт"}
         zh{"кинески"}
+        zh_Hans{"кинески (поједностављен)"}
         zu{"зулу"}
         zun{"зуни"}
         zxx{"без лингвистичког садржаја"}
         zza{"заза"}
+    }
+    Languages%menu{
+        yue{"кинески (кантонски)"}
+        zh{"кинески (мандарински)"}
+    }
+    Languages%short{
+        az{"азерски"}
+    }
+    Languages%variant{
+        ps{"пашто"}
     }
     Scripts{
         Arab{"арапско писмо"}
@@ -648,6 +665,7 @@ bs_Cyrl{
             iso8601{"ISO-8601 календар"}
             japanese{"јапански календар"}
             persian{"персијски календар"}
+            roc{"Календар Републике Кине"}
         }
         cf{
             account{"рачуноводствени формат валуте"}
@@ -760,7 +778,6 @@ bs_Cyrl{
         TARASK{"Тараскијевичка ортографија"}
         VALENCIA{"Валенцијска"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — све"}
         strokes{

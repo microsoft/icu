@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ksh{
     Countries{
         001{"de Ääd"}
@@ -91,14 +92,17 @@ ksh{
         CY{"Züppere"}
         CZ{"de Tschäschei"}
         DE{"Doütschland"}
+        DG{"de Diego-Garcia-Ensel"}
         DJ{"Dschibutti"}
         DK{"Dänemark"}
         DM{"Dominnika"}
         DO{"de Dommenekaanesche Reppublik"}
         DZ{"Alljeerije"}
+        EA{"Ze’uta un Meliija"}
         EC{"Äkwador"}
         EE{"Äßland"}
         EG{"Äjüpte"}
+        EH{"Wäß-Sahara"}
         ER{"Äritreja"}
         ES{"Schpaanije"}
         ET{"Ättijoopije"}
@@ -134,6 +138,7 @@ ksh{
         HR{"Krowazije"}
         HT{"Ha’itti"}
         HU{"Unjann"}
+        IC{"de Kannaresche Enselle"}
         ID{"Indoneesije"}
         IE{"Irrland"}
         IL{"Ißraäl"}
@@ -215,7 +220,7 @@ ksh{
         PM{"Zint Pjäär un Mikelong"}
         PN{"de Pitkärn-Ensel"}
         PR{"Pochtoriko"}
-        PS{"Palästinensische Behörde"}
+        PS{"Palästina"}
         PT{"Pochtojall"}
         PW{"Pallau"}
         PY{"Parraguwai"}
@@ -287,5 +292,13 @@ ksh{
         ZW{"Simbabwe"}
         ZZ{"- Jähjend onbikannt -"}
     }
-    Version{"37"}
+    Countries%short{
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"de Demmokraatesche Republik Konggo"}
+        CG{"de Republik Konggo"}
+        CI{"de Älfebeijnköß"}
+        FK{"de malleviinesche Enselle"}
+    }
 }

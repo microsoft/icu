@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 kea{
     Keys{
         calendar{"Kalendáriu"}
@@ -18,6 +19,7 @@ kea{
         ak{"akan"}
         am{"amáriku"}
         ar{"árabi"}
+        ar_001{"árabi mudernu"}
         arn{"araukanu"}
         as{"asames"}
         asa{"asu"}
@@ -52,6 +54,8 @@ kea{
         da{"dinamarkes"}
         dav{"taita"}
         de{"alemon"}
+        de_AT{"alemon austríaku"}
+        de_CH{"alemon altu suisu"}
         dje{"zarma"}
         dsb{"sórbiu baxu"}
         dua{"duala"}
@@ -61,8 +65,15 @@ kea{
         ee{"eve"}
         el{"gregu"}
         en{"ingles"}
+        en_AU{"ingles australianu"}
+        en_CA{"ingles kanadianu"}
+        en_GB{"ingles britániku"}
+        en_US{"ingles merkanu"}
         eo{"sperantu"}
         es{"spanhol"}
+        es_419{"spanhol latinu-merkanu"}
+        es_ES{"spanhol europeu"}
+        es_MX{"spanhol mexikanu"}
         et{"stonianu"}
         eu{"basku"}
         ewo{"ewondo"}
@@ -73,13 +84,15 @@ kea{
         fj{"fijianu"}
         fo{"faroes"}
         fr{"franses"}
+        fr_CA{"franses kanadianu"}
+        fr_CH{"franses suisu"}
         fur{"friulanu"}
         fy{"fríziu osidental"}
         ga{"irlandes"}
         gag{"gagauz"}
         gl{"galegu"}
         gn{"guarani"}
-        gsw{"alemon suísu"}
+        gsw{"alemon suisu"}
         gu{"gujarati"}
         guz{"gusii"}
         gv{"manks"}
@@ -151,6 +164,7 @@ kea{
         nds{"alemon baxu"}
         ne{"nepales"}
         nl{"olandes"}
+        nl_BE{"flamengu"}
         nmg{"kuazio"}
         nn{"norueges nynorsk"}
         om{"oromo"}
@@ -161,11 +175,14 @@ kea{
         prg{"prusianu"}
         ps{"paxto"}
         pt{"purtuges"}
+        pt_BR{"purtuges brazileru"}
+        pt_PT{"purtuges europeu"}
         qu{"kexua"}
         quc{"kitxe"}
         rm{"romanxi"}
         rn{"rundi"}
         ro{"rumenu"}
+        ro_MD{"rumenu moldáviku"}
         rof{"rombu"}
         ru{"rusu"}
         rw{"kiniaruanda"}
@@ -183,6 +200,7 @@ kea{
         su{"sundanes"}
         sv{"sueku"}
         sw{"suaíli"}
+        sw_CD{"suaíli kongoles"}
         ta{"tamil"}
         te{"telugu"}
         tg{"tadjiki"}
@@ -192,7 +210,7 @@ kea{
         to{"tonganes"}
         tr{"turku"}
         tt{"tatar"}
-        tzm{"tamazait di Atlas Sentral"}
+        tzm{"tamaziti di Atlas Sentral"}
         ug{"uigur"}
         uk{"ukranianu"}
         und{"língua diskonxedu"}
@@ -205,8 +223,21 @@ kea{
         yue{"kantunes"}
         zgh{"tamazait marokinu padron"}
         zh{"xines"}
+        zh_Hans{"xines simplifikadu"}
+        zh_Hant{"xines tradisional"}
         zu{"zulu"}
         zxx{"sen kontiudu linguístiku"}
+    }
+    Languages%long{
+        zh_Hans{"xines mandarin (simplificadu)"}
+        zh_Hant{"xines mandarin (tradisional)"}
+    }
+    Languages%menu{
+        yue{"kantunes (tradisional)"}
+        zh{"xines, mandarin"}
+    }
+    Languages%short{
+        az{"azeri"}
     }
     Scripts{
         Arab{"arábiku"}
@@ -260,14 +291,21 @@ kea{
         calendar{
             buddhist{"Kalendáriu budista"}
             chinese{"Kalendáriu xines"}
+            coptic{"Kalendáriu kopta"}
             dangi{"Kalendáriu dangi"}
             ethiopic{"Kalendáriu etiópiku"}
+            ethiopic-amete-alem{"Kalendáriu etíopi ameti alem"}
             gregorian{"Kalendáriu Gregorianu"}
             hebrew{"Kalendáriu ebraiku"}
+            indian{"Kalendáriu nasional indianu"}
             islamic{"Kalendáriu islámiku"}
+            islamic-civil{"Kalendáriu islámiku (sivil)"}
+            islamic-tbla{"Kalendáriu islámiku (astronómiku)"}
+            islamic-umalqura{"Kalendáriu islámiku (Umm al-Qura)"}
             iso8601{"Kalendáriu ISO-8601"}
             japanese{"Kalendáriu japones"}
             persian{"Kalendáriu persa"}
+            roc{"Kalendáriu di Repúblika di Xina"}
         }
         cf{
             account{"Formatu di mueda kontabilístiku"}
@@ -298,7 +336,6 @@ kea{
             latn{"Nunbru osidental"}
         }
     }
-    Version{"37"}
     codePatterns{
         language{"Lingua: {0}"}
         script{"Skrita: {0}"}

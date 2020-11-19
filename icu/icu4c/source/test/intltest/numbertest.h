@@ -16,6 +16,11 @@
 #include "unicode/numberformatter.h"
 #include "unicode/numberrangeformatter.h"
 
+// ICU-20241 Solaris #defines ESP in sys/regset.h
+#ifdef ESP
+#   undef ESP
+#endif
+
 using namespace icu::number;
 using namespace icu::number::impl;
 using namespace icu::numparse;
@@ -54,6 +59,10 @@ class NumberFormatterApiTest : public IntlTestWithFieldPosition {
     void notationCompact();
     void unitMeasure();
     void unitCompoundMeasure();
+    void unitSkeletons();
+    void unitUsage();
+    void unitUsageErrorCodes();
+    void unitUsageSkeletons();
     void unitCurrency();
     void unitPercent();
     void percentParity();
@@ -84,6 +93,7 @@ class NumberFormatterApiTest : public IntlTestWithFieldPosition {
     void localPointerCAPI();
     void toObject();
     void toDecimalNumber();
+    void microPropsInternals();
 
     void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par = 0);
 
@@ -95,15 +105,20 @@ class NumberFormatterApiTest : public IntlTestWithFieldPosition {
     CurrencyUnit ESP;
     CurrencyUnit PTE;
     CurrencyUnit RON;
+    CurrencyUnit TWD;
+    CurrencyUnit TRY;
     CurrencyUnit CNY;
 
     MeasureUnit METER;
+    MeasureUnit METER_PER_SECOND;
     MeasureUnit DAY;
     MeasureUnit SQUARE_METER;
     MeasureUnit FAHRENHEIT;
     MeasureUnit SECOND;
     MeasureUnit POUND;
+    MeasureUnit POUND_FORCE;
     MeasureUnit SQUARE_MILE;
+    MeasureUnit SQUARE_INCH;
     MeasureUnit JOULE;
     MeasureUnit FURLONG;
     MeasureUnit KELVIN;
@@ -259,6 +274,7 @@ class NumberSkeletonTest : public IntlTest {
     void flexibleSeparators();
     void wildcardCharacters();
     void perUnitInArabic();
+    void perUnitToSkeleton();
 
     void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par = 0);
 
@@ -280,6 +296,7 @@ class NumberRangeFormatterTest : public IntlTestWithFieldPosition {
     void testFieldPositions();
     void testCopyMove();
     void toObject();
+    void testGetDecimalNumbers();
 
     void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par = 0);
 

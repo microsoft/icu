@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 tk{
     Keys{
         calendar{"Senenama"}
@@ -27,6 +28,7 @@ tk{
         an{"aragon dili"}
         anp{"angika dili"}
         ar{"arap dili"}
+        ar_001{"häzirki zaman standart arap dili"}
         arn{"mapuçe dili"}
         arp{"arapaho dili"}
         as{"assam dili"}
@@ -52,7 +54,7 @@ tk{
         bo{"tibet dili"}
         br{"breton dili"}
         brx{"bodo dili"}
-        bs{"boşnak dili"}
+        bs{"bosniýa dili"}
         bug{"bugiý dili"}
         byn{"blin dili"}
         ca{"katalan dili"}
@@ -78,6 +80,7 @@ tk{
         dar{"dargi dili"}
         dav{"taita dili"}
         de{"nemes dili"}
+        de_CH{"ýokarky nemes dili (Şweýsariýa)"}
         dgr{"dogrib dili"}
         dje{"zarma dili"}
         dsb{"aşaky lužits dili"}
@@ -92,12 +95,16 @@ tk{
         eka{"ekajuk dili"}
         el{"grek dili"}
         en{"iňlis dili"}
+        en_GB{"iňlis dili (Beýik Britaniýa)"}
+        en_US{"iňlis dili (Amerika)"}
         eo{"esperanto dili"}
         es{"ispan dili"}
+        es_ES{"ispan dili (Ýewropa)"}
         et{"eston dili"}
         eu{"bask dili"}
         ewo{"ewondo dili"}
         fa{"pars dili"}
+        fa_AF{"dari dili"}
         ff{"fula dili"}
         fi{"fin dili"}
         fil{"filippin dili"}
@@ -161,7 +168,7 @@ tk{
         kea{"kabuwerdianu dili"}
         kfo{"koro dili"}
         kha{"khasi dili"}
-        khq{"koýra-Çini dili"}
+        khq{"koýra-çini dili"}
         ki{"kikuýu dili"}
         kj{"kwanýama dili"}
         kk{"gazak dili"}
@@ -251,6 +258,7 @@ tk{
         nia{"nias dili"}
         niu{"niue dili"}
         nl{"niderland dili"}
+        nl_BE{"flamand dili"}
         nmg{"kwasio dili"}
         nn{"norwegiýa nýunorsk dili"}
         nnh{"ngembun dili"}
@@ -271,11 +279,12 @@ tk{
         pam{"kapampangan dili"}
         pap{"papýamento dili"}
         pau{"palau dili"}
-        pcm{"nigeriý-pijin dili"}
+        pcm{"nigeriýa-pijin dili"}
         pl{"polýak dili"}
         prg{"prussiýa dili"}
         ps{"peştun dili"}
         pt{"portugal dili"}
+        pt_PT{"portugal dili (Ýewropa)"}
         qu{"keçua dili"}
         quc{"kiçe dili"}
         rap{"rapanuý dili"}
@@ -283,6 +292,7 @@ tk{
         rm{"retoroman dili"}
         rn{"rundi dili"}
         ro{"rumyn dili"}
+        ro_MD{"moldaw dili"}
         rof{"rombo dili"}
         root{"kök"}
         ru{"rus dili"}
@@ -327,6 +337,7 @@ tk{
         suk{"sukuma dili"}
         sv{"şwed dili"}
         sw{"suahili dili"}
+        sw_CD{"kongo suahili dili"}
         swb{"komor dili"}
         syr{"siriýa dili"}
         ta{"tamil dili"}
@@ -380,10 +391,23 @@ tk{
         yue{"kanton dili"}
         zgh{"standart Marokko tamazight dili"}
         zh{"hytaý dili"}
+        zh_Hans{"ýönekeýleşdirilen hytaý dili"}
+        zh_Hant{"adaty hytaý dili"}
         zu{"zulu dili"}
         zun{"zuni dili"}
         zxx{"dilçilige degişli mazmun ýok"}
         zza{"zazaki dili"}
+    }
+    Languages%long{
+        zh_Hans{"ýönekeýleşdirilen hytaý diliniň mandarin şiwesi"}
+        zh_Hant{"adaty hytaý diliniň mandarin şiwesi"}
+    }
+    Languages%menu{
+        yue{"hytaý dili, kantonça"}
+        zh{"hytaý dili, mandarin"}
+    }
+    Languages%short{
+        az{"azeri dili"}
     }
     Scripts{
         Arab{"Arap elipbiýi"}
@@ -447,6 +471,7 @@ tk{
             iso8601{"ISO-8601 senenamasy"}
             japanese{"Ýapon senenamasy"}
             persian{"Pars senenamasy"}
+            roc{"Minguo senenamasy"}
         }
         cf{
             account{"Pul birliginiň buhgalterçilik formaty"}
@@ -511,7 +536,6 @@ tk{
             tibt{"Tibet sanlary"}
         }
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — ähli"}
         category-list{"{0}: {1}"}
@@ -526,6 +550,8 @@ tk{
             one{"{0} ştrih"}
             other{"{0} ştrih"}
         }
+        subscript{"aşaky indeks {0}"}
+        superscript{"ýokarky indeks {0}"}
     }
     codePatterns{
         language{"Dil: {0}"}

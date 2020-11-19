@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 se{
     Countries{
         001{"máilbmi"}
@@ -90,14 +91,17 @@ se{
         CY{"Kypros"}
         CZ{"Čeahkka"}
         DE{"Duiska"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Dánmárku"}
         DM{"Dominica"}
         DO{"Dominikána dásseváldi"}
         DZ{"Algeria"}
+        EA{"Ceuta ja Melilla"}
         EC{"Ecuador"}
         EE{"Estlánda"}
         EG{"Egypta"}
+        EH{"Oarje-Sahára"}
         ER{"Eritrea"}
         ES{"Spánia"}
         ET{"Etiopia"}
@@ -133,6 +137,7 @@ se{
         HR{"Kroátia"}
         HT{"Haiti"}
         HU{"Ungár"}
+        IC{"Kanáriasullot"}
         ID{"Indonesia"}
         IE{"Irlánda"}
         IL{"Israel"}
@@ -282,5 +287,7 @@ se{
         ZW{"Zimbabwe"}
         ZZ{"dovdameahttun guovlu"}
     }
-    Version{"37"}
+    Countries%short{
+        US{"USA"}
+    }
 }

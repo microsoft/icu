@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 nb{
     Countries{
         001{"verden"}
@@ -73,7 +74,7 @@ nb{
         BZ{"Belize"}
         CA{"Canada"}
         CC{"Kokosøyene"}
-        CD{"Kongo-Kinshasa"}
+        CD{"Kongo"}
         CF{"Den sentralafrikanske republikk"}
         CG{"Kongo-Brazzaville"}
         CH{"Sveits"}
@@ -92,14 +93,17 @@ nb{
         CY{"Kypros"}
         CZ{"Tsjekkia"}
         DE{"Tyskland"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Danmark"}
         DM{"Dominica"}
         DO{"Den dominikanske republikk"}
         DZ{"Algerie"}
+        EA{"Ceuta og Melilla"}
         EC{"Ecuador"}
         EE{"Estland"}
         EG{"Egypt"}
+        EH{"Vest-Sahara"}
         ER{"Eritrea"}
         ES{"Spania"}
         ET{"Etiopia"}
@@ -130,12 +134,13 @@ nb{
         GU{"Guam"}
         GW{"Guinea-Bissau"}
         GY{"Guyana"}
-        HK{"Hongkong S.A.R. Kina"}
+        HK{"Hongkong SAR Kina"}
         HM{"Heard- og McDonaldøyene"}
         HN{"Honduras"}
         HR{"Kroatia"}
         HT{"Haiti"}
         HU{"Ungarn"}
+        IC{"Kanariøyene"}
         ID{"Indonesia"}
         IE{"Irland"}
         IL{"Israel"}
@@ -183,7 +188,7 @@ nb{
         ML{"Mali"}
         MM{"Myanmar (Burma)"}
         MN{"Mongolia"}
-        MO{"Macao S.A.R. Kina"}
+        MO{"Macao SAR Kina"}
         MP{"Nord-Marianene"}
         MQ{"Martinique"}
         MR{"Mauritania"}
@@ -218,7 +223,7 @@ nb{
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Pitcairnøyene"}
         PR{"Puerto Rico"}
-        PS{"den palestinske selvstyremyndigheten"}
+        PS{"Det palestinske området"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -283,6 +288,8 @@ nb{
         VU{"Vanuatu"}
         WF{"Wallis og Futuna"}
         WS{"Samoa"}
+        XA{"pseudospråk – aksenter"}
+        XB{"pseudospråk – tekst begge veier"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +298,17 @@ nb{
         ZW{"Zimbabwe"}
         ZZ{"ukjent område"}
     }
-    Version{"37"}
+    Countries%short{
+        HK{"Hongkong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+    }
+    Countries%variant{
+        CD{"Den demokratiske republikken Kongo"}
+        CG{"Republikken Kongo"}
+        CZ{"Den tsjekkiske republikk"}
+        FK{"Falklandsøyene (Islas Malvinas)"}
+        SZ{"Swaziland"}
+        TL{"Timor-Leste"}
+    }
 }

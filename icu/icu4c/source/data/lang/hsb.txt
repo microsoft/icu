@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 hsb{
     Keys{
         calendar{"protyka"}
@@ -17,6 +18,7 @@ hsb{
         an{"aragonšćina"}
         ang{"anglosakšćina"}
         ar{"arabšćina"}
+        ar_001{"moderna wysokoarabšćina"}
         arn{"arawkanšćina"}
         as{"asamšćina"}
         asa{"pare"}
@@ -50,6 +52,8 @@ hsb{
         da{"danšćina"}
         dav{"taita"}
         de{"němčina"}
+        de_AT{"awstriska němčina"}
+        de_CH{"šwicarska wysokoněmčina"}
         dje{"zarma"}
         dsb{"delnjoserbšćina"}
         dua{"duala"}
@@ -60,8 +64,15 @@ hsb{
         ee{"ewe"}
         el{"grjekšćina"}
         en{"jendźelšćina"}
+        en_AU{"awstralska jendźelšćina"}
+        en_CA{"kanadiska jendźelšćina"}
+        en_GB{"britiska jendźelšćina"}
+        en_US{"ameriska jendźelšćina"}
         eo{"esperanto"}
         es{"španišćina"}
+        es_419{"łaćonskoameriska španišćina"}
+        es_ES{"europska španišćina"}
+        es_MX{"mexiska španišćina"}
         et{"estišćina"}
         eu{"baskišćina"}
         fa{"persišćina"}
@@ -70,6 +81,8 @@ hsb{
         fj{"fidźišćina"}
         fo{"färöšćina"}
         fr{"francošćina"}
+        fr_CA{"kanadiska francošćina"}
+        fr_CH{"šwicarska francošćina"}
         fy{"frizišćina"}
         ga{"iršćina"}
         gag{"gagauzišćina"}
@@ -161,6 +174,7 @@ hsb{
         nds{"delnjoněmčina"}
         ne{"nepalšćina"}
         nl{"nižozemšćina"}
+        nl_BE{"flamšćina"}
         nmg{"kwasio"}
         nn{"norwegšćina (nynorsk)"}
         no{"norwegšćina"}
@@ -176,11 +190,14 @@ hsb{
         prg{"prušćina"}
         ps{"paštunšćina"}
         pt{"portugalšćina"}
+        pt_BR{"brazilska portugalšćina"}
+        pt_PT{"europska portugalšćina"}
         qu{"kečua"}
         quc{"kʼicheʼ"}
         rm{"retoromanšćina"}
         rn{"kirundišćina"}
         ro{"rumunšćina"}
+        ro_MD{"moldawšćina"}
         rof{"rombo"}
         ru{"rušćina"}
         rw{"kinjarwanda"}
@@ -195,6 +212,7 @@ hsb{
         seh{"sena"}
         ses{"koyra senni"}
         sg{"sango"}
+        sh{"serbochorwatšćina"}
         shi{"tašelhit"}
         si{"singhalšćina"}
         sk{"słowakšćina"}
@@ -214,6 +232,7 @@ hsb{
         su{"sundanezišćina"}
         sv{"šwedšćina"}
         sw{"suahelšćina"}
+        sw_CD{"kongoska suahelšćina"}
         ta{"tamilšćina"}
         te{"telugu"}
         teo{"teso"}
@@ -249,6 +268,8 @@ hsb{
         za{"zhuang"}
         zgh{"tamazight"}
         zh{"chinšćina"}
+        zh_Hans{"chinšćina (zjednorjena)"}
+        zh_Hant{"chinšćina (tradicionalna)"}
         zu{"zulušćina"}
         zxx{"žadyn rěčny wobsah"}
     }
@@ -309,6 +330,7 @@ hsb{
             iso8601{"protyka po iso-8601"}
             japanese{"japanska protyka"}
             persian{"persiska protyka"}
+            roc{"protyka republiki China"}
         }
         collation{
             ducet{"rjadowanski slěd po Unicode"}
@@ -353,7 +375,6 @@ hsb{
             tibt{"tibetske cyfry"}
         }
     }
-    Version{"37"}
     codePatterns{
         language{"rěč: {0}"}
         script{"pismo: {0}"}

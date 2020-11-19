@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 nb{
     Keys{
         calendar{"kalender"}
@@ -45,6 +46,7 @@ nb{
         ang{"gammelengelsk"}
         anp{"angika"}
         ar{"arabisk"}
+        ar_001{"moderne standardarabisk"}
         arc{"arameisk"}
         arn{"mapudungun"}
         aro{"araona"}
@@ -172,6 +174,7 @@ nb{
         ewo{"ewondo"}
         ext{"ekstremaduransk"}
         fa{"persisk"}
+        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulfulde"}
@@ -393,6 +396,7 @@ nb{
         nb{"norsk bokmål"}
         nd{"nord-ndebele"}
         nds{"nedertysk"}
+        nds_NL{"nedersaksisk"}
         ne{"nepali"}
         new{"newari"}
         ng{"ndonga"}
@@ -400,6 +404,7 @@ nb{
         niu{"niueansk"}
         njo{"ao naga"}
         nl{"nederlandsk"}
+        nl_BE{"flamsk"}
         nmg{"kwasio"}
         nn{"norsk nynorsk"}
         nnh{"ngiemboon"}
@@ -458,6 +463,7 @@ nb{
         rm{"retoromansk"}
         rn{"rundi"}
         ro{"rumensk"}
+        ro_MD{"moldovsk"}
         rof{"rombo"}
         rom{"romani"}
         root{"rot"}
@@ -493,6 +499,7 @@ nb{
         sg{"sango"}
         sga{"gammelirsk"}
         sgs{"samogitisk"}
+        sh{"serbokroatisk"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"tsjadisk arabisk"}
@@ -525,6 +532,7 @@ nb{
         sux{"sumerisk"}
         sv{"svensk"}
         sw{"swahili"}
+        sw_CD{"kongolesisk swahili"}
         swb{"komorisk"}
         syc{"klassisk syrisk"}
         syr{"syriakisk"}
@@ -614,10 +622,27 @@ nb{
         zen{"zenaga"}
         zgh{"standard marrokansk tamazight"}
         zh{"kinesisk"}
+        zh_Hans{"forenklet kinesisk"}
+        zh_Hant{"tradisjonell kinesisk"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"uten språklig innhold"}
         zza{"zazaisk"}
+    }
+    Languages%long{
+        zh_Hans{"forenklet mandarinkinesisk"}
+        zh_Hant{"tradisjonell mandarinkinesisk"}
+    }
+    Languages%menu{
+        ars{"arabisk (najd)"}
+        ckb{"kurdisk (sentral)"}
+        zh{"kinesisk, mandarin"}
+    }
+    Languages%short{
+        az{"azeri"}
+    }
+    Languages%variant{
+        ps{"pushto"}
     }
     Scripts{
         Afak{"afaka"}
@@ -665,7 +690,7 @@ nb{
         Grek{"gresk"}
         Gujr{"gujarati"}
         Guru{"gurmukhi"}
-        Hanb{"hanb"}
+        Hanb{"han-kinesisk med bopomofo"}
         Hang{"hangul"}
         Hani{"han"}
         Hano{"hanunoo"}
@@ -819,6 +844,7 @@ nb{
             iso8601{"ISO 8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
+            roc{"minguo-kalender"}
         }
         cf{
             account{"valutaformat for regnskapsføring"}
@@ -921,10 +947,10 @@ nb{
             gujr{"gujarati-sifre"}
             guru{"gurmukhi-sifre"}
             hanidec{"kinesiske desimaltall"}
-            hans{"forenklede kinesiske tall"}
-            hansfin{"forenklede kinesiske finanstall"}
-            hant{"tradisjonelle kinesiske tall"}
-            hantfin{"tradisjonelle kinesiske finanstall"}
+            hans{"forenklet kinesisk-tall"}
+            hansfin{"forenklet kinesisk-finanstall"}
+            hant{"tradisjonell kinesisk-tall"}
+            hantfin{"tradisjonell kinesisk-finanstall"}
             hebr{"hebraiske tall"}
             java{"java-tall"}
             jpan{"japanske tall"}
@@ -1033,7 +1059,6 @@ nb{
         VALLADER{"vallader"}
         WADEGILE{"Wade-Giles-romanisering"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} – alt"}
         category-list{"{0}: {1}"}
@@ -1048,6 +1073,8 @@ nb{
             one{"{0} strek"}
             other{"{0} streker"}
         }
+        subscript{"senket {0}"}
+        superscript{"hevet {0}"}
     }
     codePatterns{
         language{"Språk: {0}"}

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 uz_Cyrl{
     %%Parent{"root"}
     Countries{
@@ -92,14 +93,17 @@ uz_Cyrl{
         CY{"Кипр"}
         CZ{"Чехия"}
         DE{"Германия"}
+        DG{"Диего-Гарсия"}
         DJ{"Жибути"}
         DK{"Дания"}
         DM{"Доминика"}
         DO{"Доминикан Республикаси"}
         DZ{"Жазоир"}
+        EA{"Сэута ва Мелилла"}
         EC{"Эквадор"}
         EE{"Эстония"}
         EG{"Миср"}
+        EH{"Ғарбий Саҳрои Кабир"}
         ER{"Эритрея"}
         ES{"Испания"}
         ET{"Эфиопия"}
@@ -135,6 +139,7 @@ uz_Cyrl{
         HR{"Хорватия"}
         HT{"Гаити"}
         HU{"Венгрия"}
+        IC{"Канар ороллари"}
         ID{"Индонезия"}
         IE{"Ирландия"}
         IL{"Исроил"}
@@ -217,7 +222,7 @@ uz_Cyrl{
         PM{"Сент-Пьер ва Микелон"}
         PN{"Питкэрн ороллари"}
         PR{"Пуэрто-Рико"}
-        PS{"Фаластин Маъмурияти"}
+        PS{"Фаластин ҳудуди"}
         PT{"Португалия"}
         PW{"Палау"}
         PY{"Парагвай"}
@@ -289,5 +294,18 @@ uz_Cyrl{
         ZW{"Зимбабве"}
         ZZ{"Номаълум минтақа"}
     }
-    Version{"37"}
+    Countries%short{
+        HK{"Гонконг"}
+        MO{"Макао"}
+        PS{"Фаластин"}
+        US{"АҚШ"}
+    }
+    Countries%variant{
+        CD{"Конго (КДР)"}
+        CG{"Конго (Республика)"}
+        CI{"Фил Суяги Қирғоғи"}
+        CZ{"Чехия Республикаси"}
+        FK{"Фолкленд (Малвин) ороллари"}
+        TL{"Шарқий Тимор"}
+    }
 }

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 am{
     Keys{
         calendar{"የቀን አቆጣጠር"}
@@ -42,6 +43,7 @@ am{
         an{"አራጎንስ"}
         anp{"አንጊካ"}
         ar{"ዓረብኛ"}
+        ar_001{"ዘመናዊ መደበኛ ዓረብኛ"}
         arc{"አራማይክ"}
         arn{"ማፑቼ"}
         aro{"አራኦና"}
@@ -128,6 +130,8 @@ am{
         dar{"ዳርግዋ"}
         dav{"ታይታኛ"}
         de{"ጀርመን"}
+        de_AT{"የኦስትሪያ ጀርመን"}
+        de_CH{"የስዊዝ ከፍተኛ ጀርመንኛ"}
         del{"ዳላዌር"}
         dgr{"ዶግሪብ"}
         din{"ዲንካ"}
@@ -148,13 +152,21 @@ am{
         eka{"ኤካጁክ"}
         el{"ግሪክኛ"}
         en{"እንግሊዝኛ"}
+        en_AU{"የአውስትራሊያ እንግሊዝኛ"}
+        en_CA{"የካናዳ እንግሊዝኛ"}
+        en_GB{"የብሪቲሽ እንግሊዝኛ"}
+        en_US{"የአሜሪካ እንግሊዝኛ"}
         eo{"ኤስፐራንቶ"}
         es{"ስፓንሽኛ"}
+        es_419{"የላቲን አሜሪካ ስፓኒሽ"}
+        es_ES{"የአውሮፓ ስፓንሽኛ"}
+        es_MX{"የሜክሲኮ ስፓንሽኛ"}
         esu{"ሴንተራል ዩፒክ"}
         et{"ኢስቶኒያንኛ"}
         eu{"ባስክኛ"}
         ewo{"ኤዎንዶ"}
         fa{"ፐርሺያኛ"}
+        fa_AF{"ዳሪኛ"}
         ff{"ፉላህ"}
         fi{"ፊኒሽ"}
         fil{"ፊሊፒንኛ"}
@@ -162,6 +174,8 @@ am{
         fo{"ፋሮኛ"}
         fon{"ፎን"}
         fr{"ፈረንሳይኛ"}
+        fr_CA{"የካናዳ ፈረንሳይኛ"}
+        fr_CH{"የስዊዝ ፈረንሳይኛ"}
         frc{"ካጁን ፍሬንች"}
         frp{"አርፒታን"}
         fur{"ፍሩሊያን"}
@@ -314,6 +328,7 @@ am{
         nb{"የኖርዌይ ቦክማል"}
         nd{"ሰሜን ንዴብሌ"}
         nds{"የታችኛው ጀርመን"}
+        nds_NL{"የታችኛው ሳክሰን"}
         ne{"ኔፓሊኛ"}
         new{"ኒዋሪ(ኔፓል)"}
         ng{"ንዶንጋ"}
@@ -321,6 +336,7 @@ am{
         niu{"ኒዩአንኛ"}
         njo{"ኦ ናጋ"}
         nl{"ደች"}
+        nl_BE{"ፍሌሚሽ"}
         nmg{"ክዋሲዮ"}
         nn{"የኖርዌይ ናይኖርስክ"}
         nnh{"ኒጊምቡን"}
@@ -348,6 +364,8 @@ am{
         prg{"ፐሩሳንኛ"}
         ps{"ፓሽቶኛ"}
         pt{"ፖርቹጋልኛ"}
+        pt_BR{"የብራዚል ፖርቹጋልኛ"}
+        pt_PT{"የአውሮፓ ፖርቹጋልኛ"}
         qu{"ኵቿኛ"}
         quc{"ኪቼ"}
         qug{"ቺምቦራዞ ሃይላንድ ኩቹዋ"}
@@ -356,6 +374,7 @@ am{
         rm{"ሮማንሽ"}
         rn{"ሩንዲኛ"}
         ro{"ሮማኒያን"}
+        ro_MD{"ሞልዳቪያንኛ"}
         rof{"ሮምቦ"}
         root{"ሩት"}
         ru{"ራሽያኛ"}
@@ -378,6 +397,7 @@ am{
         seh{"ሴና"}
         ses{"ኮይራቦሮ ሴኒ"}
         sg{"ሳንጎኛ"}
+        sh{"ሰርቦ-ክሮኤሽያኛ"}
         shi{"ታቼልሂት"}
         shn{"ሻን"}
         shu{"ቻዲያን ዓረብኛ"}
@@ -403,6 +423,7 @@ am{
         suk{"ሱኩማ"}
         sv{"ስዊድንኛ"}
         sw{"ስዋሂሊኛ"}
+        sw_CD{"ኮንጎ ስዋሂሊ"}
         swb{"ኮሞሪያን"}
         syc{"ክላሲክ ኔይራ"}
         syr{"ሲሪያክ"}
@@ -463,10 +484,29 @@ am{
         zbl{"ብሊስይምቦልስ"}
         zgh{"መደበኛ የሞሮኮ ታማዚግት"}
         zh{"ቻይንኛ"}
+        zh_Hans{"ቀለል ያለ ቻይንኛ"}
+        zh_Hant{"ባህላዊ ቻይንኛ"}
         zu{"ዙሉኛ"}
         zun{"ዙኒ"}
         zxx{"ቋንቋዊ ይዘት አይደለም"}
         zza{"ዛዛ"}
+    }
+    Languages%long{
+        zh_Hans{"ቀለል ያለ ማንድሪን ቻይንኛ"}
+        zh_Hant{"ባህላዊ ማንድሪን ቻይንኛ"}
+    }
+    Languages%menu{
+        yue{"ቻይና፤ ካንቶንኛ"}
+        zh{"ማንድሪን ቻይንኛ"}
+    }
+    Languages%short{
+        az{"አዜሪ"}
+        en_GB{"የዩናይትድ ኪንግደም እንግሊዝኛ"}
+        en_US{"የዩ ኤስ እንግሊዝኛ"}
+    }
+    Languages%variant{
+        ps{"ፑሽቶ"}
+        ug{"ኡይገር"}
     }
     Scripts{
         Arab{"ዓረብኛ"}
@@ -537,6 +577,7 @@ am{
             iso8601{"ISO-8601 የቀን አቆጣጠር"}
             japanese{"የጃፓን የቀን አቆጣጠር"}
             persian{"የፐርሽያ የቀን አቆጣጠር"}
+            roc{"የሚንጉ የቀን አቆጣጠር"}
         }
         cf{
             account{"የሂሳብ ምንዛሪ ቅርጸት"}
@@ -658,7 +699,6 @@ am{
             vaii{"የቫይ አሃዞች"}
         }
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — ሁሉም"}
         category-list{"{0}: {1}"}
@@ -673,6 +713,8 @@ am{
             one{"{0} ምች"}
             other{"{0} ምች"}
         }
+        subscript{"ግርጌ ምልክት {0}"}
+        superscript{"ራስጌ ምልክት {0}"}
     }
     codePatterns{
         language{"{0}"}

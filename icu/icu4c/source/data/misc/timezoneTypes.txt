@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 timezoneTypes:table(nofallback){
     bcpTypeAlias{
         tz{
@@ -40,6 +41,7 @@ timezoneTypes:table(nofallback){
             "Asia:Harbin"{"Asia/Shanghai"}
             "Asia:Ho_Chi_Minh"{"Asia/Saigon"}
             "Asia:Istanbul"{"Europe/Istanbul"}
+            "Asia:Kashgar"{"Asia/Urumqi"}
             "Asia:Kathmandu"{"Asia/Katmandu"}
             "Asia:Kolkata"{"Asia/Calcutta"}
             "Asia:Macao"{"Asia/Macau"}
@@ -435,6 +437,7 @@ timezoneTypes:table(nofallback){
             "Asia:Tokyo"{"jptyo"}
             "Asia:Tomsk"{"rutof"}
             "Asia:Ulaanbaatar"{"mnuln"}
+            "Asia:Urumqi"{"cnurc"}
             "Asia:Ust-Nera"{"ruunera"}
             "Asia:Vientiane"{"lavte"}
             "Asia:Vladivostok"{"ruvvo"}

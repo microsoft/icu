@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 zu{
     Countries{
         001{"umhlaba"}
@@ -92,18 +93,22 @@ zu{
         CY{"i-Cyprus"}
         CZ{"i-Czechia"}
         DE{"i-Germany"}
+        DG{"i-Diego Garcia"}
         DJ{"i-Djibouti"}
         DK{"i-Denmark"}
         DM{"i-Dominica"}
         DO{"i-Dominican Republic"}
         DZ{"i-Algeria"}
+        EA{"i-Cueta ne-Melilla"}
         EC{"i-Ecuador"}
         EE{"i-Estonia"}
         EG{"i-Egypt"}
+        EH{"i-Western Sahara"}
         ER{"i-Eritrea"}
         ES{"i-Spain"}
         ET{"i-Ethiopia"}
         EU{"i-European Union"}
+        EZ{"I-Eurozone"}
         FI{"i-Finland"}
         FJ{"i-Fiji"}
         FK{"i-Falkland Islands"}
@@ -135,6 +140,7 @@ zu{
         HR{"i-Croatia"}
         HT{"i-Haiti"}
         HU{"i-Hungary"}
+        IC{"i-Canary Islands"}
         ID{"i-Indonesia"}
         IE{"i-Ireland"}
         IL{"kwa-Israel"}
@@ -217,7 +223,7 @@ zu{
         PM{"i-Saint Pierre kanye ne-Miquelon"}
         PN{"i-Pitcairn Islands"}
         PR{"i-Puerto Rico"}
-        PS{"Iziphathimandla zasePhalestina"}
+        PS{"i-Palestinian Territories"}
         PT{"i-Portugal"}
         PW{"i-Palau"}
         PY{"i-Paraguay"}
@@ -282,6 +288,8 @@ zu{
         VU{"i-Vanuatu"}
         WF{"i-Wallis ne-Futuna"}
         WS{"i-Samoa"}
+        XA{"Pseudo-Accents"}
+        XB{"Pseudo-Bidi"}
         XK{"i-Kosovo"}
         YE{"i-Yemen"}
         YT{"i-Mayotte"}
@@ -290,5 +298,20 @@ zu{
         ZW{"iZimbabwe"}
         ZZ{"iSifunda esingaziwa"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"i-U.K."}
+        HK{"i-Hong Kong"}
+        MO{"i-Macau"}
+        PS{"i-Palestine"}
+        UN{"ifulegi"}
+        US{"i-U.S"}
+    }
+    Countries%variant{
+        CD{"i-Congo (DRC)"}
+        CG{"i-Congo (Republic)"}
+        CI{"i-Ivory Coast"}
+        CZ{"i-Czech Republic"}
+        FK{"i-Falkland Islands (Islas Malvinas)"}
+        TL{"i-East Timor"}
+    }
 }

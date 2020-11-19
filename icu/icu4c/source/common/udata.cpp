@@ -820,12 +820,6 @@ openCommonData(const char *path,          /*  Path from OpenChoice?          */
  *----------------------------------------------------------------------*/
 static UBool extendICUData(UErrorCode *pErr)
 {
-#if defined(ICU_DATA_DIR_WINDOWS)
-    // For the Windows OS build of MS-ICU, we only have one data package, and don't use the extended data at all.
-    (void)pErr; // suppress unused variable.
-    return FALSE;
-#endif
-
     UDataMemory   *pData;
     UDataMemory   copyPData;
     UBool         didUpdate = FALSE;

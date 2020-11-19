@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 eo{
     Countries{
         001{"Mondo"}
@@ -59,6 +60,7 @@ eo{
         EC{"Ekvadoro"}
         EE{"Estonujo"}
         EG{"Egipto"}
+        EH{"Okcidenta Saharo"}
         ER{"Eritreo"}
         ES{"Hispanujo"}
         ET{"Etiopujo"}
@@ -225,5 +227,4 @@ eo{
         ZM{"Zambio"}
         ZW{"Zimbabvo"}
     }
-    Version{"37"}
 }

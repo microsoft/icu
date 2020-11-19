@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 fr{
     Countries{
         001{"Monde"}
@@ -61,7 +62,7 @@ fr{
         BJ{"Bénin"}
         BL{"Saint-Barthélemy"}
         BM{"Bermudes"}
-        BN{"Brunéi Darussalam"}
+        BN{"Brunei"}
         BO{"Bolivie"}
         BQ{"Pays-Bas caribéens"}
         BR{"Brésil"}
@@ -73,9 +74,9 @@ fr{
         BZ{"Belize"}
         CA{"Canada"}
         CC{"Îles Cocos"}
-        CD{"Congo (République démocratique du)"}
+        CD{"Congo-Kinshasa"}
         CF{"République centrafricaine"}
-        CG{"Congo"}
+        CG{"Congo-Brazzaville"}
         CH{"Suisse"}
         CI{"Côte d’Ivoire"}
         CK{"Îles Cook"}
@@ -92,14 +93,17 @@ fr{
         CY{"Chypre"}
         CZ{"Tchéquie"}
         DE{"Allemagne"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Danemark"}
         DM{"Dominique"}
         DO{"République dominicaine"}
         DZ{"Algérie"}
+        EA{"Ceuta et Melilla"}
         EC{"Équateur"}
         EE{"Estonie"}
         EG{"Égypte"}
+        EH{"Sahara occidental"}
         ER{"Érythrée"}
         ES{"Espagne"}
         ET{"Éthiopie"}
@@ -108,7 +112,7 @@ fr{
         FI{"Finlande"}
         FJ{"Fidji"}
         FK{"Îles Malouines"}
-        FM{"États fédérés de Micronésie"}
+        FM{"Micronésie"}
         FO{"Îles Féroé"}
         FR{"France"}
         GA{"Gabon"}
@@ -125,17 +129,18 @@ fr{
         GP{"Guadeloupe"}
         GQ{"Guinée équatoriale"}
         GR{"Grèce"}
-        GS{"Géorgie du Sud et îles Sandwich du Sud"}
+        GS{"Géorgie du Sud-et-les Îles Sandwich du Sud"}
         GT{"Guatemala"}
         GU{"Guam"}
         GW{"Guinée-Bissau"}
         GY{"Guyana"}
         HK{"R.A.S. chinoise de Hong Kong"}
-        HM{"Îles Heard et McDonald"}
+        HM{"Îles Heard-et-MacDonald"}
         HN{"Honduras"}
         HR{"Croatie"}
         HT{"Haïti"}
         HU{"Hongrie"}
+        IC{"Îles Canaries"}
         ID{"Indonésie"}
         IE{"Irlande"}
         IL{"Israël"}
@@ -151,7 +156,7 @@ fr{
         JO{"Jordanie"}
         JP{"Japon"}
         KE{"Kenya"}
-        KG{"Kirghizistan"}
+        KG{"Kirghizstan"}
         KH{"Cambodge"}
         KI{"Kiribati"}
         KM{"Comores"}
@@ -166,7 +171,7 @@ fr{
         LC{"Sainte-Lucie"}
         LI{"Liechtenstein"}
         LK{"Sri Lanka"}
-        LR{"Libéria"}
+        LR{"Liberia"}
         LS{"Lesotho"}
         LT{"Lituanie"}
         LU{"Luxembourg"}
@@ -199,7 +204,7 @@ fr{
         NC{"Nouvelle-Calédonie"}
         NE{"Niger"}
         NF{"Île Norfolk"}
-        NG{"Nigéria"}
+        NG{"Nigeria"}
         NI{"Nicaragua"}
         NL{"Pays-Bas"}
         NO{"Norvège"}
@@ -218,7 +223,7 @@ fr{
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Îles Pitcairn"}
         PR{"Porto Rico"}
-        PS{"Autorité palestinienne"}
+        PS{"Territoires palestiniens"}
         PT{"Portugal"}
         PW{"Palaos"}
         PY{"Paraguay"}
@@ -275,14 +280,16 @@ fr{
         UY{"Uruguay"}
         UZ{"Ouzbékistan"}
         VA{"État de la Cité du Vatican"}
-        VC{"Saint-Vincent-et-les-Grenadines"}
+        VC{"Saint-Vincent-et-les Grenadines"}
         VE{"Venezuela"}
         VG{"Îles Vierges britanniques"}
         VI{"Îles Vierges des États-Unis"}
-        VN{"Vietnam"}
+        VN{"Viêt Nam"}
         VU{"Vanuatu"}
         WF{"Wallis-et-Futuna"}
         WS{"Samoa"}
+        XA{"pseudo-accents"}
+        XB{"pseudo-bidi"}
         XK{"Kosovo"}
         YE{"Yémen"}
         YT{"Mayotte"}
@@ -291,5 +298,21 @@ fr{
         ZW{"Zimbabwe"}
         ZZ{"région indéterminée"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"R.-U."}
+        HK{"Hong Kong"}
+        MO{"Macao"}
+        PS{"Palestine"}
+        UN{"NU"}
+        US{"É.-U."}
+    }
+    Countries%variant{
+        CD{"Congo (RDC)"}
+        CG{"République du Congo"}
+        CI{"​​République de Côte d’Ivoire"}
+        CZ{"République tchèque"}
+        FK{"Îles Malouines (Îles Falkland)"}
+        SZ{"Swaziland"}
+        TL{"Timor-Oriental"}
+    }
 }

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ast{
     Keys{
         calendar{"calendariu"}
@@ -35,6 +36,7 @@ ast{
         ang{"inglés antiguu"}
         anp{"angika"}
         ar{"árabe"}
+        ar_001{"árabe estándar modernu"}
         arc{"araméu"}
         arn{"mapuche"}
         aro{"araona"}
@@ -127,6 +129,8 @@ ast{
         dar{"dargwa"}
         dav{"taita"}
         de{"alemán"}
+        de_AT{"alemán d’Austria"}
+        de_CH{"altualemán de Suiza"}
         del{"delaware"}
         den{"slave"}
         dgr{"dogrib"}
@@ -151,9 +155,16 @@ ast{
         el{"griegu"}
         elx{"elamita"}
         en{"inglés"}
+        en_AU{"inglés d’Australia"}
+        en_CA{"inglés de Canadá"}
+        en_GB{"inglés de Gran Bretaña"}
+        en_US{"inglés d’Estaos Xuníos"}
         enm{"inglés mediu"}
         eo{"esperanto"}
         es{"español"}
+        es_419{"español d’América Llatina"}
+        es_ES{"español européu"}
+        es_MX{"español de Méxicu"}
         esu{"yupik central"}
         et{"estoniu"}
         eu{"vascu"}
@@ -170,6 +181,8 @@ ast{
         fo{"feroés"}
         fon{"fon"}
         fr{"francés"}
+        fr_CA{"francés de Canadá"}
+        fr_CH{"francés de Suiza"}
         frc{"francés cajun"}
         frm{"francés mediu"}
         fro{"francés antiguu"}
@@ -380,6 +393,7 @@ ast{
         nb{"noruegu Bokmål"}
         nd{"ndebele del norte"}
         nds{"baxu alemán"}
+        nds_NL{"baxu saxón"}
         ne{"nepalés"}
         new{"newari"}
         ng{"ndonga"}
@@ -387,6 +401,7 @@ ast{
         niu{"niueanu"}
         njo{"ao naga"}
         nl{"neerlandés"}
+        nl_BE{"flamencu"}
         nmg{"kwasio"}
         nn{"noruegu Nynorsk"}
         nnh{"ngiemboon"}
@@ -434,6 +449,8 @@ ast{
         pro{"provenzal antiguu"}
         ps{"pashtu"}
         pt{"portugués"}
+        pt_BR{"portugués del Brasil"}
+        pt_PT{"portugués européu"}
         qu{"quechua"}
         quc{"kʼicheʼ"}
         qug{"quichua del altiplanu de Chimborazo"}
@@ -445,6 +462,7 @@ ast{
         rm{"romanche"}
         rn{"rundi"}
         ro{"rumanu"}
+        ro_MD{"moldavu"}
         rof{"rombo"}
         rom{"romaní"}
         rtm{"rotumanu"}
@@ -479,6 +497,7 @@ ast{
         sg{"sango"}
         sga{"irlandés antiguu"}
         sgs{"samogitianu"}
+        sh{"serbo-croata"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"árabe chadianu"}
@@ -511,6 +530,7 @@ ast{
         sux{"sumeriu"}
         sv{"suecu"}
         sw{"suaḥili"}
+        sw_CD{"suaḥili del Congu"}
         swb{"comorianu"}
         syc{"siriacu clásicu"}
         syr{"siriacu"}
@@ -600,10 +620,17 @@ ast{
         zen{"zenaga"}
         zgh{"tamazight estándar de Marruecos"}
         zh{"chinu"}
+        zh_Hans{"chinu simplificáu"}
+        zh_Hant{"chinu tradicional"}
         zu{"zulú"}
         zun{"zuni"}
         zxx{"ensin conteníu llingüísticu"}
         zza{"zaza"}
+    }
+    Languages%short{
+        az{"azerí"}
+        en_GB{"inglés del R.X."}
+        en_US{"inglés d’EE.XX."}
     }
     Scripts{
         Adlm{"adlm"}
@@ -805,6 +832,7 @@ ast{
             iso8601{"calendariu ISO-8601"}
             japanese{"calendariu xaponés"}
             persian{"calendariu persa"}
+            roc{"calendariu de la República de China"}
         }
         cf{
             account{"formatu monetariu contable"}
@@ -978,7 +1006,6 @@ ast{
         VALENCIA{"valencianu"}
         WADEGILE{"romanización de Wade-Giles"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — too"}
         category-list{"{0}: {1}"}

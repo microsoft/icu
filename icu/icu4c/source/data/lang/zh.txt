@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 zh{
     Keys{
         calendar{"日历"}
@@ -42,6 +43,7 @@ zh{
         ang{"古英语"}
         anp{"昂加语"}
         ar{"阿拉伯语"}
+        ar_001{"现代标准阿拉伯语"}
         arc{"阿拉米语"}
         arn{"马普切语"}
         arp{"阿拉帕霍语"}
@@ -54,6 +56,7 @@ zh{
         awa{"阿瓦德语"}
         ay{"艾马拉语"}
         az{"阿塞拜疆语"}
+        az_Arab{"南阿塞拜疆语"}
         ba{"巴什基尔语"}
         bal{"俾路支语"}
         ban{"巴厘语"}
@@ -121,6 +124,8 @@ zh{
         dar{"达尔格瓦语"}
         dav{"台塔语"}
         de{"德语"}
+        de_AT{"奥地利德语"}
+        de_CH{"瑞士高地德语"}
         del{"特拉华语"}
         den{"史拉维语"}
         dgr{"多格里布语"}
@@ -128,7 +133,7 @@ zh{
         dje{"哲尔马语"}
         doi{"多格拉语"}
         dsb{"下索布语"}
-        dua{"都阿拉语"}
+        dua{"杜阿拉语"}
         dum{"中古荷兰语"}
         dv{"迪维希语"}
         dyo{"朱拉语"}
@@ -143,13 +148,21 @@ zh{
         el{"希腊语"}
         elx{"埃兰语"}
         en{"英语"}
+        en_AU{"澳大利亚英语"}
+        en_CA{"加拿大英语"}
+        en_GB{"英国英语"}
+        en_US{"美国英语"}
         enm{"中古英语"}
         eo{"世界语"}
         es{"西班牙语"}
+        es_419{"拉丁美洲西班牙语"}
+        es_ES{"欧洲西班牙语"}
+        es_MX{"墨西哥西班牙语"}
         et{"爱沙尼亚语"}
         eu{"巴斯克语"}
-        ewo{"旺杜语"}
+        ewo{"埃翁多语"}
         fa{"波斯语"}
+        fa_AF{"达里语"}
         fan{"芳格语"}
         fat{"芳蒂语"}
         ff{"富拉语"}
@@ -159,6 +172,8 @@ zh{
         fo{"法罗语"}
         fon{"丰语"}
         fr{"法语"}
+        fr_CA{"加拿大法语"}
+        fr_CH{"瑞士法语"}
         frc{"卡真法语"}
         frm{"中古法语"}
         fro{"古法语"}
@@ -345,12 +360,14 @@ zh{
         nb{"书面挪威语"}
         nd{"北恩德贝勒语"}
         nds{"低地德语"}
+        nds_NL{"低萨克森语"}
         ne{"尼泊尔语"}
         new{"尼瓦尔语"}
         ng{"恩东加语"}
         nia{"尼亚斯语"}
         niu{"纽埃语"}
         nl{"荷兰语"}
+        nl_BE{"弗拉芒语"}
         nmg{"夸西奥语"}
         nn{"挪威尼诺斯克语"}
         nnh{"恩甘澎语"}
@@ -391,6 +408,8 @@ zh{
         pro{"古普罗文斯语"}
         ps{"普什图语"}
         pt{"葡萄牙语"}
+        pt_BR{"巴西葡萄牙语"}
+        pt_PT{"欧洲葡萄牙语"}
         qu{"克丘亚语"}
         quc{"基切语"}
         raj{"拉贾斯坦语"}
@@ -399,6 +418,7 @@ zh{
         rm{"罗曼什语"}
         rn{"隆迪语"}
         ro{"罗马尼亚语"}
+        ro_MD{"摩尔多瓦语"}
         rof{"兰博语"}
         rom{"吉普赛语"}
         root{"根语言"}
@@ -427,6 +447,7 @@ zh{
         ses{"东桑海语"}
         sg{"桑戈语"}
         sga{"古爱尔兰语"}
+        sh{"塞尔维亚-克罗地亚语"}
         shi{"希尔哈语"}
         shn{"掸语"}
         shu{"乍得阿拉伯语"}
@@ -456,6 +477,7 @@ zh{
         sux{"苏美尔语"}
         sv{"瑞典语"}
         sw{"斯瓦希里语"}
+        sw_CD{"刚果斯瓦希里语"}
         swb{"科摩罗语"}
         syc{"古典叙利亚语"}
         syr{"叙利亚语"}
@@ -531,10 +553,26 @@ zh{
         zen{"泽纳加语"}
         zgh{"标准摩洛哥塔马塞特语"}
         zh{"中文"}
+        zh_Hans{"简体中文"}
+        zh_Hant{"繁体中文"}
         zu{"祖鲁语"}
         zun{"祖尼语"}
         zxx{"无语言内容"}
         zza{"扎扎语"}
+    }
+    Languages%long{
+        zh_Hans{"现代标准汉语"}
+        zh_Hant{"台湾国语"}
+    }
+    Languages%menu{
+        ars{"阿拉伯语（纳吉迪）"}
+        yue{"广东话"}
+        zh{"普通话"}
+    }
+    Languages%short{
+        az{"阿塞语"}
+        en_GB{"英式英语"}
+        en_US{"美式英语"}
     }
     Scripts{
         Adlm{"阿德拉姆文"}
@@ -759,6 +797,7 @@ zh{
             iso8601{"国际标准历法"}
             japanese{"和历"}
             persian{"波斯历"}
+            roc{"民国纪年"}
         }
         cf{
             account{"会计货币格式"}
@@ -1031,7 +1070,6 @@ zh{
         WADEGILE{"WG 威氏拼音法"}
         XSISTEMO{"西西斯特莫方言"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — 全部"}
         category-list{"{0}: {1}"}
@@ -1045,6 +1083,8 @@ zh{
         strokes{
             other{"{0}笔"}
         }
+        subscript{"下标{0}"}
+        superscript{"上标{0}"}
     }
     codePatterns{
         language{"语言：{0}"}

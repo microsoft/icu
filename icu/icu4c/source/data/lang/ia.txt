@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ia{
     Keys{
         calendar{"calendario"}
@@ -27,6 +28,7 @@ ia{
         an{"aragonese"}
         anp{"angika"}
         ar{"arabe"}
+        ar_001{"arabe standard moderne"}
         arn{"mapuche"}
         arp{"arapaho"}
         as{"assamese"}
@@ -77,6 +79,8 @@ ia{
         dar{"dargwa"}
         dav{"taita"}
         de{"germano"}
+        de_AT{"germano austriac"}
+        de_CH{"alte germano suisse"}
         dgr{"dogrib"}
         dje{"zarma"}
         dsb{"basse sorabo"}
@@ -91,8 +95,15 @@ ia{
         eka{"ekajuk"}
         el{"greco"}
         en{"anglese"}
+        en_AU{"anglese australian"}
+        en_CA{"anglese canadian"}
+        en_GB{"anglese britannic"}
+        en_US{"anglese american"}
         eo{"esperanto"}
         es{"espaniol"}
+        es_419{"espaniol latinoamerican"}
+        es_ES{"espaniol europee"}
+        es_MX{"espaniol mexican"}
         et{"estoniano"}
         eu{"basco"}
         ewo{"ewondo"}
@@ -104,6 +115,8 @@ ia{
         fo{"feroese"}
         fon{"fon"}
         fr{"francese"}
+        fr_CA{"francese canadian"}
+        fr_CH{"francese suisse"}
         fur{"friulano"}
         fy{"frison occidental"}
         ga{"irlandese"}
@@ -249,6 +262,7 @@ ia{
         nia{"nias"}
         niu{"nieuano"}
         nl{"nederlandese"}
+        nl_BE{"flamingo"}
         nmg{"kwasio"}
         nn{"norvegiano nynorsk"}
         nnh{"ngiemboon"}
@@ -274,6 +288,8 @@ ia{
         prg{"prussiano"}
         ps{"pashto"}
         pt{"portugese"}
+        pt_BR{"portugese de Brasil"}
+        pt_PT{"portugese de Portugal"}
         qu{"quechua"}
         quc{"kʼicheʼ"}
         rap{"rapanui"}
@@ -281,6 +297,7 @@ ia{
         rm{"romanche"}
         rn{"rundi"}
         ro{"romaniano"}
+        ro_MD{"moldavo"}
         rof{"rombo"}
         root{"radice"}
         ru{"russo"}
@@ -325,6 +342,7 @@ ia{
         suk{"sukuma"}
         sv{"svedese"}
         sw{"swahili"}
+        sw_CD{"swahili del Congo"}
         swb{"comoriano"}
         syr{"syriaco"}
         ta{"tamil"}
@@ -378,10 +396,15 @@ ia{
         yue{"cantonese"}
         zgh{"tamazight marocchin standard"}
         zh{"chinese"}
+        zh_Hans{"chinese simplificate"}
+        zh_Hant{"chinese traditional"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"sin contento linguistic"}
         zza{"zaza"}
+    }
+    Languages%short{
+        az{"azeri"}
     }
     Scripts{
         Arab{"arabe"}
@@ -445,6 +468,7 @@ ia{
             iso8601{"calendario ISO-8601"}
             japanese{"calendario japonese"}
             persian{"calendario persa"}
+            roc{"calendario del Republica de China"}
         }
         cf{
             account{"formato de moneta pro contabilitate"}
@@ -509,7 +533,6 @@ ia{
             tibt{"cifras tibetan"}
         }
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — toto"}
         category-list{"{0}: {1}"}

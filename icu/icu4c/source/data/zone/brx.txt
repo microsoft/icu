@@ -1,7 +1,7 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 brx{
-    Version{"37"}
     zoneStrings{
         "Africa:Abidjan"{
             ec{"अबिद्जान"}
@@ -767,6 +767,9 @@ brx{
         }
         "Asia:Ulaanbaatar"{
             ec{"उलानबातर"}
+        }
+        "Asia:Urumqi"{
+            ec{"उरुमकी"}
         }
         "Asia:Vientiane"{
             ec{"वियंसियान"}

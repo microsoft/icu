@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 eu{
     Keys{
         calendar{"Egutegia"}
@@ -38,6 +39,7 @@ eu{
         an{"aragoiera"}
         anp{"angikera"}
         ar{"arabiera"}
+        ar_001{"arabiera moderno estandarra"}
         arn{"maputxe"}
         arp{"arapaho"}
         as{"assamera"}
@@ -89,6 +91,8 @@ eu{
         dar{"dargvera"}
         dav{"taitera"}
         de{"aleman"}
+        de_AT{"Austriako aleman"}
+        de_CH{"Suitzako aleman garai"}
         dgr{"dogribera"}
         dje{"zarma"}
         dsb{"behe-sorabiera"}
@@ -103,12 +107,20 @@ eu{
         eka{"akajuka"}
         el{"greziera"}
         en{"ingeles"}
+        en_AU{"Australiako ingeles"}
+        en_CA{"Kanadako ingeles"}
+        en_GB{"Britania Handiko ingeles"}
+        en_US{"AEBko ingeles"}
         eo{"esperanto"}
         es{"espainiera"}
+        es_419{"Latinoamerikako espainiera"}
+        es_ES{"espainiera (Europa)"}
+        es_MX{"Mexikoko espainiera"}
         et{"estoniera"}
         eu{"euskara"}
         ewo{"ewondera"}
         fa{"persiera"}
+        fa_AF{"daria"}
         ff{"fula"}
         fi{"finlandiera"}
         fil{"filipinera"}
@@ -116,6 +128,8 @@ eu{
         fo{"faroera"}
         fon{"fona"}
         fr{"frantses"}
+        fr_CA{"Kanadako frantses"}
+        fr_CH{"Suitzako frantses"}
         fur{"friuliera"}
         fy{"frisiera"}
         ga{"irlandera"}
@@ -260,12 +274,14 @@ eu{
         nb{"bokmål (norvegiera)"}
         nd{"iparraldeko ndebeleera"}
         nds{"behe-aleman"}
+        nds_NL{"behe-saxoiera"}
         ne{"nepalera"}
         new{"newarera"}
         ng{"ndongera"}
         nia{"niasera"}
         niu{"niueera"}
         nl{"nederlandera"}
+        nl_BE{"flandriera"}
         nmg{"kwasiera"}
         nn{"nynorsk (norvegiera)"}
         nnh{"ngiemboonera"}
@@ -292,6 +308,8 @@ eu{
         prg{"prusiera"}
         ps{"paxtuera"}
         pt{"portuges"}
+        pt_BR{"Brasilgo portuges"}
+        pt_PT{"Europako portuges"}
         qu{"kitxua"}
         quc{"quicheera"}
         rap{"rapa nui"}
@@ -299,6 +317,7 @@ eu{
         rm{"erretorromaniera"}
         rn{"rundiera"}
         ro{"errumaniera"}
+        ro_MD{"moldaviera"}
         rof{"rombo"}
         root{"erroa"}
         ru{"errusiera"}
@@ -320,6 +339,7 @@ eu{
         seh{"senera"}
         ses{"koyraboro senni"}
         sg{"sango"}
+        sh{"serbokroaziera"}
         shi{"tachelhit"}
         shn{"shanera"}
         si{"sinhala"}
@@ -343,6 +363,7 @@ eu{
         suk{"sukumera"}
         sv{"suediera"}
         sw{"swahilia"}
+        sw_CD{"Kongoko swahilia"}
         swb{"komoreera"}
         syr{"asiriera"}
         ta{"tamilera"}
@@ -398,10 +419,24 @@ eu{
         yue{"kantonera"}
         zgh{"amazigera estandarra"}
         zh{"txinera"}
+        zh_Hans{"txinera sinplifikatu"}
+        zh_Hant{"txinera tradizionala"}
         zu{"zuluera"}
         zun{"zuñia"}
         zxx{"ez dago eduki linguistikorik"}
         zza{"zazera"}
+    }
+    Languages%long{
+        zh_Hans{"mandarin sinplifikatu"}
+        zh_Hant{"mandarin tradizional"}
+    }
+    Languages%menu{
+        yue{"Kantongo txinera"}
+        zh{"mandarin"}
+    }
+    Languages%short{
+        en_GB{"Erresuma Batuko ingeles"}
+        en_US{"AEBko ingelesa"}
     }
     Scripts{
         Arab{"arabiarra"}
@@ -472,6 +507,7 @@ eu{
             iso8601{"ISO-8601 egutegia"}
             japanese{"Japoniar egutegia"}
             persian{"Egutegi persiarra"}
+            roc{"Minguo egutegia"}
         }
         cf{
             account{"Kontabilitateko moneta-formatua"}
@@ -600,7 +636,6 @@ eu{
         SCOTLAND{"ESKOZIAR INGELESA"}
         VALENCIA{"VALENTZIERA"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — Guztiak"}
         category-list{"{0}: {1}"}
@@ -612,9 +647,11 @@ eu{
         other{"{0} — Bestelakoak"}
         scripts{"Scriptak — {0}"}
         strokes{
-            one{"{0} trazuak"}
-            other{"{0} trazuak"}
+            one{"{0} trazu"}
+            other{"{0} trazu"}
         }
+        subscript{"{0} azpi-indizea"}
+        superscript{"{0} goi-indizea"}
     }
     codePatterns{
         language{"{0}"}

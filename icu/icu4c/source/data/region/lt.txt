@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 lt{
     Countries{
         001{"pasaulis"}
@@ -92,14 +93,17 @@ lt{
         CY{"Kipras"}
         CZ{"Čekija"}
         DE{"Vokietija"}
+        DG{"Diego Garsija"}
         DJ{"Džibutis"}
         DK{"Danija"}
         DM{"Dominika"}
         DO{"Dominikos Respublika"}
         DZ{"Alžyras"}
+        EA{"Seuta ir Melila"}
         EC{"Ekvadoras"}
         EE{"Estija"}
         EG{"Egiptas"}
+        EH{"Vakarų Sachara"}
         ER{"Eritrėja"}
         ES{"Ispanija"}
         ET{"Etiopija"}
@@ -136,6 +140,7 @@ lt{
         HR{"Kroatija"}
         HT{"Haitis"}
         HU{"Vengrija"}
+        IC{"Kanarų salos"}
         ID{"Indonezija"}
         IE{"Airija"}
         IL{"Izraelis"}
@@ -218,7 +223,7 @@ lt{
         PM{"Sen Pjeras ir Mikelonas"}
         PN{"Pitkerno salos"}
         PR{"Puerto Rikas"}
-        PS{"Palestinos administracinis vienetas"}
+        PS{"Palestinos teritorija"}
         PT{"Portugalija"}
         PW{"Palau"}
         PY{"Paragvajus"}
@@ -250,7 +255,7 @@ lt{
         SX{"Sint Martenas"}
         SY{"Sirija"}
         SZ{"Svazilandas"}
-        TA{"Tristanas da Kunja"}
+        TA{"Tristano da Kunjos"}
         TC{"Terkso ir Kaikoso Salos"}
         TD{"Čadas"}
         TF{"Prancūzijos Pietų sritys"}
@@ -283,6 +288,8 @@ lt{
         VU{"Vanuatu"}
         WF{"Volisas ir Futūna"}
         WS{"Samoa"}
+        XA{"pseudo A"}
+        XB{"pseudo B"}
         XK{"Kosovas"}
         YE{"Jemenas"}
         YT{"Majotas"}
@@ -291,5 +298,19 @@ lt{
         ZW{"Zimbabvė"}
         ZZ{"nežinoma sritis"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"JK"}
+        HK{"Honkongas"}
+        MO{"Makao"}
+        PS{"Palestina"}
+        UN{"JT"}
+        US{"JAV"}
+    }
+    Countries%variant{
+        CD{"Kongo Demokratinė Respublika"}
+        CG{"Kongo Respublika"}
+        CI{"Dramblio Kaulo Kranto Respublika"}
+        CZ{"Čekijos Respublika"}
+        FK{"Folklando (Malvinų) Salos"}
+    }
 }

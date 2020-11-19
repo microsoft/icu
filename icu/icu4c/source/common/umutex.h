@@ -184,11 +184,6 @@ template<class T> void umtx_initOnce(UInitOnce &uio, void (U_CALLCONV *fp)(T, UE
     }
 }
 
-// MSFT-PATCH: In order to enable testing (in automated CI builds), we make this macro
-// configurable so that we can selectively disable it in order to catch any static globals.
-#if defined(FORCE_DISABLE_UMUTEX_CONSTEXPR)
-#   define UMUTEX_CONSTEXPR
-#else
 // UMutex should be constexpr-constructible, so that no initialization code
 // is run during startup.
 // This works on all C++ libraries except MS VS before VS2019.
@@ -199,7 +194,6 @@ template<class T> void umtx_initOnce(UInitOnce &uio, void (U_CALLCONV *fp)(T, UE
 #else
 #   define UMUTEX_CONSTEXPR constexpr
 #endif
-#endif /* #if defined(FORCE_DISABLE_UMUTEX_CONSTEXPR) */
 
 /**
  * UMutex - ICU Mutex class.
@@ -268,13 +262,13 @@ private:
  *              the global ICU mutex.  Recursive locks are an error
  *              and may cause a deadlock on some platforms.
  */
-U_INTERNAL void U_EXPORT2 umtx_lock(UMutex* mutex);
+U_CAPI void U_EXPORT2 umtx_lock(UMutex* mutex);
 
 /* Unlock a mutex.
  * @param mutex The given mutex to be unlocked.  Pass NULL to specify
  *              the global ICU mutex.
  */
-U_INTERNAL void U_EXPORT2 umtx_unlock (UMutex* mutex);
+U_CAPI void U_EXPORT2 umtx_unlock (UMutex* mutex);
 
 
 U_NAMESPACE_END

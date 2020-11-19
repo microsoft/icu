@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 nmg{
     Countries{
         AD{"Andɔ́ra"}
@@ -35,7 +36,7 @@ nmg{
         BY{"Belarus"}
         BZ{"Bɛliz"}
         CA{"Kanada"}
-        CD{"Congo (RDC)"}
+        CD{"Kongó Zaïre"}
         CF{"Sentrafríka"}
         CG{"Kongo"}
         CH{"Switzɛrland"}
@@ -164,7 +165,7 @@ nmg{
         PM{"Saint Peter ba Mikelɔn"}
         PN{"Pitkairn"}
         PR{"Puɛrto Riko"}
-        PS{"Autorité palestinienne"}
+        PS{"Palɛstin"}
         PT{"Pɔrtugal"}
         PW{"Palo"}
         PY{"Paraguay"}
@@ -226,5 +227,4 @@ nmg{
         ZM{"Zambia"}
         ZW{"Zimbabwǝ"}
     }
-    Version{"37"}
 }

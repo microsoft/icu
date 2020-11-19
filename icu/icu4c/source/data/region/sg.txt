@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 sg{
     Countries{
         AD{"Andôro"}
@@ -164,7 +165,7 @@ sg{
         PM{"Sên-Pyêre na Mikelöon"}
         PN{"Pitikêrni"}
         PR{"Porto Rîko"}
-        PS{"Autorité palestinienne"}
+        PS{"Sêse tî Palestîni"}
         PT{"Pörtugäle, Ködörö Pûra"}
         PW{"Palau"}
         PY{"Paraguëe"}
@@ -226,5 +227,4 @@ sg{
         ZM{"Zambïi"}
         ZW{"Zimbäbwe"}
     }
-    Version{"37"}
 }

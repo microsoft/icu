@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 zh_Hant{
     %%Parent{"root"}
     Keys{
@@ -46,6 +47,7 @@ zh_Hant{
         ang{"古英文"}
         anp{"昂加文"}
         ar{"阿拉伯文"}
+        ar_001{"現代標準阿拉伯文"}
         arc{"阿拉米文"}
         arn{"馬普切文"}
         aro{"阿拉奧納文"}
@@ -140,6 +142,7 @@ zh_Hant{
         dar{"達爾格瓦文"}
         dav{"台塔文"}
         de{"德文"}
+        de_CH{"高地德文（瑞士）"}
         del{"德拉瓦文"}
         den{"斯拉夫"}
         dgr{"多格里布文"}
@@ -244,7 +247,7 @@ zh_Hant{
         id{"印尼文"}
         ie{"國際文（E）"}
         ig{"伊布文"}
-        ii{"彝文"}
+        ii{"四川彝文"}
         ik{"依奴皮維克文"}
         ilo{"伊洛闊文"}
         inh{"印古什文"}
@@ -394,6 +397,7 @@ zh_Hant{
         nb{"巴克摩挪威文"}
         nd{"北地畢列文"}
         nds{"低地德文"}
+        nds_NL{"低地薩克遜文"}
         ne{"尼泊爾文"}
         new{"尼瓦爾文"}
         ng{"恩東加文"}
@@ -401,6 +405,7 @@ zh_Hant{
         niu{"紐埃文"}
         njo{"阿沃那加文"}
         nl{"荷蘭文"}
+        nl_BE{"佛蘭芒文"}
         nmg{"夸西奧文"}
         nn{"耐諾斯克挪威文"}
         nnh{"恩甘澎文"}
@@ -459,6 +464,7 @@ zh_Hant{
         rm{"羅曼斯文"}
         rn{"隆迪文"}
         ro{"羅馬尼亞文"}
+        ro_MD{"摩爾多瓦文"}
         rof{"蘭博文"}
         rom{"吉普賽文"}
         root{"根語言"}
@@ -494,6 +500,7 @@ zh_Hant{
         sg{"桑戈文"}
         sga{"古愛爾蘭文"}
         sgs{"薩莫吉希亞文"}
+        sh{"塞爾維亞克羅埃西亞文"}
         shi{"希爾哈文"}
         shn{"撣文"}
         shu{"阿拉伯文（查德）"}
@@ -526,6 +533,7 @@ zh_Hant{
         sux{"蘇美文"}
         sv{"瑞典文"}
         sw{"史瓦希里文"}
+        sw_CD{"史瓦希里文（剛果）"}
         swb{"葛摩文"}
         syc{"古敘利亞文"}
         syr{"敘利亞文"}
@@ -615,10 +623,18 @@ zh_Hant{
         zen{"澤納加文"}
         zgh{"標準摩洛哥塔馬塞特文"}
         zh{"中文"}
+        zh_Hans{"簡體中文"}
+        zh_Hant{"繁體中文"}
         zu{"祖魯文"}
         zun{"祖尼文"}
         zxx{"無語言內容"}
         zza{"扎扎文"}
+    }
+    Languages%menu{
+        ars{"阿拉伯文（納吉迪）"}
+    }
+    Languages%variant{
+        ckb{"庫德文（索拉尼）"}
     }
     Scripts{
         Adlm{"富拉文"}
@@ -735,7 +751,7 @@ zh_Hant{
         Ogam{"歐甘文"}
         Olck{"桑塔利文"}
         Orkh{"鄂爾渾文"}
-        Orya{"歐利亞文"}
+        Orya{"歐迪亞文"}
         Osge{"歐塞奇文"}
         Osma{"歐斯曼亞文"}
         Palm{"帕米瑞拉文字"}
@@ -828,6 +844,7 @@ zh_Hant{
             iso8601{"ISO 8601 國際曆法"}
             japanese{"日本曆"}
             persian{"波斯曆"}
+            roc{"國曆"}
         }
         cf{
             account{"會計貨幣格式"}
@@ -967,7 +984,7 @@ zh_Hant{
             native{"原始數字"}
             nkoo{"曼德數字"}
             olck{"桑塔利文數字"}
-            orya{"歐利亞數字"}
+            orya{"歐迪亞數字"}
             osma{"奧斯曼亞數字"}
             roman{"羅馬數字"}
             romanlow{"小寫羅馬數字"}
@@ -1064,7 +1081,6 @@ zh_Hant{
         VALLADER{"瑞士瓦勒德方言"}
         WADEGILE{"威妥瑪式拼音"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — 全部"}
         category-list{"{0}: {1}"}
@@ -1078,6 +1094,8 @@ zh_Hant{
         strokes{
             other{"{0} 畫"}
         }
+        subscript{"下標 {0}"}
+        superscript{"上標 {0}"}
     }
     codePatterns{
         language{"語言：{0}"}

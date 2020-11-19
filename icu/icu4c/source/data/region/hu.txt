@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 hu{
     Countries{
         001{"Világ"}
@@ -73,9 +74,9 @@ hu{
         BZ{"Belize"}
         CA{"Kanada"}
         CC{"Kókusz (Keeling)-szigetek"}
-        CD{"Kongó - Kinshasa"}
+        CD{"Kongó – Kinshasa"}
         CF{"Közép-afrikai Köztársaság"}
-        CG{"Kongó - Brazzaville"}
+        CG{"Kongó – Brazzaville"}
         CH{"Svájc"}
         CI{"Elefántcsontpart"}
         CK{"Cook-szigetek"}
@@ -92,14 +93,17 @@ hu{
         CY{"Ciprus"}
         CZ{"Csehország"}
         DE{"Németország"}
+        DG{"Diego Garcia"}
         DJ{"Dzsibuti"}
         DK{"Dánia"}
         DM{"Dominika"}
         DO{"Dominikai Köztársaság"}
         DZ{"Algéria"}
+        EA{"Ceuta és Melilla"}
         EC{"Ecuador"}
         EE{"Észtország"}
         EG{"Egyiptom"}
+        EH{"Nyugat-Szahara"}
         ER{"Eritrea"}
         ES{"Spanyolország"}
         ET{"Etiópia"}
@@ -136,6 +140,7 @@ hu{
         HR{"Horvátország"}
         HT{"Haiti"}
         HU{"Magyarország"}
+        IC{"Kanári-szigetek"}
         ID{"Indonézia"}
         IE{"Írország"}
         IL{"Izrael"}
@@ -218,7 +223,7 @@ hu{
         PM{"Saint-Pierre és Miquelon"}
         PN{"Pitcairn-szigetek"}
         PR{"Puerto Rico"}
-        PS{"Palesztin Hatóság"}
+        PS{"Palesztin Autonómia"}
         PT{"Portugália"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -283,6 +288,8 @@ hu{
         VU{"Vanuatu"}
         WF{"Wallis és Futuna"}
         WS{"Szamoa"}
+        XA{"Pszeudo-nyelvjárások"}
+        XB{"Pszeudo-kétirányú"}
         XK{"Koszovó"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +298,20 @@ hu{
         ZW{"Zimbabwe"}
         ZZ{"Ismeretlen körzet"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"UK"}
+        HK{"Hongkong"}
+        MO{"Makaó"}
+        PS{"Palesztina"}
+        UN{"ENSZ"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Kongó (KDK)"}
+        CG{"Kongó (Köztársaság)"}
+        CZ{"Cseh Köztársaság"}
+        FK{"Falkland-szigetek (Malvin-szigetek)"}
+        SZ{"Eswatini"}
+        TL{"Timor-Leste"}
+    }
 }

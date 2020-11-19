@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 mzn{
     Countries{
         001{"جهون"}
@@ -91,14 +92,17 @@ mzn{
         CY{"قبرس"}
         CZ{"چک جمهوری"}
         DE{"آلمان"}
+        DG{"دیگو گارسیا"}
         DJ{"جیبوتی"}
         DK{"دانمارک"}
         DM{"دومنیکا"}
         DO{"دومنیکن جمهوری"}
         DZ{"الجزیره"}
+        EA{"سوتا و ملیله"}
         EC{"اکوادر"}
         EE{"استونی"}
         EG{"مصر"}
+        EH{"غربی صحرا"}
         ER{"اریتره"}
         ES{"ایسپانیا"}
         ET{"اتیوپی"}
@@ -134,6 +138,7 @@ mzn{
         HR{"کرواسی"}
         HT{"هاییتی"}
         HU{"مجارستون"}
+        IC{"قناری جزایر"}
         ID{"اندونزی"}
         IE{"ایرلند"}
         IL{"ایسراییل"}
@@ -215,7 +220,7 @@ mzn{
         PM{"سن پییر و میکلن"}
         PN{"پیتکارین جزایر"}
         PR{"پورتوریکو"}
-        PS{"دولت خودمختار فلسطین"}
+        PS{"فلسطین ِسرزمین"}
         PT{"پرتغال"}
         PW{"پالائو"}
         PY{"پاراگوئه"}
@@ -287,5 +292,17 @@ mzn{
         ZW{"زیمبابوه"}
         ZZ{"نامَیِّن منطقه"}
     }
-    Version{"37"}
+    Countries%short{
+        HK{"هونگ کونگ"}
+        MO{"ماکائو"}
+        PS{"فلسطین"}
+        US{"آمریکا متحده ایالات"}
+    }
+    Countries%variant{
+        CD{"کنگو (دموکراتیک جمهوری)"}
+        CG{"کنگو (جمهوری)"}
+        CI{"عاج ساحل"}
+        FK{"فالکلند (مالویناس)"}
+        TL{"شرقی تیمور"}
+    }
 }

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 jv{
     Keys{
         calendar{"Tanggalan"}
@@ -17,6 +18,7 @@ jv{
         ak{"Akan"}
         am{"Amharik"}
         ar{"Arab"}
+        ar_001{"Arab Standar Anyar"}
         as{"Assam"}
         asa{"Asu"}
         ast{"Asturia"}
@@ -57,6 +59,9 @@ jv{
         en{"Inggris"}
         eo{"Esperanto"}
         es{"Spanyol"}
+        es_419{"Spanyol (Amerika Latin)"}
+        es_ES{"Spanyol (Eropah)"}
+        es_MX{"Spanyol (Meksiko)"}
         et{"Estonia"}
         eu{"Basque"}
         ewo{"Ewondo"}
@@ -130,6 +135,7 @@ jv{
         luo{"Luo"}
         luy{"Luyia"}
         lv{"Latvia"}
+        mai{"Maithili"}
         mas{"Masai"}
         mer{"Meru"}
         mfe{"Morisyen"}
@@ -140,6 +146,7 @@ jv{
         mk{"Makedonia"}
         ml{"Malayalam"}
         mn{"Mongolia"}
+        mni{"Manipuri"}
         mr{"Marathi"}
         ms{"Melayu"}
         mt{"Malta"}
@@ -153,6 +160,7 @@ jv{
         nds{"Jerman Non Standar"}
         ne{"Nepal"}
         nl{"Walanda"}
+        nl_BE{"Flemis"}
         nmg{"Kwasio"}
         nn{"Nynorsk Norwegia"}
         nnh{"Ngiemboon"}
@@ -163,6 +171,7 @@ jv{
         or{"Odia"}
         os{"Ossetia"}
         pa{"Punjab"}
+        pcm{"Nigeria Pidgin"}
         pl{"Polandia"}
         prg{"Prusia"}
         ps{"Pashto"}
@@ -178,6 +187,7 @@ jv{
         sa{"Sanskerta"}
         sah{"Sakha"}
         saq{"Samburu"}
+        sat{"Santali"}
         sbp{"Sangu"}
         sd{"Sindhi"}
         se{"Sami Sisih Lor"}
@@ -229,8 +239,22 @@ jv{
         yue{"Kanton"}
         zgh{"Tamazight Moroko Standar"}
         zh{"Tyonghwa"}
+        zh_Hans{"Tyonghwa (Ringkes)"}
+        zh_Hant{"Tyonghwa (Tradisional)"}
         zu{"Zulu"}
         zxx{"Konten tanpa linguistik"}
+    }
+    Languages%long{
+        zh_Hans{"Tyonghwa Mandarin (Ringkes)"}
+        zh_Hant{"Tyonghwa Mandarin (Tradisional)"}
+    }
+    Languages%menu{
+        yue{"Tyonghwa, Kanton"}
+        zh{"Tyonghwa, Mandarin"}
+    }
+    Languages%short{
+        az{"Azeri"}
+        en_GB{"Inggris (Britania)"}
     }
     Scripts{
         Arab{"hija’iyah"}
@@ -293,6 +317,7 @@ jv{
             iso8601{"Tanggalan ISO-8601"}
             japanese{"Tanggalan Jepang"}
             persian{"Tanggalan Persia"}
+            roc{"Tanggalan Minguo"}
         }
         cf{
             account{"Format Mata Uang Akuntansi"}
@@ -357,7 +382,6 @@ jv{
             tibt{"Digit Tibet"}
         }
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — kabeh"}
         compatibility{"{0} — kompatibilitas"}
@@ -370,6 +394,8 @@ jv{
         strokes{
             other{"{0} tunyuk"}
         }
+        subscript{"tika ngisor {0}"}
+        superscript{"tika dhuwur {0}"}
     }
     codePatterns{
         language{"Basa: {0}"}

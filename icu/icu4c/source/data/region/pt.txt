@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 pt{
     Countries{
         001{"Mundo"}
@@ -56,7 +57,7 @@ pt{
         BE{"Bélgica"}
         BF{"Burquina Faso"}
         BG{"Bulgária"}
-        BH{"Bahrein"}
+        BH{"Barein"}
         BI{"Burundi"}
         BJ{"Benin"}
         BL{"São Bartolomeu"}
@@ -92,14 +93,17 @@ pt{
         CY{"Chipre"}
         CZ{"Tchéquia"}
         DE{"Alemanha"}
+        DG{"Diego Garcia"}
         DJ{"Djibuti"}
         DK{"Dinamarca"}
         DM{"Dominica"}
         DO{"República Dominicana"}
         DZ{"Argélia"}
+        EA{"Ceuta e Melilla"}
         EC{"Equador"}
         EE{"Estônia"}
         EG{"Egito"}
+        EH{"Saara Ocidental"}
         ER{"Eritreia"}
         ES{"Espanha"}
         ET{"Etiópia"}
@@ -109,7 +113,7 @@ pt{
         FJ{"Fiji"}
         FK{"Ilhas Malvinas"}
         FM{"Micronésia"}
-        FO{"Ilhas Faroe"}
+        FO{"Ilhas Faroé"}
         FR{"França"}
         GA{"Gabão"}
         GB{"Reino Unido"}
@@ -136,6 +140,7 @@ pt{
         HR{"Croácia"}
         HT{"Haiti"}
         HU{"Hungria"}
+        IC{"Ilhas Canárias"}
         ID{"Indonésia"}
         IE{"Irlanda"}
         IL{"Israel"}
@@ -174,7 +179,7 @@ pt{
         LY{"Líbia"}
         MA{"Marrocos"}
         MC{"Mônaco"}
-        MD{"Moldova"}
+        MD{"Moldávia"}
         ME{"Montenegro"}
         MF{"São Martinho"}
         MG{"Madagascar"}
@@ -183,7 +188,7 @@ pt{
         ML{"Mali"}
         MM{"Mianmar (Birmânia)"}
         MN{"Mongólia"}
-        MO{"RAE de Macau"}
+        MO{"Macau, RAE da China"}
         MP{"Ilhas Marianas do Norte"}
         MQ{"Martinica"}
         MR{"Mauritânia"}
@@ -283,6 +288,8 @@ pt{
         VU{"Vanuatu"}
         WF{"Wallis e Futuna"}
         WS{"Samoa"}
+        XA{"Pseudossotaques"}
+        XB{"Pseudobidirecional"}
         XK{"Kosovo"}
         YE{"Iêmen"}
         YT{"Mayotte"}
@@ -291,5 +298,20 @@ pt{
         ZW{"Zimbábue"}
         ZZ{"Região desconhecida"}
     }
-    Version{"37"}
+    Countries%short{
+        HK{"Hong Kong"}
+        MO{"Macau"}
+        PS{"Palestina"}
+        UN{"ONU"}
+        US{"EUA"}
+    }
+    Countries%variant{
+        CD{"República Democrática do Congo"}
+        CG{"Congo"}
+        CI{"Côte d’Ivoire"}
+        CZ{"República Tcheca"}
+        FK{"Ilhas Malvinas (Ilhas Falkland)"}
+        SZ{"Suazilândia"}
+        TL{"República Democrática de Timor-Leste"}
+    }
 }

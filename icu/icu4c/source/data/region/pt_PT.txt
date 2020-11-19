@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 pt_PT{
     Countries{
         009{"Oceânia"}
@@ -25,10 +26,11 @@ pt_PT{
         CZ{"Chéquia"}
         DJ{"Jibuti"}
         DM{"Domínica"}
+        EA{"Ceuta e Melilha"}
         EE{"Estónia"}
+        EH{"Sara Ocidental"}
         EZ{"Zona Euro"}
-        FK{"Ilhas Malvinas (Falkland)"}
-        FO{"Ilhas Faroé"}
+        FK{"Ilhas Falkland"}
         GG{"Guernesey"}
         GL{"Gronelândia"}
         GU{"Guame"}
@@ -42,17 +44,15 @@ pt_PT{
         LK{"Sri Lanca"}
         LV{"Letónia"}
         MC{"Mónaco"}
-        MD{"Moldávia"}
         MG{"Madagáscar"}
         MK{"Macedónia do Norte"}
-        MO{"Macau, RAE da China"}
         MS{"Monserrate"}
         MU{"Maurícia"}
         MW{"Maláui"}
         NC{"Nova Caledónia"}
         NU{"Niuê"}
         PL{"Polónia"}
-        PS{"Autoridade Palestiniana"}
+        PS{"Territórios palestinianos"}
         QO{"Oceânia Insular"}
         RO{"Roménia"}
         SI{"Eslovénia"}
@@ -68,9 +68,19 @@ pt_PT{
         UZ{"Usbequistão"}
         VI{"Ilhas Virgens dos EUA"}
         VN{"Vietname"}
+        XA{"pseudoacentos"}
+        XB{"pseudobidirecional"}
         YE{"Iémen"}
         YT{"Maiote"}
         ZW{"Zimbabué"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"GB"}
+    }
+    Countries%variant{
+        CG{"República do Congo"}
+        CI{"Costa do Marfim"}
+        CZ{"República Checa"}
+        FK{"Ilhas Falkland (Malvinas)"}
+    }
 }

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 fy{
     Countries{
         001{"Wrâld"}
@@ -91,14 +92,17 @@ fy{
         CY{"Syprus"}
         CZ{"Tsjechje"}
         DE{"Dútslân"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denemarken"}
         DM{"Dominika"}
         DO{"Dominikaanske Republyk"}
         DZ{"Algerije"}
+        EA{"Ceuta en Melilla"}
         EC{"Ecuador"}
         EE{"Estlân"}
         EG{"Egypte"}
+        EH{"Westelijke Sahara"}
         ER{"Eritrea"}
         ES{"Spanje"}
         ET{"Ethiopië"}
@@ -134,6 +138,7 @@ fy{
         HR{"Kroatië"}
         HT{"Haïti"}
         HU{"Hongarije"}
+        IC{"Kanaryske Eilânnen"}
         ID{"Yndonesië"}
         IE{"Ierlân"}
         IL{"Israël"}
@@ -215,7 +220,7 @@ fy{
         PM{"Saint-Pierre en Miquelon"}
         PN{"Pitcairneilannen"}
         PR{"Puerto Rico"}
-        PS{"Palestijnse Autoriteit"}
+        PS{"Palestynske gebieten"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -287,5 +292,16 @@ fy{
         ZW{"Zimbabwe"}
         ZZ{"Unbekend gebiet"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"VK"}
+        HK{"Hongkong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+        US{"VS"}
+    }
+    Countries%variant{
+        CD{"Congo (DRC)"}
+        CG{"Congo (Republyk)"}
+        FK{"Falklâneilannen (Islas Malvinas)"}
+    }
 }

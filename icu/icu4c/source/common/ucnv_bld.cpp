@@ -194,10 +194,7 @@ static struct {
 
 /*initializes some global variables */
 static UHashtable *SHARED_DATA_HASHTABLE = NULL;
-static icu::UMutex *cnvCacheMutex() {                 /* Mutex for synchronizing cnv cache access. */
-    static icu::UMutex m;
-    return &m;
-}
+static icu::UMutex cnvCacheMutex;
 /*  Note:  the global mutex is used for      */
 /*         reference count updates.          */
 
@@ -227,7 +224,7 @@ static UBool gDefaultConverterContainsOption;
 static const char DATA_TYPE[] = "cnv";
 
 /* ucnv_flushAvailableConverterCache. This is only called from ucnv_cleanup().
- *                       If it is ever to be called from elsewhere, synchronization 
+ *                       If it is ever to be called from elsewhere, synchronization
  *                       will need to be considered.
  */
 static void
@@ -265,7 +262,7 @@ static UBool U_CALLCONV ucnv_cleanup(void) {
 }
 
 U_CAPI void U_EXPORT2
-ucnv_enableCleanup() {
+ucnv_enableCleanup(void) {
     ucln_common_registerCleanup(UCLN_COMMON_UCNV, ucnv_cleanup);
 }
 
@@ -540,7 +537,7 @@ ucnv_deleteSharedConverterData(UConverterSharedData * deadSharedData)
 
 /**
  * Load a non-algorithmic converter.
- * If pkg==NULL, then this function must be called inside umtx_lock(cnvCacheMutex()).
+ * If pkg==NULL, then this function must be called inside umtx_lock(&cnvCacheMutex).
  */
 UConverterSharedData *
 ucnv_load(UConverterLoadArgs *pArgs, UErrorCode *err) {
@@ -583,7 +580,7 @@ ucnv_load(UConverterLoadArgs *pArgs, UErrorCode *err) {
 /**
  * Unload a non-algorithmic converter.
  * It must be sharedData->isReferenceCounted
- * and this function must be called inside umtx_lock(cnvCacheMutex()).
+ * and this function must be called inside umtx_lock(&cnvCacheMutex).
  */
 U_CAPI void
 ucnv_unload(UConverterSharedData *sharedData) {
@@ -602,9 +599,9 @@ U_CFUNC void
 ucnv_unloadSharedDataIfReady(UConverterSharedData *sharedData)
 {
     if(sharedData != NULL && sharedData->isReferenceCounted) {
-        umtx_lock(cnvCacheMutex());
+        umtx_lock(&cnvCacheMutex);
         ucnv_unload(sharedData);
-        umtx_unlock(cnvCacheMutex());
+        umtx_unlock(&cnvCacheMutex);
     }
 }
 
@@ -612,9 +609,9 @@ U_CFUNC void
 ucnv_incrementRefCount(UConverterSharedData *sharedData)
 {
     if(sharedData != NULL && sharedData->isReferenceCounted) {
-        umtx_lock(cnvCacheMutex());
+        umtx_lock(&cnvCacheMutex);
         sharedData->referenceCounter++;
-        umtx_unlock(cnvCacheMutex());
+        umtx_unlock(&cnvCacheMutex);
     }
 }
 
@@ -815,9 +812,9 @@ ucnv_loadSharedData(const char *converterName,
         pArgs->nestedLoads=1;
         pArgs->pkg=NULL;
 
-        umtx_lock(cnvCacheMutex());
+        umtx_lock(&cnvCacheMutex);
         mySharedConverterData = ucnv_load(pArgs, err);
-        umtx_unlock(cnvCacheMutex());
+        umtx_unlock(&cnvCacheMutex);
         if (U_FAILURE (*err) || (mySharedConverterData == NULL))
         {
             return NULL;
@@ -1064,7 +1061,7 @@ ucnv_flushCache ()
     *                   because the sequence of looking up in the cache + incrementing
     *                   is protected by cnvCacheMutex.
     */
-    umtx_lock(cnvCacheMutex());
+    umtx_lock(&cnvCacheMutex);
     /*
      * double loop: A delta/extension-only converter has a pointer to its base table's
      * shared data; the first iteration of the outer loop may see the delta converter
@@ -1093,7 +1090,7 @@ ucnv_flushCache ()
             }
         }
     } while(++i == 1 && remaining > 0);
-    umtx_unlock(cnvCacheMutex());
+    umtx_unlock(&cnvCacheMutex);
 
     UTRACE_DATA1(UTRACE_INFO, "ucnv_flushCache() exits with %d converters remaining", remaining);
 
@@ -1199,7 +1196,7 @@ internalSetName(const char *name, UErrorCode *status) {
     }
     algorithmicSharedData = getAlgorithmicTypeFromName(stackArgs.name);
 
-    umtx_lock(cnvCacheMutex());
+    umtx_lock(&cnvCacheMutex);
 
     gDefaultAlgorithmicSharedData = algorithmicSharedData;
     gDefaultConverterContainsOption = containsOption;
@@ -1215,7 +1212,7 @@ internalSetName(const char *name, UErrorCode *status) {
 
     ucnv_enableCleanup();
 
-    umtx_unlock(cnvCacheMutex());
+    umtx_unlock(&cnvCacheMutex);
 }
 #endif
 
@@ -1240,7 +1237,7 @@ ucnv_getDefaultName() {
     but ucnv_setDefaultName is not thread safe.
     */
     {
-        icu::Mutex lock(cnvCacheMutex());
+        icu::Mutex lock(&cnvCacheMutex);
         name = gDefaultConverterName;
     }
     if(name==NULL) {
@@ -1312,7 +1309,7 @@ ucnv_setDefaultName(const char *converterName) {
 
         /* The close may make the current name go away. */
         ucnv_close(cnv);
-  
+
         /* reset the converter cache */
         u_flushDefaultConverter();
     }

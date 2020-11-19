@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ks{
     Countries{
         001{"دُنیا"}
@@ -96,6 +97,7 @@ ks{
         EC{"اِکواڑور"}
         EE{"ایسٹونِیا"}
         EG{"مِسٔر"}
+        EH{"مشرِقی سَہارا"}
         ER{"اِرٕٹِیا"}
         ES{"سٕپین"}
         ET{"اِتھوپِیا"}
@@ -208,7 +210,7 @@ ks{
         PM{"سینٹ پیٖری تہٕ موکیلِیَن"}
         PN{"پِٹکیرٕنۍ جٔزیٖرٕ"}
         PR{"پٔرٹو رِکو"}
-        PS{"Palestinian Authority"}
+        PS{"فَلَستیٖن"}
         PT{"پُرتِگال"}
         PW{"پَلاو"}
         PY{"پَراگُے"}
@@ -276,5 +278,4 @@ ks{
         ZW{"زِمبابے"}
         ZZ{"نامعلوٗم تہٕ نالَگہار عَلاقہٕ"}
     }
-    Version{"37"}
 }

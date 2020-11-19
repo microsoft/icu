@@ -1,8 +1,8 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 en_GB{
     %%Parent{"en_001"}
-    Version{"37"}
     zoneStrings{
         "Africa:Abidjan"{
             ec{"Abidjan"}
@@ -613,9 +613,6 @@ en_GB{
         "Asia:Anadyr"{
             ec{"Anadyr"}
         }
-        "Asia:Aqtau"{
-            ec{"Aqtau"}
-        }
         "Asia:Aqtobe"{
             ec{"Aqtobe"}
         }
@@ -798,6 +795,9 @@ en_GB{
         }
         "Asia:Ulaanbaatar"{
             ec{"Ulaanbaatar"}
+        }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
         }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 nd{
     Countries{
         AD{"Andora"}
@@ -164,7 +165,7 @@ nd{
         PM{"Saint Pierre and Miquelon"}
         PN{"Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Palestinian Authority"}
+        PS{"Palestinian West Bank and Gaza"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -226,5 +227,4 @@ nd{
         ZM{"Zambiya"}
         ZW{"Zimbabwe"}
     }
-    Version{"37"}
 }

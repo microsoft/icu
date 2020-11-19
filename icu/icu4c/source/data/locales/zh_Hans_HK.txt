@@ -1,7 +1,7 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 zh_Hans_HK{
-    Version{"37"}
     calendar{
         buddhist{
             DateTimePatterns{
@@ -116,10 +116,10 @@ zh_Hans_HK{
                 "y年M月d日",
                 "y年M月d日",
                 "d/M/yy",
+                "{1}{0}",
+                "{1}{0}",
                 "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
+                "{1}{0}",
                 "{1} {0}",
             }
             availableFormats{
@@ -199,6 +199,28 @@ zh_Hans_HK{
             availableFormats{
                 MEd{"M/dE"}
                 Md{"M/d"}
+            }
+        }
+        roc{
+            DateTimePatterns{
+                "zzzz ah:mm:ss",
+                "z ah:mm:ss",
+                "ah:mm:ss",
+                "ah:mm",
+                "Gy年M月d日EEEE",
+                "Gy年M月d日",
+                "Gy年M月d日",
+                "Gd/M/yy",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+            }
+            availableFormats{
+                M{"L"}
+                MMM{"M月"}
+                Md{"M-d"}
             }
         }
     }

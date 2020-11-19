@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 nl{
     Keys{
         calendar{"kalender"}
@@ -71,7 +72,7 @@ nl{
         bax{"Bamoun"}
         bbc{"Batak Toba"}
         bbj{"Ghomala’"}
-        be{"Wit-Russisch"}
+        be{"Belarussisch"}
         bej{"Beja"}
         bem{"Bemba"}
         bew{"Betawi"}
@@ -172,6 +173,7 @@ nl{
         ewo{"Ewondo"}
         ext{"Extremeens"}
         fa{"Perzisch"}
+        fa_AF{"Dari"}
         fan{"Fang"}
         fat{"Fanti"}
         ff{"Fulah"}
@@ -377,7 +379,7 @@ nl{
         ms{"Maleis"}
         mt{"Maltees"}
         mua{"Mundang"}
-        mul{"Meerdere talen"}
+        mul{"meerdere talen"}
         mus{"Creek"}
         mwl{"Mirandees"}
         mwr{"Marwari"}
@@ -393,6 +395,7 @@ nl{
         nb{"Noors - Bokmål"}
         nd{"Noord-Ndebele"}
         nds{"Nedersaksisch"}
+        nds_NL{"Nederduits"}
         ne{"Nepalees"}
         new{"Newari"}
         ng{"Ndonga"}
@@ -493,6 +496,7 @@ nl{
         sg{"Sango"}
         sga{"Oudiers"}
         sgs{"Samogitisch"}
+        sh{"Servo-Kroatisch"}
         shi{"Tashelhiyt"}
         shn{"Shan"}
         shu{"Tsjadisch Arabisch"}
@@ -619,6 +623,22 @@ nl{
         zxx{"geen linguïstische inhoud"}
         zza{"Zaza"}
     }
+    Languages%long{
+        zh_Hans{"Mandarijn (vereenvoudigd)"}
+        zh_Hant{"Mandarijn (traditioneel)"}
+    }
+    Languages%menu{
+        ars{"Arabisch, Nadjdi"}
+        ckb{"Koerdisch, Soranî"}
+        zh{"Mandarijn"}
+    }
+    Languages%short{
+        az{"Azeri"}
+    }
+    Languages%variant{
+        ckb{"Koerdisch, Soranî"}
+        ps{"Pashto"}
+    }
     Scripts{
         Adlm{"Adlam"}
         Afak{"Defaka"}
@@ -638,7 +658,7 @@ nl{
         Blis{"Blissymbolen"}
         Bopo{"Bopomofo"}
         Brah{"Brahmi"}
-        Brai{"Braille"}
+        Brai{"braille"}
         Bugi{"Buginees"}
         Buhd{"Buhid"}
         Cakm{"Chakma"}
@@ -809,9 +829,9 @@ nl{
         Yiii{"Yi"}
         Zanb{"vierkant Zanabazar"}
         Zinh{"Overgeërfd"}
-        Zmth{"Wiskundige notatie"}
+        Zmth{"wiskundige notatie"}
         Zsye{"emoji"}
-        Zsym{"Symbolen"}
+        Zsym{"symbolen"}
         Zxxx{"ongeschreven"}
         Zyyy{"algemeen"}
         Zzzz{"onbekend schriftsysteem"}
@@ -842,6 +862,7 @@ nl{
             iso8601{"ISO-8601-kalender"}
             japanese{"Japanse kalender"}
             persian{"Perzische kalender"}
+            roc{"Kalender van de Chinese Republiek"}
         }
         cf{
             account{"financiële valutanotatie"}
@@ -1114,7 +1135,6 @@ nl{
         WADEGILE{"Wade-Giles-romanisering"}
         XSISTEMO{"X-sistemo"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — alle"}
         category-list{"{0}: {1}"}

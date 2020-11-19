@@ -1,7 +1,7 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 hu{
-    Version{"37"}
     zoneStrings{
         "Africa:Abidjan"{
             ec{"Abidjan"}
@@ -867,6 +867,9 @@ hu{
         "Asia:Ulaanbaatar"{
             ec{"Ulánbátor"}
         }
+        "Asia:Urumqi"{
+            ec{"Ürümqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Uszty-Nyera"}
         }
@@ -952,7 +955,7 @@ hu{
             ec{"Sydney"}
         }
         "Etc:UTC"{
-            ls{"Koordinált világidő"}
+            ls{"koordinált világidő"}
         }
         "Etc:Unknown"{
             ec{"Ismeretlen város"}

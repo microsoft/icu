@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 shi{
     Countries{
         AD{"ⴰⵏⴷⵓⵔⴰ"}
@@ -164,7 +165,7 @@ shi{
         PM{"ⵙⴰⵏⴱⵢⵉⵔ ⴷ ⵎⵉⴽⵍⵓⵏ"}
         PN{"ⴱⵉⵜⴽⴰⵢⵔⵏ"}
         PR{"ⴱⵓⵔⵜⵓ ⵔⵉⴽⵓ"}
-        PS{"السلطة الفلسطينية"}
+        PS{"ⴰⴳⵎⵎⴰⴹ ⵏ ⵜⴰⴳⵓⵜ ⴷ ⵖⵣⵣⴰ"}
         PT{"ⴱⵕⵟⵇⵉⵣ"}
         PW{"ⴱⴰⵍⴰⵡ"}
         PY{"ⴱⴰⵔⴰⴳⵡⴰⵢ"}
@@ -226,5 +227,4 @@ shi{
         ZM{"ⵣⴰⵎⴱⵢⴰ"}
         ZW{"ⵣⵉⵎⴱⴰⴱⵡⵉ"}
     }
-    Version{"37"}
 }

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 tt{
     Countries{
         AD{"Андорра"}
@@ -245,5 +246,11 @@ tt{
         ZW{"Зимбабве"}
         ZZ{"билгесез төбәк"}
     }
-    Version{"37"}
+    Countries%short{
+        HK{"Гонконг"}
+        MO{"Макао"}
+    }
+    Countries%variant{
+        CD{"Конго (КДР)"}
+    }
 }

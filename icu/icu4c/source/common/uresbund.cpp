@@ -51,10 +51,7 @@ TODO: This cache should probably be removed when the deprecated code is
 static UHashtable *cache = NULL;
 static icu::UInitOnce gCacheInitOnce = U_INITONCE_INITIALIZER;
 
-static UMutex *resbMutex() {
-    static UMutex m;
-    return &m;
-}
+static UMutex resbMutex;
 
 /* INTERNAL: hashes an entry  */
 static int32_t U_CALLCONV hashEntry(const UHashTok parm) {
@@ -98,7 +95,7 @@ static UBool chopLocale(char *name) {
  *  Internal function
  */
 static void entryIncrease(UResourceDataEntry *entry) {
-    Mutex lock(resbMutex());
+    Mutex lock(&resbMutex);
     entry->fCountExisting++;
     while(entry->fParent != NULL) {
       entry = entry->fParent;
@@ -185,7 +182,7 @@ static int32_t ures_flushCache()
     /*if shared data hasn't even been lazy evaluated yet
     * return 0
     */
-    Mutex lock(resbMutex());
+    Mutex lock(&resbMutex);
     if (cache == NULL) {
         return 0;
     }
@@ -231,7 +228,7 @@ U_CAPI UBool U_EXPORT2 ures_dumpCacheContents(void) {
   const UHashElement *e;
   UResourceDataEntry *resB;
   
-    Mutex lock(resbMutex());
+    Mutex lock(&resbMutex);
     if (cache == NULL) {
       fprintf(stderr,"%s:%d: RB Cache is NULL.\n", __FILE__, __LINE__);
       return FALSE;
@@ -663,7 +660,7 @@ static UResourceDataEntry *entryOpen(const char* path, const char* localeID,
         }
     }
  
-    Mutex lock(resbMutex());    // Lock resbMutex until the end of this function.
+    Mutex lock(&resbMutex);    // Lock resbMutex until the end of this function.
 
     /* We're going to skip all the locales that do not have any data */
     r = findFirstExisting(path, name, &isRoot, &hasChopped, &isDefault, &intStatus);
@@ -785,7 +782,7 @@ entryOpenDirect(const char* path, const char* localeID, UErrorCode* status) {
         return NULL;
     }
 
-    Mutex lock(resbMutex());
+    Mutex lock(&resbMutex);
     // findFirstExisting() without fallbacks.
     UResourceDataEntry *r = init_entry(localeID, path, status);
     if(U_SUCCESS(*status)) {
@@ -865,7 +862,7 @@ static void entryCloseInt(UResourceDataEntry *resB) {
  */
 
 static void entryClose(UResourceDataEntry *resB) {
-  Mutex lock(resbMutex());
+  Mutex lock(&resbMutex);
   entryCloseInt(resB);
 }
 
@@ -1795,7 +1792,7 @@ ures_findSubResource(const UResourceBundle *resB, char* path, UResourceBundle *f
 
   return result;
 }
-U_INTERNAL const UChar* U_EXPORT2 
+U_CAPI const UChar* U_EXPORT2 
 ures_getStringByKeyWithFallback(const UResourceBundle *resB, 
                                 const char* inKey, 
                                 int32_t* len,
@@ -2213,7 +2210,7 @@ ures_getUTF8StringByKey(const UResourceBundle *resB,
  *  INTERNAL: Get the name of the first real locale (not placeholder) 
  *  that has resource bundle data.
  */
-U_INTERNAL const char*  U_EXPORT2
+U_CAPI const char*  U_EXPORT2
 ures_getLocaleInternal(const UResourceBundle* resourceBundle, UErrorCode* status)
 {
     if (status==NULL || U_FAILURE(*status)) {
@@ -2360,7 +2357,7 @@ ures_openDirect(const char* path, const char* localeID, UErrorCode* status) {
  * 
  * Same as ures_open(), but uses the fill-in parameter and does not allocate a new bundle.
  */
-U_INTERNAL void U_EXPORT2
+U_CAPI void U_EXPORT2
 ures_openFillIn(UResourceBundle *r, const char* path,
                 const char* localeID, UErrorCode* status) {
     if(U_SUCCESS(*status) && r == NULL) {
@@ -2373,7 +2370,7 @@ ures_openFillIn(UResourceBundle *r, const char* path,
 /**
  * Same as ures_openDirect(), but uses the fill-in parameter and does not allocate a new bundle.
  */
-U_INTERNAL void U_EXPORT2
+U_CAPI void U_EXPORT2
 ures_openDirectFillIn(UResourceBundle *r, const char* path, const char* localeID, UErrorCode* status) {
     if(U_SUCCESS(*status) && r == NULL) {
         *status = U_ILLEGAL_ARGUMENT_ERROR;
@@ -2423,7 +2420,7 @@ ures_countArrayItems(const UResourceBundle* resourceBundle,
  * @see ures_getVersion
  * @internal
  */
-U_INTERNAL const char* U_EXPORT2 
+U_CAPI const char* U_EXPORT2 
 ures_getVersionNumberInternal(const UResourceBundle *resourceBundle)
 {
     if (!resourceBundle) return NULL;
@@ -3019,7 +3016,7 @@ ures_getKeywordValues(const char *path, const char *keyword, UErrorCode *status)
 }
 #if 0
 /* This code isn't needed, and given the documentation warnings the implementation is suspect */
-U_INTERNAL UBool U_EXPORT2
+U_CAPI UBool U_EXPORT2
 ures_equal(const UResourceBundle* res1, const UResourceBundle* res2){
     if(res1==NULL || res2==NULL){
         return res1==res2; /* pointer comparision */
@@ -3055,7 +3052,7 @@ ures_equal(const UResourceBundle* res1, const UResourceBundle* res2){
     }
     return TRUE;
 }
-U_INTERNAL UResourceBundle* U_EXPORT2
+U_CAPI UResourceBundle* U_EXPORT2
 ures_clone(const UResourceBundle* res, UErrorCode* status){
     UResourceBundle* bundle = NULL;
     UResourceBundle* ret = NULL;
@@ -3071,7 +3068,7 @@ ures_clone(const UResourceBundle* res, UErrorCode* status){
     }
     return ret;
 }
-U_INTERNAL const UResourceBundle* U_EXPORT2
+U_CAPI const UResourceBundle* U_EXPORT2
 ures_getParentBundle(const UResourceBundle* res){
     if(res==NULL){
         return NULL;
@@ -3080,7 +3077,7 @@ ures_getParentBundle(const UResourceBundle* res){
 }
 #endif
 
-U_INTERNAL void U_EXPORT2
+U_CAPI void U_EXPORT2
 ures_getVersionByKey(const UResourceBundle* res, const char *key, UVersionInfo ver, UErrorCode *status) {
   const UChar *str;
   int32_t len;

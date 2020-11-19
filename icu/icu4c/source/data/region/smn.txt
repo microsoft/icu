@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 smn{
     Countries{
         AC{"Ascension-suálui"}
@@ -58,11 +59,13 @@ smn{
         CY{"Kypros"}
         CZ{"Tšekki"}
         DE{"Saksa"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Tanska"}
         DM{"Dominica"}
         DO{"Dominikaanisâš täsiväldi"}
         DZ{"Algeria"}
+        EA{"Ceuta já Melilla"}
         EC{"Ecuador"}
         EE{"Eestieennâm"}
         EG{"Egypti"}
@@ -100,6 +103,7 @@ smn{
         HR{"Kroatia"}
         HT{"Haiti"}
         HU{"Uŋgar"}
+        IC{"Kanariasuolluuh"}
         ID{"Indonesia"}
         IE{"Irland"}
         IL{"Israel"}
@@ -250,5 +254,15 @@ smn{
         ZM{"Sambia"}
         ZW{"Zimbabwe"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"OK"}
+        HK{"Hong Kong"}
+        MO{"Macao"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Kongo demokraattisâš täsiväldi"}
+        CG{"Kongo täsiväldi"}
+        FK{"Falklandsuolluuh (Malvinassuolluuh)"}
+    }
 }

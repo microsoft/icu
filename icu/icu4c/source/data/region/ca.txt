@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ca{
     Countries{
         001{"Món"}
@@ -92,14 +93,17 @@ ca{
         CY{"Xipre"}
         CZ{"Txèquia"}
         DE{"Alemanya"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Dinamarca"}
         DM{"Dominica"}
         DO{"República Dominicana"}
         DZ{"Algèria"}
+        EA{"Ceuta i Melilla"}
         EC{"Equador"}
         EE{"Estònia"}
         EG{"Egipte"}
+        EH{"Sàhara Occidental"}
         ER{"Eritrea"}
         ES{"Espanya"}
         ET{"Etiòpia"}
@@ -122,7 +126,7 @@ ca{
         GL{"Groenlàndia"}
         GM{"Gàmbia"}
         GN{"Guinea"}
-        GP{"Guadeloupe"}
+        GP{"Guadalupe"}
         GQ{"Guinea Equatorial"}
         GR{"Grècia"}
         GS{"Illes Geòrgia del Sud i Sandwich del Sud"}
@@ -136,6 +140,7 @@ ca{
         HR{"Croàcia"}
         HT{"Haití"}
         HU{"Hongria"}
+        IC{"Illes Canàries"}
         ID{"Indonèsia"}
         IE{"Irlanda"}
         IL{"Israel"}
@@ -218,7 +223,7 @@ ca{
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Illes Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Autoritat Palestina"}
+        PS{"Territoris palestins"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguai"}
@@ -283,6 +288,8 @@ ca{
         VU{"Vanuatu"}
         WF{"Wallis i Futuna"}
         WS{"Samoa"}
+        XA{"pseudoaccents"}
+        XB{"pseudobidi"}
         XK{"Kosovo"}
         YE{"Iemen"}
         YT{"Mayotte"}
@@ -291,5 +298,20 @@ ca{
         ZW{"Zimbàbue"}
         ZZ{"regió desconeguda"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"RU"}
+        HK{"Hong Kong"}
+        MO{"Macau"}
+        PS{"Palestina"}
+        UN{"ONU"}
+        US{"EUA"}
+    }
+    Countries%variant{
+        CD{"Congo (RDC)"}
+        CG{"Congo (República del Congo)"}
+        CI{"Costa d’Ivori"}
+        CZ{"República Txeca"}
+        FK{"Illes Malvines (Illes Falkland)"}
+        SZ{"Swazilàndia"}
+    }
 }

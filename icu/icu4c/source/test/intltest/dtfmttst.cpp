@@ -88,6 +88,7 @@ void DateFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &nam
     TESTCASE_AUTO(TestHebrewClone);
     TESTCASE_AUTO(TestDateFormatSymbolsClone);
     TESTCASE_AUTO(TestTimeZoneDisplayName);
+    TESTCASE_AUTO(TestTimeZoneInLocale);
     TESTCASE_AUTO(TestRoundtripWithCalendar);
     TESTCASE_AUTO(Test6338);
     TESTCASE_AUTO(Test6726);
@@ -2857,13 +2858,13 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "de", "Asia/Calcutta", "2004-01-15T00:00:00Z", "Z", "+0530", "+5:30" },
         { "de", "Asia/Calcutta", "2004-01-15T00:00:00Z", "ZZZZ", "GMT+05:30", "+5:30" },
         { "de", "Asia/Calcutta", "2004-01-15T00:00:00Z", "z", "GMT+5:30", "+5:30" },
-        { "de", "Asia/Calcutta", "2004-01-15T00:00:00Z", "zzzz", "Indische Zeit", "+5:30" },
+        { "de", "Asia/Calcutta", "2004-01-15T00:00:00Z", "zzzz", "Indische Normalzeit", "+5:30" },
         { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "Z", "+0530", "+5:30" },
         { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "ZZZZ", "GMT+05:30", "+5:30" },
         { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "z", "GMT+5:30", "+05:30" },
-        { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "zzzz", "Indische Zeit", "+5:30" },
+        { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "zzzz", "Indische Normalzeit", "+5:30" },
         { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "v", "Indien Zeit", "Asia/Calcutta" },
-        { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "vvvv", "Indische Zeit", "Asia/Calcutta" },
+        { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "vvvv", "Indische Normalzeit", "Asia/Calcutta" },
 
         // ==========
 
@@ -3359,7 +3360,7 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "ti", "Europe/London", "2004-07-15T00:00:00Z", "Z", "+0100", "+1:00" },
         { "ti", "Europe/London", "2004-07-15T00:00:00Z", "ZZZZ", "GMT+01:00", "+1:00" },
         { "ti", "Europe/London", "2004-07-15T00:00:00Z", "z", "GMT+1", "+1:00" },
-        { "ti", "Europe/London", "2004-07-15T00:00:00Z", "zzzz", "GMT+01:00", "+1:00" },
+        { "ti", "Europe/London", "2004-07-15T00:00:00Z", "zzzz", "British Summer Time", "+1:00" },
         { "ti", "Europe/London", "2004-07-15T00:00:00Z", "v", "\\u12A5\\u1295\\u130D\\u120A\\u12DD", "Europe/London" },
         { "ti", "Europe/London", "2004-07-15T00:00:00Z", "vvvv", "\\u12A5\\u1295\\u130D\\u120A\\u12DD", "Europe/London" },
 
@@ -3439,6 +3440,82 @@ void DateFormatTest::TestTimeZoneDisplayName()
             errln(info[0] + ";" + info[1] + ";" + info[2] + ";" + info[3] + " expected: '" +
                   info[4] + "' but got: '" + result + "'");
         }
+    }
+}
+
+void DateFormatTest::TestTimeZoneInLocale()
+{
+    const char *tests[][3]  = {
+        { "en-u-tz-usden",                     "America/Denver",             "gregorian" },
+        { "es-u-tz-usden",                     "America/Denver",             "gregorian" },
+        { "ms-u-tz-mykul",                     "Asia/Kuala_Lumpur",          "gregorian" },
+        { "zh-u-tz-mykul",                     "Asia/Kuala_Lumpur",          "gregorian" },
+        { "fr-u-ca-buddhist-tz-phmnl",         "Asia/Manila",                "buddhist" },
+        { "th-u-ca-chinese-tz-gblon",          "Europe/London",              "chinese" },
+        { "de-u-ca-coptic-tz-ciabj",           "Africa/Abidjan",             "coptic" },
+        { "ja-u-ca-dangi-tz-hkhkg",            "Asia/Hong_Kong",             "dangi" },
+        { "da-u-ca-ethioaa-tz-ruunera",        "Asia/Ust-Nera",              "ethiopic-amete-alem" },
+        { "ko-u-ca-ethiopic-tz-cvrai",         "Atlantic/Cape_Verde",        "ethiopic" },
+        { "fil-u-ca-gregory-tz-aubne",         "Australia/Brisbane",         "gregorian" },
+        { "fa-u-ca-hebrew-tz-brrbr",           "America/Rio_Branco",         "hebrew" },
+        { "gr-u-ca-indian-tz-lccas",           "America/St_Lucia",           "indian" },
+        { "or-u-ca-islamic-tz-cayyn",          "America/Swift_Current",      "islamic" },
+        { "my-u-ca-islamic-umalqura-tz-kzala", "Asia/Almaty",                "islamic-umalqura" },
+        { "lo-u-ca-islamic-tbla-tz-bmbda",     "Atlantic/Bermuda",           "islamic-tbla" },
+        { "km-u-ca-islamic-civil-tz-aqplm",    "Antarctica/Palmer",          "islamic-civil" },
+        { "kk-u-ca-islamic-rgsa-tz-usanc",     "America/Anchorage",          "islamic" },
+        { "ar-u-ca-iso8601-tz-bjptn",          "Africa/Porto-Novo",          "gregorian" },
+        { "he-u-ca-japanese-tz-tzdar",         "Africa/Dar_es_Salaam",       "japanese" },
+        { "bs-u-ca-persian-tz-etadd",          "Africa/Addis_Ababa",         "persian" },
+        { "it-u-ca-roc-tz-aruaq",              "America/Argentina/San_Juan", "roc" },
+    };
+
+    for (int32_t i = 0; i < UPRV_LENGTHOF(tests); ++i) {
+        UErrorCode status = U_ZERO_ERROR;
+        const char **testLine = tests[i];
+        Locale locale(testLine[0]);
+        UnicodeString expectedTimezone(testLine[1], -1, US_INV);
+        UnicodeString actual;
+
+        SimpleDateFormat smptfmt("Z", locale, status);
+        ASSERT_OK(status);
+        assertEquals("TimeZone from SimpleDateFormat constructor",
+                     expectedTimezone, smptfmt.getTimeZone().getID(actual));
+        assertEquals("Calendar from SimpleDateFormat constructor",
+                     testLine[2], smptfmt.getCalendar()->getType());
+
+        LocalPointer<DateFormat> datefmt(
+                DateFormat::createDateInstance(DateFormat::kDefault, locale));
+        if (datefmt == nullptr) {
+            dataerrln("Error calling DateFormat::createDateInstance()");
+            return;
+        }
+        assertEquals("TimeZone from DateFormat::createDateInstance",
+                     expectedTimezone, datefmt->getTimeZone().getID(actual));
+        assertEquals("Calendar from DateFormat::createDateInstance",
+                     testLine[2], datefmt->getCalendar()->getType());
+        LocalPointer<DateFormat> timefmt(
+                DateFormat::createTimeInstance(DateFormat::kDefault, locale));
+        if (timefmt == nullptr) {
+            dataerrln("Error calling DateFormat::createTimeInstance()");
+            return;
+        }
+        assertEquals("TimeZone from TimeFormat::createTimeInstance",
+                     expectedTimezone, timefmt->getTimeZone().getID(actual));
+        assertEquals("Calendar from DateFormat::createTimeInstance",
+                     testLine[2], timefmt->getCalendar()->getType());
+
+        LocalPointer<DateFormat> datetimefmt(
+                DateFormat::createDateTimeInstance(
+                    DateFormat::kDefault, DateFormat::kDefault, locale));
+        if (datetimefmt == nullptr) {
+            dataerrln("Error calling DateFormat::createDateTimeInstance()");
+            return;
+        }
+        assertEquals("TimeZone from DateTimeFormat::createDateTimeInstance",
+                     expectedTimezone, datetimefmt->getTimeZone().getID(actual));
+        assertEquals("Calendar from DateFormat::createDateTimeInstance",
+                     testLine[2], datetimefmt->getCalendar()->getType());
     }
 }
 
@@ -5576,14 +5653,19 @@ void DateFormatTest::TestAdoptCalendarLeak() {
     UErrorCode status = U_ZERO_ERROR;
     // This test relies on the locale fullName exceeding ULOC_FULLNAME_CAPACITY
     // in order for setKeywordValue to fail.
+    Calendar* cal = Calendar::createInstance(status);
+    ASSERT_OK(status);
     SimpleDateFormat sdf(
         "d.M.y",
         Locale("de__POSIX@colstrength=primary;currency=eur;em=default;"
                "hours=h23;lb=strict;lw=normal;measure=metric;numbers=latn;"
                "rg=atzzzz;sd=atat1;ss=none;timezone=Europe/Vienna"),
         status);
-    ASSERT_OK(status);
-    sdf.adoptCalendar(Calendar::createInstance(status));
+    // ASSERT_OK(status); Please do NOT add ASSERT_OK here. The point of this
+    // test is to ensure sdf.adoptCalendar won't leak AFTER the above FAILED.
+    // If the following caused crash we should fix the implementation not change
+    // this test.
+    sdf.adoptCalendar(cal);
 }
 
 /**

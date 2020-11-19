@@ -1,10 +1,11 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ceb{
     Countries{
         001{"Kalibutan"}
         002{"Africa"}
-        003{"North America"}
+        003{"Amihanang Amerika"}
         005{"South America"}
         009{"Oceania"}
         011{"Western Africa"}
@@ -92,16 +93,19 @@ ceb{
         CY{"Cyprus"}
         CZ{"Czechia"}
         DE{"Alemanya"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denmark"}
         DM{"Dominica"}
         DO{"Dominican Republic"}
         DZ{"Algeria"}
+        EA{"Ceuta & Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egypt"}
+        EH{"Western Sahara"}
         ER{"Eritrea"}
-        ES{"Spain"}
+        ES{"Espanya"}
         ET{"Ethiopia"}
         EU{"European Union"}
         EZ{"Eurozone"}
@@ -136,6 +140,7 @@ ceb{
         HR{"Croatia"}
         HT{"Haiti"}
         HU{"Hungary"}
+        IC{"Canary Islands"}
         ID{"Indonesia"}
         IE{"Ireland"}
         IL{"Israel"}
@@ -270,7 +275,7 @@ ceb{
         UA{"Ukraine"}
         UG{"Uganda"}
         UM{"U.S. Outlying Islands"}
-        UN{"United Nations"}
+        UN{"Hiniusang Kanasoran"}
         US{"Estados Unidos"}
         UY{"Uruguay"}
         UZ{"Uzbekistan"}
@@ -283,6 +288,8 @@ ceb{
         VU{"Vanuatu"}
         WF{"Wallis & Futuna"}
         WS{"Samoa"}
+        XA{"Pseudo-Accents"}
+        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +298,20 @@ ceb{
         ZW{"Zimbabwe"}
         ZZ{"Wala Mailhing Rehiyon"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"Macao"}
+        PS{"Palestine"}
+        US{"US"}
+    }
+    Countries%variant{
+        CD{"Congo (DRC)"}
+        CG{"Congo (Republika)"}
+        CI{"Ivory Coast"}
+        CZ{"Czech Republic"}
+        FK{"Falkland Islands (Islas Malvinas)"}
+        SZ{"Swaziland"}
+        TL{"East Timor"}
+    }
 }
