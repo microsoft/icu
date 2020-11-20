@@ -1,9 +1,14 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
-Date: Thu, 26 Mar 2020 19:27:45 -0700
-Subject: [PATCH] MSFT-Patch: This changes MS-ICU to use a versioned data file,
- similar to public ICU, but keeps the filename itself versioned. This means
- the contents inside the file have the version number, but the name doesn't.
+Date: Thu, 19 Nov 2020 16:28:09 -0800
+Subject: MSFT-Patch: The Windows OS ICU data file omits the version number.
+
+When building MS-ICU for the Windows OS build, we use a "versioned" data
+file, similar to public ICU, but we omit the version number from the
+filename itself. This means the contents inside the file have the
+version number, but the filename doesn't.
+This prevents the filename changing/churning every time we update to a
+newer version of ICU.
 
 This is done by changing the COMMON_DATA_NAME based on the setting of
 ICU_DATA_DIR_WINDOWS. (This changes the name of the file, but not the
@@ -11,23 +16,19 @@ contents).
 
 This way builds without ICU_DATA_DIR_WINDOWS set are closer to the
 public version of ICU, and have a fully versioned data file.
----
- icu/icu/icu4c/source/common/ucmndata.h             | 8 ++++++--
- icu/icu/icu4c/source/tools/toolutil/pkg_gencmn.cpp | 8 +++++++-
- 2 files changed, 13 insertions(+), 3 deletions(-)
 
-diff --git a/icu/icu/icu4c/source/common/ucmndata.h b/icu/icu/icu4c/source/common/ucmndata.h
-index c3eba9f4..5ec8327a 100644
---- a/icu/icu/icu4c/source/common/ucmndata.h
-+++ b/icu/icu/icu4c/source/common/ucmndata.h
+diff --git a/icu/icu4c/source/common/ucmndata.h b/icu/icu4c/source/common/ucmndata.h
+index c3eba9f4d021022a41e41dad37bf8a9dbfdef09e..dd7cd7bebefb83f4bd5c38346c7b430c4f54f9e2 100644
+--- a/icu/icu4c/source/common/ucmndata.h
++++ b/icu/icu4c/source/common/ucmndata.h
 @@ -30,8 +30,12 @@
  #include "unicode/udata.h"
  #include "umapfile.h"
  
 -
 -#define COMMON_DATA_NAME U_ICUDATA_NAME
++// MSFT-Change: In the Windows OS ICU build, we only have one data package, and we use a versionless name in filename.
 +#if defined(ICU_DATA_DIR_WINDOWS)
-+// In the Windows OS ICU build, we only have one data package, and we use a versionless name in filename.
 +#  define COMMON_DATA_NAME "icudtl"
 +#else
 +#  define COMMON_DATA_NAME U_ICUDATA_NAME
@@ -35,17 +36,17 @@ index c3eba9f4..5ec8327a 100644
  
  typedef struct  {
      uint16_t    headerSize;
-diff --git a/icu/icu/icu4c/source/tools/toolutil/pkg_gencmn.cpp b/icu/icu/icu4c/source/tools/toolutil/pkg_gencmn.cpp
-index 29a1f7bc..0a33d2bb 100644
---- a/icu/icu/icu4c/source/tools/toolutil/pkg_gencmn.cpp
-+++ b/icu/icu/icu4c/source/tools/toolutil/pkg_gencmn.cpp
+diff --git a/icu/icu4c/source/tools/toolutil/pkg_gencmn.cpp b/icu/icu4c/source/tools/toolutil/pkg_gencmn.cpp
+index 29a1f7bc1809d381046b57f0355f98149b826516..b1e0857bf4495953acf155c3cbad6f49bb23afdc 100644
+--- a/icu/icu4c/source/tools/toolutil/pkg_gencmn.cpp
++++ b/icu/icu4c/source/tools/toolutil/pkg_gencmn.cpp
 @@ -22,7 +22,13 @@
  
  #define STRING_STORE_SIZE 200000
  
 -#define COMMON_DATA_NAME U_ICUDATA_NAME
++// MSFT-Change: In the Windows OS ICU build, we only have one data package, and we use a versionless name in filename.
 +#if defined(ICU_DATA_DIR_WINDOWS)
-+// In the Windows OS ICU build, we only have one data package, and we use a versionless name in filename.
 +#  define COMMON_DATA_NAME "icudtl"
 +#else
 +#  define COMMON_DATA_NAME U_ICUDATA_NAME
@@ -54,6 +55,3 @@ index 29a1f7bc..0a33d2bb 100644
  #define DATA_TYPE "dat"
  
  /* ICU package data file format (.dat files) ------------------------------- ***
--- 
-2.23.0.vfs.1.1.63.g5a5ad7f
-
