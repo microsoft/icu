@@ -820,6 +820,16 @@ openCommonData(const char *path,          /*  Path from OpenChoice?          */
  *----------------------------------------------------------------------*/
 static UBool extendICUData(UErrorCode *pErr)
 {
+// MSFT-Change: For the Windows OS build of ICU, we only have one data file
+// and we don't use the extended data at all. We make this function a no-op
+// in order to save a few cycles for perf, but more importantly so that
+// we don't try to load a versioned data file (ex: icudt68l.dat) after
+// already loading the non-versioned common data file.
+#if defined(ICU_DATA_DIR_WINDOWS)
+    (void)pErr; // suppress unused variable.
+    return FALSE;
+#endif
+
     UDataMemory   *pData;
     UDataMemory   copyPData;
     UBool         didUpdate = FALSE;
