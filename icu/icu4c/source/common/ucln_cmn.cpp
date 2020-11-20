@@ -36,8 +36,9 @@ static cleanupFunc *gLibCleanupFunctions[UCLN_COMMON];
  The cleanup order is important in this function.
  Please be sure that you have read ucln.h
  ************************************************/
+// MSFT-Change: Make u_cleanup a no-op for the Windows OS ICU version.
 U_CAPI void U_EXPORT2
-u_cleanup(void)
+uprv_u_cleanup(void)
 {
     UTRACE_ENTRY_OC(UTRACE_U_CLEANUP);
     icu::umtx_lock(NULL);     /* Force a memory barrier, so that we are sure to see   */
@@ -50,6 +51,31 @@ u_cleanup(void)
 /*#if U_ENABLE_TRACING*/
     utrace_cleanup();
 /*#endif*/
+}
+
+U_CAPI void U_EXPORT2
+u_cleanup(void)
+{
+// When ICU is built as an OS component for Windows, we make the public function u_cleanup
+// effectively a no-op because of the following:
+//  - It is not thread-safe and *forcefully* unloads the ICU data file.
+//  - The ICU library can simultaneously be used by other threads when this happens,
+//    either by Windows.Globalization, or by sorting functions when ICU sorting is default.
+//  - This means an App can call the function at any time, which will cause random crashes. :(
+//
+// We don't completely remove the functionality though, as we still want/need to be able to
+// unload resources when the ICU DLL is unloaded. Instead we make it a private (uprv) function
+// so that the combined DLL can still call it, and we don't export it in the DEF file.
+//
+// Note: We don't unconditionally do this though, as we don't want to alter the behavior of the
+//   public function when ICU when used/consumed in a Nuget package (for example).
+//
+#if defined(ICU_DATA_DIR_WINDOWS)
+    ((void)0); // no-op.
+    return;
+#else
+    uprv_u_cleanup();
+#endif
 }
 
 U_CAPI void U_EXPORT2 ucln_cleanupOne(ECleanupLibraryType libType) 
