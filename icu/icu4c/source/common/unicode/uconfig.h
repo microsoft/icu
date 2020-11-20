@@ -45,6 +45,10 @@
  * @stable ICU 2.4
  */
 
+//IGNORE_WINDOWS_HEADERS_START
+// MSFT-Change: Since these are compile time settings, it doesn't make sense to 
+// load a user config header in the Windows OS SDK version.
+
 /**
  * If this switch is defined, ICU will attempt to load a header file named "uconfig_local.h"
  * prior to determining default settings for uconfig variables.
@@ -54,6 +58,8 @@
 #if defined(UCONFIG_USE_LOCAL)
 #include "uconfig_local.h"
 #endif
+
+//IGNORE_WINDOWS_HEADERS_END
 
 /**
  * \def U_DEBUG
@@ -369,6 +375,9 @@
 #   define UCONFIG_MSGPAT_DEFAULT_APOSTROPHE_MODE UMSGPAT_APOS_DOUBLE_OPTIONAL
 #endif
 
+//IGNORE_WINDOWS_HEADERS_START
+// MSFT-Change: We always use the OS LCID mapping API for the Windows OS build of ICU.
+
 /**
  * \def UCONFIG_USE_WINDOWS_LCID_MAPPING_API
  * On platforms where U_PLATFORM_HAS_WIN32_API is true, this switch determines
@@ -380,6 +389,8 @@
 #ifndef UCONFIG_USE_WINDOWS_LCID_MAPPING_API
 #   define UCONFIG_USE_WINDOWS_LCID_MAPPING_API 1
 #endif
+
+//IGNORE_WINDOWS_HEADERS_END
 
 /* i18n library switches ---------------------------------------------------- */
 
