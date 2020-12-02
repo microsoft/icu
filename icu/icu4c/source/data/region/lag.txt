@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 lag{
     Countries{
         AD{"Andóra"}
@@ -164,7 +165,7 @@ lag{
         PM{"Mʉtakatíifu Peéteri na Mɨkaéeli"}
         PN{"Patikaírini"}
         PR{"Pwetorɨ́ɨko"}
-        PS{"Mamlaka ya Palestina"}
+        PS{"Mweemberera wa kʉmweeri wa Gáaza"}
         PT{"Ʉréeno"}
         PW{"Paláau"}
         PY{"Paraguáai"}
@@ -226,5 +227,4 @@ lag{
         ZM{"Sámbia"}
         ZW{"Simbáabwe"}
     }
-    Version{"37"}
 }

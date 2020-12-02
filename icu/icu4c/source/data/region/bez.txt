@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 bez{
     Countries{
         AD{"Huandola"}
@@ -164,7 +165,7 @@ bez{
         PM{"Husantapieri na Humikeloni"}
         PN{"Hupitkaini"}
         PR{"Hupwetoriko"}
-        PS{"Mamlaka ya Palestina"}
+        PS{"Ulubali lwa Magharibi nu Gaza wa Hupalestina"}
         PT{"Huuleno"}
         PW{"Hupalau"}
         PY{"Hupalagwai"}
@@ -226,5 +227,4 @@ bez{
         ZM{"Huzambia"}
         ZW{"Huzimbabwe"}
     }
-    Version{"37"}
 }

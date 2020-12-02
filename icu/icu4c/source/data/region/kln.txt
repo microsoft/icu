@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 kln{
     Countries{
         AD{"Emetab Andorra"}
@@ -164,7 +165,7 @@ kln{
         PM{"Emetab Peter Ne titil ak Miquelon"}
         PN{"Emetab Pitcairn"}
         PR{"Emetab Puerto Rico"}
-        PS{"Palestinian Authority"}
+        PS{"Emetab Palestine"}
         PT{"Emetab Portugal"}
         PW{"Emetab Palau"}
         PY{"Emetab Paraguay"}
@@ -226,5 +227,4 @@ kln{
         ZM{"Emetab Zambia"}
         ZW{"Emetab Zimbabwe"}
     }
-    Version{"37"}
 }

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 is{
     Countries{
         001{"Heimurinn"}
@@ -92,14 +93,17 @@ is{
         CY{"Kýpur"}
         CZ{"Tékkland"}
         DE{"Þýskaland"}
+        DG{"Diego Garcia"}
         DJ{"Djíbútí"}
         DK{"Danmörk"}
         DM{"Dóminíka"}
         DO{"Dóminíska lýðveldið"}
         DZ{"Alsír"}
+        EA{"Ceuta og Melilla"}
         EC{"Ekvador"}
         EE{"Eistland"}
         EG{"Egyptaland"}
+        EH{"Vestur-Sahara"}
         ER{"Erítrea"}
         ES{"Spánn"}
         ET{"Eþíópía"}
@@ -136,6 +140,7 @@ is{
         HR{"Króatía"}
         HT{"Haítí"}
         HU{"Ungverjaland"}
+        IC{"Kanaríeyjar"}
         ID{"Indónesía"}
         IE{"Írland"}
         IL{"Ísrael"}
@@ -218,7 +223,7 @@ is{
         PM{"Sankti Pierre og Miquelon"}
         PN{"Pitcairn-eyjar"}
         PR{"Púertó Ríkó"}
-        PS{"Heimastjórn Palestínumanna"}
+        PS{"Heimastjórnarsvæði Palestínumanna"}
         PT{"Portúgal"}
         PW{"Palá"}
         PY{"Paragvæ"}
@@ -247,7 +252,7 @@ is{
         SS{"Suður-Súdan"}
         ST{"Saó Tóme og Prinsípe"}
         SV{"El Salvador"}
-        SX{"Sankti Martin"}
+        SX{"Sint Maarten"}
         SY{"Sýrland"}
         SZ{"Svasíland"}
         TA{"Tristan da Cunha"}
@@ -256,7 +261,7 @@ is{
         TF{"Frönsku suðlægu landsvæðin"}
         TG{"Tógó"}
         TH{"Taíland"}
-        TJ{"Tadsjikistan"}
+        TJ{"Tadsíkistan"}
         TK{"Tókelá"}
         TL{"Tímor-Leste"}
         TM{"Túrkmenistan"}
@@ -283,6 +288,8 @@ is{
         VU{"Vanúatú"}
         WF{"Wallis- og Fútúnaeyjar"}
         WS{"Samóa"}
+        XA{"gervihreimur"}
+        XB{"gervistaður"}
         XK{"Kósóvó"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +298,17 @@ is{
         ZW{"Simbabve"}
         ZZ{"Óþekkt svæði"}
     }
-    Version{"37"}
+    Countries%short{
+        HK{"Hong Kong"}
+        MO{"Makaó"}
+        PS{"Palestína"}
+        UN{"SÞ"}
+        US{"BNA"}
+    }
+    Countries%variant{
+        CD{"Kongó (Lýðstjórnarlýðveldið)"}
+        CG{"Kongó (Lýðveldið)"}
+        FK{"Falklandseyjar (Malvinas)"}
+        TL{"Austur-Tímor"}
+    }
 }

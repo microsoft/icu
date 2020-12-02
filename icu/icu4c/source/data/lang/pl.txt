@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 pl{
     Keys{
         calendar{"kalendarz"}
@@ -8,18 +9,18 @@ pl{
         colBackwards{"Odwrotne sortowanie ze znakami akcentowanymi"}
         colCaseFirst{"Kolejność wielkie/małe litery"}
         colCaseLevel{"Sortowanie uwzględniające wielkość liter"}
-        colNormalization{"Sortowanie znormalizowane"}
-        colNumeric{"Sortowanie numeryczne"}
-        colStrength{"Siła sortowania"}
+        colNormalization{"sortowanie znormalizowane"}
+        colNumeric{"sortowanie numeryczne"}
+        colStrength{"siła sortowania"}
         collation{"kolejność sortowania"}
         currency{"waluta"}
         hc{"cykl (12- lub 24-godzinny)"}
         lb{"styl podziału wiersza"}
         ms{"system miar"}
         numbers{"cyfry"}
-        timezone{"Strefa czasowa"}
-        va{"Wariant regionalny"}
-        x{"Do prywatnego użytku"}
+        timezone{"strefa czasowa"}
+        va{"wariant regionalny"}
+        x{"do użytku prywatnego"}
     }
     Languages{
         aa{"afar"}
@@ -45,6 +46,7 @@ pl{
         ang{"staroangielski"}
         anp{"angika"}
         ar{"arabski"}
+        ar_001{"współczesny arabski"}
         arc{"aramejski"}
         arn{"mapudungun"}
         aro{"araona"}
@@ -110,7 +112,7 @@ pl{
         cch{"atsam"}
         ccp{"czakma"}
         ce{"czeczeński"}
-        ceb{"cebuano"}
+        ceb{"cebuański"}
         cgg{"chiga"}
         ch{"czamorro"}
         chb{"czibcza"}
@@ -139,6 +141,8 @@ pl{
         dar{"dargwijski"}
         dav{"taita"}
         de{"niemiecki"}
+        de_AT{"niemiecki austriacki"}
+        de_CH{"wysokoniemiecki szwajcarski"}
         del{"delaware"}
         den{"slave"}
         dgr{"dogrib"}
@@ -163,25 +167,35 @@ pl{
         el{"grecki"}
         elx{"elamicki"}
         en{"angielski"}
+        en_AU{"angielski australijski"}
+        en_CA{"angielski kanadyjski"}
+        en_GB{"angielski brytyjski"}
+        en_US{"angielski amerykański"}
         enm{"średnioangielski"}
         eo{"esperanto"}
         es{"hiszpański"}
+        es_419{"amerykański hiszpański"}
+        es_ES{"europejski hiszpański"}
+        es_MX{"meksykański hiszpański"}
         esu{"yupik środkowosyberyjski"}
         et{"estoński"}
         eu{"baskijski"}
         ewo{"ewondo"}
         ext{"estremadurski"}
         fa{"perski"}
+        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulani"}
         fi{"fiński"}
-        fil{"filipino"}
+        fil{"filipiński"}
         fit{"meänkieli"}
         fj{"fidżijski"}
         fo{"farerski"}
         fon{"fon"}
         fr{"francuski"}
+        fr_CA{"francuski kanadyjski"}
+        fr_CH{"francuski szwajcarski"}
         frc{"cajuński"}
         frm{"średniofrancuski"}
         fro{"starofrancuski"}
@@ -393,6 +407,7 @@ pl{
         nb{"norweski (bokmål)"}
         nd{"ndebele północny"}
         nds{"dolnoniemiecki"}
+        nds_NL{"dolnosaksoński"}
         ne{"nepalski"}
         new{"newarski"}
         ng{"ndonga"}
@@ -400,6 +415,7 @@ pl{
         niu{"niue"}
         njo{"ao"}
         nl{"niderlandzki"}
+        nl_BE{"flamandzki"}
         nmg{"ngumba"}
         nn{"norweski (nynorsk)"}
         nnh{"ngiemboon"}
@@ -447,6 +463,8 @@ pl{
         pro{"staroprowansalski"}
         ps{"paszto"}
         pt{"portugalski"}
+        pt_BR{"brazylijski portugalski"}
+        pt_PT{"europejski portugalski"}
         qu{"keczua"}
         quc{"kicze"}
         qug{"keczua górski (Chimborazo)"}
@@ -458,6 +476,7 @@ pl{
         rm{"retoromański"}
         rn{"rundi"}
         ro{"rumuński"}
+        ro_MD{"mołdawski"}
         rof{"rombo"}
         rom{"cygański"}
         root{"język rdzenny"}
@@ -493,6 +512,7 @@ pl{
         sg{"sango"}
         sga{"staroirlandzki"}
         sgs{"żmudzki"}
+        sh{"serbsko-chorwacki"}
         shi{"tashelhiyt"}
         shn{"szan"}
         shu{"arabski (Czad)"}
@@ -525,6 +545,7 @@ pl{
         sux{"sumeryjski"}
         sv{"szwedzki"}
         sw{"suahili"}
+        sw_CD{"kongijski suahili"}
         swb{"komoryjski"}
         syc{"syriacki"}
         syr{"syryjski"}
@@ -614,10 +635,27 @@ pl{
         zen{"zenaga"}
         zgh{"standardowy marokański tamazight"}
         zh{"chiński"}
+        zh_Hans{"chiński uproszczony"}
+        zh_Hant{"chiński tradycyjny"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"brak treści o charakterze językowym"}
         zza{"zazaki"}
+    }
+    Languages%long{
+        zh_Hans{"standardowy chiński uproszczony"}
+        zh_Hant{"standardowy chiński tradycyjny"}
+    }
+    Languages%menu{
+        ckb{"kurdyjski sorani"}
+        yue{"chiński kantoński"}
+        zh{"chiński mandaryński"}
+    }
+    Languages%short{
+        az{"azerski"}
+    }
+    Languages%variant{
+        ps{"pasztuński"}
     }
     Scripts{
         Arab{"arabskie"}
@@ -783,6 +821,7 @@ pl{
             iso8601{"kalendarz ISO-8601"}
             japanese{"kalendarz japoński"}
             persian{"kalendarz perski"}
+            roc{"kalendarz Republiki Chińskiej"}
         }
         cf{
             account{"księgowy format waluty"}
@@ -939,7 +978,6 @@ pl{
         VALENCIA{"walencki"}
         WADEGILE{"latynizacja Wade’a i Gilesa"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — wszystko"}
         category-list{"{0}: {1}"}
@@ -956,6 +994,8 @@ pl{
             one{"{0} kreska"}
             other{"{0} kreski"}
         }
+        subscript{"indeks dolny {0}"}
+        superscript{"indeks górny {0}"}
     }
     codePatterns{
         language{"Język: {0}"}

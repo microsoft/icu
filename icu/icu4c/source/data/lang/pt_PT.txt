@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 pt_PT{
     Keys{
         cf{"Formato monetário"}
@@ -18,6 +19,7 @@ pt_PT{
         af{"africanês"}
         alt{"altai do sul"}
         ang{"inglês antigo"}
+        ar_001{"árabe moderno padrão"}
         arn{"mapuche"}
         ars{"árabe do Négede"}
         av{"avaric"}
@@ -30,16 +32,26 @@ pt_PT{
         chn{"jargão chinook"}
         chr{"cherokee"}
         chy{"cheyenne"}
-        ckb{"sorani curdo"}
         co{"córsico"}
         crs{"francês crioulo seselwa"}
         cs{"checo"}
         cv{"chuvash"}
-        ee{"ewe"}
+        de_AT{"alemão austríaco"}
+        de_CH{"alto alemão suíço"}
         efi{"efik"}
         egy{"egípcio clássico"}
+        en_AU{"inglês australiano"}
+        en_CA{"inglês canadiano"}
+        en_GB{"inglês britânico"}
+        en_US{"inglês americano"}
+        es_419{"espanhol latino-americano"}
+        es_ES{"espanhol europeu"}
+        es_MX{"espanhol mexicano"}
         et{"estónio"}
+        fa_AF{"dari"}
         fon{"fon"}
+        fr_CA{"francês canadiano"}
+        fr_CH{"francês suíço"}
         fro{"francês antigo"}
         frs{"frísio oriental"}
         fy{"frísico ocidental"}
@@ -58,17 +70,19 @@ pt_PT{
         lou{"crioulo de Louisiana"}
         lrc{"luri do norte"}
         mak{"makassarês"}
+        mfe{"crioulo mauriciano"}
         mk{"macedónio"}
         moh{"mohawk"}
         mr{"marata"}
         mul{"vários idiomas"}
         nb{"norueguês bokmål"}
         nds{"baixo-alemão"}
+        nds_NL{"baixo-saxão"}
         nl{"neerlandês"}
+        nl_BE{"flamengo"}
         nn{"norueguês nynorsk"}
         non{"nórdico antigo"}
         oc{"occitano"}
-        or{"oriya"}
         os{"ossético"}
         pag{"língua pangasinesa"}
         pam{"pampango"}
@@ -77,28 +91,49 @@ pt_PT{
         pon{"língua pohnpeica"}
         pro{"provençal antigo"}
         ps{"pastó"}
+        pt_BR{"português do Brasil"}
+        pt_PT{"português europeu"}
         raj{"rajastanês"}
+        ro_MD{"moldávio"}
         se{"sami do norte"}
         sga{"irlandês antigo"}
         shu{"árabe do Chade"}
         sma{"sami do sul"}
         smn{"inari sami"}
         sn{"shona"}
+        st{"sesoto"}
         te{"telugu"}
         tem{"temne"}
         tg{"tajique"}
         tk{"turcomano"}
         to{"tonga"}
         tt{"tatar"}
-        tzm{"tamazight do Atlas Central"}
+        tzm{"tamazigue do Atlas Central"}
         uz{"usbeque"}
         wo{"uólofe"}
         xh{"xosa"}
         xog{"soga"}
         yo{"ioruba"}
         zgh{"tamazight marroquino padrão"}
+        zh_Hans{"chinês simplificado"}
+        zh_Hant{"chinês tradicional"}
         zun{"zuni"}
         zza{"zaza"}
+    }
+    Languages%long{
+        zh_Hans{"chinês mandarim simplificado"}
+        zh_Hant{"chinês mandarim tradicional"}
+    }
+    Languages%menu{
+        ckb{"curdo sorani"}
+        zh{"chinês mandarim"}
+    }
+    Languages%short{
+        az{"azeri"}
+        en_GB{"inglês (RU)"}
+    }
+    Languages%variant{
+        ckb{"sorani (curdo)"}
     }
     Scripts{
         Aran{"nasta’liq"}
@@ -239,7 +274,6 @@ pt_PT{
         MONOTON{"monotónico"}
         POLYTON{"politónico"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} – tudo"}
         compatibility{"{0} – compatibilidade"}

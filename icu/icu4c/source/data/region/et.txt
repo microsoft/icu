@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 et{
     Countries{
         001{"maailm"}
@@ -92,14 +93,17 @@ et{
         CY{"Küpros"}
         CZ{"Tšehhi"}
         DE{"Saksamaa"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Taani"}
         DM{"Dominica"}
         DO{"Dominikaani Vabariik"}
         DZ{"Alžeeria"}
+        EA{"Ceuta ja Melilla"}
         EC{"Ecuador"}
         EE{"Eesti"}
         EG{"Egiptus"}
+        EH{"Lääne-Sahara"}
         ER{"Eritrea"}
         ES{"Hispaania"}
         ET{"Etioopia"}
@@ -136,6 +140,7 @@ et{
         HR{"Horvaatia"}
         HT{"Haiti"}
         HU{"Ungari"}
+        IC{"Kanaari saared"}
         ID{"Indoneesia"}
         IE{"Iirimaa"}
         IL{"Iisrael"}
@@ -218,7 +223,7 @@ et{
         PM{"Saint-Pierre ja Miquelon"}
         PN{"Pitcairni saared"}
         PR{"Puerto Rico"}
-        PS{"Palestiina omavalitsus"}
+        PS{"Palestiina alad"}
         PT{"Portugal"}
         PW{"Belau"}
         PY{"Paraguay"}
@@ -283,6 +288,8 @@ et{
         VU{"Vanuatu"}
         WF{"Wallis ja Futuna"}
         WS{"Samoa"}
+        XA{"pseudo-aktsent"}
+        XB{"pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Jeemen"}
         YT{"Mayotte"}
@@ -291,5 +298,21 @@ et{
         ZW{"Zimbabwe"}
         ZZ{"tundmatu piirkond"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"ÜK"}
+        HK{"Hongkong"}
+        MO{"Macau"}
+        PS{"Palestiina"}
+        UN{"ÜRO"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Kongo-Kinshasa"}
+        CG{"Kongo-Brazzaville"}
+        CI{"Elevandiluurannik"}
+        CZ{"Tšehhi Vabariik"}
+        FK{"Falklandi saared (Malviini saared)"}
+        SZ{"eSwatini"}
+        TL{"Timor-Leste"}
+    }
 }

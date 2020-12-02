@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 id{
     Keys{
         calendar{"Kalender"}
@@ -44,6 +45,7 @@ id{
         ang{"Inggris Kuno"}
         anp{"Angika"}
         ar{"Arab"}
+        ar_001{"Arab Standar Modern"}
         arc{"Aram"}
         arn{"Mapuche"}
         arp{"Arapaho"}
@@ -131,6 +133,7 @@ id{
         dar{"Dargwa"}
         dav{"Taita"}
         de{"Jerman"}
+        de_CH{"Jerman Tinggi (Swiss)"}
         del{"Delaware"}
         den{"Slave"}
         dgr{"Dogrib"}
@@ -153,13 +156,16 @@ id{
         el{"Yunani"}
         elx{"Elam"}
         en{"Inggris"}
+        en_GB{"Inggris (Inggris)"}
         enm{"Inggris Abad Pertengahan"}
         eo{"Esperanto"}
         es{"Spanyol"}
+        es_ES{"Spanyol (Eropa)"}
         et{"Esti"}
         eu{"Basque"}
         ewo{"Ewondo"}
         fa{"Persia"}
+        fa_AF{"Persia Dari"}
         fan{"Fang"}
         fat{"Fanti"}
         ff{"Fula"}
@@ -406,6 +412,7 @@ id{
         pro{"Provencal Lama"}
         ps{"Pashto"}
         pt{"Portugis"}
+        pt_PT{"Portugis (Eropa)"}
         qu{"Quechua"}
         quc{"Kʼicheʼ"}
         raj{"Rajasthani"}
@@ -414,6 +421,7 @@ id{
         rm{"Reto-Roman"}
         rn{"Rundi"}
         ro{"Rumania"}
+        ro_MD{"Moldavia"}
         rof{"Rombo"}
         rom{"Romani"}
         root{"Root"}
@@ -444,6 +452,7 @@ id{
         ses{"Koyraboro Senni"}
         sg{"Sango"}
         sga{"Irlandia Kuno"}
+        sh{"Serbo-Kroasia"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Arab Suwa"}
@@ -475,6 +484,7 @@ id{
         sux{"Sumeria"}
         sv{"Swedia"}
         sw{"Swahili"}
+        sw_CD{"Swahili (Kongo)"}
         swb{"Komoria"}
         syc{"Suriah Klasik"}
         syr{"Suriah"}
@@ -558,6 +568,21 @@ id{
         zxx{"Tidak ada konten linguistik"}
         zza{"Zaza"}
     }
+    Languages%long{
+        zh_Hans{"Tionghoa Mandarin (Sederhana)"}
+        zh_Hant{"Tionghoa Mandarin (Tradisional)"}
+    }
+    Languages%menu{
+        yue{"Tionghoa, Kanton"}
+        zh{"Tionghoa, Mandarin"}
+    }
+    Languages%short{
+        az{"Azeri"}
+    }
+    Languages%variant{
+        ps{"Pushto"}
+        ug{"Uighur"}
+    }
     Scripts{
         Afak{"Afaka"}
         Aghb{"Albania Kaukasia"}
@@ -585,7 +610,7 @@ id{
         Cprt{"Siprus"}
         Cyrl{"Sirilik"}
         Cyrs{"Gereja Slavonia Sirilik Lama"}
-        Deva{"Devanagari"}
+        Deva{"Dewanagari"}
         Dsrt{"Deseret"}
         Dupl{"Stenografi Duployan"}
         Egyd{"Demotik Mesir"}
@@ -720,7 +745,7 @@ id{
         Zsym{"Simbol"}
         Zxxx{"Tidak Tertulis"}
         Zyyy{"Umum"}
-        Zzzz{"Skrip Tak Dikenal"}
+        Zzzz{"Skrip Tidak Dikenal"}
     }
     Scripts%stand-alone{
         Hans{"Han Sederhana"}
@@ -747,6 +772,7 @@ id{
             iso8601{"Kalender ISO-8601"}
             japanese{"Kalender Jepang"}
             persian{"Kalender Persia"}
+            roc{"Kalender Min-guo"}
         }
         cf{
             account{"Format Mata Uang Akuntansi"}
@@ -826,7 +852,7 @@ id{
         ms{
             metric{"Sistem Metrik"}
             uksystem{"Sistem Pengukuran Imperial"}
-            ussystem{"Sistem Pengukuran A.S."}
+            ussystem{"Sistem Pengukuran AS"}
         }
         numbers{
             arab{"Angka Arab Timur"}
@@ -836,7 +862,7 @@ id{
             bali{"Angka Bali"}
             beng{"Angka Bengali"}
             cham{"Angka Cham"}
-            deva{"Angka Devanagari"}
+            deva{"Angka Dewanagari"}
             ethi{"Angka Etiopia"}
             finance{"Angka Finansial"}
             fullwide{"Angka Lebar Penuh"}
@@ -928,20 +954,21 @@ id{
         VALENCIA{"Valencia"}
         WADEGILE{"Wade-Giles Latin"}
     }
-    Version{"37"}
     characterLabelPattern{
-        all{"{0} — Semua"}
+        all{"{0} — semua"}
         category-list{"{0}: {1}"}
-        compatibility{"{0} — Kompatibilitas"}
-        enclosed{"{0} — Terlampir"}
+        compatibility{"{0} — kompatibilitas"}
+        enclosed{"{0} — terlampir"}
         extended{"{0} — diperluas"}
-        historic{"{0} — Historis"}
-        miscellaneous{"{0} — Lain-lain"}
-        other{"{0} — Lainnya"}
+        historic{"{0} — historis"}
+        miscellaneous{"{0} — lain-lain"}
+        other{"{0} — lainnya"}
         scripts{"skrip — {0}"}
         strokes{
-            other{"{0} Goresan"}
+            other{"{0} goresan"}
         }
+        subscript{"subskrip {0}"}
+        superscript{"superskrip {0}"}
     }
     codePatterns{
         language{"Bahasa: {0}"}

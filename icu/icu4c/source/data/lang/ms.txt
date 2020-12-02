@@ -1,9 +1,10 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ms{
     Keys{
         calendar{"Kalendar"}
-        cf{"Format Mata wang"}
+        cf{"Format Mata Wang"}
         colAlternate{"Abaikan Pengisihan Simbol"}
         colBackwards{"Pengisihan Aksen Terbalik"}
         colCaseFirst{"Penyusunan Huruf Besar/Huruf Kecil"}
@@ -40,6 +41,7 @@ ms{
         an{"Aragon"}
         anp{"Angika"}
         ar{"Arab"}
+        ar_001{"Arab Standard Moden"}
         arn{"Mapuche"}
         arp{"Arapaho"}
         arq{"Arab Algeria"}
@@ -72,7 +74,7 @@ ms{
         bkm{"Kom"}
         bla{"Siksika"}
         bm{"Bambara"}
-        bn{"Benggala"}
+        bn{"Benggali"}
         bo{"Tibet"}
         bpy{"Bishnupriya"}
         br{"Breton"}
@@ -111,6 +113,8 @@ ms{
         dar{"Dargwa"}
         dav{"Taita"}
         de{"Jerman"}
+        de_AT{"Jerman Austria"}
+        de_CH{"Jerman Halus Switzerland"}
         dgr{"Dogrib"}
         dje{"Zarma"}
         doi{"Dogri"}
@@ -126,12 +130,20 @@ ms{
         eka{"Ekajuk"}
         el{"Greek"}
         en{"Inggeris"}
+        en_AU{"Inggeris Australia"}
+        en_CA{"Inggeris Kanada"}
+        en_GB{"Inggeris British"}
+        en_US{"Inggeris AS"}
         eo{"Esperanto"}
         es{"Sepanyol"}
+        es_419{"Sepanyol Amerika Latin"}
+        es_ES{"Sepanyol Eropah"}
+        es_MX{"Sepanyol Mexico"}
         et{"Estonia"}
         eu{"Basque"}
         ewo{"Ewondo"}
         fa{"Parsi"}
+        fa_AF{"Dari"}
         ff{"Fulah"}
         fi{"Finland"}
         fil{"Filipina"}
@@ -139,6 +151,8 @@ ms{
         fo{"Faroe"}
         fon{"Fon"}
         fr{"Perancis"}
+        fr_CA{"Perancis Kanada"}
+        fr_CH{"Perancis Switzerland"}
         frc{"Perancis Cajun"}
         fur{"Friulian"}
         fy{"Frisian Barat"}
@@ -299,12 +313,14 @@ ms{
         nb{"Bokmål Norway"}
         nd{"Ndebele Utara"}
         nds{"Jerman Rendah"}
+        nds_NL{"Saxon Rendah"}
         ne{"Nepal"}
         new{"Newari"}
         ng{"Ndonga"}
         nia{"Nias"}
         niu{"Niu"}
         nl{"Belanda"}
+        nl_BE{"Flemish"}
         nmg{"Kwasio"}
         nn{"Nynorsk Norway"}
         nnh{"Ngiemboon"}
@@ -331,6 +347,8 @@ ms{
         prg{"Prusia"}
         ps{"Pashto"}
         pt{"Portugis"}
+        pt_BR{"Portugis Brazil"}
+        pt_PT{"Portugis Eropah"}
         qu{"Quechua"}
         quc{"Kʼicheʼ"}
         rap{"Rapanui"}
@@ -338,6 +356,7 @@ ms{
         rm{"Romansh"}
         rn{"Rundi"}
         ro{"Romania"}
+        ro_MD{"Moldavia"}
         rof{"Rombo"}
         root{"Root"}
         ru{"Rusia"}
@@ -361,6 +380,7 @@ ms{
         seh{"Sena"}
         ses{"Koyraboro Senni"}
         sg{"Sango"}
+        sh{"SerboCroatia"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Arab Chadian"}
@@ -385,6 +405,7 @@ ms{
         suk{"Sukuma"}
         sv{"Sweden"}
         sw{"Swahili"}
+        sw_CD{"Congo Swahili"}
         swb{"Comoria"}
         syr{"Syriac"}
         ta{"Tamil"}
@@ -442,10 +463,30 @@ ms{
         yue{"Kantonis"}
         zgh{"Tamazight Maghribi Standard"}
         zh{"Cina"}
+        zh_Hans{"Cina Ringkas"}
+        zh_Hant{"Cina Tradisional"}
         zu{"Zulu"}
         zun{"Zuni"}
         zxx{"Tiada kandungan linguistik"}
         zza{"Zaza"}
+    }
+    Languages%long{
+        zh_Hans{"Cina Mandarin Ringkas"}
+        zh_Hant{"Cina Mandarin Tradisional"}
+    }
+    Languages%menu{
+        ckb{"Kurdi, Tengah"}
+        yue{"Cina, Kantonis"}
+        zh{"Cina, Mandarin"}
+    }
+    Languages%short{
+        az{"Azeri"}
+        en_GB{"Inggeris U.K."}
+        en_US{"Inggeris A.S."}
+    }
+    Languages%variant{
+        ps{"Pushto"}
+        ug{"Uighur"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -639,6 +680,7 @@ ms{
             iso8601{"Kalendar ISO-8601"}
             japanese{"Kalendar Jepun"}
             persian{"Kalendar Parsi"}
+            roc{"Kalendar Minguo"}
         }
         cf{
             account{"Format Mata Wang Perakaunan"}
@@ -859,7 +901,6 @@ ms{
         VALENCIA{"Valencia"}
         WADEGILE{"Perumian Wade-Giles"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — Semua"}
         category-list{"{0}: {1}"}
@@ -873,6 +914,8 @@ ms{
         strokes{
             other{"{0} Lejang"}
         }
+        subscript{"subskrip {0}"}
+        superscript{"superskrip {0}"}
     }
     codePatterns{
         language{"Bahasa: {0}"}

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 sbp{
     Countries{
         AD{"Andola"}
@@ -164,7 +165,7 @@ sbp{
         PM{"Santapieli ni Mikeloni"}
         PN{"Pitikailini"}
         PR{"Pwetoliko"}
-        PS{"Mamlaka ya Palestina"}
+        PS{"Munjema gwa Kusikha nu Luvala lwa Gasa lwa Palesit"}
         PT{"Wuleno"}
         PW{"Palawu"}
         PY{"Palagwayi"}
@@ -226,5 +227,4 @@ sbp{
         ZM{"Sambiya"}
         ZW{"Simbabwe"}
     }
-    Version{"37"}
 }

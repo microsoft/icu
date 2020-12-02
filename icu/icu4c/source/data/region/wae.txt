@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 wae{
     Countries{
         001{"Wäld"}
@@ -89,14 +90,17 @@ wae{
         CY{"Zypre"}
         CZ{"Tšečie"}
         DE{"Titšland"}
+        DG{"Diego Garcia"}
         DJ{"Dšibuti"}
         DK{"Dänemark"}
         DM{"Doninica"}
         DO{"Dominikaniši Rebublik"}
         DZ{"Algerie"}
+        EA{"Ceuta und Melilla"}
         EC{"Ecuador"}
         EE{"Eštland"}
         EG{"Egypte"}
+        EH{"Weštsahara"}
         ER{"Eritrea"}
         ES{"Schpanie"}
         ET{"Ethiopie"}
@@ -132,6 +136,7 @@ wae{
         HR{"Kroatie"}
         HT{"Haiti"}
         HU{"Ungare"}
+        IC{"Kanariše Inslä"}
         ID{"Indonesie"}
         IE{"Irland"}
         IL{"Israel"}
@@ -213,7 +218,7 @@ wae{
         PM{"St. Pierre und Miquelon"}
         PN{"Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Palestinian Authority"}
+        PS{"Paleština"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguai"}
@@ -282,5 +287,15 @@ wae{
         ZW{"Simbabwe"}
         ZZ{"Unbekannti Regio"}
     }
-    Version{"37"}
+    Countries%short{
+        HK{"Hongkong"}
+        MO{"Makau"}
+    }
+    Countries%variant{
+        CD{"Kongo (Demokratiši Rebublik)"}
+        CG{"Kongo (Rebublik)"}
+        CI{"Côte d’Ivoire"}
+        FK{"Falklandinslä (Malwine)"}
+        TL{"Wešttimor"}
+    }
 }

@@ -1,8 +1,0 @@
-﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
-ee_TG{
-    Countries{
-        PS{"Autorité palestinienne"}
-    }
-    Version{"37"}
-}

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 wae{
     Languages{
         ab{"Abčasiš"}
@@ -19,12 +20,20 @@ wae{
         cy{"Walisiš"}
         da{"Däniš"}
         de{"Titš"}
+        de_AT{"Öštričišes Titš"}
+        de_CH{"Schwizer Hočtitš"}
         dv{"Malediwiš"}
         dz{"Butaniš"}
         efi{"Efik"}
         el{"Gričiš"}
         en{"Engliš"}
+        en_AU{"Auštrališes Engliš"}
+        en_CA{"Kanadišes Engliš"}
+        en_GB{"Britišes Engliš"}
+        en_US{"Amerikanišes Engliš"}
         es{"Schpaniš"}
+        es_419{"Latiamerikanišes Schpaniš"}
+        es_ES{"Iberišes Schpaniš"}
         et{"Estniš"}
         eu{"Baskiš"}
         fa{"Persiš"}
@@ -32,6 +41,8 @@ wae{
         fil{"Filipiniš"}
         fj{"Fidšianiš"}
         fr{"Wälš"}
+        fr_CA{"Kanadišes Wälš"}
+        fr_CH{"Schwizer Wälš"}
         ga{"Iriš"}
         gl{"Galiziš"}
         gn{"Guarani"}
@@ -76,6 +87,7 @@ wae{
         nd{"Nordndebele"}
         ne{"Nepalesiš"}
         nl{"Holändiš"}
+        nl_BE{"Flämiš"}
         nn{"Norwegiš Nynorsk"}
         nso{"Nordsotho"}
         ny{"Nyanja"}
@@ -85,6 +97,8 @@ wae{
         pl{"Polniš"}
         ps{"Paštu"}
         pt{"Portugisiš"}
+        pt_BR{"Brasilianišes Portugisiš"}
+        pt_PT{"Iberišes Portugisiš"}
         qu{"Quečua"}
         rm{"Rätromaniš"}
         rn{"Rundi"}
@@ -134,6 +148,8 @@ wae{
         xh{"Xhosa"}
         yo{"Yoruba"}
         zh{"Chinesiš"}
+        zh_Hans{"Vereifačts Chinesiš"}
+        zh_Hant{"Traditionells Chinesiš"}
         zu{"Zulu"}
     }
     Scripts{
@@ -178,7 +194,6 @@ wae{
             latn{"Arabiši Zálä"}
         }
     }
-    Version{"37"}
     codePatterns{
         language{"Sprač: {0}"}
         script{"Alfabét: {0}"}

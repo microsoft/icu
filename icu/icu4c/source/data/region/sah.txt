@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 sah{
     Countries{
         001{"Аан дойду"}
@@ -28,5 +29,7 @@ sah{
         SE{"Швеция"}
         US{"Америка Холбоһуктаах Штааттара"}
     }
-    Version{"37"}
+    Countries%short{
+        US{"АХШ"}
+    }
 }

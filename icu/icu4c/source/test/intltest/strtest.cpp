@@ -483,11 +483,11 @@ StringTest::TestStringPieceFind() {
         std::string stdhaystack(cas.haystack);
         std::string stdneedle(cas.needle);
         assertEquals(Int64ToUnicodeString(caseNumber) + u" (std)",
-            cas.expected, stdhaystack.find(stdneedle, 0));
+            cas.expected, static_cast<int32_t>(stdhaystack.find(stdneedle, 0)));
         // Test offsets against std::string::find
         for (int32_t offset = 0; offset < haystack.length(); offset++) {
             assertEquals(Int64ToUnicodeString(caseNumber) + "u @ " + Int64ToUnicodeString(offset),
-                stdhaystack.find(stdneedle, offset), haystack.find(needle, offset));
+                static_cast<int32_t>(stdhaystack.find(stdneedle, offset)), haystack.find(needle, offset));
         }
         caseNumber++;
     }
@@ -809,6 +809,27 @@ StringTest::TestCharString() {
         assertEquals("s3 should have content of s2",
                 "Long string over 40 characters to trigger heap allocation",
                 s3.data());
+    }
+
+    {
+        // extract()
+        errorCode.reset();
+        CharString s("abc", errorCode);
+        char buffer[10];
+
+        s.extract(buffer, 10, errorCode);
+        assertEquals("abc.extract(10) success", U_ZERO_ERROR, errorCode.get());
+        assertEquals("abc.extract(10) output", "abc", buffer);
+
+        strcpy(buffer, "012345");
+        s.extract(buffer, 3, errorCode);
+        assertEquals("abc.extract(3) not terminated",
+                     U_STRING_NOT_TERMINATED_WARNING, errorCode.reset());
+        assertEquals("abc.extract(3) output", "abc345", buffer);
+
+        strcpy(buffer, "012345");
+        s.extract(buffer, 2, errorCode);
+        assertEquals("abc.extract(2) overflow", U_BUFFER_OVERFLOW_ERROR, errorCode.reset());
     }
 }
 

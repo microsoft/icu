@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ak{
     Countries{
         AD{"Andora"}
@@ -35,7 +36,7 @@ ak{
         BY{"Bɛlarus"}
         BZ{"Beliz"}
         CA{"Kanada"}
-        CD{"Congo (DRC)"}
+        CD{"Kongo (Zair)"}
         CF{"Afrika Finimfin Man"}
         CG{"Kongo"}
         CH{"Swetzaland"}
@@ -164,7 +165,7 @@ ak{
         PM{"Saint Pierre ne Miquelon"}
         PN{"Pitcairn"}
         PR{"Puɛto Riko"}
-        PS{"Palestinian Authority"}
+        PS{"Palestaen West Bank ne Gaza"}
         PT{"Pɔtugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -226,5 +227,4 @@ ak{
         ZM{"Zambia"}
         ZW{"Zembabwe"}
     }
-    Version{"37"}
 }

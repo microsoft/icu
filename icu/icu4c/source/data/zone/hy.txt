@@ -1,7 +1,7 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 hy{
-    Version{"37"}
     zoneStrings{
         "Africa:Abidjan"{
             ec{"Աբիջան"}
@@ -866,6 +866,9 @@ hy{
         }
         "Asia:Ulaanbaatar"{
             ec{"Ուլան Բատոր"}
+        }
+        "Asia:Urumqi"{
+            ec{"Ուրումչի"}
         }
         "Asia:Ust-Nera"{
             ec{"Ուստ-Ներա"}

@@ -1,8 +1,10 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 sw_CD{
     Languages{
         ak{"Kiakan"}
+        ar_001{"Kiarabu cha Dunia Kilichosanifishwa"}
         arq{"Kiarabu cha Aljeria"}
         az{"Kiazabajani"}
         gv{"Kimanksi"}
@@ -10,7 +12,6 @@ sw_CD{
         hup{"Kihupa"}
         jbo{"Kilojban"}
         kac{"Kikachin"}
-        khq{"Kikoyra Chiini"}
         kkj{"Kikako"}
         koi{"Kikomipermyak"}
         kru{"Kikurukh"}
@@ -34,5 +35,4 @@ sw_CD{
         udm{"Kiudumurti"}
         yi{"Kiyidi"}
     }
-    Version{"37"}
 }

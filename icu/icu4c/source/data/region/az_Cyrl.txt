@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 az_Cyrl{
     %%Parent{"root"}
     Countries{
@@ -91,11 +92,13 @@ az_Cyrl{
         CY{"Кипр"}
         CZ{"Чехија"}
         DE{"Алманија"}
+        DG{"Диего Гарсија"}
         DJ{"Ҹибути"}
         DK{"Данимарка"}
         DM{"Доминика"}
         DO{"Доминикан Республикасы"}
         DZ{"Әлҹәзаир"}
+        EA{"Сеута вә Мелилја"}
         EC{"Еквадор"}
         EE{"Естонија"}
         EG{"Мисир"}
@@ -134,6 +137,7 @@ az_Cyrl{
         HR{"Хорватија"}
         HT{"Һаити"}
         HU{"Маҹарыстан"}
+        IC{"Канар адалары"}
         ID{"Индонезија"}
         IE{"Ирландија"}
         IL{"Исраил"}
@@ -286,5 +290,16 @@ az_Cyrl{
         ZW{"Зимбабве"}
         ZZ{"Намәлум Реҝион"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"БК"}
+        HK{"Һонг Конг"}
+        MO{"Макао"}
+        US{"АБШ"}
+    }
+    Countries%variant{
+        CD{"Конго (КДР)"}
+        CG{"Конго (Республика)"}
+        CZ{"Чех Республикасы"}
+        FK{"Фолкленд адалары (Малвин адалары)"}
+    }
 }

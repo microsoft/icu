@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 agq{
     Countries{
         AD{"Àndolà"}
@@ -164,7 +165,7 @@ agq{
         PM{"Sɛ̀n Kpiyɛ̀ à Mikelɔŋ"}
         PN{"Kpitɨ̀kalè"}
         PR{"Kpǒto Leko"}
-        PS{"Autorité palestinienne"}
+        PS{"Adzɨmā kɨ ŋgùŋ kɨ Palɛsɨtɨnyia à kɨ Gazà kò"}
         PT{"Kputuwgà"}
         PW{"Kpàlawù"}
         PY{"Kpalàgwɛ̂"}
@@ -226,5 +227,4 @@ agq{
         ZM{"Zambìa"}
         ZW{"Zìmbagbɛ̀"}
     }
-    Version{"37"}
 }

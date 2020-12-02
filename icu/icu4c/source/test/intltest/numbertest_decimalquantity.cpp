@@ -483,18 +483,17 @@ void DecimalQuantityTest::testCompactDecimalSuppressedExponent() {
         int32_t expectedSuppressedExponent;
     } cases[] = {
         // unlocalized formatter skeleton, input, string output, long output, double output, BigDecimal output, plain string, suppressed exponent
-        /* MSFT Change: Begin */
-        {u"",              123456789, u"123\u00A0456\u00A0789",  123456789L, 123456789.0, u"123456789", 0},
+        {u"",              123456789, u"123 456 789",  123456789L, 123456789.0, u"123456789", 0},
         {u"compact-long",  123456789, u"123 millions", 123000000L, 123000000.0, u"123000000", 6},
         {u"compact-short", 123456789, u"123 M",        123000000L, 123000000.0, u"123000000", 6},
         {u"scientific",    123456789, u"1,234568E8",   123456800L, 123456800.0, u"123456800", 8},
 
-        {u"",              1234567, u"1\u00A0234\u00A0567",   1234567L, 1234567.0, u"1234567", 0},
+        {u"",              1234567, u"1 234 567",   1234567L, 1234567.0, u"1234567", 0},
         {u"compact-long",  1234567, u"1,2 million", 1200000L, 1200000.0, u"1200000", 6},
         {u"compact-short", 1234567, u"1,2 M",       1200000L, 1200000.0, u"1200000", 6},
         {u"scientific",    1234567, u"1,234567E6",  1234567L, 1234567.0, u"1234567", 6},
 
-        {u"",              123456, u"123\u00A0456",   123456L, 123456.0, u"123456", 0},
+        {u"",              123456, u"123 456",   123456L, 123456.0, u"123456", 0},
         {u"compact-long",  123456, u"123 mille", 123000L, 123000.0, u"123000", 3},
         {u"compact-short", 123456, u"123 k",     123000L, 123000.0, u"123000", 3},
         {u"scientific",    123456, u"1,23456E5", 123456L, 123456.0, u"123456", 5},
@@ -524,11 +523,10 @@ void DecimalQuantityTest::testCompactDecimalSuppressedExponent() {
         {u"compact-short", 999.9, u"1 k",       1000L, 1000.0, u"1000",  3},
         {u"scientific",    999.9, u"9,999E2",   999L,  999.9,  u"999.9", 2},
 
-        {u"",              1000.0, u"1\u00A0000",     1000L, 1000.0, u"1000", 0},
+        {u"",              1000.0, u"1 000",     1000L, 1000.0, u"1000", 0},
         {u"compact-long",  1000.0, u"1 millier", 1000L, 1000.0, u"1000", 3},
         {u"compact-short", 1000.0, u"1 k",       1000L, 1000.0, u"1000", 3},
         {u"scientific",    1000.0, u"1E3",       1000L, 1000.0, u"1000", 3},
-        /* MSFT Change: End */
     };
     for (const auto& cas : cases) {
         // test the helper methods used to compute plural operand values
@@ -575,10 +573,6 @@ void DecimalQuantityTest::testCompactDecimalSuppressedExponent() {
         double actualIOperand = dq.getPluralOperand(PLURAL_OPERAND_I);
         double actualEOperand = dq.getPluralOperand(PLURAL_OPERAND_E);
 
-        assertEquals(
-                u"formatted number " + cas.skeleton + u" toString: " + cas.input,
-                cas.expectedString,
-                actualString);
         assertDoubleEquals(
                 u"compact decimal " + cas.skeleton + u" n operand: " + cas.input,
                 expectedNOperand,

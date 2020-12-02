@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 rn{
     Countries{
         AD{"Andora"}
@@ -164,7 +165,7 @@ rn{
         PM{"Sempiyeri na Mikeloni"}
         PN{"Pitikeyirini"}
         PR{"Puwetoriko"}
-        PS{"Autorité palestinienne"}
+        PS{"Palesitina Wesitibanka na Gaza"}
         PT{"Porutugali"}
         PW{"Palawu"}
         PY{"Paragwe"}
@@ -226,5 +227,4 @@ rn{
         ZM{"Zambiya"}
         ZW{"Zimbabwe"}
     }
-    Version{"37"}
 }

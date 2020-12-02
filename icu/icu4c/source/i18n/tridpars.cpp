@@ -50,10 +50,7 @@ static UInitOnce gSpecialInversesInitOnce = U_INITONCE_INITIALIZER;
 /**
  * The mutex controlling access to SPECIAL_INVERSES
  */
-static UMutex *LOCK() {
-    static UMutex m;
-    return &m;
-}
+static UMutex LOCK;
 
 TransliteratorIDParser::Specs::Specs(const UnicodeString& s, const UnicodeString& t,
                                      const UnicodeString& v, UBool sawS,
@@ -663,7 +660,7 @@ void TransliteratorIDParser::registerSpecialInverse(const UnicodeString& target,
         bidirectional = FALSE;
     }
 
-    Mutex lock(LOCK());
+    Mutex lock(&LOCK);
 
     UnicodeString *tempus = new UnicodeString(inverseTarget);  // Used for null pointer check before usage.
     if (tempus == NULL) {
@@ -867,9 +864,9 @@ TransliteratorIDParser::specsToSpecialInverse(const Specs& specs, UErrorCode &st
 
     UnicodeString* inverseTarget;
 
-    umtx_lock(LOCK());
+    umtx_lock(&LOCK);
     inverseTarget = (UnicodeString*) SPECIAL_INVERSES->get(specs.target);
-    umtx_unlock(LOCK());
+    umtx_unlock(&LOCK);
 
     if (inverseTarget != NULL) {
         // If the original ID contained "Any-" then make the

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 yav{
     Countries{
         AD{"Aŋtúla"}
@@ -164,7 +165,7 @@ yav{
         PM{"sɛ́ŋpiɛ́l e mikelɔ́ŋ"}
         PN{"pitikɛ́ɛlínɛ́"}
         PR{"pólótolíko"}
-        PS{"Autorité palestinienne"}
+        PS{"kitɔŋ ki palɛstíin"}
         PT{"pɔltukáal"}
         PW{"palawú"}
         PY{"palakúé"}
@@ -225,5 +226,4 @@ yav{
         ZM{"saambíi"}
         ZW{"simbapuwé"}
     }
-    Version{"37"}
 }

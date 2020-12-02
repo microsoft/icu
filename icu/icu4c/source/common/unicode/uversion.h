@@ -58,10 +58,6 @@
  */
 typedef uint8_t UVersionInfo[U_MAX_VERSION_LENGTH];
 
-//IGNORE_WINDOWS_HEADERS_START
-// MSFT-Change: Since the OS ICU headers are for C APIs only, we don't
-// need or want any C++ namespace support.
-
 /*===========================================================================*/
 /* C++ namespace if supported. Versioned unless versioning is disabled.      */
 /*===========================================================================*/
@@ -130,8 +126,6 @@ typedef uint8_t UVersionInfo[U_MAX_VERSION_LENGTH];
 #   endif
 #endif /* __cplusplus */
 
-//IGNORE_WINDOWS_HEADERS_END
-
 /*===========================================================================*/
 /* General version helper functions. Definitions in putil.c                  */
 /*===========================================================================*/
@@ -147,7 +141,7 @@ typedef uint8_t UVersionInfo[U_MAX_VERSION_LENGTH];
  *                      values of up to 255 each.
  * @stable ICU 2.4
  */
-U_STABLE void U_EXPORT2
+U_CAPI void U_EXPORT2
 u_versionFromString(UVersionInfo versionArray, const char *versionString);
 
 /**
@@ -161,7 +155,7 @@ u_versionFromString(UVersionInfo versionArray, const char *versionString);
  *                      fields with values of up to 255 each.
  * @stable ICU 4.2
  */
-U_STABLE void U_EXPORT2
+U_CAPI void U_EXPORT2
 u_versionFromUString(UVersionInfo versionArray, const UChar *versionString);
 
 
@@ -177,7 +171,7 @@ u_versionFromUString(UVersionInfo versionArray, const UChar *versionString);
  *                      The buffer size must be at least U_MAX_VERSION_STRING_LENGTH.
  * @stable ICU 2.4
  */
-U_STABLE void U_EXPORT2
+U_CAPI void U_EXPORT2
 u_versionToString(const UVersionInfo versionArray, char *versionString);
 
 /**
@@ -188,6 +182,6 @@ u_versionToString(const UVersionInfo versionArray, char *versionString);
  * @param versionArray the version # information, the result will be filled in
  * @stable ICU 2.0
  */
-U_STABLE void U_EXPORT2
+U_CAPI void U_EXPORT2
 u_getVersion(UVersionInfo versionArray);
 #endif

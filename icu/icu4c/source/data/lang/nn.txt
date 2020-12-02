@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 nn{
     Keys{
         calendar{"kalender"}
@@ -32,6 +33,7 @@ nn{
         ang{"gammalengelsk"}
         anp{"angika"}
         ar{"arabisk"}
+        ar_001{"moderne standardarabisk"}
         arc{"arameisk"}
         arn{"mapudungun"}
         arp{"arapaho"}
@@ -73,6 +75,7 @@ nn{
         cad{"caddo"}
         car{"carib"}
         cch{"atsam"}
+        ccp{"chakma"}
         ce{"tsjetsjensk"}
         ceb{"cebuano"}
         cgg{"kiga"}
@@ -131,6 +134,7 @@ nn{
         eu{"baskisk"}
         ewo{"ewondo"}
         fa{"persisk"}
+        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulfulde"}
@@ -153,7 +157,7 @@ nn{
         gd{"skotsk-gælisk"}
         gez{"geez"}
         gil{"gilbertese"}
-        gl{"galicisk"}
+        gl{"galisisk"}
         gmh{"mellomhøgtysk"}
         gn{"guarani"}
         goh{"gammalhøgtysk"}
@@ -284,7 +288,7 @@ nn{
         mfe{"morisyen"}
         mg{"madagassisk"}
         mga{"mellomirsk"}
-        mgh{"Makhuwa-Meetto"}
+        mgh{"makhuwa-meetto"}
         mgo{"meta’"}
         mh{"marshallesisk"}
         mi{"maori"}
@@ -311,17 +315,19 @@ nn{
         na{"nauru"}
         nap{"napolitansk"}
         naq{"nama"}
-        nb{"bokmål"}
+        nb{"norsk bokmål"}
         nd{"nord-ndebele"}
         nds{"lågtysk"}
+        nds_NL{"lågsaksisk"}
         ne{"nepalsk"}
         new{"newari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niuisk"}
         nl{"nederlandsk"}
+        nl_BE{"flamsk"}
         nmg{"kwasio"}
-        nn{"nynorsk"}
+        nn{"norsk nynorsk"}
         nnh{"ngiemboon"}
         no{"norsk"}
         nog{"nogai"}
@@ -368,6 +374,7 @@ nn{
         rm{"retoromansk"}
         rn{"rundi"}
         ro{"rumensk"}
+        ro_MD{"moldavisk"}
         rof{"rombo"}
         rom{"romani"}
         root{"rot"}
@@ -391,9 +398,10 @@ nn{
         se{"nordsamisk"}
         seh{"sena"}
         sel{"selkupisk"}
-        ses{"Koyraboro Senni"}
+        ses{"koyraboro senni"}
         sg{"sango"}
         sga{"gammalirsk"}
+        sh{"serbokroatisk"}
         shi{"tachelhit"}
         shn{"shan"}
         si{"singalesisk"}
@@ -494,10 +502,23 @@ nn{
         zen{"zenaga"}
         zgh{"standard marokkansk tamazight"}
         zh{"kinesisk"}
+        zh_Hans{"forenkla kinesisk"}
+        zh_Hant{"tradisjonell kinesisk"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"utan språkleg innhald"}
         zza{"zaza"}
+    }
+    Languages%long{
+        zh_Hans{"forenkla mandarinkinesisk"}
+        zh_Hant{"tradisjonell mandarinkinesisk"}
+    }
+    Languages%menu{
+        ckb{"kurdisk (sentral)"}
+        zh{"kinesisk, mandarin"}
+    }
+    Languages%variant{
+        ckb{"kurdisk (sorani)"}
     }
     Scripts{
         Arab{"arabisk"}
@@ -536,7 +557,7 @@ nn{
         Grek{"gresk"}
         Gujr{"gujarati"}
         Guru{"gurmukhi"}
-        Hanb{"han med bopomofo"}
+        Hanb{"hanb"}
         Hang{"hangul"}
         Hani{"han"}
         Hano{"hanunoo"}
@@ -653,6 +674,7 @@ nn{
             iso8601{"ISO 8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
+            roc{"minguo-kalender"}
         }
         cf{
             account{"valutaformat for rekneskapsføring"}
@@ -752,7 +774,6 @@ nn{
         TARASK{"taraskievica-ortografi"}
         VALENCIA{"valensisk dialekt"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} – alt"}
         category-list{"{0}: {1}"}
@@ -767,6 +788,8 @@ nn{
             one{"{0} strek"}
             other{"{0} strekar"}
         }
+        subscript{"senka {0}"}
+        superscript{"heva {0}"}
     }
     codePatterns{
         language{"Språk: {0}"}

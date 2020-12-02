@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 nl{
     Countries{
         001{"wereld"}
@@ -63,7 +64,7 @@ nl{
         BM{"Bermuda"}
         BN{"Brunei"}
         BO{"Bolivia"}
-        BQ{"Bonaire, Sint Eustatius en Saba"}
+        BQ{"Caribisch Nederland"}
         BR{"Brazilië"}
         BS{"Bahama’s"}
         BT{"Bhutan"}
@@ -92,14 +93,17 @@ nl{
         CY{"Cyprus"}
         CZ{"Tsjechië"}
         DE{"Duitsland"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denemarken"}
         DM{"Dominica"}
         DO{"Dominicaanse Republiek"}
         DZ{"Algerije"}
+        EA{"Ceuta en Melilla"}
         EC{"Ecuador"}
         EE{"Estland"}
         EG{"Egypte"}
+        EH{"Westelijke Sahara"}
         ER{"Eritrea"}
         ES{"Spanje"}
         ET{"Ethiopië"}
@@ -136,6 +140,7 @@ nl{
         HR{"Kroatië"}
         HT{"Haïti"}
         HU{"Hongarije"}
+        IC{"Canarische Eilanden"}
         ID{"Indonesië"}
         IE{"Ierland"}
         IL{"Israël"}
@@ -218,7 +223,7 @@ nl{
         PM{"Saint-Pierre en Miquelon"}
         PN{"Pitcairneilanden"}
         PR{"Puerto Rico"}
-        PS{"Palestijnse Autoriteit"}
+        PS{"Palestijnse gebieden"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -249,7 +254,7 @@ nl{
         SV{"El Salvador"}
         SX{"Sint-Maarten"}
         SY{"Syrië"}
-        SZ{"eSwatini"}
+        SZ{"Eswatini"}
         TA{"Tristan da Cunha"}
         TC{"Turks- en Caicoseilanden"}
         TD{"Tsjaad"}
@@ -283,6 +288,8 @@ nl{
         VU{"Vanuatu"}
         WF{"Wallis en Futuna"}
         WS{"Samoa"}
+        XA{"Pseudo-Accenten"}
+        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +298,20 @@ nl{
         ZW{"Zimbabwe"}
         ZZ{"onbekend gebied"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"VK"}
+        HK{"Hongkong"}
+        MO{"Macau"}
+        PS{"Palestina"}
+        UN{"VN"}
+        US{"VS"}
+    }
+    Countries%variant{
+        CD{"Congo (DRC)"}
+        CG{"Congo (Republiek)"}
+        CZ{"Tsjechische Republiek"}
+        FK{"Falklandeilanden (Islas Malvinas)"}
+        SZ{"Swaziland"}
+        TL{"Democratische Republiek Oost-Timor"}
+    }
 }

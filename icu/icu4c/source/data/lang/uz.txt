@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 uz{
     Keys{
         calendar{"taqvim"}
@@ -27,6 +28,7 @@ uz{
         an{"aragon"}
         anp{"angika"}
         ar{"arab"}
+        ar_001{"standart arab"}
         arn{"mapuche"}
         arp{"arapaxo"}
         as{"assam"}
@@ -79,6 +81,8 @@ uz{
         dar{"dargva"}
         dav{"taita"}
         de{"nemischa"}
+        de_AT{"nemis (Avstriya)"}
+        de_CH{"yuqori nemis (Shveytsariya)"}
         dgr{"dogrib"}
         dje{"zarma"}
         dsb{"quyi sorb"}
@@ -93,12 +97,20 @@ uz{
         eka{"ekajuk"}
         el{"grek"}
         en{"inglizcha"}
+        en_AU{"ingliz (Avstraliya)"}
+        en_CA{"ingliz (Kanada)"}
+        en_GB{"ingliz (Britaniya)"}
+        en_US{"ingliz (Amerika)"}
         eo{"esperanto"}
         es{"ispancha"}
+        es_419{"ispan (Lotin Amerikasi)"}
+        es_ES{"ispan (Yevropa)"}
+        es_MX{"ispan (Meksika)"}
         et{"estoncha"}
         eu{"bask"}
         ewo{"evondo"}
         fa{"fors"}
+        fa_AF{"dari"}
         ff{"fula"}
         fi{"fincha"}
         fil{"filipincha"}
@@ -106,6 +118,8 @@ uz{
         fo{"farercha"}
         fon{"fon"}
         fr{"fransuzcha"}
+        fr_CA{"fransuz (Kanada)"}
+        fr_CH{"fransuz (Shveytsariya)"}
         fur{"friul"}
         fy{"g‘arbiy friz"}
         ga{"irland"}
@@ -249,12 +263,14 @@ uz{
         nb{"norveg-bokmal"}
         nd{"shimoliy ndebele"}
         nds{"quyi nemis"}
+        nds_NL{"quyi sakson"}
         ne{"nepal"}
         new{"nevar"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niue"}
         nl{"niderland"}
+        nl_BE{"flamand"}
         nmg{"kvasio"}
         nn{"norveg-nyunorsk"}
         nnh{"ngiyembun"}
@@ -280,6 +296,8 @@ uz{
         prg{"pruss"}
         ps{"pushtu"}
         pt{"portugalcha"}
+        pt_BR{"portugal (Braziliya)"}
+        pt_PT{"portugal (Yevropa)"}
         qu{"kechua"}
         quc{"kiche"}
         rap{"rapanui"}
@@ -287,6 +305,7 @@ uz{
         rm{"romansh"}
         rn{"rundi"}
         ro{"rumincha"}
+        ro_MD{"moldovan"}
         rof{"rombo"}
         root{"tub aholi tili"}
         ru{"ruscha"}
@@ -332,6 +351,7 @@ uz{
         suk{"sukuma"}
         sv{"shved"}
         sw{"suaxili"}
+        sw_CD{"suaxili (Kongo)"}
         swb{"qamar"}
         syr{"suriyacha"}
         ta{"tamil"}
@@ -386,10 +406,25 @@ uz{
         yue{"kanton"}
         zgh{"tamazigxt"}
         zh{"xitoy"}
+        zh_Hans{"xitoy (soddalashgan)"}
+        zh_Hant{"xitoy (an’anaviy)"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"til tarkibi yo‘q"}
         zza{"zaza"}
+    }
+    Languages%long{
+        zh_Hans{"xitoy (soddalashtirilgan mandarin)"}
+        zh_Hant{"xitoy (an’anaviy mandarin)"}
+    }
+    Languages%menu{
+        yue{"xitoy, kanton"}
+        zh{"xitoy, mandarin"}
+    }
+    Languages%short{
+        az{"ozar"}
+        en_GB{"ingliz (Buyuk Britaniya)"}
+        en_US{"ingliz (AQSH)"}
     }
     Scripts{
         Arab{"arab"}
@@ -449,6 +484,7 @@ uz{
             iso8601{"ISO-8601 taqvimi"}
             japanese{"yapon taqvimi"}
             persian{"fors taqvimi"}
+            roc{"Mingo taqvimi"}
         }
         cf{
             account{"moliyaviy valyuta formati"}
@@ -513,7 +549,6 @@ uz{
             tibt{"tibet raqamlari"}
         }
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — hammasi"}
         category-list{"{0}: {1}"}
@@ -528,6 +563,8 @@ uz{
             one{"{0} ta chiziq"}
             other{"{0} ta chiziq"}
         }
+        subscript{"{0} pastki yozuv"}
+        superscript{"{0} ustki yozuv"}
     }
     codePatterns{
         language{"Til: {0}"}

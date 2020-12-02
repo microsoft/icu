@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 mt{
     Countries{
         001{"Dinja"}
@@ -89,14 +90,17 @@ mt{
         CY{"Ċipru"}
         CZ{"ir-Repubblika Ċeka"}
         DE{"il-Ġermanja"}
+        DG{"Diego Garcia"}
         DJ{"il-Djibouti"}
         DK{"id-Danimarka"}
         DM{"Dominica"}
         DO{"ir-Repubblika Dominicana"}
         DZ{"l-Alġerija"}
+        EA{"Ceuta u Melilla"}
         EC{"l-Ekwador"}
         EE{"l-Estonja"}
         EG{"l-Eġittu"}
+        EH{"is-Saħara tal-Punent"}
         ER{"l-Eritrea"}
         ES{"Spanja"}
         ET{"l-Etjopja"}
@@ -135,6 +139,7 @@ mt{
         HR{"il-Kroazja"}
         HT{"il-Haiti"}
         HU{"l-Ungerija"}
+        IC{"il-Gżejjer Canary"}
         ID{"l-Indoneżja"}
         IE{"l-Irlanda"}
         IL{"Iżrael"}
@@ -220,7 +225,7 @@ mt{
         PM{"Saint Pierre u Miquelon"}
         PN{"Gżejjer Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Awtorità Palestinjana"}
+        PS{"it-Territorji Palestinjani"}
         PT{"il-Portugall"}
         PW{"Palau"}
         PY{"il-Paragwaj"}
@@ -291,5 +296,18 @@ mt{
         ZW{"iż-Żimbabwe"}
         ZZ{"Reġjun Mhux Magħruf"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"il-Macao"}
+        PS{"il-Palestina"}
+        US{"US"}
+    }
+    Countries%variant{
+        CD{"Kongo (RDK)"}
+        CG{"ir-Repubblika tal-Kongo"}
+        CZ{"Ir-Repubblika Ċeka"}
+        FK{"Il-Gżejjer Falkland (il-Gżejjer Malvinas)"}
+        TL{"Timor tal-Lvant"}
+    }
 }

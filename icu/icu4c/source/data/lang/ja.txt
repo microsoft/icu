@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ja{
     Keys{
         calendar{"暦法"}
@@ -45,6 +46,7 @@ ja{
         ang{"古英語"}
         anp{"アンギカ語"}
         ar{"アラビア語"}
+        ar_001{"現代標準アラビア語"}
         arc{"アラム語"}
         arn{"マプチェ語"}
         aro{"アラオナ語"}
@@ -139,6 +141,7 @@ ja{
         dar{"ダルグワ語"}
         dav{"タイタ語"}
         de{"ドイツ語"}
+        de_CH{"標準ドイツ語 (スイス)"}
         del{"デラウェア語"}
         den{"スレイビー語"}
         dgr{"ドグリブ語"}
@@ -163,15 +166,21 @@ ja{
         el{"ギリシャ語"}
         elx{"エラム語"}
         en{"英語"}
+        en_AU{"オーストラリア英語"}
+        en_CA{"カナダ英語"}
+        en_GB{"イギリス英語"}
+        en_US{"アメリカ英語"}
         enm{"中英語"}
         eo{"エスペラント語"}
         es{"スペイン語"}
+        es_ES{"スペイン語 (イベリア半島)"}
         esu{"中央アラスカ・ユピック語"}
         et{"エストニア語"}
         eu{"バスク語"}
         ewo{"エウォンド語"}
         ext{"エストレマドゥーラ語"}
         fa{"ペルシア語"}
+        fa_AF{"ダリー語"}
         fan{"ファング語"}
         fat{"ファンティー語"}
         ff{"フラ語"}
@@ -243,7 +252,7 @@ ja{
         id{"インドネシア語"}
         ie{"インターリング"}
         ig{"イボ語"}
-        ii{"イ語"}
+        ii{"四川イ語"}
         ik{"イヌピアック語"}
         ilo{"イロカノ語"}
         inh{"イングーシ語"}
@@ -400,6 +409,7 @@ ja{
         niu{"ニウーエイ語"}
         njo{"アオ・ナガ語"}
         nl{"オランダ語"}
+        nl_BE{"フラマン語"}
         nmg{"クワシオ語"}
         nn{"ノルウェー語(ニーノシュク)"}
         nnh{"ンジエムブーン語"}
@@ -447,6 +457,7 @@ ja{
         pro{"古期プロバンス語"}
         ps{"パシュトゥー語"}
         pt{"ポルトガル語"}
+        pt_PT{"ポルトガル語 (イベリア半島)"}
         qu{"ケチュア語"}
         quc{"キチェ語"}
         qug{"チンボラソ高地ケチュア語"}
@@ -458,6 +469,7 @@ ja{
         rm{"ロマンシュ語"}
         rn{"ルンディ語"}
         ro{"ルーマニア語"}
+        ro_MD{"モルダビア語"}
         rof{"ロンボ語"}
         rom{"ロマーニー語"}
         root{"ルート"}
@@ -493,6 +505,7 @@ ja{
         sg{"サンゴ語"}
         sga{"古アイルランド語"}
         sgs{"サモギティア語"}
+        sh{"セルボ・クロアチア語"}
         shi{"タシルハイト語"}
         shn{"シャン語"}
         shu{"チャド・アラビア語"}
@@ -525,6 +538,7 @@ ja{
         sux{"シュメール語"}
         sv{"スウェーデン語"}
         sw{"スワヒリ語"}
+        sw_CD{"コンゴ・スワヒリ語"}
         swb{"コモロ語"}
         syc{"古典シリア語"}
         syr{"シリア語"}
@@ -614,10 +628,32 @@ ja{
         zen{"ゼナガ語"}
         zgh{"標準モロッコ タマジクト語"}
         zh{"中国語"}
+        zh_Hans{"簡体中国語"}
+        zh_Hant{"繁体中国語"}
         zu{"ズールー語"}
         zun{"ズニ語"}
         zxx{"言語的内容なし"}
         zza{"ザザ語"}
+    }
+    Languages%long{
+        zh_Hans{"標準中国語 (簡体字)"}
+        zh_Hant{"標準中国語 (繁体字)"}
+    }
+    Languages%menu{
+        ars{"アラビア語（ナジュド地方）"}
+        ckb{"クルド語（中央）"}
+        yue{"中国語 (広東語)"}
+        zh{"中国語 (標準語)"}
+    }
+    Languages%short{
+        az{"アゼリー語"}
+        en_GB{"英語(英国)"}
+        en_US{"英語(米国)"}
+    }
+    Languages%variant{
+        ckb{"クルド語（ソラニー）"}
+        ps{"パシュトゥ語"}
+        ug{"ウィグル語"}
     }
     Scripts{
         Afak{"アファカ文字"}
@@ -815,6 +851,7 @@ ja{
             iso8601{"ISO-8601"}
             japanese{"和暦"}
             persian{"ペルシア暦"}
+            roc{"中華民国暦"}
         }
         cf{
             account{"会計通貨フォーマット"}
@@ -1022,7 +1059,6 @@ ja{
         VALLADER{"ヴァラダー"}
         WADEGILE{"ウェード式ローマ字表記法"}
     }
-    Version{"37"}
     characterLabelPattern{
         all{"{0} — すべて"}
         category-list{"{0}: {1}"}
@@ -1036,6 +1072,8 @@ ja{
         strokes{
             other{"{0} 画"}
         }
+        subscript{"下付き文字 {0}"}
+        superscript{"上付き文字 {0}"}
     }
     codePatterns{
         language{"言語: {0}"}

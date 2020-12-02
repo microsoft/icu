@@ -1,7 +1,7 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ta{
-    Version{"37"}
     zoneStrings{
         "Africa:Abidjan"{
             ec{"அபிட்ஜான்"}
@@ -866,6 +866,9 @@ ta{
         }
         "Asia:Ulaanbaatar"{
             ec{"உலான்பாட்டர்"}
+        }
+        "Asia:Urumqi"{
+            ec{"உரும்கி"}
         }
         "Asia:Ust-Nera"{
             ec{"உஸ்ட்-நேரா"}
@@ -1749,7 +1752,7 @@ ta{
             ls{"நியு நேரம்"}
         }
         "meta:Norfolk"{
-            ld{"நார்ஃபோக் தீவு கோடை நேரம்"}
+            ld{"நார்ஃபோக் தீவு பகலொளி நேரம்"}
             lg{"நார்ஃபோக் தீவு நேரம்"}
             ls{"நார்ஃபோக் தீவு நிலையான நேரம்"}
         }

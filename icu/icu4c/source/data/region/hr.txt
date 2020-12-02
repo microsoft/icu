@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 hr{
     Countries{
         001{"Svijet"}
@@ -92,14 +93,17 @@ hr{
         CY{"Cipar"}
         CZ{"Češka"}
         DE{"Njemačka"}
+        DG{"Diego Garcia"}
         DJ{"Džibuti"}
         DK{"Danska"}
         DM{"Dominika"}
         DO{"Dominikanska Republika"}
         DZ{"Alžir"}
+        EA{"Ceuta i Melilla"}
         EC{"Ekvador"}
         EE{"Estonija"}
         EG{"Egipat"}
+        EH{"Zapadna Sahara"}
         ER{"Eritreja"}
         ES{"Španjolska"}
         ET{"Etiopija"}
@@ -136,6 +140,7 @@ hr{
         HR{"Hrvatska"}
         HT{"Haiti"}
         HU{"Mađarska"}
+        IC{"Kanarski otoci"}
         ID{"Indonezija"}
         IE{"Irska"}
         IL{"Izrael"}
@@ -218,7 +223,7 @@ hr{
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Otoci Pitcairn"}
         PR{"Portoriko"}
-        PS{"Palestinska Samouprava"}
+        PS{"Palestinsko područje"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paragvaj"}
@@ -283,6 +288,8 @@ hr{
         VU{"Vanuatu"}
         WF{"Wallis i Futuna"}
         WS{"Samoa"}
+        XA{"pseudo naglasci"}
+        XB{"pseudo bidi"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +298,21 @@ hr{
         ZW{"Zimbabve"}
         ZZ{"nepoznato područje"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"Makao"}
+        PS{"Palestina"}
+        UN{"UN"}
+        US{"SAD"}
+    }
+    Countries%variant{
+        CD{"Kongo (DR)"}
+        CG{"Kongo (RK)"}
+        CI{"Bjelokosna Obala"}
+        CZ{"Češka Republika"}
+        FK{"Falklandski otoci (Malvini)"}
+        SZ{"Svazi"}
+        TL{"Istočni Timor"}
+    }
 }

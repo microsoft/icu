@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 fil{
     Countries{
         001{"Mundo"}
@@ -92,14 +93,17 @@ fil{
         CY{"Cyprus"}
         CZ{"Czechia"}
         DE{"Germany"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denmark"}
         DM{"Dominica"}
         DO{"Dominican Republic"}
         DZ{"Algeria"}
+        EA{"Ceuta & Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egypt"}
+        EH{"Kanlurang Sahara"}
         ER{"Eritrea"}
         ES{"Spain"}
         ET{"Ethiopia"}
@@ -136,6 +140,7 @@ fil{
         HR{"Croatia"}
         HT{"Haiti"}
         HU{"Hungary"}
+        IC{"Canary Islands"}
         ID{"Indonesia"}
         IE{"Ireland"}
         IL{"Israel"}
@@ -218,7 +223,7 @@ fil{
         PM{"St. Pierre & Miquelon"}
         PN{"Pitcairn Islands"}
         PR{"Puerto Rico"}
-        PS{"Palestinian Authority"}
+        PS{"Palestinian Territories"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -283,6 +288,8 @@ fil{
         VU{"Vanuatu"}
         WF{"Wallis & Futuna"}
         WS{"Samoa"}
+        XA{"Mga Pseudo-Accent"}
+        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +298,20 @@ fil{
         ZW{"Zimbabwe"}
         ZZ{"Hindi Kilalang Rehiyon"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"U.K."}
+        HK{"Hong Kong"}
+        MO{"Macau"}
+        PS{"Palestine"}
+        UN{"UN"}
+        US{"U.S."}
+    }
+    Countries%variant{
+        CD{"Congo (DRC)"}
+        CG{"Congo (Republika)"}
+        CI{"Ivory Coast"}
+        CZ{"Czech Republic"}
+        FK{"Falkland Islands (Islas Malvinas)"}
+        TL{"East Timor"}
+    }
 }

@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 fur{
     Countries{
         001{"Mont"}
@@ -88,14 +89,17 @@ fur{
         CY{"Cipri"}
         CZ{"Republiche ceche"}
         DE{"Gjermanie"}
+        DG{"Diego Garcia"}
         DJ{"Gibuti"}
         DK{"Danimarcje"}
         DM{"Dominiche"}
         DO{"Republiche dominicane"}
         DZ{"Alzerie"}
+        EA{"Ceuta e Melilla"}
         EC{"Ecuador"}
         EE{"Estonie"}
         EG{"Egjit"}
+        EH{"Sahara ocidentâl"}
         ER{"Eritree"}
         ES{"Spagne"}
         ET{"Etiopie"}
@@ -131,6 +135,7 @@ fur{
         HR{"Cravuazie"}
         HT{"Haiti"}
         HU{"Ongjarie"}
+        IC{"Isulis Canariis"}
         ID{"Indonesie"}
         IE{"Irlande"}
         IL{"Israêl"}
@@ -212,7 +217,7 @@ fur{
         PM{"San Pierre e Miquelon"}
         PN{"Pitcairn"}
         PR{"Porto Rico"}
-        PS{"Autorità Palestinese"}
+        PS{"Teritoris palestinês"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -281,5 +286,13 @@ fur{
         ZW{"Zimbabwe"}
         ZZ{"Regjon no cognossude o no valide"}
     }
-    Version{"37"}
+    Countries%short{
+        HK{"Hong Kong"}
+        MO{"Macao"}
+    }
+    Countries%variant{
+        CD{"Congo (RDC)"}
+        CG{"Congo (Republiche)"}
+        FK{"Isulis Falkland (Isulis Malvinas)"}
+    }
 }

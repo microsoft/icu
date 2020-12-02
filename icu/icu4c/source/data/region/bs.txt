@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 bs{
     Countries{
         001{"Svijet"}
@@ -83,23 +84,26 @@ bs{
         CM{"Kamerun"}
         CN{"Kina"}
         CO{"Kolumbija"}
-        CP{"Ostrvo Kliperton"}
+        CP{"Ostrvo Clipperton"}
         CR{"Kostarika"}
         CU{"Kuba"}
-        CV{"Kape Verde"}
+        CV{"Zelenortska Ostrva"}
         CW{"Kurasao"}
         CX{"Božićno ostrvo"}
         CY{"Kipar"}
         CZ{"Češka"}
         DE{"Njemačka"}
+        DG{"Dijego Garsija"}
         DJ{"Džibuti"}
         DK{"Danska"}
         DM{"Dominika"}
         DO{"Dominikanska Republika"}
         DZ{"Alžir"}
+        EA{"Seuta i Melilja"}
         EC{"Ekvador"}
         EE{"Estonija"}
         EG{"Egipat"}
+        EH{"Zapadna Sahara"}
         ER{"Eritreja"}
         ES{"Španija"}
         ET{"Etiopija"}
@@ -116,7 +120,7 @@ bs{
         GD{"Grenada"}
         GE{"Gruzija"}
         GF{"Francuska Gvajana"}
-        GG{"Gernzi"}
+        GG{"Guernsey"}
         GH{"Gana"}
         GI{"Gibraltar"}
         GL{"Grenland"}
@@ -131,11 +135,12 @@ bs{
         GW{"Gvineja-Bisao"}
         GY{"Gvajana"}
         HK{"Hong Kong (SAR Kina)"}
-        HM{"Herd i arhipelag MekDonald"}
+        HM{"Ostrvo Heard i arhipelag McDonald"}
         HN{"Honduras"}
         HR{"Hrvatska"}
         HT{"Haiti"}
         HU{"Mađarska"}
+        IC{"Kanarska ostrva"}
         ID{"Indonezija"}
         IE{"Irska"}
         IL{"Izrael"}
@@ -218,7 +223,7 @@ bs{
         PM{"Sveti Petar i Mikelon"}
         PN{"Pitkernska Ostrva"}
         PR{"Porto Riko"}
-        PS{"Palestinska Samouprava"}
+        PS{"Palestinska Teritorija"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paragvaj"}
@@ -283,6 +288,8 @@ bs{
         VU{"Vanuatu"}
         WF{"Ostrva Valis i Futuna"}
         WS{"Samoa"}
+        XA{"Pseudo naglasci"}
+        XB{"Pseudo bidi"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Majote"}
@@ -291,5 +298,19 @@ bs{
         ZW{"Zimbabve"}
         ZZ{"Nepoznata oblast"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"Makao"}
+        PS{"Palestina"}
+        UN{"UN"}
+        US{"SAD"}
+    }
+    Countries%variant{
+        CD{"DR Kongo"}
+        CG{"Republika Kongo"}
+        CZ{"Češka Republika"}
+        FK{"Folklandska (Malvinska) ostrva"}
+        SZ{"Svazilend"}
+    }
 }

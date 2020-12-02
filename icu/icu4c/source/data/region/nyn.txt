@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 nyn{
     Countries{
         AD{"Andora"}
@@ -164,7 +165,7 @@ nyn{
         PM{"Senti Piyerre na Mikweron"}
         PN{"Pitkaini"}
         PR{"Pwetoriko"}
-        PS{"Palestinian Authority"}
+        PS{"Parestiina na Gaza"}
         PT{"Pocugo"}
         PW{"Palaawu"}
         PY{"Paragwai"}
@@ -226,5 +227,4 @@ nyn{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
     }
-    Version{"37"}
 }

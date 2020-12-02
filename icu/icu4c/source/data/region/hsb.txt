@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 hsb{
     Countries{
         001{"swět"}
@@ -91,14 +92,17 @@ hsb{
         CY{"Cypern"}
         CZ{"Čěska republika"}
         DE{"Němska"}
+        DG{"Diego Garcia"}
         DJ{"Dźibuti"}
         DK{"Danska"}
         DM{"Dominika"}
         DO{"Dominikanska republika"}
         DZ{"Algeriska"}
+        EA{"Ceuta a Melilla"}
         EC{"Ekwador"}
         EE{"Estiska"}
         EG{"Egyptowska"}
+        EH{"Zapadna Sahara"}
         ER{"Eritreja"}
         ES{"Španiska"}
         ET{"Etiopiska"}
@@ -134,6 +138,7 @@ hsb{
         HR{"Chorwatska"}
         HT{"Haiti"}
         HU{"Madźarska"}
+        IC{"Kanariske kupy"}
         ID{"Indoneska"}
         IE{"Irska"}
         IL{"Israel"}
@@ -215,7 +220,7 @@ hsb{
         PM{"St. Pierre a Miquelon"}
         PN{"Pitcairnowe kupy"}
         PR{"Puerto Rico"}
-        PS{"Palästinensische Behörde"}
+        PS{"Palestinski awtonomny teritorij"}
         PT{"Portugalska"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -267,6 +272,7 @@ hsb{
         UA{"Ukraina"}
         UG{"Uganda"}
         UM{"Ameriska Oceaniska"}
+        UN{"Zjednoćene narody"}
         US{"Zjednoćene staty Ameriki"}
         UY{"Uruguay"}
         UZ{"Uzbekistan"}
@@ -287,5 +293,18 @@ hsb{
         ZW{"Simbabwe"}
         ZZ{"njeznaty region"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"UK"}
+        HK{"Hongkong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Kongo (Demokratiska republika)"}
+        CG{"Kongo (Republika)"}
+        CI{"Słonowinowy pobrjóh"}
+        FK{"Falklandske kupy (Malwiny)"}
+        TL{"Wuchodny Timor"}
+    }
 }

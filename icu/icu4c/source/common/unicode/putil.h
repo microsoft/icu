@@ -42,9 +42,6 @@
  * functions may have to be re-implemented.
  */
 
-//IGNORE_WINDOWS_HEADERS_START
-// MSFT-Change: The Windows OS version of ICU uses a single fixed data file.
-
 /**
  * Return the ICU data directory. 
  * The data directory is where common format ICU data files (.dat files)
@@ -69,7 +66,7 @@
  *   
  * @stable ICU 2.0
  */
-U_STABLE const char* U_EXPORT2 u_getDataDirectory(void);
+U_CAPI const char* U_EXPORT2 u_getDataDirectory(void);
 
 
 /** 
@@ -91,7 +88,7 @@ U_STABLE const char* U_EXPORT2 u_getDataDirectory(void);
  * @see u_init
  * @stable ICU 2.0
  */
-U_STABLE void U_EXPORT2 u_setDataDirectory(const char *directory);
+U_CAPI void U_EXPORT2 u_setDataDirectory(const char *directory);
 
 #ifndef U_HIDE_INTERNAL_API
 /**
@@ -102,7 +99,7 @@ U_STABLE void U_EXPORT2 u_setDataDirectory(const char *directory);
   * @return the time zone data override directory.
   * @internal
   */ 
-U_INTERNAL const char * U_EXPORT2 u_getTimeZoneFilesDirectory(UErrorCode *status);
+U_CAPI const char * U_EXPORT2 u_getTimeZoneFilesDirectory(UErrorCode *status);
 
 /**
   * Set the time zone files override directory.
@@ -112,11 +109,10 @@ U_INTERNAL const char * U_EXPORT2 u_getTimeZoneFilesDirectory(UErrorCode *status
   *   will access the time zone data.
   * @internal
   */
-U_INTERNAL void U_EXPORT2 u_setTimeZoneFilesDirectory(const char *path, UErrorCode *status);
+U_CAPI void U_EXPORT2 u_setTimeZoneFilesDirectory(const char *path, UErrorCode *status);
 #endif  /* U_HIDE_INTERNAL_API */
 
 
-// TODO: Should these be considered for Windows?
 /**
  * @{
  * Filesystem file and path separator characters.
@@ -138,7 +134,6 @@ U_INTERNAL void U_EXPORT2 u_setTimeZoneFilesDirectory(const char *path, UErrorCo
 #   define U_FILE_ALT_SEP_STRING "/"
 #   define U_PATH_SEP_STRING ":"
 #endif
-//IGNORE_WINDOWS_HEADERS_END
 
 /** @} */
 
@@ -160,7 +155,7 @@ U_INTERNAL void U_EXPORT2 u_setTimeZoneFilesDirectory(const char *path, UErrorCo
  * @see U_CHARSET_FAMILY
  * @stable ICU 2.0
  */
-U_STABLE void U_EXPORT2
+U_CAPI void U_EXPORT2
 u_charsToUChars(const char *cs, UChar *us, int32_t length);
 
 /**
@@ -182,7 +177,7 @@ u_charsToUChars(const char *cs, UChar *us, int32_t length);
  * @see U_CHARSET_FAMILY
  * @stable ICU 2.0
  */
-U_STABLE void U_EXPORT2
+U_CAPI void U_EXPORT2
 u_UCharsToChars(const UChar *us, char *cs, int32_t length);
 
 #endif

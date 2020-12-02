@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 seh{
     Countries{
         AD{"Andorra"}
@@ -164,7 +165,7 @@ seh{
         PM{"Saint Pierre e Miquelon"}
         PN{"Pitcairn"}
         PR{"Porto Rico"}
-        PS{"Autoridade Palestiniana"}
+        PS{"Território da Palestina"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguai"}
@@ -225,5 +226,4 @@ seh{
         ZM{"Zâmbia"}
         ZW{"Zimbábue"}
     }
-    Version{"37"}
 }

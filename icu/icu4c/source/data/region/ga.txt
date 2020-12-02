@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ga{
     Countries{
         001{"an Domhan"}
@@ -92,14 +93,17 @@ ga{
         CY{"an Chipir"}
         CZ{"an tSeicia"}
         DE{"an Ghearmáin"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"an Danmhairg"}
         DM{"Doiminice"}
         DO{"an Phoblacht Dhoiminiceach"}
         DZ{"an Ailgéir"}
+        EA{"Ceuta agus Melilla"}
         EC{"Eacuadór"}
         EE{"an Eastóin"}
         EG{"an Éigipt"}
+        EH{"an Sahára Thiar"}
         ER{"an Eiritré"}
         ES{"an Spáinn"}
         ET{"an Aetóip"}
@@ -136,6 +140,7 @@ ga{
         HR{"an Chróit"}
         HT{"Háítí"}
         HU{"an Ungáir"}
+        IC{"na hOileáin Chanáracha"}
         ID{"an Indinéis"}
         IE{"Éire"}
         IL{"Iosrael"}
@@ -218,7 +223,7 @@ ga{
         PM{"San Pierre agus Miquelon"}
         PN{"Oileáin Pitcairn"}
         PR{"Pórtó Ríce"}
-        PS{"Údarás na Palaistíne"}
+        PS{"na Críocha Palaistíneacha"}
         PT{"an Phortaingéil"}
         PW{"Oileáin Palau"}
         PY{"Paragua"}
@@ -283,6 +288,8 @@ ga{
         VU{"Vanuatú"}
         WF{"Vailís agus Futúna"}
         WS{"Samó"}
+        XA{"Bréagdhiaicriticí"}
+        XB{"Bréag-Bidi"}
         XK{"an Chosaiv"}
         YE{"Éimin"}
         YT{"Mayotte"}
@@ -291,5 +298,20 @@ ga{
         ZW{"an tSiombáib"}
         ZZ{"Réigiún Anaithnid"}
     }
-    Version{"37"}
+    Countries%short{
+        GB{"RA"}
+        HK{"Hong Cong"}
+        MO{"Macao"}
+        PS{"an Phalaistín"}
+        UN{"NA"}
+        US{"SAM"}
+    }
+    Countries%variant{
+        CD{"an Congó (PDC)"}
+        CG{"an Congó (Poblacht)"}
+        CI{"Côte d’Ivoire"}
+        CZ{"Poblacht na Seice"}
+        FK{"Oileáin Fháclainne (Islas Malvinas)"}
+        SZ{"an tSuasalainn"}
+    }
 }

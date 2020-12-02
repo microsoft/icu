@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 fa_AF{
     Countries{
         AD{"اندورا"}
@@ -24,6 +25,7 @@ fa_AF{
         CR{"کاستریکا"}
         CU{"کیوبا"}
         DK{"دنمارک"}
+        EA{"سئوتا و ملیلا"}
         EE{"استونیا"}
         ER{"اریتریا"}
         ES{"هسپانیه"}
@@ -91,5 +93,7 @@ fa_AF{
         XK{"کوسوا"}
         ZW{"زیمبابوی"}
     }
-    Version{"37"}
+    Countries%short{
+        HK{"هانگ کانگ"}
+    }
 }

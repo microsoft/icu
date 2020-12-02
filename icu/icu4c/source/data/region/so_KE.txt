@@ -1,8 +1,0 @@
-﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
-so_KE{
-    Countries{
-        PS{"Palestinian Authority"}
-    }
-    Version{"37"}
-}

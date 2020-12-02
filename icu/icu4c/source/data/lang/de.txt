@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 de{
     Keys{
         calendar{"Kalender"}
@@ -45,6 +46,7 @@ de{
         ang{"Altenglisch"}
         anp{"Angika"}
         ar{"Arabisch"}
+        ar_001{"Modernes Hocharabisch"}
         arc{"Aramäisch"}
         arn{"Mapudungun"}
         aro{"Araona"}
@@ -57,7 +59,7 @@ de{
         as{"Assamesisch"}
         asa{"Asu"}
         ase{"Amerikanische Gebärdensprache"}
-        ast{"Asturianisch"}
+        ast{"Asturisch"}
         av{"Awarisch"}
         avk{"Kotava"}
         awa{"Awadhi"}
@@ -67,11 +69,11 @@ de{
         bal{"Belutschisch"}
         ban{"Balinesisch"}
         bar{"Bairisch"}
-        bas{"Basaa"}
+        bas{"Bassa"}
         bax{"Bamun"}
         bbc{"Batak Toba"}
         bbj{"Ghomala"}
-        be{"Weißrussisch"}
+        be{"Belarussisch"}
         bej{"Bedauye"}
         bem{"Bemba"}
         bew{"Betawi"}
@@ -139,6 +141,8 @@ de{
         dar{"Darginisch"}
         dav{"Taita"}
         de{"Deutsch"}
+        de_AT{"Österreichisches Deutsch"}
+        de_CH{"Schweizer Hochdeutsch"}
         del{"Delaware"}
         den{"Slave"}
         dgr{"Dogrib"}
@@ -172,6 +176,7 @@ de{
         ewo{"Ewondo"}
         ext{"Extremadurisch"}
         fa{"Persisch"}
+        fa_AF{"Dari"}
         fan{"Pangwe"}
         fat{"Fanti"}
         ff{"Ful"}
@@ -197,7 +202,7 @@ de{
         gay{"Gayo"}
         gba{"Gbaya"}
         gbz{"Gabri"}
-        gd{"Schottisches Gälisch"}
+        gd{"Gälisch (Schottland)"}
         gez{"Geez"}
         gil{"Kiribatisch"}
         gl{"Galicisch"}
@@ -357,7 +362,7 @@ de{
         men{"Mende"}
         mer{"Meru"}
         mfe{"Morisyen"}
-        mg{"Madagassisch"}
+        mg{"Malagasy"}
         mga{"Mittelirisch"}
         mgh{"Makhuwa-Meetto"}
         mgo{"Meta’"}
@@ -390,9 +395,10 @@ de{
         nan{"Min Nan"}
         nap{"Neapolitanisch"}
         naq{"Nama"}
-        nb{"Norwegisch Bokmål"}
+        nb{"Norwegisch (Bokmål)"}
         nd{"Nord-Ndebele"}
         nds{"Niederdeutsch"}
+        nds_NL{"Niedersächsisch"}
         ne{"Nepalesisch"}
         new{"Newari"}
         ng{"Ndonga"}
@@ -400,8 +406,9 @@ de{
         niu{"Niue"}
         njo{"Ao-Naga"}
         nl{"Niederländisch"}
+        nl_BE{"Flämisch"}
         nmg{"Kwasio"}
-        nn{"Norwegisch Nynorsk"}
+        nn{"Norwegisch (Nynorsk)"}
         nnh{"Ngiemboon"}
         no{"Norwegisch"}
         nog{"Nogai"}
@@ -458,6 +465,7 @@ de{
         rm{"Rätoromanisch"}
         rn{"Rundi"}
         ro{"Rumänisch"}
+        ro_MD{"Moldauisch"}
         rof{"Rombo"}
         rom{"Romani"}
         root{"Root"}
@@ -493,6 +501,7 @@ de{
         sg{"Sango"}
         sga{"Altirisch"}
         sgs{"Samogitisch"}
+        sh{"Serbo-Kroatisch"}
         shi{"Taschelhit"}
         shn{"Schan"}
         shu{"Tschadisch-Arabisch"}
@@ -525,6 +534,7 @@ de{
         sux{"Sumerisch"}
         sv{"Schwedisch"}
         sw{"Suaheli"}
+        sw_CD{"Kongo-Swahili"}
         swb{"Komorisch"}
         syc{"Altsyrisch"}
         syr{"Syrisch"}
@@ -614,10 +624,24 @@ de{
         zen{"Zenaga"}
         zgh{"Tamazight"}
         zh{"Chinesisch"}
+        zh_Hans{"Chinesisch (vereinfacht)"}
+        zh_Hant{"Chinesisch (traditionell)"}
         zu{"Zulu"}
         zun{"Zuni"}
         zxx{"Keine Sprachinhalte"}
         zza{"Zaza"}
+    }
+    Languages%long{
+        zh_Hans{"Mandarin (Vereinfacht)"}
+        zh_Hant{"Mandarin (traditionell)"}
+    }
+    Languages%menu{
+        ckb{"Kurdisch (Sorani)"}
+        yue{"Chinesisch (Kantonesisch)"}
+        zh{"Chinesisch (Mandarin)"}
+    }
+    Languages%short{
+        en_GB{"Englisch (GB)"}
     }
     Scripts{
         Afak{"Afaka"}
@@ -813,6 +837,7 @@ de{
             iso8601{"ISO-8601-Kalender"}
             japanese{"Japanischer Kalender"}
             persian{"Persischer Kalender"}
+            roc{"Kalender der Republik China"}
         }
         cf{
             account{"Währungsformat (Buchhaltung)"}
@@ -992,21 +1017,22 @@ de{
         VALENCIA{"Valencianisch"}
         WADEGILE{"Wade-Giles"}
     }
-    Version{"37"}
     characterLabelPattern{
-        all{"{0} — Alle"}
+        all{"{0} — alle"}
         category-list{"{0}: {1}"}
         compatibility{"{0} — Kompatibilität"}
-        enclosed{"{0} — Verschachtelt"}
-        extended{"{0} — Erweitert"}
-        historic{"{0} — Historisch"}
-        miscellaneous{"{0} — Verschiedene"}
-        other{"{0} — Andere"}
+        enclosed{"{0} — verschachtelt"}
+        extended{"{0} — erweitert"}
+        historic{"{0} — historisch"}
+        miscellaneous{"{0} — verschiedene"}
+        other{"{0} — sonstige"}
         scripts{"Schriften — {0}"}
         strokes{
             one{"{0} Strich"}
             other{"{0} Striche"}
         }
+        subscript{"tiefgestellt {0}"}
+        superscript{"hochgestellt {0}"}
     }
     codePatterns{
         language{"Sprache: {0}"}

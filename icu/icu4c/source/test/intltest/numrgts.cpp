@@ -548,12 +548,10 @@ void NumberFormatRegressionTest::Test4086575(void)
     logln("...applyLocalizedPattern # ###,00;(# ###,00) ");
     // nbsp = \u00a0
     //nf->applyLocalizedPattern("#\u00a0###,00;(#\u00a0###,00)");
-    /* MSFT Change: Begin */
     UChar patChars[] = {
-             0x23, 0x00a0, 0x23, 0x23, 0x23, 0x2c, 0x30, 0x30, 0x3b, 
-        0x28, 0x23, 0x00a0, 0x23, 0x23, 0x23, 0x2c, 0x30, 0x30, 0x29
+             0x23, 0x202f, 0x23, 0x23, 0x23, 0x2c, 0x30, 0x30, 0x3b, 
+        0x28, 0x23, 0x202f, 0x23, 0x23, 0x23, 0x2c, 0x30, 0x30, 0x29
     };
-    /* MSFT Change: End */
     UnicodeString pat(patChars, 19, 19);
     nf->applyLocalizedPattern(pat, status);
     failure(status, "nf->applyLocalizedPattern", Locale::getFrance());
@@ -562,22 +560,18 @@ void NumberFormatRegressionTest::Test4086575(void)
     UnicodeString buffer;
     buffer = nf->format((int32_t)1234, buffer, pos);
     //if (buffer != UnicodeString("1\u00a0234,00"))
-    /* MSFT Change: Begin */
     UChar c[] = {
-        0x31, 0x00a0, 0x32, 0x33, 0x34, 0x2c, 0x30, 0x30
+        0x31, 0x202f, 0x32, 0x33, 0x34, 0x2c, 0x30, 0x30
     };
-    /* MSFT Change: End */
     UnicodeString cc(c, 8, 8);
     if (buffer != cc)
         errln("nf : " + buffer); // Expect 1 234,00
     
     buffer.remove();
     buffer = nf->format((int32_t)-1234, buffer, pos);
-    /* MSFT Change: Begin */
     UChar c1[] = {
-        0x28, 0x31, 0x00a0, 0x32, 0x33, 0x34, 0x2c, 0x30, 0x30, 0x29
+        0x28, 0x31, 0x202f, 0x32, 0x33, 0x34, 0x2c, 0x30, 0x30, 0x29
     };
-    /* MSFT Change: End */
     UnicodeString cc1(c1, 10, 10);
     if (buffer != cc1)
         errln("nf : " + buffer); // Expect (1 234,00)
@@ -902,22 +896,20 @@ void NumberFormatRegressionTest::Test4070798 (void)
     NumberFormat *formatter;
     UnicodeString tempString;
     
-    /* MSFT Change: Begin */
     /* User error :
-    String expectedDefault = "-5\u00a0789,987";
-    String expectedCurrency = "5\u00a0789,98\u00a0F";
-    String expectedPercent = "-578\u00a0998%";
+    String expectedDefault = "-5\u202f789,987";
+    String expectedCurrency = "5\u202f789,98\u00a0F";
+    String expectedPercent = "-578\u202f998%";
     */
     UChar chars1 [] = {
-        0x2d, 0x35, 0x00a0, 0x37, 0x38, 0x39, 0x2c, 0x39, 0x38, 0x38
+        0x2d, 0x35, 0x202f, 0x37, 0x38, 0x39, 0x2c, 0x39, 0x38, 0x38
     };
     UChar chars2 [] = {
-        0x35, 0x00a0, 0x37, 0x38, 0x39, 0x2c, 0x39, 0x39, 0x00a0, 0x46
+        0x35, 0x202f, 0x37, 0x38, 0x39, 0x2c, 0x39, 0x39, 0x00a0, 0x46
     };
     UChar chars3 [] = {
-        0x2d, 0x35, 0x37, 0x38, 0x00a0, 0x39, 0x39, 0x39, 0x00a0, 0x25
+        0x2d, 0x35, 0x37, 0x38, 0x202f, 0x39, 0x39, 0x39, 0x00a0, 0x25
     };
-    /* MSFT Change: End */
     UnicodeString expectedDefault(chars1, 10, 10);
     UnicodeString expectedCurrency(chars2, 10, 10);
     UnicodeString expectedPercent(chars3, 10, 10);
@@ -983,20 +975,20 @@ void NumberFormatRegressionTest::Test4071005 (void)
     UnicodeString tempString;
     /* User error :
     String expectedDefault = "-5\u00a0789,987";
-    String expectedCurrency = "5\u00a0789,98\u00a0$";
+    String expectedCurrency = "5\u00a0789,98\u00a0$\u00a0CA";
     String expectedPercent = "-578\u00a0998%";
     */
     UChar chars1 [] = {
         0x2d, 0x35, 0x00a0, 0x37, 0x38, 0x39, 0x2c, 0x39, 0x38, 0x38
     };
     UChar chars2 [] = {
-        0x35, 0x00a0, 0x37, 0x38, 0x39, 0x2c, 0x39, 0x39, 0x00a0, 0x24
+        0x35, 0x00a0, 0x37, 0x38, 0x39, 0x2c, 0x39, 0x39, 0x00a0, 0x24, 0x00a0, 0x43, 0x41
     };
     UChar chars3 [] = {
         0x2d, 0x35, 0x37, 0x38, 0x00a0, 0x39, 0x39, 0x39, 0x00a0, 0x25
     };
     UnicodeString expectedDefault(chars1, 10, 10);
-    UnicodeString expectedCurrency(chars2, 10, 10);
+    UnicodeString expectedCurrency(chars2, 13, 13);
     UnicodeString expectedPercent(chars3, 10, 10);
 
     UErrorCode status = U_ZERO_ERROR;
