@@ -16,20 +16,23 @@ Requirements
 Important directories
 ---------------------
 
-CLDR_ROOT = The top-level direcetory for the CLDR project, containing CLDR
-            code and non-production data. Usually obtained from:
-            https://github.com/unicode-org/cldr
+TOOLS_ROOT: Path to root of ICU tools directory, below which are (e.g.) the
+            cldr/ and unicodetools/ directories.
 
-CLDR_DIR  = The top-level directory for the CLDR production data (typically
-            the "production" directory in the staging repository). Usually
-            obtained from:
-            https://github.com/unicode-org/cldr-staging/tree/master/production
+CLDR_DIR:   This is the path to the to root of standard CLDR sources, below
+            which are the common/ and tools/ directories.
+
+CLDR_DATA_DIR: The top-level directory for the CLDR production data (typically
+               the "production" directory in the staging repository). Usually
+               generated locally or obtained from:
+               https://github.com/unicode-org/cldr-staging/tree/master/production
 
 In Posix systems, it's best to set these as exported shell variables, and any
 following instructions assume they have been set accordingly:
 
-$ export CLDR_ROOT=/path/to/cldr
-$ export CLDR_DIR=/path/to/cldr-staging/production
+$ export TOOLS_ROOT=/path/to/icu/tools
+$ export CLDR_DIR=/path/to/cldr
+$ export CLDR_DATA_DIR=/path/to/cldr-staging/production
 
 Note that you should not attempt to use data from the CLDR project directory
 (where the CLDR API code exists) for conversion into ICU data. The process now
@@ -47,18 +50,18 @@ based system, this should be as simple as:
 
 $ sudo apt-get install maven ant
 
-You also need to install two additional CLDR JAR files in a local Maven
-repository, which can be achieved by either running:
+You must also install an additional CLDR JAR file the local Maven repository at
+$TOOLS_ROOT/cldr/lib (see the README.txt in that directory for more
+information).
 
-$ install-cldr-jars.sh "$CLDR_ROOT"
+$ cd "$TOOLS_ROOT/cldr/lib"
+$ ./install-cldr-jars.sh "$CLDR_DIR"
 
-from this directory, or following the instructions in lib/README.txt. This
-step must be repeated if you update the code in the CLDR project you are
-using, or are using multiple versions of the CLDR code during development.
 
 Generating all ICU data
 -----------------------
 
+$ cd "$TOOLS_ROOT/cldr/cldr-to-icu"
 $ ant -f build-icu-data.xml
 
 
@@ -89,7 +92,7 @@ See build-icu-data.xml for documentation of all options and additional customiza
 Running unit tests
 ------------------
 
-$ mvn test -DCLDR_DIR="$CLDR_DIR"
+$ mvn test -DCLDR_DIR="$CLDR_DATA_DIR"
 
 
 Importing and running from an IDE
