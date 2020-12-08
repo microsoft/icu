@@ -1,31 +1,42 @@
-From 136882f3f9ddd2d70342faf23fec2d7cd7855112 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
-Date: Sun, 26 Jul 2020 22:29:48 -0700
-Subject: [PATCH] Static link the VCRUNTIME, VCSTARTUP, and STL, but dynamic
- link to the UCRT.
+Date: Fri, 20 Nov 2020 17:49:07 -0800
+Subject: MSFT-PATCH: Static link VCRUNTIME, VCSTARTUP, STL, but dynamic link
+ the UCRT.
 
----
- icu/icu4c/source/common/common.vcxproj | 12 ++++++++++--
- icu/icu4c/source/i18n/i18n.vcxproj     | 12 ++++++++++--
- 2 files changed, 20 insertions(+), 4 deletions(-)
+This modifies the .vcxproj files for the "common" (uc) and "i18n" (in) libraries in
+order to statically link the VCRuntime (libvcruntime.lib), VCStartup (libcmt.lib),
+and STL/MSVCP (libcpmt.lib), but dynamically link to the UCRT (ucrt.lib).
+
+The UCRT (C Runtime library: ucrtbase.dll) is included in Windows 10 and above as an OS
+component. (See https://docs.microsoft.com/cpp/c-runtime-library/crt-library-features ).
+On previous versions of Windows it is available via a Windows Update package.
+(See the KB article here: https://support.microsoft.com/kb/2999226 ).
+
+However, the vcruntime*.dll and msvcp*.dll files are only available via the
+Visual C++ Redistributable (VC Redist), and the Redist must be installed manually.
+
+This change avoids the need to install the VC Redist on Windows 10, and
+previous Windows versions with the KB update for the UCRT, in order to use
+the two icuuc*.dll and icuin*.dll libraries.
 
 diff --git a/icu/icu4c/source/common/common.vcxproj b/icu/icu4c/source/common/common.vcxproj
-index 3cee657..5d9e70a 100644
+index d7f668ea9d83084feb47a8968bac05379bc7d365..ee29c93fc60065536532cfda319f8db2bd90afd5 100644
 --- a/icu/icu4c/source/common/common.vcxproj
 +++ b/icu/icu4c/source/common/common.vcxproj
-@@ -71,24 +71,32 @@
+@@ -55,24 +55,32 @@
      <ClCompile>
        <PreprocessorDefinitions>RBBI_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
        <BrowseInformation>true</BrowseInformation>
 -      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-+      <!-- Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
++      <!-- MSFT-Change: Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
 +      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
      </ClCompile>
      <Link>
-       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc67d.dll</OutputFile>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc68d.dll</OutputFile>
        <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuucd.pdb</ProgramDatabaseFile>
        <ImportLibrary>..\..\$(IcuLibOutputDir)\icuucd.lib</ImportLibrary>
-+      <!-- This forces dynamic linking of the UCRT. -->
++      <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
 +      <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
 +      <AdditionalOptions>/DEFAULTLIB:ucrtd.lib %(AdditionalOptions)</AdditionalOptions>
      </Link>
@@ -34,38 +45,38 @@ index 3cee657..5d9e70a 100644
    <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
      <ClCompile>
 -      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-+      <!-- Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
++      <!-- MSFT-Change: Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
 +      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
        <FunctionLevelLinking>true</FunctionLevelLinking>
      </ClCompile>
      <Link>
-       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc67.dll</OutputFile>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc68.dll</OutputFile>
        <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc.pdb</ProgramDatabaseFile>
        <ImportLibrary>..\..\$(IcuLibOutputDir)\icuuc.lib</ImportLibrary>
-+      <!-- This forces dynamic linking of the UCRT. -->
++      <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
 +      <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
 +      <AdditionalOptions>/DEFAULTLIB:ucrt.lib %(AdditionalOptions)</AdditionalOptions>
      </Link>
    </ItemDefinitionGroup>
    <ItemGroup>
 diff --git a/icu/icu4c/source/i18n/i18n.vcxproj b/icu/icu4c/source/i18n/i18n.vcxproj
-index e009e21..b6e539f 100644
+index 218772f99742633fa4d3a50f0536288b2ac41507..7f9d0068b26cab09a9be106b42a1a696de373d47 100644
 --- a/icu/icu4c/source/i18n/i18n.vcxproj
 +++ b/icu/icu4c/source/i18n/i18n.vcxproj
-@@ -72,19 +72,24 @@
+@@ -56,19 +56,24 @@
    <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
      <ClCompile>
        <BrowseInformation>true</BrowseInformation>
 -      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-+      <!-- Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
++      <!-- MSFT-Change: Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
 +      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
      </ClCompile>
      <Link>
        <AdditionalDependencies>icuucd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-       <OutputFile>..\..\$(IcuBinOutputDir)\icuin67d.dll</OutputFile>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuin68d.dll</OutputFile>
        <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuind.pdb</ProgramDatabaseFile>
        <ImportLibrary>..\..\$(IcuLibOutputDir)\icuind.lib</ImportLibrary>
-+      <!-- This forces dynamic linking of the UCRT. -->
++      <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
 +      <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
 +      <AdditionalOptions>/DEFAULTLIB:ucrtd.lib %(AdditionalOptions)</AdditionalOptions>
      </Link>
@@ -74,21 +85,18 @@ index e009e21..b6e539f 100644
    <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
      <ClCompile>
 -      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
-+      <!-- Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
++      <!-- MSFT-Change: Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
 +      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
        <FunctionLevelLinking>true</FunctionLevelLinking>
      </ClCompile>
      <Link>
-@@ -92,6 +97,9 @@
-       <OutputFile>..\..\$(IcuBinOutputDir)\icuin67.dll</OutputFile>
+@@ -76,6 +81,9 @@
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuin68.dll</OutputFile>
        <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin.pdb</ProgramDatabaseFile>
        <ImportLibrary>..\..\$(IcuLibOutputDir)\icuin.lib</ImportLibrary>
-+      <!-- This forces dynamic linking of the UCRT. -->
++      <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
 +      <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
 +      <AdditionalOptions>/DEFAULTLIB:ucrt.lib %(AdditionalOptions)</AdditionalOptions>
      </Link>
    </ItemDefinitionGroup>
    <ItemGroup>
--- 
-2.19.2
-

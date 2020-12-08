@@ -58,6 +58,9 @@ class Edits;
 
 U_NAMESPACE_END
 
+//IGNORE_WINDOWS_HEADERS_START
+// MSFT-Change: Hiding the @internal API below, since we don't expose the C++ UnicodeString.
+
 // Not #ifndef U_HIDE_INTERNAL_API because UnicodeString needs the UStringCaseMapper.
 /**
  * Internal string case mapping function type.
@@ -74,6 +77,8 @@ UStringCaseMapper(int32_t caseLocale, uint32_t options,
                   const char16_t *src, int32_t srcLength,
                   icu::Edits *edits,
                   UErrorCode &errorCode);
+
+//IGNORE_WINDOWS_HEADERS_END
 
 U_NAMESPACE_BEGIN
 

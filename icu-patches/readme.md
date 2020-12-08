@@ -33,53 +33,11 @@ Patch files should be pruned when a new version of ICU is ingested.
 
 ### Applying Changes
 
-To apply/reapply all of the various patches when ingesting a new version of ICU, run the batch script `apply` from this directory.
+~~To apply/reapply all of the various patches when ingesting a new version of ICU, run the batch script `apply` from this directory.~~
 
-This script will build a list of all of the patch files under the 'patch' folder and then *interactively* apply the patches.
+~~This script will build a list of all of the patch files under the 'patch' folder and then *interactively* apply the patches.~~
 
-Below is an example of what the interactive script looks like:
-
-```
-  msft-patches> apply.cmd
-
-  Found the following Patch files (in the following order):
-     "patches\001-13686.patch"  "patches\002-13687.patch"  "patches\003-test.patch"
-
-  Do you want to proceed with applying the above patch files? [Y,N] Y
-
-  Attempting to apply the patch files...
-
-  Commit Body is:
-  --------------------------
-  UDataPathIterator adds extra file separator, even if the path already ends with one. [ICU Ticket #13686]
-  --------------------------
-  Apply? [y]es/[n]o/[e]dit/[v]iew patch/[a]ccept all: y
-  Applying: UDataPathIterator adds extra file separator, even if the path already ends with one. [ICU Ticket #13686]
-  Using index info to reconstruct a base tree...
-  M       ICU/source/common/charstr.cpp
-  M       ICU/source/common/charstr.h
-  M       ICU/source/common/udata.cpp
-  Falling back to patching base and 3-way merge...
-  No changes -- Patch already applied.
-  Commit Body is:
-  --------------------------
-  Enable Windows UWP version to use TZ update files (.res files) [ICU Bug #13687]
-  --------------------------
-  Apply? [y]es/[n]o/[e]dit/[v]iew patch/[a]ccept all: y
-  Applying: Enable Windows UWP version to use TZ update files (.res files) [ICU Bug #13687]
-  Commit Body is:
-  --------------------------
-  test patch
-  --------------------------
-  Apply? [y]es/[n]o/[e]dit/[v]iew patch/[a]ccept all: y
-  Applying: test patch
-  Using index info to reconstruct a base tree...
-  M       ICU/source/common/putil.cpp
-  Falling back to patching base and 3-way merge...
-  No changes -- Patch already applied.
-
-  msft-patches>
-```
+Unfortunately the script doesn't always work very well. For now, we need to _manually_ apply the patches when updating to a newer version.
 
 ### Generating New Patches
 
@@ -88,10 +46,11 @@ Generating a new .patch file works best if you can isolate the "change" as a sin
 Generally speaking the steps are:
 1. Make whatever changes you need to make.
 2. `git add` your changes as needed.
-3. `git commit` your changes as a single stand alone commit. Make a note of the **SHA1** hash value for your new commit.
+3. `git commit` your changes as a single stand alone commit. Make a note of the **SHA1 HASH** value for your new commit.
 4. Use the following command to create a new .patch file:
 
-    `git format-patch --stdout -1 SHA1 > new-icu.patch`
+    `git format-patch --keep-subject --no-stat --stdout --no-signature --zero-commit --full-index -1 <SHA1 HASH> > my-new-patch.patch`
+
 5. Rename your new patch file so that it is appropriately numbered and descriptive, for example "003-my-new-icu-change.patch".
 6. Copy the new patch file under the "patches" folder.
 7. Don't forget to `git add` and `git commit` the new patch file as part of your overall change.
@@ -111,7 +70,7 @@ General steps:
 6. Note: Only add the files that you want to be part of the patch.
 6. `git commit -m "My ICU patch change"`
 7. Make a note of the New SHA1 hash value from your commit.
-7. `git format-patch --stdout -1 <New SHA1> > <patch filename>.patch`
+7. `git format-patch --keep-subject --no-stat --stdout --no-signature --zero-commit --full-index -1 <New SHA1> > <patch filename>.patch`
 8. Rename the new patch file so that it is appropriately numbered and descriptive.
 9. Copy the new patch file under the "patches" folder.
 10. `git rebase --abort`
