@@ -125,13 +125,15 @@ jobs:
         CXX: clang++
 
 #-------------------------------------------------------------------------
+# VS 2019 Builds
+#-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x64_Release_Distrelease
-  displayName: 'C: MSVC 64-bit Release (VS 2017) + Distrelease'
+  displayName: 'C: MSVC 64-bit Release (VS 2019) + Distrelease'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'windows-2019'
     demands: 
       - msbuild
       - visualstudio
@@ -172,12 +174,12 @@ jobs:
 
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x86_Release_Distrelease
-  displayName: 'C: MSVC 32-bit Release (VS 2017) + Distrelease'
+  displayName: 'C: MSVC 32-bit Release (VS 2019) + Distrelease'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'windows-2019'
     demands: 
       - msbuild
       - visualstudio
@@ -213,12 +215,12 @@ jobs:
 
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x64_ARM32_ARM64_Release_Distrelease
-  displayName: 'C: MSVC x64 ARM32 ARM64 Release (VS 2017) + Distrelease ARM64'
+  displayName: 'C: MSVC x64 ARM32 ARM64 Release (VS 2019) + Distrelease ARM64'
   timeoutInMinutes: 60
   workspace:
       clean: all
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'windows-2019'
     demands: 
       - msbuild
       - visualstudio
@@ -266,12 +268,12 @@ jobs:
 
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x64_Release_TestDataFilter
-  displayName: 'C: MSVC 64-bit Release TestDataFilter (VS 2017)'
+  displayName: 'C: MSVC 64-bit Release TestDataFilter (VS 2019)'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'windows-2019'
     demands: 
       - msbuild
       - visualstudio
@@ -300,12 +302,12 @@ jobs:
 
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x86_Debug
-  displayName: 'C: MSVC 32-bit Debug (VS 2017)'
+  displayName: 'C: MSVC 32-bit Debug (VS 2019)'
   timeoutInMinutes: 60
   workspace:
       clean: all
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'windows-2019'
     demands: 
       - msbuild
       - visualstudio

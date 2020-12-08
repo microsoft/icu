@@ -88,7 +88,7 @@ stages:
     timeoutInMinutes: 30
     pool:
       name: Azure Pipelines
-      vmImage: 'vs2017-win2016'
+      vmImage: 'windows-2019'
       demands:
       - msbuild
       - visualstudio
@@ -137,7 +137,6 @@ stages:
       displayName: 'Build x64 first (Only if building ARM)'
       inputs:
         solution: icu/icu4c/source/allinone/allinone.sln
-        vsVersion: 15.0
         msbuildArgs: '/p:SkipUWP=true'
         platform: x64
         configuration: Release
@@ -147,7 +146,6 @@ stages:
       displayName: 'Build $(BuildPlatform)'
       inputs:
         solution: icu/icu4c/source/allinone/allinone.sln
-        vsVersion: 15.0
         msbuildArgs: '/p:SkipUWP=true'
         platform: '$(IcuBuildPlatform)'
         configuration: Release
