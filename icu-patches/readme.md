@@ -49,7 +49,9 @@ Generally speaking the steps are:
 3. `git commit` your changes as a single stand alone commit. Make a note of the **SHA1 HASH** value for your new commit.
 4. Use the following command to create a new .patch file:
 
-    `git format-patch --keep-subject --no-stat --stdout --no-signature --zero-commit --full-index -1 <SHA1 HASH> > my-new-patch.patch`
+```
+git format-patch --keep-subject --no-stat --stdout --no-signature --zero-commit --full-index -1 <SHA1 HASH> > my-new-patch.patch
+```
 
 5. Rename your new patch file so that it is appropriately numbered and descriptive, for example "003-my-new-icu-change.patch".
 6. Copy the new patch file under the "patches" folder.
@@ -70,10 +72,13 @@ General steps:
 6. Note: Only add the files that you want to be part of the patch.
 6. `git commit -m "My ICU patch change"`
 7. Make a note of the New SHA1 hash value from your commit.
-7. `git format-patch --keep-subject --no-stat --stdout --no-signature --zero-commit --full-index -1 <New SHA1> > <patch filename>.patch`
-8. Rename the new patch file so that it is appropriately numbered and descriptive.
-9. Copy the new patch file under the "patches" folder.
-10. `git rebase --abort`
+8. Generate the new patch file with:
+```
+git format-patch --keep-subject --no-stat --stdout --no-signature --zero-commit --full-index -1 <New SHA1> > <patch filename>.patch
+```
+9. Rename the new patch file so that it is appropriately numbered and descriptive.
+10. Copy the new patch file under the "patches" folder.
+11. `git rebase --abort`
 
 At this point you have now isolated the changes from the squash-merge commit into a single patch file and you can create a new branch for adding and committing the patch file.
 
