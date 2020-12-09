@@ -166,6 +166,8 @@
             <forcedAlias source="ceb_Latn" target="ceb"/>
             <!-- Cebuano does not have a suppress script. ceb_Latn_PH is the locale name in NLS while ceb_PH is the locale name in ICU. -->
             <forcedAlias source="ceb_Latn_PH" target="ceb_PH"/>
+            <!-- Dogri does not have a suppress script. doi_Deva_IN in the locale name in NLS while doi_IN is the locale name in ICU. -->
+            <forcedAlias source="doi_Deva_IN" target="doi_IN"/>
             <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
             <forcedAlias source="iu_Cans" target="iu"/>
             <!-- Inuktitut does not have a suppress script. iu_Cans_CA is the locale name in NLS while iu_CA is the locale name in ICU. -->
@@ -223,7 +225,7 @@
                 ca, ccp, ccp_Cakm_BD, ccp_Cakm_IN, ce, ceb, ceb_Latn_PH, cgg, chr, ckb, co, cs, cu, cy
 
                 // D
-                da, dav, de, dje, dsb, dua, dv, dyo, dz
+                da, dav, de, dje, doi, doi_Deva_IN, dsb, dua, dv, dyo, dz
 
                 // E
                 ebu, ee, el, en, en_NH, en_RH, eo, es, et, eu, ewo
@@ -345,7 +347,7 @@
                     root,
 
                     // A-B
-                    af, am, ars, ar, as, az, be, bg, bn, bo, bs_Cyrl, bs,
+                    af, am, ars, ar, as, az, be, bg, bn, bo, br, bs_Cyrl, bs,
 
                     // C-F
                     ca, ceb, chr, ckb, ckb_IQ, ckb_IR, cs, cu, cy, da, de_AT, de, dsb, dz, ee, el, en,
@@ -362,7 +364,7 @@
 
                     // Q-T
                     qu, qu_BO, qu_EC, qu_PE, quc, quc_GT, qut, qut_Latn, qut_GT, qut_Latn_GT, quz, quz_BO, quz_EC, quz_PE
-                    ro, ru, se, sh_BA, sh_CS, sh, sh_YU, si, sk, sl, smn, sq,
+                    ro, ru, sa, se, sh_BA, sh_CS, sh, sh_YU, si, sk, sl, smn, sq,
                     sr_BA, sr_Cyrl_ME, sr_Latn, sr_ME, sr_RS, sr, sv, sw,
                     ta, te, th, tk, to, tr,
 
