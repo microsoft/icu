@@ -39,7 +39,6 @@ gl{
         an{"aragonés"}
         anp{"angika"}
         ar{"árabe"}
-        ar_001{"árabe estándar moderno"}
         arc{"arameo"}
         arn{"mapuche"}
         arp{"arapaho"}
@@ -93,8 +92,6 @@ gl{
         dar{"dargwa"}
         dav{"taita"}
         de{"alemán"}
-        de_AT{"alemán austríaco"}
-        de_CH{"alto alemán suízo"}
         dgr{"dogrib"}
         dje{"zarma"}
         dsb{"baixo sorbio"}
@@ -110,20 +107,12 @@ gl{
         eka{"ekajuk"}
         el{"grego"}
         en{"inglés"}
-        en_AU{"inglés australiano"}
-        en_CA{"inglés canadense"}
-        en_GB{"inglés británico"}
-        en_US{"inglés estadounidense"}
         eo{"esperanto"}
         es{"español"}
-        es_419{"español de América"}
-        es_ES{"español de España"}
-        es_MX{"español de México"}
         et{"estoniano"}
         eu{"éuscaro"}
         ewo{"ewondo"}
         fa{"persa"}
-        fa_AF{"dari"}
         ff{"fula"}
         fi{"finés"}
         fil{"filipino"}
@@ -131,8 +120,6 @@ gl{
         fo{"feroés"}
         fon{"fon"}
         fr{"francés"}
-        fr_CA{"francés canadense"}
-        fr_CH{"francés suízo"}
         fur{"friulano"}
         fy{"frisón occidental"}
         ga{"irlandés"}
@@ -277,14 +264,12 @@ gl{
         nb{"noruegués bokmål"}
         nd{"ndebele setentrional"}
         nds{"baixo alemán"}
-        nds_NL{"baixo saxón"}
         ne{"nepalí"}
         new{"newari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niueano"}
         nl{"neerlandés"}
-        nl_BE{"flamengo"}
         nmg{"kwasio"}
         nn{"noruegués nynorsk"}
         nnh{"ngiemboon"}
@@ -311,8 +296,6 @@ gl{
         prg{"prusiano"}
         ps{"paxto"}
         pt{"portugués"}
-        pt_BR{"portugués do Brasil"}
-        pt_PT{"portugués de Portugal"}
         qu{"quechua"}
         quc{"quiché"}
         rap{"rapanui"}
@@ -320,7 +303,6 @@ gl{
         rm{"romanche"}
         rn{"rundi"}
         ro{"romanés"}
-        ro_MD{"moldavo"}
         rof{"rombo"}
         root{"raíz"}
         ru{"ruso"}
@@ -343,7 +325,6 @@ gl{
         seh{"sena"}
         ses{"koyraboro senni"}
         sg{"sango"}
-        sh{"serbocroata"}
         shi{"tachelhit"}
         shn{"shan"}
         si{"cingalés"}
@@ -367,7 +348,6 @@ gl{
         suk{"sukuma"}
         sv{"sueco"}
         sw{"suahili"}
-        sw_CD{"suahili congolés"}
         swb{"comoriano"}
         syr{"siríaco"}
         ta{"támil"}
@@ -424,26 +404,10 @@ gl{
         yue{"cantonés"}
         zgh{"tamazight marroquí estándar"}
         zh{"chinés"}
-        zh_Hans{"chinés simplificado"}
-        zh_Hant{"chinés tradicional"}
         zu{"zulú"}
         zun{"zuni"}
         zxx{"sen contido lingüístico"}
         zza{"zazaki"}
-    }
-    Languages%long{
-        zh_Hans{"chinés mandarín simplificado"}
-        zh_Hant{"chinés mandarín tradicional"}
-    }
-    Languages%menu{
-        yue{"chinés cantonés"}
-        zh{"chinés mandarín"}
-    }
-    Languages%short{
-        az{"azerí"}
-    }
-    Languages%variant{
-        ckb{"sorani"}
     }
     Scripts{
         Arab{"árabe"}
@@ -516,7 +480,6 @@ gl{
             iso8601{"calendario ISO-8601"}
             japanese{"calendario xaponés"}
             persian{"calendario persa"}
-            roc{"calendario Minguo"}
         }
         cf{
             account{"formato de moeda contable"}

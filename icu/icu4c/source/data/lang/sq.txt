@@ -28,7 +28,6 @@ sq{
         an{"aragonezisht"}
         anp{"angikisht"}
         ar{"arabisht"}
-        ar_001{"arabishte standarde moderne"}
         arn{"mapuçisht"}
         arp{"arapahoisht"}
         as{"asamezisht"}
@@ -81,8 +80,6 @@ sq{
         dar{"darguaisht"}
         dav{"tajtaisht"}
         de{"gjermanisht"}
-        de_AT{"gjermanishte austriake"}
-        de_CH{"gjermanishte zvicerane (dialekti i Alpeve)"}
         dgr{"dogribisht"}
         dje{"zarmaisht"}
         dsb{"sorbishte e poshtme"}
@@ -97,20 +94,12 @@ sq{
         eka{"ekajukisht"}
         el{"greqisht"}
         en{"anglisht"}
-        en_AU{"anglishte australiane"}
-        en_CA{"anglishte kanadeze"}
-        en_GB{"anglishte britanike"}
-        en_US{"anglishte amerikane"}
         eo{"esperanto"}
         es{"spanjisht"}
-        es_419{"spanjishte amerikano-latine"}
-        es_ES{"spanjishte evropiane"}
-        es_MX{"spanjishte meksikane"}
         et{"estonisht"}
         eu{"baskisht"}
         ewo{"euondoisht"}
         fa{"persisht"}
-        fa_AF{"darisht"}
         ff{"fulaisht"}
         fi{"finlandisht"}
         fil{"filipinisht"}
@@ -118,8 +107,6 @@ sq{
         fo{"faroisht"}
         fon{"fonisht"}
         fr{"frëngjisht"}
-        fr_CA{"frëngjishte kanadeze"}
-        fr_CH{"frëngjishte zvicerane"}
         fur{"friulianisht"}
         fy{"frizianishte perëndimore"}
         ga{"irlandisht"}
@@ -263,14 +250,12 @@ sq{
         nb{"norvegjishte letrare"}
         nd{"ndebelishte veriore"}
         nds{"gjermanishte e vendeve të ulëta"}
-        nds_NL{"gjermanishte saksone e vendeve të ulëta"}
         ne{"nepalisht"}
         new{"neuarisht"}
         ng{"ndongaisht"}
         nia{"niasisht"}
         niu{"niueanisht"}
         nl{"holandisht"}
-        nl_BE{"flamandisht"}
         nmg{"kuasisht"}
         nn{"norvegjishte nynorsk"}
         nnh{"ngiembunisht"}
@@ -297,8 +282,6 @@ sq{
         prg{"prusisht"}
         ps{"pashtoisht"}
         pt{"portugalisht"}
-        pt_BR{"portugalishte braziliane"}
-        pt_PT{"portugalishte evropiane"}
         qu{"keçuaisht"}
         quc{"kiçeisht"}
         rap{"rapanuisht"}
@@ -306,7 +289,6 @@ sq{
         rm{"retoromanisht"}
         rn{"rundisht"}
         ro{"rumanisht"}
-        ro_MD{"moldavisht"}
         rof{"romboisht"}
         root{"rutisht"}
         ru{"rusisht"}
@@ -329,7 +311,6 @@ sq{
         seh{"senaisht"}
         ses{"senishte kojrabore"}
         sg{"sangoisht"}
-        sh{"serbo-kroatisht"}
         shi{"taçelitisht"}
         shn{"shanisht"}
         si{"sinhalisht"}
@@ -353,7 +334,6 @@ sq{
         suk{"sukumaisht"}
         sv{"suedisht"}
         sw{"suahilisht"}
-        sw_CD{"suahilishte kongoleze"}
         swb{"kamorianisht"}
         syr{"siriakisht"}
         ta{"tamilisht"}
@@ -409,25 +389,10 @@ sq{
         yue{"kantonezisht"}
         zgh{"tamaziatishte standarde marokene"}
         zh{"kinezisht"}
-        zh_Hans{"kinezishte e thjeshtuar"}
-        zh_Hant{"kinezishte tradicionale"}
         zu{"zuluisht"}
         zun{"zunisht"}
         zxx{"nuk ka përmbajtje gjuhësore"}
         zza{"zazaisht"}
-    }
-    Languages%long{
-        zh_Hans{"kinezishte mandarine (e thjeshtuar)"}
-        zh_Hant{"kinezishte mandarine (tradicionale)"}
-    }
-    Languages%menu{
-        yue{"kinezishte kantoneze"}
-        zh{"kinezishte mandarine"}
-    }
-    Languages%short{
-        az{"azerisht"}
-        en_GB{"anglishte e Mbretërisë së Bashkuar"}
-        en_US{"anglishte e SHBA-së"}
     }
     Scripts{
         Arab{"arabik"}
@@ -497,7 +462,6 @@ sq{
             iso8601{"kalendar ISO-8601"}
             japanese{"kalendar japonez"}
             persian{"kalendar persian"}
-            roc{"kalendar minguo"}
         }
         cf{
             account{"format valutor llogaritës"}

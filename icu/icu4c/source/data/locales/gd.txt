@@ -2882,50 +2882,6 @@ gd{
                 }
             }
         }
-        roc{
-            DateTimePatterns{
-                "HH:mm:ss zzzz",
-                "HH:mm:ss z",
-                "HH:mm:ss",
-                "HH:mm",
-                "EEEE, d'mh' MMMM y G",
-                "d'mh' MMMM y G",
-                "d MMM y G",
-                "d/M/y GGGGG",
-                "{1} {0}",
-                "{1} 'aig' {0}",
-                "{1} 'aig' {0}",
-                "{1} {0}",
-                "{1} {0}",
-            }
-            availableFormats{
-                Ed{"E, d"}
-                MMMMd{"d'mh' MMMM"}
-                d{"d"}
-                yMM{"LL/y"}
-                yyyyM{"L/y GGGGG"}
-                yyyyMMMM{"LLLL y G"}
-            }
-            eras{
-                abbreviated{
-                    "Ro PnS",
-                    "Mínguó",
-                }
-                narrow{
-                    "Ro PnS",
-                    "Mínguó",
-                }
-                wide{
-                    "Ro Ph. na Sìne",
-                    "Mínguó",
-                }
-            }
-            intervalFormats{
-                M{
-                    M{"L – L"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"gnìomhachd"}

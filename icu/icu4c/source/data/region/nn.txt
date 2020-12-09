@@ -93,17 +93,14 @@ nn{
         CY{"Kypros"}
         CZ{"Tsjekkia"}
         DE{"Tyskland"}
-        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Danmark"}
         DM{"Dominica"}
         DO{"Den dominikanske republikken"}
         DZ{"Algerie"}
-        EA{"Ceuta og Melilla"}
         EC{"Ecuador"}
         EE{"Estland"}
         EG{"Egypt"}
-        EH{"Vest-Sahara"}
         ER{"Eritrea"}
         ES{"Spania"}
         ET{"Etiopia"}
@@ -140,7 +137,6 @@ nn{
         HR{"Kroatia"}
         HT{"Haiti"}
         HU{"Ungarn"}
-        IC{"Kanariøyane"}
         ID{"Indonesia"}
         IE{"Irland"}
         IL{"Israel"}
@@ -223,7 +219,7 @@ nn{
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Det palestinske området"}
+        PS{"Den palestinske sjølvstyresmakta"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -288,8 +284,6 @@ nn{
         VU{"Vanuatu"}
         WF{"Wallis og Futuna"}
         WS{"Samoa"}
-        XA{"pseudospråk – aksentar"}
-        XB{"pseudospråk – RTL"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -297,16 +291,5 @@ nn{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"ukjent område"}
-    }
-    Countries%short{
-        HK{"Hongkong"}
-        MO{"Macao"}
-        PS{"Palestina"}
-    }
-    Countries%variant{
-        CD{"Den demokratiske republikken Kongo"}
-        CG{"Republikken Kongo"}
-        FK{"Falklandsøyane (Islas Malvinas)"}
-        SZ{"Swaziland"}
     }
 }

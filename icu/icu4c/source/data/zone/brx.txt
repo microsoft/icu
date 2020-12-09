@@ -768,9 +768,6 @@ brx{
         "Asia:Ulaanbaatar"{
             ec{"उलानबातर"}
         }
-        "Asia:Urumqi"{
-            ec{"उरुमकी"}
-        }
         "Asia:Vientiane"{
             ec{"वियंसियान"}
         }

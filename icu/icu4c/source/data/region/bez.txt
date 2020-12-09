@@ -165,7 +165,7 @@ bez{
         PM{"Husantapieri na Humikeloni"}
         PN{"Hupitkaini"}
         PR{"Hupwetoriko"}
-        PS{"Ulubali lwa Magharibi nu Gaza wa Hupalestina"}
+        PS{"Mamlaka ya Palestina"}
         PT{"Huuleno"}
         PW{"Hupalau"}
         PY{"Hupalagwai"}

@@ -46,7 +46,6 @@ it{
         ang{"inglese antico"}
         anp{"angika"}
         ar{"arabo"}
-        ar_001{"arabo moderno standard"}
         arc{"aramaico"}
         arn{"mapudungun"}
         aro{"araona"}
@@ -141,8 +140,6 @@ it{
         dar{"dargwa"}
         dav{"taita"}
         de{"tedesco"}
-        de_AT{"tedesco austriaco"}
-        de_CH{"alto tedesco svizzero"}
         del{"delaware"}
         den{"slave"}
         dgr{"dogrib"}
@@ -167,23 +164,15 @@ it{
         el{"greco"}
         elx{"elamitico"}
         en{"inglese"}
-        en_AU{"inglese australiano"}
-        en_CA{"inglese canadese"}
-        en_GB{"inglese britannico"}
-        en_US{"inglese americano"}
         enm{"inglese medio"}
         eo{"esperanto"}
         es{"spagnolo"}
-        es_419{"spagnolo latinoamericano"}
-        es_ES{"spagnolo europeo"}
-        es_MX{"spagnolo messicano"}
         esu{"yupik centrale"}
         et{"estone"}
         eu{"basco"}
         ewo{"ewondo"}
         ext{"estremegno"}
         fa{"persiano"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulah"}
@@ -194,8 +183,6 @@ it{
         fo{"faroese"}
         fon{"fon"}
         fr{"francese"}
-        fr_CA{"francese canadese"}
-        fr_CH{"francese svizzero"}
         frc{"francese cajun"}
         frm{"francese medio"}
         fro{"francese antico"}
@@ -403,7 +390,6 @@ it{
         nb{"norvegese bokmål"}
         nd{"ndebele del nord"}
         nds{"basso tedesco"}
-        nds_NL{"basso tedesco olandese"}
         ne{"nepalese"}
         new{"newari"}
         ng{"ndonga"}
@@ -411,7 +397,6 @@ it{
         niu{"niue"}
         njo{"ao"}
         nl{"olandese"}
-        nl_BE{"fiammingo"}
         nmg{"kwasio"}
         nn{"norvegese nynorsk"}
         nnh{"ngiemboon"}
@@ -458,8 +443,6 @@ it{
         pro{"provenzale antico"}
         ps{"pashto"}
         pt{"portoghese"}
-        pt_BR{"portoghese brasiliano"}
-        pt_PT{"portoghese europeo"}
         qu{"quechua"}
         quc{"k’iche’"}
         qug{"quechua dell’altopiano del Chimborazo"}
@@ -471,7 +454,6 @@ it{
         rm{"romancio"}
         rn{"rundi"}
         ro{"rumeno"}
-        ro_MD{"moldavo"}
         rof{"rombo"}
         rom{"romani"}
         rtm{"rotumano"}
@@ -506,7 +488,6 @@ it{
         sg{"sango"}
         sga{"irlandese antico"}
         sgs{"samogitico"}
-        sh{"serbo-croato"}
         shi{"tashelhit"}
         shn{"shan"}
         shu{"arabo ciadiano"}
@@ -539,7 +520,6 @@ it{
         sux{"sumero"}
         sv{"svedese"}
         sw{"swahili"}
-        sw_CD{"swahili del Congo"}
         swb{"comoriano"}
         syc{"siriaco classico"}
         syr{"siriaco"}
@@ -628,25 +608,10 @@ it{
         zen{"zenaga"}
         zgh{"tamazight del Marocco standard"}
         zh{"cinese"}
-        zh_Hans{"cinese semplificato"}
-        zh_Hant{"cinese tradizionale"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"nessun contenuto linguistico"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"cinese mandarino semplificato"}
-        zh_Hant{"cinese mandarino tradizionale"}
-    }
-    Languages%menu{
-        ckb{"curdo centrale"}
-        yue{"cinese (cantonese)"}
-        zh{"cinese (mandarino)"}
-    }
-    Languages%short{
-        az{"azero"}
-        en_GB{"inglese (GB)"}
     }
     Scripts{
         Afak{"afaka"}
@@ -840,7 +805,6 @@ it{
             iso8601{"Calendario ISO-8601"}
             japanese{"Calendario giapponese"}
             persian{"Calendario persiano"}
-            roc{"Calendario minguo"}
         }
         cf{
             account{"Formato valuta contabile"}

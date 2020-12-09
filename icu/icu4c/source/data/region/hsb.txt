@@ -92,17 +92,14 @@ hsb{
         CY{"Cypern"}
         CZ{"Čěska republika"}
         DE{"Němska"}
-        DG{"Diego Garcia"}
         DJ{"Dźibuti"}
         DK{"Danska"}
         DM{"Dominika"}
         DO{"Dominikanska republika"}
         DZ{"Algeriska"}
-        EA{"Ceuta a Melilla"}
         EC{"Ekwador"}
         EE{"Estiska"}
         EG{"Egyptowska"}
-        EH{"Zapadna Sahara"}
         ER{"Eritreja"}
         ES{"Španiska"}
         ET{"Etiopiska"}
@@ -138,7 +135,6 @@ hsb{
         HR{"Chorwatska"}
         HT{"Haiti"}
         HU{"Madźarska"}
-        IC{"Kanariske kupy"}
         ID{"Indoneska"}
         IE{"Irska"}
         IL{"Israel"}
@@ -220,7 +216,7 @@ hsb{
         PM{"St. Pierre a Miquelon"}
         PN{"Pitcairnowe kupy"}
         PR{"Puerto Rico"}
-        PS{"Palestinski awtonomny teritorij"}
+        PS{"Palästinensische Behörde"}
         PT{"Portugalska"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -292,19 +288,5 @@ hsb{
         ZM{"Sambija"}
         ZW{"Simbabwe"}
         ZZ{"njeznaty region"}
-    }
-    Countries%short{
-        GB{"UK"}
-        HK{"Hongkong"}
-        MO{"Macao"}
-        PS{"Palestina"}
-        US{"USA"}
-    }
-    Countries%variant{
-        CD{"Kongo (Demokratiska republika)"}
-        CG{"Kongo (Republika)"}
-        CI{"Słonowinowy pobrjóh"}
-        FK{"Falklandske kupy (Malwiny)"}
-        TL{"Wuchodny Timor"}
     }
 }

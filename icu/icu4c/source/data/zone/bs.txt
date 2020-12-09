@@ -867,9 +867,6 @@ bs{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumči"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }

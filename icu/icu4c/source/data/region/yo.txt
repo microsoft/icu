@@ -93,17 +93,14 @@ yo{
         CY{"Kúrúsì"}
         CZ{"Ṣẹ́ẹ́kì"}
         DE{"Jámánì"}
-        DG{"Diego Gaṣia"}
         DJ{"Díbọ́ótì"}
         DK{"Dẹ́mákì"}
         DM{"Dòmíníkà"}
         DO{"Dòmíníkánì"}
         DZ{"Àlùgèríánì"}
-        EA{"Seuta àti Melilla"}
         EC{"Ekuádò"}
         EE{"Esitonia"}
         EG{"Égípítì"}
-        EH{"Ìwọ̀òòrùn Sàhárà"}
         ER{"Eritira"}
         ES{"Sipani"}
         ET{"Etopia"}
@@ -140,7 +137,6 @@ yo{
         HR{"Kòróátíà"}
         HT{"Haati"}
         HU{"Hungari"}
-        IC{"Ẹrékùsù Kánárì"}
         ID{"Indonesia"}
         IE{"Ailandi"}
         IL{"Iserẹli"}
@@ -223,7 +219,7 @@ yo{
         PM{"Pẹẹri ati mikuloni"}
         PN{"Pikarini"}
         PR{"Pọto Riko"}
-        PS{"Agbègbè ara Palẹsítínì"}
+        PS{"Palestinian Authority"}
         PT{"Pọ́túgà"}
         PW{"Paalu"}
         PY{"Paraguye"}
@@ -288,8 +284,6 @@ yo{
         VU{"Faniatu"}
         WF{"Wali ati futuna"}
         WS{"Samọ"}
-        XA{"ìsọ̀rọ̀sí irọ́"}
-        XB{"ibi irọ́"}
         XK{"Kòsófò"}
         YE{"Yemeni"}
         YT{"Mayote"}
@@ -297,16 +291,5 @@ yo{
         ZM{"Ṣamibia"}
         ZW{"Ṣimibabe"}
         ZZ{"Àgbègbè àìmọ̀"}
-    }
-    Countries%short{
-        HK{"Hong Kong"}
-        MO{"Màkáò"}
-        PS{"Palẹsítínì"}
-    }
-    Countries%variant{
-        CD{"Kóńgò (Tiwantiwa)"}
-        CG{"Kóńgò (Olómìnira)"}
-        SZ{"Síwásìlandì"}
-        TL{"Ìlà Òòrùn Tímọ̀"}
     }
 }

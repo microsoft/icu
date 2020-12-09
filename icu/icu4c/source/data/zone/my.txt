@@ -867,9 +867,6 @@ my{
         "Asia:Ulaanbaatar"{
             ec{"ဥလန်ဘာတော"}
         }
-        "Asia:Urumqi"{
-            ec{"အူရုမ်ချီ"}
-        }
         "Asia:Ust-Nera"{
             ec{"အူးစ် နီရား"}
         }

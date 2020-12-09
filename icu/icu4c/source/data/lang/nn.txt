@@ -33,7 +33,6 @@ nn{
         ang{"gammalengelsk"}
         anp{"angika"}
         ar{"arabisk"}
-        ar_001{"moderne standardarabisk"}
         arc{"arameisk"}
         arn{"mapudungun"}
         arp{"arapaho"}
@@ -134,7 +133,6 @@ nn{
         eu{"baskisk"}
         ewo{"ewondo"}
         fa{"persisk"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulfulde"}
@@ -318,14 +316,12 @@ nn{
         nb{"norsk bokmål"}
         nd{"nord-ndebele"}
         nds{"lågtysk"}
-        nds_NL{"lågsaksisk"}
         ne{"nepalsk"}
         new{"newari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niuisk"}
         nl{"nederlandsk"}
-        nl_BE{"flamsk"}
         nmg{"kwasio"}
         nn{"norsk nynorsk"}
         nnh{"ngiemboon"}
@@ -374,7 +370,6 @@ nn{
         rm{"retoromansk"}
         rn{"rundi"}
         ro{"rumensk"}
-        ro_MD{"moldavisk"}
         rof{"rombo"}
         rom{"romani"}
         root{"rot"}
@@ -401,7 +396,6 @@ nn{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"gammalirsk"}
-        sh{"serbokroatisk"}
         shi{"tachelhit"}
         shn{"shan"}
         si{"singalesisk"}
@@ -502,23 +496,10 @@ nn{
         zen{"zenaga"}
         zgh{"standard marokkansk tamazight"}
         zh{"kinesisk"}
-        zh_Hans{"forenkla kinesisk"}
-        zh_Hant{"tradisjonell kinesisk"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"utan språkleg innhald"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"forenkla mandarinkinesisk"}
-        zh_Hant{"tradisjonell mandarinkinesisk"}
-    }
-    Languages%menu{
-        ckb{"kurdisk (sentral)"}
-        zh{"kinesisk, mandarin"}
-    }
-    Languages%variant{
-        ckb{"kurdisk (sorani)"}
     }
     Scripts{
         Arab{"arabisk"}
@@ -674,7 +655,6 @@ nn{
             iso8601{"ISO 8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
-            roc{"minguo-kalender"}
         }
         cf{
             account{"valutaformat for rekneskapsføring"}

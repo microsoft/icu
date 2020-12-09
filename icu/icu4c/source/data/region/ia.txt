@@ -85,7 +85,6 @@ ia{
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egypto"}
-        EH{"Sahara occidental"}
         ER{"Eritrea"}
         ES{"Espania"}
         ET{"Ethiopia"}
@@ -238,12 +237,5 @@ ia{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Region incognite"}
-    }
-    Countries%short{
-        GB{"GB"}
-        US{"SUA"}
-    }
-    Countries%variant{
-        CZ{"Republica Chec"}
     }
 }

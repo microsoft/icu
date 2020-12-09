@@ -1030,22 +1030,6 @@ sl{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "pred RK",
-                    "Minguo koledar",
-                }
-                narrow{
-                    "pred RK",
-                    "Minguo koledar",
-                }
-                wide{
-                    "pred RK",
-                    "Minguo koledar",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"dejavnosti"}

@@ -93,17 +93,14 @@ vi{
         CY{"Síp"}
         CZ{"Séc"}
         DE{"Đức"}
-        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Đan Mạch"}
         DM{"Dominica"}
         DO{"Cộng hòa Dominica"}
         DZ{"Algeria"}
-        EA{"Ceuta và Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Ai Cập"}
-        EH{"Tây Sahara"}
         ER{"Eritrea"}
         ES{"Tây Ban Nha"}
         ET{"Ethiopia"}
@@ -140,7 +137,6 @@ vi{
         HR{"Croatia"}
         HT{"Haiti"}
         HU{"Hungary"}
-        IC{"Quần đảo Canary"}
         ID{"Indonesia"}
         IE{"Ireland"}
         IL{"Israel"}
@@ -223,7 +219,7 @@ vi{
         PM{"Saint Pierre và Miquelon"}
         PN{"Quần đảo Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Lãnh thổ Palestine"}
+        PS{"Chính quyền Palestine"}
         PT{"Bồ Đào Nha"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -288,8 +284,6 @@ vi{
         VU{"Vanuatu"}
         WF{"Wallis và Futuna"}
         WS{"Samoa"}
-        XA{"Pseudo-Accents"}
-        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -297,19 +291,5 @@ vi{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Vùng không xác định"}
-    }
-    Countries%short{
-        HK{"Hồng Kông"}
-        MO{"Macao"}
-        PS{"Palestine"}
-    }
-    Countries%variant{
-        CD{"Cộng hòa Dân chủ Congo"}
-        CG{"Cộng hòa Congo"}
-        CI{"Bờ Biển Ngà"}
-        CZ{"Cộng hòa Séc"}
-        FK{"Quần đảo Falkland (Islas Malvinas)"}
-        SZ{"Swaziland"}
-        TL{"Đông Timor"}
     }
 }

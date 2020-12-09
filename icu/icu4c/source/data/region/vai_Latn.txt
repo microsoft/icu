@@ -165,7 +165,7 @@ vai_Latn{
         PM{"Siŋ Piiyɛ ɓɛ́ Mikelɔŋ"}
         PN{"Pitikɛŋ"}
         PR{"Piyuto Riko"}
-        PS{"Palesitininya Tele Jii Kɔiyɛ lá hĩ Gaza"}
+        PS{"Palestinian Authority"}
         PT{"Potokíi"}
         PW{"Palo"}
         PY{"Paragɔe"}

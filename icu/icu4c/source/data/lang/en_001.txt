@@ -8,7 +8,6 @@ en_001{
     }
     Languages{
         mus{"Creek"}
-        nds_NL{"West Low German"}
         sah{"Yakut"}
     }
     Types{

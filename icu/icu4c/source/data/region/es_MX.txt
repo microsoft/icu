@@ -27,7 +27,4 @@ es_MX{
         UM{"Islas menores alejadas de EE. UU."}
         UN{"ONU"}
     }
-    Countries%short{
-        GB{"RU"}
-    }
 }

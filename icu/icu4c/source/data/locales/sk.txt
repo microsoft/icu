@@ -1515,22 +1515,6 @@ sk{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "pred ROC",
-                    "ROC",
-                }
-                narrow{
-                    "pred ROC",
-                    "ROC",
-                }
-                wide{
-                    "pred ROC",
-                    "ROC",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktivity"}

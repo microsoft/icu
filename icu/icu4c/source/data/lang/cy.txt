@@ -36,7 +36,6 @@ cy{
         ang{"Hen Saesneg"}
         anp{"Angika"}
         ar{"Arabeg"}
-        ar_001{"Arabeg Modern Safonol"}
         arc{"Aramaeg"}
         arn{"Arawcaneg"}
         aro{"Araonaeg"}
@@ -53,7 +52,6 @@ cy{
         awa{"Awadhi"}
         ay{"Aymareg"}
         az{"Aserbaijaneg"}
-        az_Arab{"Aserbaijaneg Deheuol"}
         ba{"Bashcorteg"}
         bal{"Balwtsi"}
         ban{"Balïeg"}
@@ -113,8 +111,6 @@ cy{
         dar{"Dargwa"}
         dav{"Taita"}
         de{"Almaeneg"}
-        de_AT{"Almaeneg Awstria"}
-        de_CH{"Almaeneg Safonol y Swistir"}
         dgr{"Dogrib"}
         din{"Dinca"}
         dje{"Sarmaeg"}
@@ -134,22 +130,14 @@ cy{
         el{"Groeg"}
         elx{"Elameg"}
         en{"Saesneg"}
-        en_AU{"Saesneg Awstralia"}
-        en_CA{"Saesneg Canada"}
-        en_GB{"Saesneg Prydain"}
-        en_US{"Saesneg America"}
         enm{"Saesneg Canol"}
         eo{"Esperanto"}
         es{"Sbaeneg"}
-        es_419{"Sbaeneg America Ladin"}
-        es_ES{"Sbaeneg Ewrop"}
-        es_MX{"Sbaeneg Mecsico"}
         et{"Estoneg"}
         eu{"Basgeg"}
         ewo{"Ewondo"}
         ext{"Extremadureg"}
         fa{"Perseg"}
-        fa_AF{"Dari"}
         fat{"Ffanti"}
         ff{"Ffwla"}
         fi{"Ffinneg"}
@@ -159,8 +147,6 @@ cy{
         fo{"Ffaröeg"}
         fon{"Fon"}
         fr{"Ffrangeg"}
-        fr_CA{"Ffrangeg Canada"}
-        fr_CH{"Ffrangeg y Swistir"}
         frc{"Ffrangeg Cajwn"}
         frm{"Ffrangeg Canol"}
         fro{"Hen Ffrangeg"}
@@ -336,7 +322,6 @@ cy{
         nb{"Norwyeg Bokmål"}
         nd{"Ndebele Gogleddol"}
         nds{"Almaeneg Isel"}
-        nds_NL{"Sacsoneg Isel"}
         ne{"Nepaleg"}
         new{"Newaeg"}
         ng{"Ndonga"}
@@ -344,7 +329,6 @@ cy{
         niu{"Niuean"}
         njo{"Ao Naga"}
         nl{"Iseldireg"}
-        nl_BE{"Fflemeg"}
         nmg{"Kwasio"}
         nn{"Norwyeg Nynorsk"}
         nnh{"Ngiemboon"}
@@ -390,8 +374,6 @@ cy{
         pro{"Hen Brofensaleg"}
         ps{"Pashto"}
         pt{"Portiwgaleg"}
-        pt_BR{"Portiwgaleg Brasil"}
-        pt_PT{"Portiwgaleg Ewrop"}
         qu{"Quechua"}
         quc{"K’iche’"}
         raj{"Rajasthaneg"}
@@ -400,7 +382,6 @@ cy{
         rm{"Románsh"}
         rn{"Rwndi"}
         ro{"Rwmaneg"}
-        ro_MD{"Moldofeg"}
         rof{"Rombo"}
         rom{"Romani"}
         root{"Y Gwraidd"}
@@ -433,7 +414,6 @@ cy{
         sg{"Sango"}
         sga{"Hen Wyddeleg"}
         sgs{"Samogiteg"}
-        sh{"Serbo-Croateg"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Arabeg Chad"}
@@ -465,7 +445,6 @@ cy{
         sux{"Swmereg"}
         sv{"Swedeg"}
         sw{"Swahili"}
-        sw_CD{"Swahili’r Congo"}
         swb{"Comoreg"}
         syc{"Hen Syrieg"}
         syr{"Syrieg"}
@@ -542,23 +521,10 @@ cy{
         zea{"Zêlandeg"}
         zgh{"Tamaseit Moroco Safonol"}
         zh{"Tsieinëeg"}
-        zh_Hans{"Tsieinëeg Symledig"}
-        zh_Hant{"Tsieinëeg Traddodiadol"}
         zu{"Swlw"}
         zun{"Swni"}
         zxx{"Dim cynnwys ieithyddol"}
         zza{"Sasäeg"}
-    }
-    Languages%long{
-        zh_Hans{"Tsieinëeg Mandarin Symledig"}
-        zh_Hant{"Tsieinëeg Mandarin Traddodiadol"}
-    }
-    Languages%menu{
-        yue{"Tsieinëeg, Cantoneg"}
-        zh{"Tsieinëeg, Mandarin"}
-    }
-    Languages%short{
-        az{"Aseri"}
     }
     Scripts{
         Arab{"Arabaidd"}
@@ -625,7 +591,6 @@ cy{
             iso8601{"Calendr ISO-8601"}
             japanese{"Calendr Japan"}
             persian{"Calendr Persia"}
-            roc{"Calendr Gweriniaeth Tseina"}
         }
         cf{
             account{"Fformat Arian Cyfrifeg"}

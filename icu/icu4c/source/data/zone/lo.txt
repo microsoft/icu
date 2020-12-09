@@ -867,9 +867,6 @@ lo{
         "Asia:Ulaanbaatar"{
             ec{"ອູລານບາຕາຣ໌"}
         }
-        "Asia:Urumqi"{
-            ec{"ອູຣຸມຊີ"}
-        }
         "Asia:Ust-Nera"{
             ec{"ອຸສ ເນຣາ"}
         }

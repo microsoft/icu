@@ -14,7 +14,6 @@ sw_KE{
         CC{"Visiwa vya Kokos (Keeling)"}
         CD{"Kongo - Kinshasa"}
         CV{"Kepuvede"}
-        EA{"Keuta na Melilla"}
         EC{"Ekwado"}
         GA{"Gaboni"}
         GL{"Grinilandi"}
@@ -62,8 +61,6 @@ sw_KE{
         VA{"Mji wa Vatikani"}
         VG{"Visiwa vya Virgin vya Uingereza"}
         VI{"Visiwa vya Virgin vya Marekani"}
-        XA{"Kiinitoni cha kigeni"}
-        XB{"Pseudo-Bidi"}
         YT{"Mayote"}
     }
 }

@@ -39,7 +39,6 @@ af{
         an{"Aragonees"}
         anp{"Angika"}
         ar{"Arabies"}
-        ar_001{"Moderne Standaardarabies"}
         arc{"Aramees"}
         arn{"Mapuche"}
         arp{"Arapaho"}
@@ -109,15 +108,12 @@ af{
         eka{"Ekajuk"}
         el{"Grieks"}
         en{"Engels"}
-        en_GB{"Engels (VK)"}
-        en_US{"Engels (VSA)"}
         eo{"Esperanto"}
         es{"Spaans"}
         et{"Estnies"}
         eu{"Baskies"}
         ewo{"Ewondo"}
         fa{"Persies"}
-        fa_AF{"Dari"}
         ff{"Fulah"}
         fi{"Fins"}
         fil{"Filippyns"}
@@ -276,14 +272,12 @@ af{
         nb{"Boeknoors"}
         nd{"Noord-Ndebele"}
         nds{"Nederduits"}
-        nds_NL{"Nedersaksies"}
         ne{"Nepalees"}
         new{"Newari"}
         ng{"Ndonga"}
         nia{"Nias"}
         niu{"Niueaans"}
         nl{"Nederlands"}
-        nl_BE{"Vlaams"}
         nmg{"Kwasio"}
         nn{"Nuwe Noors"}
         nnh{"Ngiemboon"}
@@ -340,7 +334,6 @@ af{
         seh{"Sena"}
         ses{"Koyraboro Senni"}
         sg{"Sango"}
-        sh{"Serwo-Kroaties"}
         shi{"Tachelhit"}
         shn{"Shan"}
         si{"Sinhala"}
@@ -425,21 +418,6 @@ af{
         zxx{"Geen taalinhoud nie"}
         zza{"Zaza"}
     }
-    Languages%long{
-        zh_Hans{"Mandarynse Chinees (Vereenvoudigd)"}
-        zh_Hant{"Mandarynse Chinees (Tradisioneel)"}
-    }
-    Languages%menu{
-        yue{"Kantonese Chinees"}
-        zh{"Mandarynse Chinees"}
-    }
-    Languages%short{
-        az{"Azeri"}
-    }
-    Languages%variant{
-        ckb{"Koerdies Sorani"}
-        ps{"Pushto"}
-    }
     Scripts{
         Arab{"Arabies"}
         Armn{"Armeens"}
@@ -509,7 +487,6 @@ af{
             iso8601{"ISO-8601-kalender"}
             japanese{"Japannese kalender"}
             persian{"Persiese kalender"}
-            roc{"Minguo-kalender"}
         }
         cf{
             account{"Rekeningkundige geldeenheidformaat"}

@@ -201,28 +201,6 @@ zh_Hans_HK{
                 Md{"M/d"}
             }
         }
-        roc{
-            DateTimePatterns{
-                "zzzz ah:mm:ss",
-                "z ah:mm:ss",
-                "ah:mm:ss",
-                "ah:mm",
-                "Gy年M月d日EEEE",
-                "Gy年M月d日",
-                "Gy年M月d日",
-                "Gd/M/yy",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-            }
-            availableFormats{
-                M{"L"}
-                MMM{"M月"}
-                Md{"M-d"}
-            }
-        }
     }
     fields{
         second{
