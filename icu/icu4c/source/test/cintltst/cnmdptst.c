@@ -478,10 +478,12 @@ static void TestCurrencyObject(void)
         "JPY",
     };
 
+    /* MSFT Change: Begin */
     const char* result[]={
-        "1\\u202F234,56\\u00A0\\u20AC",
-        "1\\u202F235\\u00A0JPY",
+        "1\\u00a0234,56\\u00A0\\u20AC",
+        "1\\u00a0235\\u00A0JPY",
     };
+    /* MSFT Change: End */
 
     log_verbose("\nTesting the number format with different currency codes\n");
     for(i=0; i < 2; i++)
