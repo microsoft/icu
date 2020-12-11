@@ -33,7 +33,6 @@ az{
         ang{"qədim ingilis"}
         anp{"angika"}
         ar{"ərəb"}
-        ar_001{"müasir standart ərəb"}
         arc{"aramik"}
         arn{"mapuçe"}
         arp{"arapaho"}
@@ -45,7 +44,6 @@ az{
         awa{"avadhi"}
         ay{"aymara"}
         az{"azərbaycan"}
-        az_Arab{"cənubi azərbaycan"}
         ba{"başqırd"}
         bal{"baluc"}
         ban{"bali"}
@@ -105,8 +103,6 @@ az{
         dar{"darqva"}
         dav{"taita"}
         de{"alman"}
-        de_AT{"Avstriya almancası"}
-        de_CH{"İsveçrə yüksək almancası"}
         del{"delaver"}
         den{"slavey"}
         dgr{"doqrib"}
@@ -129,21 +125,13 @@ az{
         el{"yunan"}
         elx{"elamit"}
         en{"ingilis"}
-        en_AU{"Avstraliya ingiliscəsi"}
-        en_CA{"Kanada ingiliscəsi"}
-        en_GB{"Britaniya ingiliscəsi"}
-        en_US{"Amerika ingiliscəsi"}
         enm{"orta ingilis"}
         eo{"esperanto"}
         es{"ispan"}
-        es_419{"Latın Amerikası ispancası"}
-        es_ES{"Kastiliya ispancası"}
-        es_MX{"Meksika ispancası"}
         et{"eston"}
         eu{"bask"}
         ewo{"evondo"}
         fa{"fars"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fula"}
@@ -153,8 +141,6 @@ az{
         fo{"farer"}
         fon{"fon"}
         fr{"fransız"}
-        fr_CA{"Kanada fransızcası"}
-        fr_CH{"İsveçrə fransızcası"}
         frm{"orta fransız"}
         fro{"qədim fransız"}
         frr{"şimali fris"}
@@ -334,14 +320,12 @@ az{
         nb{"bokmal norveç"}
         nd{"şimali ndebele"}
         nds{"aşağı alman"}
-        nds_NL{"aşağı sakson"}
         ne{"nepal"}
         new{"nevari"}
         ng{"ndonqa"}
         nia{"nias"}
         niu{"niyuan"}
         nl{"holland"}
-        nl_BE{"flamand"}
         nmg{"kvasio"}
         nn{"nünorsk norveç"}
         nnh{"ngiemboon"}
@@ -380,8 +364,6 @@ az{
         pro{"qədim provansal"}
         ps{"puştu"}
         pt{"portuqal"}
-        pt_BR{"Braziliya portuqalcası"}
-        pt_PT{"Portuqaliya portuqalcası"}
         qu{"keçua"}
         quc{"kiçe"}
         raj{"racastani"}
@@ -390,7 +372,6 @@ az{
         rm{"romanş"}
         rn{"rundi"}
         ro{"rumın"}
-        ro_MD{"moldav"}
         rof{"rombo"}
         rom{"roman"}
         root{"rut"}
@@ -418,7 +399,6 @@ az{
         ses{"koyraboro senni"}
         sg{"sanqo"}
         sga{"qədim irland"}
-        sh{"serb-xorvat"}
         shi{"taçelit"}
         shn{"şan"}
         si{"sinhala"}
@@ -447,7 +427,6 @@ az{
         sux{"sumeryan"}
         sv{"isveç"}
         sw{"suahili"}
-        sw_CD{"Konqo suahilicəsi"}
         swb{"komor"}
         syr{"suriya"}
         ta{"tamil"}
@@ -521,27 +500,10 @@ az{
         zen{"zenaqa"}
         zgh{"tamazi"}
         zh{"çin"}
-        zh_Hans{"sadələşmiş çin"}
-        zh_Hant{"ənənəvi çin"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"dil məzmunu yoxdur"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"sadələşmiş mandarin çincəsi"}
-        zh_Hant{"ənənəvi mandarin çincəsi"}
-    }
-    Languages%menu{
-        ckb{"Kürdcə, mərkəzi"}
-        yue{"Çin, kanton"}
-        zh{"Çin, mandarin"}
-    }
-    Languages%short{
-        az{"azəri"}
-    }
-    Languages%variant{
-        ckb{"Kürdcə, sorani"}
     }
     Scripts{
         Arab{"ərəb"}
@@ -691,7 +653,6 @@ az{
             iso8601{"ISO-8601 Təqvimi"}
             japanese{"Yapon Təqvimi"}
             persian{"İran Təqvimi"}
-            roc{"Minquo Təqvimi"}
         }
         cf{
             account{"Uçot Valyuta Formatı"}

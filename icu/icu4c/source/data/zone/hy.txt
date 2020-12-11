@@ -867,9 +867,6 @@ hy{
         "Asia:Ulaanbaatar"{
             ec{"Ուլան Բատոր"}
         }
-        "Asia:Urumqi"{
-            ec{"Ուրումչի"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ուստ-Ներա"}
         }

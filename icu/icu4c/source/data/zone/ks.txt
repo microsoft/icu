@@ -762,9 +762,6 @@ ks{
         "Asia:Ulaanbaatar"{
             ec{"اُلانباٹَر"}
         }
-        "Asia:Urumqi"{
-            ec{"اُرَمچی"}
-        }
         "Asia:Vientiane"{
             ec{"وِیَنتِیین"}
         }

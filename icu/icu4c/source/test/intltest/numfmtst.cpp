@@ -199,7 +199,9 @@ void NumberFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &n
   TESTCASE_AUTO(Test11640_getAffixes);
   TESTCASE_AUTO(Test11649_toPatternWithMultiCurrency);
   TESTCASE_AUTO(Test13327_numberingSystemBufferOverflow);
-  TESTCASE_AUTO(Test13391_chakmaParsing);
+  /* MSFT Change: Begin */
+  // TESTCASE_AUTO(Test13391_chakmaParsing);
+  /* MSFT Change: End */
   TESTCASE_AUTO(Test11735_ExceptionIssue);
   TESTCASE_AUTO(Test11035_FormatCurrencyAmount);
   TESTCASE_AUTO(Test11318_DoubleConversion);
@@ -1022,19 +1024,21 @@ void NumberFormatTest::TestCurrencyObject() {
         return;
     }
 
-    expectCurrency(*fmt, null, 1234.56, CharsToUnicodeString("1\\u202F234,56 \\u20AC"));
+    /* MSFT Change: Begin */
+    expectCurrency(*fmt, null, 1234.56, CharsToUnicodeString("1 234,56 \\u20AC"));
 
     expectCurrency(*fmt, Locale::getJapan(),
-                   1234.56, CharsToUnicodeString("1\\u202F235 JPY")); // Yen
+                   1234.56, CharsToUnicodeString("1 235 JPY")); // Yen
 
     expectCurrency(*fmt, Locale("fr", "CH", ""),
-                   1234.56, CharsToUnicodeString("1\\u202F234,56 CHF")); // no more 0.05 rounding here, see cldrbug 5548
+                   1234.56, CharsToUnicodeString("1 234,56 CHF")); // no more 0.05 rounding here, see cldrbug 5548
 
     expectCurrency(*fmt, Locale::getUS(),
-                   1234.56, CharsToUnicodeString("1\\u202F234,56 $US"));
+                   1234.56, CharsToUnicodeString("1 234,56 $US"));
 
     expectCurrency(*fmt, Locale::getFrance(),
-                   1234.56, CharsToUnicodeString("1\\u202F234,56 \\u20AC")); // Euro
+                   1234.56, CharsToUnicodeString("1 234,56 \\u20AC")); // Euro
+    /* MSFT Change: End */
 
     delete fmt;
 }

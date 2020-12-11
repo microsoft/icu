@@ -43,7 +43,6 @@ is{
         ang{"fornenska"}
         anp{"angíka"}
         ar{"arabíska"}
-        ar_001{"stöðluð nútímaarabíska"}
         arc{"arameíska"}
         arn{"mapuche"}
         arp{"arapahó"}
@@ -117,8 +116,6 @@ is{
         dar{"dargva"}
         dav{"taíta"}
         de{"þýska"}
-        de_AT{"austurrísk þýska"}
-        de_CH{"svissnesk háþýska"}
         del{"delaver"}
         den{"slavneska"}
         dgr{"dogríb"}
@@ -141,21 +138,13 @@ is{
         el{"gríska"}
         elx{"elamít"}
         en{"enska"}
-        en_AU{"áströlsk enska"}
-        en_CA{"kanadísk enska"}
-        en_GB{"bresk enska"}
-        en_US{"bandarísk enska"}
         enm{"miðenska"}
         eo{"esperantó"}
         es{"spænska"}
-        es_419{"rómönsk-amerísk spænska"}
-        es_ES{"evrópsk spænska"}
-        es_MX{"mexíkósk spænska"}
         et{"eistneska"}
         eu{"baskneska"}
         ewo{"evondó"}
         fa{"persneska"}
-        fa_AF{"darí"}
         fan{"fang"}
         fat{"fantí"}
         ff{"fúla"}
@@ -165,8 +154,6 @@ is{
         fo{"færeyska"}
         fon{"fón"}
         fr{"franska"}
-        fr_CA{"kanadísk franska"}
-        fr_CH{"svissnesk franska"}
         frc{"cajun-franska"}
         frm{"miðfranska"}
         fro{"fornfranska"}
@@ -346,14 +333,12 @@ is{
         nb{"norskt bókmál"}
         nd{"norður-ndebele"}
         nds{"lágþýska; lágsaxneska"}
-        nds_NL{"lágsaxneska"}
         ne{"nepalska"}
         new{"nevarí"}
         ng{"ndonga"}
         nia{"nías"}
         niu{"níveska"}
         nl{"hollenska"}
-        nl_BE{"flæmska"}
         nmg{"kwasio"}
         nn{"nýnorska"}
         nnh{"ngiemboon"}
@@ -394,8 +379,6 @@ is{
         pro{"fornpróvensalska"}
         ps{"pastú"}
         pt{"portúgalska"}
-        pt_BR{"brasílísk portúgalska"}
-        pt_PT{"evrópsk portúgalska"}
         qu{"kvesjúa"}
         quc{"kiche"}
         raj{"rajastaní"}
@@ -404,7 +387,6 @@ is{
         rm{"rómanska"}
         rn{"rúndí"}
         ro{"rúmenska"}
-        ro_MD{"moldóvska"}
         rof{"rombó"}
         rom{"romaní"}
         root{"rót"}
@@ -432,7 +414,6 @@ is{
         ses{"koíraboró-senní"}
         sg{"sangó"}
         sga{"fornírska"}
-        sh{"serbókróatíska"}
         shi{"tachelhit"}
         shn{"sjan"}
         si{"singalíska"}
@@ -461,7 +442,6 @@ is{
         sux{"súmerska"}
         sv{"sænska"}
         sw{"svahílí"}
-        sw_CD{"kongósvahílí"}
         swb{"shimaoríska"}
         syc{"klassísk sýrlenska"}
         syr{"sýrlenska"}
@@ -535,23 +515,10 @@ is{
         zen{"senaga"}
         zgh{"staðlað marokkóskt tamazight"}
         zh{"kínverska"}
-        zh_Hans{"kínverska (einfölduð)"}
-        zh_Hant{"kínverska (hefðbundin)"}
         zu{"súlú"}
         zun{"súní"}
         zxx{"ekkert tungumálaefni"}
         zza{"zázáíska"}
-    }
-    Languages%long{
-        zh_Hans{"mandarín (einfölduð)"}
-        zh_Hant{"mandarín (hefðbundin)"}
-    }
-    Languages%menu{
-        yue{"kínverska, kantónska"}
-        zh{"kínverska, mandarín"}
-    }
-    Languages%short{
-        en_GB{"enska (bresk)"}
     }
     Scripts{
         Arab{"arabískt"}
@@ -631,7 +598,6 @@ is{
             iso8601{"ISO-8601 tímatal"}
             japanese{"Japanskt tímatal"}
             persian{"Persneskt tímatal"}
-            roc{"Minguo tímatal"}
         }
         cf{
             account{"Bókhaldsgjaldmiðill"}

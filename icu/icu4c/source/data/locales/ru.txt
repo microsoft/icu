@@ -2039,22 +2039,6 @@ ru{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Before R.O.C.",
-                    "Minguo",
-                }
-                narrow{
-                    "до респ.",
-                    "Миньго",
-                }
-                wide{
-                    "до основания Китайской республики",
-                    "Миньго",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"занятия"}

@@ -867,9 +867,6 @@ lv{
         "Asia:Ulaanbaatar"{
             ec{"Ulanbatora"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumči"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ustjņera"}
         }

@@ -199,7 +199,7 @@ fr{
                 approximatelySign{"≃"}
                 decimal{","}
                 exponential{"E"}
-                group{" "}
+                group{" "}
                 infinity{"∞"}
                 list{";"}
                 minusSign{"-"}
@@ -1913,22 +1913,6 @@ fr{
                         "bahman",
                         "esfand",
                     }
-                }
-            }
-        }
-        roc{
-            eras{
-                abbreviated{
-                    "av. RdC",
-                    "RdC",
-                }
-                narrow{
-                    "av. RdC",
-                    "RdC",
-                }
-                wide{
-                    "avant RdC",
-                    "RdC",
                 }
             }
         }

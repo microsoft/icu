@@ -1792,22 +1792,6 @@ ms{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Before R.O.C.",
-                    "R.O.C.",
-                }
-                narrow{
-                    "Sblm R.O.C",
-                    "R.O.C.",
-                }
-                wide{
-                    "Sebelum R.O.C",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Aktiviti"}

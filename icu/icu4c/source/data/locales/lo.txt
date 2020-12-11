@@ -2007,14 +2007,6 @@ lo{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "ກ່ອນ R.O.C.",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"ການເຄື່ອນໄຫວ"}

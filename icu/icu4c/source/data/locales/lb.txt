@@ -749,14 +749,6 @@ lb{
                 "{1} {0}",
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Before R.O.C.",
-                    "Minguo",
-                }
-            }
-        }
     }
     delimiters{
         alternateQuotationEnd{"‘"}

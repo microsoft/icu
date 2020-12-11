@@ -246,11 +246,4 @@ tt{
         ZW{"Зимбабве"}
         ZZ{"билгесез төбәк"}
     }
-    Countries%short{
-        HK{"Гонконг"}
-        MO{"Макао"}
-    }
-    Countries%variant{
-        CD{"Конго (КДР)"}
-    }
 }

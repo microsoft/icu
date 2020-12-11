@@ -18,7 +18,6 @@ jv{
         ak{"Akan"}
         am{"Amharik"}
         ar{"Arab"}
-        ar_001{"Arab Standar Anyar"}
         as{"Assam"}
         asa{"Asu"}
         ast{"Asturia"}
@@ -59,9 +58,6 @@ jv{
         en{"Inggris"}
         eo{"Esperanto"}
         es{"Spanyol"}
-        es_419{"Spanyol (Amerika Latin)"}
-        es_ES{"Spanyol (Eropah)"}
-        es_MX{"Spanyol (Meksiko)"}
         et{"Estonia"}
         eu{"Basque"}
         ewo{"Ewondo"}
@@ -160,7 +156,6 @@ jv{
         nds{"Jerman Non Standar"}
         ne{"Nepal"}
         nl{"Walanda"}
-        nl_BE{"Flemis"}
         nmg{"Kwasio"}
         nn{"Nynorsk Norwegia"}
         nnh{"Ngiemboon"}
@@ -239,22 +234,8 @@ jv{
         yue{"Kanton"}
         zgh{"Tamazight Moroko Standar"}
         zh{"Tyonghwa"}
-        zh_Hans{"Tyonghwa (Ringkes)"}
-        zh_Hant{"Tyonghwa (Tradisional)"}
         zu{"Zulu"}
         zxx{"Konten tanpa linguistik"}
-    }
-    Languages%long{
-        zh_Hans{"Tyonghwa Mandarin (Ringkes)"}
-        zh_Hant{"Tyonghwa Mandarin (Tradisional)"}
-    }
-    Languages%menu{
-        yue{"Tyonghwa, Kanton"}
-        zh{"Tyonghwa, Mandarin"}
-    }
-    Languages%short{
-        az{"Azeri"}
-        en_GB{"Inggris (Britania)"}
     }
     Scripts{
         Arab{"hija’iyah"}
@@ -317,7 +298,6 @@ jv{
             iso8601{"Tanggalan ISO-8601"}
             japanese{"Tanggalan Jepang"}
             persian{"Tanggalan Persia"}
-            roc{"Tanggalan Minguo"}
         }
         cf{
             account{"Format Mata Uang Akuntansi"}

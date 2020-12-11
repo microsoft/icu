@@ -18,7 +18,6 @@ ig{
         ak{"Akan"}
         am{"Amariikị"}
         ar{"Arabiikị"}
-        ar_001{"Ụdị Arabiikị nke oge a"}
         asa{"Asụ"}
         az{"Azerbajanị"}
         be{"Belarusianụ"}
@@ -42,8 +41,6 @@ ig{
         da{"Danịsh"}
         dav{"Taịta"}
         de{"Jamanị"}
-        de_AT{"Jaman ndị Austria"}
-        de_CH{"Jaman Izugbe ndị Switzerland"}
         dje{"Zarma"}
         dsb{"Lowa Sorbịan"}
         dua{"Dụala"}
@@ -53,15 +50,8 @@ ig{
         ee{"Ewe"}
         el{"Giriikị"}
         en{"Bekee"}
-        en_AU{"Bekee ndị Australia"}
-        en_CA{"Bekee ndị Canada"}
-        en_GB{"Bekee ndị United Kingdom"}
-        en_US{"Bekee ndị America"}
         eo{"Ndị Esperantọ"}
         es{"Spanishi"}
-        es_419{"Spanishi ndị Latin America"}
-        es_ES{"Spanishi ndị Europe"}
-        es_MX{"Spanishi ndị Mexico"}
         et{"Ndị Estọnịa"}
         eu{"Baskwe"}
         ewo{"Ewọndọ"}
@@ -71,8 +61,6 @@ ig{
         fil{"Fịlịpịnọ"}
         fo{"Farọse"}
         fr{"Fụrenchị"}
-        fr_CA{"Fụrench ndị Canada"}
-        fr_CH{"Fụrench ndị Switzerland"}
         fur{"Frụlịan"}
         fy{"Westan Frịsịan"}
         ga{"Ịrịsh"}
@@ -174,8 +162,6 @@ ig{
         prg{"Prụssịan"}
         ps{"Pashọ"}
         pt{"Pọrtụgụese"}
-        pt_BR{"Pọrtụgụese ndị Brazil"}
-        pt_PT{"Asụsụ Portuguese ndị Europe"}
         qu{"Qụechụa"}
         rm{"Rọmansị"}
         rn{"Rụndị"}
@@ -234,22 +220,8 @@ ig{
         yo{"Yoruba"}
         yue{"Katọnịse"}
         zh{"Chainisi"}
-        zh_Hans{"Asụsụ Chinese dị mfe"}
-        zh_Hant{"Asụsụ Chinese Izugbe"}
         zu{"Zulu"}
         zxx{"Ndị ọzọ abụghị asụsụ"}
-    }
-    Languages%menu{
-        ckb{"Kurdish ọsote"}
-        yue{"Chinese,Cantonese"}
-    }
-    Languages%short{
-        az{"Azeri"}
-        en_GB{"Bekee ndị UK"}
-        en_US{"Bekee ndị US"}
-    }
-    Languages%variant{
-        ckb{"Kurdish ọzọ"}
     }
     Scripts{
         Arab{"Mkpụrụ Okwu Arabic"}
@@ -312,7 +284,6 @@ ig{
             iso8601{"Kalenda ISO-8601"}
             japanese{"Kalịnda Japanese"}
             persian{"Kalịnda Persian"}
-            roc{"Kalịnda repụblic nke China"}
         }
         cf{
             account{"Ụsọrọ akantụ egọ"}

@@ -43,7 +43,6 @@ lv{
         ang{"senangļu"}
         anp{"angika"}
         ar{"arābu"}
-        ar_001{"mūsdienu standarta arābu"}
         arc{"aramiešu"}
         arn{"araukāņu"}
         arp{"arapahu"}
@@ -55,7 +54,6 @@ lv{
         awa{"avadhu"}
         ay{"aimaru"}
         az{"azerbaidžāņu"}
-        az_Arab{"dienvidazerbaidžāņu"}
         ba{"baškīru"}
         bal{"beludžu"}
         ban{"baliešu"}
@@ -123,7 +121,6 @@ lv{
         dar{"dargu"}
         dav{"taitu"}
         de{"vācu"}
-        de_CH{"augšvācu (Šveice)"}
         del{"delavēru"}
         den{"sleivu"}
         dgr{"dogribu"}
@@ -146,7 +143,6 @@ lv{
         el{"grieķu"}
         elx{"elamiešu"}
         en{"angļu"}
-        en_GB{"angļu (Lielbritānija)"}
         enm{"vidusangļu"}
         eo{"esperanto"}
         es{"spāņu"}
@@ -154,7 +150,6 @@ lv{
         eu{"basku"}
         ewo{"evondu"}
         fa{"persiešu"}
-        fa_AF{"darī"}
         fan{"fangu"}
         fat{"fantu"}
         ff{"fulu"}
@@ -346,14 +341,12 @@ lv{
         nb{"norvēģu bukmols"}
         nd{"ziemeļndebelu"}
         nds{"lejasvācu"}
-        nds_NL{"lejassakšu"}
         ne{"nepāliešu"}
         new{"nevaru"}
         ng{"ndongu"}
         nia{"njasu"}
         niu{"niuāņu"}
         nl{"holandiešu"}
-        nl_BE{"flāmu"}
         nmg{"kvasio"}
         nn{"jaunnorvēģu"}
         nnh{"ngjembūnu"}
@@ -402,7 +395,6 @@ lv{
         rm{"retoromāņu"}
         rn{"rundu"}
         ro{"rumāņu"}
-        ro_MD{"moldāvu"}
         rof{"rombo"}
         rom{"čigānu"}
         root{"sakne"}
@@ -431,7 +423,6 @@ lv{
         ses{"koiraboro senni"}
         sg{"sango"}
         sga{"senīru"}
-        sh{"serbu–horvātu"}
         shi{"šilhu"}
         shn{"šanu"}
         shu{"Čadas arābu"}
@@ -461,7 +452,6 @@ lv{
         sux{"šumeru"}
         sv{"zviedru"}
         sw{"svahili"}
-        sw_CD{"svahili (Kongo)"}
         swb{"komoru"}
         syc{"klasiskā sīriešu"}
         syr{"sīriešu"}
@@ -535,26 +525,10 @@ lv{
         zen{"zenagu"}
         zgh{"standarta tamazigtu (Maroka)"}
         zh{"ķīniešu"}
-        zh_Hans{"ķīniešu vienkāršotā"}
-        zh_Hant{"ķīniešu tradicionālā"}
         zu{"zulu"}
         zun{"zunju"}
         zxx{"bez lingvistiska satura"}
         zza{"zazaki"}
-    }
-    Languages%long{
-        zh_Hans{"ķīniešu vienkāršotā (mandarīnu)"}
-        zh_Hant{"ķīniešu tradicionālā (mandarīnu)"}
-    }
-    Languages%menu{
-        yue{"ķīniešu (kantoniešu)"}
-        zh{"ķīniešu (mandarīnu)"}
-    }
-    Languages%short{
-        en_GB{"angļu (Lielbritānija)"}
-    }
-    Languages%variant{
-        ckb{"sorani kurdu"}
     }
     Scripts{
         Arab{"arābu"}
@@ -659,7 +633,6 @@ lv{
             iso8601{"ISO 8601 kalendārs"}
             japanese{"japāņu kalendārs"}
             persian{"persiešu kalendārs"}
-            roc{"Ķīnas Republikas kalendārs"}
         }
         cf{
             account{"uzskaites valūtas formāts"}

@@ -957,6 +957,25 @@ static void VerifyTranslation(void) {
         //else if (uprv_strncmp(currLoc,"bem",3) == 0 || uprv_strncmp(currLoc,"mgo",3) == 0 || uprv_strncmp(currLoc,"nl",2) == 0) {
         //    log_verbose("skipping test for %s, some month and country names known to use aux exemplars\n", currLoc);
         //}
+
+        /* MSFT Change: Begin */
+        else if (
+            uprv_strncmp(currLoc, "ba", 2) == 0 || uprv_strncmp(currLoc, "ba_RU", 5) == 0     ||
+            uprv_strncmp(currLoc, "byn", 3) == 0 || uprv_strncmp(currLoc, "byn_ER", 6) == 0   ||
+            uprv_strncmp(currLoc, "cu", 2) == 0 || uprv_strncmp(currLoc, "cu_RU", 5) == 0     ||
+            uprv_strncmp(currLoc, "dv", 2) == 0 || uprv_strncmp(currLoc, "dv_MV", 5) == 0     ||
+            uprv_strncmp(currLoc, "iu", 2) == 0 || uprv_strncmp(currLoc, "iu_CA", 5) == 0     ||
+            uprv_strncmp(currLoc, "mn_Mong", 7) == 0 || uprv_strncmp(currLoc, "mn_Mong_CN", 10) == 0   ||
+            uprv_strncmp(currLoc, "nqo", 3) == 0 || uprv_strncmp(currLoc, "nqo_GN", 6) == 0   ||
+            uprv_strncmp(currLoc, "oc", 2) == 0 || uprv_strncmp(currLoc, "oc_FR", 5) == 0     ||
+            uprv_strncmp(currLoc, "syr", 3) == 0 || uprv_strncmp(currLoc, "syr_SY", 6) == 0   ||
+            uprv_strncmp(currLoc, "tig", 3) == 0 || uprv_strncmp(currLoc, "tig_ER", 6) == 0   ||
+            uprv_strncmp(currLoc, "wal", 3) == 0 || uprv_strncmp(currLoc, "wal_ET", 6) == 0
+        ) {
+            log_knownIssue("0", "MSFT Change: skipping test for %s which has issues due to CLDR Seed data.", currLoc);
+        }
+        /* MSFT Change: End */
+
         else {
             UChar langBuffer[128];
             int32_t langSize;
@@ -1231,7 +1250,14 @@ static void TestExemplarSet(void){
             }
 
             if (existsInScript == FALSE){
-                log_err("ExemplarSet containment failed for locale : %s\n", locale);
+                /* MSFT Change */
+                if (uprv_strncmp(locale, "oc", 2) == 0 || uprv_strncmp(locale, "oc_FR", 5) == 0) {
+                    log_knownIssue("0", "MSFT Change: oc and oc_FR have ExemplarSet issues.");
+                    continue;
+                } else {
+                    log_err("ExemplarSet containment failed for locale : %s\n", locale);
+                }
+                /* MSFT Change: End */
             }
         }
         assertTrue("case-folded is a superset",

@@ -11,7 +11,6 @@
         "no": "nb",
         "sh": "sr_Latn",
         "zh_HK": "zh_Hant_HK",
-        "zh_Hant_HK": "yue",
         "zh_MO": "zh_Hant_MO",
         "zh_TW": "zh_Hant_TW"
     },
@@ -27,7 +26,6 @@
         "es_SV": "es_419",
         "es_US": "es_419",
         "sr_Latn": "root",
-        "yue_Hans": "root",
         "zh_Hant": "root"
     }
 }

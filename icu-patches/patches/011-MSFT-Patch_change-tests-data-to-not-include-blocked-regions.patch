@@ -1,17 +1,14 @@
-From a87b956aed5067406bf3dce52b504fc7d3b944bb Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Erik Torres Aguilar <ertorres@microsoft.com>
-Date: Wed, 1 Jul 2020 11:59:58 -0400
-Subject: [PATCH] change tests data to not include blocked regions
+Date: Thu, 10 Dec 2020 22:02:47 -0800
+Subject: MSFT-PATCH: Apply changes from:
+ 011-MSFT-Patch_change-tests-data-to-not-include-blocked-regions.patch
 
----
- icu/icu/icu4c/source/test/cintltst/uregiontest.c | 4 ----
- icu/icu/icu4c/source/test/intltest/regiontst.cpp | 4 ----
- 2 files changed, 8 deletions(-)
 
-diff --git a/icu/icu/icu4c/source/test/cintltst/uregiontest.c b/icu/icu/icu4c/source/test/cintltst/uregiontest.c
-index 93e2f19b..0412fa95 100644
---- a/icu/icu/icu4c/source/test/cintltst/uregiontest.c
-+++ b/icu/icu/icu4c/source/test/cintltst/uregiontest.c
+diff --git a/icu/icu4c/source/test/cintltst/uregiontest.c b/icu/icu4c/source/test/cintltst/uregiontest.c
+index 93e2f19b6e753e0c21defc83d45588dc03935216..0412fa956dba311c5edc8fbd7f0e280e84fa0ee6 100644
+--- a/icu/icu4c/source/test/cintltst/uregiontest.c
++++ b/icu/icu4c/source/test/cintltst/uregiontest.c
 @@ -148,17 +148,14 @@ static KnownRegion knownRegions[] = {
      { "CZ" , 203, "151", URGN_TERRITORY, "150" },
      { "DD" , 276, "155", URGN_TERRITORY, "150" },
@@ -38,10 +35,10 @@ index 93e2f19b..0412fa95 100644
      { "ID" , 360, "035", URGN_TERRITORY, "142" },
      { "IE" , 372, "154", URGN_TERRITORY, "150" },
      { "IL" , 376, "145", URGN_TERRITORY, "142" },
-diff --git a/icu/icu/icu4c/source/test/intltest/regiontst.cpp b/icu/icu/icu4c/source/test/intltest/regiontst.cpp
-index d8a6723b..bbee1863 100644
---- a/icu/icu/icu4c/source/test/intltest/regiontst.cpp
-+++ b/icu/icu/icu4c/source/test/intltest/regiontst.cpp
+diff --git a/icu/icu4c/source/test/intltest/regiontst.cpp b/icu/icu4c/source/test/intltest/regiontst.cpp
+index d8a6723bfe353e71d5a82102a09d60c640b14071..bbee1863639157a6a8b7f3f722a882754e0d7c14 100644
+--- a/icu/icu4c/source/test/intltest/regiontst.cpp
++++ b/icu/icu4c/source/test/intltest/regiontst.cpp
 @@ -122,17 +122,14 @@ static KnownRegion knownRegions[] = {
      { "CZ" , 203, "151", URGN_TERRITORY, "150" },
      { "DD" , 276, "155", URGN_TERRITORY, "150" },
@@ -68,6 +65,3 @@ index d8a6723b..bbee1863 100644
      { "ID" , 360, "035", URGN_TERRITORY, "142" },
      { "IE" , 372, "154", URGN_TERRITORY, "150" },
      { "IL" , 376, "145", URGN_TERRITORY, "142" },
--- 
-2.27.0.vfs.0.0
-

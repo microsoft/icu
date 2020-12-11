@@ -1286,14 +1286,6 @@ sr{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Пре РК",
-                    "РК",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Активности"}

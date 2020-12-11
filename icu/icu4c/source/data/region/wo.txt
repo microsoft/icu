@@ -247,12 +247,4 @@ wo{
         ZW{"Simbabwe"}
         ZZ{"Gox buñ xamul"}
     }
-    Countries%short{
-        HK{"Ooŋ Koŋ"}
-        MO{"Makaawo"}
-    }
-    Countries%variant{
-        CD{"Kongo (R K D)"}
-        CG{"Réewum Kongo"}
-    }
 }

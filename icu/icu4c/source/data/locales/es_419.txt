@@ -643,22 +643,6 @@ es_419{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "antes de R.O.C.",
-                    "R.O.C.",
-                }
-                narrow{
-                    "antes de R.O.C.",
-                    "R.O.C.",
-                }
-                wide{
-                    "antes de R.O.C.",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         african_scripts{"Símbolos de escritura de África"}

@@ -46,7 +46,6 @@ et{
         ang{"vanainglise"}
         anp{"angika"}
         ar{"araabia"}
-        ar_001{"tänapäeva araabia kirjakeel"}
         arc{"aramea"}
         arn{"mapudunguni"}
         aro{"araona"}
@@ -139,8 +138,6 @@ et{
         dar{"dargi"}
         dav{"davida"}
         de{"saksa"}
-        de_AT{"Austria saksa"}
-        de_CH{"Šveitsi ülemsaksa"}
         del{"delavari"}
         den{"sleivi"}
         dgr{"dogribi"}
@@ -165,23 +162,15 @@ et{
         el{"kreeka"}
         elx{"eelami"}
         en{"inglise"}
-        en_AU{"Austraalia inglise"}
-        en_CA{"Kanada inglise"}
-        en_GB{"Briti inglise"}
-        en_US{"Ameerika inglise"}
         enm{"keskinglise"}
         eo{"esperanto"}
         es{"hispaania"}
-        es_419{"Ladina-Ameerika hispaania"}
-        es_ES{"Euroopa hispaania"}
-        es_MX{"Mehhiko hispaania"}
         esu{"keskjupiki"}
         et{"eesti"}
         eu{"baski"}
         ewo{"evondo"}
         ext{"estremenju"}
         fa{"pärsia"}
-        fa_AF{"dari"}
         fan{"fangi"}
         fat{"fanti"}
         ff{"fula"}
@@ -192,8 +181,6 @@ et{
         fo{"fääri"}
         fon{"foni"}
         fr{"prantsuse"}
-        fr_CA{"Kanada prantsuse"}
-        fr_CH{"Šveitsi prantsuse"}
         frc{"cajun’i"}
         frm{"keskprantsuse"}
         fro{"vanaprantsuse"}
@@ -400,7 +387,6 @@ et{
         nb{"norra bokmål"}
         nd{"põhjandebele"}
         nds{"alamsaksa"}
-        nds_NL{"Hollandi alamsaksa"}
         ne{"nepali"}
         new{"nevari"}
         ng{"ndonga"}
@@ -408,7 +394,6 @@ et{
         niu{"niue"}
         njo{"ao"}
         nl{"hollandi"}
-        nl_BE{"flaami"}
         nmg{"kwasio"}
         nn{"uusnorra"}
         nnh{"ngiembooni"}
@@ -456,8 +441,6 @@ et{
         pro{"vanaprovansi"}
         ps{"puštu"}
         pt{"portugali"}
-        pt_BR{"Brasiilia portugali"}
-        pt_PT{"Euroopa portugali"}
         qu{"ketšua"}
         quc{"kitše"}
         raj{"radžastani"}
@@ -468,7 +451,6 @@ et{
         rm{"romanši"}
         rn{"rundi"}
         ro{"rumeenia"}
-        ro_MD{"moldova"}
         rof{"rombo"}
         rom{"mustlaskeel"}
         rtm{"rotuma"}
@@ -502,7 +484,6 @@ et{
         sg{"sango"}
         sga{"vanaiiri"}
         sgs{"žemaidi"}
-        sh{"serbia-horvaadi"}
         shi{"šilha"}
         shn{"šani"}
         shu{"Tšaadi araabia"}
@@ -535,7 +516,6 @@ et{
         sux{"sumeri"}
         sv{"rootsi"}
         sw{"suahiili"}
-        sw_CD{"Kongo suahiili"}
         swb{"komoori"}
         syc{"vanasüüria"}
         syr{"süüria"}
@@ -625,29 +605,10 @@ et{
         zen{"zenaga"}
         zgh{"tamasikti (Maroko)"}
         zh{"hiina"}
-        zh_Hans{"lihtsustatud hiina"}
-        zh_Hant{"traditsiooniline hiina"}
         zu{"suulu"}
         zun{"sunji"}
         zxx{"mittekeeleline"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"lihtsustatud mandariinihiina"}
-        zh_Hant{"traditsiooniline mandariinihiina"}
-    }
-    Languages%menu{
-        ckb{"kurdi (keskkurdi)"}
-        yue{"hiina (kantoni)"}
-        zh{"hiina (mandariinihiina)"}
-    }
-    Languages%short{
-        az{"aseri"}
-        en_GB{"Briti inglise"}
-        en_US{"USA inglise"}
-    }
-    Languages%variant{
-        ckb{"keskkurdi"}
     }
     Scripts{
         Afak{"afaka"}
@@ -861,7 +822,6 @@ et{
             iso8601{"ISO-8601 kalender"}
             japanese{"Jaapani kalender"}
             persian{"Pärsia kalender"}
-            roc{"Hiina Vabariigi kalender"}
         }
         cf{
             account{"arvelduse rahavorming"}

@@ -867,9 +867,6 @@ km{
         "Asia:Ulaanbaatar"{
             ec{"អ៊ូឡង់បាទ័រ"}
         }
-        "Asia:Urumqi"{
-            ec{"អ៊ូរាំហ្គី"}
-        }
         "Asia:Ust-Nera"{
             ec{"អូស្តណេរ៉ា"}
         }

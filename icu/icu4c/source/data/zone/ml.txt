@@ -867,9 +867,6 @@ ml{
         "Asia:Ulaanbaatar"{
             ec{"ഉലാൻബാത്തർ"}
         }
-        "Asia:Urumqi"{
-            ec{"ഉറുംഖി"}
-        }
         "Asia:Ust-Nera"{
             ec{"യുസ്-നേര"}
         }

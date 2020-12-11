@@ -165,7 +165,7 @@ ksf{
         PM{"sɛnpyɛr ri mikɛlɔŋ"}
         PN{"pitkɛ́n"}
         PR{"pɔtoríko"}
-        PS{"zǝ palɛstínǝ"}
+        PS{"Autorité palestinienne"}
         PT{"portugál"}
         PW{"palwa"}
         PY{"paragwɛ́"}

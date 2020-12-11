@@ -93,17 +93,14 @@ so{
         CY{"Qubrus"}
         CZ{"Jekiya"}
         DE{"Jarmal"}
-        DG{"Diyeego Karsiya"}
         DJ{"Jabuuti"}
         DK{"Denmark"}
         DM{"Dominika"}
         DO{"Jamhuuriyaddda Dominika"}
         DZ{"Aljeeriya"}
-        EA{"Seyuta & Meliila"}
         EC{"Ikuwadoor"}
         EE{"Estooniya"}
         EG{"Masar"}
-        EH{"Saxaraha Galbeed"}
         ER{"Eritreeya"}
         ES{"Isbeyn"}
         ET{"Itoobiya"}
@@ -140,7 +137,6 @@ so{
         HR{"Korweeshiya"}
         HT{"Haiti"}
         HU{"Hangari"}
-        IC{"Jasiiradda Kanari"}
         ID{"Indoneesiya"}
         IE{"Ayrlaand"}
         IL{"Israaʼiil"}
@@ -288,8 +284,6 @@ so{
         VU{"Fanuaatu"}
         WF{"Walis & Futuna"}
         WS{"Samoowa"}
-        XA{"Shigshiga"}
-        XB{"Pseudo-Bidi"}
         XK{"Koosofo"}
         YE{"Yaman"}
         YT{"Mayotte"}
@@ -297,18 +291,5 @@ so{
         ZM{"Saambiya"}
         ZW{"Simbaabwe"}
         ZZ{"Gobol aan la aqoonin amase aan saxnayn"}
-    }
-    Countries%short{
-        GB{"UK"}
-        PS{"Falastiin"}
-    }
-    Countries%variant{
-        CD{"Jamhuuriyadda Dimuqaadiga Kongo"}
-        CG{"Jamhuuriyadda Kongo"}
-        CI{"Aayforikoost"}
-        CZ{"Jamhuuriyadda Jek"}
-        FK{"Jasiiradaha Fookland"}
-        SZ{"Iswaasilaan"}
-        TL{"Bariga Timor"}
     }
 }

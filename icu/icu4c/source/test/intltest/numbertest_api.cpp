@@ -2874,8 +2874,10 @@ void NumberFormatterApiTest::symbols() {
             nullptr,
             NumberFormatter::with().symbols(FRENCH_SYMBOLS),
             Locale::getJapan(),
-            u"87\u202F650",
-            u"8\u202F765",
+            /* MSFT Change: Begin */
+            u"87\u00a0650",
+            u"8\u00a0765",
+            /* MSFT Change: End */
             u"876,5",
             u"87,65",
             u"8,765",
@@ -2915,8 +2917,10 @@ void NumberFormatterApiTest::symbols() {
             u"numbering-system/mathsanb",
             NumberFormatter::with().adoptSymbols(new NumberingSystem(MATHSANB)),
             Locale::getFrench(),
-            u"𝟴𝟳\u202F𝟲𝟱𝟬",
-            u"𝟴\u202F𝟳𝟲𝟱",
+            /* MSFT Change: Begin */
+            u"𝟴𝟳\u00a0𝟲𝟱𝟬",
+            u"𝟴\u00a0𝟳𝟲𝟱",
+            /* MSFT Change: End */
             u"𝟴𝟳𝟲,𝟱",
             u"𝟴𝟳,𝟲𝟱",
             u"𝟴,𝟳𝟲𝟱",
@@ -3545,7 +3549,9 @@ void NumberFormatterApiTest::locale() {
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString actual = NumberFormatter::withLocale(Locale::getFrench()).formatInt(1234, status)
             .toString(status);
-    assertEquals("Locale withLocale()", u"1\u202f234", actual);
+    /* MSFT Change: Begin */
+    assertEquals("Locale withLocale()", u"1\u00a0234", actual);
+    /* MSFT Change: End */
 }
 
 void NumberFormatterApiTest::skeletonUserGuideExamples() {

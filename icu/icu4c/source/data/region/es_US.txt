@@ -24,7 +24,4 @@ es_US{
         TA{"Tristán de Acuña"}
         UM{"Islas menores alejadas de EE. UU."}
     }
-    Countries%short{
-        GB{"RU"}
-    }
 }

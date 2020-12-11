@@ -173,7 +173,6 @@ nl{
         ewo{"Ewondo"}
         ext{"Extremeens"}
         fa{"Perzisch"}
-        fa_AF{"Dari"}
         fan{"Fang"}
         fat{"Fanti"}
         ff{"Fulah"}
@@ -395,7 +394,6 @@ nl{
         nb{"Noors - Bokmål"}
         nd{"Noord-Ndebele"}
         nds{"Nedersaksisch"}
-        nds_NL{"Nederduits"}
         ne{"Nepalees"}
         new{"Newari"}
         ng{"Ndonga"}
@@ -496,7 +494,6 @@ nl{
         sg{"Sango"}
         sga{"Oudiers"}
         sgs{"Samogitisch"}
-        sh{"Servo-Kroatisch"}
         shi{"Tashelhiyt"}
         shn{"Shan"}
         shu{"Tsjadisch Arabisch"}
@@ -622,22 +619,6 @@ nl{
         zun{"Zuni"}
         zxx{"geen linguïstische inhoud"}
         zza{"Zaza"}
-    }
-    Languages%long{
-        zh_Hans{"Mandarijn (vereenvoudigd)"}
-        zh_Hant{"Mandarijn (traditioneel)"}
-    }
-    Languages%menu{
-        ars{"Arabisch, Nadjdi"}
-        ckb{"Koerdisch, Soranî"}
-        zh{"Mandarijn"}
-    }
-    Languages%short{
-        az{"Azeri"}
-    }
-    Languages%variant{
-        ckb{"Koerdisch, Soranî"}
-        ps{"Pashto"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -862,7 +843,6 @@ nl{
             iso8601{"ISO-8601-kalender"}
             japanese{"Japanse kalender"}
             persian{"Perzische kalender"}
-            roc{"Kalender van de Chinese Republiek"}
         }
         cf{
             account{"financiële valutanotatie"}
