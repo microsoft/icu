@@ -347,7 +347,7 @@
                     root,
 
                     // A-B
-                    af, am, ars, ar, as, az, be, bg, bn, bo, br, bs_Cyrl, bs,
+                    aa, af, am, ars, ar, as, az, be, bg, bn, bo, br, bs_Cyrl, bs,
 
                     // C-F
                     ca, ceb, chr, ckb, ckb_IQ, ckb_IR, cs, cu, cy, da, de_AT, de, dsb, dz, ee, el, en,
@@ -359,14 +359,14 @@
 
                     // K-P
                     ka, kk, kl, km, kn, kok, ko, ku, ku_Arab_IQ, ku_Arab_IR, ky, lb, lkt, ln, lo, lt, lv,
-                    mk, ml, mn, mo, mr, ms, mt, my, nb, ne, nl, nn, no_NO, no,
+                    mk, ml, mn, mo, mr, ms, mt, my, nb, ne, nl, nn, no_NO, no, nso,
                     om, or, pa_IN, pa, pa_Guru, pl, prs, prs_AF, ps, pt,
 
                     // Q-T
                     qu, qu_BO, qu_EC, qu_PE, quc, quc_GT, qut, qut_Latn, qut_GT, qut_Latn_GT, quz, quz_BO, quz_EC, quz_PE
                     ro, ru, sa, se, sh_BA, sh_CS, sh, sh_YU, si, sk, sl, smn, sq,
-                    sr_BA, sr_Cyrl_ME, sr_Latn, sr_ME, sr_RS, sr, sv, sw,
-                    ta, te, th, tk, to, tr,
+                    sr_BA, sr_Cyrl_ME, sr_Latn, sr_ME, sr_RS, sr, ssy, st, sv, sw,
+                    ta, te, th, tk, tn, to, tr,
 
                     // U-Z
                     ug, uk, ur, uz, vi, vo, wae, wo, xh, yi, yo,
