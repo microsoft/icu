@@ -1029,7 +1029,7 @@ public:
     // place the the replaced locale ID in out and return true.
     // Otherwise return false for no replacement or error.
     bool replace(
-        const Locale& locale, CharString& out, UErrorCode status);
+        const Locale& locale, CharString& out, UErrorCode& status);
 
 private:
     const char* language;
@@ -1343,7 +1343,7 @@ AliasReplacer::replaceTerritory(UVector& toBeFreed, UErrorCode& status)
             .build(status);
         l.addLikelySubtags(status);
         const char* likelyRegion = l.getCountry();
-        CharString* item = nullptr;
+        LocalPointer<CharString> item;
         if (likelyRegion != nullptr && uprv_strlen(likelyRegion) > 0) {
             size_t len = uprv_strlen(likelyRegion);
             const char* foundInReplacement = uprv_strstr(replacement,
@@ -1355,20 +1355,22 @@ AliasReplacer::replaceTerritory(UVector& toBeFreed, UErrorCode& status)
                          *(foundInReplacement-1) == ' ');
                 U_ASSERT(foundInReplacement[len] == ' ' ||
                          foundInReplacement[len] == '\0');
-                item = new CharString(foundInReplacement, (int32_t)len, status);
+                item.adoptInsteadAndCheckErrorCode(
+                    new CharString(foundInReplacement, (int32_t)len, status), status);
             }
         }
-        if (item == nullptr) {
-            item = new CharString(replacement,
-                                  (int32_t)(firstSpace - replacement), status);
+        if (item.isNull() && U_SUCCESS(status)) {
+            item.adoptInsteadAndCheckErrorCode(
+                new CharString(replacement,
+                               (int32_t)(firstSpace - replacement), status), status);
         }
         if (U_FAILURE(status)) { return false; }
-        if (item == nullptr) {
+        if (item.isNull()) {
             status = U_MEMORY_ALLOCATION_ERROR;
             return false;
         }
         replacedRegion = item->data();
-        toBeFreed.addElement(item, status);
+        toBeFreed.addElement(item.orphan(), status);
     }
     U_ASSERT(!same(region, replacedRegion));
     region = replacedRegion;
@@ -1474,7 +1476,7 @@ AliasReplacer::outputToString(
 }
 
 bool
-AliasReplacer::replace(const Locale& locale, CharString& out, UErrorCode status)
+AliasReplacer::replace(const Locale& locale, CharString& out, UErrorCode& status)
 {
     data = AliasData::singleton(status);
     if (U_FAILURE(status)) {
