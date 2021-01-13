@@ -443,14 +443,6 @@ stages:
         outPathRoot: '$(BUILD.ArtifactStagingDirectory)\output\package'
       condition: and(succeeded(), eq(variables.codeSign, true))
 
-    # This checks that all the Nuget packages are signed.
-    - powershell: |
-        $cmd = ('nuget verify -signature -CertificateFingerprint 3F9001EA83C560D712C24CF213C3D312CB3BFF51EE89435D3430BD06B5D0EECE ' + $env:Build_ArtifactStagingDirectory + "\output\package\signed\*.nupkg")
-        Write-Host "Executing: $cmd"
-        &cmd /c $cmd
-      displayName: 'Verify Nuget Packages are Signed'
-      condition: and(succeeded(), eq(variables.codeSign, true))
-
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: Nuget Packages'
       inputs:
