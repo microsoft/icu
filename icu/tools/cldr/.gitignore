@@ -1,4 +1,4 @@
-# Exclude the Maven local repository but keep the lib directory and the top-level readme.
+# Exclude the Maven local repository but keep the lib directory and the top-level readme, scripts and build config.
 /lib/**
 !/lib/README.txt
 !/lib/install-cldr-jars.sh
