@@ -142,7 +142,7 @@ static void TestToUnicodeLocaleType(void);
 static void TestToLegacyType(void);
 static void TestBug20149(void);
 static void TestCDefaultLocale(void);
-
+static void TestBug21449InfiniteLoop(void);
 
 /**
  * U_USING_DEFAULT_WARNING
