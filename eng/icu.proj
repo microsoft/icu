@@ -1,18 +1,12 @@
 <Project>
-  <!-- Only building for wasm is supported -->
-  <Target Name="Build">
-    <ItemGroup>
-      <IcuFilter Include="icudt;icudt_no_CJK;icudt_EFIGS;icudt_CJK" />
-    </ItemGroup>
-    <PropertyGroup>
-      <Makefile>icu.wasm.mk</Makefile>
-      <Makefile Condition="'$(TargetOS)'=='iOS'">icu.ios.mk</Makefile>
-      <Makefile Condition="'$(TargetOS)'=='Android'">icu.android.mk</Makefile>
-    </PropertyGroup>
+  <Target Name="Build" Condition="'$(PackOnly)' != 'true'">
+    <Error Condition="'$(TargetOS)' == ''" Text="TargetOS needs to be specified!" />
+    <Error Condition="'$(TargetArchitecture)' == ''" Text="TargetArchitecture needs to be specified!" />
+
     <Copy SourceFiles="$(MSBuildThisFileDirectory)\..\icu-filters\curr-root.txt" 
           DestinationFiles="$(MSBuildThisFileDirectory)\..\icu\icu4c\source\data\curr\root.txt"/> 
     <Exec WorkingDirectory="$(MSBuildThisFileDirectory)"
-          Command="make -f $(Makefile) all ARCH=$(TargetArchitecture) ICU_FILTER=$(MSBuildThisFileDirectory)/../icu-filters/%(IcuFilter.Identity).json ICU_TRACING=$(IcuTracing) SHELL=/bin/bash"
+          Command="make -f icu.mk all TARGET_OS=$(TargetOS.ToLower()) TARGET_ARCHITECTURE=$(TargetArchitecture) ICU_TRACING=$(IcuTracing) SHELL=/bin/bash"
           IgnoreStandardErrorWarningFormat="true" />
   </Target>
   <Target Name="Restore" />

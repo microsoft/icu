@@ -31,25 +31,91 @@ stages:
 
       ############ BROWSER BUILD ############
       - job: Build_Browser
-        displayName: Browser
+        displayName: Build Browser
         timeoutInMinutes: 30
-        strategy:
-          matrix:
-            wasm:
-              assetManifestOS: browser
-              assetManifestPlatform: wasm
         pool:
-          name: Hosted Ubuntu 1604
+          vmImage: ubuntu-16.04
         container:
           image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20210111135621-8ac9b02
         steps:
         - bash: |
-            ./build.sh --ci --restore --build --pack --configuration $(_BuildConfig) $(_InternalBuildArgs)
-          displayName: 'Build and package'
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm $(_InternalBuildArgs)
+          displayName: Build
+        - task: PublishPipelineArtifact@1
+          displayName: Upload artifacts
+          inputs:
+            targetPath: 'artifacts/bin'
+            artifactName: Artifacts_Browser
+            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
 
+      ############ iOS BUILD ############
+      - job: Build_iOS
+        displayName: Build iOS
+        timeoutInMinutes: 30
+        pool:
+          vmImage: macOS-10.15
+        steps:
         - bash: |
-            ./eng/common/build.sh --ci --restore --publish --configuration $(_BuildConfig) $(_InternalBuildArgs) /p:AssetManifestOS=$(assetManifestOS) /p:PlatformName=$(assetManifestPlatform) --projects $(Build.SourcesDirectory)/eng/icu.proj
-          displayName: Publish packages
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOS /p:TargetArchitecture=x64 $(_InternalBuildArgs)
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOS /p:TargetArchitecture=x86 $(_InternalBuildArgs)
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOS /p:TargetArchitecture=arm $(_InternalBuildArgs)
+          displayName: Build
+        - task: PublishPipelineArtifact@1
+          displayName: Upload artifacts
+          inputs:
+            targetPath: 'artifacts/bin'
+            artifactName: Artifacts_iOS
+            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+
+      ############ Android BUILD ############
+      - job: Build_Android
+        displayName: Build Android
+        timeoutInMinutes: 30
+        pool:
+          vmImage: ubuntu-16.04
+        container:
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-android-20200422191843-e2c3f83
+        steps:
+        - bash: |
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=x64 $(_InternalBuildArgs)
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=x86 $(_InternalBuildArgs)
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=arm $(_InternalBuildArgs)
+          displayName: Build
+        - task: PublishPipelineArtifact@1
+          displayName: Upload artifacts
+          inputs:
+            targetPath: 'artifacts/bin'
+            artifactName: Artifacts_Android
+            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+
+      ############ PACK AND PUBLISH ############
+      - job: Publish_Packages
+        displayName: Publish packages
+        dependsOn:
+          - Build_Browser
+          - Build_iOS
+          - Build_Android
+        timeoutInMinutes: 30
+        pool:
+          vmImage: windows-2019
+        steps:
+        - task: DownloadPipelineArtifact@2
+          inputs:
+            artifact: Artifacts_Browser
+            path: 'artifacts/bin'
+        - task: DownloadPipelineArtifact@2
+          inputs:
+            artifact: Artifacts_iOS
+            path: 'artifacts/bin'
+        - task: DownloadPipelineArtifact@2
+          inputs:
+            artifact: Artifacts_Android
+            path: 'artifacts/bin'
+        - powershell: |
+            .\eng\common\build.ps1 -ci -restore -pack -publish -configuration $(_BuildConfig) -projects $(Build.SourcesDirectory)\eng\icu.proj /p:PackOnly=true $(_InternalBuildArgs)
+          displayName: Pack and Publish packages
           condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
 
 ############ POST BUILD ARCADE LOGIC ############
