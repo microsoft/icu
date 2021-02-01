@@ -5,7 +5,7 @@
 
 ICU-21465 Windows Time Zone offset is wrong when Automatic DST setting is OFF
 - https://unicode-org.atlassian.net/browse/ICU-21465
-- https://github.com/unicode-org/icu/pull/1465
+- https://github.com/unicode-org/icu/pull/1539
 
 ICU-21449 Infinite loop can occur with locale IDs that contain RES_PATH_SEPARATOR
 - https://unicode-org.atlassian.net/browse/ICU-21449
