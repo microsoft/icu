@@ -68,6 +68,24 @@ stages:
             artifactName: Artifacts_iOS
             condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
 
+      ############ tvOS BUILD ############
+      - job: Build_tvOS
+        displayName: Build tvOS
+        timeoutInMinutes: 30
+        pool:
+          vmImage: macOS-10.15
+        steps:
+        - bash: |
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOS /p:TargetArchitecture=x64 $(_InternalBuildArgs)
+            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
+          displayName: Build
+        - task: PublishPipelineArtifact@1
+          displayName: Upload artifacts
+          inputs:
+            targetPath: 'artifacts/bin'
+            artifactName: Artifacts_tOS
+            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+
       ############ Android BUILD ############
       - job: Build_Android
         displayName: Build Android
@@ -96,6 +114,7 @@ stages:
         dependsOn:
           - Build_Browser
           - Build_iOS
+          - Build_tvOS
           - Build_Android
         timeoutInMinutes: 30
         pool:
@@ -108,6 +127,10 @@ stages:
         - task: DownloadPipelineArtifact@2
           inputs:
             artifact: Artifacts_iOS
+            path: 'artifacts/bin'
+        - task: DownloadPipelineArtifact@2
+          inputs:
+            artifact: Artifacts_tvOS
             path: 'artifacts/bin'
         - task: DownloadPipelineArtifact@2
           inputs:

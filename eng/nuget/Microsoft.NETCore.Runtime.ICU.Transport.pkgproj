@@ -98,6 +98,21 @@
     <File Include="$(RepoRoot)\artifacts\bin\icu-ios-arm\*.dat" TargetPath="runtimes\ios-arm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
+  <!-- tvOS -->
+  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'tvos-x64'">
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-x64\lib\libicui18n.a" TargetPath="runtimes\tvos-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-x64\lib\libicuuc.a" TargetPath="runtimes\tvos-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-x64\include\**" TargetPath="runtimes\tvos-x64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-x64\*.dat" TargetPath="runtimes\tvos-x64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'tvos-arm64'">
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-arm64\lib\libicui18n.a" TargetPath="runtimes\tvos-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-arm64\lib\libicuuc.a" TargetPath="runtimes\tvos-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-arm64\include\**" TargetPath="runtimes\tvos-arm64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-arm64\*.dat" TargetPath="runtimes\tvos-arm64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+  </ItemGroup>
+
   <Import Project="$(NuGetPackageRoot)\microsoft.dotnet.build.tasks.packaging\$(MicrosoftDotNetBuildTasksPackagingVersion)\build\Microsoft.DotNet.Build.Tasks.Packaging.targets" />
   <Import Project="$(RepoRoot)\Directory.Build.targets" />
 </Project>
