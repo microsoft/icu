@@ -31,7 +31,7 @@ stages:
 
       ############ BROWSER BUILD ############
       - job: Build_Browser
-        displayName: Build Browser
+        displayName: Browser
         timeoutInMinutes: 30
         pool:
           vmImage: ubuntu-16.04
@@ -50,7 +50,7 @@ stages:
 
       ############ iOS BUILD ############
       - job: Build_iOS
-        displayName: Build iOS
+        displayName: iOS
         timeoutInMinutes: 30
         pool:
           vmImage: macOS-10.15
@@ -70,7 +70,7 @@ stages:
 
       ############ tvOS BUILD ############
       - job: Build_tvOS
-        displayName: Build tvOS
+        displayName: tvOS
         timeoutInMinutes: 30
         pool:
           vmImage: macOS-10.15
@@ -83,12 +83,12 @@ stages:
           displayName: Upload artifacts
           inputs:
             targetPath: 'artifacts/bin'
-            artifactName: Artifacts_tOS
+            artifactName: Artifacts_tvOS
             condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
 
       ############ Android BUILD ############
       - job: Build_Android
-        displayName: Build Android
+        displayName: Android
         timeoutInMinutes: 30
         pool:
           vmImage: ubuntu-16.04
@@ -111,6 +111,7 @@ stages:
       ############ PACK AND PUBLISH ############
       - job: Publish_Packages
         displayName: Publish packages
+        condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
         dependsOn:
           - Build_Browser
           - Build_iOS
@@ -139,7 +140,6 @@ stages:
         - powershell: |
             .\eng\common\build.ps1 -ci -restore -pack -publish -configuration $(_BuildConfig) -projects $(Build.SourcesDirectory)\eng\icu.proj /p:PackOnly=true $(_InternalBuildArgs)
           displayName: Pack and Publish packages
-          condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
 
 ############ POST BUILD ARCADE LOGIC ############
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest')) }}:
