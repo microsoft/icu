@@ -22,11 +22,14 @@ stages:
     workspace:
       clean: all
 
-    # Note: We only have one distro for now, but this lets others be added more easily in the future.
     strategy:
       matrix:
         centos:
           distro: 'centos'
+          BuildPlatform: 'x64'
+        arm64:
+          distro: 'ubuntu-arm64'
+          BuildPlatform: 'arm64'
 
     steps:
       - checkout: self
@@ -45,11 +48,11 @@ stages:
         inputs:
           command: build
           Dockerfile: 'build/dockerfiles/$(distro)/Dockerfile'
-          arguments: -t ms-icu-container
+          arguments: -t ms-icu-container-$(BuildPlatform)
 
       - script: |
-          mkdir /tmp/build-output && docker run --rm -v $(pwd):/src -v /tmp/build-output:/dist ms-icu-container /src/build/scripts/build-icu.sh
-        displayName: 'Build, test, and make install'
+          pwd && mkdir -p /tmp/build-output && docker run --rm -v $(pwd):/src -v /tmp/build-output:/dist ms-icu-container-$(BuildPlatform) /src/build/scripts/build-icu-$(BuildPlatform).sh
+        displayName: 'Configure ICU and Build'
 
       - script: |
           cd /tmp/build-output && ls -Rl
@@ -68,7 +71,7 @@ stages:
         displayName: 'Publish: binaries'
         inputs:
           PathtoPublish: '/tmp/icu-binaries'
-          ArtifactName: 'linux-x64'
+          ArtifactName: 'linux-$(BuildPlatform)'
 
       - script: |
           mkdir /tmp/icu-symbols
@@ -82,7 +85,7 @@ stages:
         displayName: 'Publish: symbols'
         inputs:
           PathtoPublish: '/tmp/icu-symbols'
-          ArtifactName: 'Symbols-$(nugetPackageName).linux-x64'
+          ArtifactName: 'Symbols-$(nugetPackageName).linux-$(BuildPlatform)'
 
   - job: BuildWindows
     timeoutInMinutes: 60
@@ -359,7 +362,7 @@ stages:
         Tree /F /A $(BUILD.BINARIESDIRECTORY)
       displayName: 'DIAG: dir'
 
-    # Binaries (DLLs)
+    # Binaries (.dll or .so files)
     - task: DownloadBuildArtifacts@0
       displayName: 'Download win-x86'
       inputs:
@@ -382,6 +385,12 @@ stages:
       displayName: 'Download linux-x64'
       inputs:
         artifactName: 'linux-x64'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\bits'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download linux-arm64'
+      inputs:
+        artifactName: 'linux-arm64'
         downloadPath: '$(Build.BINARIESDIRECTORY)\bits'
 
     # Symbols (PDBs)
