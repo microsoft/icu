@@ -7,6 +7,9 @@ CLDR-14476 fa, remove explicit <LRM> or replace with \u200E; ko, remove a bogus 
 - https://unicode-org.atlassian.net/browse/CLDR-14476
 - https://github.com/unicode-org/cldr/pull/1025
 
+ICU-21492 Fix regex compile assertion failure.
+- https://unicode-org.atlassian.net/browse/ICU-21492
+- https://github.com/unicode-org/icu/pull/1577
 
 ## ICU 68.2.0.2
 #### Changes cherry-picked from upstream tickets/PRs:
