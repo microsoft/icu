@@ -11,6 +11,10 @@ ICU-21492 Fix regex compile assertion failure.
 - https://unicode-org.atlassian.net/browse/ICU-21492
 - https://github.com/unicode-org/icu/pull/1577
 
+ICU-21461 uprops.h: remove unused gc macros
+- https://unicode-org.atlassian.net/browse/ICU-21461
+- https://github.com/unicode-org/icu/pull/1555
+
 ## ICU 68.2.0.2
 #### Changes cherry-picked from upstream tickets/PRs:
 
