@@ -1,5 +1,13 @@
 # Changelog
 
+## ICU 68.2.0.x
+#### Changes cherry-picked from upstream tickets/PRs:
+
+CLDR-14476 fa, remove explicit <LRM> or replace with \u200E; ko, remove a bogus <
+- https://unicode-org.atlassian.net/browse/CLDR-14476
+- https://github.com/unicode-org/cldr/pull/1025
+
+
 ## ICU 68.2.0.2
 #### Changes cherry-picked from upstream tickets/PRs:
 
