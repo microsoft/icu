@@ -1,6 +1,9 @@
 # Changelog
 
 ## ICU 68.2.0.x
+#### General changes:
+- Picked up tzdata 2021a updates.
+
 #### Changes cherry-picked from upstream tickets/PRs:
 
 CLDR-14476 fa, remove explicit <LRM> or replace with \u200E; ko, remove a bogus <
