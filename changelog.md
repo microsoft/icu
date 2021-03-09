@@ -2,7 +2,8 @@
 
 ## ICU 68.2.0.3
 #### General changes:
-- Picked up tzdata 2021a updates.
+- Add support for prebuilt Linux ARM64 binaries in the MS-ICU Nuget package. (#70)
+- Picked up tzdata 2021a updates. (#76)
 
 #### Changes cherry-picked from upstream tickets/PRs:
 
