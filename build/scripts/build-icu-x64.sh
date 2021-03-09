@@ -9,13 +9,22 @@ set -euxo pipefail
 # Disable color output
 export TERM=xterm
 
-echo Building in: $(pwd)
+# ----------------------------------------------------------------------------------
+# Common variables
+# The docker container should be setup with the ICU source under /src
+# Output will be under /dist
 
-# Install ICU into this location
-export DESTDIR=/dist/icu
+# The top-level directory for the repo.
+ICU_SRC="/src"
+
+# Install ICU into this location.
+DEST_DIR=/dist/icu
+
+# Build ICU in this location (out-of-source build).
+BUILD_DIR=/tmp/build
 
 # Number of CPU Cores to use for make
-export CPUCORES=$(nproc)
+CPU_CORES=$(nproc)
 
 # We want to produce debugging symbols for "release" builds, but we don't want to use
 # the "--enable-debug" option with runConfigureICU, as that will turn on all kinds of
@@ -26,19 +35,19 @@ export CFLAGS="$DEFINES"
 export CXXFLAGS="$DEFINES"
 
 # Configure ICU for building. Skip layout[ex] and samples
-/src/icu/icu4c/source/runConfigureICU Linux --disable-layout --disable-layoutex --disable-samples
+mkdir -p ${BUILD_DIR} && cd ${BUILD_DIR} && ${ICU_SRC}/icu/icu4c/source/runConfigureICU Linux --disable-layout --disable-layoutex --disable-samples
 
 # Build and run the tests
-make -j${CPUCORES} check
+make -j${CPU_CORES} check 2>&1 | tee make-output.log
 
-# Install into DESTDIR.
-echo "Done building, installing into $DESTDIR ..."
-make -j${CPUCORES} DESTDIR=${DESTDIR} releaseDist
+# Install into DEST_DIR.
+echo "Done building, installing into $DEST_DIR ..."
+make -j${CPU_CORES} DESTDIR=${DEST_DIR} releaseDist 2>&1 | tee make-install.log
 
 # Split out the debugging symbols from the libs
-ls -al ${DESTDIR}/usr/local/lib
+ls -al ${DEST_DIR}/usr/local/lib
 
-for file in ${DESTDIR}/usr/local/lib/lib*.so*; do
+for file in ${DEST_DIR}/usr/local/lib/lib*.so*; do
     if [[ -L "$file" ]]; then echo "Skipping symlink $file";
     else
         echo "Stripping symbols for $file"
@@ -48,7 +57,7 @@ for file in ${DESTDIR}/usr/local/lib/lib*.so*; do
     fi
 done
 
-ls -al ${DESTDIR}/usr/local/lib
+ls -al ${DEST_DIR}/usr/local/lib
 
 # Test that icuinfo works with the stripped libs in the installed location
-LD_LIBRARY_PATH=${DESTDIR}/usr/local/lib ${DESTDIR}/usr/local/bin/icuinfo
+LD_LIBRARY_PATH=${DEST_DIR}/usr/local/lib ${DEST_DIR}/usr/local/bin/icuinfo

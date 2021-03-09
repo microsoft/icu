@@ -1,5 +1,28 @@
 # Changelog
 
+## ICU 68.2.0.3
+#### General changes:
+- Add support for prebuilt Linux ARM64 binaries in the MS-ICU Nuget package. (#70)
+- Picked up tzdata 2021a updates. (#76)
+
+#### Changes cherry-picked from upstream tickets/PRs:
+
+CLDR-14476 fa, remove explicit <LRM> or replace with \u200E; ko, remove a bogus <
+- https://unicode-org.atlassian.net/browse/CLDR-14476
+- https://github.com/unicode-org/cldr/pull/1025
+
+ICU-21492 Fix regex compile assertion failure.
+- https://unicode-org.atlassian.net/browse/ICU-21492
+- https://github.com/unicode-org/icu/pull/1577
+
+ICU-21461 uprops.h: remove unused gc macros
+- https://unicode-org.atlassian.net/browse/ICU-21461
+- https://github.com/unicode-org/icu/pull/1555
+
+ICU-21521 Fix cast of uprv_strcmp
+- https://unicode-org.atlassian.net/browse/ICU-21521
+- https://github.com/unicode-org/icu/pull/1618
+
 ## ICU 68.2.0.2
 #### Changes cherry-picked from upstream tickets/PRs:
 
