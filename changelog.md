@@ -19,7 +19,7 @@ ICU-21461 uprops.h: remove unused gc macros
 - https://unicode-org.atlassian.net/browse/ICU-21461
 - https://github.com/unicode-org/icu/pull/1555
 
-ICU-21461 Fix cast of uprv_strcmp
+ICU-21521 Fix cast of uprv_strcmp
 - https://unicode-org.atlassian.net/browse/ICU-21521
 - https://github.com/unicode-org/icu/pull/1618
 
