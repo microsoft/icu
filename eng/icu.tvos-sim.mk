@@ -1,6 +1,5 @@
 TVOS_MIN_VERSION=9.0
 
-### Delete this when https://github.com/dotnet/runtime/pull/49305 is merged ###
 ifeq ($(TARGET_ARCHITECTURE),x64)
 	TVOS_ARCH=x86_64
 	TVOS_SDK=appletvsimulator
@@ -8,7 +7,7 @@ ifeq ($(TARGET_ARCHITECTURE),x64)
 endif
 ifeq ($(TARGET_ARCHITECTURE),arm64)
 	TVOS_ARCH=arm64
-	TVOS_SDK=appletvos
+	TVOS_SDK=appletvsimulator
 	TVOS_ICU_HOST=arm-apple-darwin
 endif
 
