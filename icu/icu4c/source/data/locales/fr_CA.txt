@@ -102,7 +102,6 @@ fr_CA{
             }
             symbols{
                 approximatelySign{"≈"}
-                group{" "}
             }
         }
     }
