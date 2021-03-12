@@ -1,9 +1,13 @@
 # Changelog
 
+## ICU 68.2.0.x
+#### Data changes:
+- Update number grouping separator for French locales. [#80](https://github.com/microsoft/icu/pull/80)
+
 ## ICU 68.2.0.3
 #### General changes:
-- Add support for prebuilt Linux ARM64 binaries in the MS-ICU Nuget package. (#70)
-- Picked up tzdata 2021a updates. (#76)
+- Add support for prebuilt Linux ARM64 binaries in the MS-ICU Nuget package. [#70](https://github.com/microsoft/icu/pull/70)
+- Picked up tzdata 2021a updates. [#76](https://github.com/microsoft/icu/pull/76)
 
 #### Changes cherry-picked from upstream tickets/PRs:
 

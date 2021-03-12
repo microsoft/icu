@@ -1024,21 +1024,19 @@ void NumberFormatTest::TestCurrencyObject() {
         return;
     }
 
-    /* MSFT Change: Begin */
-    expectCurrency(*fmt, null, 1234.56, CharsToUnicodeString("1 234,56 \\u20AC"));
+    expectCurrency(*fmt, null, 1234.56, CharsToUnicodeString("1\\u202F234,56 \\u20AC"));
 
     expectCurrency(*fmt, Locale::getJapan(),
-                   1234.56, CharsToUnicodeString("1 235 JPY")); // Yen
+                   1234.56, CharsToUnicodeString("1\\u202F235 JPY")); // Yen
 
     expectCurrency(*fmt, Locale("fr", "CH", ""),
-                   1234.56, CharsToUnicodeString("1 234,56 CHF")); // no more 0.05 rounding here, see cldrbug 5548
+                   1234.56, CharsToUnicodeString("1\\u202F234,56 CHF")); // no more 0.05 rounding here, see cldrbug 5548
 
     expectCurrency(*fmt, Locale::getUS(),
-                   1234.56, CharsToUnicodeString("1 234,56 $US"));
+                   1234.56, CharsToUnicodeString("1\\u202F234,56 $US"));
 
     expectCurrency(*fmt, Locale::getFrance(),
-                   1234.56, CharsToUnicodeString("1 234,56 \\u20AC")); // Euro
-    /* MSFT Change: End */
+                   1234.56, CharsToUnicodeString("1\\u202F234,56 \\u20AC")); // Euro
 
     delete fmt;
 }
