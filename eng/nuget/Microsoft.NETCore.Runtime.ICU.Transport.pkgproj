@@ -92,28 +92,28 @@
     <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x86\*.dat" TargetPath="runtimes\ios-x86\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'ios-sim-x64'">
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-x64\lib\libicui18n.a" TargetPath="runtimes\ios-sim-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-x64\lib\libicuuc.a" TargetPath="runtimes\ios-sim-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-x64\lib\libicudata.a" TargetPath="runtimes\ios-sim-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-x64\include\**" TargetPath="runtimes\ios-sim-x64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-x64\*.dat" TargetPath="runtimes\ios-sim-x64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'iossimulator-x64'">
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x64\lib\libicui18n.a" TargetPath="runtimes\iossimulator-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x64\lib\libicuuc.a" TargetPath="runtimes\iossimulator-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x64\lib\libicudata.a" TargetPath="runtimes\iossimulator-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x64\include\**" TargetPath="runtimes\iossimulator-x64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x64\*.dat" TargetPath="runtimes\iossimulator-x64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'ios-sim-x86'">
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-x86\lib\libicui18n.a" TargetPath="runtimes\ios-sim-x86\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-x86\lib\libicuuc.a" TargetPath="runtimes\ios-sim-x86\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-x86\lib\libicudata.a" TargetPath="runtimes\ios-sim-x86\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-x86\include\**" TargetPath="runtimes\ios-sim-x86\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-x86\*.dat" TargetPath="runtimes\ios-sim-x86\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'iossimulator-x86'">
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x86\lib\libicui18n.a" TargetPath="runtimes\iossimulator-x86\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x86\lib\libicuuc.a" TargetPath="runtimes\iossimulator-x86\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x86\lib\libicudata.a" TargetPath="runtimes\iossimulator-x86\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x86\include\**" TargetPath="runtimes\iossimulator-x86\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x86\*.dat" TargetPath="runtimes\iossimulator-x86\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'ios-sim-arm64'">
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-arm64\lib\libicui18n.a" TargetPath="runtimes\ios-sim-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-arm64\lib\libicuuc.a" TargetPath="runtimes\ios-sim-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-arm64\lib\libicudata.a" TargetPath="runtimes\ios-sim-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-arm64\include\**" TargetPath="runtimes\ios-sim-arm64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-sim-arm64\*.dat" TargetPath="runtimes\ios-sim-arm64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'iossimulator-arm64'">
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-arm64\lib\libicui18n.a" TargetPath="runtimes\iossimulator-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-arm64\lib\libicuuc.a" TargetPath="runtimes\iossimulator-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-arm64\lib\libicudata.a" TargetPath="runtimes\iossimulator-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-arm64\include\**" TargetPath="runtimes\iossimulator-arm64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-arm64\*.dat" TargetPath="runtimes\iossimulator-arm64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'ios-arm64'">
@@ -142,20 +142,20 @@
     <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-x64\*.dat" TargetPath="runtimes\tvos-x64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'tvos-sim-x64'">
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-sim-x64\lib\libicui18n.a" TargetPath="runtimes\tvos-sim-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-sim-x64\lib\libicuuc.a" TargetPath="runtimes\tvos-sim-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-sim-x64\lib\libicudata.a" TargetPath="runtimes\tvos-sim-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-sim-x64\include\**" TargetPath="runtimes\tvos-sim-x64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-sim-x64\*.dat" TargetPath="runtimes\tvos-sim-x64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'tvossimulator-x64'">
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-x64\lib\libicui18n.a" TargetPath="runtimes\tvossimulator-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-x64\lib\libicuuc.a" TargetPath="runtimes\tvossimulator-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-x64\lib\libicudata.a" TargetPath="runtimes\tvossimulator-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-x64\include\**" TargetPath="runtimes\tvossimulator-x64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-x64\*.dat" TargetPath="runtimes\tvossimulator-x64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'tvos-sim-arm64'">
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-sim-arm64\lib\libicui18n.a" TargetPath="runtimes\tvos-sim-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-sim-arm64\lib\libicuuc.a" TargetPath="runtimes\tvos-sim-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-sim-arm64\lib\libicudata.a" TargetPath="runtimes\tvos-sim-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-sim-arm64\include\**" TargetPath="runtimes\tvos-sim-arm64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-sim-arm64\*.dat" TargetPath="runtimes\tvos-sim-arm64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'tvossimulator-arm64'">
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-arm64\lib\libicui18n.a" TargetPath="runtimes\tvossimulator-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-arm64\lib\libicuuc.a" TargetPath="runtimes\tvossimulator-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-arm64\lib\libicudata.a" TargetPath="runtimes\tvossimulator-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-arm64\include\**" TargetPath="runtimes\tvossimulator-arm64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-arm64\*.dat" TargetPath="runtimes\tvossimulator-arm64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'tvos-arm64'">
