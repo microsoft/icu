@@ -1,6 +1,6 @@
 # Changelog
 
-## ICU 68.2.0.x
+## ICU 68.2.0.4
 #### Data changes:
 - Update number grouping separator for French locales. [#80](https://github.com/microsoft/icu/pull/80)
 - Picked up additional tzdata fixes. [#81](https://github.com/microsoft/icu/pull/81)
