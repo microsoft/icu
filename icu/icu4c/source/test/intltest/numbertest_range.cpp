@@ -139,13 +139,11 @@ void NumberRangeFormatterTest::testBasic() {
         u"≈5\u00A0degrés Fahrenheit",
         u"0–3\u00A0degrés Fahrenheit",
         u"≈0\u00A0degré Fahrenheit",
-        /* MSFT Change: Begin */
-        u"3–3\u00a0000\u00A0degrés Fahrenheit",
-        u"3\u00a0000–5\u00a0000\u00A0degrés Fahrenheit",
-        u"4\u00a0999–5\u00a0001\u00A0degrés Fahrenheit",
-        u"≈5\u00a0000\u00A0degrés Fahrenheit",
-        u"5\u00a0000–5\u00a0000\u00a0000\u00A0degrés Fahrenheit");
-        /* MSFT Change: End */
+        u"3–3\u202F000\u00A0degrés Fahrenheit",
+        u"3\u202F000–5\u202F000\u00A0degrés Fahrenheit",
+        u"4\u202F999–5\u202F001\u00A0degrés Fahrenheit",
+        u"≈5\u202F000\u00A0degrés Fahrenheit",
+        u"5\u202F000–5\u202F000\u202F000\u00A0degrés Fahrenheit");
 
     assertFormatRange(
         u"Locale with custom range separator",

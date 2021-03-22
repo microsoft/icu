@@ -1,9 +1,24 @@
 # Changelog
 
+## ICU 68.2.0.4
+#### Data changes:
+- Update number grouping separator for French locales. [#80](https://github.com/microsoft/icu/pull/80)
+- Picked up additional tzdata fixes. [#81](https://github.com/microsoft/icu/pull/81)
+
+#### Changes cherry-picked from upstream tickets/PRs:
+
+ICU-21041 Fix fuzzer memory read error.
+- https://unicode-org.atlassian.net/browse/ICU-21041
+- https://github.com/unicode-org/icu/pull/1622
+
+ICU-21537 Fix invalid free by long locale name
+- https://unicode-org.atlassian.net/browse/ICU-21537
+- https://github.com/unicode-org/icu/pull/1656
+
 ## ICU 68.2.0.3
 #### General changes:
-- Add support for prebuilt Linux ARM64 binaries in the MS-ICU Nuget package. (#70)
-- Picked up tzdata 2021a updates. (#76)
+- Add support for prebuilt Linux ARM64 binaries in the MS-ICU Nuget package. [#70](https://github.com/microsoft/icu/pull/70)
+- Picked up tzdata 2021a updates. [#76](https://github.com/microsoft/icu/pull/76)
 
 #### Changes cherry-picked from upstream tickets/PRs:
 
