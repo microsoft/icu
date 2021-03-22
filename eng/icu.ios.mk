@@ -1,4 +1,4 @@
-IOS_MIN_VERSION=8.0
+IOS_MIN_VERSION=10.0
 
 ### Delete this when https://github.com/dotnet/runtime/pull/49305 is merged ###
 ifeq ($(TARGET_ARCHITECTURE),x64)
