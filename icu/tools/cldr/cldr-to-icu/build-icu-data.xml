@@ -169,6 +169,14 @@
             <!-- Dogri does not have a suppress script. doi_Deva_IN in the locale name in NLS while doi_IN is the locale name in ICU. -->
             <forcedAlias source="doi_Deva_IN" target="doi_IN"/>
             <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
+            <forcedAlias source="ha_Latn" target="ha"/>
+            <!-- Hausa does not have a suppress script. ha_Latn_GH in the locale name in NLS while ha_GH is the locale name in ICU. -->
+            <forcedAlias source="ha_Latn_GH" target="ha_GH"/>
+            <!-- Hausa does not have a suppress script. ha_Latn_NE in the locale name in NLS while ha_NE is the locale name in ICU. -->
+            <forcedAlias source="ha_Latn_NE" target="ha_NE"/>
+            <!-- Hausa does not have a suppress script. ha_Latn_NG in the locale name in NLS while ha_NG is the locale name in ICU. -->
+            <forcedAlias source="ha_Latn_NG" target="ha_NG"/>
+            <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
             <forcedAlias source="iu_Cans" target="iu"/>
             <!-- Inuktitut does not have a suppress script. iu_Cans_CA is the locale name in NLS while iu_CA is the locale name in ICU. -->
             <forcedAlias source="iu_Cans_CA" target="iu_CA"/>
@@ -243,7 +251,7 @@
                 ga, gd, gl, gn, gsw, gu, guz, gv
 
                 // H
-                ha, haw, he, hi, hr, hsb, hu, hy
+                ha, ha_Latn, ha_Latn_GH, ha_Latn_NE, ha_Latn_NG, haw, he, hi, hr, hsb, hu, hy
 
                 // I
                 ia, ibb, id, ig, ii, in, in_ID, is, it, iu, iu_Cans_CA, iu_Latn, iw, iw_IL
