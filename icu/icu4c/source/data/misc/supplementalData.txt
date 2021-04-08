@@ -19541,6 +19541,13 @@ supplementalData:table(nofallback){
                 210,
             }
         }
+        029{
+            MeasurementSystem:int{1}
+            PaperSize:intvector{
+                279,
+                216,
+            }
+        }
         BS{
             MeasurementSystemCategory{
                 temperature:int{1}
