@@ -248,10 +248,15 @@ stages:
     name: Package ES CodeHub Lab E
   jobs:
   - job: CodeSignBits
-    timeoutInMinutes: 45
+    timeoutInMinutes: 60
     workspace:
       clean: all
-    
+    variables:
+      signingPattern: |
+        icudt*.dll
+        icuuc*.dll
+        icuin*.dll
+
     # This matrix strategy lets us code-sign the architectures in parallel.
     strategy:
       matrix:
@@ -302,15 +307,48 @@ stages:
         scanType: 'Register'
         failOnAlert: true
 
-    - task: PkgESCodeSign@10
-      displayName: 'CodeSign MS-ICU DLLs'
-      env:
-        SYSTEM_ACCESSTOKEN: $(system.accesstoken)
+    - task: EsrpCodeSigning@1
+      displayName: 'ESRP CodeSigning - CodeSign DLLs'
       inputs:
-        signConfigXml: 'build\nuget\SignConfig-ICU-Binaries-runtime.xml'
-        signTimeOut: 30
-        inPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
-        outPathRoot: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
+        ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
+        FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
+        Pattern: $(signingPattern)
+        UseMinimatch: true
+        signConfigType: 'inlineSignParams'
+        inlineOperation: |
+          [
+            {
+              "keyCode": "CP-230012",
+              "operationSetCode": "SigntoolSign",
+              "parameters": [
+                {
+                  "parameterName": "OpusName",
+                  "parameterValue": "Microsoft"
+                },
+                {
+                  "parameterName": "OpusInfo",
+                  "parameterValue": "http://www.microsoft.com"
+                },
+                {
+                  "parameterName": "PageHash",
+                  "parameterValue": "/NPH"
+                },
+                {
+                  "parameterName": "FileDigest",
+                  "parameterValue": "/fd sha256"
+                },
+                {
+                  "parameterName": "TimeStamp",
+                  "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+                }
+              ],
+              "toolName": "signtool.exe",
+              "toolVersion": "6.2.9304.0"
+            }
+          ]
+        SessionTimeout: '60'
+        MaxConcurrency: '50'
+        MaxRetryAttempts: '5'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: binaries signed'
@@ -330,7 +368,7 @@ stages:
 
   jobs:
   - job: CreateNugetAndCodeSign
-    timeoutInMinutes: 45
+    timeoutInMinutes: 60
     workspace:
       clean: all
     steps:
@@ -441,15 +479,34 @@ stages:
         scanType: 'Register'
         failOnAlert: true
 
-    - task: PkgESCodeSign@10
-      displayName: 'CodeSign MS-ICU Nuget'
-      env:
-          SYSTEM_ACCESSTOKEN: $(system.accesstoken)
+    - task: EsrpCodeSigning@1
       inputs:
-        signConfigXml: 'build\nuget\SignConfig-ICU-Nuget.xml'
-        signTimeOut: 30
-        inPathRoot: '$(BUILD.ArtifactStagingDirectory)\output\package'
-        outPathRoot: '$(BUILD.ArtifactStagingDirectory)\output\package'
+        ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
+        FolderPath: '$(BUILD.ArtifactStagingDirectory)\output\package'
+        Pattern: |
+          *.nupkg
+        UseMinimatch: true
+        signConfigType: 'inlineSignParams'
+        inlineOperation: |
+          [
+            {
+              "KeyCode" : "CP-401405",
+              "OperationCode" : "NuGetSign",
+              "Parameters" : {},
+              "ToolName" : "sign",
+              "ToolVersion" : "1.0"
+            },
+            {
+                "KeyCode" : "CP-401405",
+                "OperationCode" : "NuGetVerify",
+                "Parameters" : {},
+                "ToolName" : "sign",
+                "ToolVersion" : "1.0"
+            }
+          ]
+        SessionTimeout: '60'
+        MaxConcurrency: '50'
+        MaxRetryAttempts: '5'
       condition: and(succeeded(), eq(variables.codeSign, true))
 
     - task: PublishBuildArtifacts@1
