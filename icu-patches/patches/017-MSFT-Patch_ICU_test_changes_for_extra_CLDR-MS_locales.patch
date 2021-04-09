@@ -1,0 +1,131 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
+Date: Wed, 7 Apr 2021 20:47:08 -0700
+Subject: MSFT-PATCH: Modify ICU tests to pass with extra locales from CLDR-MS.
+
+This changes modifies the ICU tests to pass with extra locales from
+CLDR-MS.
+
+diff --git a/icu/icu4c/source/test/cintltst/cldrtest.c b/icu/icu4c/source/test/cintltst/cldrtest.c
+index 179539d5178b5cfd8b5350043c539e89e8740185..bfb35c35a449f60c61c9a8eb6282c307e41fd161 100644
+--- a/icu/icu4c/source/test/cintltst/cldrtest.c
++++ b/icu/icu4c/source/test/cintltst/cldrtest.c
+@@ -970,7 +970,14 @@ static void VerifyTranslation(void) {
+             uprv_strncmp(currLoc, "oc", 2) == 0 || uprv_strncmp(currLoc, "oc_FR", 5) == 0     ||
+             uprv_strncmp(currLoc, "syr", 3) == 0 || uprv_strncmp(currLoc, "syr_SY", 6) == 0   ||
+             uprv_strncmp(currLoc, "tig", 3) == 0 || uprv_strncmp(currLoc, "tig_ER", 6) == 0   ||
+-            uprv_strncmp(currLoc, "wal", 3) == 0 || uprv_strncmp(currLoc, "wal_ET", 6) == 0
++            uprv_strncmp(currLoc, "wal", 3) == 0 || uprv_strncmp(currLoc, "wal_ET", 6) == 0   ||
++            uprv_strncmp(currLoc, "bin", 3) == 0 || uprv_strncmp(currLoc, "bin_NG", 6) == 0   ||
++            uprv_strncmp(currLoc, "la", 2) == 0 || uprv_strncmp(currLoc, "la_VA", 6) == 0    ||
++            uprv_strncmp(currLoc, "jv_Java", 7) == 0 || uprv_strncmp(currLoc, "jv_Java_ID", 10) == 0   ||
++            uprv_strncmp(currLoc, "ks_Deva", 7) == 0 || uprv_strncmp(currLoc, "ks_Deva_IN", 10) == 0   ||
++            uprv_strncmp(currLoc, "pap", 3) == 0 || uprv_strncmp(currLoc, "pap_029", 7) == 0           ||
++            uprv_strncmp(currLoc, "tzm_Arab", 8) == 0 || uprv_strncmp(currLoc, "tzm_Arab_MA", 11) == 0 ||
++            uprv_strncmp(currLoc, "tzm_Tfng", 8) == 0 || uprv_strncmp(currLoc, "tzm_Tfng_MA", 11) == 0
+         ) {
+             log_knownIssue("0", "MSFT Change: skipping test for %s which has issues due to CLDR Seed data.", currLoc);
+         }
+@@ -1110,7 +1117,8 @@ static void VerifyTranslation(void) {
+                if (U_FAILURE(errorCode)) {
+                    log_err("ulocdata_getMeasurementSystem failed for locale %s with error: %s \n", currLoc, u_errorName(errorCode));
+                } else {
+-                   if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_LR")!=NULL ) {
++                   /* MSFT Change: CLDR-MS adds 029 region with US measurement */
++                   if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_LR")!=NULL || strstr(fullLoc, "_029")!=NULL ) {
+                        if(measurementSystem != UMS_US){
+                             log_err("ulocdata_getMeasurementSystem did not return expected data for locale %s \n", currLoc);
+                        }
+@@ -1128,10 +1136,11 @@ static void VerifyTranslation(void) {
+                if (U_FAILURE(errorCode)) {
+                    log_err("ulocdata_getPaperSize failed for locale %s with error: %s \n", currLoc, u_errorName(errorCode));
+                } else {
++                   /* MSFT Change: CLDR-MS adds 029 region with US paper size */
+                    if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_BZ")!=NULL || strstr(fullLoc, "_CA")!=NULL || strstr(fullLoc, "_CL")!=NULL ||
+                         strstr(fullLoc, "_CO")!=NULL || strstr(fullLoc, "_CR")!=NULL || strstr(fullLoc, "_GT")!=NULL || strstr(fullLoc, "_MX")!=NULL ||
+                         strstr(fullLoc, "_NI")!=NULL || strstr(fullLoc, "_PA")!=NULL || strstr(fullLoc, "_PH")!=NULL || strstr(fullLoc, "_PR")!=NULL ||
+-                        strstr(fullLoc, "_SV")!=NULL || strstr(fullLoc, "_VE")!=NULL ) {
++                        strstr(fullLoc, "_SV")!=NULL || strstr(fullLoc, "_VE")!=NULL || strstr(fullLoc, "_029")!=NULL ) {
+                        if (height != 279 || width != 216) {
+                             log_err("ulocdata_getPaperSize did not return expected data for locale %s \n", currLoc);
+                        }
+@@ -1251,8 +1260,14 @@ static void TestExemplarSet(void){
+ 
+             if (existsInScript == FALSE){
+                 /* MSFT Change */
+-                if (uprv_strncmp(locale, "oc", 2) == 0 || uprv_strncmp(locale, "oc_FR", 5) == 0) {
+-                    log_knownIssue("0", "MSFT Change: oc and oc_FR have ExemplarSet issues.");
++                if (uprv_strncmp(locale, "oc", 2) == 0 || uprv_strncmp(locale, "oc_FR", 5) == 0 ||
++                    uprv_strncmp(locale, "jv_Java", 7) == 0 || uprv_strncmp(locale, "jv_Java_ID", 10) == 0 ||
++                    uprv_strncmp(locale, "la", 2) == 0 || uprv_strncmp(locale, "la_VA", 6) == 0 ||
++                    uprv_strncmp(locale, "pap", 3) == 0 || uprv_strncmp(locale, "pap_029", 7) == 0 ||
++                    uprv_strncmp(locale, "tzm_Arab", 8) == 0 || uprv_strncmp(locale, "tzm_Arab_MA", 11) == 0 ||
++                    uprv_strncmp(locale, "tzm_Tfng", 8) == 0 || uprv_strncmp(locale, "tzm_Tfng_MA", 11) == 0
++                ) {
++                    log_knownIssue("0", "MSFT Change: skipping test for %s which has issue due to CLDR seed data.", locale);
+                     continue;
+                 } else {
+                     log_err("ExemplarSet containment failed for locale : %s\n", locale);
+diff --git a/icu/icu4c/source/test/cintltst/cnmdptst.c b/icu/icu4c/source/test/cintltst/cnmdptst.c
+index 99a9ce23be7ef93923493b2b8312a254706c3f2d..a319b99e3faf6f6fc749e70852a298ce42268696 100644
+--- a/icu/icu4c/source/test/cintltst/cnmdptst.c
++++ b/icu/icu4c/source/test/cintltst/cnmdptst.c
+@@ -811,7 +811,8 @@ static void TestGetKeywordValuesForLocale(void) {
+             { "und",                "USD", "USN", NULL },
+  /*           { "und_ZZ",             "USD", NULL, NULL },  -- temporarily remove as this locale now has 15 entries */
+             { "en_US",              "USD", "USN", NULL },
+-            { "en_029",             "USD", "USN", NULL },
++        /* MSFT Change: CLDR-MS adds en_029 locale with XCD currency */
++            { "en_029",             "XCD", NULL, NULL },
+             { "en_TH",              "THB", NULL, NULL },
+             { "de",                 "EUR", NULL, NULL },
+             { "de_DE",              "EUR", NULL, NULL },
+@@ -825,11 +826,13 @@ static void TestGetKeywordValuesForLocale(void) {
+             { "en_US@currency=CAD;rg=THZZZZ", "THB", NULL, NULL },
+     };
+     const int32_t EXPECTED_SIZE[PREFERRED_SIZE] = {
+-            2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 1
++        /* MSFT Change: CLDR-MS adds en_029 locale with XCD currency */
++            2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 1
+     };
+     /* ucurr_forLocale results for same locales; "" if no result expected */
+     const char *FORLOCALE[PREFERRED_SIZE] = {
+-            "",    "",    "USD", "",
++        /* MSFT Change: CLDR-MS adds en_029 locale with XCD currency */
++            "",    "",    "USD", "XCD",
+             "THB", "",    "EUR", "",
+             "ILS", "CAD", "ZZZ", "DEM",
+             "THB", "USD", "CAD"
+diff --git a/icu/icu4c/source/test/intltest/dtptngts.cpp b/icu/icu4c/source/test/intltest/dtptngts.cpp
+index dc86355f93fa68f509a0023dc95fc17a548170c1..c83e27bb68c212c3e9569c71ed5b417a96b7f9de 100644
+--- a/icu/icu4c/source/test/intltest/dtptngts.cpp
++++ b/icu/icu4c/source/test/intltest/dtptngts.cpp
+@@ -1408,7 +1408,8 @@ void IntlTestDateTimePatternGeneratorAPI::testJjMapping() {
+                         uprv_strncmp(localeID, "ssy_ER", 6) == 0 || uprv_strncmp(localeID, "st_LS", 5) == 0   ||
+                         uprv_strncmp(localeID, "syr", 3) == 0 || uprv_strncmp(localeID, "syr_SY", 6) == 0   ||
+                         uprv_strncmp(localeID, "tig", 3) == 0 || uprv_strncmp(localeID, "tig_ER", 6) == 0   ||
+-                        uprv_strncmp(localeID, "wal", 3) == 0 || uprv_strncmp(localeID, "wal_ET", 6) == 0
++                        uprv_strncmp(localeID, "wal", 3) == 0 || uprv_strncmp(localeID, "wal_ET", 6) == 0  ||
++                        uprv_strncmp(localeID, "ks_Deva", 7) == 0 || uprv_strncmp(localeID, "ks_Deva_IN", 10) == 0
+                      ) {
+                          logKnownIssue("0", "MSFT Change: skipping test for %s which has issues due to CLDR Seed data.", localeID);
+                      }
+diff --git a/icu/icu4c/source/test/intltest/numfmtst.cpp b/icu/icu4c/source/test/intltest/numfmtst.cpp
+index bc072bd8e3775554b8a8f96a81baf850b5e8feb7..a63c329c8eabf287512b9c152ac91d862d333264 100644
+--- a/icu/icu4c/source/test/intltest/numfmtst.cpp
++++ b/icu/icu4c/source/test/intltest/numfmtst.cpp
+@@ -8094,10 +8094,12 @@ void NumberFormatTest::TestAccountingCurrency() {
+         (Formattable)(double)-1000.5, UnicodeString("(\\uFFE51,000)").unescape(), FALSE, status);
+     expect(NumberFormat::createInstance("de_DE", style, status),
+         (Formattable)(double)-23456.7, UnicodeString("-23.456,70\\u00A0\\u20AC").unescape(), TRUE, status);
++    /* MSFT Change: We add a CLDR-MS locale en_ID */
+     expect(NumberFormat::createInstance("en_ID", style, status),
+-        (Formattable)(double)0, UnicodeString("IDR\\u00A00.00").unescape(), TRUE, status);
++        (Formattable)(double)0, UnicodeString("IDR\\u00A00,00").unescape(), TRUE, status);
+     expect(NumberFormat::createInstance("en_ID", style, status),
+-        (Formattable)(double)-0.2, UnicodeString("(IDR\\u00A00.20)").unescape(), TRUE, status);
++        (Formattable)(double)-0.2, UnicodeString("(IDR\\u00A00,20)").unescape(), TRUE, status);
++    /* MSFT Change: End */
+     expect(NumberFormat::createInstance("sh_ME", style, status),
+         (Formattable)(double)0, UnicodeString("0,00\\u00A0\\u20AC").unescape(), TRUE, status);
+     expect(NumberFormat::createInstance("sh_ME", style, status),

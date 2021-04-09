@@ -102,7 +102,7 @@ en{
         bho{"Bhojpuri"}
         bi{"Bislama"}
         bik{"Bikol"}
-        bin{"Bini"}
+        bin{"Edo"}
         bjn{"Banjar"}
         bkm{"Kom"}
         bla{"Siksika"}

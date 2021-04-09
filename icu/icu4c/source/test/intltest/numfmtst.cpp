@@ -8094,10 +8094,12 @@ void NumberFormatTest::TestAccountingCurrency() {
         (Formattable)(double)-1000.5, UnicodeString("(\\uFFE51,000)").unescape(), FALSE, status);
     expect(NumberFormat::createInstance("de_DE", style, status),
         (Formattable)(double)-23456.7, UnicodeString("-23.456,70\\u00A0\\u20AC").unescape(), TRUE, status);
+    /* MSFT Change: We add a CLDR-MS locale en_ID */
     expect(NumberFormat::createInstance("en_ID", style, status),
-        (Formattable)(double)0, UnicodeString("IDR\\u00A00.00").unescape(), TRUE, status);
+        (Formattable)(double)0, UnicodeString("IDR\\u00A00,00").unescape(), TRUE, status);
     expect(NumberFormat::createInstance("en_ID", style, status),
-        (Formattable)(double)-0.2, UnicodeString("(IDR\\u00A00.20)").unescape(), TRUE, status);
+        (Formattable)(double)-0.2, UnicodeString("(IDR\\u00A00,20)").unescape(), TRUE, status);
+    /* MSFT Change: End */
     expect(NumberFormat::createInstance("sh_ME", style, status),
         (Formattable)(double)0, UnicodeString("0,00\\u00A0\\u20AC").unescape(), TRUE, status);
     expect(NumberFormat::createInstance("sh_ME", style, status),

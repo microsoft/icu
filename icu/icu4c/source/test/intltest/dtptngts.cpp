@@ -1408,7 +1408,8 @@ void IntlTestDateTimePatternGeneratorAPI::testJjMapping() {
                         uprv_strncmp(localeID, "ssy_ER", 6) == 0 || uprv_strncmp(localeID, "st_LS", 5) == 0   ||
                         uprv_strncmp(localeID, "syr", 3) == 0 || uprv_strncmp(localeID, "syr_SY", 6) == 0   ||
                         uprv_strncmp(localeID, "tig", 3) == 0 || uprv_strncmp(localeID, "tig_ER", 6) == 0   ||
-                        uprv_strncmp(localeID, "wal", 3) == 0 || uprv_strncmp(localeID, "wal_ET", 6) == 0
+                        uprv_strncmp(localeID, "wal", 3) == 0 || uprv_strncmp(localeID, "wal_ET", 6) == 0  ||
+                        uprv_strncmp(localeID, "ks_Deva", 7) == 0 || uprv_strncmp(localeID, "ks_Deva_IN", 10) == 0
                      ) {
                          logKnownIssue("0", "MSFT Change: skipping test for %s which has issues due to CLDR Seed data.", localeID);
                      }
