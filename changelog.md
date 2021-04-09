@@ -1,10 +1,17 @@
 # Changelog
 
+## ICU 68.2.0.5
+#### Data changes:
+- Add extra locales from CLDR-MS based on NLS "MS-Only" culture data. [#91](https://github.com/microsoft/icu/pull/91)
+- Update ff-Latn-MR region name. [#88](https://github.com/microsoft/icu/pull/88)
+
+#### Misc changes:
+- Update guava from 27.0-jre to 30.0-jre [#87](https://github.com/microsoft/icu/pull/87)
+
 ## ICU 68.2.0.4
 #### Data changes:
 - Update number grouping separator for French locales. [#80](https://github.com/microsoft/icu/pull/80)
 - Picked up additional tzdata fixes. [#81](https://github.com/microsoft/icu/pull/81)
-
 #### Changes cherry-picked from upstream tickets/PRs:
 
 ICU-21041 Fix fuzzer memory read error.
