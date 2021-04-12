@@ -516,20 +516,20 @@ stages:
         ArtifactName: 'Nuget_Packages'
 
     # Publish the Windows Symbols to the public symbols server
-    - task: PublishSymbols@2
-      displayName: 'Publish Windows Symbols'
-      inputs:
-        symbolsFolder: '$(Build.BINARIESDIRECTORY)\symbols'
-        searchPattern: '**/*.pdb'
-        IndexSources: false
-        SymbolsMaximumWaitTime: 30
-        SymbolServerType: 'TeamServices'
-        SymbolsProduct: 'MS-ICU Nuget Windows binaries'
-        SymbolsVersion: '$(ICUVersion)'
-      condition: and(succeeded(), eq(variables.codeSign, true))
-      env:
-        ArtifactServices_Symbol_AccountName: microsoftpublicsymbols
-        ArtifactServices_Symbol_UseAAD: true
+    # - task: PublishSymbols@2
+    #   displayName: 'Publish Windows Symbols'
+    #   inputs:
+    #     symbolsFolder: '$(Build.BINARIESDIRECTORY)\symbols'
+    #     searchPattern: '**/*.pdb'
+    #     IndexSources: false
+    #     SymbolsMaximumWaitTime: 30
+    #     SymbolServerType: 'TeamServices'
+    #     SymbolsProduct: 'MS-ICU Nuget Windows binaries'
+    #     SymbolsVersion: '$(ICUVersion)'
+    #   condition: and(succeeded(), eq(variables.codeSign, true))
+    #   env:
+    #     ArtifactServices_Symbol_AccountName: microsoftpublicsymbols
+    #     ArtifactServices_Symbol_UseAAD: true
 
     - task: PkgESSerializeForPostBuild@10
       displayName: 'PkgES Post Build Serialization'
