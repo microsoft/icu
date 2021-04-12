@@ -15,9 +15,9 @@ XCODE_DEVELOPER := $(shell xcode-select --print-path)
 XCODE_SDK := $(shell xcodebuild -version -sdk $(TVOS_SDK) | grep -E '^Path' | sed 's/Path: //')
 
 CONFIGURE_COMPILER_FLAGS += \
-	CFLAGS="-Oz -fno-exceptions -Wno-sign-compare $(ICU_DEFINES) -isysroot $(XCODE_SDK) -I$(XCODE_SDK)/usr/include/ -arch $(TVOS_ARCH) -mappletvsimulator-version-min=$(TVOS_MIN_VERSION)" \
-	CXXFLAGS="-Oz -fno-exceptions -Wno-sign-compare $(ICU_DEFINES) -isysroot $(XCODE_SDK) -I$(XCODE_SDK)/usr/include/ -I./include/ -arch $(TVOS_ARCH) -mappletvsimulator-version-min=$(TVOS_MIN_VERSION)" \
-	LDFLAGS="-L$(XCODE_SDK)/usr/lib/ -isysroot $(XCODE_SDK) -mappletvos-version-min=$(TVOS_MIN_VERSION)" \
+	CFLAGS="-fembed-bitcode -Oz -fno-exceptions -Wno-sign-compare $(ICU_DEFINES) -isysroot $(XCODE_SDK) -I$(XCODE_SDK)/usr/include/ -arch $(TVOS_ARCH) -mappletvsimulator-version-min=$(TVOS_MIN_VERSION)" \
+	CXXFLAGS="-fembed-bitcode -Oz -fno-exceptions -Wno-sign-compare $(ICU_DEFINES) -isysroot $(XCODE_SDK) -I$(XCODE_SDK)/usr/include/ -I./include/ -arch $(TVOS_ARCH) -mappletvsimulator-version-min=$(TVOS_MIN_VERSION)" \
+	LDFLAGS="-fembed-bitcode -L$(XCODE_SDK)/usr/lib/ -isysroot $(XCODE_SDK) -mappletvsimulator-version-min=$(TVOS_MIN_VERSION)" \
 	CC="$(XCODE_DEVELOPER)/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang" \
 	CXX="$(XCODE_DEVELOPER)/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++"
 
