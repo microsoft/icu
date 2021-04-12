@@ -6,6 +6,6 @@
     <PreReleaseVersionIteration>4</PreReleaseVersionIteration>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftDotNetBuildTasksPackagingVersion>6.0.0-beta.21203.1</MicrosoftDotNetBuildTasksPackagingVersion>
+    <MicrosoftDotNetBuildTasksPackagingVersion>6.0.0-beta.21209.17</MicrosoftDotNetBuildTasksPackagingVersion>
   </PropertyGroup>
 </Project>
