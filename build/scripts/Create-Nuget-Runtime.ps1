@@ -108,9 +108,6 @@ foreach ($rid in $runtimeIdentifiers)
         if (Test-Path "$dllInput\bin" -PathType Container) {
             $dllInput = "$dllInput\bin"
         }
-        if ($codesign -eq 'true') {
-            $dllInput = "$dllInput\signed"
-        }
         $dllOutput = "$stagingLocation\runtimes\$rid\native"
         Copy-Item "$dllInput\*.dll" -Destination $dllOutput -Recurse
     }
