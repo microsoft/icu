@@ -346,8 +346,8 @@ stages:
               "toolVersion": "6.2.9304.0"
             }
           ]
-        SessionTimeout: '60'
-        MaxConcurrency: '50'
+        SessionTimeout: '30'
+        MaxConcurrency: '20'
         MaxRetryAttempts: '5'
 
     - task: PublishBuildArtifacts@1
@@ -504,8 +504,8 @@ stages:
                 "ToolVersion" : "1.0"
             }
           ]
-        SessionTimeout: '60'
-        MaxConcurrency: '50'
+        SessionTimeout: '30'
+        MaxConcurrency: '20'
         MaxRetryAttempts: '5'
       condition: and(succeeded(), eq(variables.codeSign, true))
 
