@@ -271,12 +271,6 @@ stages:
     - checkout: self
       lfs: true
       fetchDepth: 1
-    - task: PkgESSetupBuild@10
-      displayName: 'PkgES Setup Build'
-      inputs:
-        useDfs: false
-        productName: 'ms-icu-nuget'
-        disableOutputRedirect: true
 
     - task: PowerShell@2
       displayName: 'Set Version'
@@ -343,7 +337,6 @@ stages:
                 }
               ],
               "toolName": "signtool.exe",
-              "toolVersion": "6.2.9304.0"
             }
           ]
         SessionTimeout: '30'
@@ -356,7 +349,7 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
         ArtifactName: 'win-$(BuildPlatform)'
 
-- stage: Nuget
+- stage: CreateNuget
   dependsOn:
   - Build
   - CodeSignBinaries
@@ -368,21 +361,13 @@ stages:
 
   jobs:
   - job: CreateNugetAndCodeSign
-    timeoutInMinutes: 60
+    timeoutInMinutes: 30
     workspace:
       clean: all
     steps:
     - checkout: self
       lfs: true
       fetchDepth: 1
-
-    - task: PkgESSetupBuild@10
-      displayName: 'PkgES Setup Build'
-      inputs:
-        useDfs: false
-        productName: 'ms-icu-nuget'
-        disableOutputRedirect: true
-      condition: and(succeeded(), eq(variables.codeSign, true))
 
     - task: PowerShell@2
       displayName: 'Set Version'
@@ -472,6 +457,55 @@ stages:
         Tree /F /A $(BUILD.ArtifactStagingDirectory)
       displayName: 'DIAG: dir'
 
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish: Nuget Packages'
+      inputs:
+        PathtoPublish: '$(BUILD.ArtifactStagingDirectory)\output\package'
+        ArtifactName: 'Nuget_Packages'
+
+- stage: CodeSignNuget
+  dependsOn:
+  - Build
+  - CodeSignBinaries
+  - CreateNuget
+  condition: and(eq(variables.codeSign, true), and(in(dependencies.Build.result, 'Succeeded'), in(dependencies.CodeSignBinaries.result, 'Succeeded', 'Skipped')))
+  pool:
+    name: Package ES CodeHub Lab E
+  variables:
+    BuildPlatform: AnyCPU
+
+  jobs:
+  - job: CreateNugetAndCodeSign
+    timeoutInMinutes: 60
+    workspace:
+      clean: all
+    steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+
+    - task: PowerShell@2
+      displayName: 'Set Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+
+    - task: NuGetToolInstaller@1
+      displayName: 'Install NuGet'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download Nuget'
+      inputs:
+        artifactName: 'Nuget_Packages'
+        downloadPath: '$(BUILD.ArtifactStagingDirectory)\nuget'
+
+    - powershell: |
+        Write-Host ""
+        Write-Host "$(BUILD.ArtifactStagingDirectory)"
+        Tree /F /A $(BUILD.ArtifactStagingDirectory)
+      displayName: 'DIAG: dir'
+    
     - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
       displayName: 'Component Governance Detection'
       inputs:
@@ -482,7 +516,7 @@ stages:
     - task: EsrpCodeSigning@1
       inputs:
         ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
-        FolderPath: '$(BUILD.ArtifactStagingDirectory)\output\package'
+        FolderPath: '$(BUILD.ArtifactStagingDirectory)\nuget\Nuget_Packages'
         Pattern: |
           *.nupkg
         UseMinimatch: true
@@ -507,13 +541,18 @@ stages:
         SessionTimeout: '30'
         MaxConcurrency: '20'
         MaxRetryAttempts: '5'
-      condition: and(succeeded(), eq(variables.codeSign, true))
-
+    
+    - powershell: |
+        Write-Host ""
+        Write-Host "$(BUILD.ArtifactStagingDirectory)"
+        Tree /F /A $(BUILD.ArtifactStagingDirectory)
+      displayName: 'DIAG: dir'
+    
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: Nuget Packages'
       inputs:
-        PathtoPublish: '$(BUILD.ArtifactStagingDirectory)\output\package'
-        ArtifactName: 'Nuget_Packages'
+        PathtoPublish: '$(BUILD.ArtifactStagingDirectory)\nuget\Nuget_Packages'
+        ArtifactName: 'Nuget_Packages_Signed'
 
     # Publish the Windows Symbols to the public symbols server
     - task: PublishSymbols@2
@@ -530,15 +569,3 @@ stages:
       env:
         ArtifactServices_Symbol_AccountName: microsoftpublicsymbols
         ArtifactServices_Symbol_UseAAD: true
-
-    - task: PkgESSerializeForPostBuild@10
-      displayName: 'PkgES Post Build Serialization'
-      continueOnError: true
-      condition: and(succeeded(), eq(variables.codeSign, true))
-
-    - task: PkgESLateTasks@10
-      displayName: 'PkgES Finalize and Cleanup'
-      inputs:
-        enablePostBuild: false
-        enableLatest: false
-      condition: and(succeeded(), eq(variables.codeSign, true))
