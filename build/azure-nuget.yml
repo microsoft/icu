@@ -353,6 +353,7 @@ stages:
   dependsOn:
   - Build
   - CodeSignBinaries
+  # This stage needs to depend on CodeSignBinaries for the Release-Nuget pipeline, but it will be skipped in the CI-Nuget pipeline.
   condition: and(in(dependencies.Build.result, 'Succeeded'), in(dependencies.CodeSignBinaries.result, 'Succeeded', 'Skipped'))
   pool:
     name: Package ES CodeHub Lab E
@@ -360,7 +361,7 @@ stages:
     BuildPlatform: AnyCPU
 
   jobs:
-  - job: CreateNugetAndCodeSign
+  - job: CreateNugetJob
     timeoutInMinutes: 30
     workspace:
       clean: all
@@ -468,14 +469,14 @@ stages:
   - Build
   - CodeSignBinaries
   - CreateNuget
-  condition: and(eq(variables.codeSign, true), and(in(dependencies.Build.result, 'Succeeded'), in(dependencies.CodeSignBinaries.result, 'Succeeded', 'Skipped')))
+  condition: and(eq(variables.codeSign, true), and(in(dependencies.CodeSignBinaries.result, 'Succeeded'), in(dependencies.CreateNuget.result, 'Succeeded')))
   pool:
     name: Package ES CodeHub Lab E
   variables:
     BuildPlatform: AnyCPU
 
   jobs:
-  - job: CreateNugetAndCodeSign
+  - job: CodeSignNugetJob
     timeoutInMinutes: 60
     workspace:
       clean: all
