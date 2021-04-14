@@ -245,7 +245,8 @@ stages:
   condition: and(succeeded(), eq(variables.codeSign, true))
   dependsOn: Build
   pool:
-    name: Package ES CodeHub Lab E
+    name: Azure Pipelines
+    vmImage: 'windows-2019'
   jobs:
   - job: CodeSignBits
     timeoutInMinutes: 60
@@ -356,7 +357,8 @@ stages:
   # This stage needs to depend on CodeSignBinaries for the Release-Nuget pipeline, but it will be skipped in the CI-Nuget pipeline.
   condition: and(in(dependencies.Build.result, 'Succeeded'), in(dependencies.CodeSignBinaries.result, 'Succeeded', 'Skipped'))
   pool:
-    name: Package ES CodeHub Lab E
+    name: Azure Pipelines
+    vmImage: 'windows-2019'
   variables:
     BuildPlatform: AnyCPU
 
@@ -471,7 +473,8 @@ stages:
   - CreateNuget
   condition: and(eq(variables.codeSign, true), and(in(dependencies.CodeSignBinaries.result, 'Succeeded'), in(dependencies.CreateNuget.result, 'Succeeded')))
   pool:
-    name: Package ES CodeHub Lab E
+    name: Azure Pipelines
+    vmImage: 'windows-2019'
   variables:
     BuildPlatform: AnyCPU
 
