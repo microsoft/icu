@@ -1,4 +1,13 @@
 # Changelog
+## ICU 68.2.0.6
+#### Misc changes:
+- Migration to ESRP Code Signing from PackageES Code Signing. [#93](https://github.com/microsoft/icu/pull/93)
+- Add Valgrind to CI build pipeline. [#95](https://github.com/microsoft/icu/pull/95)
+
+#### Changes cherry-picked from upstream tickets/PRs:
+ICU-21587 Fix memory bug w/ baseName
+- https://unicode-org.atlassian.net/browse/ICU-21587
+- https://github.com/unicode-org/icu/pull/1698
 
 ## ICU 68.2.0.5
 #### Data changes:
