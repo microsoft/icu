@@ -3,10 +3,7 @@
 # no PR triggers
 pr: none
 
-# We need to set the version for the PackageES builds.
-name: $(BuildDefinitionName)-$(date:yyMM).$(date:dd)$(rev:rrr)
-
-# Code signing only runs on the MSCodeHub build pipeline.
+# Note: Code signing is only enabled for the manually triggered build pipeline in MSCodeHub.
 variables:
   codeSign: ${{ eq(variables['System.definitionId'], '1386') }}
   BuildConfiguration: 'Release'
