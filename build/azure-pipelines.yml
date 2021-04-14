@@ -415,26 +415,26 @@ jobs:
       displayName: 'Install valgrind'
       timeoutInMinutes: 5
     - script: |
-        cd icu4c/source && ./runConfigureICU --enable-debug Linux --disable-renaming && make -j2 tests
+        cd icu/icu4c/source && ./runConfigureICU --enable-debug Linux --disable-renaming && make -j2 tests
       displayName: 'Build'
       timeoutInMinutes: 10
       env:
         CC: clang
         CXX: clang++
     - script: |
-        cd icu4c/source/test/intltest && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./intltest
+        cd icu/icu4c/source/test/intltest && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./intltest
       displayName: 'Valgrind intltest'
       timeoutInMinutes: 45
     - script: |
-        cd icu4c/source/test/cintltst && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./cintltst
+        cd icu/icu4c/source/test/cintltst && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./cintltst
       displayName: 'Valgrind cintltst'
       timeoutInMinutes: 15
     - script: |
-        cd icu4c/source/test/iotest && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./iotest
+        cd icu/icu4c/source/test/iotest && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./iotest
       displayName: 'Valgrind iotest'
       timeoutInMinutes: 5
     - script: |
-        cd icu4c/source/tools/icuinfo && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./icuinfo
+        cd icu/icu4c/source/tools/icuinfo && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./icuinfo
       displayName: 'Valgrind icuinfo'
       timeoutInMinutes: 5
 #-------------------------------------------------------------------------
