@@ -451,8 +451,7 @@ stages:
   - CreateNuget
   condition: and(eq(variables.codeSign, true), and(in(dependencies.CodeSignBinaries.result, 'Succeeded'), in(dependencies.CreateNuget.result, 'Succeeded')))
   pool:
-    name: Azure Pipelines
-    vmImage: 'windows-2019'
+    name: Package ES CodeHub Lab E
   variables:
     BuildPlatform: AnyCPU
 
