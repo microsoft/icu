@@ -1,0 +1,46 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+en_ID{
+    NumberElements{
+        latn{
+            symbols{
+                decimal{","}
+                group{"."}
+            }
+        }
+    }
+    calendar{
+        gregorian{
+            DateTimePatterns{
+                "HH:mm:ss zzzz",
+                "HH:mm:ss z",
+                "HH:mm:ss",
+                "HH:mm",
+                "EEEE, dd MMMM y",
+                "dd MMMM y",
+                "d MMM y",
+                "dd/MM/y",
+                "{1}, {0}",
+                "{1} 'at' {0}",
+                "{1} 'at' {0}",
+                "{1}, {0}",
+                "{1}, {0}",
+            }
+            availableFormats{
+                Hm{"H:mm"}
+                Hms{"H:mm:ss"}
+                MMMEd{"E, dd MMM"}
+                MMMMd{"dd MMMM"}
+            }
+            dayPeriod{
+                stand-alone{
+                    narrow{
+                        am{"AM"}
+                        pm{"PM"}
+                    }
+                }
+            }
+        }
+    }
+}

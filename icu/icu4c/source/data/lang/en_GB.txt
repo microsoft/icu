@@ -4,6 +4,7 @@
 en_GB{
     %%Parent{"en_001"}
     Languages{
+        bin{"Bini"}
         bm{"Bambara"}
         ii{"Sichuan Yi"}
         nso{"Northern Sotho"}

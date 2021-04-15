@@ -1,10 +1,26 @@
 # Changelog
+## ICU 68.2.0.6
+#### Misc changes:
+- Migration to ESRP Code Signing from PackageES Code Signing. [#93](https://github.com/microsoft/icu/pull/93)
+- Add Valgrind to CI build pipeline. [#95](https://github.com/microsoft/icu/pull/95)
+
+#### Changes cherry-picked from upstream tickets/PRs:
+ICU-21587 Fix memory bug w/ baseName
+- https://unicode-org.atlassian.net/browse/ICU-21587
+- https://github.com/unicode-org/icu/pull/1698
+
+## ICU 68.2.0.5
+#### Data changes:
+- Add extra locales from CLDR-MS based on NLS "MS-Only" culture data. [#91](https://github.com/microsoft/icu/pull/91)
+- Update ff-Latn-MR region name. [#88](https://github.com/microsoft/icu/pull/88)
+
+#### Misc changes:
+- Update guava from 27.0-jre to 30.0-jre [#87](https://github.com/microsoft/icu/pull/87)
 
 ## ICU 68.2.0.4
 #### Data changes:
 - Update number grouping separator for French locales. [#80](https://github.com/microsoft/icu/pull/80)
 - Picked up additional tzdata fixes. [#81](https://github.com/microsoft/icu/pull/81)
-
 #### Changes cherry-picked from upstream tickets/PRs:
 
 ICU-21041 Fix fuzzer memory read error.

@@ -1,0 +1,19 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
+Date: Wed, 7 Apr 2021 20:47:31 -0700
+Subject: MSFT-PATCH: Increase the STRING_STORE_SIZE due to extra locales from CLDR-MS
+
+
+diff --git a/icu/icu4c/source/tools/toolutil/package.h b/icu/icu4c/source/tools/toolutil/package.h
+index ea60c13a74a57b94057882e39b6aa05314c4ca1f..6c411ae5fd04c8463a089307efc056f4d2f622f9 100644
+--- a/icu/icu4c/source/tools/toolutil/package.h
++++ b/icu/icu4c/source/tools/toolutil/package.h
+@@ -27,7 +27,7 @@
+ 
+ // .dat package file representation ---------------------------------------- ***
+ 
+-#define STRING_STORE_SIZE 100000
++#define STRING_STORE_SIZE 120000
+ #define MAX_PKG_NAME_LENGTH 64
+ 
+ typedef void CheckDependency(void *context, const char *itemName, const char *targetName);
