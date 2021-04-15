@@ -416,25 +416,6 @@ stages:
         artifactName: 'linux-arm64'
         downloadPath: '$(Build.BINARIESDIRECTORY)\bits'
 
-    # Symbols (PDBs)
-    - task: DownloadBuildArtifacts@0
-      displayName: 'Download symbols-win-x86'
-      inputs:
-        artifactName: 'symbols-win-x86'
-        downloadPath: '$(Build.BINARIESDIRECTORY)\symbols'
-
-    - task: DownloadBuildArtifacts@0
-      displayName: 'Download symbols-win-x64'
-      inputs:
-        artifactName: 'symbols-win-x64'
-        downloadPath: '$(Build.BINARIESDIRECTORY)\symbols'
-
-    - task: DownloadBuildArtifacts@0
-      displayName: 'Download symbols-win-ARM64'
-      inputs:
-        artifactName: 'symbols-win-ARM64'
-        downloadPath: '$(Build.BINARIESDIRECTORY)\symbols'
-
     - powershell: |
         Write-Host ""
         Write-Host "$(BUILD.BINARIESDIRECTORY)"
@@ -470,8 +451,7 @@ stages:
   - CreateNuget
   condition: and(eq(variables.codeSign, true), and(in(dependencies.CodeSignBinaries.result, 'Succeeded'), in(dependencies.CreateNuget.result, 'Succeeded')))
   pool:
-    name: Azure Pipelines
-    vmImage: 'windows-2019'
+    name: Package ES CodeHub Lab E
   variables:
     BuildPlatform: AnyCPU
 
@@ -554,6 +534,31 @@ stages:
       inputs:
         PathtoPublish: '$(BUILD.ArtifactStagingDirectory)\nuget\Nuget_Packages'
         ArtifactName: 'Nuget_Packages_Signed'
+
+    # Symbols (PDBs)
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download symbols-win-x86'
+      inputs:
+        artifactName: 'symbols-win-x86'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\symbols'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download symbols-win-x64'
+      inputs:
+        artifactName: 'symbols-win-x64'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\symbols'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download symbols-win-ARM64'
+      inputs:
+        artifactName: 'symbols-win-ARM64'
+        downloadPath: '$(Build.BINARIESDIRECTORY)\symbols'
+    
+    - powershell: |
+        Write-Host ""
+        Write-Host "$(BUILD.BINARIESDIRECTORY)"
+        Tree /F /A $(BUILD.BINARIESDIRECTORY)
+      displayName: 'DIAG: dir'
 
     # Publish the Windows Symbols to the public symbols server
     - task: PublishSymbols@2
