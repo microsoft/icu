@@ -74,24 +74,6 @@
   </ItemGroup>
 
   <!-- iOS -->
-  <!-- Delete this entry when https://github.com/dotnet/runtime/pull/49305 is merged -->
-  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'ios-x64'">
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x64\lib\libicui18n.a" TargetPath="runtimes\ios-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x64\lib\libicuuc.a" TargetPath="runtimes\ios-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x64\lib\libicudata.a" TargetPath="runtimes\ios-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x64\include\**" TargetPath="runtimes\ios-x64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x64\*.dat" TargetPath="runtimes\ios-x64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
-  </ItemGroup>
-
-  <!-- Delete this entry when https://github.com/dotnet/runtime/pull/49305 is merged -->
-  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'ios-x86'">
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x86\lib\libicui18n.a" TargetPath="runtimes\ios-x86\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x86\lib\libicuuc.a" TargetPath="runtimes\ios-x86\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x86\lib\libicudata.a" TargetPath="runtimes\ios-x86\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x86\include\**" TargetPath="runtimes\ios-x86\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-ios-x86\*.dat" TargetPath="runtimes\ios-x86\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
-  </ItemGroup>
-
   <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'iossimulator-x64'">
     <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x64\lib\libicui18n.a" TargetPath="runtimes\iossimulator-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
     <File Include="$(RepoRoot)\artifacts\bin\icu-iossimulator-x64\lib\libicuuc.a" TargetPath="runtimes\iossimulator-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
@@ -132,16 +114,23 @@
     <File Include="$(RepoRoot)\artifacts\bin\icu-ios-arm\*.dat" TargetPath="runtimes\ios-arm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
-  <!-- tvOS -->
-  <!-- Delete this entry when https://github.com/dotnet/runtime/pull/49305 is merged -->
-  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'tvos-x64'">
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-x64\lib\libicui18n.a" TargetPath="runtimes\tvos-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-x64\lib\libicuuc.a" TargetPath="runtimes\tvos-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-x64\lib\libicudata.a" TargetPath="runtimes\tvos-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-x64\include\**" TargetPath="runtimes\tvos-x64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
-    <File Include="$(RepoRoot)\artifacts\bin\icu-tvos-x64\*.dat" TargetPath="runtimes\tvos-x64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+  <!-- MacCatalyst -->
+  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'maccatalyst-x64'">
+    <File Include="$(RepoRoot)\artifacts\bin\icu-maccatalyst-x64\lib\libicui18n.a" TargetPath="runtimes\maccatalyst-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-maccatalyst-x64\lib\libicuuc.a" TargetPath="runtimes\maccatalyst-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-maccatalyst-x64\lib\libicudata.a" TargetPath="runtimes\maccatalyst-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-maccatalyst-x64\include\**" TargetPath="runtimes\maccatalyst-x64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-maccatalyst-x64\*.dat" TargetPath="runtimes\maccatalyst-x64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'maccatalyst-arm64'">
+    <File Include="$(RepoRoot)\artifacts\bin\icu-maccatalyst-arm64\lib\libicui18n.a" TargetPath="runtimes\maccatalyst-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-maccatalyst-arm64\lib\libicuuc.a" TargetPath="runtimes\maccatalyst-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-maccatalyst-arm64\lib\libicudata.a" TargetPath="runtimes\maccatalyst-arm64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-maccatalyst-arm64\include\**" TargetPath="runtimes\maccatalyst-arm64\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-maccatalyst-arm64\*.dat" TargetPath="runtimes\maccatalyst-arm64\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
+  <!-- tvOS -->
   <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'tvossimulator-x64'">
     <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-x64\lib\libicui18n.a" TargetPath="runtimes\tvossimulator-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
     <File Include="$(RepoRoot)\artifacts\bin\icu-tvossimulator-x64\lib\libicuuc.a" TargetPath="runtimes\tvossimulator-x64\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
