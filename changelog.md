@@ -1,4 +1,16 @@
 # Changelog
+## ICU 68.2.0.7
+#### Misc changes:
+- Port work-around for Ubuntu 18.04 Azure CI build bot breaking builds. [#103](https://github.com/microsoft/icu/pull/103)
+
+#### Data changes:
+- Add South Sudan (Juba) to Windows time zone mapping. [#102](https://github.com/microsoft/icu/pull/102)
+
+#### Changes cherry-picked from upstream tickets/PRs:
+ICU-21591 Release lock in SimpleDateFormat::tzFormat in case of failure
+- https://unicode-org.atlassian.net/browse/ICU-21591
+- https://github.com/unicode-org/icu/pull/1701
+
 ## ICU 68.2.0.6
 #### Misc changes:
 - Migration to ESRP Code Signing from PackageES Code Signing. [#93](https://github.com/microsoft/icu/pull/93)

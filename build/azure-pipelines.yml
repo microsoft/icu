@@ -11,6 +11,11 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    # This is to work-around issue: https://github.com/actions/virtual-environments/issues/3376
+    # Once the Ubuntu 18.04 build bot image is fixed, we can remove this work-around.
+    - script: |
+        sudo apt remove libgcc-11-dev gcc-11
+      displayName: Remove GCC 11 (work-around)
     - task: PowerShell@2
       displayName: 'Set ICU Version'
       inputs:
@@ -111,6 +116,11 @@ jobs:
     - checkout: self
       lfs: true
       fetchDepth: 1
+    # This is to work-around issue: https://github.com/actions/virtual-environments/issues/3376
+    # Once the Ubuntu 18.04 build bot image is fixed, we can remove this work-around.
+    - script: |
+        sudo apt remove libgcc-11-dev gcc-11
+      displayName: Remove GCC 11 (work-around)
     - task: PowerShell@2
       displayName: 'Set ICU Version'
       inputs:
