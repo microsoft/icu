@@ -9,6 +9,7 @@ en_CA{
     Languages{
         bn{"Bengali"}
         mfe{"Mauritian"}
+        sr_ME{"Montenegrin"}
         tvl{"Tuvaluan"}
     }
     Types{
