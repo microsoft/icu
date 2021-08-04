@@ -1,4 +1,11 @@
 # Changelog
+## ICU 68.2.0.8
+#### Data changes:
+- Update ICU data files. [#106](https://github.com/microsoft/icu/pull/106)
+
+#### Misc changes:
+- Update ant from 1.10.9 to 1.10.11 [#107](https://github.com/microsoft/icu/pull/107)
+
 ## ICU 68.2.0.7
 #### Misc changes:
 - Port work-around for Ubuntu 18.04 Azure CI build bot breaking builds. [#103](https://github.com/microsoft/icu/pull/103)
