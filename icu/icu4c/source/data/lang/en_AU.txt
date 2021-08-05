@@ -12,6 +12,7 @@ en_AU{
         bn{"Bengali"}
         frc{"frc"}
         lou{"lou"}
+        sr_ME{"Montenegrin"}
     }
     Scripts{
         Beng{"Bengali"}
