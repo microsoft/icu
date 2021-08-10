@@ -452,11 +452,10 @@ getPoolEntry(const char *path, UErrorCode *status) {
 /* INTERNAL: */
 /*   CAUTION:  resbMutex must be locked when calling this function! */
 static UResourceDataEntry *
-findFirstExisting(const char* path, char* name,
+findFirstExisting(const char* path, char* name, const char* defaultLocale,
                   UBool *isRoot, UBool *hasChopped, UBool *isDefault, UErrorCode* status) {
     UResourceDataEntry *r = NULL;
     UBool hasRealData = FALSE;
-    const char *defaultLoc = uloc_getDefault();
     *hasChopped = TRUE; /* we're starting with a fresh name */
 
     while(*hasChopped && !hasRealData) {
@@ -465,7 +464,7 @@ findFirstExisting(const char* path, char* name,
         if (U_FAILURE(*status)) {
             return NULL;
         }
-        *isDefault = (UBool)(uprv_strncmp(name, defaultLoc, uprv_strlen(name)) == 0);
+        *isDefault = (UBool)(uprv_strncmp(name, defaultLocale, uprv_strlen(name)) == 0);
         hasRealData = (UBool)(r->fBogus == U_ZERO_ERROR);
         if(!hasRealData) {
             /* this entry is not real. We will discard it. */
@@ -660,10 +659,13 @@ static UResourceDataEntry *entryOpen(const char* path, const char* localeID,
         }
     }
  
+    // Note: We need to query the default locale *before* locking resbMutex.
+    const char *defaultLocale = uloc_getDefault();
+
     Mutex lock(&resbMutex);    // Lock resbMutex until the end of this function.
 
     /* We're going to skip all the locales that do not have any data */
-    r = findFirstExisting(path, name, &isRoot, &hasChopped, &isDefault, &intStatus);
+    r = findFirstExisting(path, name, defaultLocale, &isRoot, &hasChopped, &isDefault, &intStatus);
 
     // If we failed due to out-of-memory, report the failure and exit early.
     if (intStatus == U_MEMORY_ALLOCATION_ERROR) {
@@ -703,8 +705,8 @@ static UResourceDataEntry *entryOpen(const char* path, const char* localeID,
     /* if that is the case, we need to chain in the default locale   */
     if(r==NULL && openType == URES_OPEN_LOCALE_DEFAULT_ROOT && !isDefault && !isRoot) {
         /* insert default locale */
-        uprv_strcpy(name, uloc_getDefault());
-        r = findFirstExisting(path, name, &isRoot, &hasChopped, &isDefault, &intStatus);
+        uprv_strcpy(name, defaultLocale);
+        r = findFirstExisting(path, name, defaultLocale, &isRoot, &hasChopped, &isDefault, &intStatus);
         // If we failed due to out-of-memory, report the failure and exit early.
         if (intStatus == U_MEMORY_ALLOCATION_ERROR) {
             *status = intStatus;
@@ -728,7 +730,7 @@ static UResourceDataEntry *entryOpen(const char* path, const char* localeID,
     /* present */
     if(r == NULL) {
         uprv_strcpy(name, kRootLocaleName);
-        r = findFirstExisting(path, name, &isRoot, &hasChopped, &isDefault, &intStatus);
+        r = findFirstExisting(path, name, defaultLocale, &isRoot, &hasChopped, &isDefault, &intStatus);
         // If we failed due to out-of-memory, report the failure and exit early.
         if (intStatus == U_MEMORY_ALLOCATION_ERROR) {
             *status = intStatus;
@@ -782,7 +784,17 @@ entryOpenDirect(const char* path, const char* localeID, UErrorCode* status) {
         return NULL;
     }
 
+    // Note: We need to query the default locale *before* locking resbMutex.
+    // If the localeID is NULL, then we want to use the default locale.
+    if (localeID == NULL) {
+        localeID = uloc_getDefault();
+    } else if (*localeID == 0) {
+        // If the localeID is "", then we want to use the root locale.
+        localeID = kRootLocaleName;
+    }
+
     Mutex lock(&resbMutex);
+
     // findFirstExisting() without fallbacks.
     UResourceDataEntry *r = init_entry(localeID, path, status);
     if(U_SUCCESS(*status)) {
