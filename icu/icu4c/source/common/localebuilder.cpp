@@ -212,22 +212,6 @@ _setUnicodeExtensions(Locale& locale, const CharString& value, UErrorCode& error
         locale, false, errorCode);
 }
 
-static Locale*
-_getNewDefaultLocale(UErrorCode& errorCode)
-{
-    if (U_FAILURE(errorCode)) { return nullptr; }
-    // First allocate a new Locale. We'll move assign into this locale later.
-    LocalPointer<Locale> locale(new Locale(), errorCode);
-    if (U_FAILURE(errorCode)) { return nullptr; }
-    // Remove any pre-existing extensions that might exist on the default locale.
-    char name[ULOC_FULLNAME_CAPACITY];
-    uloc_getBaseName(uloc_getDefault(), name, ULOC_FULLNAME_CAPACITY, &errorCode);
-    if (U_FAILURE(errorCode)) { return nullptr; }
-    // Move assign to the existing locale object.
-    *locale = Locale::createFromName(name);
-    return locale.orphan();
-}
-
 LocaleBuilder& LocaleBuilder::setExtension(char key, StringPiece value)
 {
     if (U_FAILURE(status_)) { return *this; }
@@ -244,8 +228,9 @@ LocaleBuilder& LocaleBuilder::setExtension(char key, StringPiece value)
         return *this;
     }
     if (extensions_ == nullptr) {
-        extensions_ = _getNewDefaultLocale(status_);
-        if (U_FAILURE(status_)) {
+        extensions_ = Locale::getRoot().clone();
+        if (extensions_ == nullptr) {
+            status_ = U_MEMORY_ALLOCATION_ERROR;
             return *this;
         }
     }
@@ -274,8 +259,9 @@ LocaleBuilder& LocaleBuilder::setUnicodeLocaleKeyword(
       return *this;
     }
     if (extensions_ == nullptr) {
-        extensions_ = _getNewDefaultLocale(status_);
-        if (U_FAILURE(status_)) {
+        extensions_ = Locale::getRoot().clone();
+        if (extensions_ == nullptr) {
+            status_ = U_MEMORY_ALLOCATION_ERROR;
             return *this;
         }
     }
@@ -294,8 +280,9 @@ LocaleBuilder& LocaleBuilder::addUnicodeLocaleAttribute(
         return *this;
     }
     if (extensions_ == nullptr) {
-        extensions_ = _getNewDefaultLocale(status_);
-        if (U_FAILURE(status_)) {
+        extensions_ = Locale::getRoot().clone();
+        if (extensions_ == nullptr) {
+            status_ = U_MEMORY_ALLOCATION_ERROR;
             return *this;
         }
         extensions_->setKeywordValue(kAttributeKey, value_str.data(), status_);
@@ -428,8 +415,9 @@ void LocaleBuilder::copyExtensionsFrom(const Locale& src, UErrorCode& errorCode)
         return;
     }
     if (extensions_ == nullptr) {
-        extensions_ = _getNewDefaultLocale(status_);
-        if (U_FAILURE(status_)) {
+        extensions_ = Locale::getRoot().clone();
+        if (extensions_ == nullptr) {
+            status_ = U_MEMORY_ALLOCATION_ERROR;
             return;
         }
     }
