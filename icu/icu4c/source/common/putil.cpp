@@ -71,6 +71,7 @@
 #include "locmap.h"
 #include "ucln_cmn.h"
 #include "charstr.h"
+#include "uprefs.h"
 
 /* Include standard headers. */
 #include <stdio.h>
@@ -1785,9 +1786,15 @@ The leftmost codepage (.xxx) wins.
         return gCorrectedPOSIXLocale;
     }
 
+    //======================TEST=======================
+    size_t neededBufferSize = uprefs_getBCP47Tag(nullptr, 0, &status);
+    char *windowsLocale = new char[neededBufferSize];
+    size_t length = uprefs_getBCP47Tag(windowsLocale, neededBufferSize, &status);
+    //======================TEST=======================
+
     // No cached value, need to determine the current value
-    static WCHAR windowsLocale[LOCALE_NAME_MAX_LENGTH] = {};
-    int length = GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT, LOCALE_SNAME, windowsLocale, LOCALE_NAME_MAX_LENGTH);
+    //static WCHAR windowsLocale[LOCALE_NAME_MAX_LENGTH] = {};
+    //int length = GetLocaleInfoEx(LOCALE_NAME_USER_DEFAULT, LOCALE_SNAME, windowsLocale, LOCALE_NAME_MAX_LENGTH);
 
     // Now we should have a Windows locale name that needs converted to the POSIX style.
     if (length > 0) // If length is 0, then the GetLocaleInfoEx failed.
