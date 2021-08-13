@@ -71,6 +71,7 @@
 #include "locmap.h"
 #include "ucln_cmn.h"
 #include "charstr.h"
+#include "uprefs.h"
 
 /* Include standard headers. */
 #include <stdio.h>
@@ -1776,10 +1777,39 @@ The leftmost codepage (.xxx) wins.
     return posixID;
 
 #elif U_PLATFORM_USES_ONLY_WIN32_API
-#define POSIX_LOCALE_CAPACITY 64
     UErrorCode status = U_ZERO_ERROR;
     char *correctedPOSIXLocale = nullptr;
 
+#if U_USE_PREFERENCES_LIBRARY
+
+    int32_t neededBufferSize = uprefs_getBCP47Tag(nullptr, 0, &status);
+    MaybeStackArray<char,40> windowsLocale(neededBufferSize, status);
+    int32_t length = uprefs_getBCP47Tag(windowsLocale.getAlias(), neededBufferSize, &status);
+
+    // Now we should have a Windows locale name that needs converted to the POSIX style.
+    if (length > 0) // If length is 0, then the call to uprefs_getBCP47Tag failed.
+    {
+
+        // Now normalize the resulting name
+        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(length * 2));
+        /* TODO: Should we just exit on memory allocation failure? */
+        if (correctedPOSIXLocale)
+        {
+            int32_t posixLen = uloc_canonicalize(windowsLocale.getAlias(), correctedPOSIXLocale, length * 2, &status);
+            if (U_SUCCESS(status))
+            {
+                *(correctedPOSIXLocale + posixLen) = 0;
+                gCorrectedPOSIXLocale = correctedPOSIXLocale;
+                gCorrectedPOSIXLocaleHeapAllocated = true;
+                ucln_common_registerCleanup(UCLN_COMMON_PUTIL, putil_cleanup);
+            }
+            else
+            {
+                uprv_free(correctedPOSIXLocale);
+            }
+        }
+    }
+#else
     // If we have already figured this out just use the cached value
     if (gCorrectedPOSIXLocale != nullptr) {
         return gCorrectedPOSIXLocale;
@@ -1821,11 +1851,11 @@ The leftmost codepage (.xxx) wins.
         }
 
         // Now normalize the resulting name
-        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(POSIX_LOCALE_CAPACITY + 1));
+        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(length * 2));
         /* TODO: Should we just exit on memory allocation failure? */
         if (correctedPOSIXLocale)
         {
-            int32_t posixLen = uloc_canonicalize(modifiedWindowsLocale, correctedPOSIXLocale, POSIX_LOCALE_CAPACITY, &status);
+            int32_t posixLen = uloc_canonicalize(modifiedWindowsLocale, correctedPOSIXLocale, length * 2, &status);
             if (U_SUCCESS(status))
             {
                 *(correctedPOSIXLocale + posixLen) = 0;
@@ -1839,6 +1869,7 @@ The leftmost codepage (.xxx) wins.
             }
         }
     }
+#endif
 
     // If unable to find a locale we can agree upon, use en-US by default
     if (gCorrectedPOSIXLocale == nullptr) {

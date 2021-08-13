@@ -156,6 +156,7 @@ public:
     void TestLeak21419();
     void TestLongLocaleSetKeywordAssign();
     void TestLongLocaleSetKeywordMoveAssign();
+    void SetAndRetrieveDefaultLocaleUPrefs();
 
 private:
     void _checklocs(const char* label,

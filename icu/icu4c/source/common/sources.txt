@@ -157,6 +157,7 @@ unistr_titlecase_brkiter.cpp
 unorm.cpp
 unormcmp.cpp
 uobject.cpp
+uprefs.cpp
 uprops.cpp
 ures_cnv.cpp
 uresbund.cpp

@@ -390,6 +390,20 @@
 #   define UCONFIG_USE_WINDOWS_LCID_MAPPING_API 1
 #endif
 
+/**
+ * \def U_USE_PREFERENCES_LIBRARY
+ * On platforms where U_PLATFORM_HAS_WIN32_API is true, this switch determines
+ * if the uprefs.h "uprefs_getBCP47Tag()" API is used to get a full, valid and
+ * canonical BCP47 tag instead of just the locale for the default locale.
+ * This BCP47Tag includes information such as calendar, currency, hour cycle
+ * among others.
+ * Otherwise, GetLocaleInfoEx() is used to get a locale with only the language
+ * and region.
+*/
+#ifndef U_USE_PREFERENCES_LIBRARY
+#define U_USE_PREFERENCES_LIBRARY 1
+#endif
+
 //IGNORE_WINDOWS_HEADERS_END
 
 /* i18n library switches ---------------------------------------------------- */
