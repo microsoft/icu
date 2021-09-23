@@ -451,7 +451,8 @@ stages:
   - CreateNuget
   condition: and(eq(variables.codeSign, true), and(in(dependencies.CodeSignBinaries.result, 'Succeeded'), in(dependencies.CreateNuget.result, 'Succeeded')))
   pool:
-    name: Package ES CodeHub Lab E
+    name: Azure Pipelines
+    vmImage: 'windows-2019'
   variables:
     BuildPlatform: AnyCPU
 
@@ -561,17 +562,17 @@ stages:
       displayName: 'DIAG: dir'
 
     # Publish the Windows Symbols to the public symbols server
-    - task: PublishSymbols@2
-      displayName: 'Publish Windows Symbols'
-      inputs:
-        symbolsFolder: '$(Build.BINARIESDIRECTORY)\symbols'
-        searchPattern: '**/*.pdb'
-        IndexSources: false
-        SymbolsMaximumWaitTime: 30
-        SymbolServerType: 'TeamServices'
-        SymbolsProduct: 'MS-ICU Nuget Windows binaries'
-        SymbolsVersion: '$(ICUVersion)'
-      condition: and(succeeded(), eq(variables.codeSign, true))
-      env:
-        ArtifactServices_Symbol_AccountName: microsoftpublicsymbols
-        ArtifactServices_Symbol_UseAAD: true
+    # - task: PublishSymbols@2
+    #   displayName: 'Publish Windows Symbols'
+    #   inputs:
+    #     symbolsFolder: '$(Build.BINARIESDIRECTORY)\symbols'
+    #     searchPattern: '**/*.pdb'
+    #     IndexSources: false
+    #     SymbolsMaximumWaitTime: 30
+    #     SymbolServerType: 'TeamServices'
+    #     SymbolsProduct: 'MS-ICU Nuget Windows binaries'
+    #     SymbolsVersion: '$(ICUVersion)'
+    #   condition: and(succeeded(), eq(variables.codeSign, true))
+    #   env:
+    #     ArtifactServices_Symbol_AccountName: microsoftpublicsymbols
+    #     ArtifactServices_Symbol_UseAAD: true
