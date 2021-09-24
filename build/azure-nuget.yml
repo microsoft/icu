@@ -561,7 +561,8 @@ stages:
         Tree /F /A $(BUILD.BINARIESDIRECTORY)
       displayName: 'DIAG: dir'
 
-    # Publish the Windows Symbols to the internal and public symbols servers.
+    # Publish the Windows Symbols to the MSCodeHub internal symbol server.
+    # Accessible via https://mscodehub.artifacts.visualstudio.com/_apis/symbol/symsrv
     - task: PublishSymbols@2
       displayName: 'Publish symbols to internal server (no source indexing)'
       inputs:
@@ -579,6 +580,8 @@ stages:
       env:
         LIB: $(Build.SourcesDirectory)
 
+    # Publish the Windows Symbols to the public MSDL symbol server.
+    # Accessible via https://msdl.microsoft.com/download/symbols
     - task: PublishSymbols@2
       displayName: 'Publish symbols to public server (no source indexing)'
       inputs:
