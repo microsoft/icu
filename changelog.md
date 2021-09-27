@@ -1,4 +1,8 @@
 # Changelog
+## ICU 68.2.0.9
+#### Misc changes:
+- Migrate from PackageES build agents to public Microsoft hosted agents [#113](https://github.com/microsoft/icu/pull/113)
+
 ## ICU 68.2.0.8
 #### Data changes:
 - Update ICU data files. [#106](https://github.com/microsoft/icu/pull/106)

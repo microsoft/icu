@@ -451,7 +451,8 @@ stages:
   - CreateNuget
   condition: and(eq(variables.codeSign, true), and(in(dependencies.CodeSignBinaries.result, 'Succeeded'), in(dependencies.CreateNuget.result, 'Succeeded')))
   pool:
-    name: Package ES CodeHub Lab E
+    name: Azure Pipelines
+    vmImage: 'windows-2019'
   variables:
     BuildPlatform: AnyCPU
 
@@ -560,18 +561,23 @@ stages:
         Tree /F /A $(BUILD.BINARIESDIRECTORY)
       displayName: 'DIAG: dir'
 
-    # Publish the Windows Symbols to the public symbols server
+    # Publish the Windows Symbols to the public MSDL symbol server.
+    # Accessible via https://msdl.microsoft.com/download/symbols
     - task: PublishSymbols@2
-      displayName: 'Publish Windows Symbols'
+      displayName: 'Publish symbols to public server (no source indexing)'
       inputs:
         symbolsFolder: '$(Build.BINARIESDIRECTORY)\symbols'
         searchPattern: '**/*.pdb'
-        IndexSources: false
         SymbolsMaximumWaitTime: 30
         SymbolServerType: 'TeamServices'
         SymbolsProduct: 'MS-ICU Nuget Windows binaries'
         SymbolsVersion: '$(ICUVersion)'
-      condition: and(succeeded(), eq(variables.codeSign, true))
+      # The ADO task does not support indexing of GitHub sources.
+        indexSources: false
+        detailedLog: true
+      # There is a bug which causes this task to fail if LIB includes an inaccessible path (even though it does not depend on it).
+      # To work around this issue, we just force LIB to be any dir that we know exists.
       env:
+        LIB: $(Build.SourcesDirectory)
         ArtifactServices_Symbol_AccountName: microsoftpublicsymbols
-        ArtifactServices_Symbol_UseAAD: true
+        ArtifactServices_Symbol_PAT: $(MSICU_microsoftpublicsymbols_PAT)
