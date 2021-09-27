@@ -2,6 +2,8 @@
 ## ICU 68.2.0.9
 #### Misc changes:
 - Migrate from PackageES build agents to public Microsoft hosted agents [#113](https://github.com/microsoft/icu/pull/113)
+- Fix crash if ICU default locale has BCP47 extensions. Fix ures_openDirect crash with NULL locale. [#110](https://github.com/microsoft/icu/pull/110)
+- Fix LocaleBuilder errors when ICU default locale has BCP47 Unicode extension tags. [#111](https://github.com/microsoft/icu/pull/111)
 
 ## ICU 68.2.0.8
 #### Data changes:
