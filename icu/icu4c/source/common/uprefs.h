@@ -6,7 +6,7 @@
 
 #include "unicode/platform.h"
 #include "unicode/utypes.h"
-#if U_PLATFORM_USES_ONLY_WIN32_API
+#if U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY
 
 /**
 * Gets the valid and canonical BCP47 tag with the user settings for Language, Calendar, Sorting, Currency,
@@ -25,5 +25,5 @@
 */
 int32_t uprefs_getBCP47Tag(char* uprefsBuffer, int32_t bufferSize, UErrorCode* status);
 
-#endif //U_PLATFORM_USES_ONLY_WIN32_API
+#endif //U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY
 #endif //UPREFS_H

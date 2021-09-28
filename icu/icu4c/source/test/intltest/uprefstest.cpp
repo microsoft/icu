@@ -1,8 +1,7 @@
 // © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
 #include "uprefstest.h"
-#if U_PLATFORM_USES_ONLY_WIN32_API
-
+#if U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY
 
 #define ARRAY_SIZE 512
 
@@ -17,7 +16,7 @@ void UPrefsTest::runIndexedTest( int32_t index, UBool exec, const char* &name, c
 {
     if (exec) logln("TestSuite UPrefsTest: ");
     TESTCASE_AUTO_BEGIN;
-    TESTCASE_AUTO(TestGetBCP47Tag1);
+    TESTCASE_AUTO(TestGetDefaultLocaleAsBCP47Tag);
     TESTCASE_AUTO(TestBCP47TagWithSorting);
     TESTCASE_AUTO(TestBCP47TagChineseSimplified);
     TESTCASE_AUTO(TestBCP47TagChineseSortingStroke);
@@ -137,11 +136,12 @@ int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPW
     }
 }
 
+// The code above is independent of the library itself, but for the code below this point,
+// we need to include the library to be able to use the definitions of the API uprefs_getBCP47Tag
 #include "uprefs.cpp"
 
-void UPrefsTest::TestGetBCP47Tag1()
+void UPrefsTest::TestGetDefaultLocaleAsBCP47Tag()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"en-US";
     currency = L"USD";
@@ -150,7 +150,7 @@ void UPrefsTest::TestGetBCP47Tag1()
     measureSystem = 1;
     calendar = CAL_GREGORIAN;
     UErrorCode status = U_ZERO_ERROR;
-    const char* expectedValue = "en-US-u-ca-gregory-cu-usd-fw-mon-hc-h23-ms-ussystem\0";
+    const char* expectedValue = "en-US-u-ca-gregory-cu-usd-fw-mon-hc-h23-ms-ussystem";
     
     if ( uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 52)
     {
@@ -164,7 +164,6 @@ void UPrefsTest::TestGetBCP47Tag1()
 
 void UPrefsTest::TestBCP47TagWithSorting()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"de-DE_phoneb";
     currency = L"EUR";
@@ -173,7 +172,7 @@ void UPrefsTest::TestBCP47TagWithSorting()
     measureSystem = 1;
     calendar = CAL_GREGORIAN;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "de-DE-u-ca-gregory-co-phonebk-cu-eur-fw-mon-hc-h23-ms-ussystem\0";
+    char* expectedValue = "de-DE-u-ca-gregory-co-phonebk-cu-eur-fw-mon-hc-h23-ms-ussystem";
     
     if ( uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 63)
     {
@@ -187,7 +186,6 @@ void UPrefsTest::TestBCP47TagWithSorting()
 
 void UPrefsTest::TestBCP47TagChineseSimplified()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"zh-Hans-HK";
     currency = L"EUR";
@@ -196,7 +194,7 @@ void UPrefsTest::TestBCP47TagChineseSimplified()
     measureSystem = 1;
     calendar = CAL_GREGORIAN;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "zh-Hans-HK-u-ca-gregory-cu-eur-fw-wed-hc-h12-ms-ussystem\0";
+    char* expectedValue = "zh-Hans-HK-u-ca-gregory-cu-eur-fw-wed-hc-h12-ms-ussystem";
     
     if ( uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 57)
     {
@@ -210,7 +208,6 @@ void UPrefsTest::TestBCP47TagChineseSimplified()
 
 void UPrefsTest::TestBCP47TagChineseSortingStroke()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"zh-SG_stroke";
     currency = L"EUR";
@@ -219,7 +216,7 @@ void UPrefsTest::TestBCP47TagChineseSortingStroke()
     measureSystem = 0;
     calendar = CAL_GREGORIAN;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "zh-SG-u-ca-gregory-co-stroke-cu-eur-fw-wed-hc-h12-ms-metric\0";
+    char* expectedValue = "zh-SG-u-ca-gregory-co-stroke-cu-eur-fw-wed-hc-h12-ms-metric";
     
     if ( uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 60)
     {
@@ -233,7 +230,6 @@ void UPrefsTest::TestBCP47TagChineseSortingStroke()
 
 void UPrefsTest::TestBCP47TagJapanCalendar()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"ja-JP";
     currency = L"MXN";
@@ -242,7 +238,7 @@ void UPrefsTest::TestBCP47TagJapanCalendar()
     measureSystem = 0;
     calendar = CAL_JAPAN;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "ja-JP-u-ca-japanese-cu-mxn-fw-tue-hc-h12-ms-metric\0";
+    char* expectedValue = "ja-JP-u-ca-japanese-cu-mxn-fw-tue-hc-h12-ms-metric";
     
     if ( uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51)
     {
@@ -256,7 +252,6 @@ void UPrefsTest::TestBCP47TagJapanCalendar()
 
 void UPrefsTest::TestUseNeededBuffer()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"ja-JP";
     currency = L"MXN";
@@ -265,7 +260,7 @@ void UPrefsTest::TestUseNeededBuffer()
     measureSystem = 0;
     calendar = CAL_THAI;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric\0";
+    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
     int32_t neededBufferSize = uprefs_getBCP47Tag(nullptr, 0, &status);
     
@@ -281,7 +276,6 @@ void UPrefsTest::TestUseNeededBuffer()
 
 void UPrefsTest::TestGetNeededBuffer()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"zh-SG_stroke";
     currency = L"MXN";
@@ -290,7 +284,7 @@ void UPrefsTest::TestGetNeededBuffer()
     measureSystem = 0;
     calendar = CAL_THAI;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "zh-SG-u-ca-buddhist-co-stroke-cu-mxn-fw-tue-hc-h12-ms-metric\0";
+    char* expectedValue = "zh-SG-u-ca-buddhist-co-stroke-cu-mxn-fw-tue-hc-h12-ms-metric";
 
     int32_t neededBufferSize = uprefs_getBCP47Tag(nullptr, 0, &status);
 
@@ -310,7 +304,6 @@ void UPrefsTest::TestGetNeededBuffer()
 
 void UPrefsTest::TestGetUnsupportedSorting()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"hu-HU_technl";
     currency = L"MXN";
@@ -319,7 +312,7 @@ void UPrefsTest::TestGetUnsupportedSorting()
     measureSystem = 0;
     calendar = CAL_THAI;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "hu-HU-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric\0";
+    char* expectedValue = "hu-HU-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
     if ( uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51)
     {
@@ -333,7 +326,6 @@ void UPrefsTest::TestGetUnsupportedSorting()
 
 void UPrefsTest::Get24HourCycleMixed() 
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"ja-JP";
     currency = L"MXN";
@@ -342,7 +334,7 @@ void UPrefsTest::Get24HourCycleMixed()
     measureSystem = 0;
     calendar = CAL_THAI;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h23-ms-metric\0";
+    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h23-ms-metric";
 
     if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
@@ -354,7 +346,6 @@ void UPrefsTest::Get24HourCycleMixed()
 
 void UPrefsTest::Get12HourCycleMixed()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"ja-JP";
     currency = L"MXN";
@@ -363,7 +354,7 @@ void UPrefsTest::Get12HourCycleMixed()
     measureSystem = 0;
     calendar = CAL_THAI;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric\0";
+    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
     if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
@@ -376,7 +367,6 @@ void UPrefsTest::Get12HourCycleMixed()
 
 void UPrefsTest::Get12HourCycleMixed2()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"ja-JP";
     currency = L"MXN";
@@ -385,7 +375,7 @@ void UPrefsTest::Get12HourCycleMixed2()
     measureSystem = 0;
     calendar = CAL_THAI;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric\0";
+    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
     if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
@@ -397,7 +387,6 @@ void UPrefsTest::Get12HourCycleMixed2()
 
 void UPrefsTest::Get12HourCycle()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"ja-JP";
     currency = L"MXN";
@@ -406,7 +395,7 @@ void UPrefsTest::Get12HourCycle()
     measureSystem = 0;
     calendar = CAL_THAI;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric\0";
+    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
     if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
@@ -418,7 +407,6 @@ void UPrefsTest::Get12HourCycle()
 
 void UPrefsTest::Get12HourCycle2()
 {
-    bool correct = false;
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"ja-JP";
     currency = L"MXN";
@@ -427,7 +415,7 @@ void UPrefsTest::Get12HourCycle2()
     measureSystem = 0;
     calendar = CAL_THAI;
     UErrorCode status = U_ZERO_ERROR;
-    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric\0";
+    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
     if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
@@ -436,4 +424,4 @@ void UPrefsTest::Get12HourCycle2()
         errln("Expected BCP47Tag to be %s, but got: %s\n", expectedValue, languageBuffer);
     }
 }
-#endif //U_PLATFORM_USES_ONLY_WIN32_API
+#endif //U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY

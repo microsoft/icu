@@ -2,12 +2,12 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 
 #include "uprefs.h"
+#if U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY
 #include "unicode/ustring.h"
 #include "cmemory.h"
 #include "charstr.h"
 #include "cstring.h"
 #include "cwchar.h"
-#if U_PLATFORM_USES_ONLY_WIN32_API
 #include <windows.h>
 
 U_NAMESPACE_USE
@@ -321,7 +321,7 @@ int32_t checkBufferCapacityAndCopy(const char* uprefsString, char* uprefsBuffer,
     return neededBufferSize;
 }
 
-CharString getLocaleBCP47Tag_impl(UErrorCode* status)
+CharString getLocaleBCP47Tag_impl(UErrorCode* status, bool getSorting)
 {
     // First part of a bcp47 tag looks like an NLS user locale, so we get the NLS user locale.
     int32_t neededBufferSize = GetLocaleInfoExWrapper(LOCALE_NAME_USER_DEFAULT, LOCALE_SNAME, nullptr, 0, status);
@@ -334,23 +334,48 @@ CharString getLocaleBCP47Tag_impl(UErrorCode* status)
     int32_t result = GetLocaleInfoExWrapper(LOCALE_NAME_USER_DEFAULT, LOCALE_SNAME, NLSLocale.getAlias(), neededBufferSize, status);
 
     RETURN_VALUE_IF(U_FAILURE(*status), CharString());
-
-    // The NLS locale may include a non-default sort, such as de-DE_phoneb. We only want the locale name before the _.
-    wchar_t * position = wcschr(NLSLocale.getAlias(), L'_');
-    if (position != nullptr)
+    
+    if (getSorting) //We determine if we want the locale (for example, en-US) or the sorting method (for example, phonebk)
     {
-        *position = L'\0';
+        // We use LOCALE_SNAME to get the sorting method (if any). So we need to keep
+        // only the sorting bit after the _, removing the locale name.
+        // Example: from "de-DE_phoneb" we only want "phoneb"
+        const wchar_t * startPosition = wcschr(NLSLocale.getAlias(), L'_');
+
+        // Note: not finding a "_" is not an error, it means the user has not selected an alternate sorting method, which is fine.
+        if (startPosition != nullptr) 
+        {
+            CharString sortingSystem = getSortingSystemBCP47FromNLSType(startPosition + 1, status);
+
+            if (sortingSystem.length() == 0)
+            {
+                *status = U_UNSUPPORTED_ERROR;
+                return CharString();
+            }
+            return sortingSystem;
+        }
+    }
+    else
+    {
+        // The NLS locale may include a non-default sort, such as de-DE_phoneb. We only want the locale name before the _.
+        wchar_t * position = wcschr(NLSLocale.getAlias(), L'_');
+        if (position != nullptr)
+        {
+            *position = L'\0';
+        }
+
+        CharString languageTag;
+        int32_t resultCapacity = 0;
+        languageTag.getAppendBuffer(neededBufferSize, neededBufferSize, resultCapacity, *status);
+        RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
+
+        int32_t unitsWritten = 0;
+        u_strToUTF8(languageTag.data(), neededBufferSize, &unitsWritten, reinterpret_cast<UChar*>(NLSLocale.getAlias()), neededBufferSize, status);
+        RETURN_VALUE_IF(U_FAILURE(*status), CharString());
+        return languageTag;
     }
 
-    CharString languageTag;
-    int32_t resultCapacity = 0;
-    languageTag.getAppendBuffer(neededBufferSize, neededBufferSize, resultCapacity, *status);
-    RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
-
-    int32_t unitsWritten = 0;
-    u_strToUTF8(languageTag.data(), neededBufferSize, &unitsWritten, reinterpret_cast<UChar*>(NLSLocale.getAlias()), neededBufferSize, status);
-    RETURN_VALUE_IF(U_FAILURE(*status), CharString());
-    return languageTag;
+    return CharString();
 }
 
 CharString getCalendarSystem_impl(UErrorCode* status)
@@ -365,40 +390,6 @@ CharString getCalendarSystem_impl(UErrorCode* status)
     RETURN_FAILURE_STRING_WITH_STATUS_IF(calendar.length() == 0, U_UNSUPPORTED_ERROR, status);
 
     return calendar;
-}
-
-CharString getSortingSystem_impl(UErrorCode* status)
-{
-    // In order to get the sorting system, we need to get LOCALE_SNAME, which appends the sorting system (if any) to the locale
-    int32_t neededBufferSize = GetLocaleInfoExWrapper(LOCALE_NAME_USER_DEFAULT, LOCALE_SNAME, nullptr, 0, status);
-    
-    RETURN_VALUE_IF(U_FAILURE(*status), CharString());
-
-    MaybeStackArray<wchar_t, 40> NLSsortingSystem(neededBufferSize, *status);
-    RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
-
-    int32_t result = GetLocaleInfoExWrapper(LOCALE_NAME_USER_DEFAULT, LOCALE_SNAME, NLSsortingSystem.getAlias(), neededBufferSize, status);
-
-    RETURN_VALUE_IF(U_FAILURE(*status), CharString()); 
-
-    // We use LOCALE_SNAME to get the sorting method (if any). So we need to keep
-    // only the sorting bit after the _, removing the locale name.
-    // Example: from "de-DE_phoneb" we only want "phoneb"
-    const wchar_t * startPosition = wcschr(NLSsortingSystem.getAlias(), L'_');
-
-    // Note: not finding a "_" is not an error, it means the user has not selected an alternate sorting method, which is fine.
-    if (startPosition != nullptr) 
-    {
-        CharString sortingSystem = getSortingSystemBCP47FromNLSType(startPosition + 1, status);
-
-        if (sortingSystem.length() == 0)
-        {
-            *status = U_UNSUPPORTED_ERROR;
-            return CharString();
-        }
-        return sortingSystem;
-    }
-    return CharString();
 }
 
 CharString getCurrencyCode_impl(UErrorCode* status)
@@ -516,7 +507,7 @@ int32_t uprefs_getBCP47Tag(char* uprefsBuffer, int32_t bufferSize, UErrorCode* s
     CharString BCP47Tag;
     bool warningGenerated = false;
 
-    CharString languageTag = getLocaleBCP47Tag_impl(status);
+    CharString languageTag = getLocaleBCP47Tag_impl(status, false);
     RETURN_VALUE_IF(U_FAILURE(*status), 0);
     BCP47Tag.append(languageTag.data(), *status);
     BCP47Tag.append("-u", *status);
@@ -525,7 +516,7 @@ int32_t uprefs_getBCP47Tag(char* uprefsBuffer, int32_t bufferSize, UErrorCode* s
     RETURN_VALUE_IF(U_FAILURE(*status) && *status != U_UNSUPPORTED_ERROR, 0);
     appendIfDataNotEmpty(BCP47Tag, "-ca-", calendar.data(), warningGenerated, status);
     
-    CharString sortingSystem = getSortingSystem_impl(status);
+    CharString sortingSystem = getLocaleBCP47Tag_impl(status, true);
     RETURN_VALUE_IF(U_FAILURE(*status) && *status != U_UNSUPPORTED_ERROR, 0);
     appendIfDataNotEmpty(BCP47Tag, "-co-", sortingSystem.data(), warningGenerated, status);
 
@@ -559,4 +550,4 @@ int32_t uprefs_getBCP47Tag(char* uprefsBuffer, int32_t bufferSize, UErrorCode* s
 // ---------------------- END OF APIs --------------------
 // -------------------------------------------------------
 
-#endif
+#endif // U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY

@@ -33,7 +33,7 @@
 #include "uvectest.h" 
 #include "aliastst.h"
 #include "usettest.h"
-#if U_PLATFORM_USES_ONLY_WIN32_API
+#if U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY
     #include "uprefstest.h"
 #endif
 
@@ -70,7 +70,7 @@ void IntlTestUtilities::runIndexedTest( int32_t index, UBool exec, const char* &
     TESTCASE_AUTO_CLASS(LocaleAliasTest);
     TESTCASE_AUTO_CLASS(UnicodeSetTest);
     TESTCASE_AUTO_CLASS(ErrorCodeTest);
-#if U_PLATFORM_USES_ONLY_WIN32_API
+#if U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY
     TESTCASE_AUTO_CLASS(UPrefsTest); 
 #endif
     TESTCASE_AUTO_CREATE_CLASS(LocalPointerTest);
