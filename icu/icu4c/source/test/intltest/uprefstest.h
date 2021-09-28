@@ -1,8 +1,13 @@
+// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
 #ifndef UPREFSTEST_H
 #define UPREFSTEST_H
 
 #include "unicode/platform.h"
 #if U_PLATFORM_USES_ONLY_WIN32_API
+// We define UPREFS_TEST to use the mock version of GetLocaleInfoEx(), which
+// allows us to simulate its behaviour and determine if the results given by the 
+// API align with what we expect to receive
 #define UPREFS_TEST 1
 
 

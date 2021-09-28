@@ -284,7 +284,6 @@ void LocaleTest::runIndexedTest( int32_t index, UBool exec, const char* &name, c
     TESTCASE_AUTO(TestLeak21419);
     TESTCASE_AUTO(TestLongLocaleSetKeywordAssign);
     TESTCASE_AUTO(TestLongLocaleSetKeywordMoveAssign);
-    TESTCASE_AUTO(SetAndRetrieveDefaultLocaleUPrefs);
     TESTCASE_AUTO_END;
 }
 
@@ -6421,42 +6420,4 @@ void LocaleTest::TestLeak21419() {
     Locale l = Locale("s-yU");
     l.canonicalize(status);
     status.expectErrorAndReset(U_ILLEGAL_ARGUMENT_ERROR);
-}
-
-// This tests getting the original default locale, which when using the uprefs library,
-// should look somehting like en-US-u-ca-gregory-cu-usd-fw-sun-hc-h12.
-// We then set it to something completely different. Then we re-detect the default locale
-// and make sure that it is the same to what we originally had. 
-void LocaleTest::SetAndRetrieveDefaultLocaleUPrefs()
-{
-    char originalLocaleBuffer[256];
-    char defaultLocaleBuffer[256];
-    char reDetectedLocaleBuffer[256];
-
-
-    UErrorCode status = U_ZERO_ERROR;
-    const char *originalLocale = uloc_getDefault();
-    uloc_toLanguageTag(originalLocale, originalLocaleBuffer, 256, FALSE, &status);
-
-    const char *mockLocale = "es-MX-u-ca-gregory-cu-mxn-fw-tue-hc-h24";
-    uloc_setDefault(mockLocale, &status);
-
-    const char *defaultLocale = uloc_getDefault(); 
-    uloc_toLanguageTag(defaultLocale, defaultLocaleBuffer, 256, FALSE, &status); // Should be es-MX-u-ca-gregory-cu-mxn-fw-tue-hc-h24
-
-    if (0 == uprv_strcmp(defaultLocaleBuffer, originalLocaleBuffer)) {
-        errln("Locale was set to es-MX-u-ca-gregory-cu-mxn-fw-tue-hc-h24"
-              " and when retrieving it, it was different. Value was %s",
-              reDetectedLocaleBuffer);
-    }
-
-    uloc_setDefault(NULL, &status);
-    const char *redetectedLocale = uloc_getDefault();
-
-    uloc_toLanguageTag(redetectedLocale, reDetectedLocaleBuffer, 256, FALSE, &status);
-    if(0 != uprv_strcmp(redetectedLocale, originalLocale))
-    {
-        errln("Locale obtained was not the same as the original. Value was %s", redetectedLocale);
-    }
-    uloc_setDefault(originalLocale, &status);
 }

@@ -123,7 +123,7 @@ CharString getCalendarBCP47FromNLSType(int32_t calendar, UErrorCode* status)
 // These could be used in a BCP47 tag like this: "de-DE-u-co-phonebk".
 // Note that there are some NLS Alternate sort methods that are not supported with the BCP47 U extensions,
 // and vice-versa.
-CharString getSortingSystemBCP47FromNLSType(wchar_t* sortingSystem, UErrorCode* status) 
+CharString getSortingSystemBCP47FromNLSType(const wchar_t* sortingSystem, UErrorCode* status) 
 {
     if (wcscmp(sortingSystem, L"phoneb") == 0) // Phonebook style ordering (such as in German)
     {
@@ -242,7 +242,7 @@ CharString get12_or_24hourFormat(wchar_t* hourFormat, UErrorCode* status)
 {
     bool isInEscapedString = false;
     const int32_t hourLength = static_cast<int32_t>(uprv_wcslen(hourFormat));
-    for (int i = 0; i < hourLength; i++)
+    for (int32_t i = 0; i < hourLength; i++)
     {
         // Toggle escaped flag if in ' quoted portion
         if (hourFormat[i] == L'\'') 
@@ -311,14 +311,14 @@ int32_t GetLocaleInfoExWrapper(LPCWSTR lpLocaleName, LCTYPE LCType, LPWSTR lpLCD
 // If the buffer's size is set to 0, the needed buffer size is returned before copying the string.
 int32_t checkBufferCapacityAndCopy(const char* uprefsString, char* uprefsBuffer, int32_t bufferSize, UErrorCode* status)
 {
-    size_t neededBufferSize = uprv_strlen(uprefsString) + 1;
+    int32_t neededBufferSize = static_cast<int32_t>(uprv_strlen(uprefsString) + 1);
 
-    RETURN_VALUE_IF(bufferSize == 0, static_cast<int32_t>(neededBufferSize));
+    RETURN_VALUE_IF(bufferSize == 0, neededBufferSize);
     RETURN_FAILURE_WITH_STATUS_IF(neededBufferSize > bufferSize, U_BUFFER_OVERFLOW_ERROR);
 
     uprv_strcpy(uprefsBuffer, uprefsString);
 
-    return static_cast<int32_t>(neededBufferSize);
+    return neededBufferSize;
 }
 
 CharString getLocaleBCP47Tag_impl(UErrorCode* status)
@@ -328,7 +328,7 @@ CharString getLocaleBCP47Tag_impl(UErrorCode* status)
 
     RETURN_VALUE_IF(U_FAILURE(*status), CharString());
 
-    MaybeStackArray<wchar_t, 40> NLSLocale(neededBufferSize, *status);
+    MaybeStackArray<wchar_t, LOCALE_NAME_MAX_LENGTH> NLSLocale(neededBufferSize, *status);
     RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
     
     int32_t result = GetLocaleInfoExWrapper(LOCALE_NAME_USER_DEFAULT, LOCALE_SNAME, NLSLocale.getAlias(), neededBufferSize, status);
@@ -349,6 +349,7 @@ CharString getLocaleBCP47Tag_impl(UErrorCode* status)
 
     int32_t unitsWritten = 0;
     u_strToUTF8(languageTag.data(), neededBufferSize, &unitsWritten, reinterpret_cast<UChar*>(NLSLocale.getAlias()), neededBufferSize, status);
+    RETURN_VALUE_IF(U_FAILURE(*status), CharString());
     return languageTag;
 }
 
@@ -383,7 +384,7 @@ CharString getSortingSystem_impl(UErrorCode* status)
     // We use LOCALE_SNAME to get the sorting method (if any). So we need to keep
     // only the sorting bit after the _, removing the locale name.
     // Example: from "de-DE_phoneb" we only want "phoneb"
-    wchar_t * startPosition = wcschr(NLSsortingSystem.getAlias(), L'_');
+    const wchar_t * startPosition = wcschr(NLSsortingSystem.getAlias(), L'_');
 
     // Note: not finding a "_" is not an error, it means the user has not selected an alternate sorting method, which is fine.
     if (startPosition != nullptr) 
@@ -418,7 +419,8 @@ CharString getCurrencyCode_impl(UErrorCode* status)
 
     int32_t unitsWritten = 0;
     u_strToUTF8(currency.getAlias(), neededBufferSize, &unitsWritten, reinterpret_cast<UChar*>(NLScurrencyData.getAlias()), neededBufferSize, status);
-
+    RETURN_VALUE_IF(U_FAILURE(*status), CharString());
+    
     if (unitsWritten == 0)
     {
         *status = U_INTERNAL_PROGRAM_ERROR;

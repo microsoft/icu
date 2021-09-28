@@ -391,17 +391,19 @@
 #endif
 
 /**
- * \def U_USE_PREFERENCES_LIBRARY
- * On platforms where U_PLATFORM_HAS_WIN32_API is true, this switch determines
- * if the uprefs.h "uprefs_getBCP47Tag()" API is used to get a full, valid and
- * canonical BCP47 tag instead of just the locale for the default locale.
- * This BCP47Tag includes information such as calendar, currency, hour cycle
- * among others.
- * Otherwise, GetLocaleInfoEx() is used to get a locale with only the language
- * and region.
+ * \def UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY 
+ *   On Windows platforms (ie: U_PLATFORM_HAS_WIN32_API is true), this switch enables ICU to
+ *   detect additional user preferences by setting BCP47 Unicode extension within the default locale.
+ *   This includes information such as calendar, currency, hour cycle, among others.
+ *
+ *   If this switch is off (or set to 0) then the default behavior of only detecting the language
+ *   and country/region occurs. 
+ *
+ *   For example, the default locale may be detected as "es-MX-u-hc-h24", instead of "es-MX",
+ *   if the user has selected a 24 hour clock option.
 */
-#ifndef U_USE_PREFERENCES_LIBRARY
-#define U_USE_PREFERENCES_LIBRARY 1
+#ifndef UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY 
+#define UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY  1
 #endif
 
 //IGNORE_WINDOWS_HEADERS_END

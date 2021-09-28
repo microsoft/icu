@@ -1,3 +1,5 @@
+// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
 #include "uprefstest.h"
 #if U_PLATFORM_USES_ONLY_WIN32_API
 

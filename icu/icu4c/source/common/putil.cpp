@@ -1780,16 +1780,14 @@ The leftmost codepage (.xxx) wins.
     UErrorCode status = U_ZERO_ERROR;
     char *correctedPOSIXLocale = nullptr;
 
-#if U_USE_PREFERENCES_LIBRARY
+#if UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY 
 
     int32_t neededBufferSize = uprefs_getBCP47Tag(nullptr, 0, &status);
-    MaybeStackArray<char,40> windowsLocale(neededBufferSize, status);
+    MaybeStackArray<char,ULOC_FULLNAME_CAPACITY> windowsLocale(neededBufferSize, status);
     int32_t length = uprefs_getBCP47Tag(windowsLocale.getAlias(), neededBufferSize, &status);
 
-    // Now we should have a Windows locale name that needs converted to the POSIX style.
     if (length > 0) // If length is 0, then the call to uprefs_getBCP47Tag failed.
     {
-
         // Now normalize the resulting name
         correctedPOSIXLocale = static_cast<char *>(uprv_malloc(length * 2));
         /* TODO: Should we just exit on memory allocation failure? */
