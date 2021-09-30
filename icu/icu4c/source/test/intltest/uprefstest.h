@@ -4,7 +4,7 @@
 #define UPREFSTEST_H
 
 #include "unicode/platform.h"
-#if U_PLATFORM_USES_ONLY_WIN32_API
+#if U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY
 // We define UPREFS_TEST to use the mock version of GetLocaleInfoEx(), which
 // allows us to simulate its behaviour and determine if the results given by the 
 // API align with what we expect to receive
@@ -16,13 +16,15 @@
 #include "uprefs.h"
 
 class UPrefsTest: public IntlTest {
-public:
+private:
     static std::wstring language;
     static std::wstring currency;
     static std::wstring hourCycle;
     static int32_t firstday;
     static int32_t measureSystem;
     static CALID calendar;
+
+public:
     UPrefsTest(){};
     virtual ~UPrefsTest(){};
 

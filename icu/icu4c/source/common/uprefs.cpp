@@ -398,14 +398,14 @@ CharString getCurrencyCode_impl(UErrorCode* status)
     
     RETURN_VALUE_IF(U_FAILURE(*status), CharString());
     
-    MaybeStackArray<wchar_t, 40> NLScurrencyData(neededBufferSize, *status);
+    MaybeStackArray<wchar_t, 10> NLScurrencyData(neededBufferSize, *status);
     RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
 
     int32_t result = GetLocaleInfoExWrapper(LOCALE_NAME_USER_DEFAULT, LOCALE_SINTLSYMBOL, NLScurrencyData.getAlias(), neededBufferSize, status);
 
     RETURN_VALUE_IF(U_FAILURE(*status), CharString());
 
-    MaybeStackArray<char, 40> currency(neededBufferSize, *status);
+    MaybeStackArray<char, 10> currency(neededBufferSize, *status);
     RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
 
     int32_t unitsWritten = 0;
