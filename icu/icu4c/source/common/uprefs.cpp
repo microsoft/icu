@@ -279,30 +279,32 @@ UErrorCode getUErrorCodeFromLastError()
         case ERROR_INVALID_FLAGS:
         case ERROR_INVALID_PARAMETER:
             return U_ILLEGAL_ARGUMENT_ERROR;
+
         case ERROR_OUTOFMEMORY:
             return U_MEMORY_ALLOCATION_ERROR;
-        default:    
+
+        default:
             return U_INTERNAL_PROGRAM_ERROR;
     }
 }
 
-int32_t GetLocaleInfoExWrapper(LPCWSTR lpLocaleName, LCTYPE LCType, LPWSTR lpLCData, int cchData, UErrorCode* errorCode)
+int32_t GetLocaleInfoExWrapper(LPCWSTR lpLocaleName, LCTYPE LCType, LPWSTR lpLCData, int cchData, UErrorCode* status)
 {
-    RETURN_VALUE_IF(U_FAILURE(*errorCode), 0);
+    RETURN_VALUE_IF(U_FAILURE(*status), 0);
 
 #ifndef UPREFS_TEST
-    *errorCode = U_ZERO_ERROR;
+    *status = U_ZERO_ERROR;
     int32_t result = GetLocaleInfoEx(lpLocaleName, LCType, lpLCData, cchData);
 
     if (result == 0)
     {
-        *errorCode = getUErrorCodeFromLastError();
+        *status = getUErrorCodeFromLastError();
     }
     return result;
 #else
     #include "uprefstest.h"
     UPrefsTest prefTests;
-    return prefTests.MockGetLocaleInfoEx(lpLocaleName, LCType, lpLCData, cchData, errorCode);
+    return prefTests.MockGetLocaleInfoEx(lpLocaleName, LCType, lpLCData, cchData, status);
 #endif
 }
 
@@ -541,9 +543,7 @@ int32_t uprefs_getBCP47Tag(char* uprefsBuffer, int32_t bufferSize, UErrorCode* s
         *status = U_USING_FALLBACK_WARNING;
     }
 
-    int32_t result = checkBufferCapacityAndCopy(BCP47Tag.data(), uprefsBuffer, bufferSize, status);
-
-    return result;
+    return checkBufferCapacityAndCopy(BCP47Tag.data(), uprefsBuffer, bufferSize, status);
 }
 
 // -------------------------------------------------------

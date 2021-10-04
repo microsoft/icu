@@ -46,7 +46,7 @@ int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPW
         if (language.length() + 1 > cchData)
         {
             *status = U_BUFFER_OVERFLOW_ERROR;
-            return -1;
+            return 0;
         }
         wcsncpy(lpLCData, language.c_str(), cchData);
         *status = U_ZERO_ERROR;
@@ -61,7 +61,7 @@ int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPW
         if (cchData < 2)
         {
             *status = U_BUFFER_OVERFLOW_ERROR;
-            return -1;
+            return 0;
         }
         *(reinterpret_cast<int32_t*>(lpLCData)) = calendar;
         *status = U_ZERO_ERROR;
@@ -76,7 +76,7 @@ int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPW
         if (currency.length() + 1 > cchData)
         {
             *status = U_BUFFER_OVERFLOW_ERROR;
-            return -1;
+            return 0;
         }
         wcsncpy(lpLCData, currency.c_str(), cchData);
         *status = U_ZERO_ERROR;
@@ -91,7 +91,7 @@ int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPW
         if (cchData < 2)
         {
             *status = U_BUFFER_OVERFLOW_ERROR;
-            return -1;
+            return 0;
         }
 
         *(reinterpret_cast<int32_t*>(lpLCData)) = firstday;
@@ -108,7 +108,7 @@ int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPW
         if (hourCycle.length() + 1 > cchData)
         {
             *status = U_BUFFER_OVERFLOW_ERROR;
-            return -1;
+            return 0;
         }
         wcsncpy(lpLCData, hourCycle.c_str(), cchData);
         *status = U_ZERO_ERROR;
@@ -124,7 +124,7 @@ int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPW
         if (cchData < 2)
         {
             *status = U_BUFFER_OVERFLOW_ERROR;
-            return -1;
+            return 0;
         }
         *(reinterpret_cast<int32_t*>(lpLCData)) = measureSystem;
         *status = U_ZERO_ERROR;
@@ -132,7 +132,7 @@ int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPW
 
     default:
         *status = U_INTERNAL_PROGRAM_ERROR;
-        return -1;
+        return 0;
     }
 }
 
