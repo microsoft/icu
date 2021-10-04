@@ -20,14 +20,14 @@ U_NAMESPACE_USE
 #define CAL_PERSIAN                    22     // Persian (Solar Hijri) calendar
 #endif
 
-#define RETURN_FAILURE_STRING_WITH_STATUS_IF(value, error, status)      \
-    if (value)                                                          \
+#define RETURN_FAILURE_STRING_WITH_STATUS_IF(condition, error, status)  \
+    if (condition)                                                      \
     {                                                                   \
         *status = error;                                                \
         return CharString();                                            \
     }
 
-#define RETURN_FAILURE_WITH_STATUS_IF(condition, error)                 \
+#define RETURN_FAILURE_WITH_STATUS_IF(condition, error, status)         \
     if (condition)                                                      \
     {                                                                   \
         *status = error;                                                \
@@ -314,7 +314,7 @@ int32_t checkBufferCapacityAndCopy(const char* uprefsString, char* uprefsBuffer,
     int32_t neededBufferSize = static_cast<int32_t>(uprv_strlen(uprefsString) + 1);
 
     RETURN_VALUE_IF(bufferSize == 0, neededBufferSize);
-    RETURN_FAILURE_WITH_STATUS_IF(neededBufferSize > bufferSize, U_BUFFER_OVERFLOW_ERROR);
+    RETURN_FAILURE_WITH_STATUS_IF(neededBufferSize > bufferSize, U_BUFFER_OVERFLOW_ERROR, status);
 
     uprv_strcpy(uprefsBuffer, uprefsString);
 
@@ -501,7 +501,7 @@ void appendIfDataNotEmpty(CharString& dest, const char* firstData, const char* s
 // Returns the needed buffer size for the BCP47 Tag. 
 int32_t uprefs_getBCP47Tag(char* uprefsBuffer, int32_t bufferSize, UErrorCode* status)
 {
-    RETURN_FAILURE_WITH_STATUS_IF(uprefsBuffer == nullptr && bufferSize != 0, U_ILLEGAL_ARGUMENT_ERROR);
+    RETURN_FAILURE_WITH_STATUS_IF(uprefsBuffer == nullptr && bufferSize != 0, U_ILLEGAL_ARGUMENT_ERROR, status);
 
     *status = U_ZERO_ERROR;
     CharString BCP47Tag;
