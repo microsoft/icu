@@ -40,8 +40,8 @@ U_NAMESPACE_USE
         return value;                                                   \
     }   
 
-#define RETURN_WITH_ALLOCATION_ERROR_IF(condition, status)              \
-    if (condition)                                                      \
+#define RETURN_WITH_ALLOCATION_ERROR_IF_FAILED(status)                  \
+    if (U_FAILURE(*status))                                             \
     {                                                                   \
         *status = U_MEMORY_ALLOCATION_ERROR;                            \
         return CharString();                                            \
@@ -329,7 +329,7 @@ CharString getLocaleBCP47Tag_impl(UErrorCode* status, bool getSorting)
     RETURN_VALUE_IF(U_FAILURE(*status), CharString());
 
     MaybeStackArray<wchar_t, LOCALE_NAME_MAX_LENGTH> NLSLocale(neededBufferSize, *status);
-    RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
+    RETURN_WITH_ALLOCATION_ERROR_IF_FAILED(status);
     
     int32_t result = GetLocaleInfoExWrapper(LOCALE_NAME_USER_DEFAULT, LOCALE_SNAME, NLSLocale.getAlias(), neededBufferSize, status);
 
@@ -367,7 +367,7 @@ CharString getLocaleBCP47Tag_impl(UErrorCode* status, bool getSorting)
         CharString languageTag;
         int32_t resultCapacity = 0;
         languageTag.getAppendBuffer(neededBufferSize, neededBufferSize, resultCapacity, *status);
-        RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
+        RETURN_WITH_ALLOCATION_ERROR_IF_FAILED(status);
 
         int32_t unitsWritten = 0;
         u_strToUTF8(languageTag.data(), neededBufferSize, &unitsWritten, reinterpret_cast<UChar*>(NLSLocale.getAlias()), neededBufferSize, status);
@@ -399,14 +399,14 @@ CharString getCurrencyCode_impl(UErrorCode* status)
     RETURN_VALUE_IF(U_FAILURE(*status), CharString());
     
     MaybeStackArray<wchar_t, 10> NLScurrencyData(neededBufferSize, *status);
-    RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
+    RETURN_WITH_ALLOCATION_ERROR_IF_FAILED(status);
 
     int32_t result = GetLocaleInfoExWrapper(LOCALE_NAME_USER_DEFAULT, LOCALE_SINTLSYMBOL, NLScurrencyData.getAlias(), neededBufferSize, status);
 
     RETURN_VALUE_IF(U_FAILURE(*status), CharString());
 
     MaybeStackArray<char, 10> currency(neededBufferSize, *status);
-    RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
+    RETURN_WITH_ALLOCATION_ERROR_IF_FAILED(status);
 
     int32_t unitsWritten = 0;
     u_strToUTF8(currency.getAlias(), neededBufferSize, &unitsWritten, reinterpret_cast<UChar*>(NLScurrencyData.getAlias()), neededBufferSize, status);
@@ -444,7 +444,7 @@ CharString getHourCycle_impl(UErrorCode* status)
     RETURN_VALUE_IF(U_FAILURE(*status), CharString());
 
     MaybeStackArray<wchar_t, 40> NLShourCycle(neededBufferSize, *status);
-    RETURN_WITH_ALLOCATION_ERROR_IF(U_FAILURE(*status), status);
+    RETURN_WITH_ALLOCATION_ERROR_IF_FAILED(status);
 
     int32_t result = GetLocaleInfoExWrapper(LOCALE_NAME_USER_DEFAULT, LOCALE_STIMEFORMAT, NLShourCycle.getAlias(), neededBufferSize, status);
 
