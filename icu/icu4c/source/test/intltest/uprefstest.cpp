@@ -336,10 +336,12 @@ void UPrefsTest::Get24HourCycleMixed()
     UErrorCode status = U_ZERO_ERROR;
     char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h23-ms-metric";
 
-    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) {
+    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51)
+    {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
     }
-    if (uprv_strcmp(expectedValue, languageBuffer) != 0) {
+    if (uprv_strcmp(expectedValue, languageBuffer) != 0)
+    {
         errln("Expected BCP47Tag to be %s, but got: %s\n", expectedValue, languageBuffer);
     }
 }
@@ -356,10 +358,12 @@ void UPrefsTest::Get12HourCycleMixed()
     UErrorCode status = U_ZERO_ERROR;
     char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
-    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) {
+    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51)
+    {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
     }
-    if (uprv_strcmp(expectedValue, languageBuffer) != 0) {
+    if (uprv_strcmp(expectedValue, languageBuffer) != 0)
+    {
         errln("Expected BCP47Tag to be %s, but got: %s\n", expectedValue, languageBuffer);
     }
 }
@@ -377,10 +381,12 @@ void UPrefsTest::Get12HourCycleMixed2()
     UErrorCode status = U_ZERO_ERROR;
     char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
-    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) {
+    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51)
+    {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
     }
-    if (uprv_strcmp(expectedValue, languageBuffer) != 0) {
+    if (uprv_strcmp(expectedValue, languageBuffer) != 0)
+    {
         errln("Expected BCP47Tag to be %s, but got: %s\n", expectedValue, languageBuffer);
     }
 }
@@ -397,10 +403,12 @@ void UPrefsTest::Get12HourCycle()
     UErrorCode status = U_ZERO_ERROR;
     char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
-    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) {
+    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51)
+    {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
     }
-    if (uprv_strcmp(expectedValue, languageBuffer) != 0) {
+    if (uprv_strcmp(expectedValue, languageBuffer) != 0)
+    {
         errln("Expected BCP47Tag to be %s, but got: %s\n", expectedValue, languageBuffer);
     }
 }
@@ -417,10 +425,12 @@ void UPrefsTest::Get12HourCycle2()
     UErrorCode status = U_ZERO_ERROR;
     char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
-    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) {
+    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51)
+    {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
     }
-    if (uprv_strcmp(expectedValue, languageBuffer) != 0) {
+    if (uprv_strcmp(expectedValue, languageBuffer) != 0)
+    {
         errln("Expected BCP47Tag to be %s, but got: %s\n", expectedValue, languageBuffer);
     }
 }
