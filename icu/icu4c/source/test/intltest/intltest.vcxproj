@@ -288,6 +288,7 @@
     <ClCompile Include="units_data_test.cpp" />
     <ClCompile Include="units_router_test.cpp" />
     <ClCompile Include="units_test.cpp" />
+    <ClCompile Include="uprefstest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="colldata.h" />
@@ -419,6 +420,7 @@
     <ClInclude Include="csdetest.h" />
     <ClInclude Include="listformattertest.h" />
     <ClInclude Include="localebuildertest.h" />
+    <ClInclude Include="uprefstest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
