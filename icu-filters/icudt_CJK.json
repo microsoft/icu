@@ -1,0 +1,152 @@
+{
+    "collationUCAData": "implicithan",
+    "localeFilter": {
+        "filterType": "language",
+        "whitelist": [
+            "en",
+            "ja",
+            "ko",
+            "zh"
+        ]
+    },
+    "featureFilters": {
+        "conversion_mappings": "exclude",
+        "confusables": "exclude",
+        "stringprep": "exclude",
+        "zone_tree": "exclude",
+        "zone_supplemental": "exclude",
+        "translit": "exclude",
+        "unames": "exclude",
+        "ulayout": "exclude",
+        "unit_tree": "exclude",
+        "rbnf_tree": "exclude",
+        "cnvalias": "exclude",
+        "lang_tree": "exclude",
+        "region_tree": "exclude",
+        "normalization": {
+            "blacklist": [
+                "nfkc_cf",
+                "nfkc"
+            ]
+        },
+        "misc": {
+            "whitelist": [
+                "currencyNumericCodes",
+                "numberingSystems",
+                "icuver",
+                "supplementalData",
+                "keyTypeData"
+            ]
+        },
+        "curr_tree": {
+            "whitelist": ["root"]
+        },
+        "brkitr_dictionaries": "exclude",
+        "brkitr_rules": {
+            "whitelist": ["char"]
+        }
+    },
+    "resourceFilters": [
+        {
+            "categories": ["curr_tree"],
+            "rules": [
+                "-/Currencies",
+                "+/Currencies/USD",
+                "+/Currencies/CNY",
+                "+/Currencies/JPY",
+                "+/Currencies/KRW",
+                "+/Currencies/XXX"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "rules": [
+                "-/characterLabel",
+                "-/measurementSystemNames",
+                "-/listPattern",
+                "-/fields",
+                "-/delimiters",
+                "-/Ellipsis",
+                "-/NumberElements/latn/miscPatterns",
+                "-/NumberElements/latn/patternsLong",
+                "-/NumberElements/latn/patternsShort",
+                "-/NumberElements/*/patternsLong",
+                "-/NumberElements/*/patternsShort",
+                "-/NumberElements/minimalPairs",
+                "-/parse",
+                "-/AuxExemplarCharacters",
+                "-/ExemplarCharacters",
+                "-/ExemplarCharactersIndex",
+                "-/ExemplarCharactersNumbers",
+                "-/ExemplarCharactersPunctuation",
+                "-/MoreInformation"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["ko"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/dangi"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["ja"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/japanese"
+            ]
+        },
+        {
+            "categories": ["locales_tree"],
+            "files": {
+                "whitelist": ["zh", "zh_Hant"]
+            },
+            "rules": [
+                "-/calendar/*",
+                "+/calendar/default",
+                "+/calendar/gregorian",
+                "+/calendar/generic",
+                "+/calendar/roc"
+            ]
+        },
+        {
+            "categories": ["coll_tree"],
+            "rules": [
+                "-/*/*",
+                "+/collations/default",
+                "+/collations/standard",
+                "+/collations/private-kana",
+                "-/UCARules"
+            ]
+        },
+        {
+            "categories": ["misc"],
+            "files": {
+                "whitelist": ["supplementalData"]
+            },
+            "rules": [
+                "-/*",
+                "+/calendarData",
+                "+/calendarPreferenceData",
+                "+/cldrVersion",
+                "+/measurementData",
+                "+/codeMappings",
+                "+/idValidity",
+                "+/timeData",
+                "+/weekData"
+            ]
+        }
+    ]
+}
