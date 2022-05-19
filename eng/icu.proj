@@ -24,6 +24,8 @@
     succeed, we need to provide a patched version of that file. Ideally, fixing upstream would be best, but until then, patch.
   -->
   <Target Name="PatchEmscripten" Condition="'$(TargetOS)' == 'Browser' and '$(WasmEnableThreads)' == 'true'">
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)patches\emcmake.py"
+          DestinationFolder="$(EMSDK_PATH)\upstream\emscripten" />
     <Copy SourceFiles="$(MSBuildThisFileDirectory)patches\emcc.py"
           DestinationFolder="$(EMSDK_PATH)\upstream\emscripten" />
   </Target>
