@@ -41,6 +41,7 @@
     <File Include="$(RepoRoot)\artifacts\bin\icu-browser-wasm\emscripten-version.txt" TargetPath="runtimes\browser-wasm\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
     <File Include="$(RepoRoot)\artifacts\bin\icu-browser-wasm\lib\libicui18n.a" TargetPath="runtimes\browser-wasm\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
     <File Include="$(RepoRoot)\artifacts\bin\icu-browser-wasm\lib\libicuuc.a" TargetPath="runtimes\browser-wasm\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-browser-wasm\lib\libicudata.a" TargetPath="runtimes\browser-wasm\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
     <File Include="$(RepoRoot)\artifacts\bin\icu-browser-wasm\include\**" TargetPath="runtimes\browser-wasm\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
     <!-- Work around non-determinism reported in https://github.com/dotnet/runtime/issues/55637
          we cannot trust that the .dat files generated in a build are "good", so we prefer files
@@ -53,6 +54,7 @@
     <!-- Threads build -->
     <File Include="$(RepoRoot)\artifacts\bin\browser-threading\icu-browser-wasm\lib\libicui18n.a" TargetPath="runtimes\browser-wasm$(ExtraPackageName)\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
     <File Include="$(RepoRoot)\artifacts\bin\browser-threading\icu-browser-wasm\lib\libicuuc.a" TargetPath="runtimes\browser-wasm$(ExtraPackageName)\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\browser-threading\icu-browser-wasm\lib\libicudata.a" TargetPath="runtimes\browser-wasm$(ExtraPackageName)\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
     <File Include="$(RepoRoot)\artifacts\bin\browser-threading\icu-browser-wasm\include\**" TargetPath="runtimes\browser-wasm$(ExtraPackageName)\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
     <!-- Work around non-determinism reported in https://github.com/dotnet/runtime/issues/55637
          we cannot trust that the .dat files generated in a build are "good", so we prefer files
