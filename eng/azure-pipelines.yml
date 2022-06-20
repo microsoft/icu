@@ -40,7 +40,7 @@ stages:
             name: NetCore1ESPool-Internal
             demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
         container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20220531132048-00a561c
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20220317214646-1ad56e8
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm $(_InternalBuildArgs)
@@ -62,7 +62,7 @@ stages:
             name: NetCore1ESPool-Internal
             demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
         container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20220531132048-00a561c
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20220317214646-1ad56e8
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm /p:WasmEnableThreads=true $(_InternalBuildArgs)
