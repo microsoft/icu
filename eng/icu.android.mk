@@ -4,29 +4,29 @@ ifeq ($(TARGET_ARCHITECTURE),x64)
 	ANDROID_FLAGS=-m64
 	ANDROID_PLATFORM=x86_64
 	ANDROID_CX_SUFFIX=android$(ANDROID_API)
-	ANDROID_AR=$(ANDROID_PLATFORM)-linux-android-ar
-	ANDROID_RANLIB=$(ANDROID_PLATFORM)-linux-android-ranlib
+	ANDROID_AR=llvm-ar
+	ANDROID_RANLIB=llvm-ranlib
 endif
 ifeq ($(TARGET_ARCHITECTURE),x86)
 	ANDROID_FLAGS=-m32
 	ANDROID_PLATFORM=i686
 	ANDROID_CX_SUFFIX=android$(ANDROID_API)
-	ANDROID_AR=$(ANDROID_PLATFORM)-linux-android-ar
-	ANDROID_RANLIB=$(ANDROID_PLATFORM)-linux-android-ranlib
+	ANDROID_AR=llvm-ar
+	ANDROID_RANLIB=llvm-ranlib
 endif
 ifeq ($(TARGET_ARCHITECTURE),arm64)
 	ANDROID_FLAGS=-fpic
 	ANDROID_PLATFORM=aarch64
 	ANDROID_CX_SUFFIX=android$(ANDROID_API)
-	ANDROID_AR=$(ANDROID_PLATFORM)-linux-android-ar
-	ANDROID_RANLIB=$(ANDROID_PLATFORM)-linux-android-ranlib
+	ANDROID_AR=llvm-ar
+	ANDROID_RANLIB=llvm-ranlib
 endif
 ifeq ($(TARGET_ARCHITECTURE),arm)
 	ANDROID_FLAGS=-march=armv7-a -mtune=cortex-a8 -mfpu=vfp -mfloat-abi=softfp -fpic
 	ANDROID_PLATFORM=armv7a
 	ANDROID_CX_SUFFIX=androideabi$(ANDROID_API)
-	ANDROID_AR=arm-linux-androideabi-ar
-	ANDROID_RANLIB=arm-linux-androideabi-ranlib
+	ANDROID_AR=llvm-ar
+	ANDROID_RANLIB=llvm-ranlib
 endif
 
 # TODO: add other host platform/arch combinations

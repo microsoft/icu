@@ -143,7 +143,7 @@ stages:
             name: NetCore1ESPool-Internal
             demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
         container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-android-20200422191843-e2c3f83
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-android-20220131172314-3983b4e
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=x64 $(_InternalBuildArgs)
