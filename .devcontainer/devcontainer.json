@@ -9,6 +9,9 @@
 			"VARIANT": "5.0",
 		}
 	},
+	"remoteEnv": {
+		"EMSDK_PATH": "${containerWorkspaceFolder}/artifacts/emsdk",
+	},
 
 	// Use 'postCreateCommand' to run commands after the container is created.
 	"postCreateCommand": "${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh",

@@ -4,6 +4,5 @@ git clone https://github.com/emscripten-core/emsdk.git $EMSDK_PATH
 EMSCRIPTEN_VERSION="`cat ./.devcontainer/emscripten-version.txt 2>&1`"
 cd $EMSDK_PATH && ./emsdk install $EMSCRIPTEN_VERSION
 cd $EMSDK_PATH && ./emsdk activate $EMSCRIPTEN_VERSION
-cd ../../
-export EMSDK_PATH=$EMSDK_PATH
-./build.sh /p:TargetOS=Browser /p:TargetArchitecture=wasm /p:IcuTracing=true
+# ready to build, e.g.:
+# ./build.sh /p:TargetOS=Browser /p:TargetArchitecture=wasm /p:IcuTracing=true
