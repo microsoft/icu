@@ -34,10 +34,22 @@
            -Dproject.parent.relativePath=""
          argument must be given. -->
     <repositories>
+    <repository>
+      <id>central</id>
+      <url>https://pkgs.dev.azure.com/dnceng/internal/_packaging/internal_PublicPackages/maven/v1</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </repository>
+<!--
         <repository>
             <id>local-maven-repo</id>
             <url>file://${project.basedir}/${project.parent.relativePath}</url>
         </repository>
+-->
     </repositories>
     
     <!-- Ant-built JAR file(s) installed into the local Maven repository in this
@@ -49,5 +61,17 @@
             <version>0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
-</project>
 
+  <pluginRepositories>
+    <pluginRepository>
+      <id>central</id>
+      <url>https://pkgs.dev.azure.com/dnceng/internal/_packaging/internal_PublicPackages/maven/v1</url>
+      <releases>
+        <enabled>true</enabled>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+      </snapshots>
+    </pluginRepository>
+  </pluginRepositories>
+</project>
