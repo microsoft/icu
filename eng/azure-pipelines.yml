@@ -2,6 +2,8 @@ variables:
   - template: /eng/common-variables.yml
   - name: Build.Repository.Clean
     value: true
+  - name: Codeql.Enabled
+    value: true
 
 trigger:
   batch: true
