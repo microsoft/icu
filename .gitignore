@@ -350,6 +350,9 @@ MigrationBackup/
 # Ionide (cross platform F# VS Code tools) working folder
 .ionide/
 
+# macOS files
+.DS_Store
+
 # dotnet/arcade folders
 .dotnet/
 .packages/
