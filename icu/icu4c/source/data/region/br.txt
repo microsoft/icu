@@ -93,14 +93,17 @@ br{
         CY{"Kiprenez"}
         CZ{"Tchekia"}
         DE{"Alamagn"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Danmark"}
         DM{"Dominica"}
         DO{"Republik Dominikan"}
         DZ{"Aljeria"}
+        EA{"Ceuta ha Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egipt"}
+        EH{"Sahara ar Cʼhornôg"}
         ER{"Eritrea"}
         ES{"Spagn"}
         ET{"Etiopia"}
@@ -137,6 +140,7 @@ br{
         HR{"Kroatia"}
         HT{"Haiti"}
         HU{"Hungaria"}
+        IC{"Inizi Kanariez"}
         ID{"Indonezia"}
         IE{"Iwerzhon"}
         IL{"Israel"}
@@ -219,7 +223,7 @@ br{
         PM{"Sant-Pêr-ha-Mikelon"}
         PN{"Enez Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Autorité palestinienne"}
+        PS{"Tiriadoù Palestina"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -284,6 +288,8 @@ br{
         VU{"Vanuatu"}
         WF{"Wallis ha Futuna"}
         WS{"Samoa"}
+        XA{"pouez-mouezh gaou"}
+        XB{"BiDi gaou"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +297,22 @@ br{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Rannved dianav"}
+    }
+    Countries%short{
+        GB{"RU"}
+        HK{"Hong Kong"}
+        MO{"Macau"}
+        PS{"Palestina"}
+        US{"SU"}
+    }
+    Countries%variant{
+        CD{"Kongo (RDK)"}
+        CG{"Kongo (Republik)"}
+        CI{"Aod Olifant"}
+        CZ{"Republik Tchek"}
+        FK{"Inizi Falkland (Inizi Maloù)"}
+        NZ{"Aotearoa Zeland-Nevez"}
+        SZ{"Swaziland"}
+        TL{"Timor ar Reter"}
     }
 }

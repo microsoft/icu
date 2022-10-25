@@ -165,7 +165,7 @@ lu{
         PM{"Santu pététo ne Mikelu"}
         PN{"Pikairni"}
         PR{"Mpotoriku"}
-        PS{"Autorité palestinienne"}
+        PS{"Palesine"}
         PT{"Mputulugeshi"}
         PW{"Palau"}
         PY{"Palagwei"}

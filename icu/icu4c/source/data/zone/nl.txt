@@ -867,6 +867,9 @@ nl{
         "Asia:Ulaanbaatar"{
             ec{"Ulaanbaatar"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1971,6 +1974,9 @@ nl{
             ld{"Jekaterinenburg-zomertijd"}
             lg{"Jekaterinenburg-tijd"}
             ls{"Jekaterinenburg-standaardtijd"}
+        }
+        "meta:Yukon"{
+            ls{"Yukon-tijd"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

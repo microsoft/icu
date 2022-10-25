@@ -3,7 +3,17 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 yo_BJ{
     units{
+        compound{
+            1024p2{"mɛ́bì {0}"}
+            1024p4{"tɛbi {0}"}
+            1024p5{"pɛbi {0}"}
+            1024p6{"ɛ́síbì {0}"}
+            1024p7{"sɛ́bì {0}"}
+        }
         concentr{
+            item{
+                dnam{"àwɔ́n ohun"}
+            }
             permille{
                 other{"{0} ìdákan nínú ɛgbɛ̀rún"}
             }
@@ -94,6 +104,12 @@ yo_BJ{
                 per{"{0} ɔd"}
             }
         }
+        force{
+            kilowatt-hour-per-100-kilometer{
+                dnam{"àwɔ́n wákàtí kílówáàtì ní kìlómítà ɔgɔ́rùn"}
+                other{"{0} àwɔ́n wákàtí kílówáàtì ní kìlómítà ɔgɔ́rùn"}
+            }
+        }
         graphics{
             dot{
                 dnam{"dɔ́ɔ̀tì"}
@@ -104,6 +120,14 @@ yo_BJ{
             earth-radius{
                 dnam{"ìdinwɔ̀n ayé"}
                 other{"{0} ìdinwɔ̀n ayé"}
+            }
+            fathom{
+                dnam{"fátɔ́ɔ̀mu"}
+                other{"{0} fátɔ́ɔ̀mù"}
+            }
+            furlong{
+                dnam{"àwɔn fɔ́lɔ́ɔ̀ngì"}
+                other{"{0} àwɔn fɔ́lɔ́ɔ̀ngì"}
             }
         }
         light{
@@ -117,6 +141,10 @@ yo_BJ{
             }
         }
         volume{
+            bushel{
+                dnam{"búsɛ́ɛ̀li"}
+                other{"{0} búsɛ́ɛ̀li"}
+            }
             dessert-spoon{
                 dnam{"àmì shíbí oúnjɛ́ kékeré"}
                 other{"{0} àmì shíbí oúnjɛ́ kékeré"}
@@ -162,11 +190,36 @@ yo_BJ{
                 other{"{0} ɔd"}
             }
         }
+        length{
+            fathom{
+                dnam{"fatɔ́"}
+            }
+            furlong{
+                dnam{"fɔ́lɔ́ɔ̀ngì"}
+            }
+        }
+        light{
+            lumen{
+                other{"{0} Lúmɛ́nì"}
+            }
+            lux{
+                dnam{"lɔ́s"}
+            }
+        }
+        volume{
+            bushel{
+                dnam{"búsɛ́li"}
+                other{"{0}búsɛ́ɛ̀li"}
+            }
+        }
     }
     unitsShort{
         concentr{
             permille{
                 dnam{"ìdákan nínú ɛgbɛ̀rún"}
+            }
+            permillion{
+                dnam{"ara/milíɔ̀nù"}
             }
         }
         digital{
@@ -214,6 +267,12 @@ yo_BJ{
                 per{"{0}/ɔd"}
             }
         }
+        force{
+            kilowatt-hour-per-100-kilometer{
+                dnam{"KWh lɔ́rí 100km"}
+                other{"{0} KWh lɔ́rí 100km"}
+            }
+        }
         graphics{
             dot{
                 dnam{"dɔ́ɔ̀tì"}
@@ -225,14 +284,24 @@ yo_BJ{
                 dnam{"àmì ìdínwɔ̀n ayé"}
                 other{"{0} àmì ìdínwɔ̀n ayé"}
             }
+            fathom{
+                dnam{"fátɔ́mù"}
+            }
+            furlong{
+                dnam{"fɔ́lɔ́ɔ̀ngì"}
+                other{"{0} fɔ́"}
+            }
         }
         light{
             lumen{
                 dnam{"àmì lumɛ́ɛ̀nì"}
-                other{"{0} àmi lumɛ́ɛ̀nì"}
+                other{"{0} Lúmɛ́nì"}
             }
         }
         volume{
+            bushel{
+                dnam{"Búsɛ́ɛ̀li"}
+            }
             dessert-spoon{
                 dnam{"shíbí oúnjɛ́ kékeré"}
                 other{"{0} shíbí oúnjɛ́ kékeré"}

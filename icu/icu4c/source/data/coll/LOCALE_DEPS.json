@@ -3,30 +3,16 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 
 {
-    "cldrVersion": "38.1",
+    "cldrVersion": "42",
     "aliases": {
         "ars": "ar_SA",
         "in": "id",
         "in_ID": "id_ID",
         "iw": "he",
         "iw_IL": "he_IL",
-        "ku": "ckb",
-        "ku_Arab_IQ": "ckb_IQ",
-        "ku_Arab_IR": "ckb_IR",
         "mo": "ro",
-        "no": "nb",
-        "no_NO": "nb_NO",
+        "no_NO": "no",
         "pa_IN": "pa_Guru_IN",
-        "prs": "fa",
-        "prs_AF": "fa_AF",
-        "qut": "quc",
-        "qut_GT": "quc_GT",
-        "qut_Latn": "quc",
-        "qut_Latn_GT": "quc_GT",
-        "quz": "qu",
-        "quz_BO": "qu_BO",
-        "quz_EC": "qu_EC",
-        "quz_PE": "qu_PE",
         "sh": "sr_Latn",
         "sh_BA": "sr_Latn_BA",
         "sh_CS": "sr_Latn_RS",
@@ -34,6 +20,11 @@
         "sr_BA": "sr_Cyrl_BA",
         "sr_ME": "sr_Cyrl_ME",
         "sr_RS": "sr_Cyrl_RS",
+        "yue": "zh_Hant",
+        "yue_CN": "zh_Hans",
+        "yue_Hans": "zh_Hans",
+        "yue_Hans_CN": "zh_Hans",
+        "yue_Hant": "zh_Hant",
         "zh_CN": "zh_Hans_CN",
         "zh_HK": "zh_Hant_HK",
         "zh_MO": "zh_Hant_MO",
@@ -41,6 +32,8 @@
         "zh_TW": "zh_Hant_TW"
     },
     "parents": {
-        "ff_Adlm": "root"
+        "ff_Adlm": "root",
+        "nb": "no",
+        "nn": "no"
     }
 }

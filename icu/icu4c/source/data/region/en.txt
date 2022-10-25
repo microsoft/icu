@@ -3,7 +3,7 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 en{
     Countries{
-        001{"World"}
+        001{"world"}
         002{"Africa"}
         003{"North America"}
         005{"South America"}
@@ -64,7 +64,7 @@ en{
         BM{"Bermuda"}
         BN{"Brunei"}
         BO{"Bolivia"}
-        BQ{"Bonaire, Sint Eustatius and Saba"}
+        BQ{"Caribbean Netherlands"}
         BR{"Brazil"}
         BS{"Bahamas"}
         BT{"Bhutan"}
@@ -74,9 +74,9 @@ en{
         BZ{"Belize"}
         CA{"Canada"}
         CC{"Cocos (Keeling) Islands"}
-        CD{"Congo (DRC)"}
+        CD{"Congo - Kinshasa"}
         CF{"Central African Republic"}
-        CG{"Congo"}
+        CG{"Congo - Brazzaville"}
         CH{"Switzerland"}
         CI{"Côte d’Ivoire"}
         CK{"Cook Islands"}
@@ -87,20 +87,23 @@ en{
         CP{"Clipperton Island"}
         CR{"Costa Rica"}
         CU{"Cuba"}
-        CV{"Cabo Verde"}
+        CV{"Cape Verde"}
         CW{"Curaçao"}
         CX{"Christmas Island"}
         CY{"Cyprus"}
         CZ{"Czechia"}
         DE{"Germany"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denmark"}
         DM{"Dominica"}
         DO{"Dominican Republic"}
         DZ{"Algeria"}
+        EA{"Ceuta & Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egypt"}
+        EH{"Western Sahara"}
         ER{"Eritrea"}
         ES{"Spain"}
         ET{"Ethiopia"}
@@ -131,12 +134,13 @@ en{
         GU{"Guam"}
         GW{"Guinea-Bissau"}
         GY{"Guyana"}
-        HK{"Hong Kong SAR"}
+        HK{"Hong Kong SAR China"}
         HM{"Heard & McDonald Islands"}
         HN{"Honduras"}
         HR{"Croatia"}
         HT{"Haiti"}
         HU{"Hungary"}
+        IC{"Canary Islands"}
         ID{"Indonesia"}
         IE{"Ireland"}
         IL{"Israel"}
@@ -158,7 +162,7 @@ en{
         KM{"Comoros"}
         KN{"St. Kitts & Nevis"}
         KP{"North Korea"}
-        KR{"Korea"}
+        KR{"South Korea"}
         KW{"Kuwait"}
         KY{"Cayman Islands"}
         KZ{"Kazakhstan"}
@@ -182,9 +186,9 @@ en{
         MH{"Marshall Islands"}
         MK{"North Macedonia"}
         ML{"Mali"}
-        MM{"Myanmar"}
+        MM{"Myanmar (Burma)"}
         MN{"Mongolia"}
-        MO{"Macao SAR"}
+        MO{"Macao SAR China"}
         MP{"Northern Mariana Islands"}
         MQ{"Martinique"}
         MR{"Mauritania"}
@@ -219,7 +223,7 @@ en{
         PM{"St. Pierre & Miquelon"}
         PN{"Pitcairn Islands"}
         PR{"Puerto Rico"}
-        PS{"Palestinian Authority"}
+        PS{"Palestinian Territories"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -236,7 +240,7 @@ en{
         SD{"Sudan"}
         SE{"Sweden"}
         SG{"Singapore"}
-        SH{"St Helena, Ascension, Tristan da Cunha"}
+        SH{"St. Helena"}
         SI{"Slovenia"}
         SJ{"Svalbard & Jan Mayen"}
         SK{"Slovakia"}
@@ -284,6 +288,8 @@ en{
         VU{"Vanuatu"}
         WF{"Wallis & Futuna"}
         WS{"Samoa"}
+        XA{"Pseudo-Accents"}
+        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +297,27 @@ en{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Unknown Region"}
+    }
+    Countries%short{
+        BA{"Bosnia"}
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MM{"Myanmar"}
+        MO{"Macao"}
+        PS{"Palestine"}
+        UN{"UN"}
+        US{"US"}
+    }
+    Countries%variant{
+        CD{"Congo (DRC)"}
+        CG{"Congo (Republic)"}
+        CI{"Ivory Coast"}
+        CV{"Cabo Verde"}
+        CZ{"Czech Republic"}
+        FK{"Falkland Islands (Islas Malvinas)"}
+        NZ{"Aotearoa New Zealand"}
+        SZ{"Swaziland"}
+        TL{"East Timor"}
+        TR{"Türkiye"}
     }
 }

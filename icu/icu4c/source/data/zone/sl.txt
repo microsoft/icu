@@ -472,7 +472,7 @@ sl{
             ec{"Noronha"}
         }
         "America:North_Dakota:Beulah"{
-            ec{"Beulah, North Dakota"}
+            ec{"Beulah, Severna Dakota"}
         }
         "America:North_Dakota:Center"{
             ec{"Center, Severna Dakota"}
@@ -866,6 +866,9 @@ sl{
         }
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
+        }
+        "Asia:Urumqi"{
+            ec{"Urumči"}
         }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
@@ -1894,6 +1897,9 @@ sl{
             ld{"Jekaterinburški poletni čas"}
             lg{"Jekaterinburški čas"}
             ls{"Jekaterinburški standardni čas"}
+        }
+        "meta:Yukon"{
+            ls{"Jukonski čas"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

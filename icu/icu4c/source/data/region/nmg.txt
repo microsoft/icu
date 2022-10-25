@@ -36,7 +36,7 @@ nmg{
         BY{"Belarus"}
         BZ{"Bɛliz"}
         CA{"Kanada"}
-        CD{"Congo (RDC)"}
+        CD{"Kongó Zaïre"}
         CF{"Sentrafríka"}
         CG{"Kongo"}
         CH{"Switzɛrland"}
@@ -165,7 +165,7 @@ nmg{
         PM{"Saint Peter ba Mikelɔn"}
         PN{"Pitkairn"}
         PR{"Puɛrto Riko"}
-        PS{"Autorité palestinienne"}
+        PS{"Palɛstin"}
         PT{"Pɔrtugal"}
         PW{"Palo"}
         PY{"Paraguay"}

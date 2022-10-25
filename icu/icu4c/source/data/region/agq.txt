@@ -165,7 +165,7 @@ agq{
         PM{"Sɛ̀n Kpiyɛ̀ à Mikelɔŋ"}
         PN{"Kpitɨ̀kalè"}
         PR{"Kpǒto Leko"}
-        PS{"Autorité palestinienne"}
+        PS{"Adzɨmā kɨ ŋgùŋ kɨ Palɛsɨtɨnyia à kɨ Gazà kò"}
         PT{"Kputuwgà"}
         PW{"Kpàlawù"}
         PY{"Kpalàgwɛ̂"}

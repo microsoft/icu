@@ -96,6 +96,7 @@ gsw{
         EC{"Ecuador"}
         EE{"Eestland"}
         EG{"Ägüpte"}
+        EH{"Weschtsahara"}
         ER{"Äritreea"}
         ES{"Schpanie"}
         ET{"Äthiopie"}
@@ -279,5 +280,9 @@ gsw{
         ZM{"Sambia"}
         ZW{"Simbabwe"}
         ZZ{"Unbekannti oder ungültigi Regioon"}
+    }
+    Countries%short{
+        HK{"Hongkong"}
+        MO{"Macao"}
     }
 }

@@ -18,10 +18,13 @@ es_US{
         155{"Europa occidental"}
         AC{"Isla de la Ascensión"}
         BA{"Bosnia y Herzegovina"}
-        CI{"Côte d’Ivoire"}
+        EH{"Sahara Occidental"}
         GG{"Guernsey"}
         QO{"Territorios alejados de Oceanía"}
         TA{"Tristán de Acuña"}
         UM{"Islas menores alejadas de EE. UU."}
+    }
+    Countries%short{
+        GB{"RU"}
     }
 }

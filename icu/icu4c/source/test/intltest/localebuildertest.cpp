@@ -62,7 +62,7 @@ void LocaleBuilderTest::Verify(LocaleBuilder& bld, const char* expected, const c
         errln(msg, u_errorName(copyStatus));
     }
     if (!bld.copyErrorTo(errorStatus) || errorStatus != U_ILLEGAL_ARGUMENT_ERROR) {
-        errln("Should always get the previous error and return FALSE");
+        errln("Should always get the previous error and return false");
     }
     Locale loc = bld.build(status);
     if (U_FAILURE(status)) {
@@ -287,7 +287,7 @@ void LocaleBuilderTest::TestLocaleBuilder() {
                 }
                 break;
             } else {
-                // Unknow test method
+                // Unknown test method
                 errln("Unknown test case method: There is an error in the test case data.");
                 break;
             }
@@ -368,7 +368,7 @@ void LocaleBuilderTest::TestLocaleBuilderBasicWithExtensionsOnDefaultLocale() {
     // Change the default locale to one with extension tags.
     UErrorCode status = U_ZERO_ERROR;
     Locale originalDefault;
-    Locale::setDefault(Locale::createFromName("en-US-u-hc-h24"), status);
+    Locale::setDefault(Locale::createFromName("en-US-u-hc-h12"), status);
     if (U_FAILURE(status)) {
         errln("ERROR: Could not change the default locale");
         return;
@@ -445,7 +445,7 @@ void LocaleBuilderTest::TestSetLanguageIllFormed() {
         "F",
         "2",
         "0",
-        "9"
+        "9",
         "{",
         ".",
         "[",
@@ -540,7 +540,7 @@ void LocaleBuilderTest::TestSetScriptIllFormed() {
         "F",
         "2",
         "0",
-        "9"
+        "9",
         "{",
         ".",
         "[",
@@ -639,7 +639,7 @@ void LocaleBuilderTest::TestSetRegionIllFormed() {
         "F",
         "2",
         "0",
-        "9"
+        "9",
         "{",
         ".",
         "[",
@@ -783,7 +783,7 @@ void LocaleBuilderTest::TestSetVariantIllFormed() {
         "F",
         "2",
         "0",
-        "9"
+        "9",
         "{",
         ".",
         "[",
@@ -1395,7 +1395,7 @@ void LocaleBuilderTest::TestSetExtensionValidateTIllFormed() {
         "9-",
         "-9",
         "-z",
-        // "Latn", // Per 2019-01-23 ICUTC, still accept 4alpha. See ICU-20321
+        "Latn",
         "Latn-",
         "en-",
         "nob-",
@@ -1420,6 +1420,8 @@ void LocaleBuilderTest::TestSetExtensionValidateTIllFormed() {
         "gab-Thai-TH-0bde-z9-abcde123-a1-",
         "gab-Thai-TH-0bde-z9-abcde123-a1-a",
         "gab-Thai-TH-0bde-z9-abcde123-a1-ab",
+        // ICU-21408
+        "root",
     };
     for (const char* ill : illFormed) {
         UErrorCode status = U_ZERO_ERROR;

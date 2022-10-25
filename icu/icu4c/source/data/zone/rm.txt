@@ -249,6 +249,9 @@ rm{
         "Asia:Tokyo"{
             ec{"Tokio"}
         }
+        "Asia:Urumqi"{
+            ec{"Ürümqi"}
+        }
         "Asia:Yakutsk"{
             ec{"Jakutsk"}
         }
@@ -311,6 +314,7 @@ rm{
         }
         "Europe:London"{
             ec{"Londra"}
+            ld{"temp da stad britannic"}
         }
         "Europe:Luxembourg"{
             ec{"Luxemburg"}

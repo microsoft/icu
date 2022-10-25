@@ -64,6 +64,9 @@
     <ClCompile Include="itrbbi.cpp">
       <Filter>break iteration</Filter>
     </ClCompile>
+    <ClCompile Include="lstmbetst.cpp">
+      <Filter>break iteration</Filter>
+    </ClCompile>
     <ClCompile Include="rbbiapts.cpp">
       <Filter>break iteration</Filter>
     </ClCompile>
@@ -281,6 +284,9 @@
       <Filter>formatting</Filter>
     </ClCompile>
     <ClCompile Include="numbertest_parse.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="displayoptions_test.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
     <ClCompile Include="numbertest_doubleconversion.cpp">

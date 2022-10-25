@@ -1597,6 +1597,11 @@ zoneinfo64:table(nofallback) {
     typeMap:bin { "03040301020102010201" }
     links:intvector { 274, 530 }
   } //Z#274
+  /* Asia/Kashgar */ :table {
+    trans:intvector { -1325480636, -946791000, 325969200, 515520000, 527007600, 545155200, 558457200, 576604800, 589906800, 608659200, 621961200, 640108800, 653410800, 671558400, 684860400 }
+    typeOffsets:intvector { 18236, 0, 18000, 0, 19800, 0, 28800, 0, 28800, 3600 }
+    typeMap:bin { "020103040304030403040304030403" }
+  } //Z#275
   /* Asia/Kathmandu */ :table {
     trans:intvector { -1577943676, 504901800 }
     typeOffsets:intvector { 20476, 0, 19800, 0, 20700, 0 }
@@ -1807,6 +1812,11 @@ zoneinfo64:table(nofallback) {
     links:intvector { 317, 318 }
   } //Z#317
   /* Asia/Ulan_Bator */ :int { 317 } //Z#318
+  /* Asia/Urumqi */ :table {
+    trans:intvector { -1325483420, 325965600, 515520000, 527007600, 545155200, 558457200, 576604800, 589906800, 608659200, 621961200, 640108800, 653410800, 671558400, 684860400 }
+    typeOffsets:intvector { 21020, 0, 21600, 0, 28800, 0, 28800, 3600 }
+    typeMap:bin { "0102030203020302030203020302" }
+  } //Z#319
   /* Asia/Ust-Nera */ :table {
     trans:intvector { -1579426374, -1247558400, 354898800, 370699200, 386427600, 402235200, 417963600, 433771200, 449586000, 465318000, 481042800, 496767600, 512492400, 528217200, 543942000, 559666800, 575391600, 591116400, 606841200, 622566000, 638290800, 654620400, 670345200, 686073600, 695750400, 701784000, 717505200, 733244400, 748969200, 764694000, 780418800, 796143600, 811868400, 828198000, 846342000, 859647600, 877791600, 891097200, 909241200, 922546800, 941295600, 953996400, 972745200, 985446000, 1004194800, 1017500400, 1035644400, 1048950000, 1067094000, 1080399600, 1099148400, 1111849200, 1130598000, 1143298800, 1162047600, 1174748400, 1193497200, 1206802800, 1224946800, 1238252400, 1256396400, 1269702000, 1288450800, 1301151600, 1315828800 }
     typeOffsets:intvector { 34374, 0, 28800, 0, 32400, 0, 36000, 0, 36000, 3600, 39600, 0, 39600, 3600, 43200, 0 }
@@ -3115,7 +3125,7 @@ zoneinfo64:table(nofallback) {
     ,"Asia/Dushanbe","Asia/Gaza","Asia/Harbin","Asia/Hebron" // 263
     ,"Asia/Ho_Chi_Minh","Asia/Hong_Kong","Asia/Hovd","Asia/Irkutsk" // 267
     ,"Asia/Istanbul","Asia/Jakarta","Asia/Jayapura","Asia/Jerusalem" // 271
-    ,"Asia/Kabul","Asia/Kamchatka","Asia/Karachi" // 275
+    ,"Asia/Kabul","Asia/Kamchatka","Asia/Karachi","Asia/Kashgar" // 275
     ,"Asia/Kathmandu","Asia/Katmandu","Asia/Khandyga","Asia/Kolkata" // 279
     ,"Asia/Krasnoyarsk","Asia/Kuala_Lumpur","Asia/Kuching" // 282
     ,"Asia/Kuwait","Asia/Macao","Asia/Macau","Asia/Magadan" // 286
@@ -3127,7 +3137,7 @@ zoneinfo64:table(nofallback) {
     ,"Asia/Shanghai","Asia/Singapore","Asia/Taipei","Asia/Tashkent" // 309
     ,"Asia/Tbilisi","Asia/Tehran","Asia/Tel_Aviv","Asia/Thimbu" // 313
     ,"Asia/Thimphu","Asia/Tokyo","Asia/Ujung_Pandang","Asia/Ulaanbaatar" // 317
-    ,"Asia/Ulan_Bator","Asia/Ust-Nera","Asia/Vientiane" // 321
+    ,"Asia/Ulan_Bator","Asia/Urumqi","Asia/Ust-Nera","Asia/Vientiane" // 321
     ,"Asia/Vladivostok","Asia/Yakutsk","Asia/Yekaterinburg" // 324
     ,"Asia/Yerevan","Atlantic/Azores","Atlantic/Bermuda" // 327
     ,"Atlantic/Canary","Atlantic/Cape_Verde","Atlantic/Faeroe" // 330
@@ -3584,6 +3594,7 @@ zoneinfo64:table(nofallback) {
   "AF", //Z#272 Asia/Kabul
   "RU", //Z#273 Asia/Kamchatka
   "PK", //Z#274 Asia/Karachi
+  "CN", //Z#275 Asia/Kashgar
   "NP", //Z#276 Asia/Kathmandu
   "NP", //Z#277 Asia/Katmandu
   "RU", //Z#278 Asia/Khandyga
@@ -3627,6 +3638,7 @@ zoneinfo64:table(nofallback) {
   "ID", //Z#316 Asia/Ujung_Pandang
   "MN", //Z#317 Asia/Ulaanbaatar
   "MN", //Z#318 Asia/Ulan_Bator
+  "CN", //Z#319 Asia/Urumqi
   "RU", //Z#320 Asia/Ust-Nera
   "LA", //Z#321 Asia/Vientiane
   "RU", //Z#322 Asia/Vladivostok

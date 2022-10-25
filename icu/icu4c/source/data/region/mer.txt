@@ -165,7 +165,7 @@ mer{
         PM{"Santapieri na Mikeloni"}
         PN{"Pitkairni"}
         PR{"Pwetoriko"}
-        PS{"Palestinian Authority"}
+        PS{"Rũtere rwa Westi banki na Gaza cia Palestina"}
         PT{"Potogo"}
         PW{"Palau"}
         PY{"Paragwai"}

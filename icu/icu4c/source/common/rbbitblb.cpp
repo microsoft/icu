@@ -79,13 +79,13 @@ void  RBBITableBuilder::buildForwardTable() {
 
     //
     // Walk through the tree, replacing any references to $variables with a copy of the
-    //   parse tree for the substition expression.
+    //   parse tree for the substitution expression.
     //
     fTree = fTree->flattenVariables();
 #ifdef RBBI_DEBUG
     if (fRB->fDebugEnv && uprv_strstr(fRB->fDebugEnv, "ftree")) {
         RBBIDebugPuts("\nParse tree after flattening variable references.");
-        RBBINode::printTree(fTree, TRUE);
+        RBBINode::printTree(fTree, true);
     }
 #endif
 
@@ -143,7 +143,7 @@ void  RBBITableBuilder::buildForwardTable() {
 #ifdef RBBI_DEBUG
     if (fRB->fDebugEnv && uprv_strstr(fRB->fDebugEnv, "stree")) {
         RBBIDebugPuts("\nParse tree after flattening Unicode Set references.");
-        RBBINode::printTree(fTree, TRUE);
+        RBBINode::printTree(fTree, true);
     }
 #endif
 
@@ -151,7 +151,7 @@ void  RBBITableBuilder::buildForwardTable() {
     //
     // calculate the functions nullable, firstpos, lastpos and followpos on
     // nodes in the parse tree.
-    //    See the alogrithm description in Aho.
+    //    See the algorithm description in Aho.
     //    Understanding how this works by looking at the code alone will be
     //       nearly impossible.
     //
@@ -209,14 +209,14 @@ void RBBITableBuilder::calcNullable(RBBINode *n) {
     if (n->fType == RBBINode::setRef ||
         n->fType == RBBINode::endMark ) {
         // These are non-empty leaf node types.
-        n->fNullable = FALSE;
+        n->fNullable = false;
         return;
     }
 
     if (n->fType == RBBINode::lookAhead || n->fType == RBBINode::tag) {
         // Lookahead marker node.  It's a leaf, so no recursion on children.
         // It's nullable because it does not match any literal text from the input stream.
-        n->fNullable = TRUE;
+        n->fNullable = true;
         return;
     }
 
@@ -234,10 +234,10 @@ void RBBITableBuilder::calcNullable(RBBINode *n) {
         n->fNullable = n->fLeftChild->fNullable && n->fRightChild->fNullable;
     }
     else if (n->fType == RBBINode::opStar || n->fType == RBBINode::opQuestion) {
-        n->fNullable = TRUE;
+        n->fNullable = true;
     }
     else {
-        n->fNullable = FALSE;
+        n->fNullable = false;
     }
 }
 
@@ -390,6 +390,7 @@ void RBBITableBuilder::addRuleRootNodes(UVector *dest, RBBINode *node) {
     if (node == NULL || U_FAILURE(*fStatus)) {
         return;
     }
+    U_ASSERT(!dest->hasDeleter());
     if (node->fRuleRoot) {
         dest->addElement(node, *fStatus);
         // Note: rules cannot nest. If we found a rule start node,
@@ -617,7 +618,7 @@ void RBBITableBuilder::buildStateTable() {
         for (tx=1; tx<fDStates->size(); tx++) {
             RBBIStateDescriptor *temp;
             temp = (RBBIStateDescriptor *)fDStates->elementAt(tx);
-            if (temp->fMarked == FALSE) {
+            if (temp->fMarked == false) {
                 T = temp;
                 break;
             }
@@ -627,7 +628,7 @@ void RBBITableBuilder::buildStateTable() {
         }
 
         // mark T;
-        T->fMarked = TRUE;
+        T->fMarked = true;
 
         // for each input symbol a do begin
         int32_t  a;
@@ -654,7 +655,7 @@ void RBBITableBuilder::buildStateTable() {
 
             // if U is not empty and not in DStates then
             int32_t  ux = 0;
-            UBool    UinDstates = FALSE;
+            UBool    UinDstates = false;
             if (U != NULL) {
                 U_ASSERT(U->size() > 0);
                 int  ix;
@@ -665,7 +666,7 @@ void RBBITableBuilder::buildStateTable() {
                         delete U;
                         U  = temp2->fPositions;
                         ux = ix;
-                        UinDstates = TRUE;
+                        UinDstates = true;
                         break;
                     }
                 }
@@ -694,7 +695,7 @@ void RBBITableBuilder::buildStateTable() {
         }
     }
     return;
-    // delete local pointers only if error occured.
+    // delete local pointers only if error occurred.
 ExitBuildSTdeleteall:
     delete initialState;
     delete failState;
@@ -1042,6 +1043,8 @@ void RBBITableBuilder::sortedAdd(UVector **vector, int32_t val) {
 //
 //-----------------------------------------------------------------------------
 void RBBITableBuilder::setAdd(UVector *dest, UVector *source) {
+    U_ASSERT(!dest->hasDeleter());
+    U_ASSERT(!source->hasDeleter());
     int32_t destOriginalSize = dest->size();
     int32_t sourceSize       = source->size();
     int32_t di           = 0;
@@ -1070,6 +1073,9 @@ void RBBITableBuilder::setAdd(UVector *dest, UVector *source) {
     (void) source->toArray(sourcePtr);
 
     dest->setSize(sourceSize+destOriginalSize, *fStatus);
+    if (U_FAILURE(*fStatus)) {
+        return;
+    }
 
     while (sourcePtr < sourceLim && destPtr < destLim) {
         if (*destPtr == *sourcePtr) {
@@ -1125,7 +1131,7 @@ void RBBITableBuilder::printPosSets(RBBINode *n) {
     printf("\n");
     RBBINode::printNodeHeader();
     RBBINode::printNode(n);
-    RBBIDebugPrintf("         Nullable:  %s\n", n->fNullable?"TRUE":"FALSE");
+    RBBIDebugPrintf("         Nullable:  %s\n", n->fNullable?"true":"false");
 
     RBBIDebugPrintf("         firstpos:  ");
     printSet(n->fFirstPosSet);
@@ -1431,7 +1437,7 @@ void RBBITableBuilder::exportTable(void *where) {
 void RBBITableBuilder::buildSafeReverseTable(UErrorCode &status) {
     // The safe table creation has three steps:
 
-    // 1. Identifiy pairs of character classes that are "safe." Safe means that boundaries
+    // 1. Identify pairs of character classes that are "safe." Safe means that boundaries
     // following the pair do not depend on context or state before the pair. To test
     // whether a pair is safe, run it through the main forward state table, starting
     // from each state. If the the final state is the same, no matter what the starting state,
@@ -1445,7 +1451,7 @@ void RBBITableBuilder::buildSafeReverseTable(UErrorCode &status) {
     // the first of a pair. In each of these rows, the entry for the second character
     // of a safe pair is set to the stop state (0), indicating that a match was found.
     // All other table entries are set to the state corresponding the current input
-    // character, allowing that charcter to be the of a start following pair.
+    // character, allowing that character to be the of a start following pair.
     //
     // Because the safe rules are to be run in reverse, moving backwards in the text,
     // the first and second pair categories are swapped when building the table.
@@ -1490,16 +1496,25 @@ void RBBITableBuilder::buildSafeReverseTable(UErrorCode &status) {
     // The table as a whole is UVector<UnicodeString>
     // Each row is represented by a UnicodeString, being used as a Vector<int16>.
     // Row 0 is the stop state.
-    // Row 1 is the start sate.
+    // Row 1 is the start state.
     // Row 2 and beyond are other states, initially one per char class, but
     //   after initial construction, many of the states will be combined, compacting the table.
     // The String holds the nextState data only. The four leading fields of a row, fAccepting,
     // fLookAhead, etc. are not needed for the safe table, and are omitted at this stage of building.
 
     U_ASSERT(fSafeTable == nullptr);
-    fSafeTable = new UVector(uprv_deleteUObject, uhash_compareUnicodeString, numCharClasses + 2, status);
+    LocalPointer<UVector> lpSafeTable(
+        new UVector(uprv_deleteUObject, uhash_compareUnicodeString, numCharClasses + 2, status), status);
+    if (U_FAILURE(status)) {
+        return;
+    }
+    fSafeTable = lpSafeTable.orphan();
     for (int32_t row=0; row<numCharClasses + 2; ++row) {
-        fSafeTable->addElement(new UnicodeString(numCharClasses, 0, numCharClasses+4), status);
+        LocalPointer<UnicodeString> lpString(new UnicodeString(numCharClasses, 0, numCharClasses+4), status);
+        fSafeTable->adoptElement(lpString.orphan(), status);
+    }
+    if (U_FAILURE(status)) {
+        return;
     }
 
     // From the start state, each input char class transitions to the state for that input.
@@ -1758,7 +1773,7 @@ void RBBITableBuilder::printRuleStatusTable() {
 //-----------------------------------------------------------------------------
 
 RBBIStateDescriptor::RBBIStateDescriptor(int lastInputSymbol, UErrorCode *fStatus) {
-    fMarked    = FALSE;
+    fMarked    = false;
     fAccepting = 0;
     fLookAhead = 0;
     fTagsIdx   = 0;

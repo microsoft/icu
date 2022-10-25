@@ -15,6 +15,8 @@
 
 #if !UCONFIG_NO_FORMATTING
 
+#include <stdbool.h>
+
 #include "unicode/ustring.h"
 #include "unicode/uregion.h"
 #include "unicode/uenum.h"
@@ -24,6 +26,7 @@
 
 static void TestKnownRegions(void);
 static void TestGetContainedRegions(void);
+static void TestGroupingChildren(void);
 static void TestGetContainedRegionsWithType(void);
 static void TestGetContainingRegion(void);
 static void TestGetContainingRegionWithType(void);
@@ -38,6 +41,7 @@ void addURegionTest(TestNode** root)
 {
     TESTCASE(TestKnownRegions);
     TESTCASE(TestGetContainedRegions);
+    TESTCASE(TestGroupingChildren);
     TESTCASE(TestGetContainedRegionsWithType);
     TESTCASE(TestGetContainingRegion);
     TESTCASE(TestGetContainingRegionWithType);
@@ -148,14 +152,17 @@ static KnownRegion knownRegions[] = {
     { "CZ" , 203, "151", URGN_TERRITORY, "150" },
     { "DD" , 276, "155", URGN_TERRITORY, "150" },
     { "DE" , 276, "155", URGN_TERRITORY, "150" },
+    { "DG" , -1 , "QO" , URGN_TERRITORY, "009" },
     { "DJ" , 262, "014", URGN_TERRITORY, "002" },
     { "DK" , 208, "154", URGN_TERRITORY, "150" },
     { "DM" , 212, "029", URGN_TERRITORY, "019" },
     { "DO" , 214, "029", URGN_TERRITORY, "019" },
     { "DZ" ,  12, "015", URGN_TERRITORY, "002" },
+    { "EA" ,  -1, "015", URGN_TERRITORY, "002" },
     { "EC" , 218, "005", URGN_TERRITORY, "019" },
     { "EE" , 233, "154", URGN_TERRITORY, "150" },
     { "EG" , 818, "015", URGN_TERRITORY, "002" },
+    { "EH" , 732, "015", URGN_TERRITORY, "002" },
     { "ER" , 232, "014", URGN_TERRITORY, "002" },
     { "ES" , 724, "039", URGN_TERRITORY, "150" },
     { "ET" , 231, "014", URGN_TERRITORY, "002" },
@@ -192,6 +199,7 @@ static KnownRegion knownRegions[] = {
     { "HR" , 191, "039", URGN_TERRITORY, "150" },
     { "HT" , 332, "029", URGN_TERRITORY, "019" },
     { "HU" , 348, "151", URGN_TERRITORY, "150" },
+    { "IC" ,  -1, "015", URGN_TERRITORY, "002" },
     { "ID" , 360, "035", URGN_TERRITORY, "142" },
     { "IE" , 372, "154", URGN_TERRITORY, "150" },
     { "IL" , 376, "145", URGN_TERRITORY, "142" },
@@ -410,6 +418,58 @@ static void TestGetContainedRegions() {
     }
 }
 
+static void TestGroupingChildren() {
+    const char* testGroupings[] = {
+        "003", "021,013,029",
+        "419", "013,029,005",
+        "EU",  "AT,BE,CY,CZ,DE,DK,EE,ES,FI,FR,GR,HR,HU,IE,IT,LT,LU,LV,MT,NL,PL,PT,SE,SI,SK,BG,RO"
+    };
+
+    for (int32_t i = 0; i < UPRV_LENGTHOF(testGroupings); i += 2) {
+        const char* groupingCode = testGroupings[i];
+        const char* expectedChildren = testGroupings[i + 1];
+        
+        UErrorCode err = U_ZERO_ERROR;
+        const URegion* grouping = uregion_getRegionFromCode(groupingCode, &err);
+        if (U_SUCCESS(err)) {
+            UEnumeration* actualChildren = uregion_getContainedRegions(grouping, &err);
+            if (U_SUCCESS(err)) {
+                int32_t numActualChildren = uenum_count(actualChildren, &err);
+                int32_t numExpectedChildren = 0;
+                const char* expectedChildStart = expectedChildren;
+                const char* expectedChildEnd = NULL;
+                const char* actualChild = NULL;
+                while ((actualChild = uenum_next(actualChildren, NULL, &err)) != NULL && *expectedChildStart != '\0') {
+                    expectedChildEnd = uprv_strchr(expectedChildStart, ',');
+                    if (expectedChildEnd == NULL) {
+                        expectedChildEnd = expectedChildStart + uprv_strlen(expectedChildStart);
+                    }
+                    if (uprv_strlen(actualChild) != (size_t)(expectedChildEnd - expectedChildStart) || uprv_strncmp(actualChild, expectedChildStart, expectedChildEnd - expectedChildStart) != 0) {
+                        log_err("Mismatch in child list for %s at position %d: expected %s, got %s\n", groupingCode, i, expectedChildStart, actualChild);
+                    }
+                    expectedChildStart = (*expectedChildEnd != '\0') ? expectedChildEnd + 1 : expectedChildEnd;
+                    ++numExpectedChildren;
+                }
+                if (expectedChildEnd == NULL) {
+                    expectedChildEnd = expectedChildren;
+                }
+                while (expectedChildEnd != NULL && *expectedChildEnd != '\0') {
+                    expectedChildEnd = uprv_strchr(expectedChildEnd + 1, ',');
+                    ++numExpectedChildren;
+                }
+                if (numExpectedChildren != numActualChildren) {
+                    log_err("Wrong number of children for %s: expected %d, got %d\n", groupingCode, numExpectedChildren, numActualChildren);
+                }
+                uenum_close(actualChildren);
+            } else {
+                log_err("Couldn't create iterator for children of %s\n", groupingCode);
+            }
+        } else {
+            log_err("Region %s not found\n", groupingCode);
+        }
+    }
+}
+
 static void TestGetContainedRegionsWithType() {
     const KnownRegion * rd;
     for (rd = knownRegions; rd->code != NULL ; rd++ ) {
@@ -517,11 +577,11 @@ static void TestGetPreferredValues() {
                     const char * preferredCode;
                     while ( (preferredCode = *regionListPtr++) != NULL ) {
                         const char *check;
-                        UBool found = FALSE;
+                        UBool found = false;
                         uenum_reset(preferredRegions, &status);
                         while ((check = uenum_next(preferredRegions, NULL, &status)) != NULL && U_SUCCESS(status) ) {
                             if ( !uprv_strcmp(check,preferredCode) ) {
-                                found = TRUE;
+                                found = true;
                                 break;
                             }
                         }

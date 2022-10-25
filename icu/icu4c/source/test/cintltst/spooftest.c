@@ -10,7 +10,7 @@
 * File spooftest.c
 *
 *********************************************************************************/
-/*C API TEST for the uspoof Unicode Indentifier Spoofing and Security API */
+/*C API TEST for the uspoof Unicode Identifier Spoofing and Security API */
 /**
 *   This is an API test for ICU spoof detection in plain C.  It doesn't test very many cases, and doesn't
 *   try to test the full functionality.  It just calls each function and verifies that it
@@ -22,8 +22,9 @@
 #include "unicode/utypes.h"
 #if !UCONFIG_NO_REGULAR_EXPRESSIONS && !UCONFIG_NO_NORMALIZATION
 
-#include <stdlib.h>
+#include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 #include "unicode/uspoof.h"
 #include "unicode/ustring.h"
@@ -38,7 +39,7 @@
 } UPRV_BLOCK_MACRO_END
 
 #define TEST_ASSERT(expr) UPRV_BLOCK_MACRO_BEGIN { \
-    if ((expr)==FALSE) { \
+    if ((expr)==false) { \
         log_err("Test Failure at file %s, line %d: \"%s\" is false.\n", __FILE__, __LINE__, #expr); \
     } \
 } UPRV_BLOCK_MACRO_END
@@ -111,7 +112,7 @@ const UChar lll_Latin_b[] = {(UChar)0xff29, (UChar)0x217c, (UChar)0x196, 0};
 
 const UChar lll_Cyrl[]    = {(UChar)0x0406, (UChar)0x04C0, (UChar)0x31, 0};
 
-/* The skeleton transform for all of thes 'lll' lookalikes is all lower case l. */
+/* The skeleton transform for all of these 'lll' lookalikes is all lower case l. */
 const UChar lll_Skel[]    = {(UChar)0x6c, (UChar)0x6c, (UChar)0x6c, 0};  
 
 const UChar han_Hiragana[] = {(UChar)0x3086, (UChar)0x308A, (UChar)0x0020, (UChar)0x77F3, (UChar)0x7530, 0};
@@ -610,12 +611,12 @@ static void TestUSpoofCAPI(void) {
 
         inclusions = uspoof_getInclusionSet(&status);
         TEST_ASSERT_SUCCESS(status);
-        TEST_ASSERT_EQ(TRUE, uset_isFrozen(inclusions));
+        TEST_ASSERT_EQ(true, uset_isFrozen(inclusions));
 
         status = U_ZERO_ERROR;
         recommended = uspoof_getRecommendedSet(&status);
         TEST_ASSERT_SUCCESS(status);
-        TEST_ASSERT_EQ(TRUE, uset_isFrozen(recommended));
+        TEST_ASSERT_EQ(true, uset_isFrozen(recommended));
     TEST_TEARDOWN;
 
 }

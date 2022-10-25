@@ -165,7 +165,7 @@ yav{
         PM{"sɛ́ŋpiɛ́l e mikelɔ́ŋ"}
         PN{"pitikɛ́ɛlínɛ́"}
         PR{"pólótolíko"}
-        PS{"Autorité palestinienne"}
+        PS{"kitɔŋ ki palɛstíin"}
         PT{"pɔltukáal"}
         PW{"palawú"}
         PY{"palakúé"}

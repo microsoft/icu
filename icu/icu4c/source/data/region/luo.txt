@@ -165,7 +165,7 @@ luo{
         PM{"Saint Pierre gi Miquelon"}
         PN{"Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Palestinian Authority"}
+        PS{"Palestinian West Bank gi Gaza"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}

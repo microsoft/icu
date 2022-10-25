@@ -93,14 +93,17 @@ cs{
         CY{"Kypr"}
         CZ{"Česko"}
         DE{"Německo"}
+        DG{"Diego García"}
         DJ{"Džibutsko"}
         DK{"Dánsko"}
         DM{"Dominika"}
         DO{"Dominikánská republika"}
         DZ{"Alžírsko"}
+        EA{"Ceuta a Melilla"}
         EC{"Ekvádor"}
         EE{"Estonsko"}
         EG{"Egypt"}
+        EH{"Západní Sahara"}
         ER{"Eritrea"}
         ES{"Španělsko"}
         ET{"Etiopie"}
@@ -137,6 +140,7 @@ cs{
         HR{"Chorvatsko"}
         HT{"Haiti"}
         HU{"Maďarsko"}
+        IC{"Kanárské ostrovy"}
         ID{"Indonésie"}
         IE{"Irsko"}
         IL{"Izrael"}
@@ -219,7 +223,7 @@ cs{
         PM{"Saint-Pierre a Miquelon"}
         PN{"Pitcairnovy ostrovy"}
         PR{"Portoriko"}
-        PS{"Palestinská samospráva"}
+        PS{"Palestinská území"}
         PT{"Portugalsko"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -284,6 +288,8 @@ cs{
         VU{"Vanuatu"}
         WF{"Wallis a Futuna"}
         WS{"Samoa"}
+        XA{"simulovaná diakritika"}
+        XB{"simulovaný obousměrný zápis"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +297,23 @@ cs{
         ZM{"Zambie"}
         ZW{"Zimbabwe"}
         ZZ{"neznámá oblast"}
+    }
+    Countries%short{
+        GB{"GB"}
+        HK{"Hongkong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+        UN{"OSN"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Kongo (DRK)"}
+        CG{"Kongo (republika)"}
+        CI{"Côte d’Ivoire"}
+        CZ{"Česká republika"}
+        FK{"Falklandské ostrovy (Malvíny)"}
+        NZ{"Aotearoa – Nový Zéland"}
+        SZ{"Svazijsko"}
+        TL{"Timor-Leste"}
     }
 }

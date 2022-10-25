@@ -1012,7 +1012,7 @@ bg{
             "Френски златен франк",
         }
         XOF{
-            "CFA",
+            "F CFA",
             "Западноафрикански франк",
         }
         XPD{
@@ -1104,7 +1104,6 @@ bg{
         BRL{"BRL"}
         BSD{"BSD"}
         BWP{"P"}
-        BYN{"BYN"}
         BZD{"BZD"}
         CAD{"CAD"}
         CLP{"CLP"}
@@ -1189,7 +1188,6 @@ bg{
         ZMW{"ZK"}
     }
     Currencies%variant{
-        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{

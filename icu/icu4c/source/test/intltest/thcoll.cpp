@@ -98,7 +98,7 @@ void CollationThaiTest::TestNamesList(void) {
     UnicodeString lastWord, word;
     //int32_t failed = 0;
     int32_t wordCount = 0;
-    while (names.readLineSkippingComments(word, ec, FALSE) && U_SUCCESS(ec)) {
+    while (names.readLineSkippingComments(word, ec, false) && U_SUCCESS(ec)) {
 
         // Show the first 8 words being compared, so we can see what's happening
         ++wordCount;
@@ -145,7 +145,7 @@ void CollationThaiTest::TestDictionary(void) {
     UnicodeString lastWord, word;
     int32_t failed = 0;
     int32_t wordCount = 0;
-    while (riwords.readLineSkippingComments(word, ec, FALSE) && U_SUCCESS(ec)) {
+    while (riwords.readLineSkippingComments(word, ec, false) && U_SUCCESS(ec)) {
 
         // Show the first 8 words being compared, so we can see what's happening
         ++wordCount;
@@ -222,7 +222,7 @@ void CollationThaiTest::TestCornerCases(void) {
         "\\u0e01\\u0e32",                        "=",    "\\u0e01\\u0e32-",
         "\\u0e01\\u0e32-",                       "<",    "\\u0e01\\u0e32\\u0e01\\u0e32",
 
-        // Doubler follows an indentical word without the doubler
+        // Doubler follows an identical word without the doubler
         "\\u0e01\\u0e32",                        "=",    "\\u0e01\\u0e32\\u0e46",
         "\\u0e01\\u0e32\\u0e46",                 "<",    "\\u0e01\\u0e32\\u0e01\\u0e32",
 

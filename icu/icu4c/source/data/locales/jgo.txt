@@ -57,6 +57,16 @@ jgo{
                 "{1} {0}",
                 "{1} {0}",
             }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "GyMMMMEEEEdd",
+                "GyMMMMd",
+                "GyMMMd",
+                "GGGGGyMMdd",
+            }
             availableFormats{
                 Ed{"E d"}
                 MEd{"E, d.M"}
@@ -64,7 +74,7 @@ jgo{
                 yyyyMd{"M.d.y G"}
             }
             intervalFormats{
-                fallback{"{0} – {1}"}
+                fallback{"{0} – {1}"}
             }
         }
         gregorian{
@@ -74,7 +84,7 @@ jgo{
             }
             AmPmMarkersAbbr{
                 "mbaꞌmbaꞌ",
-                "ŋka mbɔ́t nji",
+                "ŋka mbɔ́t nji",
             }
             DateTimePatterns{
                 "HH:mm:ss zzzz",
@@ -90,6 +100,16 @@ jgo{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
+            }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "yMMMMEEEEdd",
+                "yMMMMd",
+                "yMMMd",
+                "yMMdd",
             }
             availableFormats{
                 Ed{"E d"}
@@ -168,7 +188,7 @@ jgo{
                 }
             }
             intervalFormats{
-                fallback{"{0} – {1}"}
+                fallback{"{0} – {1}"}
             }
             monthNames{
                 format{

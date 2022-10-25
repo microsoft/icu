@@ -1116,7 +1116,7 @@ de{
             "Französischer UIC-Franc",
         }
         XOF{
-            "CFA",
+            "F CFA",
             "CFA-Franc (BCEAO)",
         }
         XPD{
@@ -1313,7 +1313,6 @@ de{
         ZMW{"K"}
     }
     Currencies%variant{
-        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{

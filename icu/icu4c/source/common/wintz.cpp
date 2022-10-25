@@ -36,7 +36,7 @@
 
 U_NAMESPACE_BEGIN
 
-// Note these constants and the struct are only used when dealing with the fallback path for RDP sesssions.
+// Note these constants and the struct are only used when dealing with the fallback path for RDP sessions.
 
 // This is the location of the time zones in the registry on Vista+ systems.
 // See: https://docs.microsoft.com/windows/win32/api/timezoneapi/ns-timezoneapi-dynamic_time_zone_information
@@ -274,7 +274,7 @@ uprv_detectWindowsTimeZone()
 
     CharString winTZ;
     UErrorCode status = U_ZERO_ERROR;
-    winTZ.appendInvariantChars(UnicodeString(TRUE, windowsTimeZoneName, -1), status);
+    winTZ.appendInvariantChars(UnicodeString(true, windowsTimeZoneName, -1), status);
 
     // Map Windows Timezone name (non-localized) to ICU timezone ID (~ Olson timezone id).
     StackUResourceBundle winTZBundle;

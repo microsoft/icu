@@ -70,7 +70,7 @@ da{
         BT{"Bhutan"}
         BV{"Bouvetøen"}
         BW{"Botswana"}
-        BY{"Hviderusland"}
+        BY{"Belarus"}
         BZ{"Belize"}
         CA{"Canada"}
         CC{"Cocosøerne"}
@@ -93,14 +93,17 @@ da{
         CY{"Cypern"}
         CZ{"Tjekkiet"}
         DE{"Tyskland"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Danmark"}
         DM{"Dominica"}
         DO{"Den Dominikanske Republik"}
         DZ{"Algeriet"}
+        EA{"Ceuta og Melilla"}
         EC{"Ecuador"}
         EE{"Estland"}
         EG{"Egypten"}
+        EH{"Vestsahara"}
         ER{"Eritrea"}
         ES{"Spanien"}
         ET{"Etiopien"}
@@ -137,6 +140,7 @@ da{
         HR{"Kroatien"}
         HT{"Haiti"}
         HU{"Ungarn"}
+        IC{"Kanariske øer"}
         ID{"Indonesien"}
         IE{"Irland"}
         IL{"Israel"}
@@ -202,7 +206,7 @@ da{
         NF{"Norfolk Island"}
         NG{"Nigeria"}
         NI{"Nicaragua"}
-        NL{"Holland"}
+        NL{"Nederlandene"}
         NO{"Norge"}
         NP{"Nepal"}
         NR{"Nauru"}
@@ -219,7 +223,7 @@ da{
         PM{"Saint Pierre og Miquelon"}
         PN{"Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Det palæstinensiske selvstyre"}
+        PS{"De palæstinensiske områder"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -284,6 +288,8 @@ da{
         VU{"Vanuatu"}
         WF{"Wallis og Futuna"}
         WS{"Samoa"}
+        XA{"pseudo-accenter"}
+        XB{"pseudo-bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +297,20 @@ da{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Ukendt område"}
+    }
+    Countries%short{
+        HK{"Hongkong"}
+        MO{"Macao"}
+        PS{"Palæstina"}
+        UN{"FN"}
+    }
+    Countries%variant{
+        CD{"Den Demokratiske Republik Congo (DRC)"}
+        CG{"Republikken Congo"}
+        CZ{"Den Tjekkiske Republik"}
+        FK{"Falklandsøerne (Islas Malvinas)"}
+        NZ{"Aotearoa New Zealand"}
+        SZ{"Swaziland"}
+        TL{"Østtimor"}
     }
 }

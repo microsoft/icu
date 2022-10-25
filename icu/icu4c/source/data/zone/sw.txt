@@ -867,6 +867,9 @@ sw{
         "Asia:Ulaanbaatar"{
             ec{"Ulaanbaatar"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1894,6 +1897,9 @@ sw{
             ld{"Saa za Majira ya joto za Yekaterinburg"}
             lg{"Saa za Yekaterinburg"}
             ls{"Saa za Wastani za Yekaterinburg"}
+        }
+        "meta:Yukon"{
+            ls{"Saa za Yukon"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT {0}"}

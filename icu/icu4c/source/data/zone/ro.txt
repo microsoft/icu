@@ -864,6 +864,9 @@ ro{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1921,6 +1924,9 @@ ro{
             ld{"Ora de vară din Ekaterinburg"}
             lg{"Ora din Ekaterinburg"}
             ls{"Ora standard din Ekaterinburg"}
+        }
+        "meta:Yukon"{
+            ls{"Ora din Yukon"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}
