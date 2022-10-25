@@ -128,6 +128,7 @@ windowsZones:table(nofallback){
         "Central Asia Standard Time"{
             001{"Asia/Almaty"}
             AQ{"Antarctica/Vostok"}
+            CN{"Asia/Urumqi"}
             IO{"Indian/Chagos"}
             KG{"Asia/Bishkek"}
             KZ{"Asia/Almaty Asia/Qostanay"}

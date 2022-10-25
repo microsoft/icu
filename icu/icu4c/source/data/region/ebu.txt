@@ -165,7 +165,7 @@ ebu{
         PM{"Santapieri na Mikeloni"}
         PN{"Pitkairni"}
         PR{"Pwetoriko"}
-        PS{"Palestinian Authority"}
+        PS{"Ukingo wa Magharibi na Ukanda wa Gaza wa Palestina"}
         PT{"Ureno"}
         PW{"Palau"}
         PY{"Paragwai"}

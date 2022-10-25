@@ -3,6 +3,7 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ur_IN{
     Languages{
+        ar_001{"جدید معیاری عربی"}
         awa{"اودھی"}
         ckb{"سورانی کردی"}
         dje{"زرمہ"}
@@ -14,6 +15,7 @@ ur_IN{
         ku{"کرد"}
         mag{"مگہی"}
         zgh{"معیاری مراقشی تمازیقی"}
+        zh_Hans{"آسان چینی"}
     }
     Types{
         numbers{

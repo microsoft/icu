@@ -119,10 +119,6 @@
 /** Obsolete/same as U_CAPI; was used to declare a function as an internal ICU C API  */
 #define U_INTERNAL U_CAPI
 
-//IGNORE_WINDOWS_HEADERS_START
-// MSFT-Change: These are C++ only constructs. The Windows OS SDK version of ICU only exposes
-// the flat C APIs.
-
 /**
  * \def U_OVERRIDE
  * Defined to the C++11 "override" keyword if available.
@@ -144,8 +140,6 @@
 #if !defined(U_FINAL) || defined(U_IN_DOXYGEN)
 #define U_FINAL final
 #endif
-
-//IGNORE_WINDOWS_HEADERS_END
 
 // Before ICU 65, function-like, multi-statement ICU macros were just defined as
 // series of statements wrapped in { } blocks and the caller could choose to
@@ -288,14 +282,8 @@ typedef int8_t UBool;
  */
 #ifdef U_DEFINE_FALSE_AND_TRUE
     // Use the predefined value.
-#elif defined(U_COMBINED_IMPLEMENTATION) || \
-        defined(U_COMMON_IMPLEMENTATION) || defined(U_I18N_IMPLEMENTATION) || \
-        defined(U_IO_IMPLEMENTATION) || defined(U_LAYOUTEX_IMPLEMENTATION) || \
-        defined(U_TOOLUTIL_IMPLEMENTATION)
-    // Inside ICU: Keep FALSE & TRUE available.
-#   define U_DEFINE_FALSE_AND_TRUE 1
 #else
-    // Outside ICU: Avoid collision with non-macro definitions of FALSE & TRUE.
+    // Default to avoiding collision with non-macro definitions of FALSE & TRUE.
 #   define U_DEFINE_FALSE_AND_TRUE 0
 #endif
 

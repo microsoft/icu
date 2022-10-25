@@ -165,7 +165,7 @@ ewo{
         PM{"Ǹfúfúb-Píɛr-ai-Mikəlɔ́ŋ"}
         PN{"Pítə́kɛ́rɛnə"}
         PR{"Pwɛrəto Ríko"}
-        PS{"Autorité palestinienne"}
+        PS{"Ǹnam Palɛsətín"}
         PT{"fɔrətugɛ́s"}
         PW{"Palau"}
         PY{"Paragué"}

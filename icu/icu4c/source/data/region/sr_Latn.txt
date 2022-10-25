@@ -94,14 +94,17 @@ sr_Latn{
         CY{"Kipar"}
         CZ{"Češka"}
         DE{"Nemačka"}
+        DG{"Dijego Garsija"}
         DJ{"Džibuti"}
         DK{"Danska"}
         DM{"Dominika"}
         DO{"Dominikanska Republika"}
         DZ{"Alžir"}
+        EA{"Seuta i Melilja"}
         EC{"Ekvador"}
         EE{"Estonija"}
         EG{"Egipat"}
+        EH{"Zapadna Sahara"}
         ER{"Eritreja"}
         ES{"Španija"}
         ET{"Etiopija"}
@@ -138,6 +141,7 @@ sr_Latn{
         HR{"Hrvatska"}
         HT{"Haiti"}
         HU{"Mađarska"}
+        IC{"Kanarska Ostrva"}
         ID{"Indonezija"}
         IE{"Irska"}
         IL{"Izrael"}
@@ -220,7 +224,7 @@ sr_Latn{
         PM{"Sen Pjer i Mikelon"}
         PN{"Pitkern"}
         PR{"Portoriko"}
-        PS{"Palestinska uprava"}
+        PS{"Palestinske teritorije"}
         PT{"Portugalija"}
         PW{"Palau"}
         PY{"Paragvaj"}
@@ -285,6 +289,8 @@ sr_Latn{
         VU{"Vanuatu"}
         WF{"Valis i Futuna"}
         WS{"Samoa"}
+        XA{"Pseudoakcenti"}
+        XB{"Pseudobidi"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Majot"}
@@ -292,5 +298,21 @@ sr_Latn{
         ZM{"Zambija"}
         ZW{"Zimbabve"}
         ZZ{"Nepoznat region"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hongkong"}
+        MO{"Makao"}
+        PS{"Palestina"}
+        UN{"UN"}
+        US{"SAD"}
+    }
+    Countries%variant{
+        CD{"Kongo (DRK)"}
+        CG{"Kongo (Republika)"}
+        CI{"Obala Slonovače"}
+        CZ{"Češka Republika"}
+        FK{"Foklandska (Malvinska) ostrva"}
+        TL{"Istočni Timor"}
     }
 }

@@ -93,14 +93,17 @@ af{
         CY{"Siprus"}
         CZ{"Tsjeggië"}
         DE{"Duitsland"}
+        DG{"Diego Garcia"}
         DJ{"Djiboeti"}
         DK{"Denemarke"}
         DM{"Dominica"}
         DO{"Dominikaanse Republiek"}
         DZ{"Algerië"}
+        EA{"Ceuta en Melilla"}
         EC{"Ecuador"}
         EE{"Estland"}
         EG{"Egipte"}
+        EH{"Wes-Sahara"}
         ER{"Eritrea"}
         ES{"Spanje"}
         ET{"Ethiopië"}
@@ -137,6 +140,7 @@ af{
         HR{"Kroasië"}
         HT{"Haïti"}
         HU{"Hongarye"}
+        IC{"Kanariese Eilande"}
         ID{"Indonesië"}
         IE{"Ierland"}
         IL{"Israel"}
@@ -219,7 +223,7 @@ af{
         PM{"Sint Pierre en Miquelon"}
         PN{"Pitcairneilande"}
         PR{"Puerto Rico"}
-        PS{"Palestynse Owerheid"}
+        PS{"Palestynse Grondgebiede"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -284,6 +288,8 @@ af{
         VU{"Vanuatu"}
         WF{"Wallis en Futuna"}
         WS{"Samoa"}
+        XA{"Pseudoaksente"}
+        XB{"Pseudotweerigting"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +297,19 @@ af{
         ZM{"Zambië"}
         ZW{"Zimbabwe"}
         ZZ{"Onbekende gebied"}
+    }
+    Countries%short{
+        GB{"VK"}
+        HK{"Hongkong"}
+        MO{"Macau"}
+        PS{"Palestina"}
+        UN{"VN"}
+        US{"VSA"}
+    }
+    Countries%variant{
+        CD{"Kongo (DRK)"}
+        CG{"Kongo (Republiek die)"}
+        CZ{"Tsjeggiese Republiek"}
+        FK{"Falklandeilande (Malvinas)"}
     }
 }

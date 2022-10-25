@@ -19,6 +19,7 @@ kea{
         ak{"akan"}
         am{"amáriku"}
         ar{"árabi"}
+        ar_001{"árabi mudernu"}
         arn{"araukanu"}
         as{"asames"}
         asa{"asu"}
@@ -53,6 +54,8 @@ kea{
         da{"dinamarkes"}
         dav{"taita"}
         de{"alemon"}
+        de_AT{"alemon austríaku"}
+        de_CH{"alemon altu suisu"}
         dje{"zarma"}
         dsb{"sórbiu baxu"}
         dua{"duala"}
@@ -62,8 +65,15 @@ kea{
         ee{"eve"}
         el{"gregu"}
         en{"ingles"}
+        en_AU{"ingles australianu"}
+        en_CA{"ingles kanadianu"}
+        en_GB{"ingles britániku"}
+        en_US{"ingles merkanu"}
         eo{"sperantu"}
         es{"spanhol"}
+        es_419{"spanhol latinu-merkanu"}
+        es_ES{"spanhol europeu"}
+        es_MX{"spanhol mexikanu"}
         et{"stonianu"}
         eu{"basku"}
         ewo{"ewondo"}
@@ -74,6 +84,8 @@ kea{
         fj{"fijianu"}
         fo{"faroes"}
         fr{"franses"}
+        fr_CA{"franses kanadianu"}
+        fr_CH{"franses suisu"}
         fur{"friulanu"}
         fy{"fríziu osidental"}
         ga{"irlandes"}
@@ -152,6 +164,7 @@ kea{
         nds{"alemon baxu"}
         ne{"nepales"}
         nl{"olandes"}
+        nl_BE{"flamengu"}
         nmg{"kuazio"}
         nn{"norueges nynorsk"}
         om{"oromo"}
@@ -162,11 +175,14 @@ kea{
         prg{"prusianu"}
         ps{"paxto"}
         pt{"purtuges"}
+        pt_BR{"purtuges brazileru"}
+        pt_PT{"purtuges europeu"}
         qu{"kexua"}
         quc{"kitxe"}
         rm{"romanxi"}
         rn{"rundi"}
         ro{"rumenu"}
+        ro_MD{"rumenu moldáviku"}
         rof{"rombu"}
         ru{"rusu"}
         rw{"kiniaruanda"}
@@ -184,6 +200,7 @@ kea{
         su{"sundanes"}
         sv{"sueku"}
         sw{"suaíli"}
+        sw_CD{"suaíli kongoles"}
         ta{"tamil"}
         te{"telugu"}
         tg{"tadjiki"}
@@ -206,8 +223,23 @@ kea{
         yue{"kantunes"}
         zgh{"tamazait marokinu padron"}
         zh{"xines"}
+        zh_Hans{"xines simplifikadu"}
+        zh_Hant{"xines tradisional"}
         zu{"zulu"}
         zxx{"sen kontiudu linguístiku"}
+    }
+    Languages%long{
+        zh_Hans{"xines mandarin (simplificadu)"}
+        zh_Hant{"xines mandarin (tradisional)"}
+    }
+    Languages%menu{
+        yue{"kantunes (tradisional)"}
+        zh{"xines, mandarin"}
+    }
+    Languages%short{
+        az{"azeri"}
+        en_GB{"ingles (R.U.)"}
+        en_US{"ingles (S.U.)"}
     }
     Scripts{
         Arab{"arábiku"}
@@ -275,6 +307,7 @@ kea{
             iso8601{"Kalendáriu ISO-8601"}
             japanese{"Kalendáriu japones"}
             persian{"Kalendáriu persa"}
+            roc{"Kalendáriu di Repúblika di Xina"}
         }
         cf{
             account{"Formatu di mueda kontabilístiku"}

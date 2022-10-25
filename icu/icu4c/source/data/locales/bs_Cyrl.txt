@@ -300,6 +300,16 @@ bs_Cyrl{
                 "{1} {0}",
                 "{1} {0}",
             }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "GyMMMMEEEEdd",
+                "GyMMMMdd",
+                "GyMMdd",
+                "GGGGGyMd",
+            }
             availableFormats{
                 Ed{"E, d."}
                 Gy{"y. G"}
@@ -315,9 +325,9 @@ bs_Cyrl{
                 MMMd{"dd. MMM"}
                 Md{"dd.MM."}
                 d{"d"}
-                h{"hh a"}
-                hm{"hh:mm a"}
-                hms{"hh:mm:ss a"}
+                h{"hh a"}
+                hm{"hh:mm a"}
+                hms{"hh:mm:ss a"}
                 ms{"mm:ss"}
                 y{"y. G"}
                 yyyy{"y. G"}
@@ -371,22 +381,22 @@ bs_Cyrl{
                     d{"d–d"}
                 }
                 h{
-                    a{"hh a – hh a"}
-                    h{"hh–hh a"}
+                    a{"hh a – hh a"}
+                    h{"hh–hh a"}
                 }
                 hm{
-                    a{"hh:mm a – hh:mm a"}
-                    h{"hh:mm–hh:mm a"}
-                    m{"hh:mm–hh:mm a"}
+                    a{"hh:mm a – hh:mm a"}
+                    h{"hh:mm–hh:mm a"}
+                    m{"hh:mm–hh:mm a"}
                 }
                 hmv{
-                    a{"hh:mm a – hh:mm a v"}
-                    h{"hh:mm–hh:mm a v"}
-                    m{"hh:mm–hh:mm a v"}
+                    a{"hh:mm a – hh:mm a v"}
+                    h{"hh:mm–hh:mm a v"}
+                    m{"hh:mm–hh:mm a v"}
                 }
                 hv{
-                    a{"hh a – hh a v"}
-                    h{"hh–hh a v"}
+                    a{"hh a – hh a v"}
+                    h{"hh–hh a v"}
                 }
                 y{
                     y{"y–y G"}
@@ -431,7 +441,7 @@ bs_Cyrl{
                 "послије подне",
             }
             AmPmMarkersAbbr{
-                "пре подне",
+                "пре подне",
                 "поподне",
             }
             DateTimePatterns{
@@ -448,6 +458,16 @@ bs_Cyrl{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
+            }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "yMMMMEEEEdd",
+                "yMMMMdd",
+                "yMMdd",
+                "yyMd",
             }
             availableFormats{
                 Ed{"E, d."}
@@ -644,22 +664,22 @@ bs_Cyrl{
                     d{"d–d"}
                 }
                 h{
-                    a{"hh a – hh a"}
-                    h{"hh–hh a"}
+                    a{"hh a – hh a"}
+                    h{"hh–hh a"}
                 }
                 hm{
-                    a{"hh:mm a – hh:mm a"}
-                    h{"hh:mm–hh:mm a"}
-                    m{"hh:mm–hh:mm a"}
+                    a{"hh:mm a – hh:mm a"}
+                    h{"hh:mm–hh:mm a"}
+                    m{"hh:mm–hh:mm a"}
                 }
                 hmv{
-                    a{"hh:mm a – hh:mm a v"}
-                    h{"hh:mm–hh:mm a v"}
-                    m{"hh:mm–hh:mm a v"}
+                    a{"hh:mm a – hh:mm a v"}
+                    h{"hh:mm–hh:mm a v"}
+                    m{"hh:mm–hh:mm a v"}
                 }
                 hv{
-                    a{"hh a – hh a v"}
-                    h{"hh–hh a v"}
+                    a{"hh a – hh a v"}
+                    h{"hh–hh a v"}
                 }
                 y{
                     y{"y–y"}
@@ -867,6 +887,16 @@ bs_Cyrl{
                 "{1} {0}",
                 "{1} {0}",
             }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "GyMMMMEEEEdd",
+                "GyMMMMdd",
+                "GyMMdd",
+                "GyMMdd",
+            }
             availableFormats{
                 Ed{"E, dd."}
                 Hm{"HH:mm"}
@@ -878,8 +908,8 @@ bs_Cyrl{
                 MMMd{"dd. MMM"}
                 Md{"dd.MM."}
                 d{"d"}
-                hm{"hh:mm a"}
-                hms{"hh:mm:ss a"}
+                hm{"hh:mm a"}
+                hms{"hh:mm:ss a"}
                 ms{"mm:ss"}
                 y{"y. G"}
                 yM{"MM.y. G"}
@@ -930,6 +960,16 @@ bs_Cyrl{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
+            }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "GyMMMMEEEEd",
+                "GyMMMMd",
+                "GyMMMd",
+                "GyyMd",
             }
             eras{
                 abbreviated{
@@ -1190,6 +1230,14 @@ bs_Cyrl{
                         "Бахман",
                         "Есфанд",
                     }
+                }
+            }
+        }
+        roc{
+            eras{
+                abbreviated{
+                    "Пре РК",
+                    "РК",
                 }
             }
         }

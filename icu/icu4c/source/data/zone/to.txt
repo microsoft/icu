@@ -864,6 +864,9 @@ to{
         "Asia:Ulaanbaatar"{
             ec{"Ulaanbaatar"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1933,6 +1936,9 @@ to{
             ld{"houa fakalūsia-ʻiekatelinepūki taimi liliu"}
             lg{"houa fakalūsia-ʻiekatelinepūki"}
             ls{"houa fakalūsia-ʻiekatelinepūki taimi totonu"}
+        }
+        "meta:Yukon"{
+            ls{"houa fakaiukoni"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

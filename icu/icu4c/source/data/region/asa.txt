@@ -164,7 +164,7 @@ asa{
         PM{"Thantapieri na Mikeloni"}
         PN{"Pitkairni"}
         PR{"Pwetoriko"}
-        PS{"Mamlaka ya Palestina"}
+        PS{"Palestina"}
         PT{"Ureno"}
         PW{"Palau"}
         PY{"Paragwai"}

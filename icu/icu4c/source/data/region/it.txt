@@ -93,14 +93,17 @@ it{
         CY{"Cipro"}
         CZ{"Cechia"}
         DE{"Germania"}
+        DG{"Diego Garcia"}
         DJ{"Gibuti"}
         DK{"Danimarca"}
         DM{"Dominica"}
         DO{"Repubblica Dominicana"}
         DZ{"Algeria"}
+        EA{"Ceuta e Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egitto"}
+        EH{"Sahara occidentale"}
         ER{"Eritrea"}
         ES{"Spagna"}
         ET{"Etiopia"}
@@ -116,7 +119,7 @@ it{
         GB{"Regno Unito"}
         GD{"Grenada"}
         GE{"Georgia"}
-        GF{"Guyana francese"}
+        GF{"Guyana Francese"}
         GG{"Guernsey"}
         GH{"Ghana"}
         GI{"Gibilterra"}
@@ -126,7 +129,7 @@ it{
         GP{"Guadalupa"}
         GQ{"Guinea Equatoriale"}
         GR{"Grecia"}
-        GS{"Georgia del Sud e Sandwich australi"}
+        GS{"Georgia del Sud e Sandwich Australi"}
         GT{"Guatemala"}
         GU{"Guam"}
         GW{"Guinea-Bissau"}
@@ -137,6 +140,7 @@ it{
         HR{"Croazia"}
         HT{"Haiti"}
         HU{"Ungheria"}
+        IC{"Isole Canarie"}
         ID{"Indonesia"}
         IE{"Irlanda"}
         IL{"Israele"}
@@ -209,7 +213,7 @@ it{
         NU{"Niue"}
         NZ{"Nuova Zelanda"}
         OM{"Oman"}
-        PA{"Panamá"}
+        PA{"Panama"}
         PE{"Perù"}
         PF{"Polinesia francese"}
         PG{"Papua Nuova Guinea"}
@@ -219,7 +223,7 @@ it{
         PM{"Saint-Pierre e Miquelon"}
         PN{"Isole Pitcairn"}
         PR{"Portorico"}
-        PS{"Autorità Palestinese"}
+        PS{"Territori palestinesi"}
         PT{"Portogallo"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -250,7 +254,7 @@ it{
         SV{"El Salvador"}
         SX{"Sint Maarten"}
         SY{"Siria"}
-        SZ{"Swaziland"}
+        SZ{"eSwatini"}
         TA{"Tristan da Cunha"}
         TC{"Isole Turks e Caicos"}
         TD{"Ciad"}
@@ -270,7 +274,7 @@ it{
         TZ{"Tanzania"}
         UA{"Ucraina"}
         UG{"Uganda"}
-        UM{"Altre isole americane del Pacifico"}
+        UM{"Isole Minori Esterne degli Stati Uniti"}
         UN{"Nazioni Unite"}
         US{"Stati Uniti"}
         UY{"Uruguay"}
@@ -284,6 +288,8 @@ it{
         VU{"Vanuatu"}
         WF{"Wallis e Futuna"}
         WS{"Samoa"}
+        XA{"Pseudo-accenti"}
+        XB{"Pseudo-bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +297,24 @@ it{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Regione sconosciuta"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+        UN{"ONU"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Congo (RDC)"}
+        CG{"Congo (Repubblica)"}
+        CI{"Côte d’Ivoire"}
+        CZ{"Repubblica Ceca"}
+        FK{"Isole Falkland (Isole Malvine)"}
+        NZ{"Nuova Zelanda (Aotearoa)"}
+        SZ{"Regno di eSwatini"}
+        TL{"Timor Leste"}
+        TR{"Türkiye"}
     }
 }

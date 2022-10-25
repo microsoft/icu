@@ -867,6 +867,9 @@ ms{
         "Asia:Ulaanbaatar"{
             ec{"Ulaanbaatar"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1930,6 +1933,9 @@ ms{
             ld{"Waktu Musim Panas Yekaterinburg"}
             lg{"Waktu Yekaterinburg"}
             ls{"Waktu Piawai Yekaterinburg"}
+        }
+        "meta:Yukon"{
+            ls{"Masa Yukon"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

@@ -138,9 +138,9 @@ NFRuleSet::NFRuleSet(RuleBasedNumberFormat *_owner, UnicodeString* descriptions,
   , rules(0)
   , owner(_owner)
   , fractionRules()
-  , fIsFractionRuleSet(FALSE)
-  , fIsPublic(FALSE)
-  , fIsParseable(TRUE)
+  , fIsFractionRuleSet(false)
+  , fIsPublic(false)
+  , fIsParseable(true)
 {
     for (int32_t i = 0; i < NON_NUMERICAL_RULE_LENGTH; ++i) {
         nonNumericalRules[i] = NULL;
@@ -185,7 +185,7 @@ NFRuleSet::NFRuleSet(RuleBasedNumberFormat *_owner, UnicodeString* descriptions,
     fIsPublic = name.indexOf(gPercentPercent, 2, 0) != 0;
 
     if ( name.endsWith(gNoparse,8) ) {
-        fIsParseable = FALSE;
+        fIsParseable = false;
         name.truncate(name.length()-8); // remove the @noparse from the name
     }
 
@@ -231,7 +231,7 @@ NFRuleSet::parseRules(UnicodeString& description, UErrorCode& status)
 
     // (this isn't a for loop because we might be deleting items from
     // the vector-- we want to make sure we only increment i when
-    // we _didn't_ delete aything from the vector)
+    // we _didn't_ delete anything from the vector)
     int32_t rulesSize = rules.size();
     for (int32_t i = 0; i < rulesSize; i++) {
         NFRule* rule = rules[i];
@@ -273,13 +273,13 @@ void NFRuleSet::setNonNumericalRule(NFRule *rule) {
         nonNumericalRules[NEGATIVE_RULE_INDEX] = rule;
     }
     else if (baseValue == NFRule::kImproperFractionRule) {
-        setBestFractionRule(IMPROPER_FRACTION_RULE_INDEX, rule, TRUE);
+        setBestFractionRule(IMPROPER_FRACTION_RULE_INDEX, rule, true);
     }
     else if (baseValue == NFRule::kProperFractionRule) {
-        setBestFractionRule(PROPER_FRACTION_RULE_INDEX, rule, TRUE);
+        setBestFractionRule(PROPER_FRACTION_RULE_INDEX, rule, true);
     }
     else if (baseValue == NFRule::kDefaultRule) {
-        setBestFractionRule(DEFAULT_RULE_INDEX, rule, TRUE);
+        setBestFractionRule(DEFAULT_RULE_INDEX, rule, true);
     }
     else if (baseValue == NFRule::kInfinityRule) {
         delete nonNumericalRules[INFINITY_RULE_INDEX];
@@ -339,12 +339,12 @@ util_equalRules(const NFRule* rule1, const NFRule* rule2)
             return *rule1 == *rule2;
         }
     } else if (!rule2) {
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
-UBool
+bool
 NFRuleSet::operator==(const NFRuleSet& rhs) const
 {
     if (rules.size() == rhs.rules.size() &&
@@ -354,19 +354,19 @@ NFRuleSet::operator==(const NFRuleSet& rhs) const
         // ...then compare the non-numerical rule lists...
         for (int i = 0; i < NON_NUMERICAL_RULE_LENGTH; i++) {
             if (!util_equalRules(nonNumericalRules[i], rhs.nonNumericalRules[i])) {
-                return FALSE;
+                return false;
             }
         }
 
         // ...then compare the rule lists...
         for (uint32_t i = 0; i < rules.size(); ++i) {
             if (*rules[i] != *rhs.rules[i]) {
-                return FALSE;
+                return false;
             }
         }
-        return TRUE;
+        return true;
     }
-    return FALSE;
+    return false;
 }
 
 void
@@ -380,7 +380,7 @@ NFRuleSet::setDecimalFormatSymbols(const DecimalFormatSymbols &newSymbols, UErro
             for (uint32_t fIdx = 0; fIdx < fractionRules.size(); fIdx++) {
                 NFRule *fractionRule = fractionRules[fIdx];
                 if (nonNumericalRules[nonNumericalIdx]->getBaseValue() == fractionRule->getBaseValue()) {
-                    setBestFractionRule(nonNumericalIdx, fractionRule, FALSE);
+                    setBestFractionRule(nonNumericalIdx, fractionRule, false);
                 }
             }
         }
@@ -630,7 +630,7 @@ NFRuleSet::findFractionRuleSetRule(double number) const
     // value, then the first one (the one we found above) is used if
     // the numerator of the fraction is 1 and the second one is used if
     // the numerator of the fraction is anything else (this lets us
-    // do things like "one third"/"two thirds" without haveing to define
+    // do things like "one third"/"two thirds" without having to define
     // a whole bunch of extra rule sets)
     if ((unsigned)(winner + 1) < rules.size() &&
         rules[winner + 1]->getBaseValue() == rules[winner]->getBaseValue()) {
@@ -647,7 +647,7 @@ NFRuleSet::findFractionRuleSetRule(double number) const
 /**
  * Parses a string.  Matches the string to be parsed against each
  * of its rules (with a base value less than upperBound) and returns
- * the value produced by the rule that matched the most charcters
+ * the value produced by the rule that matched the most characters
  * in the source string.
  * @param text The string to parse
  * @param parsePosition The initial position is ignored and assumed
@@ -762,7 +762,7 @@ NFRuleSet::parse(const UnicodeString& text, ParsePosition& pos, double upperBoun
 #ifdef RBNF_DEBUG
     fprintf(stderr, "<nfrs> exit\n");
 #endif
-    // finally, update the parse postion we were passed to point to the
+    // finally, update the parse position we were passed to point to the
     // first character we didn't use, and return the result that
     // corresponds to that string of characters
     pos = highWaterMark;

@@ -93,14 +93,17 @@ qu{
         CY{"Chipre"}
         CZ{"Chequia"}
         DE{"Alemania"}
+        DG{"Diego García"}
         DJ{"Yibuti"}
         DK{"Dinamarca"}
         DM{"Dominica"}
         DO{"República Dominicana"}
         DZ{"Argelia"}
+        EA{"Ceuta y Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egipto"}
+        EH{"Sahara Occidental"}
         ER{"Eritrea"}
         ES{"España"}
         ET{"Etiopía"}
@@ -137,6 +140,7 @@ qu{
         HR{"Croacia"}
         HT{"Haití"}
         HU{"Hungría"}
+        IC{"Islas Canarias"}
         ID{"Indonesia"}
         IE{"Irlanda"}
         IL{"Israel"}
@@ -219,7 +223,7 @@ qu{
         PM{"San Pedro y Miquelón"}
         PN{"Islas Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Autoridad Nacional Palestina"}
+        PS{"Palestina Kamachikuq"}
         PT{"Portugal"}
         PW{"Palaos"}
         PY{"Paraguay"}
@@ -250,7 +254,7 @@ qu{
         SV{"El Salvador"}
         SX{"Sint Maarten"}
         SY{"Siria"}
-        SZ{"Suazilandia"}
+        SZ{"Esuatini"}
         TA{"Tristán de Acuña"}
         TC{"Islas Turcas y Caicos"}
         TD{"Chad"}
@@ -284,6 +288,8 @@ qu{
         VU{"Vanuatu"}
         WF{"Wallis y Futuna"}
         WS{"Samoa"}
+        XA{"Seudo-Acentos"}
+        XB{"Seudo-Bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +297,15 @@ qu{
         ZM{"Zambia"}
         ZW{"Zimbabue"}
         ZZ{"Mana yachasqa Suyu"}
+    }
+    Countries%short{
+        HK{"Hong Kong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+    }
+    Countries%variant{
+        CZ{"República Checa"}
+        NZ{"Aotearoa Nueva Zelanda"}
+        SZ{"Suazilandia"}
     }
 }

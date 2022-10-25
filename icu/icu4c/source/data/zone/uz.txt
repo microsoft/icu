@@ -867,6 +867,9 @@ uz{
         "Asia:Ulaanbaatar"{
             ec{"Ulan-Bator"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumchi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1879,6 +1882,9 @@ uz{
             ld{"Yekaterinburg yozgi vaqti"}
             lg{"Yekaterinburg vaqti"}
             ls{"Yekaterinburg standart vaqti"}
+        }
+        "meta:Yukon"{
+            ls{"Yukon vaqti"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

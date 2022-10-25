@@ -18,6 +18,7 @@ smn{
         an{"aragoniakielâ"}
         anp{"angika"}
         ar{"arabiakielâ"}
+        ar_001{"standard arabiakielâ"}
         arn{"mapudungun"}
         arp{"arapahokielâ"}
         as{"assamkielâ"}
@@ -68,6 +69,8 @@ smn{
         dar{"dargikielâ"}
         dav{"taitakielâ"}
         de{"saksakielâ"}
+        de_AT{"Nuorttâriijkâ saksakielâ"}
+        de_CH{"Sveitsi pajesaksakielâ"}
         dgr{"dogribkielâ"}
         dje{"zarmakielâ"}
         dsb{"vyelisorbi"}
@@ -82,8 +85,15 @@ smn{
         eka{"ekajuk"}
         el{"kreikakielâ"}
         en{"eŋgâlâskielâ"}
+        en_AU{"Australia eŋgâlâskielâ"}
+        en_CA{"Kanada eŋgâlâskielâ"}
+        en_GB{"Britannia eŋgâlâskielâ"}
+        en_US{"Amerika eŋgâlâskielâ"}
         eo{"esperantokielâ"}
         es{"espanjakielâ"}
+        es_419{"Läättin-Amerika espanjakielâ"}
+        es_ES{"Espanja espanjakielâ"}
+        es_MX{"Meksiko espanjakielâ"}
         et{"eestikielâ"}
         eu{"baskikielâ"}
         ewo{"ewondokielâ"}
@@ -95,6 +105,8 @@ smn{
         fo{"fäärikielâ"}
         fon{"fonkielâ"}
         fr{"ranskakielâ"}
+        fr_CA{"Kanada ranskakielâ"}
+        fr_CH{"Sveitsi ranskakielâ"}
         fur{"friulikielâ"}
         fy{"viestârfriisi"}
         ga{"iirikielâ"}
@@ -235,12 +247,14 @@ smn{
         naq{"nama"}
         nb{"tárukielâ bokmål"}
         nd{"tave-nbedele"}
+        nds_NL{"Vuáládâhenâmij saksakielâ"}
         ne{"nepalkielâ"}
         new{"newari"}
         ng{"ndonga"}
         nia{"niaskielâ"}
         niu{"niuekielâ"}
         nl{"hollandkielâ"}
+        nl_BE{"hollandkielâ (flaami)"}
         nmg{"kwasio"}
         nn{"tárukielâ nynorsk"}
         nnh{"ngiemboon"}
@@ -268,6 +282,8 @@ smn{
         prg{"toovláš preussikielâ"}
         ps{"paštu"}
         pt{"portugalkielâ"}
+        pt_BR{"Brasilia portugalkielâ"}
+        pt_PT{"Portugal portugalkielâ"}
         qu{"quechua"}
         quc{"ki’che’"}
         rap{"rapanui"}
@@ -277,7 +293,6 @@ smn{
         ro{"romaniakielâ"}
         rof{"rombo"}
         rom{"roomaankielâ"}
-        root{"ruotâs"}
         ru{"ruošâkielâ"}
         rup{"aromaniakielâ"}
         rw{"ruandakielâ"}
@@ -320,6 +335,7 @@ smn{
         suk{"sukumakielâ"}
         sv{"ruotâkielâ"}
         sw{"swahilikielâ"}
+        sw_CD{"Kongo swahilikielâ"}
         swb{"komorikielâ"}
         syr{"syyriakielâ"}
         ta{"tamilkielâ"}
@@ -374,10 +390,16 @@ smn{
         yue{"kantonkielâ"}
         zgh{"standard tamazight"}
         zh{"mandarinkiinakielâ"}
+        zh_Hans{"oovtâkiärdánis kiinakielâ"}
+        zh_Hant{"ärbivuáválâš kiinakielâ"}
         zu{"zulukielâ"}
         zun{"zunikielâ"}
         zxx{"ij kielâlâš siskáldâs"}
         zza{"zazakielâ"}
+    }
+    Languages%short{
+        en_GB{"eŋgâlâskielâ (OK)"}
+        en_US{"eŋgâlâskielâ (USA)"}
     }
     codePatterns{
         language{"kielâ: {0}"}

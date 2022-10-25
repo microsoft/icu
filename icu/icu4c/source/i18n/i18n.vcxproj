@@ -43,8 +43,7 @@
       <PrecompiledHeaderOutputFile>$(OutDir)/icuin.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
       <ObjectFileName>$(OutDir)/</ObjectFileName>
-      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDataBaseFileName>$(OutDir)/icuin68.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)/icuin.pdb</ProgramDataBaseFileName>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -57,36 +56,26 @@
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
       <BrowseInformation>true</BrowseInformation>
-      <!-- MSFT-Change: Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalDependencies>icuucd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\$(IcuBinOutputDir)\icuin68d.dll</OutputFile>
-      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin68d.pdb</ProgramDatabaseFile>
+      <OutputFile>..\..\$(IcuBinOutputDir)\icuin$(IcuMajorVersion)d.dll</OutputFile>
+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuind.pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuind.lib</ImportLibrary>
-      <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
-      <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalOptions>/DEFAULTLIB:ucrtd.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <!-- Options that are common to all 'Release' project configurations -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
-      <!-- MSFT-Change: Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <AdditionalDependencies>icuuc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <OutputFile>..\..\$(IcuBinOutputDir)\icuin68.dll</OutputFile>
-      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin68.pdb</ProgramDatabaseFile>
+      <OutputFile>..\..\$(IcuBinOutputDir)\icuin$(IcuMajorVersion).dll</OutputFile>
+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin.pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuin.lib</ImportLibrary>
-      <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
-      <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalOptions>/DEFAULTLIB:ucrt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -268,6 +257,7 @@
     <ClCompile Include="units_converter.cpp" />
     <ClCompile Include="units_data.cpp" />
     <ClCompile Include="units_router.cpp" />
+    <ClCompile Include="displayoptions.cpp" />
     <ClCompile Include="unum.cpp" />
     <ClCompile Include="unumsys.cpp" />
     <ClCompile Include="upluralrules.cpp" />

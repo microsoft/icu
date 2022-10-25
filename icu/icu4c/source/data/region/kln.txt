@@ -165,7 +165,7 @@ kln{
         PM{"Emetab Peter Ne titil ak Miquelon"}
         PN{"Emetab Pitcairn"}
         PR{"Emetab Puerto Rico"}
-        PS{"Palestinian Authority"}
+        PS{"Emetab Palestine"}
         PT{"Emetab Portugal"}
         PW{"Emetab Palau"}
         PY{"Emetab Paraguay"}

@@ -165,7 +165,7 @@ kab{
         PM{"San Pyar d Miklun"}
         PN{"Pitkarin"}
         PR{"Purtu Riku"}
-        PS{"Autorité palestinienne"}
+        PS{"Falisṭin d Ɣezza"}
         PT{"Purtugal"}
         PW{"Palu"}
         PY{"Paragway"}

@@ -18,10 +18,10 @@
  *                 contents for locating the individual items by name.
  *
  *                 Two formats for the table of contents are supported, which is
- *                 why there is an abstract inteface involved.
+ *                 why there is an abstract interface involved.
  *
  *                 These functions are part of the ICU internal implementation, and
- *                 are not inteded to be used directly by applications.
+ *                 are not intended to be used directly by applications.
  */
 
 #ifndef __UCMNDATA_H__
@@ -30,12 +30,8 @@
 #include "unicode/udata.h"
 #include "umapfile.h"
 
-// MSFT-Change: In the Windows OS ICU build, we only have one data package, and we use a versionless name in filename.
-#if defined(ICU_DATA_DIR_WINDOWS)
-#  define COMMON_DATA_NAME "icudtl"
-#else
-#  define COMMON_DATA_NAME U_ICUDATA_NAME
-#endif
+
+#define COMMON_DATA_NAME U_ICUDATA_NAME
 
 typedef struct  {
     uint16_t    headerSize;

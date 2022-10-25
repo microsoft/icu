@@ -165,7 +165,7 @@ nyn{
         PM{"Senti Piyerre na Mikweron"}
         PN{"Pitkaini"}
         PR{"Pwetoriko"}
-        PS{"Palestinian Authority"}
+        PS{"Parestiina na Gaza"}
         PT{"Pocugo"}
         PW{"Palaawu"}
         PY{"Paragwai"}

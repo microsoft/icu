@@ -36,7 +36,7 @@ ak{
         BY{"Bɛlarus"}
         BZ{"Beliz"}
         CA{"Kanada"}
-        CD{"Congo (DRC)"}
+        CD{"Kongo (Zair)"}
         CF{"Afrika Finimfin Man"}
         CG{"Kongo"}
         CH{"Swetzaland"}
@@ -165,7 +165,7 @@ ak{
         PM{"Saint Pierre ne Miquelon"}
         PN{"Pitcairn"}
         PR{"Puɛto Riko"}
-        PS{"Palestinian Authority"}
+        PS{"Palestaen West Bank ne Gaza"}
         PT{"Pɔtugal"}
         PW{"Palau"}
         PY{"Paraguay"}

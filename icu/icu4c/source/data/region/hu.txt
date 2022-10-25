@@ -93,14 +93,17 @@ hu{
         CY{"Ciprus"}
         CZ{"Csehország"}
         DE{"Németország"}
+        DG{"Diego Garcia"}
         DJ{"Dzsibuti"}
         DK{"Dánia"}
         DM{"Dominika"}
         DO{"Dominikai Köztársaság"}
         DZ{"Algéria"}
+        EA{"Ceuta és Melilla"}
         EC{"Ecuador"}
         EE{"Észtország"}
         EG{"Egyiptom"}
+        EH{"Nyugat-Szahara"}
         ER{"Eritrea"}
         ES{"Spanyolország"}
         ET{"Etiópia"}
@@ -137,6 +140,7 @@ hu{
         HR{"Horvátország"}
         HT{"Haiti"}
         HU{"Magyarország"}
+        IC{"Kanári-szigetek"}
         ID{"Indonézia"}
         IE{"Írország"}
         IL{"Izrael"}
@@ -219,7 +223,7 @@ hu{
         PM{"Saint-Pierre és Miquelon"}
         PN{"Pitcairn-szigetek"}
         PR{"Puerto Rico"}
-        PS{"Palesztin Hatóság"}
+        PS{"Palesztin Autonómia"}
         PT{"Portugália"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -284,6 +288,8 @@ hu{
         VU{"Vanuatu"}
         WF{"Wallis és Futuna"}
         WS{"Szamoa"}
+        XA{"Pszeudo-nyelvjárások"}
+        XB{"Pszeudo-kétirányú"}
         XK{"Koszovó"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +297,22 @@ hu{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Ismeretlen körzet"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hongkong"}
+        MO{"Makaó"}
+        PS{"Palesztina"}
+        UN{"ENSZ"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Kongó (KDK)"}
+        CG{"Kongó (Köztársaság)"}
+        CZ{"Cseh Köztársaság"}
+        FK{"Falkland-szigetek (Malvin-szigetek)"}
+        NZ{"Aotearoa (Új-Zéland)"}
+        SZ{"Eswatini"}
+        TL{"Timor-Leste"}
     }
 }

@@ -126,11 +126,11 @@ UBool CharsetRecog_UTF_32::match(InputText* textIn, CharsetMatch *results) const
     int32_t limit = (textIn->fRawLength / 4) * 4;
     int32_t numValid = 0;
     int32_t numInvalid = 0;
-    bool hasBOM = FALSE;
+    bool hasBOM = false;
     int32_t confidence = 0;
 
     if (limit > 0 && getChar(input, 0) == 0x0000FEFFUL) {
-        hasBOM = TRUE;
+        hasBOM = true;
     }
 
     for(int32_t i = 0; i < limit; i += 4) {
@@ -144,7 +144,7 @@ UBool CharsetRecog_UTF_32::match(InputText* textIn, CharsetMatch *results) const
     }
 
 
-    // Cook up some sort of confidence score, based on presense of a BOM
+    // Cook up some sort of confidence score, based on presence of a BOM
     //    and the existence of valid and/or invalid multi-byte sequences.
     if (hasBOM && numInvalid==0) {
         confidence = 100;
@@ -155,7 +155,7 @@ UBool CharsetRecog_UTF_32::match(InputText* textIn, CharsetMatch *results) const
     } else if (numValid > 0 && numInvalid == 0) {
         confidence = 80;
     } else if (numValid > numInvalid*10) {
-        // Probably corruput UTF-32BE data.  Valid sequences aren't likely by chance.
+        // Probably corrupt UTF-32BE data.  Valid sequences aren't likely by chance.
         confidence = 25;
     }
 

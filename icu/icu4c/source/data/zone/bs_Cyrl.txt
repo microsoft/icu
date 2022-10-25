@@ -865,6 +865,9 @@ bs_Cyrl{
         "Asia:Ulaanbaatar"{
             ec{"Улан Батор"}
         }
+        "Asia:Urumqi"{
+            ec{"Урумкви"}
+        }
         "Asia:Ust-Nera"{
             ec{"Уст-Нера"}
         }

@@ -9,15 +9,25 @@ ff_Adlm_LR{
                 "h:mm:ss a z",
                 "h:mm:ss a",
                 "h:mm a",
-                "y MMMM d, EEEE",
-                "y MMMM d",
-                "y MMM d",
-                "y-MM-dd",
-                "{1} {0}",
-                "{1}{0}",
+                "EEEE d MMMM⹁ y",
+                "d MMMM⹁ y",
+                "d MMM⹁ y",
+                "d-M-y",
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+            }
+            DateTimeSkeletons{
+                "ahmmsszzzz",
+                "ahmmssz",
+                "ahmmss",
+                "ahmm",
+                "yMMMMEEEEd",
+                "yMMMMd",
+                "yMMMd",
+                "yMMdd",
             }
         }
     }

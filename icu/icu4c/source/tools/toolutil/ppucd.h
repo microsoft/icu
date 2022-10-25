@@ -36,8 +36,8 @@ U_NAMESPACE_BEGIN
 class U_TOOLUTIL_API PropertyNames {
 public:
     virtual ~PropertyNames();
-    virtual int32_t getPropertyEnum(const char *name) const;
-    virtual int32_t getPropertyValueEnum(int32_t property, const char *name) const;
+    virtual int32_t getPropertyEnum(const char *name) const = 0;
+    virtual int32_t getPropertyValueEnum(int32_t property, const char *name) const = 0;
 };
 
 struct U_TOOLUTIL_API UniProps {
@@ -102,7 +102,7 @@ public:
     /** Destructor. */
     ~PreparsedUCD();
 
-    /** Sets (aliases) a non-standard PropertyNames implementation. Caller retains ownership. */
+    /** Sets (aliases) a PropertyNames implementation. Caller retains ownership. */
     void setPropertyNames(const PropertyNames *pn) { pnames=pn; }
 
     /**
@@ -120,7 +120,7 @@ public:
     /** Returns the Unicode version when or after the UNICODE_VERSION_LINE has been read. */
     const UVersionInfo &getUnicodeVersion() const { return ucdVersion; }
 
-    /** Returns TRUE if the current line has property values. */
+    /** Returns true if the current line has property values. */
     UBool lineHasPropertyValues() const {
         return DEFAULTS_LINE<=lineType && lineType<=UNASSIGNED_LINE;
     }
@@ -159,7 +159,6 @@ private:
 
     static const int32_t kNumLineBuffers=3;
 
-    PropertyNames *icuPnames;  // owned
     const PropertyNames *pnames;  // aliased
     FILE *file;
     int32_t defaultLineIndex, blockLineIndex, lineIndex;

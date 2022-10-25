@@ -93,14 +93,17 @@ tk{
         CY{"Kipr"}
         CZ{"Çehiýa"}
         DE{"Germaniýa"}
+        DG{"Diýego-Garsiýa"}
         DJ{"Jibuti"}
         DK{"Daniýa"}
         DM{"Dominika"}
         DO{"Dominikan Respublikasy"}
         DZ{"Alžir"}
+        EA{"Seuta we Melilýa"}
         EC{"Ekwador"}
         EE{"Estoniýa"}
         EG{"Müsür"}
+        EH{"Günbatar Sahara"}
         ER{"Eritreýa"}
         ES{"Ispaniýa"}
         ET{"Efiopiýa"}
@@ -137,6 +140,7 @@ tk{
         HR{"Horwatiýa"}
         HT{"Gaiti"}
         HU{"Wengriýa"}
+        IC{"Kanar adalary"}
         ID{"Indoneziýa"}
         IE{"Irlandiýa"}
         IL{"Ysraýyl"}
@@ -284,6 +288,8 @@ tk{
         VU{"Wanuatu"}
         WF{"Uollis we Futuna"}
         WS{"Samoa"}
+        XA{"psewdo-şiweler"}
+        XB{"psewdo-bidi"}
         XK{"Kosowo"}
         YE{"Ýemen"}
         YT{"Maýotta"}
@@ -291,5 +297,21 @@ tk{
         ZM{"Zambiýa"}
         ZW{"Zimbabwe"}
         ZZ{"Näbelli sebit"}
+    }
+    Countries%short{
+        HK{"Gonkong"}
+        MO{"Makao"}
+        PS{"Palestina"}
+        US{"ABŞ"}
+    }
+    Countries%variant{
+        CD{"Kongo (KDR)"}
+        CG{"Kongo (Respublika)"}
+        CI{"Şirmaýy kenar"}
+        CZ{"Çeh Respublikasy"}
+        FK{"Folklend (Malwina) adalary"}
+        NZ{"Aotearoa Täze Zelandiýa"}
+        SZ{"Swazilend"}
+        TL{"Gündogar Timor"}
     }
 }

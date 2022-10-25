@@ -108,7 +108,7 @@ ast{
                 one{"{0} quilate"}
                 other{"{0} quilates"}
             }
-            milligram-per-deciliter{
+            milligram-ofglucose-per-deciliter{
                 dnam{"miligramos per decillitru"}
                 one{"{0} miligramu per decillitru"}
                 other{"{0} miligramos per decillitru"}
@@ -476,11 +476,6 @@ ast{
                 other{"{0} quilogramos"}
                 per{"{0} per quilogramu"}
             }
-            metric-ton{
-                dnam{"tonelaes métriques"}
-                one{"{0} tonelada métrica"}
-                other{"{0} tonelaes métriques"}
-            }
             microgram{
                 dnam{"microgramos"}
                 one{"{0} microgramu"}
@@ -517,6 +512,11 @@ ast{
                 dnam{"tonelaes"}
                 one{"{0} tonelada"}
                 other{"{0} tonelaes"}
+            }
+            tonne{
+                dnam{"tonelaes métriques"}
+                one{"{0} tonelada métrica"}
+                other{"{0} tonelaes métriques"}
             }
         }
         power{
@@ -856,7 +856,7 @@ ast{
                 one{"{0}kt"}
                 other{"{0}kt"}
             }
-            milligram-per-deciliter{
+            milligram-ofglucose-per-deciliter{
                 dnam{"mg/dL"}
                 one{"{0}mg/dL"}
                 other{"{0}mg/dL"}
@@ -1149,9 +1149,9 @@ ast{
                 per{"{0}/m"}
             }
             micrometer{
-                dnam{"µm"}
-                one{"{0}µm"}
-                other{"{0}µm"}
+                dnam{"μm"}
+                one{"{0}μm"}
+                other{"{0}μm"}
             }
             mile{
                 dnam{"mi"}
@@ -1219,15 +1219,10 @@ ast{
                 other{"{0}kg"}
                 per{"{0}/kg"}
             }
-            metric-ton{
-                dnam{"t"}
-                one{"{0}t"}
-                other{"{0}t"}
-            }
             microgram{
-                dnam{"µg"}
-                one{"{0}µg"}
-                other{"{0}µg"}
+                dnam{"μg"}
+                one{"{0}μg"}
+                other{"{0}μg"}
             }
             milligram{
                 dnam{"mg"}
@@ -1260,6 +1255,11 @@ ast{
                 dnam{"ton"}
                 one{"{0}tn"}
                 other{"{0}tn"}
+            }
+            tonne{
+                dnam{"t"}
+                one{"{0}t"}
+                other{"{0}t"}
             }
         }
         power{
@@ -1599,7 +1599,7 @@ ast{
                 one{"{0} kt"}
                 other{"{0} kt"}
             }
-            milligram-per-deciliter{
+            milligram-ofglucose-per-deciliter{
                 dnam{"mg/dL"}
                 one{"{0} mg/dL"}
                 other{"{0} mg/dL"}
@@ -1892,9 +1892,9 @@ ast{
                 per{"{0}/m"}
             }
             micrometer{
-                dnam{"µmetros"}
-                one{"{0} µm"}
-                other{"{0} µm"}
+                dnam{"μmetros"}
+                one{"{0} μm"}
+                other{"{0} μm"}
             }
             mile{
                 dnam{"milles"}
@@ -1967,15 +1967,10 @@ ast{
                 other{"{0} kg"}
                 per{"{0}/kg"}
             }
-            metric-ton{
-                dnam{"t"}
-                one{"{0} t"}
-                other{"{0} t"}
-            }
             microgram{
-                dnam{"µg"}
-                one{"{0} µg"}
-                other{"{0} µg"}
+                dnam{"μg"}
+                one{"{0} μg"}
+                other{"{0} μg"}
             }
             milligram{
                 dnam{"mg"}
@@ -2008,6 +2003,11 @@ ast{
                 dnam{"tonelaes"}
                 one{"{0} tn"}
                 other{"{0} tn"}
+            }
+            tonne{
+                dnam{"t"}
+                one{"{0} t"}
+                other{"{0} t"}
             }
         }
         power{

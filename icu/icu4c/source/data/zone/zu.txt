@@ -864,6 +864,9 @@ zu{
         "Asia:Ulaanbaatar"{
             ec{"i-Ulaanbaatar"}
         }
+        "Asia:Urumqi"{
+            ec{"i-Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"i-Ust-Nera"}
         }
@@ -1891,6 +1894,9 @@ zu{
             ld{"Isikhathi sasehlobo e-Yekaterinburg"}
             lg{"Isikhathi sase-Yekaterinburg"}
             ls{"Isikhathi Esivamile sase-Yekaterinburg"}
+        }
+        "meta:Yukon"{
+            ls{"Yukon Time"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}
