@@ -1,0 +1,11 @@
+name: Backport PR to branch
+on:
+  issue_comment:
+    types: [created]
+  schedule:
+    # once a day at 13:00 UTC
+    - cron: '0 13 * * *'
+
+jobs:
+  call-backport-workflow:
+    uses: dotnet/arcade/.github/workflows/backport.yml@main
