@@ -6,6 +6,11 @@ on:
     # once a day at 13:00 UTC
     - cron: '0 13 * * *'
 
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+
 jobs:
   call-backport-workflow:
     uses: dotnet/arcade/.github/workflows/backport.yml@main
