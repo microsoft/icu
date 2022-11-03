@@ -3,7 +3,7 @@ on:
   issue_comment:
     types: [created]
   schedule:
-    # once a day at 13:00 UTC
+    # once a day at 13:00 UTC to cleanup old runs
     - cron: '0 13 * * *'
 
 permissions:
@@ -13,5 +13,5 @@ permissions:
   actions: write
 
 jobs:
-  call-backport-workflow:
-    uses: dotnet/arcade/.github/workflows/backport.yml@main
+  backport:
+    uses: dotnet/arcade/.github/workflows/backport-base.yml@main
