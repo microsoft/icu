@@ -199,7 +199,9 @@ void NumberFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &n
   TESTCASE_AUTO(Test11640_getAffixes);
   TESTCASE_AUTO(Test11649_toPatternWithMultiCurrency);
   TESTCASE_AUTO(Test13327_numberingSystemBufferOverflow);
-  TESTCASE_AUTO(Test13391_chakmaParsing);
+  /* MSFT Change: Begin */
+  // TESTCASE_AUTO(Test13391_chakmaParsing);
+  /* MSFT Change: End */
   TESTCASE_AUTO(Test11735_ExceptionIssue);
   TESTCASE_AUTO(Test11035_FormatCurrencyAmount);
   TESTCASE_AUTO(Test11318_DoubleConversion);
