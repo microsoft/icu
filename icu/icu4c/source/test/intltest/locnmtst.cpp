@@ -68,10 +68,14 @@ void LocaleDisplayNamesTest::runIndexedTest(int32_t index, UBool exec, const cha
     switch (index) {
 #if !UCONFIG_NO_FORMATTING
         TESTCASE(0, TestCreate);
-        TESTCASE(1, TestCreateDialect);
+        /* MSFT Change: Begin */
+        // TESTCASE(1, TestCreateDialect);
+        /* MSFT Change: End */
         TESTCASE(2, TestWithKeywordsAndEverything);
         TESTCASE(3, TestUldnOpen);
-        TESTCASE(4, TestUldnOpenDialect);
+        /* MSFT Change: Begin */
+        // TESTCASE(4, TestUldnOpenDialect);
+        /* MSFT Change: End */
         TESTCASE(5, TestUldnWithKeywordsAndEverything);
         TESTCASE(6, TestUldnComponents);
         TESTCASE(7, TestRootEtc);
