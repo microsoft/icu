@@ -42,7 +42,8 @@
       <PrecompiledHeaderOutputFile>$(OutDir)/icuuc.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
       <ObjectFileName>$(OutDir)/</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)/icuuc.pdb</ProgramDataBaseFileName>
+      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
+      <ProgramDataBaseFileName>$(OutDir)/icuuc$(IcuMajorVersion).pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <!-- The icudt.lib is for U_ICUDATA_ENTRY_POINT -->
@@ -60,7 +61,8 @@
     </ClCompile>
     <Link>
       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc$(IcuMajorVersion)d.dll</OutputFile>
-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuucd.pdb</ProgramDatabaseFile>
+      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc$(IcuMajorVersion)d.pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuucd.lib</ImportLibrary>
       <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
       <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
@@ -76,7 +78,8 @@
     </ClCompile>
     <Link>
       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc$(IcuMajorVersion).dll</OutputFile>
-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc.pdb</ProgramDatabaseFile>
+      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc$(IcuMajorVersion).pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuuc.lib</ImportLibrary>
       <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
       <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
