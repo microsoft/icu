@@ -48,6 +48,10 @@ typedef struct USet USet;
 
 U_CDECL_BEGIN
 
+//IGNORE_WINDOWS_HEADERS_START
+// MSFT-Change: The value of these macros can change at runtime, so the API u_getUnicodeVersion
+// should be used instead of any version macro.
+
 /*==========================================================================*/
 /* Unicode version number                                                   */
 /*==========================================================================*/
@@ -61,6 +65,8 @@ U_CDECL_BEGIN
  * @stable ICU 2.0
  */
 #define U_UNICODE_VERSION "15.0"
+
+//IGNORE_WINDOWS_HEADERS_END
 
 /**
  * \file
