@@ -55,24 +55,32 @@
     <ClCompile>
       <PreprocessorDefinitions>RBBI_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BrowseInformation>true</BrowseInformation>
-      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <!-- MSFT-Change: Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc$(IcuMajorVersion)d.dll</OutputFile>
       <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuucd.pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuucd.lib</ImportLibrary>
+      <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
+      <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
+      <AdditionalOptions>/DEFAULTLIB:ucrtd.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <!-- Options that are common to all 'Release' project configurations -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
-      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <!-- MSFT-Change: Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc$(IcuMajorVersion).dll</OutputFile>
       <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc.pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuuc.lib</ImportLibrary>
+      <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
+      <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
+      <AdditionalOptions>/DEFAULTLIB:ucrt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
