@@ -976,7 +976,14 @@ static void VerifyTranslation(void) {
             uprv_strncmp(currLoc, "oc", 2) == 0 || uprv_strncmp(currLoc, "oc_FR", 5) == 0     ||
             uprv_strncmp(currLoc, "syr", 3) == 0 || uprv_strncmp(currLoc, "syr_SY", 6) == 0   ||
             uprv_strncmp(currLoc, "tig", 3) == 0 || uprv_strncmp(currLoc, "tig_ER", 6) == 0   ||
-            uprv_strncmp(currLoc, "wal", 3) == 0 || uprv_strncmp(currLoc, "wal_ET", 6) == 0
+            uprv_strncmp(currLoc, "wal", 3) == 0 || uprv_strncmp(currLoc, "wal_ET", 6) == 0   ||
+            uprv_strncmp(currLoc, "bin", 3) == 0 || uprv_strncmp(currLoc, "bin_NG", 6) == 0   ||
+            uprv_strncmp(currLoc, "la", 2) == 0 || uprv_strncmp(currLoc, "la_VA", 6) == 0    ||
+            uprv_strncmp(currLoc, "jv_Java", 7) == 0 || uprv_strncmp(currLoc, "jv_Java_ID", 10) == 0   ||
+            uprv_strncmp(currLoc, "ks_Deva", 7) == 0 || uprv_strncmp(currLoc, "ks_Deva_IN", 10) == 0   ||
+            uprv_strncmp(currLoc, "pap", 3) == 0 || uprv_strncmp(currLoc, "pap_029", 7) == 0           ||
+            uprv_strncmp(currLoc, "tzm_Arab", 8) == 0 || uprv_strncmp(currLoc, "tzm_Arab_MA", 11) == 0 ||
+            uprv_strncmp(currLoc, "tzm_Tfng", 8) == 0 || uprv_strncmp(currLoc, "tzm_Tfng_MA", 11) == 0
         ) {
             log_knownIssue("0", "MSFT Change: skipping test for %s which has issues due to CLDR Seed data.", currLoc);
         }
@@ -1132,7 +1139,8 @@ static void VerifyTranslation(void) {
                if (U_FAILURE(errorCode)) {
                    log_err("ulocdata_getMeasurementSystem failed for locale %s with error: %s \n", currLoc, u_errorName(errorCode));
                } else {
-                   if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_LR")!=NULL ) {
+                   /* MSFT Change: CLDR-MS adds 029 region with US measurement */
+                   if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_LR")!=NULL || strstr(fullLoc, "_029")!=NULL ) {
                        if(measurementSystem != UMS_US){
                             log_err("ulocdata_getMeasurementSystem did not return expected data for locale %s \n", currLoc);
                        }
@@ -1150,10 +1158,11 @@ static void VerifyTranslation(void) {
                if (U_FAILURE(errorCode)) {
                    log_err("ulocdata_getPaperSize failed for locale %s with error: %s \n", currLoc, u_errorName(errorCode));
                } else {
+                   /* MSFT Change: CLDR-MS adds 029 region with US paper size */
                    if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_BZ")!=NULL || strstr(fullLoc, "_CA")!=NULL || strstr(fullLoc, "_CL")!=NULL ||
                         strstr(fullLoc, "_CO")!=NULL || strstr(fullLoc, "_CR")!=NULL || strstr(fullLoc, "_GT")!=NULL || strstr(fullLoc, "_MX")!=NULL ||
                         strstr(fullLoc, "_NI")!=NULL || strstr(fullLoc, "_PA")!=NULL || strstr(fullLoc, "_PH")!=NULL || strstr(fullLoc, "_PR")!=NULL ||
-                        strstr(fullLoc, "_SV")!=NULL || strstr(fullLoc, "_VE")!=NULL ) {
+                        strstr(fullLoc, "_SV")!=NULL || strstr(fullLoc, "_VE")!=NULL || strstr(fullLoc, "_029")!=NULL ) {
                        if (height != 279 || width != 216) {
                             log_err("ulocdata_getPaperSize did not return expected data for locale %s \n", currLoc);
                        }
@@ -1273,8 +1282,14 @@ static void TestExemplarSet(void){
 
             if (existsInScript == false){
                 /* MSFT Change */
-                if (uprv_strncmp(locale, "oc", 2) == 0 || uprv_strncmp(locale, "oc_FR", 5) == 0) {
-                    log_knownIssue("0", "MSFT Change: oc and oc_FR have ExemplarSet issues.");
+                if (uprv_strncmp(locale, "oc", 2) == 0 || uprv_strncmp(locale, "oc_FR", 5) == 0 ||
+                    uprv_strncmp(locale, "jv_Java", 7) == 0 || uprv_strncmp(locale, "jv_Java_ID", 10) == 0 ||
+                    uprv_strncmp(locale, "la", 2) == 0 || uprv_strncmp(locale, "la_VA", 6) == 0 ||
+                    uprv_strncmp(locale, "pap", 3) == 0 || uprv_strncmp(locale, "pap_029", 7) == 0 ||
+                    uprv_strncmp(locale, "tzm_Arab", 8) == 0 || uprv_strncmp(locale, "tzm_Arab_MA", 11) == 0 ||
+                    uprv_strncmp(locale, "tzm_Tfng", 8) == 0 || uprv_strncmp(locale, "tzm_Tfng_MA", 11) == 0
+                ) {
+                    log_knownIssue("0", "MSFT Change: skipping test for %s which has issue due to CLDR seed data.", locale);
                     continue;
                 } else {
                     log_err("ExemplarSet containment failed for locale : %s\n", locale);
