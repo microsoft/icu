@@ -5,12 +5,12 @@
 
 #define ARRAY_SIZE 512
 
-    std::wstring UPrefsTest::language = L"";
-    std::wstring UPrefsTest::currency = L"";
-    std::wstring UPrefsTest::hourCycle = L"";
-    int32_t UPrefsTest::firstday = 0;
-    int32_t UPrefsTest::measureSystem = 0;
-    CALID UPrefsTest::calendar = 0;
+std::wstring UPrefsTest::language = L"";
+std::wstring UPrefsTest::currency = L"";
+std::wstring UPrefsTest::hourCycle = L"";
+int32_t UPrefsTest::firstday = 0;
+int32_t UPrefsTest::measureSystem = 0;
+CALID UPrefsTest::calendar = 0;
 
 void UPrefsTest::runIndexedTest( int32_t index, UBool exec, const char* &name, char* /*par*/ )
 {
@@ -32,7 +32,8 @@ void UPrefsTest::runIndexedTest( int32_t index, UBool exec, const char* &name, c
     TESTCASE_AUTO_END;
 }
 
-int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPWSTR lpLCData, int cchData, U
+int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPWSTR lpLCData,
+                                        int cchData, UErrorCode *status)
 {
     switch (LCType)
     {
@@ -413,7 +414,7 @@ void UPrefsTest::Get12HourCycle()
     }
 }
 
-void UPrefsTest::Get12HourCycle2()
+void UPrefsTest::Get12HourCycle2() 
 {
     char languageBuffer[ARRAY_SIZE] = {0};
     language = L"ja-JP";
@@ -425,11 +426,11 @@ void UPrefsTest::Get12HourCycle2()
     UErrorCode status = U_ZERO_ERROR;
     char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 
-    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51)
+    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) 
     {
         errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
     }
-    if (uprv_strcmp(expectedValue, languageBuffer) != 0)
+    if (uprv_strcmp(expectedValue, languageBuffer) != 0) 
     {
         errln("Expected BCP47Tag to be %s, but got: %s\n", expectedValue, languageBuffer);
     }
