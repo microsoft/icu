@@ -23,6 +23,9 @@ if (!$icuVersionData.ICU_version) {
 Write-Host 'ICU Version = ' $icuVersionData.ICU_version
 $ICUVersion = $icuVersionData.ICU_version
 
+# Normalize the ICU version (ex: 72.0.1.0 -> 72.0.1)
+$ICUVersion = $ICUVersion -replace '(.0)+$', ''
+
 # The Azure DevOps environment is a bit odd and requires doing the following
 # in order to persist variables from one build task to another build task.
 $vstsCommandString = 'vso[task.setvariable variable=ICUVersion]' + $ICUVersion
@@ -46,8 +49,6 @@ foreach ($versionPart in $icuVersionArray) {
     }
 }
 
-# Normalize the ICU version (ex: 72.0.1.0 -> 72.0.1)
-$ICUVersion = $ICUVersion -replace '(.0)+$', ''
 # Check that the values in the source file uvernum.h match the values in the version.txt file.
 $icuVersionHeader = (Get-Content "$PSScriptRoot\..\..\icu\icu4c\source\common\unicode\uvernum.h")
 $versionNumberDefine = '#define U_ICU_VERSION "'+ $ICUVersion +'"'
