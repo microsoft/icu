@@ -46,9 +46,11 @@ foreach ($versionPart in $icuVersionArray) {
     }
 }
 
+# Construct a normalized ICU version for version number check (ex: 72.0.1.0 -> 72.0.1)
+$normalizedICUVersion = $ICUVersion -replace '(.0)+$', ''
 # Check that the values in the source file uvernum.h match the values in the version.txt file.
 $icuVersionHeader = (Get-Content "$PSScriptRoot\..\..\icu\icu4c\source\common\unicode\uvernum.h")
-$versionNumberDefine = '#define U_ICU_VERSION "'+ $ICUVersion +'"'
+$versionNumberDefine = '#define U_ICU_VERSION "'+ $normalizedICUVersion +'"'
 if (!($icuVersionHeader -match $versionNumberDefine)) {
     Write-Host "Error: The ICU Version number (as a dotted-decimal string) in uvernum.h does not match the value in the version.txt file".
     Write-Host "The uvernum.h file has the following instead:"
