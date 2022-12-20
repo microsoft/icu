@@ -157,7 +157,23 @@
             "rules": [
                 "-/Currencies",
                 "+/Currencies/USD",
-                "+/Currencies/EUR"
+                "+/Currencies/EUR",
+                "+/Currencies/AUD",
+                "+/Currencies/CAD",
+                "+/Currencies/CHF",
+                "+/Currencies/NZD",
+                "+/Currencies/DKK",
+                "+/Currencies/GBP",
+                "+/Currencies/HKD",
+                "+/Currencies/ILS",
+                "+/Currencies/INR",
+                "+/Currencies/KES",
+                "+/Currencies/MYR",
+                "+/Currencies/PHP",
+                "+/Currencies/SEK",
+                "+/Currencies/SGD",
+                "+/Currencies/TZS",
+                "+/Currencies/UGX"
             ]
         },
         {
