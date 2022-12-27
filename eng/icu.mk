@@ -93,12 +93,17 @@ endef
 
 ifeq ($(TARGET_OS),browser)
 $(eval $(call TargetBuildTemplate,icudt_browser,icudt))
+$(eval $(call TargetBuildTemplate,hybrid_wasm/icudt_browser,icudt_wasm))
 else
 $(eval $(call TargetBuildTemplate,icudt_mobile,icudt))
+$(eval $(call TargetBuildTemplate,hybrid_wasm/icudt_mobile,icudt_wasm))
 endif
 $(eval $(call TargetBuildTemplate,icudt_CJK,icudt_CJK))
 $(eval $(call TargetBuildTemplate,icudt_no_CJK,icudt_no_CJK))
 $(eval $(call TargetBuildTemplate,icudt_EFIGS,icudt_EFIGS))
+$(eval $(call TargetBuildTemplate,hybrid_wasm/icudt_CJK,icudt_CJK_wasm))
+$(eval $(call TargetBuildTemplate,hybrid_wasm/icudt_no_CJK,icudt_no_CJK_wasm))
+$(eval $(call TargetBuildTemplate,hybrid_wasm/icudt_EFIGS,icudt_EFIGS_wasm))
 
 # build source+data for the main "icudt" filter and only data for the other filters
-all: lib-icudt data-icudt data-icudt_no_CJK data-icudt_EFIGS data-icudt_CJK
+all: lib-icudt data-icudt data-icudt_no_CJK data-icudt_EFIGS data-icudt_CJK data-icudt_wasm data-icudt_no_CJK_wasm data-icudt_EFIGS_wasm data-icudt_CJK_wasm
