@@ -23,6 +23,16 @@ if (!$icuVersionData.ICU_version) {
 Write-Host 'ICU Version = ' $icuVersionData.ICU_version
 $ICUVersion = $icuVersionData.ICU_version
 
+# Sanity check on the ICU version number
+$icuVersionArray = $ICUVersion.split('.')
+if ($icuVersionArray.length -ne 4) {
+    Write-Host "Error: The ICU version number ($env:ICUVersion) should have exactly 4 parts!".
+    throw "Error: Invalid ICU version number!"
+}
+
+# Normalize the ICU version (ex: 72.0.1.0 -> 72.0.1)
+$ICUVersion = $ICUVersion -replace '(.0)+$', ''
+
 # The Azure DevOps environment is a bit odd and requires doing the following
 # in order to persist variables from one build task to another build task.
 $vstsCommandString = 'vso[task.setvariable variable=ICUVersion]' + $ICUVersion
@@ -32,12 +42,6 @@ Write-Host "##$vstsCommandString"
 # as this script may be called by other scripts.
 $env:ICUVersion = $ICUVersion
 
-# Sanity check on the ICU version number
-$icuVersionArray = $ICUVersion.split('.')
-if ($icuVersionArray.length -ne 4) {
-    Write-Host "Error: The ICU version number ($env:ICUVersion) should have exactly 4 parts!".
-    throw "Error: Invalid ICU version number!"
-}
 foreach ($versionPart in $icuVersionArray) {
     # Each part of the ICU version must fit within a uint8_t, so the max value for each part is 255.
     if ([int]$versionPart -gt [int]255) {
