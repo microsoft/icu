@@ -1,5 +1,7 @@
 <Project>
-  <Target Name="Build" Condition="'$(PackOnly)' != 'true'" DependsOnTargets="PatchEmscripten;CopyEmscriptenVersion">
+  <Import Project="$(RepositoryEngineeringDir)Versions.props" />
+
+  <Target Name="Build" Condition="'$(PackOnly)' != 'true'" DependsOnTargets="PatchEmscripten;CopyEmscriptenVersion;DownloadWasiSdk">
     <Error Condition="'$(TargetOS)' == ''" Text="TargetOS needs to be specified!" />
     <Error Condition="'$(TargetArchitecture)' == ''" Text="TargetArchitecture needs to be specified!" />
 
@@ -7,10 +9,15 @@
       <_ExtraParams Condition="'$(WasmEnableThreads)' == 'true'">WASM_ENABLE_THREADS=true</_ExtraParams>
     </PropertyGroup>
 
+    <!-- Set WASI sdk path if WASI_SDK_PATH env variable is not set -->
+    <PropertyGroup Condition="'$(TargetOS)' == 'Wasi' and '$(WASI_SDK_PATH)' == ''">
+      <WASI_SDK_PATH Condition="'$(WASI_SDK_PATH)' == ''">$(RepoRoot)artifacts/wasi-sdk</WASI_SDK_PATH>
+    </PropertyGroup>
+
     <Copy SourceFiles="$(MSBuildThisFileDirectory)\..\icu-filters\curr-root.txt" 
           DestinationFiles="$(MSBuildThisFileDirectory)\..\icu\icu4c\source\data\curr\root.txt"/> 
     <Exec WorkingDirectory="$(MSBuildThisFileDirectory)"
-          Command="make -f icu.mk all TARGET_OS=$(TargetOS.ToLower()) TARGET_ARCHITECTURE=$(TargetArchitecture) ICU_TRACING=$(IcuTracing) $(_ExtraParams) SHELL=/bin/bash"
+          Command="make -f icu.mk all TARGET_OS=$(TargetOS.ToLower()) TARGET_ARCHITECTURE=$(TargetArchitecture) ICU_TRACING=$(IcuTracing) WASI_SDK_PATH=$(WASI_SDK_PATH) $(_ExtraParams) SHELL=/bin/bash"
           IgnoreStandardErrorWarningFormat="true" />
   </Target>
   <Target Name="Restore" />
@@ -36,5 +43,20 @@
             File="$(RepoRoot)\artifacts\bin\icu-browser-wasm\emscripten-version.txt"
             Lines="@(_ItemsFromEmscriptenVersionFile->Replace('&quot;', ''))"
             Overwrite="true" />
+  </Target>
+
+  <!-- Download WASI sdk if WASI_SDK_PATH env variable is not set -->
+  <Target Name="DownloadWasiSdk" Condition="'$(TargetOS)' == 'Wasi'  and '$(WASI_SDK_PATH)' == ''">
+    <PropertyGroup>
+      <_WasiLocalPath>$(RepoRoot)\artifacts</_WasiLocalPath>
+      <_WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('Linux'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$(WasiSdkVersion)/wasi-sdk-$(WasiSdkVersion).0-linux.tar.gz</_WasiSdkUrl>
+      <_WasiSdkUrl Condition="$([MSBuild]::IsOSPlatform('OSX'))">https://github.com/WebAssembly/wasi-sdk/releases/download/wasi-sdk-$(WasiSdkVersion)/wasi-sdk-$(WasiSdkVersion).0-macos.tar.gz</_WasiSdkUrl>
+    </PropertyGroup>
+
+    <Error Condition="'$(_WasiSdkUrl)' == ''" Text="_WasiSdkUrl is not set!" />
+
+    <Exec Command="rm -rf wasi-sdk-*/ wasi-sdk/ &amp;&amp; curl -L -o- $(_WasiSdkUrl) --fail -S | tar -xvz &amp;&amp; mv wasi-sdk-$(WasiSdkVersion).*/ wasi-sdk/"
+          WorkingDirectory="$(_WasiLocalPath)"
+          IgnoreStandardErrorWarningFormat="true" />
   </Target>
 </Project>
