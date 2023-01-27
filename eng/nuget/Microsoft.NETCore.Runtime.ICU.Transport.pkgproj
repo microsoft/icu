@@ -27,6 +27,10 @@
     <ExtraPackageName>-threads</ExtraPackageName>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'wasi-wasm'">
+    <ExtraPackageName>-threads</ExtraPackageName>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageIndex Include="$(PackageIndexFile)" />
   </ItemGroup>
@@ -48,7 +52,7 @@
          bundled in the git repo.
 
          To force a build to package using the in-tree files, pass the parameter. -->
-    <File Condition="'$(OverrideBundledDatFiles)' != 'true'" Include="$(RepoRoot)\eng\prebuilts\browser\*.dat" TargetPath="runtimes\browser-wasm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+    <File Condition="'$(OverrideBundledDatFiles)' != 'true'" Include="$(RepoRoot)\eng\prebuilts\wasm\*.dat" TargetPath="runtimes\browser-wasm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
     <File Condition="'$(OverrideBundledDatFiles)' == 'true'" Include="$(RepoRoot)\artifacts\bin\icu-browser-wasm\*.dat" TargetPath="runtimes\browser-wasm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
     
     <!-- Threads build -->
@@ -61,8 +65,36 @@
          bundled in the git repo.
 
          To force a build to package using the in-tree files, pass the parameter. -->
-    <File Condition="'$(OverrideBundledDatFiles)' != 'true'" Include="$(RepoRoot)\eng\prebuilts\browser\*.dat" TargetPath="runtimes\browser-wasm$(ExtraPackageName)\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+    <File Condition="'$(OverrideBundledDatFiles)' != 'true'" Include="$(RepoRoot)\eng\prebuilts\wasm\*.dat" TargetPath="runtimes\browser-wasm$(ExtraPackageName)\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
     <File Condition="'$(OverrideBundledDatFiles)' == 'true'" Include="$(RepoRoot)\artifacts\bin\icu-browser-wasm\*.dat" TargetPath="runtimes\browser-wasm$(ExtraPackageName)\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+  </ItemGroup>
+
+  <!-- Wasi -->
+  <ItemGroup Condition="'$(AddAllTargetOSToPackage)' == 'true' or '$(PackageRID)' == 'wasi-wasm'">
+    <File Include="$(RepoRoot)\artifacts\bin\icu-wasi-wasm\lib\libicui18n.a" TargetPath="runtimes\wasi-wasm\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-wasi-wasm\lib\libicuuc.a" TargetPath="runtimes\wasi-wasm\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-wasi-wasm\lib\libicudata.a" TargetPath="runtimes\wasi-wasm\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\icu-wasi-wasm\include\**" TargetPath="runtimes\wasi-wasm\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <!-- Work around non-determinism reported in https://github.com/dotnet/runtime/issues/55637
+         we cannot trust that the .dat files generated in a build are "good", so we prefer files
+         bundled in the git repo.
+
+         To force a build to package using the in-tree files, pass the parameter. -->
+    <File Condition="'$(OverrideBundledDatFiles)' != 'true'" Include="$(RepoRoot)\eng\prebuilts\wasm\*.dat" TargetPath="runtimes\wasi-wasm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+    <File Condition="'$(OverrideBundledDatFiles)' == 'true'" Include="$(RepoRoot)\artifacts\bin\icu-wasi-wasm\*.dat" TargetPath="runtimes\wasi-wasm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+    
+    <!-- Threads build -->
+    <File Include="$(RepoRoot)\artifacts\bin\wasi-threading\icu-wasi-wasm\lib\libicui18n.a" TargetPath="runtimes\wasi-wasm$(ExtraPackageName)\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\wasi-threading\icu-wasi-wasm\lib\libicuuc.a" TargetPath="runtimes\wasi-wasm$(ExtraPackageName)\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\wasi-threading\icu-wasi-wasm\lib\libicudata.a" TargetPath="runtimes\wasi-wasm$(ExtraPackageName)\native\lib\%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <File Include="$(RepoRoot)\artifacts\bin\wasi-threading\icu-wasi-wasm\include\**" TargetPath="runtimes\wasi-wasm$(ExtraPackageName)\native\include\%(RecursiveDir)%(Filename)%(Extension)" SkipPackageFileCheck="true" />
+    <!-- Work around non-determinism reported in https://github.com/dotnet/runtime/issues/55637
+         we cannot trust that the .dat files generated in a build are "good", so we prefer files
+         bundled in the git repo.
+
+         To force a build to package using the in-tree files, pass the parameter. -->
+    <File Condition="'$(OverrideBundledDatFiles)' != 'true'" Include="$(RepoRoot)\eng\prebuilts\wasm\*.dat" TargetPath="runtimes\wasi-wasm$(ExtraPackageName)\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+    <File Condition="'$(OverrideBundledDatFiles)' == 'true'" Include="$(RepoRoot)\artifacts\bin\icu-wasi-wasm\*.dat" TargetPath="runtimes\wasi-wasm$(ExtraPackageName)\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
   <!-- Android -->
