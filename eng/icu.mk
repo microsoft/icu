@@ -92,7 +92,7 @@ data-$(2): $(TARGET_OBJDIR)/$(1)/.stamp-configure | $(TARGET_OBJDIR)/$(1) $(TARG
 endef
 
 ifeq ($(TARGET_OS),browser)
-$(eval $(call TargetBuildTemplate,icudt_browser,icudt))
+$(eval $(call TargetBuildTemplate,icudt_wasm,icudt))
 $(eval $(call TargetBuildTemplate,hybrid_wasm/icudt_browser,icudt_wasm))
 else
 $(eval $(call TargetBuildTemplate,icudt_mobile,icudt))
