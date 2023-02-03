@@ -23,7 +23,8 @@ CONFIGURE_COMPILER_FLAGS += \
 	CXXFLAGS="-Oz -fno-exceptions -Wno-sign-compare $(THREADS_FLAG) $(ICU_DEFINES)" \
 	CC="$(WASI_SDK_PATH)/bin/clang --sysroot=$(WASI_SDK_PATH)/share/wasi-sysroot" \
 	CXX="$(WASI_SDK_PATH)/bin/clang++ --sysroot=$(WASI_SDK_PATH)/share/wasi-sysroot" \
-	--host=$(HOST_PLATFORM) --build=wasm32
+	--host=$(HOST_PLATFORM) --build=wasm32 \
+	RANLIB="$(WASI_SDK_PATH)/bin/llvm-ranlib" 
 
 check-env:
 	:
