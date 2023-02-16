@@ -131,10 +131,8 @@ stages:
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=x86 $(_InternalBuildArgs)
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOS /p:TargetArchitecture=arm $(_InternalBuildArgs)
           displayName: Build
         - task: PublishPipelineArtifact@1
           displayName: Upload artifacts
