@@ -1,5 +1,6 @@
 variables:
   - template: /eng/common-variables.yml
+  - template: /eng/common/templates/variables/pool-providers.yml
   - name: Build.Repository.Clean
     value: true
 
@@ -37,10 +38,11 @@ stages:
         timeoutInMinutes: 360
         pool:
           ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            vmImage: ubuntu-20.04
+            name: $(DncEngPublicBuildPool)
+            demands: ImageOverride -equals build.ubuntu.2204.amd64.open
           ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: NetCore1ESPool-Internal
-            demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
+            name: $(DncEngInternalBuildPool)
+            demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
           image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20220531132048-00a561c
         steps:
@@ -59,10 +61,11 @@ stages:
         timeoutInMinutes: 360
         pool:
           ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            vmImage: ubuntu-20.04
+            name: $(DncEngPublicBuildPool)
+            demands: ImageOverride -equals build.ubuntu.2204.amd64.open
           ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: NetCore1ESPool-Internal
-            demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
+            name: $(DncEngInternalBuildPool)
+            demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
           # when updating, change emscripten version here: ../.devcontainer/emscripten-version.txt
           image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20220531132048-00a561c
@@ -83,10 +86,11 @@ stages:
         timeoutInMinutes: 360
         pool:
           ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            vmImage: ubuntu-20.04
+            name: $(DncEngPublicBuildPool)
+            demands: ImageOverride -equals build.ubuntu.2204.amd64.open
           ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: NetCore1ESPool-Internal
-            demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
+            name: $(DncEngInternalBuildPool)
+            demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
           image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-20.04-webassembly
         steps:
@@ -105,10 +109,11 @@ stages:
         timeoutInMinutes: 360
         pool:
           ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            vmImage: ubuntu-20.04
+            name: $(DncEngPublicBuildPool)
+            demands: ImageOverride -equals build.ubuntu.2204.amd64.open
           ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: NetCore1ESPool-Internal
-            demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
+            name: $(DncEngInternalBuildPool)
+            demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
           image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-20.04-webassembly
         steps:
@@ -184,10 +189,11 @@ stages:
         timeoutInMinutes: 360
         pool:
           ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            vmImage: ubuntu-20.04
+            name: $(DncEngPublicBuildPool)
+            demands: ImageOverride -equals build.ubuntu.2204.amd64.open
           ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: NetCore1ESPool-Internal
-            demands: ImageOverride -equals Build.Ubuntu.1804.Amd64
+            name: $(DncEngInternalBuildPool)
+            demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
           image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-android-20220131172314-3983b4e
         steps:
@@ -220,10 +226,11 @@ stages:
         timeoutInMinutes: 360
         pool:
           ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            vmImage: windows-2019
+            name: $(DncEngPublicBuildPool)
+            demands: ImageOverride -equals windows.vs2022.amd64.open
           ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: NetCore1ESPool-Internal
-            demands: ImageOverride -equals windows.vs2019.amd64
+            name: $(DncEngInternalBuildPool)
+            demands: ImageOverride -equals windows.vs2022.amd64
         steps:
         - task: DownloadPipelineArtifact@2
           inputs:
