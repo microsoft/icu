@@ -44,7 +44,7 @@ stages:
             name: $(DncEngInternalBuildPool)
             demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly3130-20230130145247-f7eb839
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20220531132048-00a561c
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm $(_InternalBuildArgs)
@@ -68,7 +68,7 @@ stages:
             demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
           # when updating, change emscripten version here: ../.devcontainer/emscripten-version.txt
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly3130-20230130145247-f7eb839
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-20220531132048-00a561c
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm /p:WasmEnableThreads=true $(_InternalBuildArgs)
@@ -92,7 +92,7 @@ stages:
             name: $(DncEngInternalBuildPool)
             demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-20.04-webassembly3130-20230130145338-66f9fdd
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-20.04-webassembly
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Wasi /p:TargetArchitecture=wasm $(_InternalBuildArgs)
@@ -115,7 +115,7 @@ stages:
             name: $(DncEngInternalBuildPool)
             demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-20.04-webassembly3130-20230130145338-66f9fdd
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-20.04-webassembly
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Wasi /p:TargetArchitecture=wasm /p:WasmEnableThreads=true $(_InternalBuildArgs)
