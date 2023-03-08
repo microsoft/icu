@@ -176,6 +176,67 @@
                  minimalDraftStatus="${minDraftStatus}" localeIdFilter="${localeIdFilter}"
                  includePseudoLocales="${includePseudoLocales}" emitReport="${emitReport}">
 
+            <!-- MSFT-Change -->
+            <!-- The following aliases are MSFT mappings that used to live in the icu-locale-deprecates.xml file, which is no longer being used. -->
+            <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
+            <forcedAlias source="ccp_Cakm" target="ccp"/>
+            <!-- Chakma does not have a suppress script. ccp_Cakm_BD is the locale name in NLS while ccp_BD is the locale name in ICU. -->
+            <forcedAlias source="ccp_Cakm_BD" target="ccp_BD"/>
+            <!-- Chakma does not have a suppress script. ccp_Cakm_IN is the locale name in NLS while ccp_IN is the locale name in ICU. -->
+            <forcedAlias source="ccp_Cakm_IN" target="ccp_IN"/>
+            <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
+            <forcedAlias source="ceb_Latn" target="ceb"/>
+            <!-- Cebuano does not have a suppress script. ceb_Latn_PH is the locale name in NLS while ceb_PH is the locale name in ICU. -->
+            <forcedAlias source="ceb_Latn_PH" target="ceb_PH"/>
+            <!-- Dogri does not have a suppress script. doi_Deva_IN in the locale name in NLS while doi_IN is the locale name in ICU. -->
+            <forcedAlias source="doi_Deva_IN" target="doi_IN"/>
+            <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
+            <forcedAlias source="ha_Latn" target="ha"/>
+            <!-- Hausa does not have a suppress script. ha_Latn_GH in the locale name in NLS while ha_GH is the locale name in ICU. -->
+            <forcedAlias source="ha_Latn_GH" target="ha_GH"/>
+            <!-- Hausa does not have a suppress script. ha_Latn_NE in the locale name in NLS while ha_NE is the locale name in ICU. -->
+            <forcedAlias source="ha_Latn_NE" target="ha_NE"/>
+            <!-- Hausa does not have a suppress script. ha_Latn_NG in the locale name in NLS while ha_NG is the locale name in ICU. -->
+            <forcedAlias source="ha_Latn_NG" target="ha_NG"/>
+            <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
+            <forcedAlias source="iu_Cans" target="iu"/>
+            <!-- Inuktitut does not have a suppress script. iu_Cans_CA is the locale name in NLS while iu_CA is the locale name in ICU. -->
+            <forcedAlias source="iu_Cans_CA" target="iu_CA"/>
+            <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
+            <forcedAlias source="jv_Latn" target="jv"/>
+            <!-- Javanese does not have a suppress script. jv_Latn_ID is the locale name in NLS while jv_ID is the locale name in ICU. -->
+            <forcedAlias source="jv_Latn_ID" target="jv_ID"/>
+            <!-- HACK: ku/ku_Arab are the locale names in NLS while ckb is the locale name in ICU. These aliases serve as a mapping between them. -->
+            <forcedAlias source="ku" target="ckb"/>
+            <forcedAlias source="ku_Arab" target="ckb"/>
+            <!-- HACK: ku_Arab_IQ is the locale name in NLS while ckb_IQ is the locale name in ICU. This alias serves as a mapping between them. -->
+            <forcedAlias source="ku_Arab_IQ" target="ckb_IQ"/>
+            <!-- HACK: ku_Arab_IR is the locale name in NLS while ckb_IR is the locale name in ICU. This alias serves as a mapping between them. -->
+            <forcedAlias source="ku_Arab_IR" target="ckb_IR"/>
+            <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
+            <forcedAlias source="mi_Latn" target="mi"/>
+            <!-- Maori does not have a suppress script. mi_Latn_NZ is the locale name in NLS while mi_NZ is the locale name in ICU. -->
+            <forcedAlias source="mi_Latn_NZ" target="mi_NZ"/>
+            <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
+            <forcedAlias source="pcm_Latn" target="pcm"/>
+            <!-- Nigerian Pidgin does not have a suppress script. pcm_Latn_NG is the locale name in NLS while pcm_NG is the locale name in ICU. -->
+            <forcedAlias source="pcm_Latn_NG" target="pcm_NG"/>
+            <!-- qut is the former name of the NLS locale quc. -->
+            <forcedAlias source="qut" target="quc"/>
+            <forcedAlias source="qut_Latn" target="quc"/>
+            <forcedAlias source="qut_GT" target="quc_GT"/>
+            <forcedAlias source="qut_Latn_GT" target="quc_GT"/>
+            <forcedAlias source="quz" target="qu"/>
+            <forcedAlias source="quz_BO" target="qu_BO"/>
+            <forcedAlias source="quz_EC" target="qu_EC"/>
+            <forcedAlias source="quz_PE" target="qu_PE"/>
+            <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
+            <forcedAlias source="tzm_Latn" target="tzm"/>
+            <!-- Tamazight does not have a suppress script. tzm_Latn_MA is the locale name in NLS while tzm_MA is the locale name in ICU. -->
+            <forcedAlias source="tzm_Latn_MA" target="tzm_MA"/>
+            <!-- Tamazight does not have a suppress script. tzm_Latn_DZ is the locale name in NLS while tzm_DZ is the locale name in ICU. -->
+            <forcedAlias source="tzm_Latn_DZ" target="tzm_DZ"/>
+
             <!-- The primary set of locale IDs to be generated by default. The IDs in this list are
                  automatically expanded to include default scripts and all available regions. The
                  rules are:
@@ -191,16 +252,16 @@
             -->
             <localeIds>
                 // A
-                af, agq, ak, am, ar, ars, as, asa, ast, az, az_AZ, az_Cyrl
+                aa, af, agq, ak, am, ar, arn, ars, as, asa, ast, az, az_AZ, az_Cyrl
 
                 // B
-                bas, be, bem, bez, bg, bgc, bho, bm, bn, bo, br, brx, bs, bs_BA, bs_Cyrl
+                ba, bas, be, bem, bez, bg, bin, bgc, bho, bm, bn, bo, br, brx, bs, bs_BA, bs_Cyrl, byn
 
                 // C
-                ca, ccp, ce, ceb, cgg, chr, ckb, cs, cv, cy
+                ca, ccp, ccp_Cakm_BD, ccp_Cakm_IN, ce, ceb, ceb_Latn_PH, cgg, chr, ckb, co, cs, cu, cv, cy
 
                 // D
-                da, dav, de, dje, doi, dsb, dua, dyo, dz
+                da, dav, de, dje, doi, doi_Deva_IN, dsb, dua, dv, dyo, dz
 
                 // E
                 ebu, ee, el, en, en_NH, en_RH, eo, es, et, eu, ewo
@@ -209,65 +270,65 @@
                 fa, ff, ff_Adlm, ff_CM, ff_GN, ff_MR, ff_SN, fi, fil, fo, fr, fur, fy
 
                 // G
-                ga, gd, gl, gsw, gu, guz, gv
+                ga, gd, gl, gn, gsw, gu, guz, gv
 
                 // H
-                ha, haw, he, hi, hi_Latn, hr, hsb, hu, hy
+                ha, ha_Latn, ha_Latn_GH, ha_Latn_NE, ha_Latn_NG, haw, he, hi, hi_Latn, hr, hsb, hu, hy
 
                 // I
-                ia, id, ig, ii, in, in_ID, is, it, iw, iw_IL
+                ia, ibb, id, ig, ii, in, in_ID, is, it, iu, iu_Cans_CA, iu_Latn, iw, iw_IL
 
                 // J
-                ja, jgo, jmc, jv
+                ja, jgo, jmc, jv, jv_Latn_ID, jv_Java
 
                 // K
-                ka, kab, kam, kde, kea, kgp, khq, ki, kk, kkj, kl, kln, km, kn, ko, kok, ks
-                ks_Deva, ks_IN, ksb, ksf, ksh, ku, kw, ky
+                ka, kab, kam, kde, kea, kgp, khq, ki, kk, kkj, kl, kln, km, kn, ko, kok, kr, ks
+                ks_Deva, ks_IN, ksb, ksf, ksh, ku, ku_Arab_IQ, ku_Arab_IR, kw, ky
 
                 // L
-                lag, lb, lg, lkt, ln, lo, lrc, lt, lu, luo, luy, lv
+                la, lag, lb, lg, lkt, ln, lo, lrc, lt, lu, luo, luy, lv
 
                 // M
-                mai, mas, mer, mfe, mg, mgh, mgo, mi, mk, ml, mn, mni, mni_IN, mo, mr, ms
+                mai, mas, mer, mfe, mg, mgh, mgo, mi, mi_Latn_NZ, mk, ml, mn, mn_Mong, mni, mni_IN, mo, moh, mr, ms
                 mt, mua, my, mzn
 
                 // N
-                naq, nb, nd, ne, nl, nmg, nn, nnh, no, no_NO, no_NO_NY, nus, nyn
+                naq, nb, nd, nds, ne, nl, nmg, nn, nnh, no, no_NO, no_NO_NY, nqo, nr, nso, nus, nyn
 
                 // O
-                om, or, os
+                oc, om, or, os
 
                 // P
-                pa, pa_Arab, pa_IN, pa_PK, pcm, pl, ps, pt
+                pa, pa_Arab, pa_IN, pa_PK, pap, pcm, pcm_Latn_NG, pl, prg, prs, prs_AF, ps, pt
 
                 // Q
-                qu
+                qu, quc, qut, qut_GT, qut_Latn, qut_Latn_GT, quz, quz_BO, quz_EC, quz_PE
 
                 // R
                 raj, rm, rn, ro, rof, ru, rw, rwk
 
                 // S
                 sa, sah, saq, sat, sat_IN, sbp, sc, sd, sd_Deva, sd_IN, sd_PK, se, seh, ses, sg, sh, sh_BA, sh_CS, sh_YU
-                shi, shi_Latn, shi_MA, si, sk, sl, smn, sn, so, sq, sr, sr_BA, sr_CS, sr_Cyrl_CS, sr_Cyrl_YU, sr_Latn
-                sr_Latn_CS, sr_Latn_YU, sr_ME, sr_RS, sr_XK, sr_YU, su, su_ID, sv, sw
+                shi, shi_Latn, shi_MA, si, sk, sl, sma, smj, smn, sms, sn, so, sq, sr, sr_BA, sr_CS, sr_Cyrl_CS, sr_Cyrl_YU, sr_Latn
+                sr_Latn_CS, sr_Latn_YU, sr_ME, sr_RS, sr_XK, sr_YU, ss, ssy, st, su, su_ID, sv, sw, syr
 
                 // T
-                ta, te, teo, tg, th, ti, tk, tl, tl_PH, to, tr, tt, twq, tzm
+                ta, te, teo, tg, th, tig, ti, tk, tl, tl_PH, tn, to, tr, ts, tt, twq, tzm, tzm_Latn_MA, tzm_Latn_DZ, tzm_Arab, tzm_Tfng
 
                 // U
                 ug, uk, ur, uz, uz_AF, uz_Arab, uz_Cyrl, uz_UZ
 
                 // V
-                vai, vai_LR, vai_Latn, vi, vun
+                vai, vai_LR, vai_Latn, ve, vi, vo, vun
 
                 // W
-                wae, wo
+                wae, wal, wo
 
                 // X
                 xh, xog
 
                 // Y
-                yav, yi, yo, yrl, yue, yue_CN, yue_HK, yue_Hans
+                yav, yi, yo, yrl
 
                 // Z
                 zgh, zh, zh_CN, zh_HK, zh_Hant, zh_MO, zh_SG, zh_TW, zu
@@ -296,27 +357,36 @@
             <!-- Collation data is large, but also more sharable than other data, which is why there
                  are a number of aliases and parent remappings for this directory. -->
             <directory dir="coll" inheritLanguageSubtag="bs_Cyrl, sr_Latn, zh_Hant">
-                <!-- These aliases are to avoid needing to copy and maintain the same collation data
-                     for "zh" and "yue". The maximized versions of "yue_Hans" is "yue_Hans_CN" (vs
-                     "zh_Hans_CN"), and for "yue" it's "yue_Hant_HK" (vs "zh_Hant_HK"), so the
-                     aliases are effectively just rewriting the base language. -->
-                <forcedAlias source="yue" target="zh_Hant"/>
-                <forcedAlias source="yue_Hant" target="zh_Hant"/>
-                <forcedAlias source="yue_CN" target="zh_Hans"/>
-                <forcedAlias source="yue_Hans" target="zh_Hans"/>
-                <forcedAlias source="yue_Hans_CN" target="zh_Hans"/>
-
                 <!-- TODO: Find out and document this properly. -->
                 <forcedAlias source="sr_ME" target="sr_Cyrl_ME"/>
+
+                <!-- The following aliases are MSFT mappings that used to live in the icu-coll-deprecates.xml file, which is no longer being used. -->
+                <!-- ku is the locale name in NLS while ckb is the locale name in ICU. ku should use ckb collation, these aliases serve as a mapping between them. -->
+                <forcedAlias source="ku" target="ckb"/>
+                <forcedAlias source="ku_Arab_IQ" target="ckb_IQ"/>
+                <forcedAlias source="ku_Arab_IR" target="ckb_IR"/>
+                <!-- prs is the locale name in NLS while fa is the locale name in ICU. prs should use fa collation, these aliases serve as a mapping between them. -->
+                <forcedAlias source="prs" target="fa"/>
+                <forcedAlias source="prs_AF" target="fa_AF"/>
+                <!-- We add qut to quc locale mapping, so we need to add collation mapping as well. qut is the former name of the NLS locale quc. -->
+                <forcedAlias source="qut" target="quc"/>
+                <forcedAlias source="qut_Latn" target="quc"/>
+                <forcedAlias source="qut_GT" target="quc_GT"/>
+                <forcedAlias source="qut_Latn_GT" target="quc_GT"/>
+                <!-- We add quz to qu locale mapping, so we need to add collation mapping as well. -->
+                <forcedAlias source="quz" target="qu"/>
+                <forcedAlias source="quz_BO" target="qu_BO"/>
+                <forcedAlias source="quz_EC" target="qu_EC"/>
+                <forcedAlias source="quz_PE" target="qu_PE"/>
 
                 <localeIds>
                     root,
 
                     // A-B
-                    af, am, ars, ar, as, az, be, bg, bn, bo, br, bs_Cyrl, bs,
+                    aa, af, am, ars, ar, as, az, be, bg, bn, bo, br, bs_Cyrl, bs,
 
                     // C-F
-                    ca, ceb, chr, cs, cy, da, de_AT, de, dsb, dz, ee, el, en,
+                    ca, ceb, chr, ckb, ckb_IQ, ckb_IR, cs, cu, cy, da, de_AT, de, dsb, dz, ee, el, en,
                     en_US_POSIX, en_US, eo, es, et, fa_AF, fa, ff_Adlm, ff, fil, fi, fo, fr_CA, fr, fy,
 
                     // G-J
@@ -324,29 +394,23 @@
                     id_ID, id, ig, in, in_ID, is, it, iw_IL, iw, ja,
 
                     // K-P
-                    ka, kk, kl, km, kn, kok, ko, ku, ky, lb, lkt, ln, lo, lt, lv,
-                    mk, ml, mn, mo, mr, ms, mt, my, nb, nb_NO, ne, nl, nn, no, no_NO,
-                    om, or, pa_IN, pa, pa_Guru, pl, ps, pt,
+                    ka, kk, kl, km, kn, kok, ko, ku, ku_Arab_IQ, ku_Arab_IR, ky, lb, lkt, ln, lo, lt, lv,
+                    mk, ml, mn, mo, mr, ms, mt, my, nb, nb_NO, ne, nl, nn, no, no_NO, nso,
+                    om, or, pa_IN, pa, pa_Guru, pl, prs, prs_AF, ps, pt,
 
-                    // R-T
+                    // Q-T
+                    qu, qu_BO, qu_EC, qu_PE, quc, quc_GT, qut, qut_Latn, qut_GT, qut_Latn_GT, quz, quz_BO, quz_EC, quz_PE
                     ro, ru, sa, se, sh_BA, sh_CS, sh, sh_YU, si, sk, sl, smn, sq,
-                    sr_BA, sr_Cyrl_ME, sr_Latn, sr_ME, sr_RS, sr, sv, sw,
-                    ta, te, th, tk, to, tr,
+                    sr_BA, sr_Cyrl_ME, sr_Latn, sr_ME, sr_RS, sr, ssy, st, sv, sw,
+                    ta, te, th, tk, tn, to, tr,
 
                     // U-Z
-                    ug, uk, ur, uz, vi, wae, wo, xh, yi, yo, yue_CN, yue_Hans_CN, yue_Hans
-                    yue_Hant, yue, zh_CN, zh_Hans, zh_Hant, zh_HK, zh_MO, zh_SG, zh_TW, zh, zu
+                    ug, uk, ur, uz, vi, vo, wae, wo, xh, yi, yo,
+                    zh_CN, zh_Hans, zh_Hant, zh_HK, zh_MO, zh_SG, zh_TW, zh, zu
                 </localeIds>
             </directory>
 
             <directory dir="rbnf">
-                <!-- It is not at all clear why this is being done. It's certainly not exactly the
-                     same as above, since (a) the alias is reversed (b) "zh_Hant" does exist, with
-                     different data than "yue", so this alias is not just rewriting the base
-                     language. -->
-                <!-- TODO: Find out and document this properly. -->
-                <forcedAlias source="zh_Hant_HK" target="yue"/>
-
                 <localeIds>
                     root,
 
@@ -362,7 +426,7 @@
 
                     // Q-Z
                     qu, ro, ru, se, sh, sk, sl, sq, sr_Latn, sr, su, sv, sw, ta, th, tr,
-                    uk, vi, yue_Hans, yue, zh_Hant_HK, zh_Hant, zh_HK, zh_MO, zh_TW, zh
+                    uk, vi, zh_Hant_HK, zh_Hant, zh_HK, zh_MO, zh_TW, zh
                 </localeIds>
             </directory>
 
