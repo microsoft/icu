@@ -14,12 +14,13 @@ fr_CA{
         BV{"île Bouvet"}
         BY{"Bélarus"}
         CC{"îles Cocos (Keeling)"}
+        CD{"Congo-Kinshasa"}
+        CG{"Congo-Brazzaville"}
         CK{"îles Cook"}
         CX{"île Christmas"}
         FK{"îles Malouines"}
         FO{"îles Féroé"}
         HM{"îles Heard et McDonald"}
-        IC{"îles Canaries"}
         IM{"île de Man"}
         IO{"territoire britannique de l’océan Indien"}
         KG{"Kirghizistan"}
@@ -30,6 +31,7 @@ fr_CA{
         NF{"île Norfolk"}
         NG{"Nigéria"}
         PN{"îles Pitcairn"}
+        PS{"Territoires palestiniens"}
         QO{"Océanie lointaine"}
         RE{"la Réunion"}
         SX{"Saint-Martin (Pays-Bas)"}
@@ -39,9 +41,5 @@ fr_CA{
         VG{"îles Vierges britanniques"}
         VI{"îles Vierges américaines"}
         VN{"Vietnam"}
-    }
-    Countries%variant{
-        FK{"îles Falkland (Malouines)"}
-        TL{"Timor oriental"}
     }
 }

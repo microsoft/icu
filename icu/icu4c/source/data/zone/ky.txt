@@ -867,9 +867,6 @@ ky{
         "Asia:Ulaanbaatar"{
             ec{"Улан-Батор"}
         }
-        "Asia:Urumqi"{
-            ec{"Үрүмчү"}
-        }
         "Asia:Ust-Nera"{
             ec{"Усть-Нера"}
         }

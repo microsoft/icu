@@ -30,7 +30,6 @@ hsb{
         ann{"obološćina"}
         anp{"angikašćina"}
         ar{"arabšćina"}
-        ar_001{"moderna wysokoarabšćina"}
         arn{"arawkanšćina"}
         arp{"arapahošćina"}
         ars{"najdi arabšćina"}
@@ -94,8 +93,6 @@ hsb{
         dar{"dargwašćina"}
         dav{"taita"}
         de{"němčina"}
-        de_AT{"awstriska němčina"}
-        de_CH{"šwicarska wysokoněmčina"}
         dgr{"dogribšćina"}
         dje{"zarma"}
         doi{"dogrišćina"}
@@ -111,20 +108,12 @@ hsb{
         eka{"ekajukšćina"}
         el{"grjekšćina"}
         en{"jendźelšćina"}
-        en_AU{"awstralska jendźelšćina"}
-        en_CA{"kanadiska jendźelšćina"}
-        en_GB{"britiska jendźelšćina"}
-        en_US{"ameriska jendźelšćina"}
         eo{"esperanto"}
         es{"španišćina"}
-        es_419{"łaćonskoameriska španišćina"}
-        es_ES{"europska španišćina"}
-        es_MX{"mexiska španišćina"}
         et{"estišćina"}
         eu{"baskišćina"}
         ewo{"ewondo"}
         fa{"persišćina"}
-        fa_AF{"dari"}
         ff{"fulbšćina"}
         fi{"finšćina"}
         fil{"filipinšćina"}
@@ -132,8 +121,6 @@ hsb{
         fo{"färöšćina"}
         fon{"fonšćina"}
         fr{"francošćina"}
-        fr_CA{"kanadiska francošćina"}
-        fr_CH{"šwicarska francošćina"}
         frc{"cajun francošćina"}
         frr{"sewjernofrizišćina"}
         fur{"friulšćina"}
@@ -296,7 +283,6 @@ hsb{
         nia{"niazišćina"}
         niu{"niueanšćina"}
         nl{"nižozemšćina"}
-        nl_BE{"flamšćina"}
         nmg{"kwasio"}
         nn{"norwegšćina (nynorsk)"}
         nnh{"ngiemboon"}
@@ -330,8 +316,6 @@ hsb{
         prg{"prušćina"}
         ps{"paštunšćina"}
         pt{"portugalšćina"}
-        pt_BR{"brazilska portugalšćina"}
-        pt_PT{"europska portugalšćina"}
         qu{"kečua"}
         quc{"kʼicheʼ"}
         rap{"rapanuišćina"}
@@ -340,7 +324,6 @@ hsb{
         rm{"retoromanšćina"}
         rn{"kirundišćina"}
         ro{"rumunšćina"}
-        ro_MD{"moldawšćina"}
         rof{"rombo"}
         ru{"rušćina"}
         rup{"armanianšćina"}
@@ -361,7 +344,6 @@ hsb{
         seh{"sena"}
         ses{"koyra senni"}
         sg{"sango"}
-        sh{"serbochorwatšćina"}
         shi{"tašelhit"}
         shn{"shanšćina"}
         si{"singhalšćina"}
@@ -387,7 +369,6 @@ hsb{
         suk{"sukumašćina"}
         sv{"šwedšćina"}
         sw{"suahelšćina"}
-        sw_CD{"kongoska suahelšćina"}
         swb{"comorianšćina"}
         syr{"syriacšćina"}
         ta{"tamilšćina"}
@@ -452,23 +433,10 @@ hsb{
         za{"zhuang"}
         zgh{"tamazight"}
         zh{"chinšćina"}
-        zh_Hans{"chinšćina (zjednorjena)"}
-        zh_Hant{"chinšćina (tradicionalna)"}
         zu{"zulušćina"}
         zun{"zunišćina"}
         zxx{"žadyn rěčny wobsah"}
         zza{"zazašćina"}
-    }
-    Languages%menu{
-        yue{"chinšćina (kantonšćina)"}
-        zh{"chinšćina (mandarin)"}
-    }
-    Languages%short{
-        en_GB{"jendźelšćina (UK)"}
-        en_US{"jendźelšćina (USA)"}
-    }
-    Languages%variant{
-        ckb{"centralna kurdišćina"}
     }
     Scripts{
         Adlm{"adlamske pismo"}
@@ -550,7 +518,6 @@ hsb{
             iso8601{"protyka po iso-8601"}
             japanese{"japanska protyka"}
             persian{"persiska protyka"}
-            roc{"protyka republiki China"}
         }
         cf{
             account{"knihiwjedniski format měny"}

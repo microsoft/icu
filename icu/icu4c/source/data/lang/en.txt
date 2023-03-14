@@ -66,7 +66,6 @@ en{
         ann{"Obolo"}
         anp{"Angika"}
         ar{"Arabic"}
-        ar_001{"Modern Standard Arabic"}
         arc{"Aramaic"}
         arn{"Mapuche"}
         aro{"Araona"}
@@ -107,12 +106,12 @@ en{
         bho{"Bhojpuri"}
         bi{"Bislama"}
         bik{"Bikol"}
-        bin{"Bini"}
+        bin{"Edo"}
         bjn{"Banjar"}
         bkm{"Kom"}
         bla{"Siksiká"}
         blt{"Tai Dam"}
-        bm{"Bambara"}
+        bm{"Bamanankan"}
         bn{"Bangla"}
         bo{"Tibetan"}
         bpy{"Bishnupriya"}
@@ -174,8 +173,6 @@ en{
         dar{"Dargwa"}
         dav{"Taita"}
         de{"German"}
-        de_AT{"Austrian German"}
-        de_CH{"Swiss High German"}
         del{"Delaware"}
         den{"Slave"}
         dgr{"Dogrib"}
@@ -200,23 +197,15 @@ en{
         el{"Greek"}
         elx{"Elamite"}
         en{"English"}
-        en_AU{"Australian English"}
-        en_CA{"Canadian English"}
-        en_GB{"British English"}
-        en_US{"American English"}
         enm{"Middle English"}
         eo{"Esperanto"}
         es{"Spanish"}
-        es_419{"Latin American Spanish"}
-        es_ES{"European Spanish"}
-        es_MX{"Mexican Spanish"}
         esu{"Central Yupik"}
         et{"Estonian"}
         eu{"Basque"}
         ewo{"Ewondo"}
         ext{"Extremaduran"}
         fa{"Persian"}
-        fa_AF{"Dari"}
         fan{"Fang"}
         fat{"Fanti"}
         ff{"Fula"}
@@ -227,8 +216,6 @@ en{
         fo{"Faroese"}
         fon{"Fon"}
         fr{"French"}
-        fr_CA{"Canadian French"}
-        fr_CH{"Swiss French"}
         frc{"Cajun French"}
         frm{"Middle French"}
         fro{"Old French"}
@@ -294,7 +281,7 @@ en{
         id{"Indonesian"}
         ie{"Interlingue"}
         ig{"Igbo"}
-        ii{"Sichuan Yi"}
+        ii{"Yi"}
         ik{"Inupiaq"}
         ike{"Eastern Canadian Inuktitut"}
         ikt{"Western Canadian Inuktitut"}
@@ -450,7 +437,6 @@ en{
         nb{"Norwegian Bokmål"}
         nd{"North Ndebele"}
         nds{"Low German"}
-        nds_NL{"Low Saxon"}
         ne{"Nepali"}
         new{"Newari"}
         ng{"Ndonga"}
@@ -458,7 +444,6 @@ en{
         niu{"Niuean"}
         njo{"Ao Naga"}
         nl{"Dutch"}
-        nl_BE{"Flemish"}
         nmg{"Kwasio"}
         nn{"Norwegian Nynorsk"}
         nnh{"Ngiemboon"}
@@ -468,7 +453,7 @@ en{
         nov{"Novial"}
         nqo{"N’Ko"}
         nr{"South Ndebele"}
-        nso{"Northern Sotho"}
+        nso{"Sesotho sa Leboa"}
         nus{"Nuer"}
         nv{"Navajo"}
         nwc{"Classical Newari"}
@@ -514,8 +499,6 @@ en{
         pro{"Old Provençal"}
         ps{"Pashto"}
         pt{"Portuguese"}
-        pt_BR{"Brazilian Portuguese"}
-        pt_PT{"European Portuguese"}
         qu{"Quechua"}
         quc{"Kʼicheʼ"}
         qug{"Chimborazo Highland Quichua"}
@@ -528,7 +511,6 @@ en{
         rm{"Romansh"}
         rn{"Rundi"}
         ro{"Romanian"}
-        ro_MD{"Moldavian"}
         rof{"Rombo"}
         rom{"Romany"}
         rtm{"Rotuman"}
@@ -563,7 +545,6 @@ en{
         sg{"Sango"}
         sga{"Old Irish"}
         sgs{"Samogitian"}
-        sh{"Serbo-Croatian"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Chadian Arabic"}
@@ -588,9 +569,9 @@ en{
         sr_ME{"Montenegrin"}
         srn{"Sranan Tongo"}
         srr{"Serer"}
-        ss{"Swati"}
+        ss{"siSwati"}
         ssy{"Saho"}
-        st{"Southern Sotho"}
+        st{"Sesotho"}
         stq{"Saterland Frisian"}
         str{"Straits Salish"}
         su{"Sundanese"}
@@ -598,8 +579,7 @@ en{
         sus{"Susu"}
         sux{"Sumerian"}
         sv{"Swedish"}
-        sw{"Swahili"}
-        sw_CD{"Congo Swahili"}
+        sw{"Kiswahili"}
         swb{"Comorian"}
         syc{"Classical Syriac"}
         syr{"Syriac"}
@@ -627,7 +607,7 @@ en{
         tli{"Tlingit"}
         tly{"Talysh"}
         tmh{"Tamashek"}
-        tn{"Tswana"}
+        tn{"Setswana"}
         to{"Tongan"}
         tog{"Nyasa Tonga"}
         tok{"Toki Pona"}
@@ -636,7 +616,7 @@ en{
         tru{"Turoyo"}
         trv{"Taroko"}
         trw{"Torwali"}
-        ts{"Tsonga"}
+        ts{"Xitsonga"}
         tsd{"Tsakonian"}
         tsi{"Tsimshian"}
         tt{"Tatar"}
@@ -677,7 +657,7 @@ en{
         wo{"Wolof"}
         wuu{"Wu Chinese"}
         xal{"Kalmyk"}
-        xh{"Xhosa"}
+        xh{"isiXhosa"}
         xmf{"Mingrelian"}
         xog{"Soga"}
         yao{"Yao"}
@@ -695,41 +675,10 @@ en{
         zen{"Zenaga"}
         zgh{"Standard Moroccan Tamazight"}
         zh{"Chinese"}
-        zh_Hans{"Simplified Chinese"}
-        zh_Hant{"Traditional Chinese"}
-        zu{"Zulu"}
+        zu{"isiZulu"}
         zun{"Zuni"}
         zxx{"No linguistic content"}
         zza{"Zaza"}
-    }
-    Languages%long{
-        zh{"Mandarin Chinese"}
-        zh_Hans{"Simplified Mandarin Chinese"}
-        zh_Hant{"Traditional Mandarin Chinese"}
-    }
-    Languages%menu{
-        ars{"Arabic, Najdi"}
-        ckb{"Kurdish, Central"}
-        se{"Sami, Northern"}
-        sma{"Sami, Southern"}
-        smj{"Sami, Lule"}
-        smn{"Sami, Inari"}
-        sms{"Sami, Skolt"}
-        yue{"Chinese, Cantonese"}
-        zh{"Chinese, Mandarin"}
-    }
-    Languages%short{
-        az{"Azeri"}
-        en_GB{"UK English"}
-        en_US{"US English"}
-    }
-    Languages%variant{
-        ckb{"Kurdish, Sorani"}
-        hi_Latn{"Hinglish"}
-        ky{"Kirghiz"}
-        my{"Myanmar Language"}
-        ps{"Pushto"}
-        ug{"Uighur"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -966,7 +915,7 @@ en{
             iso8601{"ISO-8601 Calendar"}
             japanese{"Japanese Calendar"}
             persian{"Persian Calendar"}
-            roc{"Minguo Calendar"}
+            roc{"Taiwan Calendar"}
         }
         cf{
             account{"Accounting Currency Format"}

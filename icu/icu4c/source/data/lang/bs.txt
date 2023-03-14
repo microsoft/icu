@@ -44,7 +44,6 @@ bs{
         ann{"obolo"}
         anp{"angika"}
         ar{"arapski"}
-        ar_001{"moderni standardni arapski"}
         arc{"aramejski"}
         arn{"mapuški"}
         arp{"arapaho"}
@@ -133,7 +132,6 @@ bs{
         dar{"dargva"}
         dav{"taita"}
         de{"njemački"}
-        de_CH{"visoki njemački (Švicarska)"}
         del{"delaver"}
         den{"slave"}
         dgr{"dogrib"}
@@ -163,7 +161,6 @@ bs{
         eu{"baskijski"}
         ewo{"evondo"}
         fa{"perzijski"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulah"}
@@ -365,14 +362,12 @@ bs{
         nb{"norveški (Bokmal)"}
         nd{"sjeverni ndebele"}
         nds{"donjonjemački"}
-        nds_NL{"donjosaksonski"}
         ne{"nepalski"}
         new{"nevari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niue"}
         nl{"holandski"}
-        nl_BE{"flamanski"}
         nmg{"kvasio"}
         nn{"norveški (Nynorsk)"}
         nnh{"ngiembon"}
@@ -429,7 +424,6 @@ bs{
         rm{"retoromanski"}
         rn{"rundi"}
         ro{"rumunski"}
-        ro_MD{"moldavski"}
         rof{"rombo"}
         rom{"romani"}
         ru{"ruski"}
@@ -457,7 +451,6 @@ bs{
         ses{"kojraboro seni"}
         sg{"sango"}
         sga{"staroirski"}
-        sh{"srpskohrvatski"}
         shi{"tahelhit"}
         shn{"šan"}
         shu{"čadski arapski"}
@@ -570,26 +563,10 @@ bs{
         zen{"zenaga"}
         zgh{"standardni marokanski tamazigt"}
         zh{"kineski"}
-        zh_Hans{"kineski (pojednostavljeni)"}
-        zh_Hant{"kineski (tradicionalni)"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"bez lingvističkog sadržaja"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"kineski (pojednostavljeni standardni)"}
-        zh_Hant{"kineski (tradicionalni standardni)"}
-    }
-    Languages%menu{
-        yue{"jue"}
-        zh{"kineski (standardni)"}
-    }
-    Languages%short{
-        az{"azerski"}
-    }
-    Languages%variant{
-        ps{"pušto"}
     }
     Scripts{
         Adlm{"adlam pismo"}
@@ -821,7 +798,6 @@ bs{
             iso8601{"kalendar ISO-8601"}
             japanese{"japanski kalendar"}
             persian{"perzijski kalendar"}
-            roc{"kalendar Republike Kine"}
         }
         cf{
             account{"računovodstveni format valute"}

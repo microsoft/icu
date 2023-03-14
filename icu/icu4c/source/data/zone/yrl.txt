@@ -858,9 +858,6 @@ yrl{
         "Asia:Ulaanbaatar"{
             ec{"Urã Baturu"}
         }
-        "Asia:Urumqi"{
-            ec{"Urũki"}
-        }
         "Asia:Ust-Nera"{
             ec{"Usiti-Nera"}
         }

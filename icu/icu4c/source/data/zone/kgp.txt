@@ -855,9 +855,6 @@ kgp{
         "Asia:Ulaanbaatar"{
             ec{"Uran Mator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urũmki"}
-        }
         "Asia:Ust-Nera"{
             ec{"Unhti-Nẽra"}
         }

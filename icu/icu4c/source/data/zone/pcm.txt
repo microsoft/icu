@@ -864,9 +864,6 @@ pcm{
         "Asia:Ulaanbaatar"{
             ec{"Ulanbáta"}
         }
-        "Asia:Urumqi"{
-            ec{"Yurọ́mki"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nẹ́ra"}
         }

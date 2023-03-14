@@ -19,7 +19,6 @@ pt_PT{
         af{"africanês"}
         alt{"altai do sul"}
         ang{"inglês antigo"}
-        ar_001{"árabe moderno padrão"}
         arn{"mapuche"}
         ars{"árabe do Négede"}
         av{"avar"}
@@ -37,21 +36,10 @@ pt_PT{
         crs{"francês crioulo seselwa"}
         cs{"checo"}
         cv{"chuvash"}
-        de_AT{"alemão austríaco"}
-        de_CH{"alto alemão suíço"}
         efi{"efik"}
         egy{"egípcio clássico"}
-        en_AU{"inglês australiano"}
-        en_CA{"inglês canadiano"}
-        en_GB{"inglês britânico"}
-        en_US{"inglês americano"}
-        es_419{"espanhol latino-americano"}
-        es_ES{"espanhol europeu"}
-        es_MX{"espanhol mexicano"}
         et{"estónio"}
         fon{"fon"}
-        fr_CA{"francês canadiano"}
-        fr_CH{"francês suíço"}
         fro{"francês antigo"}
         frs{"frísio oriental"}
         fy{"frísico ocidental"}
@@ -79,7 +67,6 @@ pt_PT{
         mul{"vários idiomas"}
         nb{"norueguês bokmål"}
         nds{"baixo-alemão"}
-        nds_NL{"baixo-saxão"}
         nl{"neerlandês"}
         nn{"norueguês nynorsk"}
         non{"nórdico antigo"}
@@ -92,8 +79,6 @@ pt_PT{
         pon{"língua pohnpeica"}
         pro{"provençal antigo"}
         ps{"pastó"}
-        pt_BR{"português do Brasil"}
-        pt_PT{"português europeu"}
         raj{"rajastanês"}
         rhg{"rohingya"}
         se{"sami do norte"}
@@ -120,22 +105,6 @@ pt_PT{
         zgh{"tamazight marroquino padrão"}
         zun{"zuni"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"chinês mandarim simplificado"}
-        zh_Hant{"chinês mandarim tradicional"}
-    }
-    Languages%menu{
-        ckb{"curdo sorani"}
-        zh{"chinês mandarim"}
-    }
-    Languages%short{
-        az{"azeri"}
-        en_GB{"inglês (RU)"}
-    }
-    Languages%variant{
-        ckb{"sorani (curdo)"}
-        hi_Latn{"hinglish"}
     }
     Scripts{
         Aran{"nasta’liq"}

@@ -837,9 +837,6 @@ mai{
         "Asia:Ulaanbaatar"{
             ec{"उलनबटोर"}
         }
-        "Asia:Urumqi"{
-            ec{"उरूमकी"}
-        }
         "Asia:Ust-Nera"{
             ec{"उस्त-नेरा"}
         }

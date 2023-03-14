@@ -1664,22 +1664,6 @@ te{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "R.O.C. పూర్వం",
-                    "R.O.C.",
-                }
-                narrow{
-                    "R.O.C. పూర్వం",
-                    "R.O.C.",
-                }
-                wide{
-                    "R.O.C. పూర్వం",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"కార్యాచరణ"}

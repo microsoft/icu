@@ -88,6 +88,9 @@ root{
         "Asia:Saigon"{
             ec{"Ho Chi Minh"}
         }
+        "Asia:Tashkent"{
+            ec{"Toshkent"}
+        }
         "Atlantic:Faeroe"{
             ec{"Faroe"}
         }

@@ -64,7 +64,6 @@ nn{
         mul{"fleire språk"}
         mzn{"mazanderani"}
         nds{"lågtysk"}
-        nds_NL{"lågsaksisk"}
         ne{"nepalsk"}
         niu{"niuisk"}
         nog{"nogai"}
@@ -78,7 +77,6 @@ nn{
         peo{"gammalpersisk"}
         pro{"gammalprovençalsk"}
         quc{"k’iche"}
-        ro_MD{"moldavisk"}
         rup{"arumensk"}
         rw{"kinjarwanda"}
         sc{"sardinsk"}
@@ -103,15 +101,8 @@ nn{
         zap{"zapotec"}
         zbl{"blissymbol"}
         zgh{"standard marokkansk tamazight"}
-        zh_Hans{"forenkla kinesisk"}
         zxx{"utan språkleg innhald"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"forenkla mandarinkinesisk"}
-    }
-    Languages%variant{
-        ckb{"kurdisk (sorani)"}
     }
     Scripts{
         Armi{"armisk"}

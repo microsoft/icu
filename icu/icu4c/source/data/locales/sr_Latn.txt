@@ -1357,14 +1357,6 @@ sr_Latn{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Pre RK",
-                    "RK",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Aktivnosti"}

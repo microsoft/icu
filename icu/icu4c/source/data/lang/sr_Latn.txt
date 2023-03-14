@@ -45,7 +45,6 @@ sr_Latn{
         ann{"obolo"}
         anp{"angika"}
         ar{"arapski"}
-        ar_001{"savremeni standardni arapski"}
         arc{"aramejski"}
         arn{"mapuče"}
         arp{"arapaho"}
@@ -127,8 +126,6 @@ sr_Latn{
         dar{"darginski"}
         dav{"taita"}
         de{"nemački"}
-        de_AT{"austrijski nemački"}
-        de_CH{"švajcarski visoki nemački"}
         del{"delaverski"}
         den{"slejvi"}
         dgr{"dogripski"}
@@ -151,17 +148,13 @@ sr_Latn{
         el{"grčki"}
         elx{"elamitski"}
         en{"engleski"}
-        en_GB{"engleski (Velika Britanija)"}
-        en_US{"engleski (Sjedinjene Američke Države)"}
         enm{"srednjeengleski"}
         eo{"esperanto"}
         es{"španski"}
-        es_ES{"španski (Evropa)"}
         et{"estonski"}
         eu{"baskijski"}
         ewo{"evondo"}
         fa{"persijski"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fula"}
@@ -358,14 +351,12 @@ sr_Latn{
         nb{"norveški bukmol"}
         nd{"severni ndebele"}
         nds{"niskonemački"}
-        nds_NL{"niskosaksonski"}
         ne{"nepalski"}
         new{"nevari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niuejski"}
         nl{"holandski"}
-        nl_BE{"flamanski"}
         nmg{"kvasio"}
         nn{"norveški ninorsk"}
         nnh{"ngiembun"}
@@ -413,7 +404,6 @@ sr_Latn{
         pro{"starooksitanski"}
         ps{"paštunski"}
         pt{"portugalski"}
-        pt_PT{"portugalski (Portugal)"}
         qu{"kečua"}
         quc{"kiče"}
         raj{"radžastanski"}
@@ -423,7 +413,6 @@ sr_Latn{
         rm{"romanš"}
         rn{"kirundi"}
         ro{"rumunski"}
-        ro_MD{"moldavski"}
         rof{"rombo"}
         rom{"romski"}
         ru{"ruski"}
@@ -450,7 +439,6 @@ sr_Latn{
         ses{"kojraboro seni"}
         sg{"sango"}
         sga{"staroirski"}
-        sh{"srpskohrvatski"}
         shi{"tašelhit"}
         shn{"šanski"}
         si{"sinhaleški"}
@@ -481,7 +469,6 @@ sr_Latn{
         sux{"sumerski"}
         sv{"švedski"}
         sw{"svahili"}
-        sw_CD{"kisvahili"}
         swb{"komorski"}
         syc{"sirijački"}
         syr{"sirijski"}
@@ -562,29 +549,10 @@ sr_Latn{
         zen{"zenaga"}
         zgh{"standardni marokanski tamazigt"}
         zh{"kineski"}
-        zh_Hans{"pojednostavljeni kineski"}
-        zh_Hant{"tradicionalni kineski"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"bez lingvističkog sadržaja"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"pojednostavljeni mandarinski kineski"}
-        zh_Hant{"tradicionalni mandarinski kineski"}
-    }
-    Languages%menu{
-        yue{"kantonski kineski"}
-        zh{"mandarinski kineski"}
-    }
-    Languages%short{
-        az{"azerski"}
-        en_GB{"engleski (UK)"}
-        en_US{"engleski (SAD)"}
-    }
-    Languages%variant{
-        hi_Latn{"hingliš"}
-        ps{"pašto"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -749,7 +717,6 @@ sr_Latn{
             iso8601{"ISO-8601 kalendar"}
             japanese{"japanski kalendar"}
             persian{"persijski kalendar"}
-            roc{"kalendar Republike Kine"}
         }
         cf{
             account{"računovodstveni format valute"}

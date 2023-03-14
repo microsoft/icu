@@ -42,7 +42,6 @@ ms{
         ann{"Obolo"}
         anp{"Angika"}
         ar{"Arab"}
-        ar_001{"Arab Standard Moden"}
         arn{"Mapuche"}
         arp{"Arapaho"}
         arq{"Arab Algeria"}
@@ -124,8 +123,6 @@ ms{
         dar{"Dargwa"}
         dav{"Taita"}
         de{"Jerman"}
-        de_AT{"Jerman Austria"}
-        de_CH{"Jerman Halus Switzerland"}
         dgr{"Dogrib"}
         dje{"Zarma"}
         doi{"Dogri"}
@@ -141,20 +138,12 @@ ms{
         eka{"Ekajuk"}
         el{"Greek"}
         en{"Inggeris"}
-        en_AU{"Inggeris Australia"}
-        en_CA{"Inggeris Kanada"}
-        en_GB{"Inggeris British"}
-        en_US{"Inggeris AS"}
         eo{"Esperanto"}
         es{"Sepanyol"}
-        es_419{"Sepanyol Amerika Latin"}
-        es_ES{"Sepanyol Eropah"}
-        es_MX{"Sepanyol Mexico"}
         et{"Estonia"}
         eu{"Basque"}
         ewo{"Ewondo"}
         fa{"Parsi"}
-        fa_AF{"Dari"}
         ff{"Fulah"}
         fi{"Finland"}
         fil{"Filipina"}
@@ -162,8 +151,6 @@ ms{
         fo{"Faroe"}
         fon{"Fon"}
         fr{"Perancis"}
-        fr_CA{"Perancis Kanada"}
-        fr_CH{"Perancis Switzerland"}
         frc{"Perancis Cajun"}
         frr{"Frisian Utara"}
         fur{"Friulian"}
@@ -334,14 +321,12 @@ ms{
         nb{"Bokmal Norway"}
         nd{"Ndebele Utara"}
         nds{"Jerman Rendah"}
-        nds_NL{"Saxon Rendah"}
         ne{"Nepal"}
         new{"Newari"}
         ng{"Ndonga"}
         nia{"Nias"}
         niu{"Niu"}
         nl{"Belanda"}
-        nl_BE{"Flemish"}
         nmg{"Kwasio"}
         nn{"Nynorsk Norway"}
         nnh{"Ngiemboon"}
@@ -375,8 +360,6 @@ ms{
         prg{"Prusia"}
         ps{"Pashto"}
         pt{"Portugis"}
-        pt_BR{"Portugis Brazil"}
-        pt_PT{"Portugis Eropah"}
         qu{"Quechua"}
         quc{"Kʼicheʼ"}
         rap{"Rapanui"}
@@ -385,7 +368,6 @@ ms{
         rm{"Romansh"}
         rn{"Rundi"}
         ro{"Romania"}
-        ro_MD{"Moldavia"}
         rof{"Rombo"}
         ru{"Rusia"}
         rup{"Aromanian"}
@@ -408,7 +390,6 @@ ms{
         seh{"Sena"}
         ses{"Koyraboro Senni"}
         sg{"Sango"}
-        sh{"SerboCroatia"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Arab Chadian"}
@@ -435,7 +416,6 @@ ms{
         suk{"Sukuma"}
         sv{"Sweden"}
         sw{"Swahili"}
-        sw_CD{"Congo Swahili"}
         swb{"Comoria"}
         syr{"Syriac"}
         ta{"Tamil"}
@@ -500,32 +480,10 @@ ms{
         yue{"Kantonis"}
         zgh{"Tamazight Maghribi Standard"}
         zh{"Cina"}
-        zh_Hans{"Cina Ringkas"}
-        zh_Hant{"Cina Tradisional"}
         zu{"Zulu"}
         zun{"Zuni"}
         zxx{"Tiada kandungan linguistik"}
         zza{"Zaza"}
-    }
-    Languages%long{
-        zh_Hans{"Cina Mandarin Ringkas"}
-        zh_Hant{"Cina Mandarin Tradisional"}
-    }
-    Languages%menu{
-        ckb{"Kurdi, Tengah"}
-        yue{"Cina, Kantonis"}
-        zh{"Cina, Mandarin"}
-    }
-    Languages%short{
-        az{"Azeri"}
-        en_GB{"Inggeris U.K."}
-        en_US{"Inggeris A.S."}
-    }
-    Languages%variant{
-        ckb{"Kurdi, Sorani"}
-        hi_Latn{"Hinglish"}
-        ps{"Pushto"}
-        ug{"Uighur"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -719,7 +677,6 @@ ms{
             iso8601{"Kalendar ISO-8601"}
             japanese{"Kalendar Jepun"}
             persian{"Kalendar Parsi"}
-            roc{"Kalendar Minguo"}
         }
         cf{
             account{"Format Mata Wang Perakaunan"}

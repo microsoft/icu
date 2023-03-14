@@ -18,19 +18,29 @@ hi_Latn{
     }
     Languages{
         af{"Afreeki"}
+        bin{"Bini"}
+        bm{"Bambara"}
         bn{"Bangla"}
         bo{"Tibbati"}
         ckb{"Kurdish, Sorani"}
         crh{"Crimean Turkish"}
         fa{"Faarsi"}
         ff{"Fulah"}
+        ii{"Sichuan Yi"}
         lah{"Lahnda"}
         mus{"Muscogee"}
         nan{"Min Nan"}
         nb{"Norwegian Bokmal"}
-        nds_NL{"Low Saxon"}
+        nso{"Northern Sotho"}
+        ss{"Swati"}
+        st{"Southern Sotho"}
+        sw{"Swahili"}
+        tn{"Tswana"}
+        ts{"Tsonga"}
         ug{"Uighur"}
         wal{"walamo"}
+        xh{"Xhosa"}
+        zu{"Zulu"}
     }
     Scripts{
         Bali{"Baali"}

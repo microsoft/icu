@@ -128,7 +128,6 @@ windowsZones:table(nofallback){
         "Central Asia Standard Time"{
             001{"Asia/Almaty"}
             AQ{"Antarctica/Vostok"}
-            CN{"Asia/Urumqi"}
             IO{"Indian/Chagos"}
             KG{"Asia/Bishkek"}
             KZ{"Asia/Almaty Asia/Qostanay"}
@@ -168,7 +167,7 @@ windowsZones:table(nofallback){
             001{"America/Mexico_City"}
             MX{
                 "America/Mexico_City America/Bahia_Banderas America/Merida America/Mo"
-                "nterrey America/Chihuahua "
+                "nterrey"
             }
         }
         "Central Standard Time"{
@@ -177,7 +176,7 @@ windowsZones:table(nofallback){
                 "America/Winnipeg America/Rainy_River America/Rankin_Inlet America/Re"
                 "solute"
             }
-            MX{"America/Matamoros America/Ojinaga"}
+            MX{"America/Matamoros"}
             US{
                 "America/Chicago America/Indiana/Knox America/Indiana/Tell_City Ameri"
                 "ca/Menominee America/North_Dakota/Beulah America/North_Dakota/Center"
@@ -398,8 +397,8 @@ windowsZones:table(nofallback){
             MA{"Africa/Casablanca"}
         }
         "Mountain Standard Time (Mexico)"{
-            001{"America/Mazatlan"}
-            MX{"America/Mazatlan"}
+            001{"America/Chihuahua"}
+            MX{"America/Chihuahua America/Mazatlan"}
         }
         "Mountain Standard Time"{
             001{"America/Denver"}
@@ -407,7 +406,7 @@ windowsZones:table(nofallback){
                 "America/Edmonton America/Cambridge_Bay America/Inuvik America/Yellow"
                 "knife"
             }
-            MX{"America/Ciudad_Juarez"}
+            MX{"America/Ojinaga"}
             US{"America/Denver America/Boise"}
             ZZ{"MST7MDT"}
         }

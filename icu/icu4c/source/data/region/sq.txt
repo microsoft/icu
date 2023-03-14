@@ -93,17 +93,14 @@ sq{
         CY{"Qipro"}
         CZ{"Çeki"}
         DE{"Gjermani"}
-        DG{"Diego-Garsia"}
         DJ{"Xhibuti"}
         DK{"Danimarkë"}
         DM{"Dominikë"}
         DO{"Republika Dominikane"}
         DZ{"Algjeri"}
-        EA{"Theuta e Melila"}
         EC{"Ekuador"}
         EE{"Estoni"}
         EG{"Egjipt"}
-        EH{"Saharaja Perëndimore"}
         ER{"Eritre"}
         ES{"Spanjë"}
         ET{"Etiopi"}
@@ -140,7 +137,6 @@ sq{
         HR{"Kroaci"}
         HT{"Haiti"}
         HU{"Hungari"}
-        IC{"Ishujt Kanarie"}
         ID{"Indonezi"}
         IE{"Irlandë"}
         IL{"Izrael"}
@@ -223,7 +219,7 @@ sq{
         PM{"Shën-Pier dhe Mikelon"}
         PN{"Ishujt Pitkern"}
         PR{"Porto-Riko"}
-        PS{"Territoret Palestineze"}
+        PS{"Autoriteti Palestinez"}
         PT{"Portugali"}
         PW{"Palau"}
         PY{"Paraguai"}
@@ -288,8 +284,6 @@ sq{
         VU{"Vanuatu"}
         WF{"Uollis e Futuna"}
         WS{"Samoa"}
-        XA{"Pseudo-thekse"}
-        XB{"Pseudo-bidi"}
         XK{"Kosovë"}
         YE{"Jemen"}
         YT{"Majotë"}
@@ -297,22 +291,5 @@ sq{
         ZM{"Zambi"}
         ZW{"Zimbabve"}
         ZZ{"I panjohur"}
-    }
-    Countries%short{
-        GB{"MB"}
-        HK{"Hong-Kong"}
-        MO{"Makao"}
-        PS{"Palestinë"}
-        UN{"OKB"}
-    }
-    Countries%variant{
-        CD{"Kongo (RDK)"}
-        CG{"Kongo (Republika)"}
-        CI{"Bregu i Fildishtë"}
-        CZ{"Republika Çeke"}
-        FK{"Ishujt Falkland (Malvine)"}
-        NZ{"Zelanda e Re-Aotearoa"}
-        SZ{"Suazilend"}
-        TL{"Timori Lindor"}
     }
 }

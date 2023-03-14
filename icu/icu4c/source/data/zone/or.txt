@@ -864,9 +864,6 @@ or{
         "Asia:Ulaanbaatar"{
             ec{"ଉଲାନ୍‌ବାଟର୍‌"}
         }
-        "Asia:Urumqi"{
-            ec{"ଉରୁମକି"}
-        }
         "Asia:Ust-Nera"{
             ec{"ୟୁଷ୍ଟ-ନେରା"}
         }

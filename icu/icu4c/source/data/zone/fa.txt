@@ -867,9 +867,6 @@ fa{
         "Asia:Ulaanbaatar"{
             ec{"اولان‌باتور"}
         }
-        "Asia:Urumqi"{
-            ec{"ارومچی"}
-        }
         "Asia:Ust-Nera"{
             ec{"اوست نرا"}
         }

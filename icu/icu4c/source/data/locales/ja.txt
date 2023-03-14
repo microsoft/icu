@@ -3141,58 +3141,6 @@ ja{
                 }
             }
         }
-        roc{
-            DateTimePatterns{
-                "H時mm分ss秒 zzzz",
-                "H:mm:ss z",
-                "H:mm:ss",
-                "H:mm",
-                "Gy年M月d日EEEE",
-                "Gy年M月d日",
-                "Gy/MM/dd",
-                "Gy/MM/dd",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "Hmmss",
-                "Hmm",
-                "GyMEEEEd",
-                "GyMd",
-                "GyMMdd",
-                "GyMMdd",
-            }
-            availableFormats{
-                M{"M月"}
-                MEd{"M/d(E)"}
-                MMM{"M月"}
-                MMMEd{"M月d日(E)"}
-                MMMMd{"M月d日"}
-                MMMd{"M月d日"}
-                Md{"M/d"}
-                d{"d日"}
-                y{"Gy年"}
-            }
-            eras{
-                abbreviated{
-                    "民国前",
-                    "民国",
-                }
-                narrow{
-                    "民国前",
-                    "民国",
-                }
-                wide{
-                    "民国前",
-                    "民国",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"アクティビティ"}

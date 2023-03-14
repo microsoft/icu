@@ -90,8 +90,6 @@ pcm{
         dar{"Dargwá Lángwej"}
         dav{"Taíta"}
         de{"Jámán Lángwej"}
-        de_AT{"Ọ́stria Jámán"}
-        de_CH{"Swítzaland Haí Jámán"}
         dgr{"Dọgríb Lángwej"}
         dje{"Zármá"}
         doi{"Dogri"}
@@ -107,20 +105,12 @@ pcm{
         eka{"Ẹkajúk Lángwej"}
         el{"Grík Lángwej"}
         en{"Ínglish"}
-        en_AU{"Ọstréliá Ínglish"}
-        en_CA{"Kánáda Ínglish"}
-        en_GB{"Brítísh Ínglish"}
-        en_US{"Amẹ́ríka Ínglish"}
         eo{"Ẹsperánto Lángwej"}
         es{"Spánish Lángwej"}
-        es_419{"Látín Amẹ́ríka Spánish"}
-        es_ES{"Yúrop Spánish"}
-        es_MX{"Mẹ́ksiko Spánish"}
         et{"Ẹstóniá Lángwej"}
         eu{"Básk Lángwej"}
         ewo{"Ẹwondo Lángwej"}
         fa{"Pẹ́shiá Lángwej"}
-        fa_AF{"Dári"}
         ff{"Fúlaní Lángwej"}
         fi{"Fínísh Lángwej"}
         fil{"Filipínó Lángwej"}
@@ -128,8 +118,6 @@ pcm{
         fo{"Fáróís Lángwej"}
         fon{"Fọn Lángwej"}
         fr{"Frẹ́nch Lángwej"}
-        fr_CA{"Kánádá Frẹnch"}
-        fr_CH{"Swízalánd Frẹnch"}
         frc{"Kájun Frẹnchi"}
         frr{"Nọ́tán Frísian"}
         fur{"Friúlián Lángwej"}
@@ -153,7 +141,6 @@ pcm{
         hax{"Saútán Haida"}
         he{"Híbru Lángwej"}
         hi{"Híndi Lángwej"}
-        hi_Latn{"Híndi (Látin)"}
         hil{"Híligaínọn"}
         hmn{"Mọ́ng Lángwej"}
         hr{"Kroéshia Lángwej"}
@@ -289,7 +276,6 @@ pcm{
         nia{"Nias Lángwej"}
         niu{"Niúeán Lángwej"}
         nl{"Dọch Lángwej"}
-        nl_BE{"Flẹ́mish Lángwej"}
         nmg{"Kwasió Lángwej"}
         nn{"Nọwẹ́jiá Niúnọsk"}
         nnh{"Ngiẹ́mbọn Lángwej"}
@@ -323,8 +309,6 @@ pcm{
         prg{"Prúshia"}
         ps{"Páshto"}
         pt{"Pọtiugiz"}
-        pt_BR{"Brazíl Pọtiugíz"}
-        pt_PT{"Yúróp Pọtiugíz"}
         qu{"Kẹchuá"}
         rap{"Rapánui Lángwej"}
         rar{"Rarotóngan"}
@@ -440,23 +424,6 @@ pcm{
         zxx{"Nó Lángwéj Kọ́ntẹnt"}
         zza{"Zázá Lángwej"}
     }
-    Languages%long{
-        zh_Hant{"Tradíshọ́nál Mandarín Chainíz Lángwej"}
-    }
-    Languages%menu{
-        ckb{"Sẹ́ntrál Kọ́dísh Lángwej"}
-        yue{"Chainiz Kántọniz"}
-        zh{"Chainiz, Mandarin"}
-    }
-    Languages%short{
-        az{"Azẹ́rí"}
-        en_GB{"UK Ínglish"}
-        en_US{"US Ínglish"}
-    }
-    Languages%variant{
-        ckb{"Sorání Kọ́dísh Lángwej"}
-        hi_Latn{"Hínglish"}
-    }
     Scripts{
         Adlm{"Ádlam"}
         Arab{"Arábík"}
@@ -537,7 +504,6 @@ pcm{
             iso8601{"ISO-8601 Kalẹ́nda"}
             japanese{"Japán Kalẹ́nda"}
             persian{"Pẹ́shia Kalẹ́nda"}
-            roc{"Ripọ́blík ọf Chaíná Kalẹ́nda"}
         }
         cf{
             account{"Akáunt To Ték Arénj Mọní"}

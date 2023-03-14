@@ -60,7 +60,6 @@ eo{
         EC{"Ekvadoro"}
         EE{"Estonujo"}
         EG{"Egipto"}
-        EH{"Okcidenta Saharo"}
         ER{"Eritreo"}
         ES{"Hispanujo"}
         ET{"Etiopujo"}

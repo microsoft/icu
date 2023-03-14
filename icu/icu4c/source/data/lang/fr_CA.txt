@@ -40,7 +40,6 @@ fr_CA{
         mr{"marathe"}
         mwr{"marwari"}
         mwv{"mentawai"}
-        nds_NL{"bas saxon"}
         njo{"ao naga"}
         nmg{"kwasio"}
         nwc{"newari classique"}
@@ -63,24 +62,8 @@ fr_CA{
         smn{"sami d’Inari"}
         stq{"frison de Saterland"}
         sus{"sosso"}
-        sw_CD{"swahili congolais"}
         tru{"turoyo"}
         tzm{"tamazight"}
-    }
-    Languages%long{
-        zh_Hans{"chinois, mandarin simplifié"}
-        zh_Hant{"chinois, mandarin traditionnel"}
-    }
-    Languages%menu{
-        ckb{"sorani"}
-        yue{"chinois, cantonais"}
-        zh{"chinois, mandarin"}
-    }
-    Languages%short{
-        en_US{"anglais (É.-U.)"}
-    }
-    Languages%variant{
-        ug{"ouïghour"}
     }
     Scripts{
         Deva{"devanagari"}

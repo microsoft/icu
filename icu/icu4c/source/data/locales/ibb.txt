@@ -1,0 +1,43 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+ibb{
+    ExemplarCharacters{"[a b d e f g {gh} h i ị k {kp} m n ñ {ny} o ọ p r s t u ʌ w y]"}
+    NumberElements{
+        latn{
+            patterns{
+                currencyFormat{"¤ #,##0.00"}
+            }
+        }
+    }
+    calendar{
+        gregorian{
+            DateTimePatterns{
+                "HH:mm:ss zzzz",
+                "HH:mm:ss z",
+                "HH:mm:ss",
+                "HH:mm",
+                "EEEE, MMMM dd, y",
+                "MMMM dd, y",
+                "d MMM y",
+                "d/M/y",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+            }
+            availableFormats{
+                MMMMEd{"E, d MMMM"}
+                MMMMd{"MMMM dd"}
+                MMMd{"MMM dd"}
+                Md{"M/d"}
+                yMMMM{"y MMMM"}
+            }
+        }
+    }
+    layout{
+        characters{"left-to-right"}
+        lines{"top-to-bottom"}
+    }
+}

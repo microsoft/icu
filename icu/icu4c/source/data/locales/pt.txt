@@ -1099,22 +1099,6 @@ pt{
                 "GGGGGyyMMdd",
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Antes da R.C.",
-                    "Minguo",
-                }
-                narrow{
-                    "Antes da R.C.",
-                    "Minguo",
-                }
-                wide{
-                    "Antes da R.C.",
-                    "Minguo",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"atividade"}

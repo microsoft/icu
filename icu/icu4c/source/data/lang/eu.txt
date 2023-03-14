@@ -40,7 +40,6 @@ eu{
         ann{"oboloera"}
         anp{"angikera"}
         ar{"arabiera"}
-        ar_001{"arabiera moderno estandarra"}
         arn{"mapudunguna"}
         arp{"arapahoera"}
         ars{"Najdeko arabiera"}
@@ -104,8 +103,6 @@ eu{
         dar{"darginera"}
         dav{"taitera"}
         de{"alemana"}
-        de_AT{"Austriako alemana"}
-        de_CH{"Suitzako aleman garaia"}
         dgr{"dogribera"}
         dje{"zarma"}
         doi{"dogria"}
@@ -121,20 +118,12 @@ eu{
         eka{"ekajuka"}
         el{"greziera"}
         en{"ingelesa"}
-        en_AU{"Australiako ingelesa"}
-        en_CA{"Kanadako ingelesa"}
-        en_GB{"Britainia Handiko ingelesa"}
-        en_US{"ingeles amerikarra"}
         eo{"esperantoa"}
         es{"espainiera"}
-        es_419{"Latinoamerikako espainiera"}
-        es_ES{"espainiera (Europa)"}
-        es_MX{"Mexikoko espainiera"}
         et{"estoniera"}
         eu{"euskara"}
         ewo{"ewondoa"}
         fa{"persiera"}
-        fa_AF{"daria"}
         ff{"fula"}
         fi{"finlandiera"}
         fil{"filipinera"}
@@ -142,8 +131,6 @@ eu{
         fo{"faroera"}
         fon{"fonera"}
         fr{"frantsesa"}
-        fr_CA{"Kanadako frantsesa"}
-        fr_CH{"Suitzako frantsesa"}
         frc{"cajun frantsesa"}
         frr{"iparraldeko frisiera"}
         fur{"friulera"}
@@ -301,14 +288,12 @@ eu{
         nb{"bokmål (norvegiera)"}
         nd{"iparraldeko ndebeleera"}
         nds{"behe-alemana"}
-        nds_NL{"behe-saxoiera"}
         ne{"nepalera"}
         new{"newarera"}
         ng{"ndonga"}
         nia{"niasera"}
         niu{"niueera"}
         nl{"nederlandera"}
-        nl_BE{"flandriera"}
         nmg{"kwasiera"}
         nn{"nynorsk (norvegiera)"}
         nnh{"ngiemboonera"}
@@ -342,8 +327,6 @@ eu{
         prg{"prusiera"}
         ps{"paxtunera"}
         pt{"portugesa"}
-        pt_BR{"Brasilgo portugesa"}
-        pt_PT{"Europako portugesa"}
         qu{"kitxua"}
         quc{"quicheera"}
         rap{"rapanuia"}
@@ -352,7 +335,6 @@ eu{
         rm{"erretorromaniera"}
         rn{"rundiera"}
         ro{"errumaniera"}
-        ro_MD{"moldaviera"}
         rof{"romboa"}
         ru{"errusiera"}
         rup{"aromaniera"}
@@ -373,7 +355,6 @@ eu{
         seh{"senera"}
         ses{"koyraboro sennia"}
         sg{"sangoa"}
-        sh{"serbokroaziera"}
         shi{"tachelhita"}
         shn{"shanera"}
         si{"sinhala"}
@@ -399,7 +380,6 @@ eu{
         suk{"sukumera"}
         sv{"suediera"}
         sw{"swahilia"}
-        sw_CD{"Kongoko swahilia"}
         swb{"komoreera"}
         syr{"asiriera"}
         ta{"tamilera"}
@@ -464,24 +444,10 @@ eu{
         yue{"kantonera"}
         zgh{"amazigera estandarra"}
         zh{"txinera"}
-        zh_Hans{"txinera sinplifikatua"}
-        zh_Hant{"txinera tradizionala"}
         zu{"zuluera"}
         zun{"zuñia"}
         zxx{"ez dago eduki linguistikorik"}
         zza{"zazera"}
-    }
-    Languages%long{
-        zh_Hans{"mandarinera sinplifikatua"}
-        zh_Hant{"mandarinera tradizionala"}
-    }
-    Languages%menu{
-        yue{"Kantongo txinera"}
-        zh{"mandarinera"}
-    }
-    Languages%short{
-        en_GB{"Erresuma Batuko ingelesa"}
-        en_US{"AEBko ingelesa"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -688,7 +654,6 @@ eu{
             iso8601{"ISO-8601 egutegia"}
             japanese{"Japoniar egutegia"}
             persian{"Egutegi persiarra"}
-            roc{"Minguo egutegia"}
         }
         cf{
             account{"Kontabilitateko moneta-formatua"}

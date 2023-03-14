@@ -730,34 +730,6 @@ zh_Hant_HK{
                 }
             }
         }
-        roc{
-            availableFormats{
-                Ed{"d日E"}
-                MEd{"d-M（E）"}
-                Md{"d-M"}
-                yyyyMEd{"Gy/M/dE"}
-            }
-            intervalFormats{
-                h{
-                    a{"ah時至ah時"}
-                    h{"ah時至h時"}
-                }
-                hm{
-                    a{"ah:mm至ah:mm"}
-                    h{"ah:mm至h:mm"}
-                    m{"ah:mm至h:mm"}
-                }
-                hmv{
-                    a{"ah:mm至ah:mm [v]"}
-                    h{"ah:mm至h:mm [v]"}
-                    m{"ah:mm至h:mm [v]"}
-                }
-                hv{
-                    a{"ah時至ah時 [v]"}
-                    h{"ah時至h時 [v]"}
-                }
-            }
-        }
     }
     characterLabel{
         arrows{"箭嘴"}

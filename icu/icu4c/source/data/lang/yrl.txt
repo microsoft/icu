@@ -43,7 +43,6 @@ yrl{
         ang{"ẽgirixi arkaiku"}
         anp{"ãyika"}
         ar{"arabi"}
-        ar_001{"arabi mudernu"}
         arc{"aramaiku"}
         arn{"mapudũgũ"}
         arp{"araparu"}
@@ -56,7 +55,6 @@ yrl{
         awa{"awadi"}
         ay{"aimará"}
         az{"aserbayanu"}
-        az_Arab{"aseri sú"}
         ba{"baxikiri"}
         bal{"barúxi"}
         ban{"barinei"}
@@ -124,7 +122,6 @@ yrl{
         dar{"darigiwa"}
         dav{"taita"}
         de{"aremãu"}
-        de_CH{"aremãu iwaté (Suisa)"}
         del{"deraware"}
         den{"isireivei"}
         dgr{"dogiri"}
@@ -350,14 +347,12 @@ yrl{
         nb{"bukimau nuruegei"}
         nd{"ĩdebere nutiwara"}
         nds{"aremaũ yatuka"}
-        nds_NL{"sakisãu yatuka"}
         ne{"neparei"}
         new{"newari"}
         ng{"dũgu"}
         nia{"niyasi"}
         niu{"niweanu"}
         nl{"hurãdei"}
-        nl_BE{"faramẽgu"}
         nmg{"kuwasiu"}
         nn{"ninorisiki nuruegei"}
         nnh{"ĩgiẽbũ"}
@@ -406,7 +401,6 @@ yrl{
         rm{"rumãxi"}
         rn{"rũdi"}
         ro{"rumenu"}
-        ro_MD{"mudáwiu"}
         rof{"rũbu"}
         rom{"rumani"}
         root{"raisi"}
@@ -435,7 +429,6 @@ yrl{
         ses{"kuiraburu seni"}
         sg{"sãgú"}
         sga{"irãdesiarkaiku"}
-        sh{"seriwu-kruata"}
         shi{"taxeriti"}
         shn{"xãni"}
         shu{"arabi xadianu"}
@@ -465,7 +458,6 @@ yrl{
         sux{"sumeriu"}
         sv{"sueku"}
         sw{"suaíri"}
-        sw_CD{"suairi kũguwara"}
         swb{"kumurianu"}
         syc{"siriaku katuwa"}
         syr{"siriaku"}
@@ -541,23 +533,10 @@ yrl{
         zen{"senaga"}
         zgh{"tamasiriti marukinu padrãu"}
         zh{"xinanheẽga"}
-        zh_Hans{"xinanheẽga iwasuĩma"}
-        zh_Hant{"xinanheẽga katuwa"}
         zu{"suru"}
         zun{"sũyi"}
         zxx{"ũba aykué nheẽga sesewaraitá"}
         zza{"sasaki"}
-    }
-    Languages%long{
-        zh_Hans{"xinanheẽga mãdarĩ (iwasuĩma)"}
-        zh_Hant{"xinanheẽga mãdarĩ (katuwa)"}
-    }
-    Languages%menu{
-        yue{"kãtunei (katuwa)"}
-        zh{"xinanheẽga, mãdarĩ"}
-    }
-    Languages%variant{
-        ps{"puxitu"}
     }
     Scripts{
         Arab{"arabika"}
@@ -721,7 +700,6 @@ yrl{
             iso8601{"Akayupawa ISSO-8601"}
             japanese{"Akayupawa Nipõwara"}
             persian{"Akayupawa Persiyawara"}
-            roc{"Akayupawa Xina Repúbirikawara"}
         }
         cf{
             account{"Rikuyara rupisawa papasawa supé"}

@@ -47,7 +47,6 @@ fi{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabia"}
-        ar_001{"yleisarabia"}
         arc{"valtakunnanaramea"}
         arn{"mapudungun"}
         aro{"araona"}
@@ -151,8 +150,6 @@ fi{
         dar{"dargi"}
         dav{"taita"}
         de{"saksa"}
-        de_AT{"itävallansaksa"}
-        de_CH{"sveitsinyläsaksa"}
         del{"delaware"}
         den{"slevi"}
         dgr{"dogrib"}
@@ -177,23 +174,15 @@ fi{
         el{"kreikka"}
         elx{"elami"}
         en{"englanti"}
-        en_AU{"australianenglanti"}
-        en_CA{"kanadanenglanti"}
-        en_GB{"britannianenglanti"}
-        en_US{"amerikanenglanti"}
         enm{"keskienglanti"}
         eo{"esperanto"}
         es{"espanja"}
-        es_419{"amerikanespanja"}
-        es_ES{"euroopanespanja"}
-        es_MX{"meksikonespanja"}
         esu{"alaskanjupik"}
         et{"viro"}
         eu{"baski"}
         ewo{"ewondo"}
         ext{"extremadura"}
         fa{"persia"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulani"}
@@ -204,8 +193,6 @@ fi{
         fo{"fääri"}
         fon{"fon"}
         fr{"ranska"}
-        fr_CA{"kanadanranska"}
-        fr_CH{"sveitsinranska"}
         frc{"cajunranska"}
         frm{"keskiranska"}
         fro{"muinaisranska"}
@@ -424,7 +411,6 @@ fi{
         nb{"norjan bokmål"}
         nd{"pohjois-ndebele"}
         nds{"alasaksa"}
-        nds_NL{"alankomaidenalasaksa"}
         ne{"nepali"}
         new{"newari"}
         ng{"ndonga"}
@@ -432,7 +418,6 @@ fi{
         niu{"niue"}
         njo{"ao naga"}
         nl{"hollanti"}
-        nl_BE{"flaami"}
         nmg{"kwasio"}
         nn{"norjan nynorsk"}
         nnh{"ngiemboon"}
@@ -487,8 +472,6 @@ fi{
         pro{"muinaisprovensaali"}
         ps{"paštu"}
         pt{"portugali"}
-        pt_BR{"brasilianportugali"}
-        pt_PT{"euroopanportugali"}
         qu{"ketšua"}
         quc{"kʼicheʼ"}
         qug{"chimborazonylänköketšua"}
@@ -501,7 +484,6 @@ fi{
         rm{"retoromaani"}
         rn{"rundi"}
         ro{"romania"}
-        ro_MD{"moldova"}
         rof{"rombo"}
         rom{"romani"}
         rtm{"rotuma"}
@@ -536,7 +518,6 @@ fi{
         sg{"sango"}
         sga{"muinaisiiri"}
         sgs{"samogiitti"}
-        sh{"serbokroaatti"}
         shi{"tašelhit"}
         shn{"shan"}
         shu{"tšadinarabia"}
@@ -571,7 +552,6 @@ fi{
         sux{"sumeri"}
         sv{"ruotsi"}
         sw{"swahili"}
-        sw_CD{"kongonswahili"}
         swb{"komori"}
         syc{"muinaissyyria"}
         syr{"syyria"}
@@ -670,27 +650,6 @@ fi{
         zun{"zuni"}
         zxx{"ei kielellistä sisältöä"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"mandariinikiina (yksinkertaistettu)"}
-        zh_Hant{"mandariinikiina (perinteinen)"}
-    }
-    Languages%menu{
-        ckb{"kurdi – soranî"}
-        yue{"kiina (kantonin)"}
-        zh{"kiina (mandariini)"}
-    }
-    Languages%secondary{
-        crh{"kriminturkki"}
-        kl{"grönlanti"}
-        lad{"juutalaisespanja"}
-    }
-    Languages%short{
-        en_GB{"englanti (Britannia)"}
-        en_US{"englanti (USA)"}
-    }
-    Languages%variant{
-        hi_Latn{"hinglish"}
     }
     Scripts{
         Adlm{"fulanin adlam-aakkosto"}
@@ -927,7 +886,6 @@ fi{
             iso8601{"ISO 8601 -kalenteri"}
             japanese{"japanilainen kalenteri"}
             persian{"persialainen kalenteri"}
-            roc{"Kiinan tasavallan kalenteri"}
         }
         cf{
             account{"valuuttojen laskentatoimen esitysmuoto"}

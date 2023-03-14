@@ -29,7 +29,6 @@ ia{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabe"}
-        ar_001{"arabe standard moderne"}
         arn{"mapuche"}
         arp{"arapaho"}
         ars{"arabe najdi"}
@@ -93,8 +92,6 @@ ia{
         dar{"dargwa"}
         dav{"taita"}
         de{"germano"}
-        de_AT{"germano austriac"}
-        de_CH{"alte germano suisse"}
         dgr{"dogrib"}
         dje{"zarma"}
         doi{"dogri"}
@@ -110,20 +107,12 @@ ia{
         eka{"ekajuk"}
         el{"greco"}
         en{"anglese"}
-        en_AU{"anglese australian"}
-        en_CA{"anglese canadian"}
-        en_GB{"anglese britannic"}
-        en_US{"anglese american"}
         eo{"esperanto"}
         es{"espaniol"}
-        es_419{"espaniol latinoamerican"}
-        es_ES{"espaniol europee"}
-        es_MX{"espaniol mexican"}
         et{"estoniano"}
         eu{"basco"}
         ewo{"ewondo"}
         fa{"persa"}
-        fa_AF{"dari"}
         ff{"fula"}
         fi{"finnese"}
         fil{"filipino"}
@@ -131,8 +120,6 @@ ia{
         fo{"feroese"}
         fon{"fon"}
         fr{"francese"}
-        fr_CA{"francese canadian"}
-        fr_CH{"francese suisse"}
         frc{"francese cajun"}
         frr{"frison septentrional"}
         fur{"friulano"}
@@ -291,7 +278,6 @@ ia{
         nia{"nias"}
         niu{"nieuano"}
         nl{"nederlandese"}
-        nl_BE{"flamingo"}
         nmg{"kwasio"}
         nn{"norvegiano nynorsk"}
         nnh{"ngiemboon"}
@@ -325,8 +311,6 @@ ia{
         prg{"prussiano"}
         ps{"pashto"}
         pt{"portugese"}
-        pt_BR{"portugese de Brasil"}
-        pt_PT{"portugese de Portugal"}
         qu{"quechua"}
         quc{"kʼicheʼ"}
         rap{"rapanui"}
@@ -335,7 +319,6 @@ ia{
         rm{"romanche"}
         rn{"rundi"}
         ro{"romaniano"}
-        ro_MD{"moldavo"}
         rof{"rombo"}
         ru{"russo"}
         rup{"aromaniano"}
@@ -381,7 +364,6 @@ ia{
         suk{"sukuma"}
         sv{"svedese"}
         sw{"swahili"}
-        sw_CD{"swahili del Congo"}
         swb{"comoriano"}
         syr{"syriaco"}
         ta{"tamil"}
@@ -443,29 +425,10 @@ ia{
         yue{"cantonese"}
         zgh{"tamazight marocchin standard"}
         zh{"chinese"}
-        zh_Hans{"chinese simplificate"}
-        zh_Hant{"chinese traditional"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"sin contento linguistic"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"chinese mandarin simplificate"}
-        zh_Hant{"chinese mandarin traditional"}
-    }
-    Languages%menu{
-        yue{"chinese cantonese"}
-        zh{"chinese mandarin"}
-    }
-    Languages%short{
-        az{"azeri"}
-        en_GB{"anglese (GB)"}
-        en_US{"anglese (SUA)"}
-    }
-    Languages%variant{
-        ckb{"kurdo sorani"}
-        hi_Latn{"hinglish"}
     }
     Scripts{
         Arab{"arabe"}
@@ -533,7 +496,6 @@ ia{
             iso8601{"calendario ISO-8601"}
             japanese{"calendario japonese"}
             persian{"calendario persa"}
-            roc{"calendario del Republica de China"}
         }
         cf{
             account{"formato de moneta pro contabilitate"}

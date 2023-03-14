@@ -1514,22 +1514,6 @@ hu{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "R.O.C. előtt",
-                    "R.O.C.",
-                }
-                narrow{
-                    "R.O.C. előtt",
-                    "R.O.C.",
-                }
-                wide{
-                    "R.O.C. előtt",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"tevékenység"}

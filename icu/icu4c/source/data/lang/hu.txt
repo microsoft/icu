@@ -44,7 +44,6 @@ hu{
         ann{"obolo"}
         anp{"angika"}
         ar{"arab"}
-        ar_001{"modern szabványos arab"}
         arc{"arámi"}
         arn{"mapucse"}
         arp{"arapaho"}
@@ -133,8 +132,6 @@ hu{
         dar{"dargva"}
         dav{"taita"}
         de{"német"}
-        de_AT{"osztrák német"}
-        de_CH{"svájci felnémet"}
         del{"delavár"}
         den{"szlevi"}
         dgr{"dogrib"}
@@ -157,21 +154,13 @@ hu{
         el{"görög"}
         elx{"elamit"}
         en{"angol"}
-        en_AU{"ausztrál angol"}
-        en_CA{"kanadai angol"}
-        en_GB{"brit angol"}
-        en_US{"amerikai angol"}
         enm{"közép angol"}
         eo{"eszperantó"}
         es{"spanyol"}
-        es_419{"latin-amerikai spanyol"}
-        es_ES{"európai spanyol"}
-        es_MX{"spanyol (mexikói)"}
         et{"észt"}
         eu{"baszk"}
         ewo{"evondo"}
         fa{"perzsa"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulani"}
@@ -181,8 +170,6 @@ hu{
         fo{"feröeri"}
         fon{"fon"}
         fr{"francia"}
-        fr_CA{"kanadai francia"}
-        fr_CH{"svájci francia"}
         frc{"cajun francia"}
         frm{"közép francia"}
         fro{"ófrancia"}
@@ -378,14 +365,12 @@ hu{
         nb{"norvég (bokmål)"}
         nd{"északi ndebele"}
         nds{"alsónémet"}
-        nds_NL{"alsószász"}
         ne{"nepáli"}
         new{"nevari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niuei"}
         nl{"holland"}
-        nl_BE{"flamand"}
         nmg{"ngumba"}
         nn{"norvég (nynorsk)"}
         nnh{"ngiemboon"}
@@ -433,8 +418,6 @@ hu{
         pro{"óprovánszi"}
         ps{"pastu"}
         pt{"portugál"}
-        pt_BR{"brazíliai portugál"}
-        pt_PT{"európai portugál"}
         qu{"kecsua"}
         quc{"kicse"}
         raj{"radzsasztáni"}
@@ -444,7 +427,6 @@ hu{
         rm{"rétoromán"}
         rn{"kirundi"}
         ro{"román"}
-        ro_MD{"moldvai"}
         rof{"rombo"}
         rom{"roma"}
         ru{"orosz"}
@@ -472,7 +454,6 @@ hu{
         ses{"kojra-szenni"}
         sg{"szangó"}
         sga{"óír"}
-        sh{"szerbhorvát"}
         shi{"tachelhit"}
         shn{"san"}
         shu{"csádi arab"}
@@ -504,7 +485,6 @@ hu{
         sux{"sumér"}
         sv{"svéd"}
         sw{"szuahéli"}
-        sw_CD{"kongói szuahéli"}
         swb{"comorei"}
         syc{"klasszikus szír"}
         syr{"szír"}
@@ -585,30 +565,10 @@ hu{
         zen{"zenaga"}
         zgh{"marokkói tamazight"}
         zh{"kínai"}
-        zh_Hans{"egyszerűsített kínai"}
-        zh_Hant{"hagyományos kínai"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"nincs nyelvészeti tartalom"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"kínai (egyszerűsített)"}
-        zh_Hant{"kínai (hagyományos)"}
-    }
-    Languages%menu{
-        ars{"arab, nedzsdi"}
-        yue{"kantoni kínai"}
-        zh{"mandarin"}
-    }
-    Languages%short{
-        az{"azeri"}
-        en_GB{"angol (UK)"}
-        en_US{"angol (USA)"}
-    }
-    Languages%variant{
-        ckb{"kurd, szoráni"}
-        hi_Latn{"hinglish"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -775,7 +735,6 @@ hu{
             iso8601{"ISO-8601 naptár"}
             japanese{"Japán naptár"}
             persian{"Perzsa naptár"}
-            roc{"Kínai köztársasági naptár"}
         }
         cf{
             account{"Könyvelési pénznemformátum"}

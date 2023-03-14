@@ -864,9 +864,6 @@ fr{
         "Asia:Ulaanbaatar"{
             ec{"Oulan-Bator"}
         }
-        "Asia:Urumqi"{
-            ec{"Ürümqi"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }

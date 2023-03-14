@@ -61,13 +61,11 @@ smn{
         CY{"Kypros"}
         CZ{"Tšekki"}
         DE{"Saksa"}
-        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Tanska"}
         DM{"Dominica"}
         DO{"Dominikaanisâš täsiväldi"}
         DZ{"Algeria"}
-        EA{"Ceuta já Melilla"}
         EC{"Ecuador"}
         EE{"Eestieennâm"}
         EG{"Egypti"}
@@ -105,7 +103,6 @@ smn{
         HR{"Kroatia"}
         HT{"Haiti"}
         HU{"Uŋgar"}
-        IC{"Kanariasuolluuh"}
         ID{"Indonesia"}
         IE{"Irland"}
         IL{"Israel"}
@@ -255,14 +252,5 @@ smn{
         ZA{"Maadâ-Afrikka"}
         ZM{"Sambia"}
         ZW{"Zimbabwe"}
-    }
-    Countries%short{
-        GB{"OK"}
-        HK{"Hong Kong"}
-        MO{"Macao"}
-        US{"USA"}
-    }
-    Countries%variant{
-        FK{"Falklandsuolluuh (Malvinassuolluuh)"}
     }
 }

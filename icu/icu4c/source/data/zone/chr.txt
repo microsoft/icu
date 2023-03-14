@@ -864,9 +864,6 @@ chr{
         "Asia:Ulaanbaatar"{
             ec{"ᎤᎳᏂᏆᏔ"}
         }
-        "Asia:Urumqi"{
-            ec{"ᎤᎷᎻᎩ"}
-        }
         "Asia:Ust-Nera"{
             ec{"ᎤᏍᏔ-ᏁᎳ"}
         }

@@ -867,9 +867,6 @@ et{
         "Asia:Ulaanbaatar"{
             ec{"Ulaanbaatar"}
         }
-        "Asia:Urumqi"{
-            ec{"Ürümqi"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }

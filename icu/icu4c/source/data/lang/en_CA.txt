@@ -41,22 +41,10 @@ en_CA{
         x0{"private-use transform"}
     }
     Languages{
-        ar_001{"Arabic (Modern Standard)"}
         bn{"Bengali"}
         mfe{"Mauritian Creole"}
         mul{"multiple languages"}
-        nds_NL{"West Low German"}
-        ro_MD{"Moldovan"}
         und{"unknown language"}
-        zh_Hans{"simplified Chinese"}
-        zh_Hant{"traditional Chinese"}
-    }
-    Languages%long{
-        zh_Hans{"simplified Mandarin Chinese"}
-        zh_Hant{"traditional Mandarin Chinese"}
-    }
-    Languages%variant{
-        my{"Myanmar language"}
     }
     Scripts{
         Zmth{"mathematical notation"}
@@ -83,7 +71,6 @@ en_CA{
             iso8601{"ISO-8601 calendar"}
             japanese{"Japanese calendar"}
             persian{"Persian calendar"}
-            roc{"Minguo calendar"}
         }
         cf{
             account{"accounting currency format"}

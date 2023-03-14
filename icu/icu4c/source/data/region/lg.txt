@@ -36,7 +36,7 @@ lg{
         BY{"Belarusi"}
         BZ{"Belize"}
         CA{"Kanada"}
-        CD{"Kongo - Zayire"}
+        CD{"Congo (DRC)"}
         CF{"Lipubulika eya Senturafiriki"}
         CG{"Kongo"}
         CH{"Switizirandi"}
@@ -165,7 +165,7 @@ lg{
         PM{"Senti Piyere ne Mikeloni"}
         PN{"Pitikeeni"}
         PR{"Potoriko"}
-        PS{"Palesitayini"}
+        PS{"Palestinian Authority"}
         PT{"Potugaali"}
         PW{"Palawu"}
         PY{"Paragwayi"}
