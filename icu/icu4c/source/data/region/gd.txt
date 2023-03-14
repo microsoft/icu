@@ -93,17 +93,14 @@ gd{
         CY{"Cìopras"}
         CZ{"An t-Seic"}
         DE{"A’ Ghearmailt"}
-        DG{"Diego Garcia"}
         DJ{"Diobùtaidh"}
         DK{"An Danmhairg"}
         DM{"Doiminicea"}
         DO{"A’ Phoblachd Dhoiminiceach"}
         DZ{"Aildiria"}
-        EA{"Ceuta agus Melilla"}
         EC{"Eacuador"}
         EE{"An Eastoin"}
         EG{"An Èiphit"}
-        EH{"Sathara an Iar"}
         ER{"Eartra"}
         ES{"An Spàinnt"}
         ET{"An Itiop"}
@@ -140,7 +137,6 @@ gd{
         HR{"A’ Chròthais"}
         HT{"Haidhti"}
         HU{"An Ungair"}
-        IC{"Na h-Eileanan Canàrach"}
         ID{"Na h-Innd-innse"}
         IE{"Èirinn"}
         IL{"Iosrael"}
@@ -288,8 +284,6 @@ gd{
         VU{"Vanuatu"}
         WF{"Uallas agus Futuna"}
         WS{"Samotha"}
-        XA{"Sràcan fuadain"}
-        XB{"Dà-chomhaireach fuadain"}
         XK{"A’ Chosobho"}
         YE{"An Eaman"}
         YT{"Mayotte"}
@@ -297,22 +291,5 @@ gd{
         ZM{"Sàimbia"}
         ZW{"An t-Sìombab"}
         ZZ{"Roinn-dùthcha neo-aithnichte"}
-    }
-    Countries%short{
-        GB{"RA"}
-        HK{"Hong Kong"}
-        MO{"Macàthu"}
-        PS{"Palastain"}
-        US{"SA"}
-    }
-    Countries%variant{
-        CD{"A’ Chongo (PDC)"}
-        CG{"A’ Chongo"}
-        CI{"An Costa Ìbhri"}
-        CZ{"Poblachd na Seice"}
-        FK{"Na h-Eileanan Fàclannach (Islas Malvinas)"}
-        NZ{"Aotearoa Sealainn Nuadh"}
-        SZ{"Dùthaich nan Suasaidh"}
-        TL{"Tìomor an Ear"}
     }
 }

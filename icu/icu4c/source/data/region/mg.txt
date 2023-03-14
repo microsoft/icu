@@ -165,7 +165,7 @@ mg{
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Pitkairn"}
         PR{"Pôrtô Rikô"}
-        PS{"Palestina"}
+        PS{"Autorité palestinienne"}
         PT{"Pôrtiogala"}
         PW{"Palao"}
         PY{"Paragoay"}

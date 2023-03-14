@@ -165,7 +165,7 @@ dav{
         PM{"Santapieri na Mikeloni"}
         PN{"Pitkairni"}
         PR{"Pwetoriko"}
-        PS{"Ukingo wa Magharibi na Ukanda wa Gaza wa Palestina"}
+        PS{"Palestinian Authority"}
         PT{"Ureno"}
         PW{"Palau"}
         PY{"Paragwai"}

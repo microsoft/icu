@@ -32,7 +32,6 @@ rm{
         ang{"englais vegl"}
         anp{"angika"}
         ar{"arab"}
-        ar_001{"arab modern standardisà"}
         arc{"arameic"}
         arn{"araucanic"}
         arp{"arapaho"}
@@ -101,8 +100,6 @@ rm{
         dar{"dargwa"}
         dav{"taita"}
         de{"tudestg"}
-        de_AT{"tudestg austriac"}
-        de_CH{"tudestg da scrittira svizzer"}
         del{"delaware"}
         den{"slavey"}
         dgr{"dogrib"}
@@ -124,21 +121,13 @@ rm{
         el{"grec"}
         elx{"elamitic"}
         en{"englais"}
-        en_AU{"englais australian"}
-        en_CA{"englais canadais"}
-        en_GB{"englais britannic"}
-        en_US{"englais american"}
         enm{"englais mesaun"}
         eo{"esperanto"}
         es{"spagnol"}
-        es_419{"spagnol latinamerican"}
-        es_ES{"spagnol europeic"}
-        es_MX{"spagnol mexican"}
         et{"eston"}
         eu{"basc"}
         ewo{"ewondo"}
         fa{"persian"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulah"}
@@ -148,8 +137,6 @@ rm{
         fo{"feroais"}
         fon{"fon"}
         fr{"franzos"}
-        fr_CA{"franzos canadais"}
-        fr_CH{"franzos svizzer"}
         frm{"franzos mesaun"}
         fro{"franzos vegl"}
         frr{"fris dal nord"}
@@ -329,7 +316,6 @@ rm{
         nia{"nias"}
         niu{"niue"}
         nl{"ollandais"}
-        nl_BE{"flam"}
         nmg{"kwasio"}
         nn{"norvegiais nynorsk"}
         nnh{"ngienboon"}
@@ -370,8 +356,6 @@ rm{
         pro{"provenzal vegl"}
         ps{"paschto"}
         pt{"portugais"}
-        pt_BR{"portugais brasilian"}
-        pt_PT{"portugais europeic"}
         qu{"quechua"}
         raj{"rajasthani"}
         rap{"rapanui"}
@@ -379,7 +363,6 @@ rm{
         rm{"rumantsch"}
         rn{"rundi"}
         ro{"rumen"}
-        ro_MD{"moldav"}
         rof{"rombo"}
         rom{"romani"}
         ru{"russ"}
@@ -404,7 +387,6 @@ rm{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"irlandais vegl"}
-        sh{"serbo-croat"}
         shi{"tachelit"}
         shn{"shan"}
         si{"singalais"}
@@ -501,28 +483,10 @@ rm{
         zen{"zenaga"}
         zgh{"marocan tamazight standardisà"}
         zh{"chinais"}
-        zh_Hans{"chinais simplifitgà"}
-        zh_Hant{"chinais tradiziunal"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"nagins cuntegns linguistics"}
         zza{"zaza"}
-    }
-    Languages%long{
-        zh_Hans{"chinais mandarin simplifitgà"}
-        zh_Hant{"chinais mandarin tradiziunal"}
-    }
-    Languages%menu{
-        ckb{"curd, central"}
-        yue{"chinais, cantonais"}
-        zh{"chinais, mandarin"}
-    }
-    Languages%short{
-        en_GB{"englais GB"}
-        en_US{"englais USA"}
-    }
-    Languages%variant{
-        ckb{"curd, sorani"}
     }
     Scripts{
         Aghb{"albanais dal Caucasus"}
@@ -682,7 +646,6 @@ rm{
             iso8601{"chalender tenor ISO 8601"}
             japanese{"chalender giapunais"}
             persian{"chalender persian"}
-            roc{"chalender da la Republica Chinaisa"}
         }
         cf{
             account{"format da valuta per la contabilitad"}

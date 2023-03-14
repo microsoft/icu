@@ -90,8 +90,6 @@ yo{
         dar{"Èdè Dagiwa"}
         dav{"Táítà"}
         de{"Èdè Jámánì"}
-        de_AT{"Èdè Jámánì (Ọ́síríà )"}
-        de_CH{"Èdè Ilẹ̀ Jámánì (Orílẹ́ède swítsàlandì)"}
         dgr{"Èdè Dogribu"}
         dje{"Ṣárúmà"}
         doi{"Èdè Dogiri"}
@@ -107,14 +105,8 @@ yo{
         eka{"Èdè Ekaju"}
         el{"Èdè Giriki"}
         en{"Èdè Gẹ̀ẹ́sì"}
-        en_AU{"Èdè Gẹ̀ẹ́sì (órílẹ̀-èdè Ọsirélíà)"}
-        en_CA{"Èdè Gẹ̀ẹ́sì (Orílẹ̀-èdè Kánádà)"}
-        en_GB{"Èdè òyìnbó Gẹ̀ẹ́sì"}
         eo{"Èdè Esperanto"}
         es{"Èdè Sípáníìṣì"}
-        es_419{"Èdè Sípáníìṣì (orílẹ̀-èdè Látìn-Amẹ́ríkà)"}
-        es_ES{"Èdè Sípáníìṣì (orílẹ̀-èdè Yúróòpù)"}
-        es_MX{"Èdè Sípáníìṣì (orílẹ̀-èdè Mẹ́síkò)"}
         et{"Èdè Estonia"}
         eu{"Èdè Baski"}
         ewo{"Èdè Èwóǹdò"}
@@ -126,8 +118,6 @@ yo{
         fo{"Èdè Faroesi"}
         fon{"Èdè Fon"}
         fr{"Èdè Faransé"}
-        fr_CA{"Èdè Faransé (orílẹ̀-èdè Kánádà)"}
-        fr_CH{"Èdè Faranṣé (Súwísàlaǹdì)"}
         frc{"Èdè Faranse ti Kajun"}
         frr{"Èdè Ariwa Frisa"}
         fur{"Firiúlíànì"}
@@ -151,7 +141,6 @@ yo{
         hax{"Èdè Gusu Haida"}
         he{"Èdè Heberu"}
         hi{"Èdè Híńdì"}
-        hi_Latn{"Èdè Híndì (Látìnì)"}
         hil{"Èdè Hilgayo"}
         hmn{"Hmong"}
         hr{"Èdè Kroatia"}
@@ -320,8 +309,6 @@ yo{
         prg{"Púrúṣíànù"}
         ps{"Páshítò"}
         pt{"Èdè Pọtogí"}
-        pt_BR{"Èdè Pọtogí (Orilẹ̀-èdè Bràsíl)"}
-        pt_PT{"Èdè Pọtogí (orílẹ̀-èdè Yúróòpù)"}
         qu{"Kúẹ́ńjùà"}
         rap{"Èdè Rapanu"}
         rar{"Èdè Rarotonga"}
@@ -349,7 +336,6 @@ yo{
         seh{"Ṣẹnà"}
         ses{"Koiraboro Seni"}
         sg{"Sango"}
-        sh{"Èdè Serbo-Croatiani"}
         shi{"Taṣelíìtì"}
         shn{"Èdè Shani"}
         si{"Èdè Sinhalese"}
@@ -432,26 +418,10 @@ yo{
         yue{"Èdè Cantonese"}
         zgh{"Àfẹnùkò Támásáìtì ti Mòrókò"}
         zh{"Edè Ṣáínà"}
-        zh_Hans{"Ẹdè Ṣáínà Onírọ̀rùn"}
-        zh_Hant{"Èdè Ṣáínà Ìbílẹ̀"}
         zu{"Èdè Ṣulu"}
         zun{"Èdè Suni"}
         zxx{"Kò sí àkóònú elédè"}
         zza{"Èdè Sasa"}
-    }
-    Languages%long{
-        zh_Hans{"Èdè Mandárínì Ṣáínà Onírọ̀rùn"}
-        zh_Hant{"Èdè Mandárínì Ṣáínà Ìbílẹ̀"}
-    }
-    Languages%menu{
-        zh{"Edè Ṣáínà, Mandárínì"}
-    }
-    Languages%short{
-        en_GB{"Èdè Gẹ̀ẹ́sì (GB)"}
-        en_US{"Èdè Gẹ̀ẹ́sì (US)"}
-    }
-    Languages%variant{
-        hi_Latn{"Èdè Híńgílíṣì"}
     }
     Scripts{
         Adlm{"Èdè Adam"}
@@ -530,7 +500,6 @@ yo{
             iso8601{"Kàlẹ́ńdà ISO-8601"}
             japanese{"Kàlẹ́ńdà ti Jàpánù"}
             persian{"Kàlẹ́ńdà Pásíànù"}
-            roc{"Kàlẹ́ńdà Minguo"}
         }
         cf{
             account{"Ìgúnrégé Ìṣirò Owó Kọ́rẹ́ńsì"}

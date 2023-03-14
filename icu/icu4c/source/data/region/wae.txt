@@ -90,17 +90,14 @@ wae{
         CY{"Zypre"}
         CZ{"Tšečie"}
         DE{"Titšland"}
-        DG{"Diego Garcia"}
         DJ{"Dšibuti"}
         DK{"Dänemark"}
         DM{"Doninica"}
         DO{"Dominikaniši Rebublik"}
         DZ{"Algerie"}
-        EA{"Ceuta und Melilla"}
         EC{"Ecuador"}
         EE{"Eštland"}
         EG{"Egypte"}
-        EH{"Weštsahara"}
         ER{"Eritrea"}
         ES{"Schpanie"}
         ET{"Ethiopie"}
@@ -136,7 +133,6 @@ wae{
         HR{"Kroatie"}
         HT{"Haiti"}
         HU{"Ungare"}
-        IC{"Kanariše Inslä"}
         ID{"Indonesie"}
         IE{"Irland"}
         IL{"Israel"}
@@ -218,7 +214,7 @@ wae{
         PM{"St. Pierre und Miquelon"}
         PN{"Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Paleština"}
+        PS{"Palestinian Authority"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguai"}
@@ -286,16 +282,5 @@ wae{
         ZM{"Sambia"}
         ZW{"Simbabwe"}
         ZZ{"Unbekannti Regio"}
-    }
-    Countries%short{
-        HK{"Hongkong"}
-        MO{"Makau"}
-    }
-    Countries%variant{
-        CD{"Kongo (Demokratiši Rebublik)"}
-        CG{"Kongo (Rebublik)"}
-        CI{"Côte d’Ivoire"}
-        FK{"Falklandinslä (Malwine)"}
-        TL{"Wešttimor"}
     }
 }

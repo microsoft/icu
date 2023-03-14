@@ -1051,14 +1051,6 @@ it{
                 "GGGGGyyMMdd",
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Prima di R.O.C.",
-                    "Minguo",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Attività"}

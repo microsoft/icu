@@ -1716,22 +1716,6 @@ es{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "antes de RDC",
-                    "minguo",
-                }
-                narrow{
-                    "antes de RDC",
-                    "minguo",
-                }
-                wide{
-                    "antes de RDC",
-                    "minguo",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Actividades"}

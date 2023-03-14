@@ -864,9 +864,6 @@ kok{
         "Asia:Ulaanbaatar"{
             ec{"उलानबतार"}
         }
-        "Asia:Urumqi"{
-            ec{"उरुम्की"}
-        }
         "Asia:Ust-Nera"{
             ec{"उस्त नेरा"}
         }

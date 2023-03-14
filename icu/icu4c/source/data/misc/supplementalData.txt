@@ -7708,15 +7708,13 @@ supplementalData:table(nofallback){
                 "CR",
                 "CU~Z",
                 "DE",
-                "DG",
                 "DJ~K",
                 "DM",
                 "DO",
                 "DZ",
-                "EA",
                 "EC",
                 "EE",
-                "EG~H",
+                "EG",
                 "ER~T",
                 "FI~K",
                 "FM",
@@ -7732,7 +7730,7 @@ supplementalData:table(nofallback){
                 "HM~N",
                 "HR",
                 "HT~U",
-                "IC~E",
+                "ID~E",
                 "IL~O",
                 "IQ~T",
                 "JE",
@@ -20069,6 +20067,13 @@ supplementalData:table(nofallback){
             PaperSize:intvector{
                 297,
                 210,
+            }
+        }
+        029{
+            MeasurementSystem:int{1}
+            PaperSize:intvector{
+                279,
+                216,
             }
         }
         BS{

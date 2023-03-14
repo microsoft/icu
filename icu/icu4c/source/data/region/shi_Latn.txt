@@ -166,7 +166,7 @@ shi_Latn{
         PM{"sanbyir d miklun"}
         PN{"bitkayrn"}
         PR{"burtu riku"}
-        PS{"agmmaḍ n tagut d ɣzza"}
+        PS{"السلطة الفلسطينية"}
         PT{"bṛṭqiz"}
         PW{"balaw"}
         PY{"baragway"}

@@ -75,11 +75,9 @@ mi{
         DM{"Tominika"}
         DO{"Te Whenua Tominika"}
         DZ{"Aratiria"}
-        EA{"Hūta me Merera"}
         EC{"Ekuatoa"}
         EE{"Etōnia"}
         EG{"Īhipa"}
-        EH{"Hahāra ki te Tonga"}
         ER{"Eritēria"}
         ET{"Etiopia"}
         EU{"Te Uniana o Ūropi"}
@@ -105,7 +103,6 @@ mi{
         GY{"Kaiana"}
         HN{"Honūra"}
         HT{"Haiti"}
-        IC{"Motu Kānara"}
         IE{"Aerana"}
         IM{"Motu Tangata"}
         IN{"Inia"}
@@ -185,18 +182,10 @@ mi{
         VE{"Wenehūera"}
         VG{"Ngā Motu o Tātāhou Piritene"}
         VI{"Ngā Motu o Tātāhou Amerika"}
-        XA{"Tūreo Kimikimi"}
-        XB{"Piri Kimikimi"}
         YT{"Maio"}
         ZA{"Āwherika ki te Tonga"}
         ZM{"Tāmipia"}
         ZW{"Timuwawe"}
         ZZ{"Rohe Tē Mōhiotia"}
-    }
-    Countries%variant{
-        CD{"Kōngo"}
-        CG{"Kōngo (Tominika)"}
-        FK{"Motu Whākarangi (Ira Māwina)"}
-        SZ{"Warerangi"}
     }
 }

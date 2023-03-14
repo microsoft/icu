@@ -51,16 +51,12 @@ es_US{
         smn{"sami de Inari"}
         ss{"siswati"}
         str{"straits salish"}
-        sw_CD{"swahili del Congo"}
         syr{"siriaco"}
         tce{"tutchone del sur"}
         tet{"tetún"}
         ttm{"tutchone del norte"}
         tyv{"tuviniano"}
         wal{"wolayta"}
-    }
-    Languages%variant{
-        ug{"uigur variante"}
     }
     Scripts{
         Adlm{"adlam"}

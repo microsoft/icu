@@ -7,7 +7,6 @@ en_CA{
         AG{"Antigua and Barbuda"}
         BA{"Bosnia and Herzegovina"}
         BL{"Saint-Barthélemy"}
-        EA{"Ceuta and Melilla"}
         GS{"South Georgia and South Sandwich Islands"}
         HM{"Heard and McDonald Islands"}
         KN{"Saint Kitts and Nevis"}
@@ -24,11 +23,6 @@ en_CA{
         VC{"Saint Vincent and the Grenadines"}
         VI{"US Virgin Islands"}
         WF{"Wallis and Futuna"}
-        XA{"pseudo-accents"}
-        XB{"pseudo-bidi"}
         ZZ{"unknown region"}
-    }
-    Countries%short{
-        MO{"Macau"}
     }
 }

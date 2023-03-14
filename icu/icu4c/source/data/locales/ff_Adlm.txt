@@ -3551,22 +3551,6 @@ ff_Adlm{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "𞤀𞥋𞤁𞤕",
-                    "𞤃𞤭𞤲𞤺𞤵𞤮",
-                }
-                narrow{
-                    "𞤀𞥋𞤁𞤕",
-                    "𞤃𞤭𞤲𞤺𞤵𞤮",
-                }
-                wide{
-                    "𞤀𞥋𞤁𞤕",
-                    "𞤃𞤭𞤲𞤺𞤵𞤮",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"𞤳𞤵𞥅𞤺𞤫"}

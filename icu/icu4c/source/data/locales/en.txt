@@ -1342,8 +1342,8 @@ en{
         roc{
             eras{
                 abbreviated{
-                    "B.R.O.C.",
-                    "Minguo",
+                    "Before",
+                    "Taiwan",
                 }
             }
         }

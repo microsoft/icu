@@ -32,7 +32,6 @@ es_419{
         sma{"sami del sur"}
         st{"sesotho del sur"}
         sw{"swahili"}
-        sw_CD{"swahili (Congo)"}
         syr{"siríaco"}
         tet{"tetun"}
         tyv{"tuvano"}
@@ -40,10 +39,6 @@ es_419{
         wuu{"wu"}
         xal{"calmuco"}
         zun{"zuni"}
-    }
-    Languages%variant{
-        ps{"pashtún"}
-        ug{"uighur"}
     }
     Scripts{
         Gujr{"gujarati"}

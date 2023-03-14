@@ -1233,14 +1233,6 @@ bs_Cyrl{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "Пре РК",
-                    "РК",
-                }
-            }
-        }
     }
     delimiters{
         alternateQuotationEnd{"‘"}

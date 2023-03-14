@@ -164,7 +164,7 @@ dje{
         PM{"Seŋ Piyer nda Mikelon"}
         PN{"Pitikarin"}
         PR{"Porto Riko"}
-        PS{"Palestine Dangay nda Gaaza"}
+        PS{"Autorité palestinienne"}
         PT{"Portugaal"}
         PW{"Palu"}
         PY{"Paraguwey"}

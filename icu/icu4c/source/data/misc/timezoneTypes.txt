@@ -7,7 +7,6 @@ timezoneTypes:table(nofallback){
             aqams{"nzakl"}
             cnckg{"cnsha"}
             cnhrb{"cnsha"}
-            cnkhg{"cnurc"}
             gaza{"gazastrp"}
             usnavajo{"usden"}
         }
@@ -42,7 +41,6 @@ timezoneTypes:table(nofallback){
             "Asia:Harbin"{"Asia/Shanghai"}
             "Asia:Ho_Chi_Minh"{"Asia/Saigon"}
             "Asia:Istanbul"{"Europe/Istanbul"}
-            "Asia:Kashgar"{"Asia/Urumqi"}
             "Asia:Kathmandu"{"Asia/Katmandu"}
             "Asia:Kolkata"{"Asia/Calcutta"}
             "Asia:Macao"{"Asia/Macau"}
@@ -236,7 +234,6 @@ timezoneTypes:table(nofallback){
             "America:Cayman"{"kygec"}
             "America:Chicago"{"uschi"}
             "America:Chihuahua"{"mxchi"}
-            "America:Ciudad_Juarez"{"mxcjs"}
             "America:Coral_Harbour"{"cayzs"}
             "America:Cordoba"{"arcor"}
             "America:Costa_Rica"{"crsjo"}
@@ -441,7 +438,6 @@ timezoneTypes:table(nofallback){
             "Asia:Tokyo"{"jptyo"}
             "Asia:Tomsk"{"rutof"}
             "Asia:Ulaanbaatar"{"mnuln"}
-            "Asia:Urumqi"{"cnurc"}
             "Asia:Ust-Nera"{"ruunera"}
             "Asia:Vientiane"{"lavte"}
             "Asia:Vladivostok"{"ruvvo"}

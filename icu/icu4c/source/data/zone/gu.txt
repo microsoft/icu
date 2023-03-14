@@ -867,9 +867,6 @@ gu{
         "Asia:Ulaanbaatar"{
             ec{"ઉલાંબાતર"}
         }
-        "Asia:Urumqi"{
-            ec{"ઉરુમ્કી"}
-        }
         "Asia:Ust-Nera"{
             ec{"ઉસ્ત-નેરા"}
         }

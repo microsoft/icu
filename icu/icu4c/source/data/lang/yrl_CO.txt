@@ -6,28 +6,17 @@ yrl_CO{
         br{"beretan"}
         chn{"yarigan xinoki"}
         de{"areman"}
-        de_CH{"areman iwaté (Suisa)"}
         gmh{"areman iwaté médiu"}
         goh{"areman arkaiku iwaté"}
         gsw{"areman (Suisa)"}
         lv{"retan"}
         mul{"siía ñeẽga"}
-        nds_NL{"sakisan yatuka"}
         und{"ũba uyukuau ñeẽga"}
         wa{"waran"}
         yrl{"ñengatú"}
         zgh{"tamasiriti marukinu padran"}
         zh{"xinañeẽga"}
-        zh_Hans{"xinañeẽga iwasuĩma"}
-        zh_Hant{"xinañeẽga katuwa"}
         zxx{"ũba aykué ñeẽga sesewaraitá"}
-    }
-    Languages%long{
-        zh_Hans{"xinañeẽga mãdarĩ (iwasuĩma)"}
-        zh_Hant{"xinañeẽga mãdarĩ (katuwa)"}
-    }
-    Languages%menu{
-        zh{"xinañeẽga, mãdarĩ"}
     }
     Scripts{
         Visp{"ñeẽga xipiawera"}

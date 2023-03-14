@@ -861,9 +861,6 @@ tk{
         "Asia:Ulaanbaatar"{
             ec{"Ulan-Bator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumçi"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }

@@ -6,24 +6,26 @@ hi_Latn{
     Countries{
         AX{"Aland Islands"}
         BL{"St. Barthelemy"}
+        BQ{"Caribbean Netherlands"}
+        CD{"Congo - Kinshasa"}
+        CG{"Congo - Brazzaville"}
         CI{"Cote d’Ivoire"}
+        CV{"Cape Verde"}
         CW{"Curacao"}
+        HK{"Hong Kong SAR China"}
         KN{"St. Kitts & Nevis"}
+        KR{"South Korea"}
         LC{"St. Lucia"}
         MF{"St. Martin"}
+        MO{"Macao SAR China"}
         PM{"St. Pierre & Miquelon"}
+        PS{"Palestinian Territories"}
         RE{"Reunion"}
         SH{"St. Helena"}
         ST{"Sao Tome & Principe"}
+        TR{"Turkey"}
         UM{"U.S. Outlying Islands"}
         VC{"St. Vincent & Grenadines"}
         VI{"U.S. Virgin Islands"}
-        XB{"Pseudo-Bidirectional"}
-    }
-    Countries%short{
-        US{"America"}
-    }
-    Countries%variant{
-        TR{"Turkiye"}
     }
 }

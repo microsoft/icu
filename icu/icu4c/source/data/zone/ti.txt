@@ -864,9 +864,6 @@ ti{
         "Asia:Ulaanbaatar"{
             ec{"ኡላን ባቶር"}
         }
-        "Asia:Urumqi"{
-            ec{"ኡሩምኪ"}
-        }
         "Asia:Ust-Nera"{
             ec{"ኡስት-ኔራ"}
         }

@@ -27,7 +27,6 @@ nn{
         FO{"Færøyane"}
         GS{"Sør-Georgia og Sør-Sandwichøyane"}
         HM{"Heardøya og McDonaldøyane"}
-        IC{"Kanariøyane"}
         KM{"Komorane"}
         KY{"Caymanøyane"}
         LU{"Luxembourg"}
@@ -37,6 +36,7 @@ nn{
         NO{"Noreg"}
         PH{"Filippinane"}
         PN{"Pitcairn"}
+        PS{"Den palestinske sjølvstyresmakta"}
         SB{"Salomonøyane"}
         SC{"Seychellane"}
         SH{"Saint Helena"}
@@ -48,15 +48,5 @@ nn{
         VC{"St. Vincent og Grenadinane"}
         VG{"Dei britiske Jomfruøyane"}
         VI{"Dei amerikanske Jomfruøyane"}
-        XA{"pseudospråk – aksentar"}
-        XB{"pseudospråk – RTL"}
-    }
-    Countries%short{
-        UN{"SN"}
-    }
-    Countries%variant{
-        CI{"Elfenbeinskysten"}
-        FK{"Falklandsøyane (Islas Malvinas)"}
-        TL{"Aust-Timor"}
     }
 }

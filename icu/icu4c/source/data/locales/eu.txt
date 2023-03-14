@@ -969,14 +969,6 @@ eu{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "R.O.C. aurretik",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Jarduerak"}

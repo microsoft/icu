@@ -47,7 +47,6 @@ nl{
         ann{"Obolo"}
         anp{"Angika"}
         ar{"Arabisch"}
-        ar_001{"modern standaard Arabisch"}
         arc{"Aramees"}
         arn{"Mapudungun"}
         aro{"Araona"}
@@ -184,7 +183,6 @@ nl{
         ewo{"Ewondo"}
         ext{"Extremeens"}
         fa{"Perzisch"}
-        fa_AF{"Dari"}
         fan{"Fang"}
         fat{"Fanti"}
         ff{"Fulah"}
@@ -413,7 +411,6 @@ nl{
         nb{"Noors - Bokmål"}
         nd{"Noord-Ndebele"}
         nds{"Nedersaksisch"}
-        nds_NL{"Nederduits"}
         ne{"Nepalees"}
         new{"Newari"}
         ng{"Ndonga"}
@@ -421,7 +418,6 @@ nl{
         niu{"Niueaans"}
         njo{"Ao Naga"}
         nl{"Nederlands"}
-        nl_BE{"Vlaams"}
         nmg{"Ngumba"}
         nn{"Noors - Nynorsk"}
         nnh{"Ngiemboon"}
@@ -522,7 +518,6 @@ nl{
         sg{"Sango"}
         sga{"Oudiers"}
         sgs{"Samogitisch"}
-        sh{"Servo-Kroatisch"}
         shi{"Tashelhiyt"}
         shn{"Shan"}
         shu{"Tsjadisch Arabisch"}
@@ -655,23 +650,6 @@ nl{
         zun{"Zuni"}
         zxx{"geen linguïstische inhoud"}
         zza{"Zaza"}
-    }
-    Languages%long{
-        zh_Hans{"Mandarijn (vereenvoudigd)"}
-        zh_Hant{"Mandarijn (traditioneel)"}
-    }
-    Languages%menu{
-        ars{"Arabisch, Nadjdi"}
-        ckb{"Koerdisch, Soranî"}
-        zh{"Mandarijn"}
-    }
-    Languages%short{
-        az{"Azeri"}
-    }
-    Languages%variant{
-        ckb{"Koerdisch, Soranî"}
-        hi_Latn{"Hinglish"}
-        ps{"Pashto"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -903,7 +881,6 @@ nl{
             iso8601{"ISO-8601-kalender"}
             japanese{"Japanse kalender"}
             persian{"Perzische kalender"}
-            roc{"Kalender van de Chinese Republiek"}
         }
         cf{
             account{"financiële valutanotatie"}

@@ -93,17 +93,14 @@ yrl{
         CY{"Xipiri"}
         CZ{"Xekiya"}
         DE{"Aremãya"}
-        DG{"Diyegu Garasiya"}
         DJ{"Dijibuti"}
         DK{"Dinamaka"}
         DM{"Dominika"}
         DO{"Repubirika Duminikana"}
         DZ{"Argeriya"}
-        EA{"Seuta asuí Merira"}
         EC{"Ekuadú"}
         EE{"Isituniya"}
         EG{"Egitu"}
-        EH{"Saara Usidẽtawara"}
         ER{"Eritireya"}
         ES{"Isipãya"}
         ET{"Etiupiya"}
@@ -140,7 +137,6 @@ yrl{
         HR{"Kuruwasiya"}
         HT{"Aití"}
         HU{"Ũgiriya"}
-        IC{"Kapuãma-ita Kanariya"}
         ID{"Ĩdunesiya"}
         IE{"Irãda"}
         IL{"Isirayeu"}
@@ -288,8 +284,6 @@ yrl{
         VU{"Wanuatu"}
         WF{"Wari asuí Futuna"}
         WS{"Samowa"}
-        XA{"Sutakirana-ita"}
-        XB{"Bidiresiunaurana"}
         XK{"Kusuwu"}
         YE{"Yemẽ"}
         YT{"Mayuti"}
@@ -297,21 +291,5 @@ yrl{
         ZM{"Sãbiya"}
         ZW{"Sĩbabuwe"}
         ZZ{"Tetãma Ũbawaukuamamẽ"}
-    }
-    Countries%short{
-        HK{"Hũgi Kũgi"}
-        MO{"Makau"}
-        PS{"Paretina"}
-        UN{"ONU"}
-        US{"EUA"}
-    }
-    Countries%variant{
-        CD{"Repubirika Demukaratika Kũguyara"}
-        CG{"Kũgu"}
-        CI{"Kute Divuá"}
-        CZ{"Repubirika Xeka"}
-        FK{"Kapuãma-ita Mawina (Kapuãma-ita Falkland)"}
-        SZ{"Suwasiretãma"}
-        TL{"Repubirika Demukaratika Timu-Semusawa"}
     }
 }

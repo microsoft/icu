@@ -1379,22 +1379,6 @@ lv{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "pirms republikas",
-                    "Miņgo",
-                }
-                narrow{
-                    "pirms rep.",
-                    "Miņgo",
-                }
-                wide{
-                    "pirms Ķīnas Republikas dibināšanas",
-                    "Miņgo",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktivitātes"}

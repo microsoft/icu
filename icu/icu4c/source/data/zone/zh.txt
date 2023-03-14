@@ -867,9 +867,6 @@ zh{
         "Asia:Ulaanbaatar"{
             ec{"乌兰巴托"}
         }
-        "Asia:Urumqi"{
-            ec{"乌鲁木齐"}
-        }
         "Asia:Ust-Nera"{
             ec{"乌斯内拉"}
         }

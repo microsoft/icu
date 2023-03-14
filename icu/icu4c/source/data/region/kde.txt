@@ -165,7 +165,7 @@ kde{
         PM{"Santapieli na Mikeloni"}
         PN{"Pitikeluni"}
         PR{"Pwetoliko"}
-        PS{"Nchingu wa Magalibi wa Mpanda wa kuGaza wa kuPales"}
+        PS{"Mamlaka ya Palestina"}
         PT{"Uleno"}
         PW{"Palau"}
         PY{"Palagwai"}

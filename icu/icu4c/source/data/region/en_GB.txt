@@ -3,4 +3,15 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 en_GB{
     %%Parent{"en_001"}
+    Countries{
+        BQ{"Caribbean Netherlands"}
+        CD{"Congo - Kinshasa"}
+        CG{"Congo - Brazzaville"}
+        CV{"Cape Verde"}
+        HK{"Hong Kong SAR China"}
+        KR{"South Korea"}
+        MM{"Myanmar (Burma)"}
+        PS{"Palestinian Territories"}
+        TR{"Turkey"}
+    }
 }

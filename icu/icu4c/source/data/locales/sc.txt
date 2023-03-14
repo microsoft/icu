@@ -1495,18 +1495,6 @@ sc{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "a.R.d.T.",
-                    "R.d.T",
-                }
-                wide{
-                    "in antis de sa R.d.T.",
-                    "R.d.T.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"atividade"}

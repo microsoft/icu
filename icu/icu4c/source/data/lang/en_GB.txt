@@ -4,6 +4,17 @@
 en_GB{
     %%Parent{"en_001"}
     Languages{
+        bin{"Bini"}
+        bm{"Bambara"}
         ff{"Fulah"}
+        ii{"Sichuan Yi"}
+        nso{"Northern Sotho"}
+        ss{"Swati"}
+        st{"Southern Sotho"}
+        sw{"Swahili"}
+        tn{"Tswana"}
+        ts{"Tsonga"}
+        xh{"Xhosa"}
+        zu{"Zulu"}
     }
 }

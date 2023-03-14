@@ -867,9 +867,6 @@ ja{
         "Asia:Ulaanbaatar"{
             ec{"ウランバートル"}
         }
-        "Asia:Urumqi"{
-            ec{"ウルムチ"}
-        }
         "Asia:Ust-Nera"{
             ec{"ウスチネラ"}
         }

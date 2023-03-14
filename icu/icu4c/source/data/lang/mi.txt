@@ -18,7 +18,6 @@ mi{
         ann{"Ōporo"}
         anp{"Anahika"}
         ar{"Ārapi"}
-        ar_001{"Ārapi Moroki"}
         arn{"Mapūte"}
         arp{"Arapaho"}
         ars{"Arapika Nahāri"}
@@ -80,8 +79,6 @@ mi{
         dar{"Tākawa"}
         dav{"Taita"}
         de{"Tiamana"}
-        de_AT{"Tiamana Ateriana"}
-        de_CH{"Tiamana Ōkawa Huiterangi"}
         dgr{"Tōkiripi"}
         dje{"Tāma"}
         doi{"Tōkiri"}
@@ -97,20 +94,12 @@ mi{
         eka{"Ekatika"}
         el{"Kiriki"}
         en{"Ingarihi"}
-        en_AU{"Ingarihi Ahitereiriana"}
-        en_CA{"Ingarihi Kānata"}
-        en_GB{"Ingarihi Piritene"}
-        en_US{"Ingarihi Amerikana"}
         eo{"Eheperāto"}
         es{"Pāniora"}
-        es_419{"Pāniora Amerikana ki te Tonga"}
-        es_ES{"Pāniora Ūropi"}
-        es_MX{"Pāniora Mehikana"}
         et{"Ehetōniana"}
         eu{"Pāka"}
         ewo{"Ewāto"}
         fa{"Pāhiana"}
-        fa_AF{"Tari"}
         ff{"Wharā"}
         fi{"Whinirānia"}
         fil{"Piripīno"}
@@ -118,8 +107,6 @@ mi{
         fo{"Wharoīhi"}
         fon{"Whāna"}
         fr{"Wīwī"}
-        fr_CA{"Wīwī Kānata"}
-        fr_CH{"Wīwī Huiterangi"}
         frc{"Wīwī Keihana"}
         frr{"Whirīhiana ki te Raki"}
         fur{"Whiriūriana"}
@@ -278,7 +265,6 @@ mi{
         nia{"Niēhe"}
         niu{"Niueana"}
         nl{"Tati"}
-        nl_BE{"Tati Whēmirihi"}
         nmg{"Kuatio"}
         nn{"Nīnōka Nōwītiana"}
         nnh{"Nekeipū"}
@@ -311,8 +297,6 @@ mi{
         pqm{"Marahiti-Pehamakoare"}
         ps{"Pātio"}
         pt{"Pōtukīhi"}
-        pt_BR{"Pōtukīhi Parahi"}
-        pt_PT{"Pōtukīhi Uropi"}
         qu{"Kētua"}
         rap{"Rapanui"}
         rar{"Rarotonga"}
@@ -422,24 +406,10 @@ mi{
         yue{"Katonīhi"}
         zgh{"Moroko Tamatai"}
         zh{"Hainamana"}
-        zh_Hans{"Hainamana Māmā"}
-        zh_Hant{"Hainamana Tukuiho"}
         zu{"Tūru"}
         zun{"Tuni"}
         zxx{"Wetereo kiko kore"}
         zza{"Tātā"}
-    }
-    Languages%menu{
-        yue{"Hainamana, Katonīhi"}
-        zh{"Hainamana Manarini"}
-    }
-    Languages%short{
-        az{"Ahēri"}
-        en_GB{"Ingarihi UK"}
-        en_US{"Ingarihi US"}
-    }
-    Languages%variant{
-        ckb{"Kūrihi, Hōrani"}
     }
     Scripts{
         Adlm{"Arāma"}

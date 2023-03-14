@@ -1889,22 +1889,6 @@ el{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "προ R.O.C.",
-                    "R.O.C.",
-                }
-                narrow{
-                    "προ R.O.C.",
-                    "R.O.C.",
-                }
-                wide{
-                    "προ R.O.C.",
-                    "R.O.C.",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"δραστηριότητα"}

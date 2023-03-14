@@ -40,7 +40,6 @@ zu{
         ann{"isi-Obolo"}
         anp{"isi-Angika"}
         ar{"isi-Arabic"}
-        ar_001{"isi-Arabic esivamile sesimanje"}
         arn{"isi-Mapuche"}
         arp{"isi-Arapaho"}
         ars{"isi-Najdi Arabic"}
@@ -105,8 +104,6 @@ zu{
         dar{"isi-Dargwa"}
         dav{"isi-Taita"}
         de{"isi-German"}
-        de_AT{"isi-Austrian German"}
-        de_CH{"Isi-Swiss High German"}
         dgr{"isi-Dogrib"}
         dje{"isi-Zarma"}
         doi{"isi-Dogri"}
@@ -122,20 +119,12 @@ zu{
         eka{"isi-Ekajuk"}
         el{"isi-Greek"}
         en{"i-English"}
-        en_AU{"i-Australian English"}
-        en_CA{"i-Canadian English"}
-        en_GB{"i-British English"}
-        en_US{"i-American English"}
         eo{"isi-Esperanto"}
         es{"isi-Spanish"}
-        es_419{"isi-Latin American Spanish"}
-        es_ES{"isi-European Spanish"}
-        es_MX{"isi-Mexican Spanish"}
         et{"isi-Estonia"}
         eu{"isi-Basque"}
         ewo{"isi-Ewondo"}
         fa{"isi-Persian"}
-        fa_AF{"isi-Dari"}
         ff{"isi-Fulah"}
         fi{"isi-Finnish"}
         fil{"isi-Filipino"}
@@ -143,8 +132,6 @@ zu{
         fo{"isi-Faroese"}
         fon{"isi-Fon"}
         fr{"isi-French"}
-        fr_CA{"isi-Canadian French"}
-        fr_CH{"isi-Swiss French"}
         frc{"isi-Cajun French"}
         frr{"isi-Northern Frisian"}
         fur{"isi-Friulian"}
@@ -305,14 +292,12 @@ zu{
         nb{"isi-Norwegian Bokmål"}
         nd{"isi-North Ndebele"}
         nds{"isi-Low German"}
-        nds_NL{"isi-Low Saxon"}
         ne{"isi-Nepali"}
         new{"isi-Newari"}
         ng{"isi-Ndonga"}
         nia{"isi-Nias"}
         niu{"isi-Niuean"}
         nl{"isi-Dutch"}
-        nl_BE{"isi-Flemish"}
         nmg{"isi-Kwasio"}
         nn{"isi-Norwegian Nynorsk"}
         nnh{"isi-Ngiemboon"}
@@ -346,8 +331,6 @@ zu{
         prg{"isi-Prussian"}
         ps{"isi-Pashto"}
         pt{"isi-Portuguese"}
-        pt_BR{"isi-Brazillian Portuguese"}
-        pt_PT{"isi-European Portuguese"}
         qu{"isi-Quechua"}
         quc{"isi-Kʼicheʼ"}
         rap{"isi-Rapanui"}
@@ -356,7 +339,6 @@ zu{
         rm{"isi-Romansh"}
         rn{"isi-Rundi"}
         ro{"isi-Romanian"}
-        ro_MD{"isi-Moldavian"}
         rof{"isi-Rombo"}
         ru{"isi-Russian"}
         rup{"isi-Aromanian"}
@@ -378,7 +360,6 @@ zu{
         seh{"isi-Sena"}
         ses{"isi-Koyraboro Senni"}
         sg{"isi-Sango"}
-        sh{"isi-Serbo-Croatian"}
         shi{"isi-Tachelhit"}
         shn{"isi-Shan"}
         si{"isi-Sinhala"}
@@ -404,7 +385,6 @@ zu{
         suk{"isi-Sukuma"}
         sv{"isi-Swedish"}
         sw{"isiSwahili"}
-        sw_CD{"isi-Congo Swahili"}
         swb{"isi-Comorian"}
         syr{"isi-Syriac"}
         ta{"isi-Tamil"}
@@ -468,27 +448,10 @@ zu{
         yue{"isi-Cantonese"}
         zgh{"isi-Moroccan Tamazight esivamile"}
         zh{"isi-Chinese"}
-        zh_Hans{"isi-Chinese (esenziwe-lula)"}
-        zh_Hant{"isi-Chinese (Sasendulo)"}
         zu{"isiZulu"}
         zun{"isi-Zuni"}
         zxx{"akukho okuqukethwe kolimi"}
         zza{"isi-Zaza"}
-    }
-    Languages%long{
-        zh_Hant{"isi-Chinese (sasendulo)"}
-    }
-    Languages%menu{
-        yue{"isi-Chinese, Cantonese"}
-        zh{"isi-Chinese, Mandarin"}
-    }
-    Languages%short{
-        az{"isi-Azeria"}
-        en_GB{"i-UK English"}
-        en_US{"i-English (US)"}
-    }
-    Languages%variant{
-        ps{"isi-Pushto"}
     }
     Scripts{
         Adlm{"isi-Adlam"}
@@ -687,7 +650,6 @@ zu{
             iso8601{"Ikhalenda le-ISO-8601"}
             japanese{"Ikhalenda lesi-Japanese"}
             persian{"Ikhalenda lesi-Persian"}
-            roc{"Ikhalenda lesi-Minguo"}
         }
         cf{
             account{"Ifomethi yemali ye-Accounting"}
