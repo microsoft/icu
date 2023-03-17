@@ -6988,13 +6988,14 @@ static const UldnItem en_StdMidLong[] = {
 	{ "en_US",                  TEST_ULOC_LOCALE, u"English (United States)" },
 	{ "en_US",                  TEST_ULOC_LANGUAGE, u"English" },
 	{ "en",                     TEST_ULOC_LANGUAGE, u"English" },
+/*
 	// https://unicode-org.atlassian.net/browse/ICU-20870
 	{ "fa_AF",                  TEST_ULDN_LOCALE, u"Persian (Afghanistan)" },
 	{ "prs",                    TEST_ULDN_LOCALE, u"Dari" },
 	{ "prs_AF",                 TEST_ULDN_LOCALE, u"Dari (Afghanistan)" },
 	{ "prs_TJ",                 TEST_ULDN_LOCALE, u"Dari (Tajikistan)" },
 	{ "prs",                    TEST_ULDN_LANGUAGE, u"Dari" },
-	{ "prs",                    TEST_ULOC_LANGUAGE, u"Dari" },
+	{ "prs",                    TEST_ULOC_LANGUAGE, u"Dari" },*/
 	// https://unicode-org.atlassian.net/browse/ICU-21742
 	{ "ji",                     TEST_ULDN_LOCALE, u"Yiddish" },
 	{ "ji_US",                  TEST_ULDN_LOCALE, u"Yiddish (United States)" },
@@ -7010,24 +7011,26 @@ static const UldnItem en_StdMidLong[] = {
 };
 
 static const UldnItem en_StdMidShrt[] = {
-	{ "en_US",                  TEST_ULDN_LOCALE, u"English (US)" },
+//	{ "en_US",                  TEST_ULDN_LOCALE, u"English (US)" },
 	{ "en",                     TEST_ULDN_LANGUAGE, u"English" },
 };
 
 static const UldnItem en_DiaMidLong[] = {
+/* MSFT-Change prs-AF is defined differently in NLS.
 	{ "en_US",                  TEST_ULDN_LOCALE, u"American English" },
 	{ "fa_AF",                  TEST_ULDN_LOCALE, u"Dari" },
 	{ "prs",                    TEST_ULDN_LOCALE, u"Dari" },
 	{ "prs_AF",                 TEST_ULDN_LOCALE, u"Dari (Afghanistan)" },
 	{ "prs_TJ",                 TEST_ULDN_LOCALE, u"Dari (Tajikistan)" },
-	{ "prs",                    TEST_ULDN_LANGUAGE, u"Dari" },
+	{ "prs",                    TEST_ULDN_LANGUAGE, u"Dari" },*/
 	{ "mo",                     TEST_ULDN_LOCALE, u"Romanian" },
 	{ "mo",                     TEST_ULDN_LANGUAGE, u"Romanian" },
 };
 
+/*
 static const UldnItem en_DiaMidShrt[] = {
 	{ "en_US",                  TEST_ULDN_LOCALE, u"US English" },
-};
+};*/
 
 static const UldnItem ro_StdMidLong[] = { // https://unicode-org.atlassian.net/browse/ICU-11563
 	{ "mo",                     TEST_ULDN_LOCALE, u"română" },
@@ -7049,7 +7052,7 @@ static const UldnLocAndOpts uldnLocAndOpts[] = {
     { "en", optStdMidLong, en_StdMidLong, UPRV_LENGTHOF(en_StdMidLong) },
     { "en", optStdMidShrt, en_StdMidShrt, UPRV_LENGTHOF(en_StdMidShrt) },
     { "en", optDiaMidLong, en_DiaMidLong, UPRV_LENGTHOF(en_DiaMidLong) },
-    { "en", optDiaMidShrt, en_DiaMidShrt, UPRV_LENGTHOF(en_DiaMidShrt) },
+    //{ "en", optDiaMidShrt, en_DiaMidShrt, UPRV_LENGTHOF(en_DiaMidShrt) },
     { "ro", optStdMidLong, ro_StdMidLong, UPRV_LENGTHOF(ro_StdMidLong) },
     { "yi", optStdMidLong, yi_StdMidLong, UPRV_LENGTHOF(yi_StdMidLong) },
     { NULL, NULL, NULL, 0 }

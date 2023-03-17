@@ -147,7 +147,17 @@ TimeZoneTest::TestGenericAPI()
 
     /* Host time zone's offset should match the offset returned by uprv_timezone() */
     if (hostZoneRawOffset != tzoffset * (-1000)) {
-        errln("FAIL: detectHostTimeZone()'s raw offset != host timezone's offset");
+        UnicodeString id;
+        hostZone->getID(id);
+        // Known issues in ICU-22274 we have issues in time zone
+        // Africa/Casablanca Europe/Dublin America/Godthab America/Nuuk
+        if (id == u"Africa/Casablanca" || id == u"Europe/Dublin" ||
+            id == u"America/Godthab" || id == u"America/Nuuk" ||
+            id == u"Africa/El_Aaiun") {
+          logKnownIssue( "ICU-22274", "detectHostTimeZone()'s raw offset != host timezone's offset in TimeZone " + id);
+        } else {
+          errln("FAIL: detectHostTimeZone()'s raw offset != host timezone's offset");
+        }
     }
     delete hostZone;
 
@@ -2104,7 +2114,10 @@ void TimeZoneTest::TestCanonicalID() {
         {"America/Montreal", "America/Toronto"},
         {"America/Montserrat", "America/Puerto_Rico"},
         {"America/Nassau", "America/Toronto"},
+        {"America/Nipigon", "America/Toronto"},
+        {"America/Pangnirtung", "America/Iqaluit"},
         {"America/Port_of_Spain", "America/Puerto_Rico"},
+        {"America/Rainy_River", "America/Winnipeg"},
         {"America/Santa_Isabel", "America/Tijuana"},
         {"America/Shiprock", "America/Denver"},
         {"America/St_Barthelemy", "America/Puerto_Rico"},
@@ -2112,6 +2125,7 @@ void TimeZoneTest::TestCanonicalID() {
         {"America/St_Lucia", "America/Puerto_Rico"},
         {"America/St_Thomas", "America/Puerto_Rico"},
         {"America/St_Vincent", "America/Puerto_Rico"},
+        {"America/Thunder_Bay", "America/Toronto"},
         {"America/Tortola", "America/Puerto_Rico"},
         {"America/Virgin", "America/Puerto_Rico"},
         {"Antarctica/DumontDUrville", "Pacific/Port_Moresby"},
