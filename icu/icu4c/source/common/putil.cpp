@@ -2153,7 +2153,7 @@ int_getDefaultCodepage()
         }
         /* else use the default */
     }
-    sprintf(codepage,"ibm-%d", ccsid);
+    snprintf(codepage, sizeof(codepage), "ibm-%d", ccsid);
     return codepage;
 
 #elif U_PLATFORM == U_PF_OS390
@@ -2190,7 +2190,7 @@ int_getDefaultCodepage()
     // are between 3 and 19999
     if (codepageNumber > 0 && codepageNumber < 20000)
     {
-        sprintf(codepage, "windows-%ld", codepageNumber);
+        snprintf(codepage, sizeof(codepage), "windows-%ld", codepageNumber);
         return codepage;
     }
     // If the codepage number call failed then return UTF-8
