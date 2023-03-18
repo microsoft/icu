@@ -1,21 +1,16 @@
 jobs:
 #-------------------------------------------------------------------------
-- job: ICU4C_MakeDist_Clang_Ubuntu_1804
-  displayName: 'C: MakeDist Linux Clang (Ubuntu 18.04)'
+- job: ICU4C_MakeDist_Clang_Ubuntu_2204
+  displayName: 'C: MakeDist Linux Clang (Ubuntu 22.04)'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'ubuntu-18.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       lfs: true
       fetchDepth: 1
-    # This is to work-around issue: https://github.com/actions/virtual-environments/issues/3376
-    # Once the Ubuntu 18.04 build bot image is fixed, we can remove this work-around.
-    - script: |
-        sudo apt remove libgcc-11-dev gcc-11
-      displayName: Remove GCC 11 (work-around)
     - task: PowerShell@2
       displayName: 'Set ICU Version'
       inputs:
@@ -51,13 +46,13 @@ jobs:
       displayName: 'Build and Test MakeDist using source tarball'
 
 #-------------------------------------------------------------------------
-- job: ICU4C_Clang_Ubuntu_1604_WarningsAsErrors
-  displayName: 'C: Linux Clang WarningsAsErrors (Ubuntu 16.04)'
+- job: ICU4C_Clang_Ubuntu_2204_WarningsAsErrors
+  displayName: 'C: Linux Clang WarningsAsErrors (Ubuntu 22.04)'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       lfs: true
@@ -76,13 +71,13 @@ jobs:
         CXX: clang++
 
 #-------------------------------------------------------------------------
-- job: ICU4C_Clang_Ubuntu_TestDataFilter_1604
-  displayName: 'C: Linux Clang TestDataFilter (Ubuntu 16.04)'
+- job: ICU4C_Clang_Ubuntu_TestDataFilter_2204
+  displayName: 'C: Linux Clang TestDataFilter (Ubuntu 22.04)'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'ubuntu-16.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       lfs: true
@@ -105,22 +100,17 @@ jobs:
         CXX: clang++
 
 #-------------------------------------------------------------------------
-- job: ICU4C_Clang_Cpp14_Debug_Ubuntu_1804
-  displayName: 'C: Linux Clang C++14 Debug (Ubuntu 18.04)'
+- job: ICU4C_Clang_Cpp14_Debug_Ubuntu_2204
+  displayName: 'C: Linux Clang C++14 Debug (Ubuntu 22.04)'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'ubuntu-18.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       lfs: true
       fetchDepth: 1
-    # This is to work-around issue: https://github.com/actions/virtual-environments/issues/3376
-    # Once the Ubuntu 18.04 build bot image is fixed, we can remove this work-around.
-    - script: |
-        sudo apt remove libgcc-11-dev gcc-11
-      displayName: Remove GCC 11 (work-around)
     - task: PowerShell@2
       displayName: 'Set ICU Version'
       inputs:
@@ -135,11 +125,11 @@ jobs:
         CXX: clang++
 
 #-------------------------------------------------------------------------
-- job: ICU4C_GCC_Ubuntu_2004
-  displayName: 'C: Linux GCC (Ubuntu 20.04)'
+- job: ICU4C_GCC_Ubuntu_2204
+  displayName: 'C: Linux GCC (Ubuntu 22.04)'
   timeoutInMinutes: 30
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       lfs: true
@@ -152,11 +142,11 @@ jobs:
         CXX: g++
 
 #-------------------------------------------------------------------------
-- job: ICU4C_Clang_Ubuntu_2004_LANG
-  displayName: 'C: Linux Clang (Ubuntu 20.04) - LANG has extension tags'
+- job: ICU4C_Clang_Ubuntu_2204_LANG
+  displayName: 'C: Linux Clang (Ubuntu 22.04) - LANG has extension tags'
   timeoutInMinutes: 30
   pool:
-    vmImage: 'ubuntu-20.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       lfs: true
@@ -170,15 +160,15 @@ jobs:
         LANG: "en_US@calendar=gregorian;hours=h12"
 
 #-------------------------------------------------------------------------
-# VS 2019 Builds
+# VS 2022 Builds
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x64_Release_Distrelease
-  displayName: 'C: MSVC 64-bit Release (VS 2019) + Distrelease'
+  displayName: 'C: MSVC 64-bit Release (VS 2022) + Distrelease'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
     demands: 
       - msbuild
       - visualstudio
@@ -219,12 +209,12 @@ jobs:
 
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x86_Release_Distrelease
-  displayName: 'C: MSVC 32-bit Release (VS 2019) + Distrelease'
+  displayName: 'C: MSVC 32-bit Release (VS 2022) + Distrelease'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
     demands: 
       - msbuild
       - visualstudio
@@ -260,12 +250,12 @@ jobs:
 
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x64_ARM32_ARM64_Release_Distrelease
-  displayName: 'C: MSVC x64 ARM32 ARM64 Release (VS 2019) + Distrelease ARM64'
+  displayName: 'C: MSVC x64 ARM32 ARM64 Release (VS 2022) + Distrelease ARM64'
   timeoutInMinutes: 60
   workspace:
       clean: all
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
     demands: 
       - msbuild
       - visualstudio
@@ -313,12 +303,12 @@ jobs:
 
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x64_Release_TestDataFilter
-  displayName: 'C: MSVC 64-bit Release TestDataFilter (VS 2019)'
+  displayName: 'C: MSVC 64-bit Release TestDataFilter (VS 2022)'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
     demands: 
       - msbuild
       - visualstudio
@@ -347,12 +337,12 @@ jobs:
 
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x86_Debug
-  displayName: 'C: MSVC 32-bit Debug (VS 2019)'
+  displayName: 'C: MSVC 32-bit Debug (VS 2022)'
   timeoutInMinutes: 60
   workspace:
       clean: all
   pool:
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
     demands: 
       - msbuild
       - visualstudio
@@ -386,7 +376,7 @@ jobs:
   workspace:
       clean: all
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'windows-2022'
     demands:
       - Cmd
   steps:
@@ -425,12 +415,12 @@ jobs:
 
 #-------------------------------------------------------------------------
 - job: ICU4C_Clang_MacOSX_WarningsAsErrors
-  displayName: 'C: macOSX Clang WarningsAsErrors (Mojave 10.14)'
+  displayName: 'C: macOSX Clang WarningsAsErrors'
   timeoutInMinutes: 30
   workspace:
       clean: all
   pool:
-    vmImage: 'macOS-10.14'
+    vmImage: 'macOS-latest'
   steps:
     - checkout: self
       lfs: true
@@ -444,11 +434,11 @@ jobs:
 
 #-------------------------------------------------------------------------
 
-- job: ICU4C_Clang_Valgrind_Ubuntu_1604
-  displayName: 'C: Linux Clang Valgrind (Ubuntu 16.04)'
+- job: ICU4C_Clang_Valgrind_Ubuntu_2204
+  displayName: 'C: Linux Clang Valgrind (Ubuntu 22.04)'
   timeoutInMinutes: 60
   pool:
-    vmImage: 'Ubuntu 16.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       lfs: true
