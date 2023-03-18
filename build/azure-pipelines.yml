@@ -250,12 +250,12 @@ jobs:
 
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x64_ARM32_ARM64_Release_Distrelease
-  displayName: 'C: MSVC x64 ARM32 ARM64 Release (VS 2022) + Distrelease ARM64'
+  displayName: 'C: MSVC x64 ARM32 ARM64 Release (VS 2019) + Distrelease ARM64'
   timeoutInMinutes: 60
   workspace:
       clean: all
   pool:
-    vmImage: 'windows-2022'
+    vmImage: 'windows-2019'
     demands: 
       - msbuild
       - visualstudio
@@ -434,19 +434,19 @@ jobs:
 
 #-------------------------------------------------------------------------
 
-- job: ICU4C_Clang_Valgrind_Ubuntu_2204
-  displayName: 'C: Linux Clang Valgrind (Ubuntu 22.04)'
-  timeoutInMinutes: 60
+- job: ICU4C_Clang_Valgrind_Ubuntu_2004
+  displayName: 'C: Linux Clang Valgrind (Ubuntu 20.04)'
+  timeoutInMinutes: 75
   pool:
-    vmImage: 'ubuntu-22.04'
+    vmImage: 'ubuntu-20.04'
   steps:
     - checkout: self
       lfs: true
       fetchDepth: 10
     - script: |
         set -ex
-        sudo apt -y update
-        sudo apt install -y valgrind
+        sudo apt-get -y update
+        sudo apt-get install -y valgrind
       displayName: 'Install valgrind'
       timeoutInMinutes: 5
     - script: |
@@ -459,7 +459,7 @@ jobs:
     - script: |
         cd icu/icu4c/source/test/intltest && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./intltest
       displayName: 'Valgrind intltest'
-      timeoutInMinutes: 45
+      timeoutInMinutes: 60
     - script: |
         cd icu/icu4c/source/test/cintltst && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./cintltst
       displayName: 'Valgrind cintltst'
