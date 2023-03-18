@@ -26,7 +26,7 @@
 #include "filestrm.h"
 #include <stdbool.h>
 #include <stdlib.h>
-#include <stdio.h>  // for sprintf()
+#include <stdio.h>  // for snprintf()
 
 #define RESTEST_HEAP_CHECK 0
 
