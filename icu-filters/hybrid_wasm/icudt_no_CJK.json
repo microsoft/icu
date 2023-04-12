@@ -222,7 +222,8 @@
         "brkitr_dictionaries": "exclude",
         "brkitr_rules": {
             "whitelist": ["char"]
-        }
+        },
+        "coll_tree": "exclude"
     },
     "resourceFilters": [
         {
@@ -259,14 +260,6 @@
                 "+/calendar/default",
                 "+/calendar/gregorian",
                 "+/calendar/generic"
-            ]
-        },
-        {
-            "categories": ["coll_tree"],
-            "rules": [
-                "-/*/*",
-                "+/collations/default",
-                "-/UCARules"
             ]
         },
         {

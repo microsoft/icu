@@ -44,7 +44,8 @@
         "brkitr_dictionaries": "exclude",
         "brkitr_rules": {
             "whitelist": ["char"]
-        }
+        },
+        "coll_tree": "exclude"
     },
     "resourceFilters": [
         {
@@ -119,15 +120,6 @@
                 "+/calendar/gregorian",
                 "+/calendar/generic",
                 "+/calendar/roc"
-            ]
-        },
-        {
-            "categories": ["coll_tree"],
-            "rules": [
-                "-/*/*",
-                "+/collations/default",
-                "+/collations/private-kana",
-                "-/UCARules"
             ]
         },
         {

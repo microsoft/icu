@@ -229,7 +229,8 @@
         "brkitr_dictionaries": "exclude",
         "brkitr_rules": {
             "whitelist": ["char"]
-        }
+        },
+        "coll_tree": "exclude"
     },
     "resourceFilters": [
         {
@@ -279,15 +280,6 @@
                 "+/calendar/gregorian",
                 "+/calendar/generic",
                 "+/calendar/japanese"
-            ]
-        },
-        {
-            "categories": ["coll_tree"],
-            "rules": [
-                "-/*/*",
-                "+/collations/default",
-                "+/collations/private-kana",
-                "-/UCARules"
             ]
         },
         {
