@@ -14,6 +14,8 @@
 *   created by: Markus W. Scherer
 */
 
+#include <cstdlib>
+
 #include "unicode/utypes.h"
 #include "unicode/putil.h"
 #include "charstr.h"
@@ -141,6 +143,38 @@ CharString &CharString::append(const char *s, int32_t sLength, UErrorCode &error
     return *this;
 }
 
+CharString &CharString::appendNumber(int32_t number, UErrorCode &status) {
+    if (number < 0) {
+        this->append('-', status);
+        if (U_FAILURE(status)) {
+            return *this;
+        }
+    }
+
+    if (number == 0) {
+        this->append('0', status);
+        return *this;
+    }
+
+    int32_t numLen = 0;
+    while (number != 0) {
+        int32_t residue = number % 10;
+        number /= 10;
+        this->append(std::abs(residue) + '0', status);
+        numLen++;
+        if (U_FAILURE(status)) {
+            return *this;
+        }
+    }
+
+    int32_t start = this->length() - numLen, end = this->length() - 1;
+    while(start < end) {
+        std::swap(this->data()[start++], this->data()[end--]);
+    }
+
+    return *this;
+}
+
 char *CharString::getAppendBuffer(int32_t minCapacity,
                                   int32_t desiredCapacityHint,
                                   int32_t &resultCapacity,
@@ -186,7 +220,7 @@ UBool CharString::ensureCapacity(int32_t capacity,
                                  int32_t desiredCapacityHint,
                                  UErrorCode &errorCode) {
     if(U_FAILURE(errorCode)) {
-        return FALSE;
+        return false;
     }
     if(capacity>buffer.getCapacity()) {
         if(desiredCapacityHint==0) {
@@ -196,10 +230,10 @@ UBool CharString::ensureCapacity(int32_t capacity,
             buffer.resize(capacity, len+1)==NULL
         ) {
             errorCode=U_MEMORY_ALLOCATION_ERROR;
-            return FALSE;
+            return false;
         }
     }
-    return TRUE;
+    return true;
 }
 
 CharString &CharString::appendPathPart(StringPiece s, UErrorCode &errorCode) {

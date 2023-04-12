@@ -30,6 +30,8 @@
 
 #include <stdio.h>
 #include <sys/stat.h>
+#include <fstream>
+#include <time.h>
 #include "unicode/utypes.h"
 
 #ifndef U_TOOLUTIL_IMPLEMENTATION
@@ -67,7 +69,6 @@
 #include "cmemory.h"
 #include "cstring.h"
 #include "toolutil.h"
-#include "unicode/ucal.h"
 
 U_NAMESPACE_BEGIN
 
@@ -86,19 +87,11 @@ U_NAMESPACE_END
 static int32_t currentYear = -1;
 
 U_CAPI int32_t U_EXPORT2 getCurrentYear() {
-#if !UCONFIG_NO_FORMATTING
-    UErrorCode status=U_ZERO_ERROR;    
-    UCalendar *cal = NULL;
-
     if(currentYear == -1) {
-        cal = ucal_open(NULL, -1, NULL, UCAL_TRADITIONAL, &status);
-        ucal_setMillis(cal, ucal_getNow(), &status);
-        currentYear = ucal_get(cal, UCAL_YEAR, &status);
-        ucal_close(cal);
+        time_t now = time(nullptr);
+        tm *fields = gmtime(&now);
+        currentYear = 1900 + fields->tm_year;
     }
-#else
-    /* No formatting- no way to set the current year. */
-#endif
     return currentYear;
 }
 
@@ -211,12 +204,44 @@ U_CAPI UBool U_EXPORT2
 uprv_fileExists(const char *file) {
   struct stat stat_buf;
   if (stat(file, &stat_buf) == 0) {
-    return TRUE;
+    return true;
   } else {
-    return FALSE;
+    return false;
   }
 }
 #endif
+
+U_CAPI int32_t U_EXPORT2
+uprv_compareGoldenFiles(
+        const char* buffer, int32_t bufferLen,
+        const char* goldenFilePath,
+        bool overwrite) {
+
+    if (overwrite) {
+        std::ofstream ofs;
+        ofs.open(goldenFilePath);
+        ofs.write(buffer, bufferLen);
+        ofs.close();
+        return -1;
+    }
+
+    std::ifstream ifs(goldenFilePath, std::ifstream::in);
+    int32_t pos = 0;
+    char c;
+    while (ifs.get(c) && pos < bufferLen) {
+        if (c != buffer[pos]) {
+            // Files differ at this position
+            break;
+        }
+        pos++;
+    }
+    if (pos == bufferLen && ifs.eof()) {
+        // Files are same lengths
+        pos = -1;
+    }
+    ifs.close();
+    return pos;
+}
 
 /*U_CAPI UDate U_EXPORT2
 uprv_getModificationDate(const char *pathname, UErrorCode *status)
@@ -326,7 +351,7 @@ utm_hasCapacity(UToolMemory *mem, int32_t capacity) {
         mem->capacity=newCapacity;
     }
 
-    return TRUE;
+    return true;
 }
 
 U_CAPI void * U_EXPORT2

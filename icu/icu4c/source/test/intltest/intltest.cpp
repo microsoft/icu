@@ -39,6 +39,7 @@
 #include "cmemory.h"
 #include "cstring.h"
 #include "itmajor.h"
+#include "lstmbe.h"
 #include "mutex.h"
 #include "putilimp.h" // for uprv_getRawUTCtime()
 #include "uassert.h"
@@ -58,7 +59,7 @@ static char* _testDataPath=NULL;
 // Static list of errors found
 static UnicodeString errorList;
 static void *knownList = NULL; // known issues
-static UBool noKnownIssues = FALSE; // if TRUE, don't emit known issues
+static UBool noKnownIssues = false; // if true, don't emit known issues
 
 //-----------------------------------------------------------------------------
 //convenience classes to ease porting code that uses the Java
@@ -77,7 +78,7 @@ operator+(const UnicodeString& left,
     char buffer[64];    // nos changed from 10 to 64
     char danger = 'p';  // guard against overrunning the buffer (rtg)
 
-    sprintf(buffer, "%ld", num);
+    snprintf(buffer, sizeof(buffer), "%ld", num);
     assert(danger == 'p');
 
     return left + buffer;
@@ -90,7 +91,7 @@ operator+(const UnicodeString& left,
     char buffer[64];    // nos changed from 10 to 64
     char danger = 'p';  // guard against overrunning the buffer (rtg)
 
-    sprintf(buffer, "%lu", num);
+    snprintf(buffer, sizeof(buffer), "%lu", num);
     assert(danger == 'p');
 
     return left + buffer;
@@ -103,9 +104,9 @@ Int64ToUnicodeString(int64_t num)
     char danger = 'p';  // guard against overrunning the buffer (rtg)
 
 #if defined(_MSC_VER)
-    sprintf(buffer, "%I64d", num);
+    snprintf(buffer, sizeof(buffer), "%I64d", num);
 #else
-    sprintf(buffer, "%lld", (long long)num);
+    snprintf(buffer, sizeof(buffer), "%lld", (long long)num);
 #endif
     assert(danger == 'p');
 
@@ -118,7 +119,7 @@ DoubleToUnicodeString(double num)
     char buffer[64];    // nos changed from 10 to 64
     char danger = 'p';  // guard against overrunning the buffer (rtg)
 
-    sprintf(buffer, "%1.14e", num);
+    snprintf(buffer, sizeof(buffer), "%1.14e", num);
     assert(danger == 'p');
 
     return buffer;
@@ -136,7 +137,7 @@ operator+(const UnicodeString& left,
     //  53*log(2)/log(10) = 15.95
     // so there is no need to show more than 16 digits. [alan]
 
-    sprintf(buffer, "%.17g", num);
+    snprintf(buffer, sizeof(buffer), "%.17g", num);
     assert(danger == 'p');
 
     return left + buffer;
@@ -237,7 +238,7 @@ UnicodeString toString(int32_t n) {
 
 
 UnicodeString toString(UBool b) {
-  return b ? UnicodeString("TRUE"):UnicodeString("FALSE");
+  return b ? UnicodeString("true"):UnicodeString("false");
 }
 
 UnicodeString toString(const UnicodeSet& uniset, UErrorCode& status) {
@@ -568,15 +569,15 @@ IntlTest::IntlTest()
 {
     caller = NULL;
     testPath = NULL;
-    LL_linestart = TRUE;
+    LL_linestart = true;
     errorCount = 0;
     dataErrorCount = 0;
-    verbose = FALSE;
-    no_time = FALSE;
-    no_err_msg = FALSE;
-    warn_on_missing_data = FALSE;
-    quick = FALSE;
-    leaks = FALSE;
+    verbose = false;
+    no_time = false;
+    no_err_msg = false;
+    warn_on_missing_data = false;
+    quick = false;
+    leaks = false;
     threadCount = 12;
     testoutfp = stdout;
     LL_indentlevel = indentLevel_offset;
@@ -712,7 +713,7 @@ UBool IntlTest::runTest( char* name, char* par, char *baseName )
 
     }else if (strcmp( name, "LIST" ) == 0) {
         this->usage();
-        rval = TRUE;
+        rval = true;
 
     }else{
       rval = runTestLoop( name, par, baseName );
@@ -747,12 +748,12 @@ UBool IntlTest::runTestLoop( char* testname, char* par, char *baseName )
     const char*   name;
     UBool  run_this_test;
     int32_t    lastErrorCount;
-    UBool  rval = FALSE;
+    UBool  rval = false;
     UBool   lastTestFailed;
 
     if(baseName == NULL) {
       printf("ERROR: baseName can't be null.\n");
-      return FALSE;
+      return false;
     } else {
       if ((char *)this->basePath != baseName) {
         strcpy(this->basePath, baseName);
@@ -764,14 +765,14 @@ UBool IntlTest::runTestLoop( char* testname, char* par, char *baseName )
     IntlTest* saveTest = gTest;
     gTest = this;
     do {
-        this->runIndexedTest( index, FALSE, name, par );
+        this->runIndexedTest( index, false, name, par );
         if (strcmp(name,"skip") == 0) {
-            run_this_test = FALSE;
+            run_this_test = false;
         } else {
             if (!name || (name[0] == 0))
                 break;
             if (!testname) {
-                run_this_test = TRUE;
+                run_this_test = true;
             }else{
                 run_this_test = (UBool) (strcmp( name, testname ) == 0);
             }
@@ -780,21 +781,21 @@ UBool IntlTest::runTestLoop( char* testname, char* par, char *baseName )
             lastErrorCount = errorCount;
             execCount++;
             char msg[256];
-            sprintf(msg, "%s {", name);
-            LL_message(msg, TRUE);
+            snprintf(msg, sizeof(msg), "%s {", name);
+            LL_message(msg, true);
             UDate timeStart = uprv_getRawUTCtime();
             strcpy(saveBaseLoc,name);
             strcat(saveBaseLoc,"/");
 
             strcpy(currName, name); // set
-            this->runIndexedTest( index, TRUE, name, par );
+            this->runIndexedTest( index, true, name, par );
             currName[0]=0; // reset
 
             UDate timeStop = uprv_getRawUTCtime();
-            rval = TRUE; // at least one test has been called
+            rval = true; // at least one test has been called
             char secs[256];
             if(!no_time) {
-              sprintf(secs, "%f", (timeStop-timeStart)/1000.0);
+              snprintf(secs, sizeof(secs), "%f", (timeStop-timeStart)/1000.0);
             } else {
               secs[0]=0;
             }
@@ -809,11 +810,11 @@ UBool IntlTest::runTestLoop( char* testname, char* par, char *baseName )
             saveBaseLoc[0]=0; /* reset path */
             
             if (lastErrorCount == errorCount) {
-                sprintf( msg, "   } OK:   %s ", name );
+                snprintf( msg, sizeof(msg),  "   } OK:   %s ", name );
                 if(!no_time) str_timeDelta(msg+strlen(msg),timeStop-timeStart);
-                lastTestFailed = FALSE;
+                lastTestFailed = false;
             }else{
-                sprintf(msg,  "   } ERRORS (%li) in %s", (long)(errorCount-lastErrorCount), name);
+                snprintf(msg, sizeof(msg), "   } ERRORS (%li) in %s", (long)(errorCount-lastErrorCount), name);
                 if(!no_time) str_timeDelta(msg+strlen(msg),timeStop-timeStart);
 
                 for(int i=0;i<LL_indentlevel;i++) {
@@ -821,15 +822,15 @@ UBool IntlTest::runTestLoop( char* testname, char* par, char *baseName )
                 }
                 errorList += name;
                 errorList += "\n";
-                lastTestFailed = TRUE;
+                lastTestFailed = true;
             }
             LL_indentlevel -= 3;
             if (lastTestFailed) {
-                LL_message( "", TRUE);
+                LL_message( "", true);
             }
-            LL_message( msg, TRUE);
+            LL_message( msg, true);
             if (lastTestFailed) {
-                LL_message( "", TRUE);
+                LL_message( "", true);
             }
             LL_indentlevel += 3;
         }
@@ -849,7 +850,7 @@ UBool IntlTest::runTestLoop( char* testname, char* par, char *baseName )
 void IntlTest::log( const UnicodeString &message )
 {
     if( verbose ) {
-        LL_message( message, FALSE );
+        LL_message( message, false );
     }
 }
 
@@ -860,14 +861,14 @@ void IntlTest::log( const UnicodeString &message )
 void IntlTest::logln( const UnicodeString &message )
 {
     if( verbose ) {
-        LL_message( message, TRUE );
+        LL_message( message, true );
     }
 }
 
 void IntlTest::logln( void )
 {
     if( verbose ) {
-        LL_message( "", TRUE );
+        LL_message( "", true );
     }
 }
 
@@ -876,7 +877,7 @@ void IntlTest::logln( void )
 */
 void IntlTest::info( const UnicodeString &message )
 {
-  LL_message( message, FALSE );
+  LL_message( message, false );
 }
 
 /**
@@ -885,12 +886,12 @@ void IntlTest::info( const UnicodeString &message )
 */
 void IntlTest::infoln( const UnicodeString &message )
 {
-  LL_message( message, TRUE );
+  LL_message( message, true );
 }
 
 void IntlTest::infoln( void )
 {
-  LL_message( "", TRUE );
+  LL_message( "", true );
 }
 
 int32_t IntlTest::IncErrorCount( void )
@@ -915,13 +916,13 @@ void IntlTest::err()
 void IntlTest::err( const UnicodeString &message )
 {
     IncErrorCount();
-    if (!no_err_msg) LL_message( message, FALSE );
+    if (!no_err_msg) LL_message( message, false );
 }
 
 void IntlTest::errln( const UnicodeString &message )
 {
     IncErrorCount();
-    if (!no_err_msg) LL_message( message, TRUE );
+    if (!no_err_msg) LL_message( message, true );
 }
 
 void IntlTest::dataerr( const UnicodeString &message )
@@ -932,7 +933,7 @@ void IntlTest::dataerr( const UnicodeString &message )
         IncErrorCount();
     }
 
-    if (!no_err_msg) LL_message( message, FALSE );
+    if (!no_err_msg) LL_message( message, false );
 }
 
 void IntlTest::dataerrln( const UnicodeString &message )
@@ -948,9 +949,9 @@ void IntlTest::dataerrln( const UnicodeString &message )
 
     if (!no_err_msg) {
       if ( errCount == 1) {
-          LL_message( msg + " - (Are you missing data?)", TRUE ); // only show this message the first time
+          LL_message( msg + " - (Are you missing data?)", true ); // only show this message the first time
       } else {
-          LL_message( msg , TRUE );
+          LL_message( msg , true );
       }
     }
 }
@@ -963,15 +964,15 @@ void IntlTest::errcheckln(UErrorCode status, const UnicodeString &message ) {
     }
 }
 
-/* convenience functions that include sprintf formatting */
+/* convenience functions that include snprintf formatting */
 void IntlTest::log(const char *fmt, ...)
 {
     char buffer[4000];
     va_list ap;
 
     va_start(ap, fmt);
-    /* sprintf it just to make sure that the information is valid */
-    vsprintf(buffer, fmt, ap);
+    /* snprintf it just to make sure that the information is valid */
+    vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     if( verbose ) {
         log(UnicodeString(buffer, (const char *)NULL));
@@ -984,8 +985,8 @@ void IntlTest::logln(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    /* sprintf it just to make sure that the information is valid */
-    vsprintf(buffer, fmt, ap);
+    /* snprintf it just to make sure that the information is valid */
+    vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     if( verbose ) {
         logln(UnicodeString(buffer, (const char *)NULL));
@@ -998,8 +999,8 @@ UBool IntlTest::logKnownIssue(const char *ticket, const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    /* sprintf it just to make sure that the information is valid */
-    vsprintf(buffer, fmt, ap);
+    /* snprintf it just to make sure that the information is valid */
+    vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     return logKnownIssue(ticket, UnicodeString(buffer, (const char *)NULL));
 }
@@ -1009,13 +1010,13 @@ UBool IntlTest::logKnownIssue(const char *ticket) {
 }
 
 UBool IntlTest::logKnownIssue(const char *ticket, const UnicodeString &msg) {
-  if(noKnownIssues) return FALSE;
+  if(noKnownIssues) return false;
 
   char fullpath[2048];
   strcpy(fullpath, basePath);
   strcat(fullpath, currName);
   UnicodeString msg2 = msg;
-  UBool firstForTicket = TRUE, firstForWhere = TRUE;
+  UBool firstForTicket = true, firstForWhere = true;
   knownList = udbg_knownIssue_openU(knownList, ticket, fullpath, msg2.getTerminatedBuffer(), &firstForTicket, &firstForWhere);
 
   msg2 = UNICODE_STRING_SIMPLE("(Known issue ") +
@@ -1026,18 +1027,18 @@ UBool IntlTest::logKnownIssue(const char *ticket, const UnicodeString &msg) {
     logln(msg2);
   }
 
-  return TRUE;
+  return true;
 }
 
-/* convenience functions that include sprintf formatting */
+/* convenience functions that include snprintf formatting */
 void IntlTest::info(const char *fmt, ...)
 {
     char buffer[4000];
     va_list ap;
 
     va_start(ap, fmt);
-    /* sprintf it just to make sure that the information is valid */
-    vsprintf(buffer, fmt, ap);
+    /* snprintf it just to make sure that the information is valid */
+    vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     info(UnicodeString(buffer, (const char *)NULL));
 }
@@ -1048,8 +1049,8 @@ void IntlTest::infoln(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    /* sprintf it just to make sure that the information is valid */
-    vsprintf(buffer, fmt, ap);
+    /* snprintf it just to make sure that the information is valid */
+    vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     infoln(UnicodeString(buffer, (const char *)NULL));
 }
@@ -1060,7 +1061,7 @@ void IntlTest::err(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    vsprintf(buffer, fmt, ap);
+    vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     err(UnicodeString(buffer, (const char *)NULL));
 }
@@ -1071,7 +1072,7 @@ void IntlTest::errln(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    vsprintf(buffer, fmt, ap);
+    vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     errln(UnicodeString(buffer, (const char *)NULL));
 }
@@ -1082,7 +1083,7 @@ void IntlTest::dataerrln(const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    vsprintf(buffer, fmt, ap);
+    vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     dataerrln(UnicodeString(buffer, (const char *)NULL));
 }
@@ -1093,7 +1094,7 @@ void IntlTest::errcheckln(UErrorCode status, const char *fmt, ...)
     va_list ap;
 
     va_start(ap, fmt);
-    vsprintf(buffer, fmt, ap);
+    vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     
     if (status == U_FILE_ACCESS_ERROR || status == U_MISSING_RESOURCE_ERROR) {
@@ -1105,7 +1106,7 @@ void IntlTest::errcheckln(UErrorCode status, const char *fmt, ...)
 
 void IntlTest::printErrors()
 {
-     IntlTest::LL_message(errorList, TRUE);
+     IntlTest::LL_message(errorList, true);
 }
 
 UBool IntlTest::printKnownIssues()
@@ -1113,9 +1114,9 @@ UBool IntlTest::printKnownIssues()
   if(knownList != NULL) {
     udbg_knownIssue_print(knownList);
     udbg_knownIssue_close(knownList);
-    return TRUE;
+    return true;
   } else {
-    return FALSE;
+    return false;
   }
 }
 
@@ -1145,7 +1146,7 @@ void IntlTest::LL_message( UnicodeString message, UBool newline )
         32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32
     };
     U_ASSERT(1 + LL_indentlevel <= UPRV_LENGTHOF(indentUChars));
-    UnicodeString indent(FALSE, indentUChars, 1 + LL_indentlevel);
+    UnicodeString indent(false, indentUChars, 1 + LL_indentlevel);
 
     char buffer[30000];
     int32_t length;
@@ -1181,14 +1182,14 @@ void IntlTest::LL_message( UnicodeString message, UBool newline )
 */
 void IntlTest::usage( void )
 {
-    UBool save_verbose = setVerbose( TRUE );
+    UBool save_verbose = setVerbose( true );
     logln("Test names:");
     logln("-----------");
 
     int32_t index = 0;
     const char* name = NULL;
     do{
-        this->runIndexedTest( index, FALSE, name );
+        this->runIndexedTest( index, false, name );
         if (!name) break;
         logln(name);
         index++;
@@ -1223,19 +1224,19 @@ U_CAPI void unistr_printLengths();
 int
 main(int argc, char* argv[])
 {
-    UBool syntax = FALSE;
-    UBool all = FALSE;
-    UBool verbose = FALSE;
-    UBool no_err_msg = FALSE;
-    UBool no_time = FALSE;
-    UBool quick = TRUE;
-    UBool name = FALSE;
-    UBool leaks = FALSE;
-    UBool utf8 = FALSE;
+    UBool syntax = false;
+    UBool all = false;
+    UBool verbose = false;
+    UBool no_err_msg = false;
+    UBool no_time = false;
+    UBool quick = true;
+    UBool name = false;
+    UBool leaks = false;
+    UBool utf8 = false;
     const char *summary_file = NULL;
-    UBool warnOnMissingData = FALSE;
-    UBool writeGoldenData = FALSE;
-    UBool defaultDataFound = FALSE;
+    UBool warnOnMissingData = false;
+    UBool writeGoldenData = false;
+    UBool defaultDataFound = false;
     int32_t threadCount = 12;
     UErrorCode errorCode = U_ZERO_ERROR;
     UConverter *cnv = NULL;
@@ -1254,43 +1255,43 @@ main(int argc, char* argv[])
             const char* str = argv[i] + 1;
             if (strcmp("verbose", str) == 0 ||
                 strcmp("v", str) == 0)
-                verbose = TRUE;
+                verbose = true;
             else if (strcmp("noerrormsg", str) == 0 ||
                      strcmp("n", str) == 0)
-                no_err_msg = TRUE;
+                no_err_msg = true;
             else if (strcmp("exhaustive", str) == 0 ||
                      strcmp("e", str) == 0)
-                quick = FALSE;
+                quick = false;
             else if (strcmp("all", str) == 0 ||
                      strcmp("a", str) == 0)
-                all = TRUE;
+                all = true;
             else if (strcmp("utf-8", str) == 0 ||
                      strcmp("u", str) == 0)
-                utf8 = TRUE;
+                utf8 = true;
             else if (strcmp("noknownissues", str) == 0 ||
                      strcmp("K", str) == 0)
-                noKnownIssues = TRUE;
+                noKnownIssues = true;
             else if (strcmp("leaks", str) == 0 ||
                      strcmp("l", str) == 0)
-                leaks = TRUE;
+                leaks = true;
             else if (strcmp("notime", str) == 0 ||
                      strcmp("T", str) == 0)
-                no_time = TRUE;
+                no_time = true;
             else if (strcmp("goldens", str) == 0 ||
                      strcmp("G", str) == 0)
-                writeGoldenData = TRUE;
+                writeGoldenData = true;
             else if (strncmp("E", str, 1) == 0)
                 summary_file = str+1;
             else if (strcmp("x", str)==0) {
               if(++i>=argc) {
                 printf("* Error: '-x' option requires an argument. usage: '-x outfile.xml'.\n");
-                syntax = TRUE;
+                syntax = true;
               }
               if(ctest_xml_setFileName(argv[i])) { /* set the name */
                 return 1; /* error */
               }
             } else if (strcmp("w", str) == 0) {
-              warnOnMissingData = TRUE;
+              warnOnMissingData = true;
               warnOrErr = "WARNING";
             }
             else if (strncmp("threads:", str, 8) == 0) {
@@ -1303,17 +1304,17 @@ main(int argc, char* argv[])
                 nProps++;
             }
             else {
-                syntax = TRUE;
+                syntax = true;
             }
         }else{
-            name = TRUE;
+            name = true;
         }
     }
 
     if (!all && !name) {
-        all = TRUE;
+        all = true;
     } else if (all && name) {
-        syntax = TRUE;
+        syntax = true;
     }
 
     if (syntax) {
@@ -1322,7 +1323,7 @@ main(int argc, char* argv[])
                 "### IntlTest [-option1 -option2 ...] [testname1 testname2 ...] \n"
                 "### \n"
                 "### Options are: verbose (v), all (a), noerrormsg (n), \n"
-                "### exhaustive (e), leaks (l), -x xmlfile.xml, prop:<propery>=<value>, \n"
+                "### exhaustive (e), leaks (l), -x xmlfile.xml, prop:<property>=<value>, \n"
                 "### notime (T), \n"
                 "### threads:<threadCount>\n"
                 "###     (The default thread count is 12.),\n"
@@ -1411,10 +1412,10 @@ main(int argc, char* argv[])
     if (U_FAILURE(errorCode)) {
         fprintf(stderr,
             "#### Note:  ICU Init without build-specific setDataDirectory() failed.\n");
-        defaultDataFound = FALSE;
+        defaultDataFound = false;
     }
     else {
-        defaultDataFound = TRUE;
+        defaultDataFound = true;
     }
     u_cleanup();
     if(utf8) {
@@ -1505,7 +1506,7 @@ main(int argc, char* argv[])
                 fprintf(stdout, "\n=== Handling test: %s: ===\n", name);
 
                 char baseName[1024];
-                sprintf(baseName, "/%s/", name);
+                snprintf(baseName, sizeof(baseName), "/%s/", name);
 
                 char* parameter = strchr( name, '@' );
                 if (parameter) {
@@ -1605,7 +1606,7 @@ main(int argc, char* argv[])
 }
 
 const char* IntlTest::loadTestData(UErrorCode& err){
-    if( _testDataPath == NULL){
+    if ( _testDataPath == NULL){
         const char*      directory=NULL;
         UResourceBundle* test =NULL;
         char* tdpath=NULL;
@@ -1621,6 +1622,11 @@ const char* IntlTest::loadTestData(UErrorCode& err){
 
         tdpath = (char*) malloc(sizeof(char) *(( strlen(directory) * strlen(tdrelativepath)) + 100));
 
+        if (tdpath == NULL) {
+            err = U_MEMORY_ALLOCATION_ERROR;
+            it_dataerrln((UnicodeString) "Could not allocate memory for _testDataPath " + u_errorName(err));
+            return "";
+        }
 
         /* u_getDataDirectory shoul return \source\data ... set the
          * directory to ..\source\data\..\test\testdata\out\testdata
@@ -1631,7 +1637,7 @@ const char* IntlTest::loadTestData(UErrorCode& err){
 
         test=ures_open(tdpath, "testtypes", &err);
 
-        if(U_FAILURE(err)){
+        if (U_FAILURE(err)) {
             err = U_FILE_ACCESS_ERROR;
             it_dataerrln((UnicodeString)"Could not load testtypes.res in testdata bundle with path " + tdpath + (UnicodeString)" - " + u_errorName(err));
             return "";
@@ -1647,7 +1653,10 @@ const char* IntlTest::getTestDataPath(UErrorCode& err) {
     return loadTestData(err);
 }
 
-/* Returns the path to icu/source/test/testdata/ */
+/**
+ * Returns the path to icu/source/test/testdata/
+ * Note: this function is parallel with C loadSourceTestData in cintltst.c
+ */
 const char *IntlTest::getSourceTestData(UErrorCode& /*err*/) {
     const char *srcDataDir = NULL;
 #ifdef U_TOPSRCDIR
@@ -1808,10 +1817,10 @@ static int32_t RAND_SEED;
  */
 float IntlTest::random(int32_t* seedp) {
     static int32_t iy, ir[98];
-    static UBool first=TRUE;
+    static UBool first=true;
     int32_t j;
     if (*seedp < 0 || first) {
-        first = FALSE;
+        first = false;
         if ((*seedp=(RAND_IC-(*seedp)) % RAND_M) < 0) *seedp = -(*seedp);
         for (j=1;j<=97;++j) {
             *seedp=(RAND_IA*(*seedp)+RAND_IC) % RAND_M;
@@ -1920,9 +1929,9 @@ UBool IntlTest::assertTrue(const char* message, UBool condition, UBool quiet, UB
 UBool IntlTest::assertFalse(const char* message, UBool condition, UBool quiet, UBool possibleDataError) {
     if (condition) {
         if (possibleDataError) {
-            dataerrln("FAIL: assertTrue() failed: %s", message);
+            dataerrln("FAIL: assertFalse() failed: %s", message);
         } else {
-            errln("FAIL: assertTrue() failed: %s", message);
+            errln("FAIL: assertFalse() failed: %s", message);
         }
     } else if (!quiet) {
         logln("Ok: %s", message);
@@ -1940,11 +1949,11 @@ UBool IntlTest::assertSuccess(const char* message, UErrorCode ec, UBool possible
         } else {
           errcheckln(ec, "FAIL: %s:%d: %s (%s)", file, line, message, u_errorName(ec));
         }
-        return FALSE;
+        return false;
     } else {
       logln("OK: %s:%d: %s - (%s)", file, line, message, u_errorName(ec));
     }
-    return TRUE;
+    return true;
 }
 
 UBool IntlTest::assertEquals(const char* message,
@@ -1961,31 +1970,33 @@ UBool IntlTest::assertEquals(const char* message,
                   prettify(actual) +
                   "; expected " + prettify(expected));
         }
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
         logln((UnicodeString)"Ok: " + message + "; got " + prettify(actual));
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 UBool IntlTest::assertEquals(const char* message,
                              const char* expected,
                              const char* actual) {
+    U_ASSERT(expected != nullptr);
+    U_ASSERT(actual != nullptr);
     if (uprv_strcmp(expected, actual) != 0) {
         errln((UnicodeString)"FAIL: " + message + "; got \"" +
               actual +
               "\"; expected \"" + expected + "\"");
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
         logln((UnicodeString)"Ok: " + message + "; got \"" + actual + "\"");
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 UBool IntlTest::assertEquals(const char* message,
@@ -1995,14 +2006,14 @@ UBool IntlTest::assertEquals(const char* message,
         errln((UnicodeString)"FAIL: " + message + "; got " +
               actual + "=0x" + toHex(actual) +
               "; expected " + expected + "=0x" + toHex(expected));
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
         logln((UnicodeString)"Ok: " + message + "; got " + actual + "=0x" + toHex(actual));
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 UBool IntlTest::assertEquals(const char* message,
@@ -2012,14 +2023,14 @@ UBool IntlTest::assertEquals(const char* message,
         errln((UnicodeString)"FAIL: " + message + "; got int64 " +
               Int64ToUnicodeString(actual) + 
               "; expected " + Int64ToUnicodeString(expected) );
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
       logln((UnicodeString)"Ok: " + message + "; got int64 " + Int64ToUnicodeString(actual));
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 UBool IntlTest::assertEquals(const char* message,
@@ -2030,14 +2041,14 @@ UBool IntlTest::assertEquals(const char* message,
         errln((UnicodeString)"FAIL: " + message + "; got " +
               actual + 
               "; expected " + expected);
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
         logln((UnicodeString)"Ok: " + message + "; got " + actual);
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 UBool IntlTest::assertEquals(const char* message,
@@ -2047,14 +2058,14 @@ UBool IntlTest::assertEquals(const char* message,
         errln((UnicodeString)"FAIL: " + message + "; got " +
               toString(actual) +
               "; expected " + toString(expected));
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
       logln((UnicodeString)"Ok: " + message + "; got " + toString(actual));
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 
@@ -2065,14 +2076,14 @@ UBool IntlTest::assertEquals(const char* message,
         errln((UnicodeString)"FAIL: " + message + "; got " +
               u_errorName(actual) + 
               "; expected " + u_errorName(expected));
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
         logln((UnicodeString)"Ok: " + message + "; got " + u_errorName(actual));
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 UBool IntlTest::assertEquals(const char* message,
@@ -2083,14 +2094,14 @@ UBool IntlTest::assertEquals(const char* message,
         errln((UnicodeString)"FAIL: " + message + "; got " +
               toString(actual, status) +
               "; expected " + toString(expected, status));
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
         logln((UnicodeString)"Ok: " + message + "; got " + toString(actual, status));
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 
@@ -2109,14 +2120,14 @@ UBool IntlTest::assertEquals(const char* message,
                   toString(actual) +
                   "; expected " + toString(expected));
         }
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
         logln((UnicodeString)"Ok: " + message + "; got " + toString(actual));
     }
 #endif
-    return TRUE;
+    return true;
 }
 #endif
 
@@ -2146,14 +2157,14 @@ UBool IntlTest::assertEquals(const char* message,
         errln((UnicodeString)"FAIL: " + message +
             "; got " + actualAsString.c_str() +
             "; expected " + expectedAsString.c_str());
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
         logln((UnicodeString)"Ok: " + message + "; got " + vectorToString(actual).c_str());
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 UBool IntlTest::assertNotEquals(const char* message,
@@ -2162,7 +2173,7 @@ UBool IntlTest::assertNotEquals(const char* message,
     if (expectedNot == actual) {
         errln((UnicodeString)("FAIL: ") + message + "; got " + actual + "=0x" + toHex(actual) +
               "; expected != " + expectedNot);
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
@@ -2170,31 +2181,37 @@ UBool IntlTest::assertNotEquals(const char* message,
               " != " + expectedNot);
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 UBool IntlTest::assertEqualsNear(const char* message,
                                  double expected,
                                  double actual,
                                  double delta) {
+    bool bothNaN = std::isnan(expected) && std::isnan(actual);
+    bool bothPosInf = uprv_isPositiveInfinity(expected) && uprv_isPositiveInfinity(actual);
+    bool bothNegInf = uprv_isNegativeInfinity(expected) && uprv_isNegativeInfinity(actual);
+    if (bothPosInf || bothNegInf || bothNaN) {
+        // We don't care about delta in these cases
+        return true;
+    }
     if (std::isnan(delta) || std::isinf(delta)) {
         errln((UnicodeString)("FAIL: ") + message + "; nonsensical delta " + delta +
-              " - delta may not be NaN or Inf");
-        return FALSE;
+              " - delta may not be NaN or Inf. (Got " + actual + "; expected " + expected + ".)");
+        return false;
     }
-    bool bothNaN = std::isnan(expected) && std::isnan(actual);
     double difference = std::abs(expected - actual);
-    if (expected != actual && (difference > delta || std::isnan(difference)) && !bothNaN) {
+    if (expected != actual && (difference > delta || std::isnan(difference))) {
         errln((UnicodeString)("FAIL: ") + message + "; got " + actual + "; expected " + expected +
               "; acceptable delta " + delta);
-        return FALSE;
+        return false;
     }
 #ifdef VERBOSE_ASSERTIONS
     else {
         logln((UnicodeString)("Ok: ") + message + "; got " + actual);
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 static char ASSERT_BUF[256];
@@ -2306,6 +2323,143 @@ const char* IntlTest::getProperty(const char* prop) {
     }
     return val;
 }
+
+//-------------------------------------------------------------------------------
+//
+//    ReadAndConvertFile   Read a text data file, convert it to UChars, and
+//    return the data in one big UChar * buffer, which the caller must delete.
+//
+//    parameters:
+//          fileName:   the name of the file, with no directory part.  The test data directory
+//                      is assumed.
+//          ulen        an out parameter, receives the actual length (in UChars) of the file data.
+//          encoding    The file encoding.  If the file contains a BOM, that will override the encoding
+//                      specified here.  The BOM, if it exists, will be stripped from the returned data.
+//                      Pass NULL for the system default encoding.
+//          status
+//    returns:
+//                      The file data, converted to UChar.
+//                      The caller must delete this when done with
+//                           delete [] theBuffer;
+//
+//
+//--------------------------------------------------------------------------------
+UChar *IntlTest::ReadAndConvertFile(const char *fileName, int &ulen, const char *encoding, UErrorCode &status) {
+    UChar       *retPtr  = NULL;
+    char        *fileBuf = NULL;
+    UConverter* conv     = NULL;
+    FILE        *f       = NULL;
+
+    ulen = 0;
+    if (U_FAILURE(status)) {
+        return retPtr;
+    }
+
+    //
+    //  Open the file.
+    //
+    f = fopen(fileName, "rb");
+    if (f == 0) {
+        dataerrln("Error opening test data file %s\n", fileName);
+        status = U_FILE_ACCESS_ERROR;
+        return NULL;
+    }
+    //
+    //  Read it in
+    //
+    int   fileSize;
+    int   amt_read;
+
+    fseek( f, 0, SEEK_END);
+    fileSize = ftell(f);
+    fileBuf = new char[fileSize];
+    fseek(f, 0, SEEK_SET);
+    amt_read = static_cast<int>(fread(fileBuf, 1, fileSize, f));
+    if (amt_read != fileSize || fileSize <= 0) {
+        errln("Error reading test data file.");
+        goto cleanUpAndReturn;
+    }
+
+    //
+    // Look for a Unicode Signature (BOM) on the data just read
+    //
+    int32_t        signatureLength;
+    const char *   fileBufC;
+    const char*    bomEncoding;
+
+    fileBufC = fileBuf;
+    bomEncoding = ucnv_detectUnicodeSignature(
+        fileBuf, fileSize, &signatureLength, &status);
+    if(bomEncoding!=NULL ){
+        fileBufC  += signatureLength;
+        fileSize  -= signatureLength;
+        encoding = bomEncoding;
+    }
+
+    //
+    // Open a converter to take the rule file to UTF-16
+    //
+    conv = ucnv_open(encoding, &status);
+    if (U_FAILURE(status)) {
+        goto cleanUpAndReturn;
+    }
+
+    //
+    // Convert the rules to UChar.
+    //  Preflight first to determine required buffer size.
+    //
+    ulen = ucnv_toUChars(conv,
+        NULL,           //  dest,
+        0,              //  destCapacity,
+        fileBufC,
+        fileSize,
+        &status);
+    if (status == U_BUFFER_OVERFLOW_ERROR) {
+        // Buffer Overflow is expected from the preflight operation.
+        status = U_ZERO_ERROR;
+
+        retPtr = new UChar[ulen+1];
+        ucnv_toUChars(conv,
+            retPtr,       //  dest,
+            ulen+1,
+            fileBufC,
+            fileSize,
+            &status);
+    }
+
+cleanUpAndReturn:
+    fclose(f);
+    delete []fileBuf;
+    ucnv_close(conv);
+    if (U_FAILURE(status)) {
+        errln("ucnv_toUChars: ICU Error \"%s\"\n", u_errorName(status));
+        delete []retPtr;
+        retPtr = 0;
+        ulen   = 0;
+    }
+    return retPtr;
+}
+
+#if !UCONFIG_NO_BREAK_ITERATION
+UBool LSTMDataIsBuilt() {
+  // If we can find the LSTM data, the RBBI will use the LSTM engine.
+  // So we skip the test which depending on the dictionary data.
+  UErrorCode status = U_ZERO_ERROR;
+  DeleteLSTMData(CreateLSTMDataForScript(USCRIPT_THAI, status));
+  UBool thaiDataIsBuilt = U_SUCCESS(status);
+  status = U_ZERO_ERROR;
+  DeleteLSTMData(CreateLSTMDataForScript(USCRIPT_MYANMAR, status));
+  UBool burmeseDataIsBuilt = U_SUCCESS(status);
+  return thaiDataIsBuilt | burmeseDataIsBuilt;
+}
+
+UBool IntlTest::skipLSTMTest() {
+   return ! LSTMDataIsBuilt();
+}
+UBool IntlTest::skipDictionaryTest() {
+   return LSTMDataIsBuilt();
+}
+#endif /* #if !UCONFIG_NO_BREAK_ITERATION */
 
 /*
  * Hey, Emacs, please set the following:

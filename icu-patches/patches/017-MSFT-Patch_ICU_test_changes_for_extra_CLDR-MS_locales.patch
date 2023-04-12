@@ -6,11 +6,11 @@ Subject: MSFT-PATCH: Modify ICU tests to pass with extra locales from CLDR-MS.
 This changes modifies the ICU tests to pass with extra locales from
 CLDR-MS.
 
-diff --git a/icu/icu4c/source/test/cintltst/cldrtest.c b/icu/icu4c/source/test/cintltst/cldrtest.c
-index 179539d5178b5cfd8b5350043c539e89e8740185..bfb35c35a449f60c61c9a8eb6282c307e41fd161 100644
---- a/icu/icu4c/source/test/cintltst/cldrtest.c
-+++ b/icu/icu4c/source/test/cintltst/cldrtest.c
-@@ -970,7 +970,14 @@ static void VerifyTranslation(void) {
+diff --git a/icu4c/source/test/cintltst/cldrtest.c b/icu4c/source/test/cintltst/cldrtest.c
+index 576bafba07..6c241f7b16 100644
+--- a/icu4c/source/test/cintltst/cldrtest.c
++++ b/icu4c/source/test/cintltst/cldrtest.c
+@@ -976,7 +976,14 @@ static void VerifyTranslation(void) {
              uprv_strncmp(currLoc, "oc", 2) == 0 || uprv_strncmp(currLoc, "oc_FR", 5) == 0     ||
              uprv_strncmp(currLoc, "syr", 3) == 0 || uprv_strncmp(currLoc, "syr_SY", 6) == 0   ||
              uprv_strncmp(currLoc, "tig", 3) == 0 || uprv_strncmp(currLoc, "tig_ER", 6) == 0   ||
@@ -26,7 +26,7 @@ index 179539d5178b5cfd8b5350043c539e89e8740185..bfb35c35a449f60c61c9a8eb6282c307
          ) {
              log_knownIssue("0", "MSFT Change: skipping test for %s which has issues due to CLDR Seed data.", currLoc);
          }
-@@ -1110,7 +1117,8 @@ static void VerifyTranslation(void) {
+@@ -1132,7 +1139,8 @@ static void VerifyTranslation(void) {
                 if (U_FAILURE(errorCode)) {
                     log_err("ulocdata_getMeasurementSystem failed for locale %s with error: %s \n", currLoc, u_errorName(errorCode));
                 } else {
@@ -36,7 +36,7 @@ index 179539d5178b5cfd8b5350043c539e89e8740185..bfb35c35a449f60c61c9a8eb6282c307
                         if(measurementSystem != UMS_US){
                              log_err("ulocdata_getMeasurementSystem did not return expected data for locale %s \n", currLoc);
                         }
-@@ -1128,10 +1136,11 @@ static void VerifyTranslation(void) {
+@@ -1150,10 +1158,11 @@ static void VerifyTranslation(void) {
                 if (U_FAILURE(errorCode)) {
                     log_err("ulocdata_getPaperSize failed for locale %s with error: %s \n", currLoc, u_errorName(errorCode));
                 } else {
@@ -49,9 +49,9 @@ index 179539d5178b5cfd8b5350043c539e89e8740185..bfb35c35a449f60c61c9a8eb6282c307
                         if (height != 279 || width != 216) {
                              log_err("ulocdata_getPaperSize did not return expected data for locale %s \n", currLoc);
                         }
-@@ -1251,8 +1260,14 @@ static void TestExemplarSet(void){
+@@ -1273,8 +1282,14 @@ static void TestExemplarSet(void){
  
-             if (existsInScript == FALSE){
+             if (existsInScript == false){
                  /* MSFT Change */
 -                if (uprv_strncmp(locale, "oc", 2) == 0 || uprv_strncmp(locale, "oc_FR", 5) == 0) {
 -                    log_knownIssue("0", "MSFT Change: oc and oc_FR have ExemplarSet issues.");
@@ -66,11 +66,11 @@ index 179539d5178b5cfd8b5350043c539e89e8740185..bfb35c35a449f60c61c9a8eb6282c307
                      continue;
                  } else {
                      log_err("ExemplarSet containment failed for locale : %s\n", locale);
-diff --git a/icu/icu4c/source/test/cintltst/cnmdptst.c b/icu/icu4c/source/test/cintltst/cnmdptst.c
-index 99a9ce23be7ef93923493b2b8312a254706c3f2d..a319b99e3faf6f6fc749e70852a298ce42268696 100644
---- a/icu/icu4c/source/test/cintltst/cnmdptst.c
-+++ b/icu/icu4c/source/test/cintltst/cnmdptst.c
-@@ -811,7 +811,8 @@ static void TestGetKeywordValuesForLocale(void) {
+diff --git a/icu4c/source/test/cintltst/cnmdptst.c b/icu4c/source/test/cintltst/cnmdptst.c
+index 98504e0220..98adb371d7 100644
+--- a/icu4c/source/test/cintltst/cnmdptst.c
++++ b/icu4c/source/test/cintltst/cnmdptst.c
+@@ -813,7 +813,8 @@ static void TestGetKeywordValuesForLocale(void) {
              { "und",                "USD", "USN", NULL },
   /*           { "und_ZZ",             "USD", NULL, NULL },  -- temporarily remove as this locale now has 15 entries */
              { "en_US",              "USD", "USN", NULL },
@@ -80,7 +80,7 @@ index 99a9ce23be7ef93923493b2b8312a254706c3f2d..a319b99e3faf6f6fc749e70852a298ce
              { "en_TH",              "THB", NULL, NULL },
              { "de",                 "EUR", NULL, NULL },
              { "de_DE",              "EUR", NULL, NULL },
-@@ -825,11 +826,13 @@ static void TestGetKeywordValuesForLocale(void) {
+@@ -827,11 +828,13 @@ static void TestGetKeywordValuesForLocale(void) {
              { "en_US@currency=CAD;rg=THZZZZ", "THB", NULL, NULL },
      };
      const int32_t EXPECTED_SIZE[PREFERRED_SIZE] = {
@@ -96,11 +96,11 @@ index 99a9ce23be7ef93923493b2b8312a254706c3f2d..a319b99e3faf6f6fc749e70852a298ce
              "THB", "",    "EUR", "",
              "ILS", "CAD", "ZZZ", "DEM",
              "THB", "USD", "CAD"
-diff --git a/icu/icu4c/source/test/intltest/dtptngts.cpp b/icu/icu4c/source/test/intltest/dtptngts.cpp
-index dc86355f93fa68f509a0023dc95fc17a548170c1..c83e27bb68c212c3e9569c71ed5b417a96b7f9de 100644
---- a/icu/icu4c/source/test/intltest/dtptngts.cpp
-+++ b/icu/icu4c/source/test/intltest/dtptngts.cpp
-@@ -1408,7 +1408,8 @@ void IntlTestDateTimePatternGeneratorAPI::testJjMapping() {
+diff --git a/icu4c/source/test/intltest/dtptngts.cpp b/icu4c/source/test/intltest/dtptngts.cpp
+index 61818ec2ac..e2a170452d 100644
+--- a/icu4c/source/test/intltest/dtptngts.cpp
++++ b/icu4c/source/test/intltest/dtptngts.cpp
+@@ -1411,7 +1411,8 @@ void IntlTestDateTimePatternGeneratorAPI::testJjMapping() {
                          uprv_strncmp(localeID, "ssy_ER", 6) == 0 || uprv_strncmp(localeID, "st_LS", 5) == 0   ||
                          uprv_strncmp(localeID, "syr", 3) == 0 || uprv_strncmp(localeID, "syr_SY", 6) == 0   ||
                          uprv_strncmp(localeID, "tig", 3) == 0 || uprv_strncmp(localeID, "tig_ER", 6) == 0   ||
@@ -110,22 +110,22 @@ index dc86355f93fa68f509a0023dc95fc17a548170c1..c83e27bb68c212c3e9569c71ed5b417a
                       ) {
                           logKnownIssue("0", "MSFT Change: skipping test for %s which has issues due to CLDR Seed data.", localeID);
                       }
-diff --git a/icu/icu4c/source/test/intltest/numfmtst.cpp b/icu/icu4c/source/test/intltest/numfmtst.cpp
-index bc072bd8e3775554b8a8f96a81baf850b5e8feb7..a63c329c8eabf287512b9c152ac91d862d333264 100644
---- a/icu/icu4c/source/test/intltest/numfmtst.cpp
-+++ b/icu/icu4c/source/test/intltest/numfmtst.cpp
-@@ -8094,10 +8094,12 @@ void NumberFormatTest::TestAccountingCurrency() {
-         (Formattable)(double)-1000.5, UnicodeString("(\\uFFE51,000)").unescape(), FALSE, status);
+diff --git a/icu4c/source/test/intltest/numfmtst.cpp b/icu4c/source/test/intltest/numfmtst.cpp
+index cf23bb841a..25d39e0c05 100644
+--- a/icu4c/source/test/intltest/numfmtst.cpp
++++ b/icu4c/source/test/intltest/numfmtst.cpp
+@@ -8100,10 +8100,12 @@ void NumberFormatTest::TestAccountingCurrency() {
+         (Formattable)(double)-1000.5, UnicodeString("(\\uFFE51,000)").unescape(), false, status);
      expect(NumberFormat::createInstance("de_DE", style, status),
-         (Formattable)(double)-23456.7, UnicodeString("-23.456,70\\u00A0\\u20AC").unescape(), TRUE, status);
+         (Formattable)(double)-23456.7, UnicodeString("-23.456,70\\u00A0\\u20AC").unescape(), true, status);
 +    /* MSFT Change: We add a CLDR-MS locale en_ID */
      expect(NumberFormat::createInstance("en_ID", style, status),
--        (Formattable)(double)0, UnicodeString("IDR\\u00A00.00").unescape(), TRUE, status);
-+        (Formattable)(double)0, UnicodeString("IDR\\u00A00,00").unescape(), TRUE, status);
+-        (Formattable)(double)0, UnicodeString("IDR\\u00A00.00").unescape(), true, status);
++        (Formattable)(double)0, UnicodeString("IDR\\u00A00,00").unescape(), true, status);
      expect(NumberFormat::createInstance("en_ID", style, status),
--        (Formattable)(double)-0.2, UnicodeString("(IDR\\u00A00.20)").unescape(), TRUE, status);
-+        (Formattable)(double)-0.2, UnicodeString("(IDR\\u00A00,20)").unescape(), TRUE, status);
+-        (Formattable)(double)-0.2, UnicodeString("(IDR\\u00A00.20)").unescape(), true, status);
++        (Formattable)(double)-0.2, UnicodeString("(IDR\\u00A00,20)").unescape(), true, status);
 +    /* MSFT Change: End */
      expect(NumberFormat::createInstance("sh_ME", style, status),
-         (Formattable)(double)0, UnicodeString("0,00\\u00A0\\u20AC").unescape(), TRUE, status);
+         (Formattable)(double)0, UnicodeString("0,00\\u00A0\\u20AC").unescape(), true, status);
      expect(NumberFormat::createInstance("sh_ME", style, status),

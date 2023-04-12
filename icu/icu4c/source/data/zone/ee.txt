@@ -861,6 +861,9 @@ ee{
         "Asia:Ulaanbaatar"{
             ec{"Ulaanbaatar"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }

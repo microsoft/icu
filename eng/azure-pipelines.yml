@@ -46,7 +46,7 @@ stages:
             name: $(DncEngInternalBuildPool)
             demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-net8-20230327150025-4404b5c
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-net8-20230322221728-80fdceb
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm $(_InternalBuildArgs)
@@ -70,7 +70,7 @@ stages:
             demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
           # when updating, change emscripten version here: ../.devcontainer/emscripten-version.txt
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-net8-20230327150025-4404b5c
+          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-webassembly-net8-20230322221728-80fdceb
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm /p:WasmEnableThreads=true $(_InternalBuildArgs)

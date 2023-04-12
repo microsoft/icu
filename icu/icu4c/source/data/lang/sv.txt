@@ -44,8 +44,10 @@ sv{
         am{"amhariska"}
         an{"aragonesiska"}
         ang{"fornengelska"}
+        ann{"obolo"}
         anp{"angika"}
         ar{"arabiska"}
+        ar_001{"modern standardarabiska"}
         arc{"arameiska"}
         arn{"mapudungun"}
         aro{"araoniska"}
@@ -59,6 +61,7 @@ sv{
         asa{"asu"}
         ase{"amerikanskt teckenspråk"}
         ast{"asturiska"}
+        atj{"atikamekw"}
         av{"avariska"}
         avk{"kotava"}
         awa{"awadhi"}
@@ -124,14 +127,22 @@ sv{
         chr{"cherokesiska"}
         chy{"cheyenne"}
         ckb{"soranisk kurdiska"}
+        clc{"chilcotin"}
         co{"korsikanska"}
         cop{"koptiska"}
         cps{"kapisnon"}
         cr{"cree"}
+        crg{"michif"}
         crh{"krimtatariska"}
+        crj{"sydostcree"}
+        crk{"slättcree"}
+        crl{"nordost-cree"}
+        crm{"moose cree"}
+        crr{"Carolina-algonkinska"}
         crs{"seychellisk kreol"}
         cs{"tjeckiska"}
         csb{"kasjubiska"}
+        csw{"träskcree"}
         cu{"kyrkslaviska"}
         cv{"tjuvasjiska"}
         cy{"walesiska"}
@@ -140,6 +151,8 @@ sv{
         dar{"darginska"}
         dav{"taita"}
         de{"tyska"}
+        de_AT{"österrikisk tyska"}
+        de_CH{"schweizisk högtyska"}
         del{"delaware"}
         den{"slavej"}
         dgr{"dogrib"}
@@ -164,15 +177,23 @@ sv{
         el{"grekiska"}
         elx{"elamitiska"}
         en{"engelska"}
+        en_AU{"australisk engelska"}
+        en_CA{"kanadensisk engelska"}
+        en_GB{"brittisk engelska"}
+        en_US{"amerikansk engelska"}
         enm{"medelengelska"}
         eo{"esperanto"}
         es{"spanska"}
+        es_419{"latinamerikansk spanska"}
+        es_ES{"europeisk spanska"}
+        es_MX{"mexikansk spanska"}
         esu{"centralalaskisk jupiska"}
         et{"estniska"}
         eu{"baskiska"}
         ewo{"ewondo"}
         ext{"extremaduriska"}
         fa{"persiska"}
+        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulani"}
@@ -183,6 +204,8 @@ sv{
         fo{"färöiska"}
         fon{"fonspråket"}
         fr{"franska"}
+        fr_CA{"kanadensisk franska"}
+        fr_CH{"schweizisk franska"}
         frc{"cajun-franska"}
         frm{"medelfranska"}
         fro{"fornfranska"}
@@ -223,8 +246,10 @@ sv{
         hai{"haida"}
         hak{"hakka"}
         haw{"hawaiiska"}
+        hax{"sydhaida"}
         he{"hebreiska"}
         hi{"hindi"}
+        hi_Latn{"hindi (latinsk)"}
         hif{"Fiji-hindi"}
         hil{"hiligaynon"}
         hit{"hettitiska"}
@@ -236,6 +261,7 @@ sv{
         ht{"haitiska"}
         hu{"ungerska"}
         hup{"hupa"}
+        hur{"halkomelem"}
         hy{"armeniska"}
         hz{"herero"}
         ia{"interlingua"}
@@ -246,6 +272,7 @@ sv{
         ig{"igbo"}
         ii{"szezuan i"}
         ik{"inupiak"}
+        ikt{"inuktun"}
         ilo{"iloko"}
         inh{"ingusjiska"}
         io{"ido"}
@@ -312,6 +339,7 @@ sv{
         kut{"kutenaj"}
         kv{"kome"}
         kw{"korniska"}
+        kwk{"kwakʼwala"}
         ky{"kirgiziska"}
         la{"latin"}
         lad{"ladino"}
@@ -324,6 +352,7 @@ sv{
         lg{"luganda"}
         li{"limburgiska"}
         lij{"liguriska"}
+        lil{"lillooet"}
         liv{"livoniska"}
         lkt{"lakota"}
         lmo{"lombardiska"}
@@ -333,6 +362,7 @@ sv{
         lou{"louisiana-kreol"}
         loz{"lozi"}
         lrc{"nordluri"}
+        lsm{"saamia"}
         lt{"litauiska"}
         ltg{"lettgalliska"}
         lu{"luba-katanga"}
@@ -371,6 +401,7 @@ sv{
         mn{"mongoliska"}
         mnc{"manchuriska"}
         mni{"manipuri"}
+        moe{"innu-aimun"}
         moh{"mohawk"}
         mos{"mossi"}
         mr{"marathi"}
@@ -394,6 +425,7 @@ sv{
         nb{"norskt bokmål"}
         nd{"nordndebele"}
         nds{"lågtyska"}
+        nds_NL{"lågsaxiska"}
         ne{"nepalesiska"}
         new{"newariska"}
         ng{"ndonga"}
@@ -401,6 +433,7 @@ sv{
         niu{"niueanska"}
         njo{"ao-naga"}
         nl{"nederländska"}
+        nl_BE{"flamländska"}
         nmg{"kwasio"}
         nn{"nynorska"}
         nnh{"bamileké-ngiemboon"}
@@ -421,6 +454,11 @@ sv{
         nzi{"nzima"}
         oc{"occitanska"}
         oj{"odjibwa"}
+        ojb{"nordvästojibwa"}
+        ojc{"ojibwa"}
+        ojs{"oji-cree"}
+        ojw{"västojibwe"}
+        oka{"okanagan"}
         om{"oromo"}
         or{"oriya"}
         os{"ossetiska"}
@@ -440,14 +478,18 @@ sv{
         pfl{"Pfalz-tyska"}
         phn{"feniciska"}
         pi{"pali"}
+        pis{"pidginspråk"}
         pl{"polska"}
         pms{"piemontesiska"}
         pnt{"pontiska"}
         pon{"pohnpeiska"}
+        pqm{"maliseet-passamaquoddy"}
         prg{"fornpreussiska"}
         pro{"fornprovensalska"}
         ps{"afghanska"}
         pt{"portugisiska"}
+        pt_BR{"brasiliansk portugisiska"}
+        pt_PT{"europeisk portugisiska"}
         qu{"quechua"}
         quc{"quiché"}
         qug{"Chimborazo-höglandskichwa"}
@@ -455,13 +497,14 @@ sv{
         rap{"rapanui"}
         rar{"rarotonganska"}
         rgn{"romagnol"}
+        rhg{"ruáingga"}
         rif{"riffianska"}
         rm{"rätoromanska"}
         rn{"rundi"}
         ro{"rumänska"}
+        ro_MD{"moldaviska"}
         rof{"rombo"}
         rom{"romani"}
-        root{"rot"}
         rtm{"rotumänska"}
         ru{"ryska"}
         rue{"rusyn"}
@@ -494,6 +537,7 @@ sv{
         sg{"sango"}
         sga{"forniriska"}
         sgs{"samogitiska"}
+        sh{"serbokroatiska"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"Tchad-arabiska"}
@@ -501,6 +545,7 @@ sv{
         sid{"sidamo"}
         sk{"slovakiska"}
         sl{"slovenska"}
+        slh{"sydlushootseed"}
         sli{"lågsilesiska"}
         sly{"selayar"}
         sm{"samoanska"}
@@ -520,17 +565,20 @@ sv{
         ssy{"saho"}
         st{"sydsotho"}
         stq{"saterfrisiska"}
+        str{"sundsalishanska"}
         su{"sundanesiska"}
         suk{"sukuma"}
         sus{"susu"}
         sux{"sumeriska"}
         sv{"svenska"}
         sw{"swahili"}
+        sw_CD{"Kongo-swahili"}
         swb{"shimaoré"}
         syc{"klassisk syriska"}
         syr{"syriska"}
         szl{"silesiska"}
         ta{"tamil"}
+        tce{"sydtutchone"}
         tcy{"tulu"}
         te{"telugu"}
         tem{"temne"}
@@ -538,7 +586,9 @@ sv{
         ter{"tereno"}
         tet{"tetum"}
         tg{"tadzjikiska"}
+        tgx{"tagish"}
         th{"thailändska"}
+        tht{"tahltan"}
         ti{"tigrinja"}
         tig{"tigré"}
         tiv{"tivi"}
@@ -553,6 +603,7 @@ sv{
         tn{"tswana"}
         to{"tonganska"}
         tog{"nyasatonganska"}
+        tok{"toki pona"}
         tpi{"tok pisin"}
         tr{"turkiska"}
         tru{"turoyo"}
@@ -561,6 +612,7 @@ sv{
         tsd{"tsakodiska"}
         tsi{"tsimshian"}
         tt{"tatariska"}
+        ttm{"nordtutchone"}
         ttt{"muslimsk tatariska"}
         tum{"tumbuka"}
         tvl{"tuvaluanska"}
@@ -615,10 +667,25 @@ sv{
         zen{"zenaga"}
         zgh{"marockansk standard-tamazight"}
         zh{"kinesiska"}
+        zh_Hans{"förenklad kinesiska"}
+        zh_Hant{"traditionell kinesiska"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"inget språkligt innehåll"}
         zza{"zazaiska"}
+    }
+    Languages%menu{
+        ars{"arabiska (najdi)"}
+        ckb{"kurdiska (sorani)"}
+        zh{"mandarin"}
+    }
+    Languages%short{
+        az{"azeriska"}
+    }
+    Languages%variant{
+        hi_Latn{"hinglish"}
+        ps{"pashto"}
+        ug{"östturkiska"}
     }
     Scripts{
         Adlm{"adlamiska"}
@@ -650,6 +717,7 @@ sv{
         Chrs{"khwarezmiska"}
         Cirt{"cirt"}
         Copt{"koptiska"}
+        Cpmn{"cypro-minoisk skrift"}
         Cprt{"cypriotiska"}
         Cyrl{"kyrilliska"}
         Cyrs{"fornkyrkoslavisk kyrilliska"}
@@ -840,6 +908,7 @@ sv{
             iso8601{"ISO 8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
+            roc{"kinesiska republikens kalender"}
         }
         cf{
             account{"redovisningsformat"}
@@ -979,7 +1048,7 @@ sv{
             mymr{"burmesiska siffror"}
             mymrshan{"burmesiska shan-siffror"}
             mymrtlng{"burmesiska tai laing-siffror"}
-            native{"Språkspecifika siffror"}
+            native{"språkspecifika siffror"}
             nkoo{"n’ko-siffror"}
             olck{"ol chiki-siffror"}
             orya{"oriyiska siffror"}

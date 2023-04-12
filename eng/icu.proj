@@ -14,8 +14,8 @@
       <WASI_SDK_PATH Condition="'$(WASI_SDK_PATH)' == ''">$(RepoRoot)artifacts/wasi-sdk</WASI_SDK_PATH>
     </PropertyGroup>
 
-    <Copy SourceFiles="$(MSBuildThisFileDirectory)\..\icu-filters\curr-root.txt" 
-          DestinationFiles="$(MSBuildThisFileDirectory)\..\icu\icu4c\source\data\curr\root.txt"/> 
+    <Copy SourceFiles="$(MSBuildThisFileDirectory)\..\icu-filters\curr-root.txt"
+          DestinationFiles="$(MSBuildThisFileDirectory)\..\icu4c\source\data\curr\root.txt"/>
     <Exec WorkingDirectory="$(MSBuildThisFileDirectory)"
           Command="make -f icu.mk all TARGET_OS=$(TargetOS.ToLower()) TARGET_ARCHITECTURE=$(TargetArchitecture) ICU_TRACING=$(IcuTracing) WASI_SDK_PATH=$(WASI_SDK_PATH) $(_ExtraParams) SHELL=/bin/bash"
           IgnoreStandardErrorWarningFormat="true" />

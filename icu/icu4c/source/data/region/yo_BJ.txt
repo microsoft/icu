@@ -30,16 +30,20 @@ yo_BJ{
         BA{"Bɔ̀síníà àti Ɛtisɛgófínà"}
         BE{"Bégíɔ́mù"}
         BJ{"Bɛ̀nɛ̀"}
+        BL{"Ìlú Bátílɛ́mì"}
         BN{"Búrúnɛ́lì"}
         BO{"Bɔ̀lífíyà"}
+        BQ{"Káríbíánì ti Nɛ́dálándì"}
         BW{"Bɔ̀tìsúwánà"}
         BZ{"Bèlísɛ̀"}
         CH{"switishilandi"}
         CL{"Shílè"}
         CN{"Sháínà"}
         CZ{"Shɛ́ɛ́kì"}
+        DG{"Diego Gashia"}
         DJ{"Díbɔ́ótì"}
         DK{"Dɛ́mákì"}
+        EH{"Ìwɔ̀òòrùn Sàhárà"}
         EU{"Àpapɔ̀ Yúróòpù"}
         FO{"Àwɔn Erékùsù ti Faroe"}
         GB{"Gɛ̀ɛ́sì"}
@@ -47,6 +51,7 @@ yo_BJ{
         GF{"Firenshi Guana"}
         GS{"Gúúsù Georgia àti Gúúsù Àwɔn Erékùsù Sandwich"}
         HK{"Agbègbè Ìshàkóso Ìshúná Hong Kong Tí Shánà Ń Darí"}
+        IC{"Ɛrékùsù Kánárì"}
         IL{"Iserɛli"}
         IS{"Ashilandi"}
         JO{"Jɔdani"}
@@ -69,12 +74,15 @@ yo_BJ{
         PS{"Agbègbè ara Palɛsítínì"}
         PT{"Pɔ́túgà"}
         QO{"Agbègbè Òshɔ́ɔ́níà"}
+        RS{"Sɛ́bíà"}
         RU{"Rɔshia"}
         SC{"Sheshɛlɛsi"}
         SH{"Hɛlena"}
+        SJ{"Sífábáàdì àti Jánì Máyɛ̀nì"}
         SN{"Sɛnɛga"}
         ST{"Sao tomi ati piriishipi"}
         SV{"Ɛɛsáfádò"}
+        SX{"Síntì Mátɛ́ɛ̀nì"}
         SZ{"Sashiland"}
         TC{"Tɔɔki ati Etikun Kakɔsi"}
         TD{"Shààdì"}
@@ -92,9 +100,19 @@ yo_BJ{
         VI{"Etikun Fagini ti Amɛrika"}
         VN{"Fɛtinami"}
         WS{"Samɔ"}
+        XA{"ìsɔ̀rɔ̀sí irɔ́"}
+        XB{"ibi irɔ́"}
         ZA{"Gúúshù Áfíríkà"}
         ZM{"Shamibia"}
         ZW{"Shimibabe"}
         ZZ{"Àgbègbè àìmɔ̀"}
+    }
+    Countries%short{
+        PS{"Palɛsítínì"}
+    }
+    Countries%variant{
+        CZ{"Shɛ́ɛ́kì"}
+        TL{"Ìlà Òòrùn Tímɔ̀"}
+        TR{"Èdè Tɔɔki"}
     }
 }

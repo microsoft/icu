@@ -867,6 +867,9 @@ bs{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumči"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1943,6 +1946,9 @@ bs{
             ld{"Jekaterinburško ljetno vrijeme"}
             lg{"Jekaterinburško vrijeme"}
             ls{"Jekaterinburško standardno vrijeme"}
+        }
+        "meta:Yukon"{
+            ls{"Jukonsko vrijeme"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT {0}"}

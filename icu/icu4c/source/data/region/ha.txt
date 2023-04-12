@@ -24,7 +24,7 @@ ha{
         053{"Tsibarai na Austraila da New Zealand da maƙota"}
         054{"Tsibirai na New Guinea da Fiji da maƙota"}
         057{"Yankin Micronesiya"}
-        061{"tsibiri"}
+        061{"Tsibiri"}
         142{"Asiya"}
         143{"Asiya ta Tsakiya"}
         145{"Yammacin Asiya"}
@@ -93,14 +93,17 @@ ha{
         CY{"Sifurus"}
         CZ{"Jamhuriyar Cak"}
         DE{"Jamus"}
+        DG{"Tsibirn Diego Garcia"}
         DJ{"Jibuti"}
         DK{"Danmark"}
         DM{"Dominika"}
         DO{"Jamhuriyar Dominika"}
         DZ{"Aljeriya"}
+        EA{"Ceuta da Melilla"}
         EC{"Ekwador"}
         EE{"Estoniya"}
         EG{"Misira"}
+        EH{"Yammacin Sahara"}
         ER{"Eritireya"}
         ES{"Sipen"}
         ET{"Habasha"}
@@ -133,10 +136,11 @@ ha{
         GY{"Guyana"}
         HK{"Babban Yankin Mulkin Hong Kong na Ƙasar Sin"}
         HM{"Tsibirin Heard da McDonald"}
-        HN{"Honduras"}
+        HN{"Yankin Honduras"}
         HR{"Kurowaishiya"}
         HT{"Haiti"}
         HU{"Hungari"}
+        IC{"Tsibiran Canary"}
         ID{"Indunusiya"}
         IE{"Ayalan"}
         IL{"Israʼila"}
@@ -193,14 +197,14 @@ ha{
         MU{"Moritus"}
         MV{"Maldibi"}
         MW{"Malawi"}
-        MX{"Makasiko"}
+        MX{"Mesiko"}
         MY{"Malaisiya"}
         MZ{"Mozambik"}
         NA{"Namibiya"}
         NC{"Kaledoniya Sabuwa"}
         NE{"Nijar"}
         NF{"Tsibirin Narfalk"}
-        NG{"Najeriya"}
+        NG{"Nijeriya"}
         NI{"Nikaraguwa"}
         NL{"Holan"}
         NO{"Norwe"}
@@ -284,6 +288,8 @@ ha{
         VU{"Banuwatu"}
         WF{"Walis Da Futuna"}
         WS{"Samoa"}
+        XA{"Gogewar Kwalwa"}
+        XB{"Gano wani abu ta hanyar amfani da fasaha"}
         XK{"Kasar Kosovo"}
         YE{"Yamal"}
         YT{"Mayoti"}
@@ -291,5 +297,14 @@ ha{
         ZM{"Zambiya"}
         ZW{"Zimbabuwe"}
         ZZ{"Yanki da ba a sani ba"}
+    }
+    Countries%short{
+        PS{"Palasɗinu"}
+    }
+    Countries%variant{
+        CD{"Kongo (DRC)"}
+        CG{"Jamhuriyar Kongo"}
+        NZ{"Aotearoa Nuzilan"}
+        SZ{"Suwazilan"}
     }
 }

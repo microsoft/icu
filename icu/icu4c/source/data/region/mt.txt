@@ -90,14 +90,17 @@ mt{
         CY{"Ċipru"}
         CZ{"ir-Repubblika Ċeka"}
         DE{"il-Ġermanja"}
+        DG{"Diego Garcia"}
         DJ{"il-Djibouti"}
         DK{"id-Danimarka"}
         DM{"Dominica"}
         DO{"ir-Repubblika Dominicana"}
         DZ{"l-Alġerija"}
+        EA{"Ceuta u Melilla"}
         EC{"l-Ekwador"}
         EE{"l-Estonja"}
         EG{"l-Eġittu"}
+        EH{"is-Saħara tal-Punent"}
         ER{"l-Eritrea"}
         ES{"Spanja"}
         ET{"l-Etjopja"}
@@ -105,7 +108,7 @@ mt{
         FI{"il-Finlandja"}
         FJ{"Fiġi"}
         FK{"il-Gżejjer Falkland"}
-        FM{"Mikroneżja"}
+        FM{"il-Mikroneżja"}
         FO{"il-Gżejjer Faeroe"}
         FR{"Franza"}
         GA{"il-Gabon"}
@@ -136,6 +139,7 @@ mt{
         HR{"il-Kroazja"}
         HT{"il-Haiti"}
         HU{"l-Ungerija"}
+        IC{"il-Gżejjer Canary"}
         ID{"l-Indoneżja"}
         IE{"l-Irlanda"}
         IL{"Iżrael"}
@@ -144,7 +148,7 @@ mt{
         IO{"Territorju Brittaniku tal-Oċean Indjan"}
         IQ{"l-Iraq"}
         IR{"l-Iran"}
-        IS{"l-iżlanda"}
+        IS{"l-Iżlanda"}
         IT{"l-Italja"}
         JE{"Jersey"}
         JM{"il-Ġamajka"}
@@ -221,7 +225,7 @@ mt{
         PM{"Saint Pierre u Miquelon"}
         PN{"Gżejjer Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Awtorità Palestinjana"}
+        PS{"it-Territorji Palestinjani"}
         PT{"il-Portugall"}
         PW{"Palau"}
         PY{"il-Paragwaj"}
@@ -231,7 +235,7 @@ mt{
         RS{"is-Serbja"}
         RU{"ir-Russja"}
         RW{"ir-Rwanda"}
-        SA{"l-Arabia Sawdija"}
+        SA{"l-Arabja Sawdija"}
         SB{"il-Gżejjer Solomon"}
         SC{"is-Seychelles"}
         SD{"is-Sudan"}
@@ -251,7 +255,7 @@ mt{
         SV{"El Salvador"}
         SX{"Sint Maarten"}
         SY{"is-Sirja"}
-        SZ{"is-Swaziland"}
+        SZ{"l-Eswatini"}
         TA{"Tristan da Cunha"}
         TC{"il-Gżejjer Turks u Caicos"}
         TD{"iċ-Chad"}
@@ -291,5 +295,19 @@ mt{
         ZM{"iż-Żambja"}
         ZW{"iż-Żimbabwe"}
         ZZ{"Reġjun Mhux Magħruf"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"il-Macao"}
+        PS{"il-Palestina"}
+        US{"US"}
+    }
+    Countries%variant{
+        CD{"Kongo (RDK)"}
+        CG{"ir-Repubblika tal-Kongo"}
+        CZ{"Ir-Repubblika Ċeka"}
+        FK{"Il-Gżejjer Falkland (il-Gżejjer Malvinas)"}
+        TL{"Timor tal-Lvant"}
     }
 }

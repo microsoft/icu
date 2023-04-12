@@ -21,9 +21,16 @@ es_419{
         CG{"República del Congo"}
         CI{"Costa de Marfil"}
         EZ{"Eurozona"}
-        PS{"Territorios Palestinos"}
+        IC{"Islas Canarias"}
         QO{"Islas Ultramarinas"}
         TA{"Tristán da Cunha"}
         UM{"Islas Ultramarinas de EE.UU."}
+    }
+    Countries%short{
+        GB{"R. U."}
+    }
+    Countries%variant{
+        CD{"Congo (República Democrática del Congo)"}
+        TR{"Türkiye"}
     }
 }

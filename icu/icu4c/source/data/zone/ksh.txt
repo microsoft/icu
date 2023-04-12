@@ -147,6 +147,9 @@ ksh{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
+        "Asia:Urumqi"{
+            ec{"Urrumptschi"}
+        }
         "Asia:Vladivostok"{
             ec{"Wladiwostok"}
         }

@@ -32,6 +32,7 @@ hsb{
         151{"wuchodna Europa"}
         154{"sewjerna Europa"}
         155{"zapadna Europa"}
+        202{"subsaharaska Afrika"}
         419{"Łaćonska Amerika"}
         AC{"Ascension"}
         AD{"Andorra"}
@@ -92,18 +93,22 @@ hsb{
         CY{"Cypern"}
         CZ{"Čěska republika"}
         DE{"Němska"}
+        DG{"Diego Garcia"}
         DJ{"Dźibuti"}
         DK{"Danska"}
         DM{"Dominika"}
         DO{"Dominikanska republika"}
         DZ{"Algeriska"}
+        EA{"Ceuta a Melilla"}
         EC{"Ekwador"}
         EE{"Estiska"}
         EG{"Egyptowska"}
+        EH{"Zapadna Sahara"}
         ER{"Eritreja"}
         ES{"Španiska"}
         ET{"Etiopiska"}
         EU{"Europska unija"}
+        EZ{"europasmo"}
         FI{"Finska"}
         FJ{"Fidźi"}
         FK{"Falklandske kupy"}
@@ -135,6 +140,7 @@ hsb{
         HR{"Chorwatska"}
         HT{"Haiti"}
         HU{"Madźarska"}
+        IC{"Kanariske kupy"}
         ID{"Indoneska"}
         IE{"Irska"}
         IL{"Israel"}
@@ -178,6 +184,7 @@ hsb{
         MF{"St. Martin"}
         MG{"Madagaskar"}
         MH{"Marshallowe kupy"}
+        MK{"Serwjerna Makedonska"}
         ML{"Mali"}
         MM{"Myanmar"}
         MN{"Mongolska"}
@@ -216,7 +223,7 @@ hsb{
         PM{"St. Pierre a Miquelon"}
         PN{"Pitcairnowe kupy"}
         PR{"Puerto Rico"}
-        PS{"Palästinensische Behörde"}
+        PS{"Palestinski awtonomny teritorij"}
         PT{"Portugalska"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -281,6 +288,8 @@ hsb{
         VU{"Vanuatu"}
         WF{"Wallis a Futuna"}
         WS{"Samoa"}
+        XA{"pseudo-akcenty"}
+        XB{"pseudo-bidi"}
         XK{"Kosowo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -288,5 +297,20 @@ hsb{
         ZM{"Sambija"}
         ZW{"Simbabwe"}
         ZZ{"njeznaty region"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hongkong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Kongo (Demokratiska republika)"}
+        CG{"Kongo (Republika)"}
+        CI{"Słonowinowy pobrjóh"}
+        FK{"Falklandske kupy (Malwiny)"}
+        NZ{"Aotearoa Nowoseelandska"}
+        TL{"Wuchodny Timor"}
     }
 }

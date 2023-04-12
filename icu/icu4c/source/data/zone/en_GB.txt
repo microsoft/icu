@@ -796,6 +796,9 @@ en_GB{
         "Asia:Ulaanbaatar"{
             ec{"Ulaanbaatar"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -849,9 +852,6 @@ en_GB{
         }
         "Australia:Broken_Hill"{
             ec{"Broken Hill"}
-        }
-        "Australia:Currie"{
-            ec{"Currie"}
         }
         "Australia:Darwin"{
             ec{"Darwin"}
@@ -1082,9 +1082,6 @@ en_GB{
         "Pacific:Efate"{
             ec{"Efate"}
         }
-        "Pacific:Enderbury"{
-            ec{"Enderbury"}
-        }
         "Pacific:Fakaofo"{
             ec{"Fakaofo"}
         }
@@ -1189,6 +1186,9 @@ en_GB{
             sd{"WEST"}
             sg{"WET"}
             ss{"WET"}
+        }
+        "meta:Gulf"{
+            ss{"GTS"}
         }
         gmtZeroFormat{"GMT"}
     }

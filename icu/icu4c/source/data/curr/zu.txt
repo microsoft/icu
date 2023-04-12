@@ -632,7 +632,7 @@ zu{
             "i-East Caribbean Dollar",
         }
         XOF{
-            "CFA",
+            "F CFA",
             "i-West African CFA Franc",
         }
         XPF{
@@ -756,7 +756,6 @@ zu{
         ZMW{"ZK"}
     }
     Currencies%variant{
-        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{

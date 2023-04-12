@@ -72,6 +72,9 @@ sah{
         "Asia:Ulaanbaatar"{
             ec{"Улан Баатар"}
         }
+        "Asia:Urumqi"{
+            ec{"Урумчу"}
+        }
         "Asia:Ust-Nera"{
             ec{"Уус Ньара"}
         }

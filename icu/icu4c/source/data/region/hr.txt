@@ -79,7 +79,7 @@ hr{
         CG{"Kongo - Brazzaville"}
         CH{"Švicarska"}
         CI{"Obala Bjelokosti"}
-        CK{"Cookovi Otoci"}
+        CK{"Cookovi otoci"}
         CL{"Čile"}
         CM{"Kamerun"}
         CN{"Kina"}
@@ -93,14 +93,17 @@ hr{
         CY{"Cipar"}
         CZ{"Češka"}
         DE{"Njemačka"}
+        DG{"Diego Garcia"}
         DJ{"Džibuti"}
         DK{"Danska"}
         DM{"Dominika"}
         DO{"Dominikanska Republika"}
         DZ{"Alžir"}
+        EA{"Ceuta i Melilla"}
         EC{"Ekvador"}
         EE{"Estonija"}
         EG{"Egipat"}
+        EH{"Zapadna Sahara"}
         ER{"Eritreja"}
         ES{"Španjolska"}
         ET{"Etiopija"}
@@ -137,6 +140,7 @@ hr{
         HR{"Hrvatska"}
         HT{"Haiti"}
         HU{"Mađarska"}
+        IC{"Kanarski otoci"}
         ID{"Indonezija"}
         IE{"Irska"}
         IL{"Izrael"}
@@ -186,7 +190,7 @@ hr{
         MN{"Mongolija"}
         MO{"PUP Makao Kina"}
         MP{"Sjevernomarijanski otoci"}
-        MQ{"Martinique"}
+        MQ{"Martinik"}
         MR{"Mauretanija"}
         MS{"Montserrat"}
         MT{"Malta"}
@@ -219,7 +223,7 @@ hr{
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Otoci Pitcairn"}
         PR{"Portoriko"}
-        PS{"Palestinska Samouprava"}
+        PS{"Palestinsko područje"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paragvaj"}
@@ -284,6 +288,8 @@ hr{
         VU{"Vanuatu"}
         WF{"Wallis i Futuna"}
         WS{"Samoa"}
+        XA{"pseudo naglasci"}
+        XB{"pseudo bidi"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +297,22 @@ hr{
         ZM{"Zambija"}
         ZW{"Zimbabve"}
         ZZ{"nepoznato područje"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"Makao"}
+        PS{"Palestina"}
+        UN{"UN"}
+        US{"SAD"}
+    }
+    Countries%variant{
+        CD{"Kongo (DR)"}
+        CG{"Kongo (RK)"}
+        CI{"Bjelokosna Obala"}
+        CZ{"Češka Republika"}
+        FK{"Falklandski otoci (Malvini)"}
+        SZ{"Svazi"}
+        TL{"Istočni Timor"}
     }
 }

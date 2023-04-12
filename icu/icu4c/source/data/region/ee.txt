@@ -90,14 +90,17 @@ ee{
         CY{"Saiprus nutome"}
         CZ{"Tsɛk repɔblik nutome"}
         DE{"Germania nutome"}
+        DG{"Diego Garsia nutome"}
         DJ{"Dzibuti nutome"}
         DK{"Denmark nutome"}
         DM{"Dominika nutome"}
         DO{"Dominika repɔblik nutome"}
         DZ{"Algeria nutome"}
+        EA{"Keuta and Melilla nutome"}
         EC{"Ekuadɔ nutome"}
         EE{"Estonia nutome"}
         EG{"Egypte nutome"}
+        EH{"Ɣetoɖoƒe Sahara nutome"}
         ER{"Eritrea nutome"}
         ES{"Spain nutome"}
         ET{"Etiopia nutome"}
@@ -133,6 +136,7 @@ ee{
         HR{"Kroatsia nutome"}
         HT{"Haiti nutome"}
         HU{"Hungari nutome"}
+        IC{"Kanari ƒudomekpowo nutome"}
         ID{"Indonesia nutome"}
         IE{"Ireland nutome"}
         IL{"Israel nutome"}
@@ -281,5 +285,16 @@ ee{
         ZM{"Zambia nutome"}
         ZW{"Zimbabwe nutome"}
         ZZ{"nutome manya"}
+    }
+    Countries%short{
+        HK{"Hɔng Kɔng nutome"}
+        MO{"Macau nutome"}
+    }
+    Countries%variant{
+        CD{"Kongo demokratik repɔblik nutome"}
+        CG{"Kongo repɔblik nutome"}
+        CI{"Ivory Kost nutome"}
+        FK{"Falkland ƒudomekpowo (Islas Malvinas) nutome"}
+        TL{"Ɣedzeƒe Timɔ nutome"}
     }
 }

@@ -9,6 +9,7 @@ ps_PK{
         " ه ة و ؤ ی ے ي ې ۍ ئ]"
     }
     calendar{
+        default{"gregorian"}
         gregorian{
             DateTimePatterns{
                 "h:mm:ss a zzzz",
@@ -24,6 +25,16 @@ ps_PK{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
+            }
+            DateTimeSkeletons{
+                "ahmmsszzzz",
+                "ahmmssz",
+                "ahmmss",
+                "ahmm",
+                "yMMMMEEEEd",
+                "yMMMMd",
+                "yMMMd",
+                "yMd",
             }
         }
         islamic{

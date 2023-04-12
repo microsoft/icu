@@ -867,6 +867,9 @@ tr{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Batur"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumçi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1936,6 +1939,9 @@ tr{
             ld{"Yekaterinburg Yaz Saati"}
             lg{"Yekaterinburg Saati"}
             ls{"Yekaterinburg Standart Saati"}
+        }
+        "meta:Yukon"{
+            ls{"Yukon Saati"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

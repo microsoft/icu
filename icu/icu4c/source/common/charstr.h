@@ -127,6 +127,9 @@ public:
         return append(s.data(), s.length(), errorCode);
     }
     CharString &append(const char *s, int32_t sLength, UErrorCode &status);
+
+    CharString &appendNumber(int32_t number, UErrorCode &status);
+
     /**
      * Returns a writable buffer for appending and writes the buffer's capacity to
      * resultCapacity. Guarantees resultCapacity>=minCapacity if U_SUCCESS().
@@ -174,8 +177,8 @@ private:
 
     UBool ensureCapacity(int32_t capacity, int32_t desiredCapacityHint, UErrorCode &errorCode);
 
-    CharString(const CharString &other); // forbid copying of this class
-    CharString &operator=(const CharString &other); // forbid copying of this class
+    CharString(const CharString &other) = delete; // forbid copying of this class
+    CharString &operator=(const CharString &other) = delete; // forbid copying of this class
 
     /**
      * Returns U_FILE_ALT_SEP_CHAR if found in string, and U_FILE_SEP_CHAR is not found.

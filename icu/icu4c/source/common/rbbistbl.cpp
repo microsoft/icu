@@ -63,7 +63,7 @@ RBBISymbolTable::~RBBISymbolTable()
 
 
 //
-//  RBBISymbolTable::lookup       This function from the abstract symbol table inteface
+//  RBBISymbolTable::lookup       This function from the abstract symbol table interface
 //                                looks up a variable name and returns a UnicodeString
 //                                containing the substitution text.
 //
@@ -254,8 +254,8 @@ void RBBISymbolTable::rbbiSymtablePrint() const {
         }
         RBBISymbolTableEntry  *s   = (RBBISymbolTableEntry *)e->value.pointer;
         RBBIDebugPrintf("%s\n", CStr(s->key)());
-        RBBINode::printTree(s->val, TRUE);
-        RBBINode::printTree(s->val->fLeftChild, FALSE);
+        RBBINode::printTree(s->val, true);
+        RBBINode::printTree(s->val->fLeftChild, false);
         RBBIDebugPrintf("\n");
     }
 }

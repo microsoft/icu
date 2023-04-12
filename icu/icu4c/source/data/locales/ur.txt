@@ -30,6 +30,8 @@ ur{
         arabext{
             patterns{
                 currencyFormat{"¤#,##0.00"}
+                currencyFormat%alphaNextToNumber{"¤ #,##0.00"}
+                currencyFormat%noCurrency{"#,##0.00"}
                 decimalFormat{"#,##0.###"}
                 percentFormat{"#,##0%"}
                 scientificFormat{"#E0"}
@@ -59,7 +61,10 @@ ur{
             }
             patterns{
                 accountingFormat{"¤#,##0.00;(¤#,##0.00)"}
-                currencyFormat{"¤ #,##0.00"}
+                accountingFormat%alphaNextToNumber{"¤ #,##0.00;(¤ #,##0.00)"}
+                accountingFormat%noCurrency{"#,##0.00;(#,##0.00)"}
+                currencyFormat{"¤#,##0.00"}
+                currencyPatternAppendISO{"{0} ¤¤"}
                 decimalFormat{"#,##0.###"}
                 percentFormat{"#,##0%"}
                 scientificFormat{"#E0"}
@@ -167,6 +172,12 @@ ur{
                         other{"¤ 000 ٹریلین"}
                     }
                 }
+                currencyFormat%alphaNextToNumber{
+                    1000000000000{
+                        one{"¤ 0 ٹریلین"}
+                        other{"¤ 0 ٹریلین"}
+                    }
+                }
                 decimalFormat{
                     1000{
                         one{"0 ہزار"}
@@ -235,6 +246,14 @@ ur{
             }
         }
         minimalPairs{
+            case{
+                nominative{"دن باقی ہے۔ {0}"}
+                oblique{"باقی {0} دن۔"}
+            }
+            gender{
+                feminine{"{0} دنوں کی وارنٹی"}
+                masculine{"استعمال کے {0} دن"}
+            }
             ordinal{
                 other{"دایاں موڑ نمبر {0} مڑیں۔"}
             }
@@ -440,6 +459,22 @@ ur{
                 "{1} {0}",
                 "{1} {0}",
             }
+            DateTimePatterns%atTime{
+                "{1} {0}",
+                "{1} کو {0}",
+                "{1}، {0}",
+                "{1}، {0}",
+            }
+            DateTimeSkeletons{
+                "ahmmsszzzz",
+                "ahmmssz",
+                "ahmmss",
+                "ahmm",
+                "GyMMMMEEEEd",
+                "GyMMMMd",
+                "GyMMMd",
+                "GGGGGyMd",
+            }
             availableFormats{
                 Bh{"h B"}
                 Bhm{"h:mm B"}
@@ -456,6 +491,7 @@ ur{
                 GyMMM{"MMM y G"}
                 GyMMMEd{"E، d MMM، y G"}
                 GyMMMd{"d MMM، y G"}
+                GyMd{"d/M/y GGGGG"}
                 H{"HH"}
                 Hm{"HH:mm"}
                 Hms{"HH:mm:ss"}
@@ -654,6 +690,22 @@ ur{
                 "{1} {0}",
                 "{1} {0}",
             }
+            DateTimePatterns%atTime{
+                "{1} کو {0}",
+                "{1} کو {0}",
+                "{1}، {0}",
+                "{1}، {0}",
+            }
+            DateTimeSkeletons{
+                "ahmmsszzzz",
+                "ahmmssz",
+                "ahmmss",
+                "ahmm",
+                "yMMMMEEEEd",
+                "yMMMMd",
+                "yMMMd",
+                "yyMd",
+            }
             appendItems{
                 Timezone{"{0} {1}"}
             }
@@ -673,6 +725,7 @@ ur{
                 GyMMM{"MMM y G"}
                 GyMMMEd{"E، d MMM، y G"}
                 GyMMMd{"d MMM، y G"}
+                GyMd{"d/M/y GGGGG"}
                 H{"HH"}
                 Hm{"HH:mm"}
                 Hms{"HH:mm:ss"}
@@ -1240,67 +1293,98 @@ ur{
             monthNames{
                 format{
                     abbreviated{
-                        "چتررا",
-                        "ویساکھا",
-                        "جیہائشہ",
-                        "اسدھا",
-                        "سراؤنا",
-                        "بھدرا",
+                        "چیت",
+                        "بیساکھ",
+                        "جیٹھ",
+                        "اساڑھ",
+                        "ساون",
+                        "بھادوں",
                         "اسوینا",
-                        "کارتیکا",
-                        "اگراہانا",
-                        "پوسا",
-                        "میگا",
-                        "پھالگنا",
+                        "کاتک",
+                        "اگہن",
+                        "پوس",
+                        "ماگھ",
+                        "پھاگن",
+                    }
+                    narrow{
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9",
+                        "10",
+                        "11",
+                        "12",
                     }
                     wide{
-                        "چتررا",
-                        "ویساکھا",
-                        "جیہائشہ",
-                        "اسدھا",
-                        "سراؤنا",
-                        "بھدرا",
+                        "چیت",
+                        "بیساکھ",
+                        "جیٹھ",
+                        "اساڑھ",
+                        "ساون",
+                        "بھادوں",
                         "اسوینا",
-                        "کارتیکا",
-                        "اگراہانا",
-                        "پوسا",
-                        "میگا",
-                        "پھالگنا",
+                        "کاتِک",
+                        "اگہن",
+                        "پوس",
+                        "ماگھ",
+                        "پھاگن",
                     }
                 }
                 stand-alone{
                     abbreviated{
-                        "چتررا",
-                        "ویساکھا",
-                        "جیہائشہ",
-                        "اسدھا",
-                        "سراؤنا",
-                        "بھدرا",
+                        "چیت",
+                        "بیساکھ",
+                        "جیٹھ",
+                        "اساڑھ",
+                        "ساون",
+                        "بھادوں",
                         "اسوینا",
-                        "کارتیکا",
-                        "اگراہانا",
-                        "پوسا",
-                        "میگا",
-                        "پھالگنا",
+                        "کاتِک",
+                        "اگہن",
+                        "پوس",
+                        "ماگھ",
+                        "پھاگن",
+                    }
+                    narrow{
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "8",
+                        "9",
+                        "10",
+                        "11",
+                        "12",
                     }
                     wide{
-                        "چتررا",
-                        "ویساکھا",
-                        "جیہائشہ",
-                        "اسدھا",
-                        "سراؤنا",
-                        "بھدرا",
+                        "چیت",
+                        "بیساکھ",
+                        "جیٹھ",
+                        "اساڑھ",
+                        "ساون",
+                        "بھادوں",
                         "اسوینا",
-                        "کارتیکا",
-                        "اگراہانا",
-                        "پوسا",
-                        "میگا",
-                        "پھالگنا",
+                        "کاتِک",
+                        "اگہن",
+                        "پوس",
+                        "ماگھ",
+                        "پھاگن",
                     }
                 }
             }
         }
         islamic{
+            availableFormats{
+                GyMd{"d/M/y GGGGG"}
+            }
             eras{
                 abbreviated{
                     "ہجری",
@@ -1447,6 +1531,22 @@ ur{
                         "بہمن",
                         "اسفند",
                     }
+                }
+            }
+        }
+        roc{
+            eras{
+                abbreviated{
+                    "قبل از جمہوریہ چین",
+                    "جمہوریہ چین",
+                }
+                narrow{
+                    "قبل از جمہوریہ چین",
+                    "جمہوریہ چین",
+                }
+                wide{
+                    "قبل از جمہوریہ چین",
+                    "جمہوریہ چین",
                 }
             }
         }
@@ -2442,6 +2542,79 @@ ur{
                 "[,٫︐﹐，]",
                 "[.․﹒．｡]",
             }
+        }
+    }
+    personNames{
+        foreignSpaceReplacement{" "}
+        initialPattern{
+            initial{"{0}."}
+            initialSequence{"{0} {1}"}
+        }
+        nameOrderLocales{
+            givenFirst{
+                "und",
+                "ur",
+            }
+            surnameFirst{
+                "ja",
+                "ko",
+                "si",
+                "ta",
+                "te",
+                "vi",
+                "yue",
+                "zh",
+            }
+        }
+        namePattern{
+            givenFirst-long-addressing-formal{"{prefix} {surname}"}
+            givenFirst-long-addressing-informal{"{given-informal}"}
+            givenFirst-long-monogram-formal{
+                "{given-monogram-allCaps}{given2-monogram-allCaps}{surname-monogram-a"
+                "llCaps}"
+            }
+            givenFirst-long-monogram-informal{"{given-informal-monogram-allCaps}{surname-monogram-allCaps}"}
+            givenFirst-long-referring-formal{"{given} {given2} {surname} {suffix}"}
+            givenFirst-long-referring-informal{"{given-informal} {surname}"}
+            givenFirst-medium-addressing-formal{"{prefix} {surname}"}
+            givenFirst-medium-addressing-informal{"{given-informal}"}
+            givenFirst-medium-monogram-formal{"{surname-monogram-allCaps}"}
+            givenFirst-medium-monogram-informal{"{given-informal-monogram-allCaps}"}
+            givenFirst-medium-referring-formal{"{given} {given2-initial} {surname} {suffix}"}
+            givenFirst-medium-referring-informal{"{given-informal} {surname}"}
+            givenFirst-short-addressing-formal{"{prefix} {surname}"}
+            givenFirst-short-addressing-informal{"{given-informal}"}
+            givenFirst-short-monogram-formal{"{surname-monogram-allCaps}"}
+            givenFirst-short-monogram-informal{"{given-informal-monogram-allCaps}"}
+            givenFirst-short-referring-formal{"{given-initial} {given2-initial} {surname}"}
+            givenFirst-short-referring-informal{"{given-informal} {surname-initial}"}
+            sorting-long-referring-formal{"{surname}، {given} {given2} {suffix}"}
+            sorting-long-referring-informal{"{surname}، {given-informal}"}
+            sorting-medium-referring-formal{"{surname}، {given} {given2-initial} {suffix}"}
+            sorting-medium-referring-informal{"{surname}، {given-informal}"}
+            sorting-short-referring-formal{"{surname}، {given-initial} {given2-initial}"}
+            sorting-short-referring-informal{"{surname}، {given-informal}"}
+            surnameFirst-long-addressing-formal{"{prefix} {surname}"}
+            surnameFirst-long-addressing-informal{"{given-informal}"}
+            surnameFirst-long-monogram-formal{
+                "{surname-monogram-allCaps}{given-monogram-allCaps}{given2-monogram-a"
+                "llCaps}"
+            }
+            surnameFirst-long-monogram-informal{"{surname-monogram-allCaps}{given-informal-monogram-allCaps}"}
+            surnameFirst-long-referring-formal{"{surname} {given} {given2} {suffix}"}
+            surnameFirst-long-referring-informal{"{surname} {given-informal}"}
+            surnameFirst-medium-addressing-formal{"{prefix} {surname}"}
+            surnameFirst-medium-addressing-informal{"{given-informal}"}
+            surnameFirst-medium-monogram-formal{"{surname-monogram-allCaps}"}
+            surnameFirst-medium-monogram-informal{"{given-informal-monogram-allCaps}"}
+            surnameFirst-medium-referring-formal{"{surname} {given} {given2-initial} {suffix}"}
+            surnameFirst-medium-referring-informal{"{surname} {given-informal}"}
+            surnameFirst-short-addressing-formal{"{prefix} {surname}"}
+            surnameFirst-short-addressing-informal{"{given-informal}"}
+            surnameFirst-short-monogram-formal{"{surname-monogram-allCaps}"}
+            surnameFirst-short-monogram-informal{"{given-informal-monogram-allCaps}"}
+            surnameFirst-short-referring-formal{"{surname} {given-initial} {given2-initial}"}
+            surnameFirst-short-referring-informal{"{surname} {given-initial}"}
         }
     }
 }

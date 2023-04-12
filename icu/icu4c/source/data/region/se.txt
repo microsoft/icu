@@ -91,14 +91,17 @@ se{
         CY{"Kypros"}
         CZ{"Čeahkka"}
         DE{"Duiska"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Dánmárku"}
         DM{"Dominica"}
         DO{"Dominikána dásseváldi"}
         DZ{"Algeria"}
+        EA{"Ceuta ja Melilla"}
         EC{"Ecuador"}
         EE{"Estlánda"}
         EG{"Egypta"}
+        EH{"Oarje-Sahára"}
         ER{"Eritrea"}
         ES{"Spánia"}
         ET{"Etiopia"}
@@ -134,6 +137,7 @@ se{
         HR{"Kroátia"}
         HT{"Haiti"}
         HU{"Ungár"}
+        IC{"Kanáriasullot"}
         ID{"Indonesia"}
         IE{"Irlánda"}
         IL{"Israel"}
@@ -282,5 +286,8 @@ se{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"dovdameahttun guovlu"}
+    }
+    Countries%short{
+        US{"USA"}
     }
 }

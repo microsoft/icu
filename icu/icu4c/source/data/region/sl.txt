@@ -93,14 +93,17 @@ sl{
         CY{"Ciper"}
         CZ{"Češka"}
         DE{"Nemčija"}
+        DG{"Diego Garcia"}
         DJ{"Džibuti"}
         DK{"Danska"}
         DM{"Dominika"}
         DO{"Dominikanska republika"}
         DZ{"Alžirija"}
+        EA{"Ceuta in Melilla"}
         EC{"Ekvador"}
         EE{"Estonija"}
         EG{"Egipt"}
+        EH{"Zahodna Sahara"}
         ER{"Eritreja"}
         ES{"Španija"}
         ET{"Etiopija"}
@@ -137,6 +140,7 @@ sl{
         HR{"Hrvaška"}
         HT{"Haiti"}
         HU{"Madžarska"}
+        IC{"Kanarski otoki"}
         ID{"Indonezija"}
         IE{"Irska"}
         IL{"Izrael"}
@@ -219,7 +223,7 @@ sl{
         PM{"Saint Pierre in Miquelon"}
         PN{"Pitcairn"}
         PR{"Portoriko"}
-        PS{"Palestinska uprava"}
+        PS{"Palestinsko ozemlje"}
         PT{"Portugalska"}
         PW{"Palau"}
         PY{"Paragvaj"}
@@ -284,6 +288,8 @@ sl{
         VU{"Vanuatu"}
         WF{"Wallis in Futuna"}
         WS{"Samoa"}
+        XA{"psevdonaglasi"}
+        XB{"psevdobidi"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +297,24 @@ sl{
         ZM{"Zambija"}
         ZW{"Zimbabve"}
         ZZ{"Neznano ali neveljavno območje"}
+    }
+    Countries%short{
+        GB{"ZK"}
+        HK{"Hongkong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+        UN{"ZN"}
+        US{"ZDA"}
+    }
+    Countries%variant{
+        CD{"Kongo (Demokratična republika Kongo)"}
+        CG{"Kongo (Republika)"}
+        CI{"Côte d’Ivoire"}
+        CZ{"Češka republika"}
+        FK{"Falklandski otoki (Malvini)"}
+        NZ{"Aotearoa Nova Zelandija"}
+        SZ{"Svazi"}
+        TL{"Vzhodni Timor"}
+        TR{"Türkiye"}
     }
 }

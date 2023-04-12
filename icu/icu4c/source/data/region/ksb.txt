@@ -164,7 +164,7 @@ ksb{
         PM{"Santapieli na Mikeloni"}
         PN{"Pitkailni"}
         PR{"Pwetoliko"}
-        PS{"Mamlaka ya Palestina"}
+        PS{"Ukingo wa Maghalibi na Ukanda wa Gaza wa Palestina"}
         PT{"Uleno"}
         PW{"Palau"}
         PY{"Palagwai"}

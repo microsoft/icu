@@ -165,7 +165,7 @@ tzm{
         PM{"Santepyir d Mikelun"}
         PN{"Pitkirn"}
         PR{"Purturiku"}
-        PS{"السلطة الفلسطينية"}
+        PS{"Agemmaḍ Ugut d Ɣazza Ifilisṭiniyen"}
         PT{"Purtuɣal"}
         PW{"Palu"}
         PY{"Paragway"}

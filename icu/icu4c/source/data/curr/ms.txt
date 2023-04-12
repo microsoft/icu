@@ -652,7 +652,7 @@ ms{
             "Dolar Caribbean Timur",
         }
         XOF{
-            "CFA",
+            "F CFA",
             "Franc CFA BCEAO",
         }
         XPF{
@@ -861,9 +861,6 @@ ms{
             other{"Pula Botswana"}
         }
         BYN{
-            other{"rubel lama Belarus"}
-        }
-        BYR{
             other{"Rubel Belarus"}
         }
         BZD{

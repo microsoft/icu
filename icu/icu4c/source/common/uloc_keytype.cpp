@@ -24,7 +24,7 @@
 #include "udataswp.h" /* for InvChar functions */
 
 static UHashtable* gLocExtKeyMap = NULL;
-static icu::UInitOnce gLocExtKeyMapInitOnce = U_INITONCE_INITIALIZER;
+static icu::UInitOnce gLocExtKeyMapInitOnce {};
 
 // bit flags for special types
 typedef enum {
@@ -69,7 +69,7 @@ uloc_key_type_cleanup(void) {
     gKeyTypeStringPool = NULL;
 
     gLocExtKeyMapInitOnce.reset();
-    return TRUE;
+    return true;
 }
 
 U_CDECL_END
@@ -168,10 +168,8 @@ initFromResourceBundle(UErrorCode& sts) {
         }
 
         // look up type map for the key, and walk through the mapping data
-        tmpSts = U_ZERO_ERROR;
-        LocalUResourceBundlePointer typeMapResByKey(ures_getByKey(typeMapRes.getAlias(), legacyKeyId, NULL, &tmpSts));
-        if (U_FAILURE(tmpSts)) {
-            // type map for each key must exist
+        LocalUResourceBundlePointer typeMapResByKey(ures_getByKey(typeMapRes.getAlias(), legacyKeyId, NULL, &sts));
+        if (U_FAILURE(sts)) {
 
             // ICU-20506
             // Note: The code used to call `U_ASSERT(FALSE)` here, but this was changed in ICU-20074
@@ -278,7 +276,7 @@ initFromResourceBundle(UErrorCode& sts) {
                         if (U_FAILURE(sts)) {
                             break;
                         }
-                        // check if this is an alias of canoncal legacy type
+                        // check if this is an alias of canonical legacy type
                         if (uprv_compareInvWithUChar(NULL, legacyTypeId, -1, to, toLen) == 0) {
                             const char* from = ures_getKey(typeAliasDataEntry.getAlias());
                             if (isTZ) {
@@ -361,9 +359,9 @@ init() {
     UErrorCode sts = U_ZERO_ERROR;
     umtx_initOnce(gLocExtKeyMapInitOnce, &initFromResourceBundle, sts);
     if (U_FAILURE(sts)) {
-        return FALSE;
+        return false;
     }
-    return TRUE;
+    return true;
 }
 
 static UBool
@@ -373,7 +371,7 @@ isSpecialTypeCodepoints(const char* val) {
     while (*p) {
         if (*p == '-') {
             if (subtagLen < 4 || subtagLen > 6) {
-                return FALSE;
+                return false;
             }
             subtagLen = 0;
         } else if ((*p >= '0' && *p <= '9') ||
@@ -381,7 +379,7 @@ isSpecialTypeCodepoints(const char* val) {
                     (*p >= 'a' && *p <= 'f')) { // also in EBCDIC
             subtagLen++;
         } else {
-            return FALSE;
+            return false;
         }
         p++;
     }
@@ -395,13 +393,13 @@ isSpecialTypeReorderCode(const char* val) {
     while (*p) {
         if (*p == '-') {
             if (subtagLen < 3 || subtagLen > 8) {
-                return FALSE;
+                return false;
             }
             subtagLen = 0;
         } else if (uprv_isASCIILetter(*p)) {
             subtagLen++;
         } else {
-            return FALSE;
+            return false;
         }
         p++;
     }
@@ -417,7 +415,7 @@ isSpecialTypeRgKeyValue(const char* val) {
                     (subtagLen >= 2 && (*p == 'Z' || *p == 'z')) ) {
             subtagLen++;
         } else {
-            return FALSE;
+            return false;
         }
         p++;
     }
@@ -453,10 +451,10 @@ ulocimp_toLegacyKey(const char* key) {
 U_CFUNC const char*
 ulocimp_toBcpType(const char* key, const char* type, UBool* isKnownKey, UBool* isSpecialType) {
     if (isKnownKey != NULL) {
-        *isKnownKey = FALSE;
+        *isKnownKey = false;
     }
     if (isSpecialType != NULL) {
-        *isSpecialType = FALSE;
+        *isSpecialType = false;
     }
 
     if (!init()) {
@@ -466,14 +464,14 @@ ulocimp_toBcpType(const char* key, const char* type, UBool* isKnownKey, UBool* i
     LocExtKeyData* keyData = (LocExtKeyData*)uhash_get(gLocExtKeyMap, key);
     if (keyData != NULL) {
         if (isKnownKey != NULL) {
-            *isKnownKey = TRUE;
+            *isKnownKey = true;
         }
         LocExtType* t = (LocExtType*)uhash_get(keyData->typeMap.getAlias(), type);
         if (t != NULL) {
             return t->bcpId;
         }
         if (keyData->specialTypes != SPECIALTYPE_NONE) {
-            UBool matched = FALSE;
+            UBool matched = false;
             if (keyData->specialTypes & SPECIALTYPE_CODEPOINTS) {
                 matched = isSpecialTypeCodepoints(type);
             }
@@ -485,7 +483,7 @@ ulocimp_toBcpType(const char* key, const char* type, UBool* isKnownKey, UBool* i
             }
             if (matched) {
                 if (isSpecialType != NULL) {
-                    *isSpecialType = TRUE;
+                    *isSpecialType = true;
                 }
                 return type;
             }
@@ -498,10 +496,10 @@ ulocimp_toBcpType(const char* key, const char* type, UBool* isKnownKey, UBool* i
 U_CFUNC const char*
 ulocimp_toLegacyType(const char* key, const char* type, UBool* isKnownKey, UBool* isSpecialType) {
     if (isKnownKey != NULL) {
-        *isKnownKey = FALSE;
+        *isKnownKey = false;
     }
     if (isSpecialType != NULL) {
-        *isSpecialType = FALSE;
+        *isSpecialType = false;
     }
 
     if (!init()) {
@@ -511,14 +509,14 @@ ulocimp_toLegacyType(const char* key, const char* type, UBool* isKnownKey, UBool
     LocExtKeyData* keyData = (LocExtKeyData*)uhash_get(gLocExtKeyMap, key);
     if (keyData != NULL) {
         if (isKnownKey != NULL) {
-            *isKnownKey = TRUE;
+            *isKnownKey = true;
         }
         LocExtType* t = (LocExtType*)uhash_get(keyData->typeMap.getAlias(), type);
         if (t != NULL) {
             return t->legacyId;
         }
         if (keyData->specialTypes != SPECIALTYPE_NONE) {
-            UBool matched = FALSE;
+            UBool matched = false;
             if (keyData->specialTypes & SPECIALTYPE_CODEPOINTS) {
                 matched = isSpecialTypeCodepoints(type);
             }
@@ -530,7 +528,7 @@ ulocimp_toLegacyType(const char* key, const char* type, UBool* isKnownKey, UBool
             }
             if (matched) {
                 if (isSpecialType != NULL) {
-                    *isSpecialType = TRUE;
+                    *isSpecialType = true;
                 }
                 return type;
             }

@@ -640,7 +640,7 @@ am{
             "የምዕራብ ካሪብያን ዶላር",
         }
         XOF{
-            "CFA",
+            "F CFA",
             "የምዕራብ አፍሪካ ሴፋ ፍራንክ",
         }
         XPF{
@@ -769,7 +769,6 @@ am{
         ZMW{"ZK"}
     }
     Currencies%variant{
-        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{
