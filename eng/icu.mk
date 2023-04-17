@@ -91,19 +91,15 @@ data-$(2): $(TARGET_OBJDIR)/$(1)/.stamp-configure | $(TARGET_OBJDIR)/$(1) $(TARG
 
 endef
 
-ifeq ($(TARGET_OS),browser)
-$(eval $(call TargetBuildTemplate,icudt_browser,icudt))
-$(eval $(call TargetBuildTemplate,hybrid_browser/icudt_browser,icudt_browser))
+ifeq ($(TARGET_ARCHITECTURE),wasm)
+$(eval $(call TargetBuildTemplate,icudt_wasm,icudt))
+$(eval $(call TargetBuildTemplate,icudt_hg_browser,icudt_hg_browser))
 else
 $(eval $(call TargetBuildTemplate,icudt_mobile,icudt))
-$(eval $(call TargetBuildTemplate,hybrid_browser/icudt_mobile,icudt_browser))
 endif
 $(eval $(call TargetBuildTemplate,icudt_CJK,icudt_CJK))
 $(eval $(call TargetBuildTemplate,icudt_no_CJK,icudt_no_CJK))
 $(eval $(call TargetBuildTemplate,icudt_EFIGS,icudt_EFIGS))
-$(eval $(call TargetBuildTemplate,hybrid_browser/icudt_CJK,icudt_CJK_browser))
-$(eval $(call TargetBuildTemplate,hybrid_browser/icudt_no_CJK,icudt_no_CJK_browser))
-$(eval $(call TargetBuildTemplate,hybrid_browser/icudt_EFIGS,icudt_EFIGS_browser))
 
 # build source+data for the main "icudt" filter and only data for the other filters
-all: lib-icudt data-icudt data-icudt_no_CJK data-icudt_EFIGS data-icudt_CJK data-icudt_browser data-icudt_no_CJK_browser data-icudt_EFIGS_browser data-icudt_CJK_browser
+all: lib-icudt data-icudt data-icudt_no_CJK data-icudt_EFIGS data-icudt_CJK data-icudt_hg_browser
