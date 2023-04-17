@@ -45,25 +45,28 @@
 
 void DateIntervalFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &name, char* /*par*/ ) {
     if (exec) logln("TestSuite DateIntervalFormat");
-    switch (index) {
-        TESTCASE(0, testAPI);
-        TESTCASE(1, testFormat);
-        TESTCASE(2, testFormatUserDII);
-        TESTCASE(3, testSetIntervalPatternNoSideEffect);
-        TESTCASE(4, testYearFormats);
-        TESTCASE(5, testStress);
-        TESTCASE(6, testTicket11583_2);
-        TESTCASE(7, testTicket11985);
-        TESTCASE(8, testTicket11669);
-        TESTCASE(9, testTicket12065);
-        TESTCASE(10, testFormattedDateInterval);
-        TESTCASE(11, testCreateInstanceForAllLocales);
-        TESTCASE(12, testTicket20707);
-        TESTCASE(13, testFormatMillisecond);
-        TESTCASE(14, testHourMetacharacters);
-        TESTCASE(15, testContext);
-        default: name = ""; break;
-    }
+    TESTCASE_AUTO_BEGIN;
+    TESTCASE_AUTO(testAPI);
+    TESTCASE_AUTO(testFormat);
+    TESTCASE_AUTO(testFormatUserDII);
+    TESTCASE_AUTO(testSetIntervalPatternNoSideEffect);
+    TESTCASE_AUTO(testYearFormats);
+    TESTCASE_AUTO(testStress);
+    TESTCASE_AUTO(testTicket11583_2);
+    TESTCASE_AUTO(testTicket11985);
+    TESTCASE_AUTO(testTicket11669);
+    TESTCASE_AUTO(testTicket12065);
+    TESTCASE_AUTO(testFormattedDateInterval);
+    TESTCASE_AUTO(testCreateInstanceForAllLocales);
+    TESTCASE_AUTO(testTicket20707);
+    TESTCASE_AUTO(testFormatMillisecond);
+    TESTCASE_AUTO(testHourMetacharacters);
+    TESTCASE_AUTO(testContext);
+    TESTCASE_AUTO(testTicket21222GregorianEraDiff);
+    TESTCASE_AUTO(testTicket21222ROCEraDiff);
+    TESTCASE_AUTO(testTicket21222JapaneseEraDiff);
+    TESTCASE_AUTO(testTicket21939);
+    TESTCASE_AUTO_END;
 }
 
 /**
@@ -78,7 +81,7 @@ void DateIntervalFormatTest::testAPI() {
 
     DateIntervalFormat* dtitvfmt = DateIntervalFormat::createInstance(UDAT_YEAR_MONTH_DAY, status);
     if(U_FAILURE(status)) {
-        dataerrln("ERROR: Could not create DateIntervalFormat (skeleton + default locale) - exitting");
+        dataerrln("ERROR: Could not create DateIntervalFormat (skeleton + default locale) - exiting");
         return;
     } else {
         delete dtitvfmt;
@@ -92,7 +95,7 @@ void DateIntervalFormatTest::testAPI() {
 
     dtitvfmt = DateIntervalFormat::createInstance(UDAT_YEAR_MONTH_DAY, Locale::getJapanese(), status);
     if(U_FAILURE(status)) {
-        dataerrln("ERROR: Could not create DateIntervalFormat (skeleton + locale) - exitting");
+        dataerrln("ERROR: Could not create DateIntervalFormat (skeleton + locale) - exiting");
         return;
     } else {
         delete dtitvfmt;
@@ -110,7 +113,7 @@ void DateIntervalFormatTest::testAPI() {
     delete dtitvinf;
 
     if(U_FAILURE(status)) {
-        dataerrln("ERROR: Could not create DateIntervalFormat (skeleton + DateIntervalInfo + default locale) - exitting");
+        dataerrln("ERROR: Could not create DateIntervalFormat (skeleton + DateIntervalInfo + default locale) - exiting");
         return;
     } else {
         delete dtitvfmt;
@@ -127,7 +130,7 @@ void DateIntervalFormatTest::testAPI() {
     dtitvfmt = DateIntervalFormat::createInstance("EEEdMMMyhms", Locale::getSimplifiedChinese(), *dtitvinf, status);
     delete dtitvinf;
     if(U_FAILURE(status)) {
-        dataerrln("ERROR: Could not create DateIntervalFormat (skeleton + DateIntervalInfo + locale) - exitting");
+        dataerrln("ERROR: Could not create DateIntervalFormat (skeleton + DateIntervalInfo + locale) - exiting");
         return;
     }
     // not deleted, test clone
@@ -252,7 +255,7 @@ void DateIntervalFormatTest::testAPI() {
 
     // ====== test constructor/copy constructor and assignment
     /* they are protected, no test
-    logln("Testing DateIntervalFormat constructor and assigment operator");
+    logln("Testing DateIntervalFormat constructor and assignment operator");
     status = U_ZERO_ERROR;
 
     DateFormat* constFmt = dtitvfmt->getDateFormat()->clone();
@@ -261,19 +264,19 @@ void DateIntervalFormatTest::testAPI() {
 
     DateIntervalFormat* dtifmt = new DateIntervalFormat(fmt, inf, status);
     if(U_FAILURE(status)) {
-        dataerrln("ERROR: Could not create DateIntervalFormat (default) - exitting");
+        dataerrln("ERROR: Could not create DateIntervalFormat (default) - exiting");
         return;
     }
 
     DateIntervalFormat* dtifmt2 = new(dtifmt);
     if ( (*dtifmt) != (*dtifmt2) ) {
-        dataerrln("ERROR: Could not create DateIntervalFormat (default) - exitting");
+        dataerrln("ERROR: Could not create DateIntervalFormat (default) - exiting");
         return;
     }
 
     DateIntervalFormat dtifmt3 = (*dtifmt);
     if ( (*dtifmt) != dtifmt3 ) {
-        dataerrln("ERROR: Could not create DateIntervalFormat (default) - exitting");
+        dataerrln("ERROR: Could not create DateIntervalFormat (default) - exiting");
         return;
     }
 
@@ -291,7 +294,7 @@ void DateIntervalFormatTest::testAPI() {
     status = U_ZERO_ERROR;
     dtitvfmt->format(formattable, res, pos, status);
     if ( status != U_ILLEGAL_ARGUMENT_ERROR ) {
-        dataerrln("ERROR: format non-date-interval object should set U_ILLEGAL_ARGUMENT_ERROR - exitting");
+        dataerrln("ERROR: format non-date-interval object should set U_ILLEGAL_ARGUMENT_ERROR - exiting");
         return;
     }
 
@@ -302,7 +305,7 @@ void DateIntervalFormatTest::testAPI() {
     status = U_ZERO_ERROR;
     dtitvfmt->format(formattable, res, pos, status);
     if ( U_FAILURE(status) ) {
-        dataerrln("ERROR: format date interval failed - exitting");
+        dataerrln("ERROR: format date interval failed - exiting");
         return;
     }
 
@@ -314,7 +317,7 @@ void DateIntervalFormatTest::testAPI() {
     status = U_ZERO_ERROR;
     dtitvfmt->format(*fromCal, *toCal, res, pos, status);
     if ( U_FAILURE(status) ) {
-        dataerrln("ERROR: format date interval failed - exitting");
+        dataerrln("ERROR: format date interval failed - exiting");
         return;
     }
     delete fromCal;
@@ -326,7 +329,7 @@ void DateIntervalFormatTest::testAPI() {
     // TODO: why do I need cast?
     ((Format*)dtitvfmt)->parseObject(res, fmttable, status);
     if ( status != U_INVALID_FORMAT_ERROR ) {
-        dataerrln("ERROR: parse should set U_INVALID_FORMAT_ERROR - exitting");
+        dataerrln("ERROR: parse should set U_INVALID_FORMAT_ERROR - exiting");
         return;
     }
 
@@ -343,8 +346,8 @@ void DateIntervalFormatTest::testAPI() {
         DateInterval * dtitv12 = new DateInterval(date1, date2);
         TimeZone * tzCalif = TimeZone::createTimeZone("US/Pacific");
         TimeZone * tzTokyo = TimeZone::createTimeZone("Asia/Tokyo");
-        UnicodeString fmtCalif = UnicodeString(ctou("Mar 2, 10:30 \\u2013 17:30"));
-        UnicodeString fmtTokyo = UnicodeString(ctou("Mar 3, 03:30 \\u2013 10:30"));
+        UnicodeString fmtCalif = UnicodeString(u"Mar 2, 10:30\u2009\u2013\u200917:30", -1);
+        UnicodeString fmtTokyo = UnicodeString(u"Mar 3, 03:30\u2009\u2013\u200910:30", -1);
 
         dtitvfmt->adoptTimeZone(tzCalif);
         res.remove();
@@ -366,7 +369,7 @@ void DateIntervalFormatTest::testAPI() {
         dtitvfmt->format(dtitv12, res, pos, status);
         if ( U_SUCCESS(status) ) {
             if ( res.compare(fmtTokyo) != 0 ) {
-                errln("ERROR: DateIntervalFormat::format for fmtTokyo, expect " + fmtTokyo + ", get " + res);
+                errln("ERROR: DateIntervalFormat::format for tzTokyo, expect " + fmtTokyo + ", get " + res);
             }
         } else {
             errln("ERROR: DateIntervalFormat::format for tzTokyo, status %s", u_errorName(status));
@@ -419,188 +422,188 @@ void DateIntervalFormatTest::testFormat() {
         "root", "CE 2007 11 10 10:10:10", "CE 2007 12 10 10:10:10", "yM", "2007-11 \\u2013 2007-12",
 
         // test 'H' and 'h', using availableFormat in fallback
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 15:10:10", "Hms", "10:10:10 \\u2013 15:10:10",
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 15:10:10", "hms", "10:10:10 AM \\u2013 3:10:10 PM",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 15:10:10", "Hms", "10:10:10\\u2009\\u2013\\u200915:10:10",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 15:10:10", "hms", "10:10:10\\u202FAM\\u2009\\u2013\\u20093:10:10\\u202FPM",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "MMMM", "October 2007 \\u2013 October 2008",
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "MMM", "Oct 2007 \\u2013 Oct 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "MMMM", "October 2007\\u2009\\u2013\\u2009October 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "MMM", "Oct 2007\\u2009\\u2013\\u2009Oct 2008",
         // test skeleton with both date and time
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMyhm", "Nov 10, 2007, 10:10 AM \\u2013 Nov 20, 2007, 10:10 AM",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMyhm", "Nov 10, 2007, 10:10\\u202FAM\\u2009\\u2013\\u2009Nov 20, 2007, 10:10\\u202FAM",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 11:10:10", "dMMMyhm", "Nov 10, 2007, 10:10 \\u2013 11:10 AM",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 11:10:10", "dMMMyhm", "Nov 10, 2007, 10:10\\u2009\\u2013\\u200911:10\\u202FAM",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 11:10:10", "hms", "10:10:10 AM \\u2013 11:10:10 AM",
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 11:10:10", "Hms", "10:10:10 \\u2013 11:10:10",
-        "en", "CE 2007 11 10 20:10:10", "CE 2007 11 10 21:10:10", "Hms", "20:10:10 \\u2013 21:10:10",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 11:10:10", "hms", "10:10:10\\u202FAM\\u2009\\u2013\\u200911:10:10\\u202FAM",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 11:10:10", "Hms", "10:10:10\\u2009\\u2013\\u200911:10:10",
+        "en", "CE 2007 11 10 20:10:10", "CE 2007 11 10 21:10:10", "Hms", "20:10:10\\u2009\\u2013\\u200921:10:10",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEEEdMMMMy", "Wednesday, October 10, 2007 \\u2013 Friday, October 10, 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEEEdMMMMy", "Wednesday, October 10, 2007\\u2009\\u2013\\u2009Friday, October 10, 2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMMMy", "October 10, 2007 \\u2013 October 10, 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMMMy", "October 10, 2007\\u2009\\u2013\\u2009October 10, 2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMMM", "October 10, 2007 \\u2013 October 10, 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMMM", "October 10, 2007\\u2009\\u2013\\u2009October 10, 2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "MMMMy", "October 2007 \\u2013 October 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "MMMMy", "October 2007\\u2009\\u2013\\u2009October 2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEEEdMMMM", "Wednesday, October 10, 2007 \\u2013 Friday, October 10, 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEEEdMMMM", "Wednesday, October 10, 2007\\u2009\\u2013\\u2009Friday, October 10, 2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdMMMy", "Wed, Oct 10, 2007 \\u2013 Fri, Oct 10, 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdMMMy", "Wed, Oct 10, 2007\\u2009\\u2013\\u2009Fri, Oct 10, 2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMMy", "Oct 10, 2007 \\u2013 Oct 10, 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMMy", "Oct 10, 2007\\u2009\\u2013\\u2009Oct 10, 2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMM", "Oct 10, 2007 \\u2013 Oct 10, 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMM", "Oct 10, 2007\\u2009\\u2013\\u2009Oct 10, 2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "MMMy", "Oct 2007 \\u2013 Oct 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "MMMy", "Oct 2007\\u2009\\u2013\\u2009Oct 2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdMMM", "Wed, Oct 10, 2007 \\u2013 Fri, Oct 10, 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdMMM", "Wed, Oct 10, 2007\\u2009\\u2013\\u2009Fri, Oct 10, 2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdMy", "Wed, 10/10/2007 \\u2013 Fri, 10/10/2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdMy", "Wed, 10/10/2007\\u2009\\u2013\\u2009Fri, 10/10/2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMy", "10/10/2007 \\u2013 10/10/2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMy", "10/10/2007\\u2009\\u2013\\u200910/10/2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dM", "10/10/2007 \\u2013 10/10/2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dM", "10/10/2007\\u2009\\u2013\\u200910/10/2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "My", "10/2007 \\u2013 10/2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "My", "10/2007\\u2009\\u2013\\u200910/2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdM", "Wed, 10/10/2007 \\u2013 Fri, 10/10/2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdM", "Wed, 10/10/2007\\u2009\\u2013\\u2009Fri, 10/10/2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "d", "10/10/2007 \\u2013 10/10/2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "d", "10/10/2007\\u2009\\u2013\\u200910/10/2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "Ed", "10 Wed \\u2013 10 Fri",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "Ed", "10 Wed\\u2009\\u2013\\u200910 Fri",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "y", "2007 \\u2013 2008",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "y", "2007\\u2009\\u2013\\u20092008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "M", "10/2007 \\u2013 10/2008",
-
-
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hm", "10/10/2007, 10:10 AM \\u2013 10/10/2008, 10:10 AM",
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "Hm", "10/10/2007, 10:10 \\u2013 10/10/2008, 10:10",
-        "en", "CE 2007 10 10 20:10:10", "CE 2008 10 10 20:10:10", "Hm", "10/10/2007, 20:10 \\u2013 10/10/2008, 20:10",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hmv", "10/10/2007, 10:10 AM PT \\u2013 10/10/2008, 10:10 AM PT",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hmz", "10/10/2007, 10:10 AM PDT \\u2013 10/10/2008, 10:10 AM PDT",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "h", "10/10/2007, 10 AM \\u2013 10/10/2008, 10 AM",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hv", "10/10/2007, 10 AM PT \\u2013 10/10/2008, 10 AM PT",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hz", "10/10/2007, 10 AM PDT \\u2013 10/10/2008, 10 AM PDT",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEddMMyyyy", "Wed, 10/10/2007 \\u2013 Fri, 10/10/2008",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EddMMy", "Wed, 10/10/2007 \\u2013 Fri, 10/10/2008",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmm", "10/10/2007, 10:10 AM \\u2013 10/10/2008, 10:10 AM",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmmzz", "10/10/2007, 10:10 AM PDT \\u2013 10/10/2008, 10:10 AM PDT",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hms", "10/10/2007, 10:10:10 AM \\u2013 10/10/2008, 10:10:10 AM",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMMMMy", "O 10, 2007 \\u2013 O 10, 2008",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEEEEdM", "W, 10/10/2007 \\u2013 F, 10/10/2008",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEdMMMMy", "Wednesday, October 10 \\u2013 Saturday, November 10, 2007",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMMMy", "October 10 \\u2013 November 10, 2007",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMMM", "October 10 \\u2013 November 10",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMMMy", "October \\u2013 November 2007",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEdMMMM", "Wednesday, October 10 \\u2013 Saturday, November 10",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EdMMMy", "Wed, Oct 10 \\u2013 Sat, Nov 10, 2007",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMMy", "Oct 10 \\u2013 Nov 10, 2007",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMM", "Oct 10 \\u2013 Nov 10",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMMy", "Oct \\u2013 Nov 2007",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EdMMM", "Wed, Oct 10 \\u2013 Sat, Nov 10",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EdMy", "Wed, 10/10/2007 \\u2013 Sat, 11/10/2007",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMy", "10/10/2007 \\u2013 11/10/2007",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "M", "10/2007\\u2009\\u2013\\u200910/2008",
 
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "My", "10/2007 \\u2013 11/2007",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EdM", "Wed, 10/10 \\u2013 Sat, 11/10",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hm", "10/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "Hm", "10/10/2007, 10:10\\u2009\\u2013\\u200910/10/2008, 10:10",
+        "en", "CE 2007 10 10 20:10:10", "CE 2008 10 10 20:10:10", "Hm", "10/10/2007, 20:10\\u2009\\u2013\\u200910/10/2008, 20:10",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "d", "10/10 \\u2013 11/10",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hmv", "10/10/2007, 10:10\\u202FAM PT\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM PT",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "Ed", "10 Wed \\u2013 10 Sat",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hmz", "10/10/2007, 10:10\\u202FAM PDT\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM PDT",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "h", "10/10/2007, 10\\u202FAM\\u2009\\u2013\\u200910/10/2008, 10\\u202FAM",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hv", "10/10/2007, 10\\u202FAM PT\\u2009\\u2013\\u200910/10/2008, 10\\u202FAM PT",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hz", "10/10/2007, 10\\u202FAM PDT\\u2009\\u2013\\u200910/10/2008, 10\\u202FAM PDT",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEddMMyyyy", "Wed, 10/10/2007\\u2009\\u2013\\u2009Fri, 10/10/2008",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EddMMy", "Wed, 10/10/2007\\u2009\\u2013\\u2009Fri, 10/10/2008",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmm", "10/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmmzz", "10/10/2007, 10:10\\u202FAM PDT\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM PDT",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hms", "10/10/2007, 10:10:10\\u202FAM\\u2009\\u2013\\u200910/10/2008, 10:10:10\\u202FAM",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMMMMy", "O 10, 2007\\u2009\\u2013\\u2009O 10, 2008",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEEEEdM", "W, 10/10/2007\\u2009\\u2013\\u2009F, 10/10/2008",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEdMMMMy", "Wednesday, October 10\\u2009\\u2013\\u2009Saturday, November 10, 2007",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMMMy", "October 10\\u2009\\u2013\\u2009November 10, 2007",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMMM", "October 10\\u2009\\u2013\\u2009November 10",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMMMy", "October\\u2009\\u2013\\u2009November 2007",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEdMMMM", "Wednesday, October 10\\u2009\\u2013\\u2009Saturday, November 10",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EdMMMy", "Wed, Oct 10\\u2009\\u2013\\u2009Sat, Nov 10, 2007",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMMy", "Oct 10\\u2009\\u2013\\u2009Nov 10, 2007",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMM", "Oct 10\\u2009\\u2013\\u2009Nov 10",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMMy", "Oct\\u2009\\u2013\\u2009Nov 2007",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EdMMM", "Wed, Oct 10\\u2009\\u2013\\u2009Sat, Nov 10",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EdMy", "Wed, 10/10/2007\\u2009\\u2013\\u2009Sat, 11/10/2007",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMy", "10/10/2007\\u2009\\u2013\\u200911/10/2007",
+
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "My", "10/2007\\u2009\\u2013\\u200911/2007",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EdM", "Wed, 10/10\\u2009\\u2013\\u2009Sat, 11/10",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "d", "10/10\\u2009\\u2013\\u200911/10",
+
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "Ed", "10 Wed\\u2009\\u2013\\u200910 Sat",
 
         "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "y", "2007",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "M", "10 \\u2013 11",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "M", "10\\u2009\\u2013\\u200911",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMM", "Oct \\u2013 Nov",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMM", "Oct\\u2009\\u2013\\u2009Nov",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMMM", "October \\u2013 November",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMMM", "October\\u2009\\u2013\\u2009November",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hm", "10/10/2007, 10:10 AM \\u2013 11/10/2007, 10:10 AM",
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "Hm", "10/10/2007, 10:10 \\u2013 11/10/2007, 10:10",
-        "en", "CE 2007 10 10 20:10:10", "CE 2007 11 10 20:10:10", "Hm", "10/10/2007, 20:10 \\u2013 11/10/2007, 20:10",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hm", "10/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200911/10/2007, 10:10\\u202FAM",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "Hm", "10/10/2007, 10:10\\u2009\\u2013\\u200911/10/2007, 10:10",
+        "en", "CE 2007 10 10 20:10:10", "CE 2007 11 10 20:10:10", "Hm", "10/10/2007, 20:10\\u2009\\u2013\\u200911/10/2007, 20:10",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hmv", "10/10/2007, 10:10 AM PT \\u2013 11/10/2007, 10:10 AM PT",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hmv", "10/10/2007, 10:10\\u202FAM PT\\u2009\\u2013\\u200911/10/2007, 10:10\\u202FAM PT",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hmz", "10/10/2007, 10:10 AM PDT \\u2013 11/10/2007, 10:10 AM PST",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hmz", "10/10/2007, 10:10\\u202FAM PDT\\u2009\\u2013\\u200911/10/2007, 10:10\\u202FAM PST",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "h", "10/10/2007, 10 AM \\u2013 11/10/2007, 10 AM",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "h", "10/10/2007, 10\\u202FAM\\u2009\\u2013\\u200911/10/2007, 10\\u202FAM",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hv", "10/10/2007, 10 AM PT \\u2013 11/10/2007, 10 AM PT",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hv", "10/10/2007, 10\\u202FAM PT\\u2009\\u2013\\u200911/10/2007, 10\\u202FAM PT",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hz", "10/10/2007, 10 AM PDT \\u2013 11/10/2007, 10 AM PST",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hz", "10/10/2007, 10\\u202FAM PDT\\u2009\\u2013\\u200911/10/2007, 10\\u202FAM PST",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEddMMyyyy", "Wed, 10/10/2007 \\u2013 Sat, 11/10/2007",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEddMMyyyy", "Wed, 10/10/2007\\u2009\\u2013\\u2009Sat, 11/10/2007",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EddMMy", "Wed, 10/10/2007 \\u2013 Sat, 11/10/2007",
-
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hhmmzz", "10/10/2007, 10:10 AM PDT \\u2013 11/10/2007, 10:10 AM PST",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hms", "10/10/2007, 10:10:10 AM \\u2013 11/10/2007, 10:10:10 AM",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMMMMy", "O 10 \\u2013 N 10, 2007",
-
-        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEEdM", "W, 10/10 \\u2013 S, 11/10",
-
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMMMy", "Saturday, November 10 \\u2013 Tuesday, November 20, 2007",
-
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMMy", "November 10 \\u2013 20, 2007",
-
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMM", "November 10 \\u2013 20",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EddMMy", "Wed, 10/10/2007\\u2009\\u2013\\u2009Sat, 11/10/2007",
 
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMMM", "Saturday, November 10 \\u2013 Tuesday, November 20",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hhmmzz", "10/10/2007, 10:10\\u202FAM PDT\\u2009\\u2013\\u200911/10/2007, 10:10\\u202FAM PST",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdMMMy", "Sat, Nov 10 \\u2013 Tue, Nov 20, 2007",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hms", "10/10/2007, 10:10:10\\u202FAM\\u2009\\u2013\\u200911/10/2007, 10:10:10\\u202FAM",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMy", "Nov 10 \\u2013 20, 2007",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMMMMy", "O 10\\u2009\\u2013\\u2009N 10, 2007",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMM", "Nov 10 \\u2013 20",
+        "en", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEEdM", "W, 10/10\\u2009\\u2013\\u2009S, 11/10",
+
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMMMy", "Saturday, November 10\\u2009\\u2013\\u2009Tuesday, November 20, 2007",
+
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMMy", "November 10\\u2009\\u2013\\u200920, 2007",
+
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMM", "November 10\\u2009\\u2013\\u200920",
+
+
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMMM", "Saturday, November 10\\u2009\\u2013\\u2009Tuesday, November 20",
+
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdMMMy", "Sat, Nov 10\\u2009\\u2013\\u2009Tue, Nov 20, 2007",
+
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMy", "Nov 10\\u2009\\u2013\\u200920, 2007",
+
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMM", "Nov 10\\u2009\\u2013\\u200920",
 
         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "MMMy", "Nov 2007",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdMMM", "Sat, Nov 10 \\u2013 Tue, Nov 20",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdMMM", "Sat, Nov 10\\u2009\\u2013\\u2009Tue, Nov 20",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdMy", "Sat, 11/10/2007 \\u2013 Tue, 11/20/2007",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdMy", "Sat, 11/10/2007\\u2009\\u2013\\u2009Tue, 11/20/2007",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMy", "11/10/2007 \\u2013 11/20/2007",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMy", "11/10/2007\\u2009\\u2013\\u200911/20/2007",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dM", "11/10 \\u2013 11/20",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dM", "11/10\\u2009\\u2013\\u200911/20",
 
         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "My", "11/2007",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdM", "Sat, 11/10 \\u2013 Tue, 11/20",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdM", "Sat, 11/10\\u2009\\u2013\\u2009Tue, 11/20",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "d", "10 \\u2013 20",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "d", "10\\u2009\\u2013\\u200920",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "Ed", "10 Sat \\u2013 20 Tue",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "Ed", "10 Sat\\u2009\\u2013\\u200920 Tue",
 
         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "y", "2007",
 
@@ -610,35 +613,35 @@ void DateIntervalFormatTest::testFormat() {
 
         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "MMMM", "November",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hm", "11/10/2007, 10:10 AM \\u2013 11/20/2007, 10:10 AM",
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "Hm", "11/10/2007, 10:10 \\u2013 11/20/2007, 10:10",
-        "en", "CE 2007 11 10 20:10:10", "CE 2007 11 20 20:10:10", "Hm", "11/10/2007, 20:10 \\u2013 11/20/2007, 20:10",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hm", "11/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "Hm", "11/10/2007, 10:10\\u2009\\u2013\\u200911/20/2007, 10:10",
+        "en", "CE 2007 11 10 20:10:10", "CE 2007 11 20 20:10:10", "Hm", "11/10/2007, 20:10\\u2009\\u2013\\u200911/20/2007, 20:10",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hmv", "11/10/2007, 10:10 AM PT \\u2013 11/20/2007, 10:10 AM PT",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hmv", "11/10/2007, 10:10\\u202FAM PT\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM PT",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hmz", "11/10/2007, 10:10 AM PST \\u2013 11/20/2007, 10:10 AM PST",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hmz", "11/10/2007, 10:10\\u202FAM PST\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM PST",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "h", "11/10/2007, 10 AM \\u2013 11/20/2007, 10 AM",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "h", "11/10/2007, 10\\u202FAM\\u2009\\u2013\\u200911/20/2007, 10\\u202FAM",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hv", "11/10/2007, 10 AM PT \\u2013 11/20/2007, 10 AM PT",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hv", "11/10/2007, 10\\u202FAM PT\\u2009\\u2013\\u200911/20/2007, 10\\u202FAM PT",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hz", "11/10/2007, 10 AM PST \\u2013 11/20/2007, 10 AM PST",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hz", "11/10/2007, 10\\u202FAM PST\\u2009\\u2013\\u200911/20/2007, 10\\u202FAM PST",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEddMMyyyy", "Sat, 11/10/2007 \\u2013 Tue, 11/20/2007",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEddMMyyyy", "Sat, 11/10/2007\\u2009\\u2013\\u2009Tue, 11/20/2007",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EddMMy", "Sat, 11/10/2007 \\u2013 Tue, 11/20/2007",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EddMMy", "Sat, 11/10/2007\\u2009\\u2013\\u2009Tue, 11/20/2007",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmm", "11/10/2007, 10:10 AM \\u2013 11/20/2007, 10:10 AM",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmm", "11/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmmzz", "11/10/2007, 10:10 AM PST \\u2013 11/20/2007, 10:10 AM PST",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmmzz", "11/10/2007, 10:10\\u202FAM PST\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM PST",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hms", "11/10/2007, 10:10:10 AM \\u2013 11/20/2007, 10:10:10 AM",
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "Hms", "11/10/2007, 10:10:10 \\u2013 11/20/2007, 10:10:10",
-        "en", "CE 2007 11 10 20:10:10", "CE 2007 11 20 20:10:10", "Hms", "11/10/2007, 20:10:10 \\u2013 11/20/2007, 20:10:10",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hms", "11/10/2007, 10:10:10\\u202FAM\\u2009\\u2013\\u200911/20/2007, 10:10:10\\u202FAM",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "Hms", "11/10/2007, 10:10:10\\u2009\\u2013\\u200911/20/2007, 10:10:10",
+        "en", "CE 2007 11 10 20:10:10", "CE 2007 11 20 20:10:10", "Hms", "11/10/2007, 20:10:10\\u2009\\u2013\\u200911/20/2007, 20:10:10",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMMMy", "N 10 \\u2013 20, 2007",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMMMy", "N 10\\u2009\\u2013\\u200920, 2007",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEEdM", "S, 11/10 \\u2013 T, 11/20",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEEdM", "S, 11/10\\u2009\\u2013\\u2009T, 11/20",
 
         "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "EEEEdMMMMy", "Wednesday, January 10, 2007",
 
@@ -681,30 +684,30 @@ void DateIntervalFormatTest::testFormat() {
 
         "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "MMMM", "January",
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hm", "10:00 AM \\u2013 2:10 PM",
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "Hm", "10:00 \\u2013 14:10",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hm", "10:00\\u202FAM\\u2009\\u2013\\u20092:10\\u202FPM",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "Hm", "10:00\\u2009\\u2013\\u200914:10",
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hmv", "10:00 AM \\u2013 2:10 PM PT",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hmv", "10:00\\u202FAM\\u2009\\u2013\\u20092:10\\u202FPM PT",
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hmz", "10:00 AM \\u2013 2:10 PM PST",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hmz", "10:00\\u202FAM\\u2009\\u2013\\u20092:10\\u202FPM PST",
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "h", "10 AM \\u2013 2 PM",
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "H", "10 \\u2013 14",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "h", "10\\u202FAM\\u2009\\u2013\\u20092\\u202FPM",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "H", "10\\u2009\\u2013\\u200914",
 
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hz", "10 AM \\u2013 2 PM PST",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hz", "10\\u202FAM\\u2009\\u2013\\u20092\\u202FPM PST",
 
         "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "EEddMMyyyy", "Wed, 01/10/2007",
 
         "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "EddMMy", "Wed, 01/10/2007",
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hhmm", "10:00 AM \\u2013 2:10 PM",
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "HHmm", "10:00 \\u2013 14:10",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hhmm", "10:00\\u202FAM\\u2009\\u2013\\u20092:10\\u202FPM",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "HHmm", "10:00\\u2009\\u2013\\u200914:10",
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hhmmzz", "10:00 AM \\u2013 2:10 PM PST",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hhmmzz", "10:00\\u202FAM\\u2009\\u2013\\u20092:10\\u202FPM PST",
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hms", "10:00:10 AM \\u2013 2:10:10 PM",
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "Hms", "10:00:10 \\u2013 14:10:10",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hms", "10:00:10\\u202FAM\\u2009\\u2013\\u20092:10:10\\u202FPM",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "Hms", "10:00:10\\u2009\\u2013\\u200914:10:10",
 
         "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "dMMMMMy", "J 10, 2007",
 
@@ -744,23 +747,23 @@ void DateIntervalFormatTest::testFormat() {
 
 
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hm", "10:00 \\u2013 10:20 AM",
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "Hm", "10:00 \\u2013 10:20",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hm", "10:00\\u2009\\u2013\\u200910:20\\u202FAM",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "Hm", "10:00\\u2009\\u2013\\u200910:20",
 
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hmz", "10:00 \\u2013 10:20 AM PST",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hmz", "10:00\\u2009\\u2013\\u200910:20\\u202FAM PST",
 
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hv", "10 AM PT",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hv", "10\\u202FAM PT",
 
 
 
         "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "EddMMy", "Wed, 01/10/2007",
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hhmm", "10:00 \\u2013 10:20 AM",
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "HHmm", "10:00 \\u2013 10:20",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hhmm", "10:00\\u2009\\u2013\\u200910:20\\u202FAM",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "HHmm", "10:00\\u2009\\u2013\\u200910:20",
 
-        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hhmmzz", "10:00 \\u2013 10:20 AM PST",
+        "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hhmmzz", "10:00\\u2009\\u2013\\u200910:20\\u202FAM PST",
 
 
         "en", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "dMMMMMy", "J 10, 2007",
@@ -802,24 +805,24 @@ void DateIntervalFormatTest::testFormat() {
 
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "MMMM", "January",
 
-        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hm", "10:10 AM",
+        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hm", "10:10\\u202FAM",
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "Hm", "10:10",
 
 
-        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hmz", "10:10 AM PST",
+        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hmz", "10:10\\u202FAM PST",
 
-        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "h", "10 AM",
+        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "h", "10\\u202FAM",
 
-        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hv", "10 AM PT",
+        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hv", "10\\u202FAM PT",
 
 
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "EEddMMyyyy", "Wed, 01/10/2007",
 
 
-        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmm", "10:10 AM",
+        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmm", "10:10\\u202FAM",
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "HHmm", "10:10",
 
-        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmmzz", "10:10 AM PST",
+        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmmzz", "10:10\\u202FAM PST",
 
 
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "dMMMMMy", "J 10, 2007",
@@ -835,7 +838,7 @@ void DateIntervalFormatTest::testFormat() {
         "zh", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMMMy", "2007\\u5e7410\\u6708\\u81f311\\u6708",
 
 
-        "zh", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hmv", "2007/10/10\\u6D1B\\u6749\\u77F6\\u65F6\\u95F4 \\u4E0A\\u534810:10 \\u2013 2007/11/10\\u6D1B\\u6749\\u77F6\\u65F6\\u95F4 \\u4E0A\\u534810:10",
+        "zh", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hmv", "2007/10/10 \\u6D1B\\u6749\\u77F6\\u65F6\\u95F4 \\u4E0A\\u534810:10 \\u2013 2007/11/10 \\u6D1B\\u6749\\u77F6\\u65F6\\u95F4 \\u4E0A\\u534810:10",
 
         "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMMMy", "2007\\u5e7411\\u670810\\u65e5\\u661f\\u671f\\u516d\\u81f320\\u65e5\\u661f\\u671f\\u4e8c",
 
@@ -864,9 +867,9 @@ void DateIntervalFormatTest::testFormat() {
         "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "MMM", "11\\u6708", // (fixed expected result per ticket:6626: and others)
 
 
-        "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hmz", "2007/11/10GMT-8 \\u4e0a\\u534810:10 \\u2013 2007/11/20GMT-8 \\u4e0a\\u534810:10",
+        "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hmz", "2007/11/10 GMT-8 \\u4e0a\\u534810:10 \\u2013 2007/11/20 GMT-8 \\u4e0a\\u534810:10",
 
-        "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "h", "2007/11/10\\u4e0a\\u534810\\u65f6 \\u2013 2007/11/20\\u4e0a\\u534810\\u65f6",
+        "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "h", "2007/11/10 \\u4e0a\\u534810\\u65f6 \\u2013 2007/11/20 \\u4e0a\\u534810\\u65f6",
 
         "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "EEEEdMMMMy", "2007\\u5e741\\u670810\\u65e5\\u661f\\u671f\\u4e09", // (fixed expected result per ticket:6626:)
 
@@ -889,45 +892,45 @@ void DateIntervalFormatTest::testFormat() {
 
         "zh", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "h", "\\u4e0a\\u534810\\u65f6",
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEEEdMMMy", "Mittwoch, 10. Okt. 2007 \\u2013 Freitag, 10. Okt. 2008",
+        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEEEdMMMy", "Mittwoch, 10. Okt. 2007\\u2009\\u2013\\u2009Freitag, 10. Okt. 2008",
 
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMM", "10. Okt. 2007 \\u2013 10. Okt. 2008",
+        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMMM", "10. Okt. 2007\\u2009\\u2013\\u200910. Okt. 2008",
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "MMMy", "Okt. 2007 \\u2013 Okt. 2008",
-
-
-        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdMy", "Mi., 10.10.2007 \\u2013 Fr., 10.10.2008",
-
-        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMy", "10.10.2007 \\u2013 10.10.2008",
+        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "MMMy", "Okt. 2007\\u2009\\u2013\\u2009Okt. 2008",
 
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "My", "10.2007 \\u2013 10.2008",
+        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdMy", "Mi., 10.10.2007\\u2009\\u2013\\u2009Fr., 10.10.2008",
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdM", "Mi., 10.10.2007 \\u2013 Fr., 10.10.2008",
+        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "dMy", "10.10.2007\\u2009\\u2013\\u200910.10.2008",
+
+
+        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "My", "10/2007\\u2009\\u2013\\u200910/2008",
+
+        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EdM", "Mi., 10.10.2007\\u2009\\u2013\\u2009Fr., 10.10.2008",
 
 
         "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "y", "2007\\u20132008",
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "M", "10.2007 \\u2013 10.2008",
+        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "M", "10/2007\\u2009\\u2013\\u200910/2008",
 
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hm", "10.10.2007, 10:10 AM \\u2013 10.10.2008, 10:10 AM",
-        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "Hm", "10.10.2007, 10:10 \\u2013 10.10.2008, 10:10",
+        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hm", "10.10.2007, 10:10\\u202FAM\\u2009\\u2013\\u200910.10.2008, 10:10\\u202FAM",
+        "de", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "Hm", "10.10.2007, 10:10\\u2009\\u2013\\u200910.10.2008, 10:10",
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEdMMMy", "Mittwoch, 10. Okt. \\u2013 Samstag, 10. Nov. 2007",
+        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEdMMMy", "Mittwoch, 10. Okt.\\u2009\\u2013\\u2009Samstag, 10. Nov. 2007",
 
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMM", "10. Okt. \\u2013 10. Nov.",
+        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMM", "10. Okt.\\u2009\\u2013\\u200910. Nov.",
 
         "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMMy", "Okt.\\u2013Nov. 2007",
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEdMMM", "Mittwoch, 10. Okt. \\u2013 Samstag, 10. Nov.",
+        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEdMMM", "Mittwoch, 10. Okt.\\u2009\\u2013\\u2009Samstag, 10. Nov.",
 
 
         "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dM", "10.10. \\u2013 10.11.",
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "My", "10.2007 \\u2013 11.2007",
+        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "My", "10/2007\\u2009\\u2013\\u200911/2007",
 
 
         "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "d", "10.10. \\u2013 10.11.",
@@ -938,8 +941,8 @@ void DateIntervalFormatTest::testFormat() {
         "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMM", "Okt.\\u2013Nov.",
 
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hms", "10.10.2007, 10:10:10 AM \\u2013 10.11.2007, 10:10:10 AM",
-        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "Hms", "10.10.2007, 10:10:10 \\u2013 10.11.2007, 10:10:10",
+        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hms", "10.10.2007, 10:10:10\\u202FAM\\u2009\\u2013\\u200910.11.2007, 10:10:10\\u202FAM",
+        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "Hms", "10.10.2007, 10:10:10\\u2009\\u2013\\u200910.11.2007, 10:10:10",
 
         "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMMy", "Samstag, 10. \\u2013 Dienstag, 20. Nov. 2007",
 
@@ -955,7 +958,7 @@ void DateIntervalFormatTest::testFormat() {
 
         "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dM", "10.\\u201320.11.",
 
-        "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "My", "11.2007",
+        "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "My", "11/2007",
 
 
         "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "d", "10.\\u201320.",
@@ -963,7 +966,7 @@ void DateIntervalFormatTest::testFormat() {
         "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "y", "2007",
 
 
-        "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hmv", "10.11.2007, 10:10 AM Los Angeles Zeit \\u2013 20.11.2007, 10:10 AM Los Angeles Zeit",
+        "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hmv", "10.11.2007, 10:10\\u202FAM Los Angeles (Ortszeit)\\u2009\\u2013\\u200920.11.2007, 10:10\\u202FAM Los Angeles (Ortszeit)",
 
         "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "EEEEdMMMy", "Mittwoch, 10. Jan. 2007",
 
@@ -976,15 +979,15 @@ void DateIntervalFormatTest::testFormat() {
 
         /* Following is an important test, because the 'h' in 'Uhr' is interpreted as a pattern
            if not escaped properly. */
-        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "h", "10 Uhr AM \\u2013 2 Uhr PM",
+        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "h", "10 Uhr AM\\u2009\\u2013\\u20092 Uhr PM",
         "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "H", "10\\u201314 Uhr",
 
         "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "EEEEdMMM", "Mittwoch, 10. Jan.",
 
 
-        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hmv", "10:00\\u201310:20 AM Los Angeles Zeit",
+        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hmv", "10:00\\u201310:20\\u202FAM Los Angeles (Ortszeit)",
 
-        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hmz", "10:00\\u201310:20 AM GMT-8",
+        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hmz", "10:00\\u201310:20\\u202FAM GMT-8",
 
         "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "h", "10 Uhr AM",
         "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "H", "10 Uhr",
@@ -995,12 +998,12 @@ void DateIntervalFormatTest::testFormat() {
         "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "EEEEdMMMy", "Mittwoch, 10. Jan. 2007",
 
 
-        "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hmv", "10:10 AM Los Angeles Zeit",
+        "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hmv", "10:10\\u202FAM Los Angeles (Ortszeit)",
 
-        "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hmz", "10:10 AM GMT-8",
+        "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hmz", "10:10\\u202FAM GMT-8",
 
 
-        "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hv", "10 Uhr AM Los Angeles Zeit",
+        "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hv", "10 Uhr AM Los Angeles (Ortszeit)",
 
         "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hz", "10 Uhr AM GMT-8",
 
@@ -1050,17 +1053,17 @@ void DateIntervalFormatTest::testFormat() {
 
         // Tests for Japanese calendar with eras, including new era in 2019 (Heisei 31 through April 30, then new era)
 
-        "en-u-ca-japanese", "H 31 03 15 09:00:00", "H 31 04 15 09:00:00", "GyMMMd", "Mar 15 \\u2013 Apr 15, 31 Heisei",
+        "en-u-ca-japanese", "H 31 03 15 09:00:00", "H 31 04 15 09:00:00", "GyMMMd", "Mar 15\\u2009\\u2013\\u2009Apr 15, 31 Heisei",
 
-        "en-u-ca-japanese", "H 31 03 15 09:00:00", "H 31 04 15 09:00:00", "GGGGGyMd", "3/15/31 \\u2013 4/15/31 H",
+        "en-u-ca-japanese", "H 31 03 15 09:00:00", "H 31 04 15 09:00:00", "GGGGGyMd", "3/15/31\\u2009\\u2013\\u20094/15/31 H",
 
-        "en-u-ca-japanese", "S 64 01 05 09:00:00", "H 1 01 15 09:00:00",  "GyMMMd", "Jan 5, 64 Sh\\u014Dwa \\u2013 Jan 15, 1 Heisei",
+        "en-u-ca-japanese", "S 64 01 05 09:00:00", "H 1 01 15 09:00:00",  "GyMMMd", "Jan 5, 64 Sh\\u014Dwa\\u2009\\u2013\\u2009Jan 15, 1 Heisei",
 
-        "en-u-ca-japanese", "S 64 01 05 09:00:00", "H 1 01 15 09:00:00",  "GGGGGyMd", "1/5/64 S \\u2013 1/15/1 H",
+        "en-u-ca-japanese", "S 64 01 05 09:00:00", "H 1 01 15 09:00:00",  "GGGGGyMd", "1/5/64 S\\u2009\\u2013\\u20091/15/1 H",
  
-        "en-u-ca-japanese", "H 31 04 15 09:00:00", JP_ERA_2019_NARROW " 1 05 15 09:00:00",  "GyMMMd", "Apr 15, 31 Heisei \\u2013 May 15, 1 " JP_ERA_2019_ROOT,
+        "en-u-ca-japanese", "H 31 04 15 09:00:00", JP_ERA_2019_NARROW " 1 05 15 09:00:00",  "GyMMMd", "Apr 15, 31 Heisei\\u2009\\u2013\\u2009May 15, 1 " JP_ERA_2019_ROOT,
 
-        "en-u-ca-japanese", "H 31 04 15 09:00:00", JP_ERA_2019_NARROW " 1 05 15 09:00:00",  "GGGGGyMd", "4/15/31 H \\u2013 5/15/1 " JP_ERA_2019_NARROW,
+        "en-u-ca-japanese", "H 31 04 15 09:00:00", JP_ERA_2019_NARROW " 1 05 15 09:00:00",  "GGGGGyMd", "4/15/31 H\\u2009\\u2013\\u20095/15/1 " JP_ERA_2019_NARROW,
  
  
         "ja-u-ca-japanese", "H 31 03 15 09:00:00", "H 31 04 15 09:00:00", "GyMMMd", "\\u5E73\\u621031\\u5E743\\u670815\\u65E5\\uFF5E4\\u670815\\u65E5",
@@ -1101,48 +1104,63 @@ void DateIntervalFormatTest::testHourMetacharacters() {
         // - In all cases, if the day period of both ends of the range is the same, you only see it once
 
         // baseline (h and H)
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12 \\u2013 1 AM",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12\\u2009\\u2013\\u20091\\u202FAM",
         "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "HH", "00\\u201301 Uhr",
         
         // k and K (ICU-21154 and ICU-21156)
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "0 \\u2013 1 AM",
-        "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "kk", "24\\u201301 Uhr",
+        // (should behave the same as h and H if not overridden in locale ID)
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "12\\u2009\\u2013\\u20091\\u202FAM",
+        "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "kk", "00\\u201301 Uhr",
+        // (overriding hour cycle in locale ID should affect both h and K [or both H and k])
+        "en-u-hc-h11", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "0\\u2009\\u2013\\u20091\\u202FAM",
+        "en-u-hc-h11", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "0\\u2009\\u2013\\u20091\\u202FAM",
+        "de-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "HH", "24\\u201301 Uhr",
+        "de-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "kk", "24\\u201301 Uhr",
+        // (overriding hour cycle to h11 should NOT affect H and k; overriding to h24 should NOT affect h and K)
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "HH", "00\\u2009\\u2013\\u200901",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "kk", "00\\u2009\\u2013\\u200901",
+        "en-u-hc-h11", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "HH", "00\\u2009\\u2013\\u200901",
+        "en-u-hc-h11", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "kk", "00\\u2009\\u2013\\u200901",
+        "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12\\u2009\\u2013\\u20091 Uhr AM",
+        "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "12\\u2009\\u2013\\u20091 Uhr AM",
+        "de-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12\\u2009\\u2013\\u20091 Uhr AM",
+        "de-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "12\\u2009\\u2013\\u20091 Uhr AM",
 
         // different lengths of the 'a' field
-        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "ha", "10 AM \\u2013 1 PM",
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "ha", "12 \\u2013 1 AM",
-        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 12:00:00", "haaaaa", "10 a \\u2013 12 p",
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "haaaaa", "12 \\u2013 1 a",
+        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "ha", "10\\u202FAM\\u2009\\u2013\\u20091\\u202FPM",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "ha", "12\\u2009\\u2013\\u20091\\u202FAM",
+        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 12:00:00", "haaaaa", "10\\u202Fa\\u2009\\u2013\\u200912\\u202Fp",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "haaaaa", "12\\u2009\\u2013\\u20091\\u202Fa",
         
         // j (ICU-21155)
-        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jj", "10 AM \\u2013 1 PM",
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "12 \\u2013 1 AM",
-        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jjjjj", "10 a \\u2013 1 p",
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jjjjj", "12 \\u2013 1 a",
+        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jj", "10\\u202FAM\\u2009\\u2013\\u20091\\u202FPM",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "12\\u2009\\u2013\\u20091\\u202FAM",
+        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jjjjj", "10\\u202Fa\\u2009\\u2013\\u20091\\u202Fp",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jjjjj", "12\\u2009\\u2013\\u20091\\u202Fa",
         "de", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jj", "10\\u201313 Uhr",
         "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "00\\u201301 Uhr",
         "de", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jjjjj", "10\\u201313 Uhr",
         "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jjjjj", "00\\u201301 Uhr",
         
         // b and B
-        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 12:00:00", "hb", "10 AM \\u2013 12 noon",
-        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 12:00:00", "hbbbbb", "10 a \\u2013 12 n",
-        "en", "CE 2010 09 27 13:00:00", "CE 2010 09 27 14:00:00", "hb", "1 \\u2013 2 PM",
-        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "hB", "10 in the morning \\u2013 1 in the afternoon",
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hB", "12 \\u2013 1 at night",
+        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 12:00:00", "hb", "10\\u202FAM\\u2009\\u2013\\u200912\\u202Fnoon",
+        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 12:00:00", "hbbbbb", "10\\u202Fa\\u2009\\u2013\\u200912\\u202Fn",
+        "en", "CE 2010 09 27 13:00:00", "CE 2010 09 27 14:00:00", "hb", "1\\u2009\\u2013\\u20092\\u202FPM",
+        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "hB", "10 in the morning\\u2009\\u2013\\u20091 in the afternoon",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hB", "12\\u2009\\u2013\\u20091 at night",
         
         // J
-        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "J", "10 \\u2013 1",
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "J", "12 \\u2013 1",
+        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "J", "10\\u2009\\u2013\\u20091",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "J", "12\\u2009\\u2013\\u20091",
         "de", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "J", "10\\u201313 Uhr",
         "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "J", "00\\u201301 Uhr",
         
         // C
         // (for English and German, C should do the same thing as j)
-        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CC", "10 AM \\u2013 1 PM",
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "CC", "12 \\u2013 1 AM",
-        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CCCCC", "10 a \\u2013 1 p",
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "CCCCC", "12 \\u2013 1 a",
+        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CC", "10\\u202FAM\\u2009\\u2013\\u20091\\u202FPM",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "CC", "12\\u2009\\u2013\\u20091\\u202FAM",
+        "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CCCCC", "10\\u202Fa\\u2009\\u2013\\u20091\\u202Fp",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "CCCCC", "12\\u2009\\u2013\\u20091\\u202Fa",
         "de", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CC", "10\\u201313 Uhr",
         "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "CC", "00\\u201301 Uhr",
         "de", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CCCCC", "10\\u201313 Uhr",
@@ -1152,8 +1170,8 @@ void DateIntervalFormatTest::testHourMetacharacters() {
         "zh_HK", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "\\u4E0A\\u534812\\u6642\\u81F31\\u6642",
         "zh_HK", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "hB", "\\u4E0A\\u534810\\u6642 \\u2013 \\u4E0B\\u53481\\u6642",
         "zh_HK", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hB", "\\u51CC\\u666812\\u20131\\u6642",
-        "zh_HK", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CC", "\\u4E0A\\u534810\\u6642 \\u2013 \\u4E0B\\u53481\\u6642",
-        "zh_HK", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "CC", "\\u51CC\\u666812\\u20131\\u6642",
+        "zh_HK", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CC", "\\u4E0A\\u534810\\u6642\\u81F3\\u4E0B\\u53481\\u6642",
+        "zh_HK", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "CC", "\\u4E0A\\u534812\\u6642\\u81F31\\u6642",
         "hi_IN", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jj", "10 am \\u2013 1 pm",
         "hi_IN", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "12\\u20131 am",
         "hi_IN", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "hB", "\\u0938\\u0941\\u092C\\u0939 10 \\u2013 \\u0926\\u094B\\u092A\\u0939\\u0930 1",
@@ -1161,14 +1179,26 @@ void DateIntervalFormatTest::testHourMetacharacters() {
         "hi_IN", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CC", "\\u0938\\u0941\\u092C\\u0939 10 \\u2013 \\u0926\\u094B\\u092A\\u0939\\u0930 1",
         "hi_IN", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "CC", "\\u0930\\u093E\\u0924 12\\u20131",
 
-         // regression test for ICU-21342
-         "en_GB", "CE 2010 09 27 00:00:00", "CE 2010 09 27 10:00:00", "kk", "24\\u201310",
-         "en_GB", "CE 2010 09 27 00:00:00", "CE 2010 09 27 11:00:00", "kk", "24\\u201311",
-         "en_GB", "CE 2010 09 27 00:00:00", "CE 2010 09 27 12:00:00", "kk", "24\\u201312",
-         "en_GB", "CE 2010 09 27 00:00:00", "CE 2010 09 27 13:00:00", "kk", "24\\u201313",
+        // regression test for ICU-21342
+        "en-gb-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 10:00:00", "kk", "24\\u201310",
+        "en-gb-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 11:00:00", "kk", "24\\u201311",
+        "en-gb-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 12:00:00", "kk", "24\\u201312",
+        "en-gb-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 13:00:00", "kk", "24\\u201313",
 
-         // regression test for ICU-21343
-         "de", "CE 2010 09 27 01:00:00", "CE 2010 09 27 10:00:00", "KK", "1 \\u2013 10 Uhr AM",
+        // regression test for ICU-21343
+        "de", "CE 2010 09 27 01:00:00", "CE 2010 09 27 10:00:00", "KK", "1\\u2009\\u2013\\u200910 Uhr AM",
+        
+        // regression test for ICU-21154 (single-date ranges should use the same hour cycle as multi-date ranges)
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 00:00:00", "hh", "12\\u202FAM",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12\\u2009\\u2013\\u20091\\u202FAM",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 00:00:00", "KK", "12\\u202FAM",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "12\\u2009\\u2013\\u20091\\u202FAM", // (this was producing "0 - 1\\u202FAM" before)
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 00:00:00", "jj", "12\\u202FAM",
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "12\\u2009\\u2013\\u20091\\u202FAM",
+        
+        // regression test for ICU-21984 (multiple day-period characters in date-interval patterns)
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "MMMdhhmma", "Sep 27, 12:00\\u2009\\u2013\\u20091:00\\u202FAM",
+        "sq", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "Bhm", "12:00\\u2009\\u2013\\u20091:00 e nat\\u00EBs",
     };
     expect(DATA, UPRV_LENGTHOF(DATA));
 }
@@ -1374,7 +1404,7 @@ void DateIntervalFormatTest::testSetIntervalPatternNoSideEffect() {
     }
     UnicodeString expected;
     dtitvinf->getIntervalPattern(ctou("yMd"), UCAL_DATE, expected, ec);
-    dtitvinf->setIntervalPattern(ctou("yMd"), UCAL_DATE, ctou("M/d/y \\u2013 d"), ec);
+    dtitvinf->setIntervalPattern(ctou("yMd"), UCAL_DATE, ctou("M/d/y\\u2009\\u2013\\u2009d"), ec);
     if (U_FAILURE(ec)) {
         errln("Failure encountered: %s", u_errorName(ec));
         return;
@@ -1416,7 +1446,7 @@ void DateIntervalFormatTest::testYearFormats() {
             return;
         }
         UnicodeString actual;
-        UnicodeString expected(ctou("4/26/0113 \\u2013 4/28/0113"));
+        UnicodeString expected(ctou("4/26/0113\\u2009\\u2013\\u20094/28/0113"));
         FieldPosition pos;
         dif->format(*fromTime, *toTime, actual, pos, status);
         if (U_FAILURE(status)) {
@@ -1434,7 +1464,7 @@ void DateIntervalFormatTest::testYearFormats() {
             return;
         }
         UnicodeString actual;
-        UnicodeString expected(ctou("4/26/13 \\u2013 4/28/13"));
+        UnicodeString expected(ctou("4/26/13\\u2009\\u2013\\u20094/28/13"));
         FieldPosition pos(FieldPosition::DONT_CARE);
         dif->format(*fromTime, *toTime, actual, pos, status);
         if (U_FAILURE(status)) {
@@ -1452,7 +1482,7 @@ void DateIntervalFormatTest::testYearFormats() {
             return;
         }
         UnicodeString actual;
-        UnicodeString expected(ctou("4/26/113 \\u2013 4/28/113"));
+        UnicodeString expected(ctou("4/26/113\\u2009\\u2013\\u20094/28/113"));
         FieldPosition pos(FieldPosition::DONT_CARE);
         dif->format(*fromTime, *toTime, actual, pos, status);
         if (U_FAILURE(status)) {
@@ -1509,7 +1539,7 @@ void DateIntervalFormatTest::expectUserDII(const char** data,
         char mesg[1000];
         PRINTMESG("interval format using user defined DateIntervalInfo\n");
         str.extract(0,  str.length(), result, "UTF-8");
-        sprintf(mesg, "interval date: %s\n", result);
+        snprintf(mesg, sizeof(mesg), "interval date: %s\n", result);
         PRINTMESG(mesg);
 #endif
         delete dtitvfmt;
@@ -1632,7 +1662,7 @@ void DateIntervalFormatTest::stress(const char** data, int32_t data_length,
 #ifdef DTIFMTTS_DEBUG
     char result[1000];
     char mesg[1000];
-    sprintf(mesg, "locale: %s\n", locName);
+    snprintf(mesg, sizeof(mesg), "locale: %s\n", locName);
     PRINTMESG(mesg);
 #endif
 
@@ -1642,7 +1672,7 @@ void DateIntervalFormatTest::stress(const char** data, int32_t data_length,
         const char* datestr = data[i++];
         const char* datestr_2 = data[i++];
 #ifdef DTIFMTTS_DEBUG
-        sprintf(mesg, "original date: %s - %s\n", datestr, datestr_2);
+        snprintf(mesg, sizeof(mesg), "original date: %s - %s\n", datestr, datestr_2);
         PRINTMESG(mesg)
 #endif
         UDate date = ref.parse(ctou(datestr), ec);
@@ -1676,10 +1706,10 @@ void DateIntervalFormatTest::stress(const char** data, int32_t data_length,
             if (!assertSuccess("format", ec)) return;
 #ifdef DTIFMTTS_DEBUG
             oneSkeleton.extract(0,  oneSkeleton.length(), result, "UTF-8");
-            sprintf(mesg, "interval by skeleton: %s\n", result);
+            snprintf(mesg, sizeof(mesg), "interval by skeleton: %s\n", result);
             PRINTMESG(mesg)
             str.extract(0,  str.length(), result, "UTF-8");
-            sprintf(mesg, "interval date: %s\n", result);
+            snprintf(mesg, sizeof(mesg), "interval date: %s\n", result);
             PRINTMESG(mesg)
 #endif
             delete dtitvfmt;
@@ -1703,7 +1733,7 @@ void DateIntervalFormatTest::stress(const char** data, int32_t data_length,
 #ifdef DTIFMTTS_DEBUG
             PRINTMESG("interval format using user defined DateIntervalInfo\n");
             str.extract(0,  str.length(), result, "UTF-8");
-            sprintf(mesg, "interval date: %s\n", result);
+            snprintf(mesg, sizeof(mesg), "interval date: %s\n", result);
             PRINTMESG(mesg)
 #endif
         } else {
@@ -1726,7 +1756,7 @@ void DateIntervalFormatTest::testTicket11583_2() {
     DateInterval interval((UDate) 1232364615000.0, (UDate) 1328787015000.0);
     UnicodeString appendTo;
     FieldPosition fpos(FieldPosition::DONT_CARE);
-    UnicodeString expected("ene. de 2009 \\u2013 feb. de 2012");
+    UnicodeString expected("ene de 2009\\u2009\\u2013\\u2009feb de 2012");
     assertEquals(
             "",
             expected.unescape(),
@@ -1746,7 +1776,7 @@ void DateIntervalFormatTest::testTicket11985() {
     }
     UnicodeString pattern;
     static_cast<const SimpleDateFormat*>(fmt->getDateFormat())->toPattern(pattern);
-    assertEquals("Format pattern", "h:mm a", pattern);
+    assertEquals("Format pattern", u"h:mm\u202Fa", pattern);
 }
 
 // Ticket 11669 - thread safety of DateIntervalFormat::format(). This test failed before
@@ -1845,7 +1875,7 @@ void DateIntervalFormatTest::testFormattedDateInterval() {
 
     {
         const char16_t* message = u"FormattedDateInterval test 1";
-        const char16_t* expectedString = u"July 20 \u2013 25, 2018";
+        const char16_t* expectedString = u"July 20\u2009\u2013\u200925, 2018";
         LocalPointer<Calendar> input1(Calendar::createInstance("en-GB", status));
         if (status.errIfFailureAndReset()) { return; }
         LocalPointer<Calendar> input2(Calendar::createInstance("en-GB", status));
@@ -1899,7 +1929,7 @@ void DateIntervalFormatTest::testFormattedDateInterval() {
         // Let input1 be July 20, 2018 and input2 be August 3, 2018:
         FormattedDateInterval result = fmt->formatToValue(*input1, *input2, status);
         assertEquals("Expected output from format",
-            u"July 20 \u2013 August 3, 2018", result.toString(status));
+            u"July 20\u2009\u2013\u2009August 3, 2018", result.toString(status));
         ConstrainedFieldPosition cfpos;
         cfpos.constrainField(UFIELD_CATEGORY_DATE_INTERVAL_SPAN, 0);
         if (result.nextPosition(cfpos, status)) {
@@ -1956,7 +1986,7 @@ void DateIntervalFormatTest::testCreateInstanceForAllLocales() {
     for (int32_t i = 0; i < locale_count; i++) {
         std::unique_ptr<icu::StringEnumeration> calendars(
             icu::Calendar::getKeywordValuesForLocale(
-                "calendar", locales[i], FALSE, status));
+                "calendar", locales[i], false, status));
         int32_t calendar_count = calendars->count(status);
         if (status.errIfFailureAndReset()) { break; }
         // In quick mode, only run 1/5 of locale combination
@@ -2010,51 +2040,51 @@ void DateIntervalFormatTest::testFormatMillisecond() {
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 321, "msSS",   u"23:45.32"},
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 321, "msSSS",  u"23:45.321"},
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "ms",     u"23:45"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "msS",    u"23:45.3 \u2013 23:45.9"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "msSS",   u"23:45.32 \u2013 23:45.98"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "msSSS",  u"23:45.321 \u2013 23:45.987"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "ms",     u"23:45 \u2013 23:46"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "msS",    u"23:45.3 \u2013 23:46.9"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "msSS",   u"23:45.32 \u2013 23:46.98"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "msSSS",  u"23:45.321 \u2013 23:46.987"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "ms",     u"23:45 \u2013 24:45"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "msS",    u"23:45.3 \u2013 24:45.9"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "msSS",   u"23:45.32 \u2013 24:45.98"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "msSSS",  u"23:45.321 \u2013 24:45.987"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "msS",    u"23:45.3\u2009\u2013\u200923:45.9"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "msSS",   u"23:45.32\u2009\u2013\u200923:45.98"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "msSSS",  u"23:45.321\u2009\u2013\u200923:45.987"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "ms",     u"23:45\u2009\u2013\u200923:46"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "msS",    u"23:45.3\u2009\u2013\u200923:46.9"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "msSS",   u"23:45.32\u2009\u2013\u200923:46.98"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "msSSS",  u"23:45.321\u2009\u2013\u200923:46.987"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "ms",     u"23:45\u2009\u2013\u200924:45"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "msS",    u"23:45.3\u2009\u2013\u200924:45.9"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "msSS",   u"23:45.32\u2009\u2013\u200924:45.98"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "msSSS",  u"23:45.321\u2009\u2013\u200924:45.987"},
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 321, "s",      u"45"},
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 321, "sS",     u"45.3"},
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 321, "sSS",    u"45.32"},
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 321, "sSSS",   u"45.321"},
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "s",      u"45"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "sS",     u"45.3 \u2013 45.9"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "sSS",    u"45.32 \u2013 45.98"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "sSSS",   u"45.321 \u2013 45.987"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "s",      u"45 \u2013 46"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "sS",     u"45.3 \u2013 46.9"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "sSS",    u"45.32 \u2013 46.98"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "sSSS",   u"45.321 \u2013 46.987"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "s",      u"45 \u2013 45"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "sS",     u"45.3 \u2013 45.9"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "sSS",    u"45.32 \u2013 45.98"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "sSSS",   u"45.321 \u2013 45.987"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "sS",     u"45.3\u2009\u2013\u200945.9"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "sSS",    u"45.32\u2009\u2013\u200945.98"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "sSSS",   u"45.321\u2009\u2013\u200945.987"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "s",      u"45\u2009\u2013\u200946"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "sS",     u"45.3\u2009\u2013\u200946.9"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "sSS",    u"45.32\u2009\u2013\u200946.98"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "sSSS",   u"45.321\u2009\u2013\u200946.987"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "s",      u"45\u2009\u2013\u200945"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "sS",     u"45.3\u2009\u2013\u200945.9"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "sSS",    u"45.32\u2009\u2013\u200945.98"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "sSSS",   u"45.321\u2009\u2013\u200945.987"},
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 321, "S",      u"3"},
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 321, "SS",     u"32"},
         { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 321, "SSS",    u"321"},
 
         // Same millisecond but in different second.
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 321, "S",      u"3 \u2013 3"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 321, "SS",     u"32 \u2013 32"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 321, "SSS",    u"321 \u2013 321"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 321, "S",      u"3\u2009\u2013\u20093"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 321, "SS",     u"32\u2009\u2013\u200932"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 321, "SSS",    u"321\u2009\u2013\u2009321"},
 
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "S",      u"3 \u2013 9"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "SS",     u"32 \u2013 98"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "SSS",    u"321 \u2013 987"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "S",      u"3 \u2013 9"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "SS",     u"32 \u2013 98"},
-        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "SSS",    u"321 \u2013 987"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "S",      u"3 \u2013 9"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "SS",     u"32 \u2013 98"},
-        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "SSS",    u"321 \u2013 987"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "S",      u"3\u2009\u2013\u20099"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "SS",     u"32\u2009\u2013\u200998"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 45, 987, "SSS",    u"321\u2009\u2013\u2009987"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "S",      u"3\u2009\u2013\u20099"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "SS",     u"32\u2009\u2013\u200998"},
+        { 2019, 2, 10, 1, 23, 45, 321, 1, 23, 46, 987, "SSS",    u"321\u2009\u2013\u2009987"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "S",      u"3\u2009\u2013\u20099"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "SS",     u"32\u2009\u2013\u200998"},
+        { 2019, 2, 10, 1, 23, 45, 321, 2, 24, 45, 987, "SSS",    u"321\u2009\u2013\u2009987"},
         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, nullptr, nullptr},
     };
 
@@ -2102,15 +2132,15 @@ void DateIntervalFormatTest::testTicket20707() {
     // Clomuns: hh, HH, kk, KK, jj, JJs, CC
     UnicodeString expected[][7] = {
         // Hour-cycle: k
-        {u"12 AM", u"24", u"24", u"12 AM", u"24", u"0 (hour: 24)", u"12 AM"},
+        {u"12\u202FAM", u"24", u"24", u"12\u202FAM", u"24", u"0 (hour: 24)", u"12\u202FAM"},
         // Hour-cycle: H
-        {u"12 AM", u"00", u"00", u"12 AM", u"00", u"0 (hour: 00)", u"12 AM"},
+        {u"12\u202FAM", u"00", u"00", u"12\u202FAM", u"00", u"0 (hour: 00)", u"12\u202FAM"},
         // Hour-cycle: h
-        {u"12 AM", u"00", u"00", u"12 AM", u"12 AM", u"0 (hour: 12)", u"12 AM"},
+        {u"12\u202FAM", u"00", u"00", u"12\u202FAM", u"12\u202FAM", u"0 (hour: 12)", u"12\u202FAM"},
         // Hour-cycle: K
-        {u"0 AM", u"00", u"00", u"0 AM", u"0 AM", u"0 (hour: 00)", u"0 AM"},
-        {u"12 AM", u"00", u"00", u"12 AM", u"12 AM", u"0 (hour: 12)", u"12 AM"},
-        {u"12 AM", u"00", u"00", u"12 AM", u"12 AM", u"0 (hour: 12)", u"12 AM"},
+        {u"0\u202FAM", u"00", u"00", u"0\u202FAM", u"0\u202FAM", u"0 (hour: 00)", u"0\u202FAM"},
+        {u"12\u202FAM", u"00", u"00", u"12\u202FAM", u"12\u202FAM", u"0 (hour: 12)", u"12\u202FAM"},
+        {u"12\u202FAM", u"00", u"00", u"12\u202FAM", u"12\u202FAM", u"0 (hour: 12)", u"12\u202FAM"},
         // Hour-cycle: K
         {u"0 am", u"00", u"00", u"0 am", u"0 am", u"0 (\u0918\u0902\u091F\u093E: 00)", u"\u0930\u093E\u0924 0"}
     };
@@ -2132,6 +2162,226 @@ void DateIntervalFormatTest::testTicket20707() {
             assertEquals("Formatted result", expected[i][j++], result);
         }
         i++;
+    }
+}
+
+void DateIntervalFormatTest::getCategoryAndField(
+        const FormattedDateInterval& formatted,
+        std::vector<int32_t>& categories,
+        std::vector<int32_t>& fields,
+        IcuTestErrorCode& status) {
+    categories.clear();
+    fields.clear();
+    ConstrainedFieldPosition cfpos;
+    while (formatted.nextPosition(cfpos, status)) {
+        categories.push_back(cfpos.getCategory());
+        fields.push_back(cfpos.getField());
+    }
+}
+
+void DateIntervalFormatTest::verifyCategoryAndField(
+        const FormattedDateInterval& formatted,
+        const std::vector<int32_t>& categories,
+        const std::vector<int32_t>& fields,
+        IcuTestErrorCode& status) {
+    ConstrainedFieldPosition cfpos;
+    int32_t i = 0;
+    while (formatted.nextPosition(cfpos, status)) {
+        assertEquals("Category", cfpos.getCategory(), categories[i]);
+        assertEquals("Field", cfpos.getField(), fields[i]);
+        i++;
+    }
+}
+
+void DateIntervalFormatTest::testTicket21222GregorianEraDiff() {
+    IcuTestErrorCode status(*this, "   ");
+
+    LocalPointer<Calendar> cal(Calendar::createInstance(*TimeZone::getGMT(), status));
+    if (U_FAILURE(status)) {
+        errln("Failure encountered: %s", u_errorName(status));
+        return;
+    }
+    std::vector<int32_t> expectedCategory;
+    std::vector<int32_t> expectedField;
+
+    // Test Gregorian calendar
+    LocalPointer<DateIntervalFormat> g(
+        DateIntervalFormat::createInstance(
+            u"h", Locale("en"), status));
+    if (U_FAILURE(status)) {
+        errln("Failure encountered: %s", u_errorName(status));
+        return;
+    }
+    g->setTimeZone(*(TimeZone::getGMT()));
+    cal->setTime(Calendar::getNow(), status);
+    cal->set(123, UCAL_APRIL, 5, 6, 0);
+    FormattedDateInterval formatted;
+
+    UDate date0123Apr5AD = cal->getTime(status);
+
+    cal->set(UCAL_YEAR, 124);
+    UDate date0124Apr5AD = cal->getTime(status);
+
+    cal->set(UCAL_ERA, 0);
+    UDate date0124Apr5BC = cal->getTime(status);
+
+    cal->set(UCAL_YEAR, 123);
+    UDate date0123Apr5BC = cal->getTime(status);
+
+    DateInterval bothAD(date0123Apr5AD, date0124Apr5AD);
+    DateInterval bothBC(date0124Apr5BC, date0123Apr5BC);
+    DateInterval BCtoAD(date0123Apr5BC, date0124Apr5AD);
+
+    formatted = g->formatToValue(bothAD, status);
+    assertEquals("Gregorian - calendar both dates in AD",
+                 u"4/5/123, 6\u202FAM\u2009\u2013\u20094/5/124, 6\u202FAM",
+                 formatted.toString(status));
+
+    formatted = g->formatToValue(bothBC, status);
+    assertEquals("Gregorian - calendar both dates in BC",
+                 u"4/5/124, 6\u202FAM\u2009\u2013\u20094/5/123, 6\u202FAM",
+                 formatted.toString(status));
+
+    formatted = g->formatToValue(BCtoAD, status);
+    assertEquals("Gregorian - BC to AD",
+                 u"4/5/123 BC, 6\u202FAM\u2009\u2013\u20094/5/124 AD, 6\u202FAM",
+                 formatted.toString(status));
+}
+
+void DateIntervalFormatTest::testTicket21222ROCEraDiff() {
+    IcuTestErrorCode status(*this, "testTicket21222ROCEraDiff");
+
+    LocalPointer<Calendar> cal(Calendar::createInstance(*TimeZone::getGMT(), status));
+    if (U_FAILURE(status)) {
+        errln("Failure encountered: %s", u_errorName(status));
+        return;
+    }
+    std::vector<int32_t> expectedCategory;
+    std::vector<int32_t> expectedField;
+
+    // Test roc calendar
+    LocalPointer<DateIntervalFormat> roc(
+        DateIntervalFormat::createInstance(
+            u"h", Locale("zh-Hant-TW@calendar=roc"), status));
+    if (U_FAILURE(status)) {
+        errln("Failure encountered: %s", u_errorName(status));
+        return;
+    }
+    roc->setTimeZone(*(TimeZone::getGMT()));
+
+    FormattedDateInterval formatted;
+    // set date1910Jan2 to 1910/1/2 AD which is prior to MG
+    cal->set(1910, UCAL_JANUARY, 2, 6, 0);
+    UDate date1910Jan2 = cal->getTime(status);
+
+    // set date1911Jan2 to 1911/1/2 AD which is also prior to MG
+    cal->set(UCAL_YEAR, 1911);
+    UDate date1911Jan2 = cal->getTime(status);
+
+    // set date1912Jan2 to 1912/1/2 AD which is after MG
+    cal->set(UCAL_YEAR, 1912);
+    UDate date1912Jan2 = cal->getTime(status);
+
+    // set date1913Jan2 to 1913/1/2 AD which is also after MG
+    cal->set(UCAL_YEAR, 1913);
+    UDate date1913Jan2 = cal->getTime(status);
+
+    DateInterval bothBeforeMG(date1910Jan2, date1911Jan2);
+    DateInterval beforeAfterMG(date1911Jan2, date1913Jan2);
+    DateInterval bothAfterMG(date1912Jan2, date1913Jan2);
+
+    formatted = roc->formatToValue(bothAfterMG, status);
+    assertEquals("roc calendar - both dates in MG Era",
+                 u"民國1/1/2 上午6時\u2009\u2013\u2009民國2/1/2 上午6時",
+                 formatted.toString(status));
+    getCategoryAndField(formatted, expectedCategory,
+                        expectedField, status);
+
+    formatted = roc->formatToValue(beforeAfterMG, status);
+    assertEquals("roc calendar - prior MG Era and in MG Era",
+                 u"民國前1/1/2 上午6時\u2009\u2013\u2009民國2/1/2 上午6時",
+                 formatted.toString(status));
+    verifyCategoryAndField(formatted, expectedCategory, expectedField, status);
+
+    formatted = roc->formatToValue(bothBeforeMG, status);
+    assertEquals("roc calendar - both dates prior MG Era",
+                 u"民國前2/1/2 上午6時\u2009\u2013\u2009民國前1/1/2 上午6時",
+                 formatted.toString(status));
+    verifyCategoryAndField(formatted, expectedCategory, expectedField, status);
+}
+
+void DateIntervalFormatTest::testTicket21222JapaneseEraDiff() {
+    IcuTestErrorCode status(*this, "testTicket21222JapaneseEraDiff");
+
+    LocalPointer<Calendar> cal(Calendar::createInstance(*TimeZone::getGMT(), status));
+    if (U_FAILURE(status)) {
+        errln("Failure encountered: %s", u_errorName(status));
+        return;
+    }
+    std::vector<int32_t> expectedCategory;
+    std::vector<int32_t> expectedField;
+
+    // Test roc calendar
+    // Test Japanese calendar
+    LocalPointer<DateIntervalFormat> japanese(
+        DateIntervalFormat::createInstance(
+            u"h", Locale("ja@calendar=japanese"), status));
+    if (U_FAILURE(status)) {
+        errln("Failure encountered: %s", u_errorName(status));
+        return;
+    }
+    japanese->setTimeZone(*(TimeZone::getGMT()));
+
+    FormattedDateInterval formatted;
+
+    cal->set(2019, UCAL_MARCH, 2, 6, 0);
+    UDate date2019Mar2 = cal->getTime(status);
+
+    cal->set(UCAL_MONTH, UCAL_APRIL);
+    cal->set(UCAL_DAY_OF_MONTH, 3);
+    UDate date2019Apr3 = cal->getTime(status);
+
+    cal->set(UCAL_MONTH, UCAL_MAY);
+    cal->set(UCAL_DAY_OF_MONTH, 4);
+    UDate date2019May4 = cal->getTime(status);
+
+    cal->set(UCAL_MONTH, UCAL_JUNE);
+    cal->set(UCAL_DAY_OF_MONTH, 5);
+    UDate date2019Jun5 = cal->getTime(status);
+
+    DateInterval bothBeforeReiwa(date2019Mar2, date2019Apr3);
+    DateInterval beforeAfterReiwa(date2019Mar2, date2019May4);
+    DateInterval bothAfterReiwa(date2019May4, date2019Jun5);
+
+    formatted = japanese->formatToValue(bothAfterReiwa, status);
+    assertEquals("japanese calendar - both dates in Reiwa",
+                 u"R1/5/4 午前6時～R1/6/5 午前6時",
+                 formatted.toString(status));
+    getCategoryAndField(formatted, expectedCategory,
+                        expectedField, status);
+
+    formatted = japanese->formatToValue(bothBeforeReiwa, status);
+    assertEquals("japanese calendar - both dates before Reiwa",
+                 u"H31/3/2 午前6時～H31/4/3 午前6時",
+                 formatted.toString(status));
+    verifyCategoryAndField(formatted, expectedCategory, expectedField, status);
+
+    formatted = japanese->formatToValue(beforeAfterReiwa, status);
+    assertEquals("japanese calendar - date before and in Reiwa",
+                 u"H31/3/2 午前6時～R1/5/4 午前6時",
+                 formatted.toString(status));
+    verifyCategoryAndField(formatted, expectedCategory, expectedField, status);
+}
+
+void DateIntervalFormatTest::testTicket21939() {
+    IcuTestErrorCode err(*this, "testTicket21939");
+    LocalPointer<DateIntervalFormat> dif(DateIntervalFormat::createInstance(u"rMdhm", Locale::forLanguageTag("en-u-ca-chinese", err), err));
+    
+    if (assertSuccess("Error creating DateIntervalFormat", err)) {
+        const DateFormat* df = dif->getDateFormat();
+        const SimpleDateFormat* sdf = dynamic_cast<const SimpleDateFormat*>(df);
+        UnicodeString pattern;
+        assertEquals("Wrong pattern", u"M/d/r, h:mm\u202Fa", sdf->toPattern(pattern));
     }
 }
 

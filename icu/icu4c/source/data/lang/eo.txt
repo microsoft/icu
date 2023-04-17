@@ -100,6 +100,8 @@ eo{
         pl{"pola"}
         ps{"paŝtoa"}
         pt{"portugala"}
+        pt_BR{"brazilportugala"}
+        pt_PT{"eŭropportugala"}
         qu{"keĉua"}
         rm{"romanĉa"}
         rn{"burunda"}
@@ -109,6 +111,7 @@ eo{
         sa{"sanskrito"}
         sd{"sinda"}
         sg{"sangoa"}
+        sh{"serbo-Kroata"}
         si{"sinhala"}
         sk{"slovaka"}
         sl{"slovena"}
@@ -148,6 +151,8 @@ eo{
         yo{"joruba"}
         za{"ĝuanga"}
         zh{"ĉina"}
+        zh_Hans{"ĉina simpligita"}
+        zh_Hant{"ĉina tradicia"}
         zu{"zulua"}
         zxx{"nelingvaĵo"}
     }

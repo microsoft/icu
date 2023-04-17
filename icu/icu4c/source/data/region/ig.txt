@@ -93,14 +93,17 @@ ig{
         CY{"Cyprus"}
         CZ{"Czechia"}
         DE{"Jamanị"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denmark"}
         DM{"Dominika"}
         DO{"Dominican Republik"}
         DZ{"Algeria"}
+        EA{"Ceuta & Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egypt"}
+        EH{"Ọdịda Anyanwụ Sahara"}
         ER{"Eritrea"}
         ES{"Spain"}
         ET{"Ethiopia"}
@@ -137,6 +140,7 @@ ig{
         HR{"Croatia"}
         HT{"Hati"}
         HU{"Hungary"}
+        IC{"Agwaetiti Kanarị"}
         ID{"Indonesia"}
         IE{"Ireland"}
         IL{"Israel"}
@@ -284,6 +288,8 @@ ig{
         VU{"Vanuatu"}
         WF{"Wallis & Futuna"}
         WS{"Samoa"}
+        XA{"Pseudo-Accents"}
+        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +297,18 @@ ig{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Mpaghara Amaghị"}
+    }
+    Countries%short{
+        GB{"UK"}
+        MO{"Macao"}
+    }
+    Countries%variant{
+        CD{"Congo (DRC)"}
+        CG{"Congo (Republik)"}
+        CI{"Ivory Coast"}
+        CZ{"Czech Republik"}
+        SZ{"Swaziland"}
+        TL{"East Timor"}
+        TR{"Turki"}
     }
 }

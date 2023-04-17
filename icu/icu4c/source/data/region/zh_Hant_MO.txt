@@ -3,7 +3,4 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 zh_Hant_MO{
     %%Parent{"zh_Hant_HK"}
-    Countries{
-        MO{"澳門特別行政區"}
-    }
 }

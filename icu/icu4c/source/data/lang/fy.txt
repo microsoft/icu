@@ -39,6 +39,7 @@ fy{
         ang{"âldingelsk"}
         anp{"Angika"}
         ar{"Arabysk"}
+        ar_001{"Modern standert Arabysk"}
         arc{"Arameesk"}
         arn{"Araukaansk"}
         arp{"Arapaho"}
@@ -114,6 +115,8 @@ fy{
         dar{"Dargwa"}
         dav{"Taita"}
         de{"Dútsk"}
+        de_AT{"Eastenryks Dútsk"}
+        de_CH{"Switsersk Heechdútsk"}
         del{"Delaware"}
         den{"Slave"}
         dgr{"Dogrib"}
@@ -136,9 +139,16 @@ fy{
         el{"Gryks"}
         elx{"Elamitysk"}
         en{"Ingelsk"}
+        en_AU{"Australysk Ingelsk"}
+        en_CA{"Kanadeesk Ingelsk"}
+        en_GB{"Britsk Ingelsk"}
+        en_US{"Amerikaansk Ingelsk"}
         enm{"Middelingelsk"}
         eo{"Esperanto"}
         es{"Spaansk"}
+        es_419{"Latynsk-Amerikaansk Spaansk"}
+        es_ES{"Europeesk Spaansk"}
+        es_MX{"Meksikaansk Spaansk"}
         et{"Estlânsk"}
         eu{"Baskysk"}
         ewo{"Ewondo"}
@@ -152,6 +162,8 @@ fy{
         fo{"Faeröersk"}
         fon{"Fon"}
         fr{"Frânsk"}
+        fr_CA{"Kanadeesk Frânsk"}
+        fr_CH{"Switserse Frânsk"}
         frm{"Middelfrânsk"}
         fro{"Aldfrânsk"}
         frr{"Noard-Frysk"}
@@ -334,6 +346,7 @@ fy{
         nia{"Nias"}
         niu{"Niueaansk"}
         nl{"Nederlânsk"}
+        nl_BE{"Vlaams"}
         nmg{"Ngumba"}
         nn{"Noors - Nynorsk"}
         nnh{"Ngiemboon"}
@@ -372,6 +385,8 @@ fy{
         pro{"Aldprovençaals"}
         ps{"Pasjtoe"}
         pt{"Portugeesk"}
+        pt_BR{"Brazyljaansk Portugees"}
+        pt_PT{"Europees Portugees"}
         qu{"Quechua"}
         raj{"Rajasthani"}
         rap{"Rapanui"}
@@ -379,9 +394,9 @@ fy{
         rm{"Reto-Romaansk"}
         rn{"Kirundi"}
         ro{"Roemeensk"}
+        ro_MD{"Moldavysk"}
         rof{"Rombo"}
         rom{"Romani"}
-        root{"Root"}
         ru{"Russysk"}
         rup{"Aromaniaansk"}
         rw{"Kinyarwanda"}
@@ -406,6 +421,7 @@ fy{
         ses{"Koyraboro Senni"}
         sg{"Sango"}
         sga{"Aldyrsk"}
+        sh{"Servokroatysk"}
         shi{"Tashelhiyt"}
         shn{"Shan"}
         shu{"Tsjadysk Arabysk"}
@@ -435,6 +451,7 @@ fy{
         sux{"Soemerysk"}
         sv{"Zweeds"}
         sw{"Swahili"}
+        sw_CD{"Congo Swahili"}
         swb{"Shimaore"}
         syc{"Klassiek Syrysk"}
         syr{"Syrysk"}
@@ -507,10 +524,18 @@ fy{
         zen{"Zenaga"}
         zgh{"Standert Marokkaanske Tamazight"}
         zh{"Sineesk"}
+        zh_Hans{"Ferienfâldich Sineesk"}
+        zh_Hant{"Tradisjoneel Sineesk"}
         zu{"Zulu"}
         zun{"Zuni"}
         zxx{"Gjin linguïstyske ynhâld"}
         zza{"Zaza"}
+    }
+    Languages%short{
+        az{"Azeri"}
+    }
+    Languages%variant{
+        ps{"Pashto"}
     }
     Scripts{
         Afak{"Defaka"}
@@ -694,6 +719,7 @@ fy{
             islamic-civil{"Islamityske kalinder (cyclysk)"}
             japanese{"Japanske kalinder"}
             persian{"Perzyske kalinder"}
+            roc{"Kalinder fan de Sineeske Republyk"}
         }
         colAlternate{
             non-ignorable{"Symbolen sortearje"}

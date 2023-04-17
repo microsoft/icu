@@ -100,15 +100,72 @@ uz{
             }
         }
         compound{
+            1024p1{"kibi{0}"}
+            1024p2{"mebi{0}"}
+            1024p3{"gibi{0}"}
+            1024p4{"tebi{0}"}
+            1024p5{"pebi{0}"}
+            1024p6{"eksbi{0}"}
+            1024p7{"zebi{0}"}
+            1024p8{"yobe{0}"}
+            10p-1{"detsi{0}"}
+            10p-12{"piko{0}"}
+            10p-15{"femto{0}"}
+            10p-18{"atto{0}"}
+            10p-2{"santi{0}"}
+            10p-21{"zepto{0}"}
+            10p-24{"yokto{0}"}
+            10p-3{"milli{0}"}
+            10p-6{"mikro{0}"}
+            10p-9{"nano{0}"}
+            10p1{"deka{0}"}
+            10p12{"tera{0}"}
+            10p15{"peta{0}"}
+            10p18{"eksa{0}"}
+            10p2{"gekto{0}"}
+            10p21{"zetta{0}"}
+            10p24{"yotta{0}"}
+            10p3{"kilo{0}"}
+            10p6{"mega{0}"}
+            10p9{"giga{0}"}
             per{"{0}/{1}"}
+            power2{
+                one{
+                    _{
+                        _{"{0} kvadrat"}
+                    }
+                }
+                other{
+                    _{
+                        _{"{0} kvadrat"}
+                    }
+                }
+            }
+            power3{
+                one{
+                    _{
+                        _{"{0} kub"}
+                    }
+                }
+                other{
+                    _{
+                        _{"{0} kub"}
+                    }
+                }
+            }
         }
         concentr{
+            item{
+                dnam{"elementlar"}
+                one{"{0} element"}
+                other{"{0} ta element"}
+            }
             karat{
                 dnam{"karat"}
                 one{"{0} karat"}
                 other{"{0} karat"}
             }
-            milligram-per-deciliter{
+            milligram-ofglucose-per-deciliter{
                 dnam{"milligramm/detsilitr"}
                 one{"{0} milligramm/detsilitr"}
                 other{"{0} milligramm/detsilitr"}
@@ -129,9 +186,9 @@ uz{
                 other{"{0} promille"}
             }
             permillion{
-                dnam{"qism/million"}
-                one{"{0} qism/million"}
-                other{"{0} qism/million"}
+                dnam{"milliondan ulush"}
+                one{"{0} ppm"}
+                other{"{0} ppm"}
             }
             permyriad{
                 dnam{"promiriada"}
@@ -275,6 +332,12 @@ uz{
                 one{"{0} nanosoniya"}
                 other{"{0} nanosoniya"}
             }
+            quarter{
+                dnam{"chorak"}
+                one{"{0} chorak"}
+                other{"{0} chorak"}
+                per{"{0}/chorak"}
+            }
             second{
                 dnam{"soniya"}
                 one{"{0} soniya"}
@@ -364,6 +427,11 @@ uz{
             }
         }
         force{
+            kilowatt-hour-per-100-kilometer{
+                dnam{"kWh/100km"}
+                one{"{0} kWh/100km"}
+                other{"{0} kWh/100km"}
+            }
             newton{
                 dnam{"nyuton"}
                 one{"{0} nyuton"}
@@ -609,11 +677,6 @@ uz{
                 other{"{0} kilogramm"}
                 per{"{0}/kilogramm"}
             }
-            metric-ton{
-                dnam{"tonna"}
-                one{"{0} tonna"}
-                other{"{0} tonna"}
-            }
             microgram{
                 dnam{"mikrogramm"}
                 one{"{0} mikrogramm"}
@@ -655,6 +718,11 @@ uz{
                 dnam{"amerika tonnasi"}
                 one{"{0} amerika tonnasi"}
                 other{"{0} amerika tonnasi"}
+            }
+            tonne{
+                dnam{"tonna"}
+                one{"{0} tonna"}
+                other{"{0} tonna"}
             }
         }
         power{
@@ -1018,13 +1086,62 @@ uz{
             }
         }
         compound{
+            10p-1{"d{0}"}
+            10p-12{"p{0}"}
+            10p-15{"f{0}"}
+            10p-18{"a{0}"}
+            10p-2{"s{0}"}
+            10p-21{"z{0}"}
+            10p-24{"y{0}"}
+            10p-3{"m{0}"}
+            10p-6{"μ{0}"}
+            10p-9{"n{0}"}
+            10p1{"da{0}"}
+            10p12{"T{0}"}
+            10p15{"P{0}"}
+            10p18{"E{0}"}
+            10p2{"gekto{0}"}
+            10p21{"Z{0}"}
+            10p24{"Y{0}"}
+            10p3{"k{0}"}
+            10p6{"M{0}"}
+            10p9{"G{0}"}
             per{"{0}/{1}"}
+            power2{
+                one{
+                    _{
+                        _{"{0}²"}
+                    }
+                }
+                other{
+                    _{
+                        _{"{0}²"}
+                    }
+                }
+            }
+            power3{
+                one{
+                    _{
+                        _{"{0}³"}
+                    }
+                }
+                other{
+                    _{
+                        _{"{0}³"}
+                    }
+                }
+            }
         }
         concentr{
             percent{
                 dnam{"%"}
                 one{"{0}%"}
                 other{"{0}%"}
+            }
+            permillion{
+                dnam{"ppm"}
+                one{"{0}ppm"}
+                other{"{0}ppm"}
             }
         }
         consumption{
@@ -1067,6 +1184,12 @@ uz{
                 one{"{0} oy"}
                 other{"{0} oy"}
             }
+            quarter{
+                dnam{"chorak"}
+                one{"{0} chorak"}
+                other{"{0} chorak"}
+                per{"{0}/ch."}
+            }
             second{
                 dnam{"son."}
                 one{"{0} s"}
@@ -1086,6 +1209,10 @@ uz{
         graphics{
             dot{
                 dnam{"piksel"}
+            }
+            dot-per-centimeter{
+                one{"{0} nqt/sm"}
+                other{"{0} nuqta/sm"}
             }
         }
         length{
@@ -1132,6 +1259,22 @@ uz{
             yard{
                 one{"{0} yard"}
                 other{"{0} yard"}
+            }
+        }
+        light{
+            candela{
+                dnam{"kd"}
+                one{"{0}kd"}
+                other{"{0}kd"}
+            }
+            lumen{
+                one{"{0}lm"}
+                other{"{0}lm"}
+            }
+            solar-luminosity{
+                dnam{"L☉"}
+                one{"{0}L☉"}
+                other{"{0}L☉"}
             }
         }
         mass{
@@ -1206,6 +1349,17 @@ uz{
             fahrenheit{
                 one{"{0}°F"}
                 other{"{0}°F"}
+            }
+        }
+        torque{
+            newton-meter{
+                one{"{0}N⋅m"}
+                other{"{0}N⋅m"}
+            }
+            pound-force-foot{
+                dnam{"funt-fut"}
+                one{"{0} funt-fut"}
+                other{"{0} funt-fut"}
             }
         }
         volume{
@@ -1322,16 +1476,65 @@ uz{
             }
         }
         compound{
+            10p-1{"d{0}"}
+            10p-12{"p{0}"}
+            10p-15{"f{0}"}
+            10p-18{"a{0}"}
+            10p-2{"s{0}"}
+            10p-21{"z{0}"}
+            10p-24{"y{0}"}
+            10p-3{"m{0}"}
+            10p-6{"μ{0}"}
+            10p-9{"n{0}"}
+            10p1{"da{0}"}
+            10p12{"T{0}"}
+            10p15{"P{0}"}
+            10p18{"E{0}"}
+            10p2{"gekto{0}"}
+            10p21{"Z{0}"}
+            10p24{"Y{0}"}
+            10p3{"k{0}"}
+            10p6{"M{0}"}
+            10p9{"G{0}"}
             per{"{0}/{1}"}
+            power2{
+                one{
+                    _{
+                        _{"{0}²"}
+                    }
+                }
+                other{
+                    _{
+                        _{"{0}²"}
+                    }
+                }
+            }
+            power3{
+                one{
+                    _{
+                        _{"{0}³"}
+                    }
+                }
+                other{
+                    _{
+                        _{"{0}³"}
+                    }
+                }
+            }
             times{"{0}⋅{1}"}
         }
         concentr{
+            item{
+                dnam{"element"}
+                one{"{0} element"}
+                other{"{0} ta element"}
+            }
             karat{
                 dnam{"karat"}
                 one{"{0} kt"}
                 other{"{0} kt"}
             }
-            milligram-per-deciliter{
+            milligram-ofglucose-per-deciliter{
                 dnam{"mg/dL"}
                 one{"{0} mg/dL"}
                 other{"{0} mg/dL"}
@@ -1357,9 +1560,9 @@ uz{
                 other{"{0}‰"}
             }
             permillion{
-                dnam{"qism/million"}
-                one{"{0} qism/million"}
-                other{"{0} qism/million"}
+                dnam{"milliondan ulush"}
+                one{"{0} ppm"}
+                other{"{0} ppm"}
             }
             permyriad{
                 dnam{"promiriada"}
@@ -1503,6 +1706,12 @@ uz{
                 one{"{0} ns"}
                 other{"{0} ns"}
             }
+            quarter{
+                dnam{"chorak"}
+                one{"{0} chorak"}
+                other{"{0} chorak"}
+                per{"{0}/chorak"}
+            }
             second{
                 dnam{"son."}
                 one{"{0} son."}
@@ -1592,6 +1801,11 @@ uz{
             }
         }
         force{
+            kilowatt-hour-per-100-kilometer{
+                dnam{"kWh/100km"}
+                one{"{0} kWh/100km"}
+                other{"{0} kWh/100km"}
+            }
             newton{
                 dnam{"nyuton"}
                 one{"{0} N"}
@@ -1729,9 +1943,9 @@ uz{
                 per{"{0}/m"}
             }
             micrometer{
-                dnam{"µmetr"}
-                one{"{0} µm"}
-                other{"{0} µm"}
+                dnam{"μmetr"}
+                one{"{0} μm"}
+                other{"{0} μm"}
             }
             mile{
                 dnam{"mil"}
@@ -1839,15 +2053,10 @@ uz{
                 other{"{0} kg"}
                 per{"{0}/kg"}
             }
-            metric-ton{
-                dnam{"t"}
-                one{"{0} t"}
-                other{"{0} t"}
-            }
             microgram{
-                dnam{"µg"}
-                one{"{0} µg"}
-                other{"{0} µg"}
+                dnam{"μg"}
+                one{"{0} μg"}
+                other{"{0} μg"}
             }
             milligram{
                 dnam{"mg"}
@@ -1885,6 +2094,11 @@ uz{
                 dnam{"amer. t"}
                 one{"{0} amer. t"}
                 other{"{0} amer. t"}
+            }
+            tonne{
+                dnam{"t"}
+                one{"{0} t"}
+                other{"{0} t"}
             }
         }
         power{

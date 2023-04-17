@@ -28,6 +28,7 @@ ksh{
         ang{"Ahl Änglesch"}
         anp{"Anjikahnesch"}
         ar{"Arahbesch"}
+        ar_001{"Schtandatt Arahbesch"}
         arp{"Arrappaho"}
         arq{"Aljehresch Arahbesch"}
         ary{"Marokahnesch Arahbesch"}
@@ -40,6 +41,7 @@ ksh{
         awa{"Awahdesch"}
         ay{"Aimahresch"}
         az{"Asserbaidschahnesch"}
+        az_Arab{"Södasserbaidschahnesch"}
         ba{"Baschkihresch"}
         bal{"Beluhtschesch"}
         ban{"Balinehsesch"}
@@ -87,6 +89,8 @@ ksh{
         dar{"Darjihnesch"}
         dav{"Dawedahnesch"}
         de{"Deutsch"}
+        de_AT{"Deutsch uß Öhßterich"}
+        de_CH{"Deutsch uß de Schweijz"}
         dgr{"Dohjribesch"}
         dje{"Djerma"}
         dsb{"Niddersorbesch"}
@@ -104,9 +108,16 @@ ksh{
         eka{"Ekajukesch"}
         el{"Jrihschesch"}
         en{"Änglesch"}
+        en_AU{"Änglesch uß Außtrahlije"}
+        en_CA{"Änglesch uß Kanada"}
+        en_GB{"Änglesch uß Jruhßbrettannije"}
+        en_US{"Amärrekahnesch Änglesch"}
         enm{"Meddelänglesch"}
         eo{"Esperanto"}
         es{"Schpahnesch"}
+        es_419{"Schpahnesch uß Latting-Ammärrika"}
+        es_ES{"Schpahnesch en Schpahneje"}
+        es_MX{"Schpahnesch en Mäxikoh"}
         esu{"Zäntrahl-Juppik"}
         et{"Äßnesch"}
         eu{"Baskesch"}
@@ -119,6 +130,8 @@ ksh{
         fo{"Färröhresch"}
         fon{"Fohnesch"}
         fr{"Franzühsesch"}
+        fr_CA{"Franzühsesch uß Kanada"}
+        fr_CH{"Franzühsesch uß de Schweijz"}
         fur{"Frijauhlesch"}
         fy{"Wäßfrihsesch"}
         ga{"Ihresch"}
@@ -237,10 +250,12 @@ ksh{
         nap{"Napolletahnesch"}
         nb{"Norrwehjesch Bokmål"}
         nd{"Nood-Ndebele"}
+        nds_NL{"Nehdersaksesch en de Nederläng"}
         ne{"Nepallehsesch"}
         new{"Newahresch"}
         ng{"Ndongjahnesch"}
         nl{"Holländesch"}
+        nl_BE{"Flähmesch"}
         nmg{"Gyele"}
         nn{"Neu Norrwehjesch"}
         nnh{"Njijembohn"}
@@ -255,6 +270,8 @@ ksh{
         pl{"Pollnesch"}
         ps{"Paschtuunesch"}
         pt{"Pochtojesesch"}
+        pt_BR{"Brasilljaanesch Pochtojesesch"}
+        pt_PT{"Pochtojesesch uß Pochtojall"}
         qu{"Kättschowa"}
         quc{"K’ische’"}
         rm{"Rätoromaanesch"}
@@ -271,6 +288,7 @@ ksh{
         se{"Nood-Lappländesch"}
         ses{"Kojraboro Senni"}
         sg{"Sangjo"}
+        sh{"Särbokowatesch"}
         shi{"Taschelhittesch"}
         si{"Singjaleesesch"}
         sk{"ẞlovakesch"}
@@ -331,10 +349,17 @@ ksh{
         yo{"Joruhba"}
         yue{"Kanton-Schinehsesch"}
         zh{"Schinehsesch (Mandarin)"}
+        zh_Hans{"Schinehsesch (eijfache Schreff)"}
+        zh_Hant{"Schinehsesch (tradizjonälle Schreff)"}
         zu{"Suhlu"}
         zun{"Suhñi"}
         zxx{"kein Schprooch"}
         zza{"Sahsajesch"}
+    }
+    Languages%short{
+        az{"Asehresch"}
+        en_GB{"Brettesch Änglesch"}
+        en_US{"Änglesch uß de USA"}
     }
     Scripts{
         Arab{"arraabesche Schreff"}
@@ -396,6 +421,7 @@ ksh{
             islamic-civil{"wältlesche islaamesche Kaländer"}
             japanese{"japaanesche Kaländer"}
             persian{"pärsesche Kaländer"}
+            roc{"rotschineesesche Kaländer"}
         }
         collation{
             big5han{"zoteert nohm tradizjonäll schineesesch Big5"}

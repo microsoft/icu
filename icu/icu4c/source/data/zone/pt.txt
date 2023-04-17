@@ -861,6 +861,9 @@ pt{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1930,6 +1933,9 @@ pt{
             ld{"Horário de Verão de Ecaterimburgo"}
             lg{"Horário de Ecaterimburgo"}
             ls{"Horário Padrão de Ecaterimburgo"}
+        }
+        "meta:Yukon"{
+            ls{"Horário do Yukon"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

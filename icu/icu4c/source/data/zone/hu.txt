@@ -867,6 +867,9 @@ hu{
         "Asia:Ulaanbaatar"{
             ec{"Ulánbátor"}
         }
+        "Asia:Urumqi"{
+            ec{"Ürümqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Uszty-Nyera"}
         }
@@ -1943,6 +1946,9 @@ hu{
             ld{"jekatyerinburgi nyári idő"}
             lg{"jekatyerinburgi idő"}
             ls{"jekatyerinburgi téli idő"}
+        }
+        "meta:Yukon"{
+            ls{"yukoni idő"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

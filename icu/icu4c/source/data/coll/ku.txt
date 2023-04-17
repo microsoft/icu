@@ -2,5 +2,21 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 ku{
-    "%%ALIAS"{"ckb"}
+    collations{
+        standard{
+            Sequence{
+                "[reorder Latn Arab]"
+                "&c<ç<<<Ç"
+                "&e<ê<<<Ê"
+                "&i<î<<<Î"
+                "&s<ş<<<Ş"
+                "&u<û<<<Û"
+                "&ê<<é<<<É"
+                "&î<<í<<<Í"
+                "&û<<ú<<<Ú"
+                "&ú<<ù<<<Ù"
+            }
+            Version{"42"}
+        }
+    }
 }

@@ -864,6 +864,9 @@ or{
         "Asia:Ulaanbaatar"{
             ec{"ଉଲାନ୍‌ବାଟର୍‌"}
         }
+        "Asia:Urumqi"{
+            ec{"ଉରୁମକି"}
+        }
         "Asia:Ust-Nera"{
             ec{"ୟୁଷ୍ଟ-ନେରା"}
         }
@@ -1216,6 +1219,9 @@ or{
         }
         "Pacific:Johnston"{
             ec{"ଜନଷ୍ଟନ୍"}
+        }
+        "Pacific:Kanton"{
+            ec{"କ୍ୟାଣ୍ଟନ"}
         }
         "Pacific:Kiritimati"{
             ec{"କିରିତିମାଟି"}
@@ -1929,6 +1935,9 @@ or{
             ld{"ୟେକାଟେରିନବର୍ଗ୍ ଗ୍ରୀଷ୍ମକାଳ ସମୟ"}
             lg{"ୟେକାଟେରିନବର୍ଗ୍ ସମୟ"}
             ls{"ୟେକାଟେରିନବର୍ଗ୍ ମାନାଙ୍କ ସମୟ"}
+        }
+        "meta:Yukon"{
+            ls{"ୟୁକୋନ୍ ସମୟ"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

@@ -864,6 +864,9 @@ cy{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1882,6 +1885,9 @@ cy{
             ld{"Amser Haf Yekaterinburg"}
             lg{"Amser Yekaterinburg"}
             ls{"Amser Safonol Yekaterinburg"}
+        }
+        "meta:Yukon"{
+            ls{"Amser Yukon"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

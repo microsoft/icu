@@ -28,6 +28,7 @@ fo{
         an{"aragoniskt"}
         anp{"angika"}
         ar{"arabiskt"}
+        ar_001{"nútíðar vanligt arabiskt"}
         arn{"mapuche"}
         arp{"arapaho"}
         as{"assamesiskt"}
@@ -81,6 +82,7 @@ fo{
         dar{"dargwa"}
         dav{"taita"}
         de{"týskt"}
+        de_CH{"høgt týskt (Sveis)"}
         dgr{"dogrib"}
         dje{"sarma"}
         dsb{"lágt sorbian"}
@@ -101,6 +103,7 @@ fo{
         eu{"baskiskt"}
         ewo{"ewondo"}
         fa{"persiskt"}
+        fa_AF{"dari"}
         ff{"fulah"}
         fi{"finskt"}
         fil{"filipiniskt"}
@@ -256,12 +259,14 @@ fo{
         nb{"norskt bókmál"}
         nd{"norður ndebele"}
         nds{"lágt týskt"}
+        nds_NL{"lágt saksiskt"}
         ne{"nepalskt"}
         new{"newari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niuean"}
         nl{"hálendskt"}
+        nl_BE{"flamskt"}
         nmg{"kwasio"}
         nn{"nýnorskt"}
         nnh{"ngiemboon"}
@@ -288,6 +293,8 @@ fo{
         prg{"prusslanskt"}
         ps{"pashto"}
         pt{"portugiskiskt"}
+        pt_BR{"portugiskiskt (Brasilia)"}
+        pt_PT{"portugiskiskt (Evropa)"}
         qu{"quechua"}
         quc{"kʼicheʼ"}
         rap{"rapanui"}
@@ -295,6 +302,7 @@ fo{
         rm{"retoromanskt"}
         rn{"rundi"}
         ro{"rumenskt"}
+        ro_MD{"moldaviskt"}
         rof{"rombo"}
         ru{"russiskt"}
         rup{"aromenskt"}
@@ -316,6 +324,7 @@ fo{
         seh{"sena"}
         ses{"koyraboro senni"}
         sg{"sango"}
+        sh{"serbokroatiskt"}
         shi{"tachelhit"}
         shn{"shan"}
         si{"singalesiskt"}
@@ -339,6 +348,7 @@ fo{
         suk{"sukuma"}
         sv{"svenskt"}
         sw{"swahili"}
+        sw_CD{"kongo svahili"}
         swb{"komoriskt"}
         syr{"syriac"}
         ta{"tamilskt"}
@@ -396,10 +406,29 @@ fo{
         yue{"kantonesiskt"}
         zgh{"vanligt marokanskt tamazight"}
         zh{"kinesiskt"}
+        zh_Hans{"einkult kinesiskt"}
+        zh_Hant{"vanligt kinesiskt"}
         zu{"sulu"}
         zun{"zuni"}
         zxx{"einki málsligt innihald"}
         zza{"zaza"}
+    }
+    Languages%long{
+        zh_Hans{"mandarin kinesiskt (einkult)"}
+        zh_Hant{"mandarin kinesiskt (vanligt)"}
+    }
+    Languages%menu{
+        ckb{"kurdiskt, mið"}
+        yue{"kinesiskt, kantonesiskt"}
+        zh{"kinesiskt, mandarin"}
+    }
+    Languages%short{
+        az{"azeri"}
+        en_GB{"enskt (UK)"}
+        en_US{"enskt (USA)"}
+    }
+    Languages%variant{
+        ckb{"kurdiskt, sorani"}
     }
     Scripts{
         Arab{"arabisk"}
@@ -463,6 +492,7 @@ fo{
             iso8601{"ISO-8601 kalendari"}
             japanese{"japanskur kalendari"}
             persian{"persiskur kalendari"}
+            roc{"minguo kalendari"}
         }
         cf{
             account{"gjaldoyras roknskaparførsla format"}

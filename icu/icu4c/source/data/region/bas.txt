@@ -162,7 +162,7 @@ bas{
         PM{"Nûmpubi Petrò nì Mikèlôn"}
         PN{"Pìdkaìrn"}
         PR{"Pɔ̀rtò Rikò"}
-        PS{"Autorité palestinienne"}
+        PS{"Pàlɛ̀htinà Hyɔ̀ŋg nì Gazà"}
         PT{"Pɔ̀tɔkì"}
         PW{"Pàlaù"}
         PY{"Pàràgwê"}

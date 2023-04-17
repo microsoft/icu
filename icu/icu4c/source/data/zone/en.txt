@@ -34,8 +34,7 @@ en{
             ld{"Irish Standard Time"}
         }
         "Europe:Kiev"{
-            ec{"Kiev"}
-            ec%formal{"Kyiv"}
+            ec{"Kyiv"}
         }
         "Europe:London"{
             ld{"British Summer Time"}
@@ -720,6 +719,9 @@ en{
             ld{"Yekaterinburg Summer Time"}
             lg{"Yekaterinburg Time"}
             ls{"Yekaterinburg Standard Time"}
+        }
+        "meta:Yukon"{
+            ls{"Yukon Time"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

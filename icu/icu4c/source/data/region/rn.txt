@@ -165,7 +165,7 @@ rn{
         PM{"Sempiyeri na Mikeloni"}
         PN{"Pitikeyirini"}
         PR{"Puwetoriko"}
-        PS{"Autorité palestinienne"}
+        PS{"Palesitina Wesitibanka na Gaza"}
         PT{"Porutugali"}
         PW{"Palawu"}
         PY{"Paragwe"}

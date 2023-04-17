@@ -8,4 +8,7 @@ es_PY{
         TA{"Tristán de Acuña"}
         UM{"Islas menores alejadas de EE. UU."}
     }
+    Countries%short{
+        GB{"RU"}
+    }
 }

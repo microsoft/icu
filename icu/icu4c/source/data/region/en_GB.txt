@@ -3,21 +3,4 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 en_GB{
     %%Parent{"en_001"}
-    Countries{
-        BL{"St Barthélemy"}
-        BQ{"Caribbean Netherlands"}
-        CD{"Congo - Kinshasa"}
-        CG{"Congo - Brazzaville"}
-        CV{"Cape Verde"}
-        HK{"Hong Kong SAR China"}
-        KN{"St Kitts & Nevis"}
-        KR{"South Korea"}
-        LC{"St Lucia"}
-        MF{"St Martin"}
-        MM{"Myanmar (Burma)"}
-        PM{"St Pierre & Miquelon"}
-        PS{"Palestinian Territories"}
-        SH{"St Helena"}
-        VC{"St Vincent & the Grenadines"}
-    }
 }

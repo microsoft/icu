@@ -867,6 +867,9 @@ et{
         "Asia:Ulaanbaatar"{
             ec{"Ulaanbaatar"}
         }
+        "Asia:Urumqi"{
+            ec{"Ürümqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1936,6 +1939,9 @@ et{
             ld{"Jekaterinburgi suveaeg"}
             lg{"Jekaterinburgi aeg"}
             ls{"Jekaterinburgi standardaeg"}
+        }
+        "meta:Yukon"{
+            ls{"Yukoni aeg"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT {0}"}

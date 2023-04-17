@@ -165,7 +165,7 @@ naq{
         PM{"Saint Pierre and Miquelon"}
         PN{"Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Palestinian Authority"}
+        PS{"Palestinian West Bank and Gaza"}
         PT{"Portugali"}
         PW{"Palau"}
         PY{"Paraguaib"}

@@ -84,14 +84,61 @@ jv{
             }
         }
         compound{
+            1024p1{"Kibi{0}"}
+            1024p2{"mebi{0}"}
+            1024p3{"gibi{0}"}
+            1024p4{"tebi{0}"}
+            1024p5{"pebi{0}"}
+            1024p6{"exbi{0}"}
+            1024p7{"zebi{0}"}
+            1024p8{"yobe{0}"}
+            10p-1{"desi{0}"}
+            10p-12{"piko{0}"}
+            10p-15{"femto{0}"}
+            10p-18{"atto{0}"}
+            10p-2{"senti{0}"}
+            10p-21{"zepto{0}"}
+            10p-24{"yokto{0}"}
+            10p-3{"mili{0}"}
+            10p-6{"mikro{0}"}
+            10p-9{"nano{0}"}
+            10p1{"deka{0}"}
+            10p12{"tera{0}"}
+            10p15{"peta{0}"}
+            10p18{"exa{0}"}
+            10p2{"hekto{0}"}
+            10p21{"zetta{0}"}
+            10p24{"yotta{0}"}
+            10p3{"kilo{0}"}
+            10p6{"mega{0}"}
+            10p9{"giga{0}"}
             per{"{0} saben {1}"}
+            power2{
+                other{
+                    _{
+                        _{"pesagi {0}"}
+                    }
+                }
+            }
+            power3{
+                other{
+                    _{
+                        _{"kubik {0}"}
+                    }
+                }
+            }
+            times{"{0}-{1}"}
         }
         concentr{
+            item{
+                dnam{"iji"}
+                other{"{0} iji"}
+            }
             karat{
                 dnam{"karat"}
                 other{"{0} karat"}
             }
-            milligram-per-deciliter{
+            milligram-ofglucose-per-deciliter{
                 dnam{"miligram saben desiliter"}
                 other{"{0} miligram saben desiliter"}
             }
@@ -228,6 +275,11 @@ jv{
                 dnam{"nanodetik"}
                 other{"{0} nanodetik"}
             }
+            quarter{
+                dnam{"seprapat"}
+                other{"{0} seprapat"}
+                per{"{0}/seprapat"}
+            }
             second{
                 dnam{"detik"}
                 other{"{0} detik"}
@@ -301,6 +353,10 @@ jv{
             }
         }
         force{
+            kilowatt-hour-per-100-kilometer{
+                dnam{"kilowatt-jam saben 100 kilometer"}
+                other{"{0} kilowatt-jam saben 100 kilometer"}
+            }
             newton{
                 dnam{"newton"}
                 other{"{0} newton"}
@@ -493,10 +549,6 @@ jv{
                 other{"{0} kilogram"}
                 per{"{0} saben kilogram"}
             }
-            metric-ton{
-                dnam{"metrik ton"}
-                other{"{0} metrik ton"}
-            }
             microgram{
                 dnam{"mikrogram"}
                 other{"{0} mikrogram"}
@@ -530,6 +582,10 @@ jv{
             ton{
                 dnam{"ton"}
                 other{"{0} ton"}
+            }
+            tonne{
+                dnam{"metrik ton"}
+                other{"{0} metrik ton"}
             }
         }
         power{
@@ -783,19 +839,48 @@ jv{
         }
     }
     unitsNarrow{
+        acceleration{
+            meter-per-square-second{
+                other{"{0}m/s²"}
+            }
+        }
+        angle{
+            arc-minute{
+                other{"{0}′"}
+            }
+            arc-second{
+                other{"{0}″"}
+            }
+        }
+        area{
+            square-foot{
+                other{"{0} kaki²"}
+            }
+        }
         compound{
+            10p-9{"n{0}"}
             per{"{0}/{1}"}
         }
         concentr{
+            item{
+                other{"{0} iji"}
+            }
             percent{
                 dnam{"%"}
                 other{"{0}%"}
+            }
+            permillion{
+                other{"{0}bpj"}
             }
         }
         consumption{
             liter-per-100-kilometer{
                 dnam{"L/100 km"}
                 other{"{0} L/100 km"}
+            }
+            mile-per-gallon-imperial{
+                dnam{"mpg inggris"}
+                other{"{0}m/gUK"}
             }
         }
         coordinate{
@@ -826,6 +911,11 @@ jv{
                 dnam{"sasi"}
                 other{"{0} sasi"}
             }
+            quarter{
+                dnam{"seprapat"}
+                other{"{0}seprapat"}
+                per{"{0}/seprapat"}
+            }
             second{
                 dnam{"dtk"}
                 other{"{0} dtk"}
@@ -837,6 +927,16 @@ jv{
             year{
                 dnam{"taun"}
                 other{"{0} taun"}
+            }
+        }
+        energy{
+            therm-us{
+                other{"{0}panas AS"}
+            }
+        }
+        force{
+            kilowatt-hour-per-100-kilometer{
+                other{"{0}kWh/km"}
             }
         }
         length{
@@ -866,6 +966,14 @@ jv{
                 dnam{"kg"}
                 other{"{0} kg"}
             }
+            tonne{
+                other{"{0}t"}
+            }
+        }
+        power{
+            horsepower{
+                other{"{0}dj"}
+            }
         }
         speed{
             kilometer-per-hour{
@@ -879,10 +987,51 @@ jv{
                 other{"{0}°C"}
             }
         }
+        torque{
+            pound-force-foot{
+                other{"{0}lbf⋅kaki"}
+            }
+        }
         volume{
+            centiliter{
+                other{"{0}cL"}
+            }
+            dessert-spoon{
+                other{"{0}sde"}
+            }
+            dessert-spoon-imperial{
+                other{"{0}sde-lmp"}
+            }
+            dram{
+                other{"{0}by.dr."}
+            }
+            fluid-ounce{
+                other{"{0}ons by"}
+            }
+            fluid-ounce-imperial{
+                other{"{0}oz lm by"}
+            }
+            gallon-imperial{
+                other{"{0}gallm"}
+            }
             liter{
                 dnam{"liter"}
                 other{"{0} L"}
+            }
+            pinch{
+                other{"{0}juwit"}
+            }
+            pint-metric{
+                other{"{0}mpt"}
+            }
+            quart{
+                other{"{0}sprt"}
+            }
+            quart-imperial{
+                other{"{0}spt-lmp."}
+            }
+            tablespoon{
+                other{"{0}sdm"}
             }
         }
     }
@@ -963,14 +1112,19 @@ jv{
             }
         }
         compound{
+            10p-9{"n{0}"}
             per{"{0}/{1}"}
         }
         concentr{
+            item{
+                dnam{"iji"}
+                other{"{0} iji"}
+            }
             karat{
                 dnam{"karat"}
                 other{"{0} kt"}
             }
-            milligram-per-deciliter{
+            milligram-ofglucose-per-deciliter{
                 dnam{"mg/dL"}
                 other{"{0} mg/dL"}
             }
@@ -988,7 +1142,7 @@ jv{
             }
             permillion{
                 dnam{"bagean/yuta"}
-                other{"{0} bagean saben yuta"}
+                other{"{0}bpj"}
             }
             permyriad{
                 dnam{"permiriad"}
@@ -1104,6 +1258,11 @@ jv{
             nanosecond{
                 dnam{"nanodtk"}
                 other{"{0} nd"}
+            }
+            quarter{
+                dnam{"seprapat"}
+                other{"{0} seprapat"}
+                per{"{0}/seprapat"}
             }
             second{
                 dnam{"dtk"}
@@ -1262,8 +1421,8 @@ jv{
                 per{"{0}/m"}
             }
             micrometer{
-                dnam{"µmeter"}
-                other{"{0} µm"}
+                dnam{"μmeter"}
+                other{"{0} μm"}
             }
             mile{
                 dnam{"mil"}
@@ -1335,10 +1494,6 @@ jv{
                 other{"{0} kg"}
                 per{"{0}/kg"}
             }
-            metric-ton{
-                dnam{"metrik ton"}
-                other{"{0} metrik ton"}
-            }
             microgram{
                 dnam{"mikrogram"}
             }
@@ -1370,6 +1525,10 @@ jv{
             ton{
                 dnam{"ton"}
                 other{"{0} ton"}
+            }
+            tonne{
+                dnam{"metrik ton"}
+                other{"{0} metrik ton"}
             }
         }
         power{

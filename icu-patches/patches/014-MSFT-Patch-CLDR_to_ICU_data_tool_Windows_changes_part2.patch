@@ -11,11 +11,11 @@ that get passed to the JVM. Without this hack the arguments don't get
 quoted at all, which causes build failures as some of the variables
 which get replaced have embedded spaces in them.
 
-diff --git a/icu/tools/cldr/cldr-to-icu/build-icu-data.xml b/icu/tools/cldr/cldr-to-icu/build-icu-data.xml
-index a524e3dfbeb32e1d98069fb9696ebd1c1f9d8805..9e3520d70244285176908295ad902c4e7df99f0b 100644
---- a/icu/tools/cldr/cldr-to-icu/build-icu-data.xml
-+++ b/icu/tools/cldr/cldr-to-icu/build-icu-data.xml
-@@ -109,24 +109,34 @@
+diff --git a/tools/cldr/cldr-to-icu/build-icu-data.xml b/tools/cldr/cldr-to-icu/build-icu-data.xml
+index d0cebe8ab2..5293a10147 100644
+--- a/tools/cldr/cldr-to-icu/build-icu-data.xml
++++ b/tools/cldr/cldr-to-icu/build-icu-data.xml
+@@ -123,27 +123,37 @@
           need to use CLDR_DIR at runtime to find the production data, this can all be
           removed. -->
      <target name="convert" depends="init-args, prepare-jar">
@@ -40,6 +40,9 @@ index a524e3dfbeb32e1d98069fb9696ebd1c1f9d8805..9e3520d70244285176908295ad902c4e
 +            <arg value="&quot;-DcldrDir=${cldrDataDir}&quot;"/>
              <!-- List all properties in the "convert-impl" task (except cldrDir). -->
 -            <arg value="-DoutDir=${outDir}"/>
+-            <arg value="-DgenCCodeDir=${genCCodeDir}"/>
+-            <arg value="-DgenJavaCodeDir=${genJavaCodeDir}"/>
+-            <arg value="-DdontGenCode=${dontGenCode}"/>
 -            <arg value="-DspecialsDir=${specialsDir}"/>
 -            <arg value="-DoutputTypes=${outputTypes}"/>
 -            <arg value="-DicuVersion=${icuVersion}"/>
@@ -50,6 +53,9 @@ index a524e3dfbeb32e1d98069fb9696ebd1c1f9d8805..9e3520d70244285176908295ad902c4e
 -            <arg value="-DincludePseudoLocales=${includePseudoLocales}"/>
 -            <arg value="-DemitReport=${emitReport}"/>
 +            <arg value="&quot;-DoutDir=${outDir}&quot;"/>
++            <arg value="&quot;-DgenCCodeDir=${genCCodeDir}&quot;"/>
++            <arg value="&quot;-DgenJavaCodeDir=${genJavaCodeDir}&quot;"/>
++            <arg value="&quot;-DdontGenCode=${dontGenCode}&quot;"/>
 +            <arg value="&quot;-DspecialsDir=${specialsDir}&quot;"/>
 +            <arg value="&quot;-DoutputTypes=${outputTypes}&quot;"/>
 +            <arg value="&quot;-DicuVersion=${icuVersion}&quot;"/>

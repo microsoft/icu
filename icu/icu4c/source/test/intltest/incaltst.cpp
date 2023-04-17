@@ -42,7 +42,7 @@ static UnicodeString escape( const UnicodeString&src)
         else {
             dst += UnicodeString("[");
             char buf [8];
-            sprintf(buf, "%#x", c);
+            snprintf(buf, sizeof(buf), "%#x", c);
             dst += UnicodeString(buf);
             dst += UnicodeString("]");
         }
@@ -932,7 +932,7 @@ void IntlCalendarTest::TestPersianFormat() {
         logln("Parsed OK: " + expected);
     }
 
-    CHECK(status, "Error occured testing Persian Calendar in English "); 
+    CHECK(status, "Error occurred testing Persian Calendar in English "); 
 }
 
 void IntlCalendarTest::TestConsistencyGregorian() {
@@ -988,7 +988,7 @@ void IntlCalendarTest::TestConsistencyEthiopicAmeteAlem() {
 }
 void IntlCalendarTest::checkConsistency(const char* locale) {
     // Check 2.5 years in quick mode and 8000 years in exhaustive mode.
-    int32_t numOfDaysToTest = (quick ? 2.5 : 8000) * 365;
+    int32_t numOfDaysToTest = static_cast<int32_t>((quick ? 2.5 : 8000) * 365);
     constexpr int32_t msInADay = 1000*60*60*24;
     std::string msg("TestConsistency");
     IcuTestErrorCode status(*this, (msg + locale).c_str());

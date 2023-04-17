@@ -92,14 +92,17 @@ ast{
         CY{"Xipre"}
         CZ{"Chequia"}
         DE{"Alemaña"}
+        DG{"Diego Garcia"}
         DJ{"Xibuti"}
         DK{"Dinamarca"}
         DM{"Dominica"}
         DO{"República Dominicana"}
         DZ{"Arxelia"}
+        EA{"Ceuta y Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Exiptu"}
+        EH{"Sáḥara Occidental"}
         ER{"Eritrea"}
         ES{"España"}
         ET{"Etiopía"}
@@ -136,6 +139,7 @@ ast{
         HR{"Croacia"}
         HT{"Haití"}
         HU{"Hungría"}
+        IC{"Islles Canaries"}
         ID{"Indonesia"}
         IE{"Irlanda"}
         IL{"Israel"}
@@ -217,7 +221,7 @@ ast{
         PM{"Saint Pierre y Miquelon"}
         PN{"Islles Pitcairn"}
         PR{"Puertu Ricu"}
-        PS{"Autoridad Palestina"}
+        PS{"Territorios Palestinos"}
         PT{"Portugal"}
         PW{"Paláu"}
         PY{"Paraguái"}
@@ -289,5 +293,20 @@ ast{
         ZM{"Zambia"}
         ZW{"Zimbabue"}
         ZZ{"Rexón desconocida"}
+    }
+    Countries%short{
+        GB{"RX"}
+        HK{"Ḥong Kong"}
+        MO{"Macáu"}
+        PS{"Palestina"}
+        US{"EE.XX."}
+    }
+    Countries%variant{
+        CD{"Congu (RDC)"}
+        CG{"Congu (República del)"}
+        CI{"Costa del Marfil"}
+        CZ{"República Checa"}
+        FK{"Islles Malvines (Falkland Islands)"}
+        TL{"Timor Este"}
     }
 }

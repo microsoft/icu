@@ -93,14 +93,17 @@ cy{
         CY{"Cyprus"}
         CZ{"Tsiecia"}
         DE{"Yr Almaen"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denmarc"}
         DM{"Dominica"}
         DO{"Gweriniaeth Dominica"}
         DZ{"Algeria"}
+        EA{"Ceuta a Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Yr Aifft"}
+        EH{"Gorllewin Sahara"}
         ER{"Eritrea"}
         ES{"Sbaen"}
         ET{"Ethiopia"}
@@ -137,6 +140,7 @@ cy{
         HR{"Croatia"}
         HT{"Haiti"}
         HU{"Hwngari"}
+        IC{"Yr Ynysoedd Dedwydd"}
         ID{"Indonesia"}
         IE{"Iwerddon"}
         IL{"Israel"}
@@ -219,7 +223,7 @@ cy{
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Ynysoedd Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Awdurdod Palesteina"}
+        PS{"Tiriogaethau Palesteinaidd"}
         PT{"Portiwgal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -284,6 +288,8 @@ cy{
         VU{"Vanuatu"}
         WF{"Wallis a Futuna"}
         WS{"Samoa"}
+        XA{"Acenion Ffug"}
+        XB{"Bidi Ffug"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +297,24 @@ cy{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Rhanbarth Anhysbys"}
+    }
+    Countries%short{
+        GB{"DU"}
+        HK{"Hong Kong"}
+        MO{"Macau"}
+        PS{"Palesteina"}
+        UN{"UN"}
+        US{"UDA"}
+    }
+    Countries%variant{
+        CD{"Y Congo (G.Dd.C.)"}
+        CG{"Y Congo (Gweriniaeth)"}
+        CI{"Arfordir Ifori"}
+        CZ{"Gweriniaeth Tsiec"}
+        FK{"Ynysoedd y Falkland (Ynysoedd y Malfinas)"}
+        NZ{"Aotearoa Seland Newydd"}
+        SZ{"Gwlad Swazi"}
+        TL{"Dwyrain Timor"}
+        TR{"Türkiye"}
     }
 }

@@ -2,7 +2,7 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 root{
-    Version{"38.1"}
+    Version{"42"}
     zoneStrings{
         "Africa:Asmera"{
             ec{"Asmara"}
@@ -87,9 +87,6 @@ root{
         }
         "Asia:Saigon"{
             ec{"Ho Chi Minh"}
-        }
-        "Asia:Tashkent"{
-            ec{"Toshkent"}
         }
         "Atlantic:Faeroe"{
             ec{"Faroe"}

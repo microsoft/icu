@@ -68,7 +68,7 @@ using icu::number::impl::DecimalQuantity;
 using namespace icu::number;
 
 //#define NUMFMTST_CACHE_DEBUG 1
-#include "stdio.h" /* for sprintf */
+#include "stdio.h" /* for snprintf */
 // #include "iostream"   // for cout
 
 //#define NUMFMTST_DEBUG 1
@@ -249,7 +249,12 @@ void NumberFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &n
   TESTCASE_AUTO(Test20961_CurrencyPluralPattern);
   TESTCASE_AUTO(Test21134_ToNumberFormatter);
   TESTCASE_AUTO(Test13733_StrictAndLenient);
+  TESTCASE_AUTO(Test20425_IntegerIncrement);
+  TESTCASE_AUTO(Test20425_FractionWithIntegerIncrement);
   TESTCASE_AUTO(Test21232_ParseTimeout);
+  TESTCASE_AUTO(Test10997_FormatCurrency);
+  TESTCASE_AUTO(Test21556_CurrencyAsDecimal);
+  TESTCASE_AUTO(Test22088_Ethiopic);
   TESTCASE_AUTO_END;
 }
 
@@ -308,29 +313,29 @@ NumberFormatTest::TestAPI(void)
 class StubNumberFormat :public NumberFormat{
 public:
     StubNumberFormat(){}
-    virtual UnicodeString& format(double ,UnicodeString& appendTo,FieldPosition& ) const {
+    virtual UnicodeString& format(double ,UnicodeString& appendTo,FieldPosition& ) const override {
         return appendTo;
     }
-    virtual UnicodeString& format(int32_t ,UnicodeString& appendTo,FieldPosition& ) const {
+    virtual UnicodeString& format(int32_t ,UnicodeString& appendTo,FieldPosition& ) const override {
         return appendTo.append((UChar)0x0033);
     }
-    virtual UnicodeString& format(int64_t number,UnicodeString& appendTo,FieldPosition& pos) const {
+    virtual UnicodeString& format(int64_t number,UnicodeString& appendTo,FieldPosition& pos) const override {
         return NumberFormat::format(number, appendTo, pos);
     }
-    virtual UnicodeString& format(const Formattable& , UnicodeString& appendTo, FieldPosition& , UErrorCode& ) const {
+    virtual UnicodeString& format(const Formattable& , UnicodeString& appendTo, FieldPosition& , UErrorCode& ) const override {
         return appendTo;
     }
     virtual void parse(const UnicodeString& ,
                     Formattable& ,
-                    ParsePosition& ) const {}
+                    ParsePosition& ) const override {}
     virtual void parse( const UnicodeString& ,
                         Formattable& ,
-                        UErrorCode& ) const {}
-    virtual UClassID getDynamicClassID(void) const {
+                        UErrorCode& ) const override {}
+    virtual UClassID getDynamicClassID(void) const override {
         static char classID = 0;
         return (UClassID)&classID;
     }
-    virtual StubNumberFormat* clone() const {return NULL;}
+    virtual StubNumberFormat* clone() const override {return NULL;}
 };
 
 void
@@ -582,7 +587,7 @@ NumberFormatTest::TestExponential(void)
             Formattable af;
             fmt.parse(s, af, pos);
             double a;
-            UBool useEpsilon = FALSE;
+            UBool useEpsilon = false;
             if (af.getType() == Formattable::kLong)
                 a = af.getLong();
             else if (af.getType() == Formattable::kDouble) {
@@ -595,7 +600,7 @@ NumberFormatTest::TestExponential(void)
                 // To compensate, we use an epsilon-based equality
                 // test on S/390 only.  We don't want to do this in
                 // general because it's less exacting.
-                useEpsilon = TRUE;
+                useEpsilon = true;
 #endif
             }
             else {
@@ -661,9 +666,9 @@ NumberFormatTest::TestScientific2() {
     if (U_SUCCESS(status)) {
         double num = 12.34;
         expect(*fmt, num, "$12.34");
-        fmt->setScientificNotation(TRUE);
+        fmt->setScientificNotation(true);
         expect(*fmt, num, "$1.23E1");
-        fmt->setScientificNotation(FALSE);
+        fmt->setScientificNotation(false);
         expect(*fmt, num, "$12.34");
     }
     delete fmt;
@@ -686,16 +691,16 @@ NumberFormatTest::TestScientificGrouping() {
 
 /*static void setFromString(DigitList& dl, const char* str) {
     char c;
-    UBool decimalSet = FALSE;
+    UBool decimalSet = false;
     dl.clear();
     while ((c = *str++)) {
         if (c == '-') {
-            dl.fIsPositive = FALSE;
+            dl.fIsPositive = false;
         } else if (c == '+') {
-            dl.fIsPositive = TRUE;
+            dl.fIsPositive = true;
         } else if (c == '.') {
             dl.fDecimalAt = dl.fCount;
-            decimalSet = TRUE;
+            decimalSet = true;
         } else {
             dl.append(c);
         }
@@ -735,7 +740,7 @@ NumberFormatTest::TestInt64() {
     DigitList dl;
     setFromString(dl, int64maxstr);
     {
-        if (!dl.fitsIntoInt64(FALSE)) {
+        if (!dl.fitsIntoInt64(false)) {
             errln(fail + int64maxstr + " didn't fit");
         }
         int64_t int64Value = dl.getInt64();
@@ -749,9 +754,9 @@ NumberFormatTest::TestInt64() {
         }
     }
     // test negative of max int64 value (1 shy of min int64 value)
-    dl.fIsPositive = FALSE;
+    dl.fIsPositive = false;
     {
-        if (!dl.fitsIntoInt64(FALSE)) {
+        if (!dl.fitsIntoInt64(false)) {
             errln(fail + "-" + int64maxstr + " didn't fit");
         }
         int64_t int64Value = dl.getInt64();
@@ -767,7 +772,7 @@ NumberFormatTest::TestInt64() {
     // test min int64 value
     setFromString(dl, int64minstr);
     {
-        if (!dl.fitsIntoInt64(FALSE)) {
+        if (!dl.fitsIntoInt64(false)) {
             errln(fail + "-" + int64minstr + " didn't fit");
         }
         int64_t int64Value = dl.getInt64();
@@ -781,9 +786,9 @@ NumberFormatTest::TestInt64() {
         }
     }
     // test negative of min int 64 value (1 more than max int64 value)
-    dl.fIsPositive = TRUE; // won't fit
+    dl.fIsPositive = true; // won't fit
     {
-        if (dl.fitsIntoInt64(FALSE)) {
+        if (dl.fitsIntoInt64(false)) {
             errln(fail + "-(" + int64minstr + ") didn't fit");
         }
     }*/
@@ -933,8 +938,8 @@ NumberFormatTest::TestCurrency(void)
 
     UnicodeString s; currencyFmt->format(1.50, s);
     logln((UnicodeString)"Un pauvre ici a..........." + s);
-    if (!(s==CharsToUnicodeString("1,50\\u00A0$\\u00A0CA")))
-        errln((UnicodeString)"FAIL: Expected 1,50<nbsp>$<nbsp>CA but got " + s);
+    if (!(s==CharsToUnicodeString("1,50\\u00A0$")))
+        errln((UnicodeString)"FAIL: Expected 1,50<nbsp>$ but got " + s);
     delete currencyFmt;
     s.truncate(0);
     char loc[256]={0};
@@ -1144,7 +1149,7 @@ NumberFormatTest::TestLenientParse(void)
     if (format == NULL || U_FAILURE(status)) {
         dataerrln("Unable to create DecimalFormat (#,##0) - %s", u_errorName(status));
     } else {
-        format->setLenient(TRUE);
+        format->setLenient(true);
         for (int32_t t = 0; t < UPRV_LENGTHOF (lenientAffixTestCases); t += 1) {
         	UnicodeString testCase = ctou(lenientAffixTestCases[t]);
 
@@ -1169,7 +1174,7 @@ NumberFormatTest::TestLenientParse(void)
     if (mFormat == NULL || U_FAILURE(status)) {
         dataerrln("Unable to create NumberFormat (sv_SE, UNUM_DECIMAL) - %s", u_errorName(status));
     } else {
-        mFormat->setLenient(TRUE);
+        mFormat->setLenient(true);
         for (int32_t t = 0; t < UPRV_LENGTHOF(lenientMinusTestCases); t += 1) {
             UnicodeString testCase = ctou(lenientMinusTestCases[t]);
 
@@ -1190,7 +1195,7 @@ NumberFormatTest::TestLenientParse(void)
     if (mFormat == NULL || U_FAILURE(status)) {
         dataerrln("Unable to create NumberFormat (en_US, UNUM_DECIMAL) - %s", u_errorName(status));
     } else {
-        mFormat->setLenient(TRUE);
+        mFormat->setLenient(true);
         for (int32_t t = 0; t < UPRV_LENGTHOF(lenientMinusTestCases); t += 1) {
             UnicodeString testCase = ctou(lenientMinusTestCases[t]);
 
@@ -1211,7 +1216,7 @@ NumberFormatTest::TestLenientParse(void)
     if (cFormat == NULL || U_FAILURE(status)) {
         dataerrln("Unable to create NumberFormat (en_US, UNUM_CURRENCY) - %s", u_errorName(status));
     } else {
-        cFormat->setLenient(TRUE);
+        cFormat->setLenient(true);
         for (int32_t t = 0; t < UPRV_LENGTHOF (lenientCurrencyTestCases); t += 1) {
         	UnicodeString testCase = ctou(lenientCurrencyTestCases[t]);
 
@@ -1248,7 +1253,7 @@ NumberFormatTest::TestLenientParse(void)
     if (pFormat == NULL || U_FAILURE(status)) {
         dataerrln("Unable to create NumberFormat::createPercentInstance (en_US) - %s", u_errorName(status));
     } else {
-        pFormat->setLenient(TRUE);
+        pFormat->setLenient(true);
         for (int32_t t = 0; t < UPRV_LENGTHOF (lenientPercentTestCases); t += 1) {
         	UnicodeString testCase = ctou(lenientPercentTestCases[t]);
 
@@ -1305,7 +1310,7 @@ NumberFormatTest::TestLenientParse(void)
        }
 
        // then, make sure that they pass with a lenient parse
-       nFormat->setLenient(TRUE);
+       nFormat->setLenient(true);
        for (int32_t t = 0; t < UPRV_LENGTHOF(strictFailureTestCases); t += 1) {
 	       UnicodeString testCase = ctou(strictFailureTestCases[t]);
 
@@ -1378,25 +1383,25 @@ void NumberFormatTest::TestSecondaryGrouping(void) {
     delete g;
     // expect "1,87,65,43,210", but with Hindi digits
     //         01234567890123
-    UBool ok = TRUE;
+    UBool ok = true;
     if (out.length() != 14) {
-        ok = FALSE;
+        ok = false;
     } else {
         for (int32_t i=0; i<out.length(); ++i) {
-            UBool expectGroup = FALSE;
+            UBool expectGroup = false;
             switch (i) {
             case 1:
             case 4:
             case 7:
             case 10:
-                expectGroup = TRUE;
+                expectGroup = true;
                 break;
             }
             // Later -- fix this to get the actual grouping
             // character from the resource bundle.
             UBool isGroup = (out.charAt(i) == 0x002C);
             if (isGroup != expectGroup) {
-                ok = FALSE;
+                ok = false;
                 break;
             }
         }
@@ -1421,7 +1426,7 @@ void NumberFormatTest::TestWhiteSpaceParsing(void) {
         return;
     }
     // From ICU 62, flexible whitespace needs lenient mode
-    fmt.setLenient(TRUE);
+    fmt.setLenient(true);
     int32_t n = 1234;
     expect(fmt, "a b1234c ", n);
     expect(fmt, "a   b1234c   ", n);
@@ -1760,7 +1765,7 @@ void NumberFormatTest::TestPad(void) {
     expectPad(fmt, "*P##.##", DecimalFormat::kPadBeforePrefix, 5, padString);
     fmt.setPadCharacter((UnicodeString)"^");
     expectPad(fmt, "*^#", DecimalFormat::kPadBeforePrefix, 1, (UnicodeString)"^");
-    //commented untill implementation is complete
+    //commented until implementation is complete
   /*  fmt.setPadCharacter((UnicodeString)"^^^");
     expectPad(fmt, "*^^^#", DecimalFormat::kPadBeforePrefix, 3, (UnicodeString)"^^^");
     padString.remove();
@@ -2004,7 +2009,7 @@ void NumberFormatTest::TestCurrencyNames(void) {
     static const UChar ITL[] = {0x49, 0x54, 0x4C, 0}; /*ITL*/
     UBool isChoiceFormat;
     int32_t len;
-    const UBool possibleDataError = TRUE;
+    const UBool possibleDataError = true;
     // Warning: HARD-CODED LOCALE DATA in this test.  If it fails, CHECK
     // THE LOCALE DATA before diving into the code.
     assertEquals("USD.getName(SYMBOL_NAME, en)",
@@ -2050,7 +2055,7 @@ void NumberFormatTest::TestCurrencyNames(void) {
                                              &isChoiceFormat, &len, &ec)),
                                              possibleDataError);
     assertEquals("USD.getName(NARROW_SYMBOL_NAME, en_CA)",
-                 UnicodeString("$"),
+                 UnicodeString("US$"),
                  UnicodeString(ucurr_getName(USD, "en_CA",
                                              UCURR_NARROW_SYMBOL_NAME,
                                              &isChoiceFormat, &len, &ec)),
@@ -2093,28 +2098,28 @@ void NumberFormatTest::TestCurrencyNames(void) {
     ucurr_getName(CAD, "es_ES", UCURR_LONG_NAME, &isChoiceFormat,
                             &len, &ec);
     assertTrue("ucurr_getName (es_ES fallback)",
-                    U_USING_FALLBACK_WARNING == ec, TRUE, possibleDataError);
+                    U_USING_FALLBACK_WARNING == ec, true, possibleDataError);
 
     ucurr_getName(CAD, "zh_TW", UCURR_LONG_NAME, &isChoiceFormat,
                             &len, &ec);
     assertTrue("ucurr_getName (zh_TW fallback)",
-                    U_USING_FALLBACK_WARNING == ec, TRUE, possibleDataError);
+                    U_USING_FALLBACK_WARNING == ec, true, possibleDataError);
 
     ucurr_getName(CAD, "en_US", UCURR_LONG_NAME, &isChoiceFormat,
                             &len, &ec);
     assertTrue("ucurr_getName (en_US default)",
-                    U_USING_DEFAULT_WARNING == ec || U_USING_FALLBACK_WARNING == ec, TRUE);
+                    U_USING_DEFAULT_WARNING == ec || U_USING_FALLBACK_WARNING == ec, true);
 
     ucurr_getName(CAD, "ti", UCURR_LONG_NAME, &isChoiceFormat,
                             &len, &ec);
     assertTrue("ucurr_getName (ti default)",
-                    U_USING_DEFAULT_WARNING == ec, TRUE);
+                    U_USING_DEFAULT_WARNING == ec, true);
 
     // Test that a default warning is being returned when falling back to root. JB 4536.
     ucurr_getName(ITL, "cy", UCURR_LONG_NAME, &isChoiceFormat,
                             &len, &ec);
     assertTrue("ucurr_getName (cy default to root)",
-                    U_USING_DEFAULT_WARNING == ec, TRUE);
+                    U_USING_DEFAULT_WARNING == ec, true);
 
     // TODO add more tests later
 }
@@ -2748,13 +2753,13 @@ void NumberFormatTest::TestCases() {
             if (!tokens.next(testpat, ec)) goto error;
             if (!tokens.next(exppat, ec)) goto error;
             UBool err = exppat == "err";
-            UBool existingPat = FALSE;
+            UBool existingPat = false;
             if (testpat == "-") {
                 if (err) {
                     errln("FAIL: " + where + "Invalid command \"pat: - err\"");
                     continue;
                 }
-                existingPat = TRUE;
+                existingPat = true;
                 testpat = pat;
             }
             if (exppat == "-") exppat = testpat;
@@ -2834,18 +2839,18 @@ UBool NumberFormatTest::equalValue(const Formattable& a, const Formattable& b) {
             return a.getInt64() == (int64_t)b.getDouble();
         }
     }
-    return FALSE;
+    return false;
 }
 
 void NumberFormatTest::expect3(NumberFormat& fmt, const Formattable& n, const UnicodeString& str) {
     // Don't round-trip format test, since we explicitly do it
-    expect_rbnf(fmt, n, str, FALSE);
+    expect_rbnf(fmt, n, str, false);
     expect_rbnf(fmt, str, n);
 }
 
 void NumberFormatTest::expect2(NumberFormat& fmt, const Formattable& n, const UnicodeString& str) {
     // Don't round-trip format test, since we explicitly do it
-    expect(fmt, n, str, FALSE);
+    expect(fmt, n, str, false);
     expect(fmt, str, n);
 }
 
@@ -3011,7 +3016,7 @@ void NumberFormatTest::expectCurrency(NumberFormat& nf, const Locale& locale,
         v = (UnicodeString)"" + value;
     } else {
         f->setMaximumFractionDigits(4);
-        f->setGroupingUsed(FALSE);
+        f->setGroupingUsed(false);
         f->format(value, v);
     }
     delete f;
@@ -3120,7 +3125,7 @@ void NumberFormatTest::expectParseCurrency(const NumberFormat &fmt, const UChar*
     UErrorCode status = U_ZERO_ERROR;
 
     char theInfo[100];
-    sprintf(theInfo, "For locale %s, string \"%s\", currency ",
+    snprintf(theInfo, sizeof(theInfo), "For locale %s, string \"%s\", currency ",
             fmt.getLocale(ULOC_ACTUAL_LOCALE, status).getBaseName(),
             text);
     u_austrcpy(theInfo+uprv_strlen(theInfo), currency);
@@ -3355,6 +3360,7 @@ void NumberFormatTest::TestRoundingPattern() {
 
 void NumberFormatTest::checkRounding(DecimalFormat* df, double base, int iterations, double increment) {
     df->setRoundingIncrement(increment);
+    assertEquals("Rounding increment round-trip", increment, df->getRoundingIncrement());
     double lastParsed=INT32_MIN; //Intger.MIN_VALUE
     for (int i=-iterations; i<=iterations;i++) {
         double iValue=base+(increment*(i*0.1));
@@ -3423,12 +3429,12 @@ void NumberFormatTest::TestNonpositiveMultiplier() {
     expect(df, "1.2", -1.2);
     expect(df, "-1.2", 1.2);
 
-    // Note:  the tests with the final parameter of FALSE will not round trip.
+    // Note:  the tests with the final parameter of false will not round trip.
     //        The initial numeric value will format correctly, after the multiplier.
     //        Parsing the formatted text will be out-of-range for an int64, however.
     //        The expect() function could be modified to detect this and fall back
     //        to looking at the decimal parsed value, but it doesn't.
-    expect(df, U_INT64_MIN,    "9223372036854775808", FALSE);
+    expect(df, U_INT64_MIN,    "9223372036854775808", false);
     expect(df, U_INT64_MIN+1,  "9223372036854775807");
     expect(df, (int64_t)-123,                  "123");
     expect(df, (int64_t)123,                  "-123");
@@ -3438,10 +3444,10 @@ void NumberFormatTest::TestNonpositiveMultiplier() {
     df.setMultiplier(-2);
     expect(df, -(U_INT64_MIN/2)-1, "-9223372036854775806");
     expect(df, -(U_INT64_MIN/2),   "-9223372036854775808");
-    expect(df, -(U_INT64_MIN/2)+1, "-9223372036854775810", FALSE);
+    expect(df, -(U_INT64_MIN/2)+1, "-9223372036854775810", false);
 
     df.setMultiplier(-7);
-    expect(df, -(U_INT64_MAX/7)-1, "9223372036854775814", FALSE);
+    expect(df, -(U_INT64_MAX/7)-1, "9223372036854775814", false);
     expect(df, -(U_INT64_MAX/7),   "9223372036854775807");
     expect(df, -(U_INT64_MAX/7)+1, "9223372036854775800");
 
@@ -3471,24 +3477,24 @@ NumberFormatTest::TestSpaceParsing() {
     // the data are:
     // the string to be parsed, parsed position, parsed error index
     const TestSpaceParsingItem DATA[] = {
-        {"$124",           4, -1, FALSE},
-        {"$124 $124",      4, -1, FALSE},
-        {"$124 ",          4, -1, FALSE},
-        {"$ 124 ",         0,  1, FALSE},
-        {"$\\u00A0124 ",   5, -1, FALSE},
-        {" $ 124 ",        0,  0, FALSE},
-        {"124$",           0,  4, FALSE},
-        {"124 $",          0,  3, FALSE},
-        {"$124",           4, -1, TRUE},
-        {"$124 $124",      4, -1, TRUE},
-        {"$124 ",          4, -1, TRUE},
-        {"$ 124 ",         5, -1, TRUE},
-        {"$\\u00A0124 ",   5, -1, TRUE},
-        {" $ 124 ",        6, -1, TRUE},
-        {"124$",           4, -1, TRUE},
-        {"124$",           4, -1, TRUE},
-        {"124 $",          5, -1, TRUE},
-        {"124 $",          5, -1, TRUE},
+        {"$124",           4, -1, false},
+        {"$124 $124",      4, -1, false},
+        {"$124 ",          4, -1, false},
+        {"$ 124 ",         0,  1, false},
+        {"$\\u00A0124 ",   5, -1, false},
+        {" $ 124 ",        0,  0, false},
+        {"124$",           0,  4, false},
+        {"124 $",          0,  3, false},
+        {"$124",           4, -1, true},
+        {"$124 $124",      4, -1, true},
+        {"$124 ",          4, -1, true},
+        {"$ 124 ",         5, -1, true},
+        {"$\\u00A0124 ",   5, -1, true},
+        {" $ 124 ",        6, -1, true},
+        {"124$",           4, -1, true},
+        {"124$",           4, -1, true},
+        {"124 $",          5, -1, true},
+        {"124 $",          5, -1, true},
     };
     UErrorCode status = U_ZERO_ERROR;
     Locale locale("en_US");
@@ -3533,20 +3539,20 @@ typedef struct {
 void NumberFormatTest::TestNumberingSystems() {
 
     const TestNumberingSystemItem DATA[] = {
-        { "en_US@numbers=thai", 1234.567, FALSE, "\\u0E51,\\u0E52\\u0E53\\u0E54.\\u0E55\\u0E56\\u0E57" },
-        { "en_US@numbers=hebr", 5678.0, TRUE, "\\u05D4\\u05F3\\u05EA\\u05E8\\u05E2\\u05F4\\u05D7" },
-        { "en_US@numbers=arabext", 1234.567, FALSE, "\\u06F1\\u066c\\u06F2\\u06F3\\u06F4\\u066b\\u06F5\\u06F6\\u06F7" },
-        { "ar_EG", 1234.567, FALSE, "\\u0661\\u066C\\u0662\\u0663\\u0664\\u066b\\u0665\\u0666\\u0667" },
-        { "th_TH@numbers=traditional", 1234.567, FALSE, "\\u0E51,\\u0E52\\u0E53\\u0E54.\\u0E55\\u0E56\\u0E57" }, // fall back to native per TR35
-        { "ar_MA", 1234.567, FALSE, "1.234,567" },
-        { "en_US@numbers=hanidec", 1234.567, FALSE, "\\u4e00,\\u4e8c\\u4e09\\u56db.\\u4e94\\u516d\\u4e03" },
-        { "ta_IN@numbers=native", 1234.567, FALSE, "\\u0BE7,\\u0BE8\\u0BE9\\u0BEA.\\u0BEB\\u0BEC\\u0BED" },
-        { "ta_IN@numbers=traditional", 1235.0, TRUE, "\\u0BF2\\u0BE8\\u0BF1\\u0BE9\\u0BF0\\u0BEB" },
-        { "ta_IN@numbers=finance", 1234.567, FALSE, "1,234.567" }, // fall back to default per TR35
-        { "zh_TW@numbers=native", 1234.567, FALSE, "\\u4e00,\\u4e8c\\u4e09\\u56db.\\u4e94\\u516d\\u4e03" },
-        { "zh_TW@numbers=traditional", 1234.567, TRUE, "\\u4E00\\u5343\\u4E8C\\u767E\\u4E09\\u5341\\u56DB\\u9EDE\\u4E94\\u516D\\u4E03" },
-        { "zh_TW@numbers=finance", 1234.567, TRUE, "\\u58F9\\u4EDF\\u8CB3\\u4F70\\u53C3\\u62FE\\u8086\\u9EDE\\u4F0D\\u9678\\u67D2" },
-        { NULL, 0, FALSE, NULL }
+        { "en_US@numbers=thai", 1234.567, false, "\\u0E51,\\u0E52\\u0E53\\u0E54.\\u0E55\\u0E56\\u0E57" },
+        { "en_US@numbers=hebr", 5678.0, true, "\\u05D4\\u05F3\\u05EA\\u05E8\\u05E2\\u05F4\\u05D7" },
+        { "en_US@numbers=arabext", 1234.567, false, "\\u06F1\\u066c\\u06F2\\u06F3\\u06F4\\u066b\\u06F5\\u06F6\\u06F7" },
+        { "ar_EG", 1234.567, false, "\\u0661\\u066C\\u0662\\u0663\\u0664\\u066b\\u0665\\u0666\\u0667" },
+        { "th_TH@numbers=traditional", 1234.567, false, "\\u0E51,\\u0E52\\u0E53\\u0E54.\\u0E55\\u0E56\\u0E57" }, // fall back to native per TR35
+        { "ar_MA", 1234.567, false, "1.234,567" },
+        { "en_US@numbers=hanidec", 1234.567, false, "\\u4e00,\\u4e8c\\u4e09\\u56db.\\u4e94\\u516d\\u4e03" },
+        { "ta_IN@numbers=native", 1234.567, false, "\\u0BE7,\\u0BE8\\u0BE9\\u0BEA.\\u0BEB\\u0BEC\\u0BED" },
+        { "ta_IN@numbers=traditional", 1235.0, true, "\\u0BF2\\u0BE8\\u0BF1\\u0BE9\\u0BF0\\u0BEB" },
+        { "ta_IN@numbers=finance", 1234.567, false, "1,234.567" }, // fall back to default per TR35
+        { "zh_TW@numbers=native", 1234.567, false, "\\u4e00,\\u4e8c\\u4e09\\u56db.\\u4e94\\u516d\\u4e03" },
+        { "zh_TW@numbers=traditional", 1234.567, true, "\\u4E00\\u5343\\u4E8C\\u767E\\u4E09\\u5341\\u56DB\\u9EDE\\u4E94\\u516D\\u4E03" },
+        { "zh_TW@numbers=finance", 1234.567, true, "\\u58F9\\u4EDF\\u8CB3\\u4F70\\u53C3\\u62FE\\u8086\\u9EDE\\u4F0D\\u9678\\u67D2" },
+        { NULL, 0, false, NULL }
     };
 
     UErrorCode ec;
@@ -3755,11 +3761,11 @@ void NumberFormatTest::TestMismatchedCurrencyFormatFail() {
     df->setCurrency(u"EUR", status);
     expect2(*df, 1.23, u"\u20AC1.23");
     // Should parse with currency in the wrong place in lenient mode
-    df->setLenient(TRUE);
+    df->setLenient(true);
     expect(*df, u"1.23\u20AC", 1.23);
     expectParseCurrency(*df, u"EUR", 1.23, "1.23\\u20AC");
     // Should NOT parse with currency in the wrong place in STRICT mode
-    df->setLenient(FALSE);
+    df->setLenient(false);
     {
         Formattable result;
         ErrorCode failStatus;
@@ -3804,7 +3810,7 @@ NumberFormatTest::TestDecimalFormatCurrencyParse() {
         {"1,234.56 US dollar", "1234.56"},
     };
     // NOTE: ICU 62 requires that the currency format match the pattern in strict mode.
-    fmt->setLenient(TRUE);
+    fmt->setLenient(true);
     for (uint32_t i = 0; i < UPRV_LENGTHOF(DATA); ++i) {
         UnicodeString stringToBeParsed = ctou(DATA[i][0]);
         double parsedResult = atof(DATA[i][1]);
@@ -3892,7 +3898,7 @@ NumberFormatTest::TestCurrencyIsoPluralFormat() {
         }
         // test parsing, and test parsing for all currency formats.
         // NOTE: ICU 62 requires that the currency format match the pattern in strict mode.
-        numFmt->setLenient(TRUE);
+        numFmt->setLenient(true);
         for (int j = 3; j < 6; ++j) {
             // DATA[i][3] is the currency format result using
             // CURRENCYSTYLE formatter.
@@ -3937,7 +3943,7 @@ NumberFormatTest::TestCurrencyParsing() {
         {"pa_IN", "1", "USD", "US$\\u00A01.00", "USD\\u00A01.00", "1.00 \\u0a2f\\u0a42.\\u0a10\\u0a38. \\u0a21\\u0a3e\\u0a32\\u0a30"},
         {"es_AR", "1", "USD", "US$\\u00A01,00", "USD\\u00A01,00", "1,00 d\\u00f3lar estadounidense"},
         {"ar_EG", "1", "USD", "\\u0661\\u066b\\u0660\\u0660\\u00a0US$", "\\u0661\\u066b\\u0660\\u0660\\u00a0USD", "\\u0661\\u066b\\u0660\\u0660 \\u062f\\u0648\\u0644\\u0627\\u0631 \\u0623\\u0645\\u0631\\u064a\\u0643\\u064a"},
-        {"fa_CA", "1", "USD", "\\u200e$\\u06f1\\u066b\\u06f0\\u06f0", "\\u200eUSD\\u06f1\\u066b\\u06f0\\u06f0", "\\u06f1\\u066b\\u06f0\\u06f0 \\u062f\\u0644\\u0627\\u0631 \\u0627\\u0645\\u0631\\u06cc\\u06a9\\u0627"},
+        {"fa_CA", "1", "USD", "\\u200e$\\u06f1\\u066b\\u06f0\\u06f0", "\\u200eUSD\\u06f1\\u066b\\u06f0\\u06f0", "\\u06f1\\u066b\\u06f0\\u06f0 \\u062f\\u0644\\u0627\\u0631 \\u0622\\u0645\\u0631\\u06cc\\u06a9\\u0627"},
         {"he_IL", "1", "USD", "\\u200f1.00\\u00a0$", "\\u200f1.00\\u00a0USD", "1.00 \\u05d3\\u05d5\\u05dc\\u05e8 \\u05d0\\u05de\\u05e8\\u05d9\\u05e7\\u05d0\\u05d9"},
         {"hr_HR", "1", "USD", "1,00\\u00a0USD", "1,00\\u00a0USD", "1,00 ameri\\u010Dkih dolara"},
         {"id_ID", "1", "USD", "US$\\u00A01,00", "USD\\u00A01,00", "1,00 Dolar Amerika Serikat"},
@@ -4007,7 +4013,7 @@ for (;;) {
         }
         // test parsing, and test parsing for all currency formats.
         // NOTE: ICU 62 requires that the currency format match the pattern in strict mode.
-        numFmt->setLenient(TRUE);
+        numFmt->setLenient(true);
         for (int j = 3; j < 6; ++j) {
             // DATA[i][3] is the currency format result using
             // CURRENCYSTYLE formatter.
@@ -4887,9 +4893,9 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
         "Peruvian soles1.00",
         "Peruvian sol (1863\\u20131965)1.00",
         "Peruvian soles (1863\\u20131965)1.00",
-        "Philippine Piso1.00",
-        "Philippine piso1.00",
-        "Philippine pisos1.00",
+        "Philippine Peso1.00",
+        "Philippine peso1.00",
+        "Philippine pesos1.00",
         "Platinum1.00",
         "Platinum1.00",
         "Polish Zloty (1950\\u20131995)1.00",
@@ -4906,9 +4912,9 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
         "Portuguese escudos1.00",
         "GTQ1.00",
         "QAR1.00",
-        "Qatari Rial1.00",
-        "Qatari rial1.00",
-        "Qatari rials1.00",
+        "Qatari Riyal1.00",
+        "Qatari riyal1.00",
+        "Qatari riyals1.00",
         "RHD1.00",
         "RHD1.00",
         "RINET Funds1.00",
@@ -5824,9 +5830,9 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
         "1.00 Peruvian soles random",
         "1.00 Peruvian sol (1863\\u20131965) random",
         "1.00 Peruvian soles (1863\\u20131965) random",
-        "1.00 Philippine Piso random",
-        "1.00 Philippine piso random",
-        "1.00 Philippine pisos random",
+        "1.00 Philippine Peso random",
+        "1.00 Philippine peso random",
+        "1.00 Philippine pesos random",
         "1.00 Platinum random",
         "1.00 Platinum random",
         "1.00 Polish Zloty (1950\\u20131995) random",
@@ -5841,9 +5847,9 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
         "1.00 Portuguese Guinea escudos random",
         "1.00 Portuguese escudo random",
         "1.00 Portuguese escudos random",
-        "1.00 Qatari Rial random",
-        "1.00 Qatari rial random",
-        "1.00 Qatari rials random",
+        "1.00 Qatari Riyal random",
+        "1.00 Qatari riyal random",
+        "1.00 Qatari riyals random",
         "1.00 RINET Funds random",
         "1.00 RINET Funds random",
         "1.00 Rhodesian Dollar random",
@@ -6435,7 +6441,7 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
         "Portuguese Guinea Escud1.00",
         "Pr1.00",
         "QA1.00",
-        "Qatari Ria1.00",
+        "Qatari Riya1.00",
         "RD1.00",
         "RH1.00",
         "RINET Fund1.00",
@@ -6598,7 +6604,7 @@ NumberFormatTest::TestParseCurrencyInUCurr() {
             return;
         }
         // NOTE: ICU 62 requires that the currency format match the pattern in strict mode.
-        numFmt->setLenient(TRUE);
+        numFmt->setLenient(true);
         ParsePosition parsePos;
         LocalPointer<CurrencyAmount> currAmt(numFmt->parseCurrency(formatted, parsePos));
         if (parsePos.getIndex() > 0) {
@@ -6642,23 +6648,23 @@ void NumberFormatTest::expectPositions(FieldPositionIterator& iter, int32_t *val
   FieldPosition fp;
 
   if (tupleCount > 10) {
-    assertTrue("internal error, tupleCount too large", FALSE);
+    assertTrue("internal error, tupleCount too large", false);
   } else {
     for (int i = 0; i < tupleCount; ++i) {
-      found[i] = FALSE;
+      found[i] = false;
     }
   }
 
   logln(str);
   while (iter.next(fp)) {
-    UBool ok = FALSE;
+    UBool ok = false;
     int32_t id = fp.getField();
     int32_t start = fp.getBeginIndex();
     int32_t limit = fp.getEndIndex();
 
     // is there a logln using printf?
     char buf[128];
-    sprintf(buf, "%24s %3d %3d %3d", attrString(id), id, start, limit);
+    snprintf(buf, sizeof(buf), "%24s %3d %3d %3d", attrString(id), id, start, limit);
     logln(buf);
 
     for (int i = 0; i < tupleCount; ++i) {
@@ -6668,7 +6674,7 @@ void NumberFormatTest::expectPositions(FieldPositionIterator& iter, int32_t *val
       if (values[i*3] == id &&
           values[i*3+1] == start &&
           values[i*3+2] == limit) {
-        found[i] = ok = TRUE;
+        found[i] = ok = true;
         break;
       }
     }
@@ -6677,10 +6683,10 @@ void NumberFormatTest::expectPositions(FieldPositionIterator& iter, int32_t *val
   }
 
   // check that all were found
-  UBool ok = TRUE;
+  UBool ok = true;
   for (int i = 0; i < tupleCount; ++i) {
     if (!found[i]) {
-      ok = FALSE;
+      ok = false;
       assertTrue((UnicodeString) "missing [" + values[i*3] + "," + values[i*3+1] + "," + values[i*3+2] + "]", found[i]);
     }
   }
@@ -6703,7 +6709,7 @@ void NumberFormatTest::TestFieldPositionIterator() {
   FieldPosition pos;
 
   DecimalFormat *decFmt = (DecimalFormat *) NumberFormat::createInstance(status);
-  if (failure(status, "NumberFormat::createInstance", TRUE)) return;
+  if (failure(status, "NumberFormat::createInstance", true)) return;
 
   double num = 1234.56;
   UnicodeString str1;
@@ -6733,7 +6739,7 @@ void NumberFormatTest::TestFormatAttributes() {
   Locale locale("en_US");
   UErrorCode status = U_ZERO_ERROR;
   DecimalFormat *decFmt = (DecimalFormat *) NumberFormat::createInstance(locale, UNUM_CURRENCY, status);
-    if (failure(status, "NumberFormat::createInstance", TRUE)) return;
+    if (failure(status, "NumberFormat::createInstance", true)) return;
   double val = 12345.67;
 
   {
@@ -7300,7 +7306,7 @@ UBool NumberFormatTest::testFormattableAsUFormattable(const char *file, int line
   logln();
   if (u == NULL) {
     errln("%s:%d: Error: f.toUFormattable() retuned NULL.");
-    return FALSE;
+    return false;
   }
   logln("%s:%d: comparing Formattable with UFormattable", file, line);
   logln(fileLine + toString(f));
@@ -7309,24 +7315,24 @@ UBool NumberFormatTest::testFormattableAsUFormattable(const char *file, int line
   UErrorCode valueStatus = U_ZERO_ERROR;
   UFormattableType expectUType = UFMT_COUNT; // invalid
 
-  UBool triedExact = FALSE; // did we attempt an exact comparison?
-  UBool exactMatch = FALSE; // was the exact comparison true?
+  UBool triedExact = false; // did we attempt an exact comparison?
+  UBool exactMatch = false; // was the exact comparison true?
 
   switch( f.getType() ) {
   case Formattable::kDate:
     expectUType = UFMT_DATE;
     exactMatch = (f.getDate()==ufmt_getDate(u, &valueStatus));
-    triedExact = TRUE;
+    triedExact = true;
     break;
   case Formattable::kDouble:
     expectUType = UFMT_DOUBLE;
     exactMatch = (f.getDouble()==ufmt_getDouble(u, &valueStatus));
-    triedExact = TRUE;
+    triedExact = true;
     break;
   case Formattable::kLong:
     expectUType = UFMT_LONG;
     exactMatch = (f.getLong()==ufmt_getLong(u, &valueStatus));
-    triedExact = TRUE;
+    triedExact = true;
     break;
   case Formattable::kString:
     expectUType = UFMT_STRING;
@@ -7340,12 +7346,12 @@ UBool NumberFormatTest::testFormattableAsUFormattable(const char *file, int line
         assertTrue("UChar* NULL-terminated", uch[len]==0);
         exactMatch = (str == str2);
       }
-      triedExact = TRUE;
+      triedExact = true;
     }
     break;
   case Formattable::kArray:
     expectUType = UFMT_ARRAY;
-    triedExact = TRUE;
+    triedExact = true;
     {
       int32_t count = ufmt_getArrayLength(u, &valueStatus);
       int32_t count2;
@@ -7358,10 +7364,10 @@ UBool NumberFormatTest::testFormattableAsUFormattable(const char *file, int line
           if(*Formattable::fromUFormattable(uu) != (array2[i])) {
             errln("%s:%d: operator== did not match at index[%d] - %p vs %p", file, line, i,
                   (const void*)Formattable::fromUFormattable(uu), (const void*)&(array2[i]));
-            exactMatch = FALSE;
+            exactMatch = false;
           } else {
             if(!testFormattableAsUFormattable("(sub item)",i,*Formattable::fromUFormattable(uu))) {
-              exactMatch = FALSE;
+              exactMatch = false;
             }
           }
         }
@@ -7371,19 +7377,19 @@ UBool NumberFormatTest::testFormattableAsUFormattable(const char *file, int line
   case Formattable::kInt64:
     expectUType = UFMT_INT64;
     exactMatch = (f.getInt64()==ufmt_getInt64(u, &valueStatus));
-    triedExact = TRUE;
+    triedExact = true;
     break;
   case Formattable::kObject:
     expectUType = UFMT_OBJECT;
     exactMatch = (f.getObject()==ufmt_getObject(u, &valueStatus));
-    triedExact = TRUE;
+    triedExact = true;
     break;
   }
   UFormattableType uType = ufmt_getType(u, &status);
 
   if(U_FAILURE(status)) {
     errln("%s:%d: Error calling ufmt_getType - %s", file, line, u_errorName(status));
-    return FALSE;
+    return false;
   }
 
   if(uType != expectUType) {
@@ -7555,7 +7561,7 @@ void NumberFormatTest::TestSignificantDigits(void) {
             NumberFormat::createInstance(locale, status)));
     CHECK_DATA(status,"NumberFormat::createInstance");
 
-    numberFormat->setSignificantDigitsUsed(TRUE);
+    numberFormat->setSignificantDigitsUsed(true);
     numberFormat->setMinimumSignificantDigits(3);
     numberFormat->setMaximumSignificantDigits(5);
     numberFormat->setGroupingUsed(false);
@@ -7574,28 +7580,28 @@ void NumberFormatTest::TestSignificantDigits(void) {
     // Test for ICU-20063
     {
         DecimalFormat df({"en-us", status}, status);
-        df.setSignificantDigitsUsed(TRUE);
+        df.setSignificantDigitsUsed(true);
         expect(df, 9.87654321, u"9.87654");
         df.setMaximumSignificantDigits(3);
         expect(df, 9.87654321, u"9.88");
         // setSignificantDigitsUsed with maxSig only
-        df.setSignificantDigitsUsed(TRUE);
+        df.setSignificantDigitsUsed(true);
         expect(df, 9.87654321, u"9.88");
         df.setMinimumSignificantDigits(2);
         expect(df, 9, u"9.0");
         // setSignificantDigitsUsed with both minSig and maxSig
-        df.setSignificantDigitsUsed(TRUE);
+        df.setSignificantDigitsUsed(true);
         expect(df, 9, u"9.0");
         // setSignificantDigitsUsed to false: should revert to fraction rounding
-        df.setSignificantDigitsUsed(FALSE);
+        df.setSignificantDigitsUsed(false);
         expect(df, 9.87654321, u"9.876543");
         expect(df, 9, u"9");
-        df.setSignificantDigitsUsed(TRUE);
+        df.setSignificantDigitsUsed(true);
         df.setMinimumSignificantDigits(2);
         expect(df, 9.87654321, u"9.87654");
         expect(df, 9, u"9.0");
         // setSignificantDigitsUsed with minSig only
-        df.setSignificantDigitsUsed(TRUE);
+        df.setSignificantDigitsUsed(true);
         expect(df, 9.87654321, u"9.87654");
         expect(df, 9, u"9.0");
     }
@@ -7608,7 +7614,7 @@ void NumberFormatTest::TestShowZero() {
             NumberFormat::createInstance(locale, status)));
     CHECK_DATA(status, "NumberFormat::createInstance");
 
-    numberFormat->setSignificantDigitsUsed(TRUE);
+    numberFormat->setSignificantDigitsUsed(true);
     numberFormat->setMaximumSignificantDigits(3);
 
     UnicodeString result;
@@ -7628,28 +7634,28 @@ void NumberFormatTest::TestBug9936() {
         return;
     }
 
-    if (numberFormat->areSignificantDigitsUsed() == TRUE) {
-        errln("File %s, Line %d: areSignificantDigitsUsed() was TRUE, expected FALSE.\n", __FILE__, __LINE__);
+    if (numberFormat->areSignificantDigitsUsed() == true) {
+        errln("File %s, Line %d: areSignificantDigitsUsed() was true, expected false.\n", __FILE__, __LINE__);
     }
-    numberFormat->setSignificantDigitsUsed(TRUE);
-    if (numberFormat->areSignificantDigitsUsed() == FALSE) {
-        errln("File %s, Line %d: areSignificantDigitsUsed() was FALSE, expected TRUE.\n", __FILE__, __LINE__);
+    numberFormat->setSignificantDigitsUsed(true);
+    if (numberFormat->areSignificantDigitsUsed() == false) {
+        errln("File %s, Line %d: areSignificantDigitsUsed() was false, expected true.\n", __FILE__, __LINE__);
     }
 
-    numberFormat->setSignificantDigitsUsed(FALSE);
-    if (numberFormat->areSignificantDigitsUsed() == TRUE) {
-        errln("File %s, Line %d: areSignificantDigitsUsed() was TRUE, expected FALSE.\n", __FILE__, __LINE__);
+    numberFormat->setSignificantDigitsUsed(false);
+    if (numberFormat->areSignificantDigitsUsed() == true) {
+        errln("File %s, Line %d: areSignificantDigitsUsed() was true, expected false.\n", __FILE__, __LINE__);
     }
 
     numberFormat->setMinimumSignificantDigits(3);
-    if (numberFormat->areSignificantDigitsUsed() == FALSE) {
-        errln("File %s, Line %d: areSignificantDigitsUsed() was FALSE, expected TRUE.\n", __FILE__, __LINE__);
+    if (numberFormat->areSignificantDigitsUsed() == false) {
+        errln("File %s, Line %d: areSignificantDigitsUsed() was false, expected true.\n", __FILE__, __LINE__);
     }
 
-    numberFormat->setSignificantDigitsUsed(FALSE);
+    numberFormat->setSignificantDigitsUsed(false);
     numberFormat->setMaximumSignificantDigits(6);
-    if (numberFormat->areSignificantDigitsUsed() == FALSE) {
-        errln("File %s, Line %d: areSignificantDigitsUsed() was FALSE, expected TRUE.\n", __FILE__, __LINE__);
+    if (numberFormat->areSignificantDigitsUsed() == false) {
+        errln("File %s, Line %d: areSignificantDigitsUsed() was false, expected true.\n", __FILE__, __LINE__);
     }
 
 }
@@ -7658,7 +7664,7 @@ void NumberFormatTest::TestParseNegativeWithFaLocale() {
     UErrorCode status = U_ZERO_ERROR;
     DecimalFormat *test = (DecimalFormat *) NumberFormat::createInstance("fa", status);
     CHECK_DATA(status, "NumberFormat::createInstance");
-    test->setLenient(TRUE);
+    test->setLenient(true);
     Formattable af;
     ParsePosition ppos;
     UnicodeString value("\\u200e-0,5");
@@ -7674,7 +7680,7 @@ void NumberFormatTest::TestParseNegativeWithAlternateMinusSign() {
     UErrorCode status = U_ZERO_ERROR;
     DecimalFormat *test = (DecimalFormat *) NumberFormat::createInstance("en", status);
     CHECK_DATA(status, "NumberFormat::createInstance");
-    test->setLenient(TRUE);
+    test->setLenient(true);
     Formattable af;
     ParsePosition ppos;
     UnicodeString value("\\u208B0.5");
@@ -7716,80 +7722,80 @@ typedef struct {
 void NumberFormatTest::TestParseSignsAndMarks() {
     const SignsAndMarksItem items[] = {
         // locale               lenient numString                                                       value
-        { "en",                 FALSE,  CharsToUnicodeString("12"),                                      12 },
-        { "en",                 TRUE,   CharsToUnicodeString("12"),                                      12 },
-        { "en",                 FALSE,  CharsToUnicodeString("-23"),                                    -23 },
-        { "en",                 TRUE,   CharsToUnicodeString("-23"),                                    -23 },
-        { "en",                 TRUE,   CharsToUnicodeString("- 23"),                                   -23 },
-        { "en",                 FALSE,  CharsToUnicodeString("\\u200E-23"),                             -23 },
-        { "en",                 TRUE,   CharsToUnicodeString("\\u200E-23"),                             -23 },
-        { "en",                 TRUE,   CharsToUnicodeString("\\u200E- 23"),                            -23 },
+        { "en",                 false,  CharsToUnicodeString("12"),                                      12 },
+        { "en",                 true,   CharsToUnicodeString("12"),                                      12 },
+        { "en",                 false,  CharsToUnicodeString("-23"),                                    -23 },
+        { "en",                 true,   CharsToUnicodeString("-23"),                                    -23 },
+        { "en",                 true,   CharsToUnicodeString("- 23"),                                   -23 },
+        { "en",                 false,  CharsToUnicodeString("\\u200E-23"),                             -23 },
+        { "en",                 true,   CharsToUnicodeString("\\u200E-23"),                             -23 },
+        { "en",                 true,   CharsToUnicodeString("\\u200E- 23"),                            -23 },
 
-        { "en@numbers=arab",    FALSE,  CharsToUnicodeString("\\u0663\\u0664"),                          34 },
-        { "en@numbers=arab",    TRUE,   CharsToUnicodeString("\\u0663\\u0664"),                          34 },
-        { "en@numbers=arab",    FALSE,  CharsToUnicodeString("-\\u0664\\u0665"),                        -45 },
-        { "en@numbers=arab",    TRUE,   CharsToUnicodeString("-\\u0664\\u0665"),                        -45 },
-        { "en@numbers=arab",    TRUE,   CharsToUnicodeString("- \\u0664\\u0665"),                       -45 },
-        { "en@numbers=arab",    FALSE,  CharsToUnicodeString("\\u200F-\\u0664\\u0665"),                 -45 },
-        { "en@numbers=arab",    TRUE,   CharsToUnicodeString("\\u200F-\\u0664\\u0665"),                 -45 },
-        { "en@numbers=arab",    TRUE,   CharsToUnicodeString("\\u200F- \\u0664\\u0665"),                -45 },
+        { "en@numbers=arab",    false,  CharsToUnicodeString("\\u0663\\u0664"),                          34 },
+        { "en@numbers=arab",    true,   CharsToUnicodeString("\\u0663\\u0664"),                          34 },
+        { "en@numbers=arab",    false,  CharsToUnicodeString("-\\u0664\\u0665"),                        -45 },
+        { "en@numbers=arab",    true,   CharsToUnicodeString("-\\u0664\\u0665"),                        -45 },
+        { "en@numbers=arab",    true,   CharsToUnicodeString("- \\u0664\\u0665"),                       -45 },
+        { "en@numbers=arab",    false,  CharsToUnicodeString("\\u200F-\\u0664\\u0665"),                 -45 },
+        { "en@numbers=arab",    true,   CharsToUnicodeString("\\u200F-\\u0664\\u0665"),                 -45 },
+        { "en@numbers=arab",    true,   CharsToUnicodeString("\\u200F- \\u0664\\u0665"),                -45 },
 
-        { "en@numbers=arabext", FALSE,  CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
-        { "en@numbers=arabext", TRUE,   CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
-        { "en@numbers=arabext", FALSE,  CharsToUnicodeString("-\\u06F6\\u06F7"),                        -67 },
-        { "en@numbers=arabext", TRUE,   CharsToUnicodeString("-\\u06F6\\u06F7"),                        -67 },
-        { "en@numbers=arabext", TRUE,   CharsToUnicodeString("- \\u06F6\\u06F7"),                       -67 },
-        { "en@numbers=arabext", FALSE,  CharsToUnicodeString("\\u200E-\\u200E\\u06F6\\u06F7"),          -67 },
-        { "en@numbers=arabext", TRUE,   CharsToUnicodeString("\\u200E-\\u200E\\u06F6\\u06F7"),          -67 },
-        { "en@numbers=arabext", TRUE,   CharsToUnicodeString("\\u200E-\\u200E \\u06F6\\u06F7"),         -67 },
+        { "en@numbers=arabext", false,  CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
+        { "en@numbers=arabext", true,   CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
+        { "en@numbers=arabext", false,  CharsToUnicodeString("-\\u06F6\\u06F7"),                        -67 },
+        { "en@numbers=arabext", true,   CharsToUnicodeString("-\\u06F6\\u06F7"),                        -67 },
+        { "en@numbers=arabext", true,   CharsToUnicodeString("- \\u06F6\\u06F7"),                       -67 },
+        { "en@numbers=arabext", false,  CharsToUnicodeString("\\u200E-\\u200E\\u06F6\\u06F7"),          -67 },
+        { "en@numbers=arabext", true,   CharsToUnicodeString("\\u200E-\\u200E\\u06F6\\u06F7"),          -67 },
+        { "en@numbers=arabext", true,   CharsToUnicodeString("\\u200E-\\u200E \\u06F6\\u06F7"),         -67 },
 
-        { "he",                 FALSE,  CharsToUnicodeString("12"),                                      12 },
-        { "he",                 TRUE,   CharsToUnicodeString("12"),                                      12 },
-        { "he",                 FALSE,  CharsToUnicodeString("-23"),                                    -23 },
-        { "he",                 TRUE,   CharsToUnicodeString("-23"),                                    -23 },
-        { "he",                 TRUE,   CharsToUnicodeString("- 23"),                                   -23 },
-        { "he",                 FALSE,  CharsToUnicodeString("\\u200E-23"),                             -23 },
-        { "he",                 TRUE,   CharsToUnicodeString("\\u200E-23"),                             -23 },
-        { "he",                 TRUE,   CharsToUnicodeString("\\u200E- 23"),                            -23 },
+        { "he",                 false,  CharsToUnicodeString("12"),                                      12 },
+        { "he",                 true,   CharsToUnicodeString("12"),                                      12 },
+        { "he",                 false,  CharsToUnicodeString("-23"),                                    -23 },
+        { "he",                 true,   CharsToUnicodeString("-23"),                                    -23 },
+        { "he",                 true,   CharsToUnicodeString("- 23"),                                   -23 },
+        { "he",                 false,  CharsToUnicodeString("\\u200E-23"),                             -23 },
+        { "he",                 true,   CharsToUnicodeString("\\u200E-23"),                             -23 },
+        { "he",                 true,   CharsToUnicodeString("\\u200E- 23"),                            -23 },
 
-        { "ar",                 FALSE,  CharsToUnicodeString("\\u0663\\u0664"),                          34 },
-        { "ar",                 TRUE,   CharsToUnicodeString("\\u0663\\u0664"),                          34 },
-        { "ar",                 FALSE,  CharsToUnicodeString("-\\u0664\\u0665"),                        -45 },
-        { "ar",                 TRUE,   CharsToUnicodeString("-\\u0664\\u0665"),                        -45 },
-        { "ar",                 TRUE,   CharsToUnicodeString("- \\u0664\\u0665"),                       -45 },
-        { "ar",                 FALSE,  CharsToUnicodeString("\\u200F-\\u0664\\u0665"),                 -45 },
-        { "ar",                 TRUE,   CharsToUnicodeString("\\u200F-\\u0664\\u0665"),                 -45 },
-        { "ar",                 TRUE,   CharsToUnicodeString("\\u200F- \\u0664\\u0665"),                -45 },
+        { "ar",                 false,  CharsToUnicodeString("\\u0663\\u0664"),                          34 },
+        { "ar",                 true,   CharsToUnicodeString("\\u0663\\u0664"),                          34 },
+        { "ar",                 false,  CharsToUnicodeString("-\\u0664\\u0665"),                        -45 },
+        { "ar",                 true,   CharsToUnicodeString("-\\u0664\\u0665"),                        -45 },
+        { "ar",                 true,   CharsToUnicodeString("- \\u0664\\u0665"),                       -45 },
+        { "ar",                 false,  CharsToUnicodeString("\\u200F-\\u0664\\u0665"),                 -45 },
+        { "ar",                 true,   CharsToUnicodeString("\\u200F-\\u0664\\u0665"),                 -45 },
+        { "ar",                 true,   CharsToUnicodeString("\\u200F- \\u0664\\u0665"),                -45 },
 
-        { "ar_MA",              FALSE,  CharsToUnicodeString("12"),                                      12 },
-        { "ar_MA",              TRUE,   CharsToUnicodeString("12"),                                      12 },
-        { "ar_MA",              FALSE,  CharsToUnicodeString("-23"),                                    -23 },
-        { "ar_MA",              TRUE,   CharsToUnicodeString("-23"),                                    -23 },
-        { "ar_MA",              TRUE,   CharsToUnicodeString("- 23"),                                   -23 },
-        { "ar_MA",              FALSE,  CharsToUnicodeString("\\u200E-23"),                             -23 },
-        { "ar_MA",              TRUE,   CharsToUnicodeString("\\u200E-23"),                             -23 },
-        { "ar_MA",              TRUE,   CharsToUnicodeString("\\u200E- 23"),                            -23 },
+        { "ar_MA",              false,  CharsToUnicodeString("12"),                                      12 },
+        { "ar_MA",              true,   CharsToUnicodeString("12"),                                      12 },
+        { "ar_MA",              false,  CharsToUnicodeString("-23"),                                    -23 },
+        { "ar_MA",              true,   CharsToUnicodeString("-23"),                                    -23 },
+        { "ar_MA",              true,   CharsToUnicodeString("- 23"),                                   -23 },
+        { "ar_MA",              false,  CharsToUnicodeString("\\u200E-23"),                             -23 },
+        { "ar_MA",              true,   CharsToUnicodeString("\\u200E-23"),                             -23 },
+        { "ar_MA",              true,   CharsToUnicodeString("\\u200E- 23"),                            -23 },
 
-        { "fa",                 FALSE,  CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
-        { "fa",                 TRUE,   CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
-        { "fa",                 FALSE,  CharsToUnicodeString("\\u2212\\u06F6\\u06F7"),                  -67 },
-        { "fa",                 TRUE,   CharsToUnicodeString("\\u2212\\u06F6\\u06F7"),                  -67 },
-        { "fa",                 TRUE,   CharsToUnicodeString("\\u2212 \\u06F6\\u06F7"),                 -67 },
-        { "fa",                 FALSE,  CharsToUnicodeString("\\u200E\\u2212\\u200E\\u06F6\\u06F7"),    -67 },
-        { "fa",                 TRUE,   CharsToUnicodeString("\\u200E\\u2212\\u200E\\u06F6\\u06F7"),    -67 },
-        { "fa",                 TRUE,   CharsToUnicodeString("\\u200E\\u2212\\u200E \\u06F6\\u06F7"),   -67 },
+        { "fa",                 false,  CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
+        { "fa",                 true,   CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
+        { "fa",                 false,  CharsToUnicodeString("\\u2212\\u06F6\\u06F7"),                  -67 },
+        { "fa",                 true,   CharsToUnicodeString("\\u2212\\u06F6\\u06F7"),                  -67 },
+        { "fa",                 true,   CharsToUnicodeString("\\u2212 \\u06F6\\u06F7"),                 -67 },
+        { "fa",                 false,  CharsToUnicodeString("\\u200E\\u2212\\u200E\\u06F6\\u06F7"),    -67 },
+        { "fa",                 true,   CharsToUnicodeString("\\u200E\\u2212\\u200E\\u06F6\\u06F7"),    -67 },
+        { "fa",                 true,   CharsToUnicodeString("\\u200E\\u2212\\u200E \\u06F6\\u06F7"),   -67 },
 
-        { "ps",                 FALSE,  CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
-        { "ps",                 TRUE,   CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
-        { "ps",                 FALSE,  CharsToUnicodeString("-\\u06F6\\u06F7"),                        -67 },
-        { "ps",                 TRUE,   CharsToUnicodeString("-\\u06F6\\u06F7"),                        -67 },
-        { "ps",                 TRUE,   CharsToUnicodeString("- \\u06F6\\u06F7"),                       -67 },
-        { "ps",                 FALSE,  CharsToUnicodeString("\\u200E-\\u200E\\u06F6\\u06F7"),          -67 },
-        { "ps",                 TRUE,   CharsToUnicodeString("\\u200E-\\u200E\\u06F6\\u06F7"),          -67 },
-        { "ps",                 TRUE,   CharsToUnicodeString("\\u200E-\\u200E \\u06F6\\u06F7"),         -67 },
-        { "ps",                 FALSE,  CharsToUnicodeString("-\\u200E\\u06F6\\u06F7"),                 -67 },
-        { "ps",                 TRUE,   CharsToUnicodeString("-\\u200E\\u06F6\\u06F7"),                 -67 },
-        { "ps",                 TRUE,   CharsToUnicodeString("-\\u200E \\u06F6\\u06F7"),                -67 },
+        { "ps",                 false,  CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
+        { "ps",                 true,   CharsToUnicodeString("\\u06F5\\u06F6"),                          56 },
+        { "ps",                 false,  CharsToUnicodeString("-\\u06F6\\u06F7"),                        -67 },
+        { "ps",                 true,   CharsToUnicodeString("-\\u06F6\\u06F7"),                        -67 },
+        { "ps",                 true,   CharsToUnicodeString("- \\u06F6\\u06F7"),                       -67 },
+        { "ps",                 false,  CharsToUnicodeString("\\u200E-\\u200E\\u06F6\\u06F7"),          -67 },
+        { "ps",                 true,   CharsToUnicodeString("\\u200E-\\u200E\\u06F6\\u06F7"),          -67 },
+        { "ps",                 true,   CharsToUnicodeString("\\u200E-\\u200E \\u06F6\\u06F7"),         -67 },
+        { "ps",                 false,  CharsToUnicodeString("-\\u200E\\u06F6\\u06F7"),                 -67 },
+        { "ps",                 true,   CharsToUnicodeString("-\\u200E\\u06F6\\u06F7"),                 -67 },
+        { "ps",                 true,   CharsToUnicodeString("-\\u200E \\u06F6\\u06F7"),                -67 },
         // terminator
         { NULL,                 0,      UnicodeString(""),                                                0 },
     };
@@ -8081,29 +8087,29 @@ void NumberFormatTest::TestAccountingCurrency() {
     UNumberFormatStyle style = UNUM_CURRENCY_ACCOUNTING;
 
     expect(NumberFormat::createInstance("en_US", style, status),
-        (Formattable)(double)1234.5, "$1,234.50", TRUE, status);
+        (Formattable)(double)1234.5, "$1,234.50", true, status);
     expect(NumberFormat::createInstance("en_US", style, status),
-        (Formattable)(double)-1234.5, "($1,234.50)", TRUE, status);
+        (Formattable)(double)-1234.5, "($1,234.50)", true, status);
     expect(NumberFormat::createInstance("en_US", style, status),
-        (Formattable)(double)0, "$0.00", TRUE, status);
+        (Formattable)(double)0, "$0.00", true, status);
     expect(NumberFormat::createInstance("en_US", style, status),
-        (Formattable)(double)-0.2, "($0.20)", TRUE, status);
+        (Formattable)(double)-0.2, "($0.20)", true, status);
     expect(NumberFormat::createInstance("ja_JP", style, status),
-        (Formattable)(double)10000, UnicodeString("\\uFFE510,000").unescape(), TRUE, status);
+        (Formattable)(double)10000, UnicodeString("\\uFFE510,000").unescape(), true, status);
     expect(NumberFormat::createInstance("ja_JP", style, status),
-        (Formattable)(double)-1000.5, UnicodeString("(\\uFFE51,000)").unescape(), FALSE, status);
+        (Formattable)(double)-1000.5, UnicodeString("(\\uFFE51,000)").unescape(), false, status);
     expect(NumberFormat::createInstance("de_DE", style, status),
-        (Formattable)(double)-23456.7, UnicodeString("-23.456,70\\u00A0\\u20AC").unescape(), TRUE, status);
+        (Formattable)(double)-23456.7, UnicodeString("-23.456,70\\u00A0\\u20AC").unescape(), true, status);
     /* MSFT Change: We add a CLDR-MS locale en_ID */
     expect(NumberFormat::createInstance("en_ID", style, status),
-        (Formattable)(double)0, UnicodeString("IDR\\u00A00,00").unescape(), TRUE, status);
+        (Formattable)(double)0, UnicodeString("IDR\\u00A00,00").unescape(), true, status);
     expect(NumberFormat::createInstance("en_ID", style, status),
-        (Formattable)(double)-0.2, UnicodeString("(IDR\\u00A00,20)").unescape(), TRUE, status);
+        (Formattable)(double)-0.2, UnicodeString("(IDR\\u00A00,20)").unescape(), true, status);
     /* MSFT Change: End */
     expect(NumberFormat::createInstance("sh_ME", style, status),
-        (Formattable)(double)0, UnicodeString("0,00\\u00A0\\u20AC").unescape(), TRUE, status);
+        (Formattable)(double)0, UnicodeString("0,00\\u00A0\\u20AC").unescape(), true, status);
     expect(NumberFormat::createInstance("sh_ME", style, status),
-        (Formattable)(double)-0.2, UnicodeString("(0,20\\u00A0\\u20AC)").unescape(), TRUE, status);
+        (Formattable)(double)-0.2, UnicodeString("(0,20\\u00A0\\u20AC)").unescape(), true, status);
 }
 
 /**
@@ -8184,7 +8190,7 @@ void NumberFormatTest::TestCurrencyUsage() {
         status = U_ZERO_ERROR;
         if(i == 0){
             fmt = (DecimalFormat *) NumberFormat::createInstance(enUS_ISK, UNUM_CURRENCY, status);
-            if (assertSuccess("en_US@currency=ISK/CURRENCY", status, TRUE) == FALSE) {
+            if (assertSuccess("en_US@currency=ISK/CURRENCY", status, true) == false) {
                 continue;
             }
 
@@ -8199,7 +8205,7 @@ void NumberFormatTest::TestCurrencyUsage() {
             fmt->setCurrencyUsage(UCURR_USAGE_CASH, &status);
         }else{
             fmt = (DecimalFormat *) NumberFormat::createInstance(enUS_ISK, UNUM_CASH_CURRENCY, status);
-            if (assertSuccess("en_US@currency=ISK/CASH", status, TRUE) == FALSE) {
+            if (assertSuccess("en_US@currency=ISK/CASH", status, true) == false) {
                 continue;
             }
         }
@@ -8221,7 +8227,7 @@ void NumberFormatTest::TestCurrencyUsage() {
         status = U_ZERO_ERROR;
         if(i == 0){
             fmt = (DecimalFormat *) NumberFormat::createInstance(enUS_CAD, UNUM_CURRENCY, status);
-            if (assertSuccess("en_US@currency=CAD/CURRENCY", status, TRUE) == FALSE) {
+            if (assertSuccess("en_US@currency=CAD/CURRENCY", status, true) == false) {
                 continue;
             }
 
@@ -8231,7 +8237,7 @@ void NumberFormatTest::TestCurrencyUsage() {
             fmt->setCurrencyUsage(UCURR_USAGE_CASH, &status);
         }else{
             fmt = (DecimalFormat *) NumberFormat::createInstance(enUS_CAD, UNUM_CASH_CURRENCY, status);
-            if (assertSuccess("en_US@currency=CAD/CASH", status, TRUE) == FALSE) {
+            if (assertSuccess("en_US@currency=CAD/CASH", status, true) == false) {
                 continue;
             }
         }
@@ -8249,13 +8255,13 @@ void NumberFormatTest::TestCurrencyUsage() {
         status = U_ZERO_ERROR;
         if(i == 0){
             fmt = (DecimalFormat *) NumberFormat::createInstance(enUS_CAD, UNUM_CURRENCY, status);
-            if (assertSuccess("en_US@currency=CAD/CURRENCY", status, TRUE) == FALSE) {
+            if (assertSuccess("en_US@currency=CAD/CURRENCY", status, true) == false) {
                 continue;
             }
             fmt->setCurrencyUsage(UCURR_USAGE_CASH, &status);
         }else{
             fmt = (DecimalFormat *) NumberFormat::createInstance(enUS_CAD, UNUM_CASH_CURRENCY, status);
-            if (assertSuccess("en_US@currency=CAD/CASH", status, TRUE) == FALSE) {
+            if (assertSuccess("en_US@currency=CAD/CASH", status, true) == false) {
                 continue;
             }
         }
@@ -8289,7 +8295,7 @@ void NumberFormatTest::TestCurrencyUsage() {
 void NumberFormatTest::TestDoubleLimit11439() {
     char  buf[50];
     for (int64_t num = MAX_INT64_IN_DOUBLE-10; num<=MAX_INT64_IN_DOUBLE; num++) {
-        sprintf(buf, "%lld", (long long)num);
+        snprintf(buf, sizeof(buf), "%lld", (long long)num);
         double fNum = 0.0;
         sscanf(buf, "%lf", &fNum);
         int64_t rtNum = static_cast<int64_t>(fNum);
@@ -8299,7 +8305,7 @@ void NumberFormatTest::TestDoubleLimit11439() {
         }
     }
     for (int64_t num = -MAX_INT64_IN_DOUBLE+10; num>=-MAX_INT64_IN_DOUBLE; num--) {
-        sprintf(buf, "%lld", (long long)num);
+        snprintf(buf, sizeof(buf), "%lld", (long long)num);
         double fNum = 0.0;
         sscanf(buf, "%lf", &fNum);
         int64_t rtNum = static_cast<int64_t>(fNum);
@@ -8377,7 +8383,7 @@ void NumberFormatTest::TestToPatternScientific11648() {
         dataerrln("Error creating DecimalFormat - %s", u_errorName(status));
         return;
     }
-    fmt.setScientificNotation(TRUE);
+    fmt.setScientificNotation(true);
     UnicodeString pattern;
     assertEquals("", "0.00E0", fmt.toPattern(pattern));
     DecimalFormat fmt2(pattern, sym, status);
@@ -8593,7 +8599,7 @@ void NumberFormatTest::Test13737_ParseScientificStrict() {
     IcuTestErrorCode status(*this, "Test13737_ParseScientificStrict");
     LocalPointer<NumberFormat> df(NumberFormat::createScientificInstance("en", status), status);
     if (!assertSuccess("", status, true, __FILE__, __LINE__)) {return;}
-    df->setLenient(FALSE);
+    df->setLenient(false);
     // Parse Test
     expect(*df, u"1.2", 1.2);
 }
@@ -8883,8 +8889,8 @@ void NumberFormatTest::TestParsePercentRegression() {
     LocalPointer<DecimalFormat> df1((DecimalFormat*) NumberFormat::createInstance("en", status), status);
     LocalPointer<DecimalFormat> df2((DecimalFormat*) NumberFormat::createPercentInstance("en", status), status);
     if (status.isFailure()) {return; }
-    df1->setLenient(TRUE);
-    df2->setLenient(TRUE);
+    df1->setLenient(true);
+    df2->setLenient(true);
 
     {
         ParsePosition ppos;
@@ -9028,9 +9034,9 @@ void NumberFormatTest::TestFormatFailIfMoreThanMaxDigits() {
     if (status.errDataIfFailureAndReset()) {
         return;
     }
-    assertEquals("Coverage for getter 1", (UBool) FALSE, df.isFormatFailIfMoreThanMaxDigits());
-    df.setFormatFailIfMoreThanMaxDigits(TRUE);
-    assertEquals("Coverage for getter 2", (UBool) TRUE, df.isFormatFailIfMoreThanMaxDigits());
+    assertEquals("Coverage for getter 1", (UBool) false, df.isFormatFailIfMoreThanMaxDigits());
+    df.setFormatFailIfMoreThanMaxDigits(true);
+    assertEquals("Coverage for getter 2", (UBool) true, df.isFormatFailIfMoreThanMaxDigits());
     df.setMaximumIntegerDigits(2);
     UnicodeString result;
     df.format(1234, result, status);
@@ -9044,9 +9050,9 @@ void NumberFormatTest::TestParseCaseSensitive() {
     if (status.errDataIfFailureAndReset()) {
         return;
     }
-    assertEquals("Coverage for getter 1", (UBool) FALSE, df.isParseCaseSensitive());
-    df.setParseCaseSensitive(TRUE);
-    assertEquals("Coverage for getter 1", (UBool) TRUE, df.isParseCaseSensitive());
+    assertEquals("Coverage for getter 1", (UBool) false, df.isParseCaseSensitive());
+    df.setParseCaseSensitive(true);
+    assertEquals("Coverage for getter 1", (UBool) true, df.isParseCaseSensitive());
     Formattable result;
     ParsePosition ppos;
     df.parse(u"1e2", result, ppos);
@@ -9061,9 +9067,9 @@ void NumberFormatTest::TestParseNoExponent() {
     if (status.errDataIfFailureAndReset()) {
         return;
     }
-    assertEquals("Coverage for getter 1", (UBool) FALSE, df.isParseNoExponent());
-    df.setParseNoExponent(TRUE);
-    assertEquals("Coverage for getter 1", (UBool) TRUE, df.isParseNoExponent());
+    assertEquals("Coverage for getter 1", (UBool) false, df.isParseNoExponent());
+    df.setParseNoExponent(true);
+    assertEquals("Coverage for getter 1", (UBool) true, df.isParseNoExponent());
     Formattable result;
     ParsePosition ppos;
     df.parse(u"1E2", result, ppos);
@@ -9078,9 +9084,9 @@ void NumberFormatTest::TestSignAlwaysShown() {
     if (status.errDataIfFailureAndReset()) {
         return;
     }
-    assertEquals("Coverage for getter 1", (UBool) FALSE, df.isSignAlwaysShown());
-    df.setSignAlwaysShown(TRUE);
-    assertEquals("Coverage for getter 1", (UBool) TRUE, df.isSignAlwaysShown());
+    assertEquals("Coverage for getter 1", (UBool) false, df.isSignAlwaysShown());
+    df.setSignAlwaysShown(true);
+    assertEquals("Coverage for getter 1", (UBool) true, df.isSignAlwaysShown());
     UnicodeString result;
     df.format(1234, result, status);
     status.errIfFailureAndReset();
@@ -9159,7 +9165,7 @@ void NumberFormatTest::Test11897_LocalizedPatternSeparator() {
     // when set manually via API
     {
         DecimalFormatSymbols dfs("en", status);
-        dfs.setSymbol(DecimalFormatSymbols::kPatternSeparatorSymbol, u"!", FALSE);
+        dfs.setSymbol(DecimalFormatSymbols::kPatternSeparatorSymbol, u"!", false);
         DecimalFormat df(u"0", dfs, status);
         if (!assertSuccess("", status, true, __FILE__, __LINE__)) { return; }
         df.applyPattern("a0;b0", status); // should not throw
@@ -9187,7 +9193,7 @@ void NumberFormatTest::Test13055_PercentageRounding() {
   pFormat->format(2.155, actual);
   assertEquals("Should round percent toward even number", "216%", actual);
 }
-  
+
 void NumberFormatTest::Test11839() {
     IcuTestErrorCode errorCode(*this, "Test11839");
     // Ticket #11839: DecimalFormat does not respect custom plus sign
@@ -9323,7 +9329,7 @@ void NumberFormatTest::Test20073_StrictPercentParseErrorIndex() {
         dataerrln("Unable to create DecimalFormat instance.");
         return;
     }
-    df.setLenient(FALSE);
+    df.setLenient(false);
     Formattable result;
     df.parse(u"%2%", result, parsePosition);
     assertEquals("", 0, parsePosition.getIndex());
@@ -9362,7 +9368,7 @@ void NumberFormatTest::Test11648_ExpDecFormatMalPattern() {
 
     DecimalFormat fmt("0.00", {"en", status}, status);
     if (!assertSuccess("", status, true, __FILE__, __LINE__)) { return; }
-    fmt.setScientificNotation(TRUE);
+    fmt.setScientificNotation(true);
     UnicodeString pattern;
 
     assertEquals("A valid scientific notation pattern should be produced",
@@ -9505,40 +9511,40 @@ void NumberFormatTest::Test13804_EmptyStringsWhenParsing() {
     if (status.errIfFailureAndReset()) {
         return;
     }
-    dfs.setSymbol(DecimalFormatSymbols::kCurrencySymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kDecimalSeparatorSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kZeroDigitSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kOneDigitSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kTwoDigitSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kThreeDigitSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kFourDigitSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kFiveDigitSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kSixDigitSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kSevenDigitSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kEightDigitSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kNineDigitSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kExponentMultiplicationSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kExponentialSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kGroupingSeparatorSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kInfinitySymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kIntlCurrencySymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kMinusSignSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kMonetarySeparatorSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kMonetaryGroupingSeparatorSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kNaNSymbol, u"", FALSE);
-    dfs.setPatternForCurrencySpacing(UNUM_CURRENCY_INSERT, FALSE, u"");
-    dfs.setPatternForCurrencySpacing(UNUM_CURRENCY_INSERT, TRUE, u"");
-    dfs.setSymbol(DecimalFormatSymbols::kPercentSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kPerMillSymbol, u"", FALSE);
-    dfs.setSymbol(DecimalFormatSymbols::kPlusSignSymbol, u"", FALSE);
+    dfs.setSymbol(DecimalFormatSymbols::kCurrencySymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kDecimalSeparatorSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kZeroDigitSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kOneDigitSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kTwoDigitSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kThreeDigitSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kFourDigitSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kFiveDigitSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kSixDigitSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kSevenDigitSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kEightDigitSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kNineDigitSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kExponentMultiplicationSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kExponentialSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kGroupingSeparatorSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kInfinitySymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kIntlCurrencySymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kMinusSignSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kMonetarySeparatorSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kMonetaryGroupingSeparatorSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kNaNSymbol, u"", false);
+    dfs.setPatternForCurrencySpacing(UNUM_CURRENCY_INSERT, false, u"");
+    dfs.setPatternForCurrencySpacing(UNUM_CURRENCY_INSERT, true, u"");
+    dfs.setSymbol(DecimalFormatSymbols::kPercentSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kPerMillSymbol, u"", false);
+    dfs.setSymbol(DecimalFormatSymbols::kPlusSignSymbol, u"", false);
 
     DecimalFormat df("0", dfs, status);
     if (status.errIfFailureAndReset()) {
         return;
     }
-    df.setGroupingUsed(TRUE);
-    df.setScientificNotation(TRUE);
-    df.setLenient(TRUE); // enable all matchers
+    df.setGroupingUsed(true);
+    df.setScientificNotation(true);
+    df.setLenient(true); // enable all matchers
     {
         UnicodeString result;
         df.format(0, result); // should not crash or hit infinite loop
@@ -9565,7 +9571,7 @@ void NumberFormatTest::Test13804_EmptyStringsWhenParsing() {
     }
 
     // Test with a nonempty exponent separator symbol to cover more code
-    dfs.setSymbol(DecimalFormatSymbols::kExponentialSymbol, u"E", FALSE);
+    dfs.setSymbol(DecimalFormatSymbols::kExponentialSymbol, u"E", false);
     df.setDecimalFormatSymbols(dfs);
     {
         Formattable result;
@@ -9867,7 +9873,7 @@ void NumberFormatTest::Test13734_StrictFlexibleWhitespace() {
     IcuTestErrorCode status(*this, "Test13734_StrictFlexibleWhitespace");
     {
         DecimalFormat df("+0", {"en", status}, status);
-        df.setLenient(FALSE);
+        df.setLenient(false);
         Formattable result;
         ParsePosition ppos;
         df.parse("+  33", result, ppos);
@@ -9876,7 +9882,7 @@ void NumberFormatTest::Test13734_StrictFlexibleWhitespace() {
     }
     {
         DecimalFormat df("+ 0", {"en", status}, status);
-        df.setLenient(FALSE);
+        df.setLenient(false);
         Formattable result;
         ParsePosition ppos;
         df.parse("+  33", result, ppos);
@@ -10022,7 +10028,7 @@ void NumberFormatTest::Test13733_StrictAndLenient() {
         if (status.errDataIfFailureAndReset()) {
             return;
         }
-        df.setLenient(FALSE);
+        df.setLenient(false);
         LocalPointer<CurrencyAmount> ca_strict(df.parseCurrency(inputString, ppos));
         if (ca_strict != nullptr) {
             parsedStrictValue = ca_strict->getNumber().getInt64();
@@ -10031,7 +10037,7 @@ void NumberFormatTest::Test13733_StrictAndLenient() {
             parsedStrictValue, cas.expectedStrictParse);
 
         ppos.setIndex(0);
-        df.setLenient(TRUE);
+        df.setLenient(true);
         LocalPointer<CurrencyAmount> ca_lenient(df.parseCurrency(inputString, ppos));
         Formattable parsedNumber_lenient = ca_lenient->getNumber();
         if (ca_lenient != nullptr) {
@@ -10040,6 +10046,26 @@ void NumberFormatTest::Test13733_StrictAndLenient() {
         assertEquals("Lenient parse of " + inputString + " using " + patternString,
             parsedLenientValue, cas.expectedLenientParse);
     }
+}
+
+void NumberFormatTest::Test20425_IntegerIncrement() {
+    IcuTestErrorCode status(*this, "Test20425_IntegerIncrement");
+
+    DecimalFormat df("##00", status);
+    df.setRoundingIncrement(1);
+    UnicodeString actual;
+    df.format(1235.5, actual, status);
+    assertEquals("Should round to integer", u"1236", actual);
+}
+
+void NumberFormatTest::Test20425_FractionWithIntegerIncrement() {
+    IcuTestErrorCode status(*this, "Test20425_FractionWithIntegerIncrement");
+
+    DecimalFormat df("0.0", status);
+    df.setRoundingIncrement(1);
+    UnicodeString actual;
+    df.format(8.6, actual, status);
+    assertEquals("Should have a fraction digit", u"9.0", actual);
 }
 
 void NumberFormatTest::Test21232_ParseTimeout() {
@@ -10065,6 +10091,79 @@ void NumberFormatTest::Test21232_ParseTimeout() {
     Formattable result;
     df.parse(input, result, status);
     // Should not hang
+}
+
+void NumberFormatTest::Test10997_FormatCurrency() {
+    IcuTestErrorCode status(*this, "Test10997_FormatCurrency");
+
+    LocalPointer<NumberFormat> fmt(NumberFormat::createCurrencyInstance(Locale::getUS(), status));
+    if (status.errDataIfFailureAndReset()) {
+        return;
+    }
+    fmt->setMinimumFractionDigits(4);
+    fmt->setMaximumFractionDigits(4);
+
+    FieldPosition fp;
+
+    UnicodeString str;
+    Formattable usdAmnt(new CurrencyAmount(123.45, u"USD", status));
+    fmt->format(usdAmnt, str, fp, status);
+    assertEquals("minFrac 4 should be respected in default currency", u"$123.4500", str);
+
+    UnicodeString str2;
+    Formattable eurAmnt(new CurrencyAmount(123.45, u"EUR", status));
+    fmt->format(eurAmnt, str2, fp, status);
+    assertEquals("minFrac 4 should be respected in different currency", u"€123.4500", str2);
+}
+
+void NumberFormatTest::Test21556_CurrencyAsDecimal() {
+    IcuTestErrorCode status(*this, "Test21556_CurrencyAsDecimal");
+
+    {
+        DecimalFormat df(u"a0¤00b", status);
+        if (status.errDataIfFailureAndReset()) {
+            return;
+        }
+        df.setCurrency(u"EUR", status);
+        UnicodeString result;
+        FieldPosition fp(UNUM_CURRENCY_FIELD);
+        df.format(3.141, result, fp);
+        assertEquals("Basic test: format", u"a3€14b", result);
+        UnicodeString pattern;
+        assertEquals("Basic test: toPattern", u"a0¤00b", df.toPattern(pattern));
+        assertEquals("Basic test: field position begin", 2, fp.getBeginIndex());
+        assertEquals("Basic test: field position end", 3, fp.getEndIndex());
+    }
+
+    {
+        LocalPointer<NumberFormat> nf(NumberFormat::createCurrencyInstance("en-GB", status));
+        DecimalFormat* df = static_cast<DecimalFormat*>(nf.getAlias());
+        df->applyPattern(u"a0¤00b", status);
+        UnicodeString result;
+        FieldPosition fp(UNUM_CURRENCY_FIELD);
+        df->format(3.141, result, fp);
+        assertEquals("Via applyPattern: format", u"a3£14b", result);
+        UnicodeString pattern;
+        assertEquals("Via applyPattern: toPattern", u"a0¤00b", df->toPattern(pattern));
+        assertEquals("Via applyPattern: field position begin", 2, fp.getBeginIndex());
+        assertEquals("Via applyPattern: field position end", 3, fp.getEndIndex());
+    }
+}
+
+void NumberFormatTest::Test22088_Ethiopic() {
+    IcuTestErrorCode err(*this, "Test22088_Ethiopic");
+    LocalPointer<NumberFormat> nf1(NumberFormat::createInstance(Locale("am_ET@numbers=ethi"), UNUM_DEFAULT, err));
+    LocalPointer<NumberFormat> nf2(NumberFormat::createInstance(Locale("am_ET@numbers=ethi"), UNUM_NUMBERING_SYSTEM, err));
+    LocalPointer<NumberFormat> nf3(NumberFormat::createInstance(Locale::getUS(), UNUM_NUMBERING_SYSTEM, err));
+    
+    if (!err.errIfFailureAndReset("Creation of number formatters failed")) {
+        UnicodeString result;
+        assertEquals("Wrong result with UNUM_DEFAULT", u"፻፳፫", nf1->format(123, result));
+        result.remove();
+        assertEquals("Wrong result with UNUM_NUMBERING_SYSTEM", u"፻፳፫", nf2->format(123, result));
+        result.remove();
+        assertEquals("Wrong result with UNUM_NUMBERING_SYSTEM and English", u"123", nf3->format(123, result));
+    }
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

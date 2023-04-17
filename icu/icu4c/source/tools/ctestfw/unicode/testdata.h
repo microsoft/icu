@@ -24,7 +24,7 @@
   *  each setting. Each call to nextSettings resets the cases iterator.
   *  Individual test cases have to have the same number of fields as the
   *  number of entries in headers. Default headers can be specified in 
-  *  the TestDataModule info section. The default headers will be overriden
+  *  the TestDataModule info section. The default headers will be overridden
   *  by per-test headers. 
   *  Example:                                             
   *  DataMap *settings = NULL;                            
@@ -68,7 +68,7 @@ public:
    *  @param settings a DataMap pointer provided by the user. Will be NULL if 
    *                  no more settings are available.
    *  @param status for reporting unexpected errors.
-   *  @return A boolean, TRUE if there are settings, FALSE if there is no more 
+   *  @return A boolean, true if there are settings, false if there is no more 
    *          settings. 
    */
   virtual UBool nextSettings(const DataMap *& settings, UErrorCode &status) = 0;
@@ -78,7 +78,7 @@ public:
    *  @param data a DataMap pointer provided by the user. Will be NULL if 
    *                  no more cases are available.
    *  @param status for reporting unexpected errors.
-   *  @return A boolean, TRUE if there are cases, FALSE if there is no more 
+   *  @return A boolean, true if there are cases, false if there is no more 
    *          cases. 
    */
   virtual UBool nextCase(const DataMap *& data, UErrorCode &status) = 0;
@@ -103,10 +103,10 @@ private:
 public:
   virtual ~RBTestData();
 
-  virtual UBool getInfo(const DataMap *& info, UErrorCode &status) const;
+  virtual UBool getInfo(const DataMap *& info, UErrorCode &status) const override;
 
-  virtual UBool nextSettings(const DataMap *& settings, UErrorCode &status);
-  virtual UBool nextCase(const DataMap *& nextCase, UErrorCode &status);
+  virtual UBool nextSettings(const DataMap *& settings, UErrorCode &status) override;
+  virtual UBool nextCase(const DataMap *& nextCase, UErrorCode &status) override;
 };
 
 #endif

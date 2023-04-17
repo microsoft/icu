@@ -88,6 +88,8 @@ gsw{
         dak{"Takota"}
         dar{"Targiinisch"}
         de{"Tüütsch"}
+        de_AT{"Öschtriichischs Tüütsch"}
+        de_CH{"Schwiizer Hochtüütsch"}
         del{"Delaware-Schpraach"}
         den{"Slavey"}
         dgr{"Togrib"}
@@ -106,9 +108,15 @@ gsw{
         el{"Griechisch"}
         elx{"Elamisch"}
         en{"Änglisch"}
+        en_AU{"Auschtralischs Änglisch"}
+        en_CA{"Kanadischs Änglisch"}
+        en_GB{"Britischs Änglisch"}
+        en_US{"Amerikanischs Änglisch"}
         enm{"Mittelänglisch"}
         eo{"Eschperanto"}
         es{"Schpanisch"}
+        es_419{"Latiinamerikanischs Schpanisch"}
+        es_ES{"Ibeerischs Schpanisch"}
         et{"Eestnisch"}
         eu{"Baskisch"}
         ewo{"Ewondo"}
@@ -122,6 +130,8 @@ gsw{
         fo{"Färöisch"}
         fon{"Fon"}
         fr{"Französisch"}
+        fr_CA{"Kanadischs Französisch"}
+        fr_CH{"Schwiizer Französisch"}
         frm{"Mittelfranzösisch"}
         fro{"Altfranzösisch"}
         frr{"Nordfriesisch"}
@@ -279,6 +289,7 @@ gsw{
         nia{"Nias-Schpraach"}
         niu{"Niue-Schpraach"}
         nl{"Niderländisch"}
+        nl_BE{"Fläämisch"}
         nn{"Norwegisch Nynorsk"}
         no{"Norwegisch"}
         nog{"Nogaisch"}
@@ -314,6 +325,8 @@ gsw{
         pro{"Altprovenzalisch"}
         ps{"Paschtu"}
         pt{"Portugiisisch"}
+        pt_BR{"Brasilianischs Portugiisisch"}
+        pt_PT{"Iberischs Portugiisisch"}
         qu{"Quechua"}
         raj{"Rajasthani"}
         rap{"Oschterinsel-Schpraach"}
@@ -321,8 +334,8 @@ gsw{
         rm{"Rätoromanisch"}
         rn{"Rundi-Schpraach"}
         ro{"Rumänisch"}
+        ro_MD{"Moldawisch"}
         rom{"Zigüünerschpraach"}
-        root{"Root"}
         ru{"Russisch"}
         rup{"Aromunisch"}
         rw{"Ruandisch"}
@@ -340,6 +353,7 @@ gsw{
         sel{"Selkupisch"}
         sg{"Sango"}
         sga{"Altirisch"}
+        sh{"Serbo-Kroatisch"}
         shn{"Schan-Schpraach"}
         si{"Singhalesisch"}
         sid{"Sidamo"}
@@ -426,6 +440,8 @@ gsw{
         zbl{"Bliss-Symbool"}
         zen{"Zenaga"}
         zh{"Chineesisch"}
+        zh_Hans{"Veräifachts Chineesisch"}
+        zh_Hant{"Tradizionells Chineesisch"}
         zu{"Zulu"}
         zun{"Zuni-Schpraach"}
         zxx{"Kän schpraachliche Inhalt"}
@@ -563,6 +579,7 @@ gsw{
             islamic{"Islaamisch Kaländer"}
             islamic-civil{"Bürgerlich islaamisch Kaländer"}
             japanese{"Japaanisch Kaländer"}
+            roc{"Kaländer vor Republik Chiina"}
         }
         collation{
             big5han{"Tradizionells Chineesisch - Big5"}

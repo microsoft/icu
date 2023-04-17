@@ -64,10 +64,10 @@ static const UChar RIYADH8[] = { 0x52, 0x69, 0x79, 0x61, 0x64, 0x68, 0x38, 0 }; 
 static UBool contains(const char** list, const char* str) {
     for (int32_t i = 0; list[i]; i++) {
         if (uprv_strcmp(list[i], str) == 0) {
-            return TRUE;
+            return true;
         }
     }
-    return FALSE;
+    return false;
 }
 
 void
@@ -86,6 +86,7 @@ TimeZoneFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &name
         TESTCASE(6, TestFormatCustomZone);
         TESTCASE(7, TestFormatTZDBNamesAllZoneCoverage);
         TESTCASE(8, TestAdoptDefaultThreadSafe);
+        TESTCASE(9, TestCentralTime);
     default: name = ""; break;
     }
 }
@@ -157,7 +158,11 @@ TimeZoneFormatTest::TestTimeZoneRoundTrip(void) {
         LOCALES = Locale::getAvailableLocales(nLocales);
     }
 
-    StringEnumeration *tzids = TimeZone::createEnumeration();
+    StringEnumeration *tzids = TimeZone::createEnumeration(status);
+    if (U_FAILURE(status)) {
+        dataerrln("Unable to create TimeZone enumeration");
+        return;
+    }
     int32_t inRaw, inDst;
     int32_t outRaw, outDst;
 
@@ -232,7 +237,7 @@ TimeZoneFormatTest::TestTimeZoneRoundTrip(void) {
                         UnicodeString canonicalID;
                         TimeZone::getCanonicalID(*tzid, canonicalID, status);
                         if (U_FAILURE(status)) {
-                            // Uknown ID - we should not get here
+                            // Unknown ID - we should not get here
                             errln((UnicodeString)"Unknown ID " + *tzid);
                             status = U_ZERO_ERROR;
                         } else if (outtzid != canonicalID) {
@@ -265,12 +270,12 @@ TimeZoneFormatTest::TestTimeZoneRoundTrip(void) {
                         UnicodeString canonical;
                         TimeZone::getCanonicalID(*tzid, canonical, status);
                         if (U_FAILURE(status)) {
-                            // Uknown ID - we should not get here
+                            // Unknown ID - we should not get here
                             errln((UnicodeString)"Unknown ID " + *tzid);
                             status = U_ZERO_ERROR;
                         } else if (outtzid != canonical) {
                             // Canonical ID did not match - check the rules
-                            if (!((BasicTimeZone*)&outtz)->hasEquivalentTransitions((BasicTimeZone&)*tz, low, high, TRUE, status)) {
+                            if (!((BasicTimeZone*)&outtz)->hasEquivalentTransitions((BasicTimeZone&)*tz, low, high, true, status)) {
                                 if (canonical.indexOf((UChar)0x27 /*'/'*/) == -1) {
                                     // Exceptional cases, such as CET, EET, MET and WET
                                     logln((UnicodeString)"Canonical round trip failed (as expected); tz=" + *tzid
@@ -295,7 +300,7 @@ TimeZoneFormatTest::TestTimeZoneRoundTrip(void) {
                                                 || *PATTERNS[patidx] == 'O'
                                                 || *PATTERNS[patidx] == 'X'
                                                 || *PATTERNS[patidx] == 'x');
-                        UBool minutesOffset = FALSE;
+                        UBool minutesOffset = false;
                         if (*PATTERNS[patidx] == 'X' || *PATTERNS[patidx] == 'x') {
                             minutesOffset = (uprv_strlen(PATTERNS[patidx]) <= 3);
                         }
@@ -367,13 +372,13 @@ static UBool isSpecialTimeRoundTripCase(const char* loc,
         {NULL, NULL, NULL, U_DATE_MIN}
     };
 
-    UBool isExcluded = FALSE;
+    UBool isExcluded = false;
     for (int32_t i = 0; EXCLUSIONS[i].id != NULL; i++) {
         if (EXCLUSIONS[i].loc == NULL || uprv_strcmp(loc, EXCLUSIONS[i].loc) == 0) {
             if (id.compare(EXCLUSIONS[i].id) == 0) {
                 if (EXCLUSIONS[i].pattern == NULL || uprv_strcmp(pattern, EXCLUSIONS[i].pattern) == 0) {
                     if (EXCLUSIONS[i].time == U_DATE_MIN || EXCLUSIONS[i].time == time) {
-                        isExcluded = TRUE;
+                        isExcluded = true;
                     }
                 }
             }
@@ -422,7 +427,7 @@ struct LocaleData {
         Mutex lock;
         if (patternIndex >= UPRV_LENGTHOF(PATTERNS) - 1) {
             if (localeIndex >= nLocales - 1) {
-                return FALSE;
+                return false;
             }
             patternIndex = -1;
             ++localeIndex;
@@ -431,7 +436,7 @@ struct LocaleData {
         rLocaleIndex = localeIndex;
         rPatternIndex = patternIndex;
         ++numDone;
-        return TRUE;
+        return true;
     }
 
     void addTime(UDate amount, int32_t patIdx) {
@@ -526,7 +531,7 @@ TimeZoneFormatTest::TestTimeRoundTrip(void) {
 //    
 void TimeZoneFormatTest::RunTimeRoundTripTests(int32_t threadNumber) {
     UErrorCode status = U_ZERO_ERROR;
-    UBool REALLY_VERBOSE = FALSE;
+    UBool REALLY_VERBOSE = false;
 
     // These patterns are ambiguous at DST->STD local time overlap
     const char* AMBIGUOUS_DST_DECESSION[] = { "v", "vvvv", "V", "VV", "VVV", "VVVV", 0 };
@@ -613,13 +618,13 @@ void TimeZoneFormatTest::RunTimeRoundTripTests(int32_t threadNumber) {
 
             UDate t = gLocaleData->START_TIME;
             TimeZoneTransition tzt;
-            UBool tztAvail = FALSE;
-            UBool middle = TRUE;
+            UBool tztAvail = false;
+            UBool middle = true;
 
             while (t < gLocaleData->END_TIME) {
                 if (!tztAvail) {
                     testTimes[0] = t;
-                    expectedRoundTrip[0] = TRUE;
+                    expectedRoundTrip[0] = true;
                     testLen = 1;
                 } else {
                     int32_t fromOffset = tzt.getFrom()->getRawOffset() + tzt.getFrom()->getDSTSavings();
@@ -628,7 +633,7 @@ void TimeZoneFormatTest::RunTimeRoundTripTests(int32_t threadNumber) {
                     if (delta < 0) {
                         UBool isDstDecession = tzt.getFrom()->getDSTSavings() > 0 && tzt.getTo()->getDSTSavings() == 0;
                         testTimes[0] = t + delta - 1;
-                        expectedRoundTrip[0] = TRUE;
+                        expectedRoundTrip[0] = true;
                         testTimes[1] = t + delta;
                         expectedRoundTrip[1] = isDstDecession ?
                             !contains(AMBIGUOUS_DST_DECESSION, PATTERNS[patidx]) :
@@ -638,13 +643,13 @@ void TimeZoneFormatTest::RunTimeRoundTripTests(int32_t threadNumber) {
                             !contains(AMBIGUOUS_DST_DECESSION, PATTERNS[patidx]) :
                             !contains(AMBIGUOUS_NEGATIVE_SHIFT, PATTERNS[patidx]);
                         testTimes[3] = t;
-                        expectedRoundTrip[3] = TRUE;
+                        expectedRoundTrip[3] = true;
                         testLen = 4;
                     } else {
                         testTimes[0] = t - 1;
-                        expectedRoundTrip[0] = TRUE;
+                        expectedRoundTrip[0] = true;
                         testTimes[1] = t;
-                        expectedRoundTrip[1] = TRUE;
+                        expectedRoundTrip[1] = true;
                         testLen = 2;
                     }
                 }
@@ -690,15 +695,15 @@ void TimeZoneFormatTest::RunTimeRoundTripTests(int32_t threadNumber) {
                         }
                     }
                 }
-                tztAvail = tz->getNextTransition(t, FALSE, tzt);
+                tztAvail = tz->getNextTransition(t, false, tzt);
                 if (!tztAvail) {
                     break;
                 }
                 if (middle) {
                     // Test the date in the middle of two transitions.
                     t += (int64_t) ((tzt.getTime() - t) / 2);
-                    middle = FALSE;
-                    tztAvail = FALSE;
+                    middle = false;
+                    tztAvail = false;
                 } else {
                     t = tzt.getTime();
                 }
@@ -728,9 +733,12 @@ void TimeZoneFormatTest::RunAdoptDefaultThreadSafeTests(int32_t threadNumber) {
     if (threadNumber % 2 == 0) {
         for (int32_t i = 0; i < kAdoptDefaultIteration; i++) {
             std::unique_ptr<icu::StringEnumeration> timezones(
-                    icu::TimeZone::createEnumeration());
+                    icu::TimeZone::createEnumeration(status));
             // Fails with missing data.
-            if (!assertTrue(WHERE, (bool)timezones, false, true)) {return;}
+            if (U_FAILURE(status)) {
+                dataerrln("Unable to create TimeZone enumeration");
+                return;
+            }
             while (const icu::UnicodeString* timezone = timezones->snext(status)) {
                 status = U_ZERO_ERROR;
                 icu::TimeZone::adoptDefault(icu::TimeZone::createTimeZone(*timezone));
@@ -744,9 +752,9 @@ void TimeZoneFormatTest::RunAdoptDefaultThreadSafeTests(int32_t threadNumber) {
             date += 6000 * i;
             std::unique_ptr<icu::TimeZone> tz(icu::TimeZone::createDefault());
             status = U_ZERO_ERROR;
-            tz->getOffset(date, TRUE, rawOffset, dstOffset, status);
+            tz->getOffset(static_cast<UDate>(date), true, rawOffset, dstOffset, status);
             status = U_ZERO_ERROR;
-            tz->getOffset(date, FALSE, rawOffset, dstOffset, status);
+            tz->getOffset(static_cast<UDate>(date), false, rawOffset, dstOffset, status);
         }
     }
 }
@@ -1300,9 +1308,9 @@ TimeZoneFormatTest::TestFormatCustomZone(void) {
 void
 TimeZoneFormatTest::TestFormatTZDBNamesAllZoneCoverage(void) {
     UErrorCode status = U_ZERO_ERROR;
-    LocalPointer<StringEnumeration> tzids(TimeZone::createEnumeration());
-    if (tzids.getAlias() == nullptr) {
-        dataerrln("%s %d tzids is null", __FILE__, __LINE__);
+    LocalPointer<StringEnumeration> tzids(TimeZone::createEnumeration(status));
+    if (U_FAILURE(status)) {
+        dataerrln("Unable to create TimeZone enumeration", __FILE__, __LINE__);
         return;
     }
     const UnicodeString *tzid;
@@ -1337,6 +1345,59 @@ TimeZoneFormatTest::TestFormatTZDBNamesAllZoneCoverage(void) {
         }
         else {
             logln((UnicodeString)"Meta zone short daylight name: " + name);
+        }
+    }
+}
+
+// Test for checking parse results are same for a same input string
+// using SimpleDateFormat initialized with different regional locales - US and Belize.
+// Belize did not observe DST from 1968 to 1973, 1975 to 1982, and 1985 and later.
+void
+TimeZoneFormatTest::TestCentralTime(void) {
+    UnicodeString pattern(u"y-MM-dd HH:mm:ss zzzz");
+    UnicodeString testInputs[] = {
+        // 1970-01-01 - Chicago:STD/Belize:STD
+        u"1970-01-01 12:00:00 Central Standard Time",
+        u"1970-01-01 12:00:00 Central Daylight Time",
+
+        // 1970-07-01 - Chicago:STD/Belize:STD
+        u"1970-07-01 12:00:00 Central Standard Time",
+        u"1970-07-01 12:00:00 Central Daylight Time",
+
+        // 1974-01-01 - Chicago:STD/Belize:DST
+        u"1974-01-01 12:00:00 Central Standard Time",
+        u"1974-01-01 12:00:00 Central Daylight Time",
+
+        // 2020-01-01 - Chicago:STD/Belize:STD
+        u"2020-01-01 12:00:00 Central Standard Time",
+        u"2020-01-01 12:00:00 Central Daylight Time",
+
+        // 2020-01-01 - Chicago:DST/Belize:STD
+        u"2020-07-01 12:00:00 Central Standard Time",
+        u"2020-07-01 12:00:00 Central Daylight Time",
+
+        u""
+    };
+
+    UErrorCode status = U_ZERO_ERROR;
+    SimpleDateFormat sdfUS(pattern, Locale("en_US"), status);
+    SimpleDateFormat sdfBZ(pattern, Locale("en_BZ"), status);
+    if (U_FAILURE(status)) {
+        errln("Failed to create SimpleDateFormat instance");
+        return;
+    }
+
+    for (int32_t i = 0; !testInputs[i].isEmpty(); i++) {
+        UDate dUS = sdfUS.parse(testInputs[i], status);
+        UDate dBZ = sdfBZ.parse(testInputs[i], status);
+
+        if (U_FAILURE(status)) {
+            errln((UnicodeString)"Failed to parse date string: " + testInputs[i]);
+            continue;
+        }
+
+        if (dUS != dBZ) {
+            errln((UnicodeString)"Parse results should be same for input: " + testInputs[i]);
         }
     }
 }

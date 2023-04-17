@@ -234,4 +234,7 @@ ln{
         ZM{"Zambi"}
         ZW{"Zimbabwe"}
     }
+    Countries%variant{
+        CZ{"Repibiki Tsekɛ"}
+    }
 }

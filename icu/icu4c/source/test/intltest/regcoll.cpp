@@ -519,7 +519,7 @@ void CollationRegressionTest::Test4079231(/* char* par */)
     //
     // if (en_us->operator==(NULL))
     // {
-    //     errln("en_us->operator==(NULL) returned TRUE");
+    //     errln("en_us->operator==(NULL) returned true");
     // }
 
  /*
@@ -984,96 +984,6 @@ void CollationRegressionTest::Test4139572(/* char* par */)
 
     delete col;
 }
-/* HSYS : RuleBasedCollator::compare() performance enhancements
-          compare() does not create CollationElementIterator() anymore.*/
-
-class My4146160Collator : public RuleBasedCollator
-{
-public:
-    My4146160Collator(RuleBasedCollator &rbc, UErrorCode &status);
-    ~My4146160Collator();
-
-    CollationElementIterator *createCollationElementIterator(const UnicodeString &text) const;
-
-    CollationElementIterator *createCollationElementIterator(const CharacterIterator &text) const;
-
-    static int32_t count;
-};
-
-int32_t My4146160Collator::count = 0;
-
-My4146160Collator::My4146160Collator(RuleBasedCollator &rbc, UErrorCode &status)
-  : RuleBasedCollator(rbc.getRules(), status)
-{
-}
-
-My4146160Collator::~My4146160Collator()
-{
-}
-
-CollationElementIterator *My4146160Collator::createCollationElementIterator(const UnicodeString &text) const
-{
-    count += 1;
-    return RuleBasedCollator::createCollationElementIterator(text);
-}
-
-CollationElementIterator *My4146160Collator::createCollationElementIterator(const CharacterIterator &text) const
-{
-    count += 1;
-    return RuleBasedCollator::createCollationElementIterator(text);
-}
-
-// @bug 4146160
-//
-// RuleBasedCollator doesn't use createCollationElementIterator internally
-//
-void CollationRegressionTest::Test4146160(/* char* par */)
-{
-#if 0
-    //
-    // Use a custom collator class whose createCollationElementIterator
-    // methods increment a count....
-    //
-    UErrorCode status = U_ZERO_ERROR;
-    CollationKey key;
-
-    My4146160Collator::count = 0;
-    My4146160Collator *mc = NULL;
-
-    mc = new My4146160Collator(*en_us, status);
-
-    if (mc == NULL || U_FAILURE(status))
-    {
-        errln("Failed to create a My4146160Collator.");
-        delete mc;
-        return;
-    }
-
-    mc->getCollationKey("1", key, status);
-
-    if (key.isBogus() || U_FAILURE(status))
-    {
-        errln("Failure to get a CollationKey from a My4146160Collator.");
-        delete mc;
-        return;
-    }
-
-    if (My4146160Collator::count < 1)
-    {
-        errln("My4146160Collator::createCollationElementIterator not called for getCollationKey");
-    }
-
-    My4146160Collator::count = 0;
-    mc->compare("1", "2");
-
-    if (My4146160Collator::count < 1)
-    {
-        errln("My4146160Collator::createtCollationElementIterator not called for compare");
-    }
-
-    delete mc;
-#endif
-}
 
 void CollationRegressionTest::Test4179216() {
     // you can position a CollationElementIterator in the middle of
@@ -1184,7 +1094,7 @@ static int32_t calcKeyIncremental(UCollator *coll, const UChar* text, int32_t le
 
     uiter_setString(&uiter, text, len);
     keyLen = 0;
-    while (TRUE) {
+    while (true) {
         int32_t keyPartLen = ucol_nextSortKeyPart(coll, &uiter, state, &keyBuf[keyLen], count, &status);
         if (U_FAILURE(status)) {
             return -1;
@@ -1221,7 +1131,7 @@ void CollationRegressionTest::TestT7189() {
     };
 
     // Open the collator
-    coll = ucol_openFromShortString("EO_S1", FALSE, NULL, &status);
+    coll = ucol_openFromShortString("EO_S1", false, NULL, &status);
     if (U_FAILURE(status)) {
         errln("Failed to create a collator for short string EO_S1");
         return;
@@ -1472,7 +1382,6 @@ void CollationRegressionTest::runIndexedTest(int32_t index, UBool exec, const ch
     TESTCASE_AUTO(Test4133509);
     TESTCASE_AUTO(Test4139572);
     TESTCASE_AUTO(Test4141640);
-    TESTCASE_AUTO(Test4146160);
     TESTCASE_AUTO(Test4179216);
     TESTCASE_AUTO(TestT7189);
     TESTCASE_AUTO(TestCaseFirstCompression);

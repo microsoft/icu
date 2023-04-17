@@ -74,9 +74,9 @@ fr{
         BZ{"Belize"}
         CA{"Canada"}
         CC{"Îles Cocos"}
-        CD{"Congo (République démocratique du)"}
+        CD{"Congo-Kinshasa"}
         CF{"République centrafricaine"}
-        CG{"Congo"}
+        CG{"Congo-Brazzaville"}
         CH{"Suisse"}
         CI{"Côte d’Ivoire"}
         CK{"Îles Cook"}
@@ -93,14 +93,17 @@ fr{
         CY{"Chypre"}
         CZ{"Tchéquie"}
         DE{"Allemagne"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Danemark"}
         DM{"Dominique"}
         DO{"République dominicaine"}
         DZ{"Algérie"}
+        EA{"Ceuta et Melilla"}
         EC{"Équateur"}
         EE{"Estonie"}
         EG{"Égypte"}
+        EH{"Sahara occidental"}
         ER{"Érythrée"}
         ES{"Espagne"}
         ET{"Éthiopie"}
@@ -137,6 +140,7 @@ fr{
         HR{"Croatie"}
         HT{"Haïti"}
         HU{"Hongrie"}
+        IC{"Îles Canaries"}
         ID{"Indonésie"}
         IE{"Irlande"}
         IL{"Israël"}
@@ -219,7 +223,7 @@ fr{
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Îles Pitcairn"}
         PR{"Porto Rico"}
-        PS{"Autorité palestinienne"}
+        PS{"Territoires palestiniens"}
         PT{"Portugal"}
         PW{"Palaos"}
         PY{"Paraguay"}
@@ -284,6 +288,8 @@ fr{
         VU{"Vanuatu"}
         WF{"Wallis-et-Futuna"}
         WS{"Samoa"}
+        XA{"pseudo-accents"}
+        XB{"pseudo-bidi"}
         XK{"Kosovo"}
         YE{"Yémen"}
         YT{"Mayotte"}
@@ -291,5 +297,24 @@ fr{
         ZM{"Zambie"}
         ZW{"Zimbabwe"}
         ZZ{"région indéterminée"}
+    }
+    Countries%short{
+        GB{"R.-U."}
+        HK{"Hong Kong"}
+        MO{"Macao"}
+        PS{"Palestine"}
+        UN{"ONU"}
+        US{"É.-U."}
+    }
+    Countries%variant{
+        CD{"Congo (RDC)"}
+        CG{"République du Congo"}
+        CI{"République de Côte d’Ivoire"}
+        CZ{"République tchèque"}
+        FK{"Îles Malouines (Îles Falkland)"}
+        NZ{"Aotearoa (Nouvelle-Zélande)"}
+        SZ{"Swaziland"}
+        TL{"Timor-Oriental"}
+        TR{"Türkiye"}
     }
 }

@@ -864,6 +864,9 @@ qu{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
+        "Asia:Urumqi"{
+            ec{"Urumqi"}
+        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1879,6 +1882,9 @@ qu{
             ld{"Hora de Verano de Ekaterinburgo"}
             lg{"Hora de Ekaterinburgo"}
             ls{"Hora Estandar de Ekaterinburgo"}
+        }
+        "meta:Yukon"{
+            ls{"Yukon Ura"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

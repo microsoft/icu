@@ -5,7 +5,11 @@ es_CL{
     %%Parent{"es_419"}
     Countries{
         BA{"Bosnia y Herzegovina"}
+        EH{"Sahara Occidental"}
         TA{"Tristán de Acuña"}
         UM{"Islas menores alejadas de EE. UU."}
+    }
+    Countries%short{
+        GB{"RU"}
     }
 }

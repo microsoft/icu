@@ -6,10 +6,10 @@ Subject: Fix icu for wasi
 #
 # WASI issue: https://github.com/WebAssembly/wasi-sdk/issues/180
 
-diff --git a/icu/icu4c/source/common/putilimp.h b/icu/icu4c/source/common/putilimp.h
-index a325c6c359ad26f1c7202ff4700afa39b5d284c3..ab5e8ac68ad6c1e92feecce83ef0b42c21450115 100644
---- a/icu/icu4c/source/common/putilimp.h
-+++ b/icu/icu4c/source/common/putilimp.h
+diff --git a/icu4c/source/common/putilimp.h b/icu4c/source/common/putilimp.h
+index 5b95a68418..7097232e71 100644
+--- a/icu4c/source/common/putilimp.h
++++ b/icu4c/source/common/putilimp.h
 @@ -103,6 +103,8 @@ typedef size_t uintptr_t;
  #endif
  #elif U_PLATFORM == U_PF_OS400
@@ -37,10 +37,10 @@ index a325c6c359ad26f1c7202ff4700afa39b5d284c3..ab5e8ac68ad6c1e92feecce83ef0b42c
  #else
  #   define U_TZNAME tzname
  #endif
-diff --git a/icu/icu4c/source/common/umapfile.h b/icu/icu4c/source/common/umapfile.h
-index 92bd567a2a98952845eb489391092a6a64d9dfbc..4ed1112bc6dfaf96e6d106d4fead783229a87ab5 100644
---- a/icu/icu4c/source/common/umapfile.h
-+++ b/icu/icu4c/source/common/umapfile.h
+diff --git a/icu4c/source/common/umapfile.h b/icu4c/source/common/umapfile.h
+index 042e71374c..004f279fe6 100644
+--- a/icu4c/source/common/umapfile.h
++++ b/icu4c/source/common/umapfile.h
 @@ -41,6 +41,8 @@ U_CFUNC void  uprv_unmapFile(UDataMemory *pData);
  
  #if UCONFIG_NO_FILE_IO
@@ -50,10 +50,10 @@ index 92bd567a2a98952845eb489391092a6a64d9dfbc..4ed1112bc6dfaf96e6d106d4fead7832
  #elif U_PLATFORM_USES_ONLY_WIN32_API
  #   define MAP_IMPLEMENTATION MAP_WIN32
  #elif U_HAVE_MMAP || U_PLATFORM == U_PF_OS390
-diff --git a/icu/icu4c/source/common/umutex.cpp b/icu/icu4c/source/common/umutex.cpp
-index ccbee9960a39e7bea47b4f76a41e30ae671e5f0f..729644eed9c93699db2676c3b8d20878d886ba38 100644
---- a/icu/icu4c/source/common/umutex.cpp
-+++ b/icu/icu4c/source/common/umutex.cpp
+diff --git a/icu4c/source/common/umutex.cpp b/icu4c/source/common/umutex.cpp
+index ccbee9960a..729644eed9 100644
+--- a/icu4c/source/common/umutex.cpp
++++ b/icu4c/source/common/umutex.cpp
 @@ -42,7 +42,7 @@ U_NAMESPACE_BEGIN
   *  ICU Mutex wrappers.
   *
@@ -178,10 +178,10 @@ index ccbee9960a39e7bea47b4f76a41e30ae671e5f0f..729644eed9c93699db2676c3b8d20878
  }
  
  U_NAMESPACE_END
-diff --git a/icu/icu4c/source/common/umutex.h b/icu/icu4c/source/common/umutex.h
-index 8d76b3f3e6f59628779774cbb993307655b2729b..3f3ba1defc5b5d3e532bb4b592dd3d9cdc05b880 100644
---- a/icu/icu4c/source/common/umutex.h
-+++ b/icu/icu4c/source/common/umutex.h
+diff --git a/icu4c/source/common/umutex.h b/icu4c/source/common/umutex.h
+index 1b8332409c..297e2c335c 100644
+--- a/icu4c/source/common/umutex.h
++++ b/icu4c/source/common/umutex.h
 @@ -20,9 +20,12 @@
  #ifndef UMUTEX_H
  #define UMUTEX_H
@@ -220,9 +220,9 @@ index 8d76b3f3e6f59628779774cbb993307655b2729b..3f3ba1defc5b5d3e532bb4b592dd3d9c
 -
 +#ifndef __wasi__
  typedef std::atomic<int32_t> u_atomic_int32_t;
- #define ATOMIC_INT32_T_INITIALIZER(val) ATOMIC_VAR_INIT(val)
  
-@@ -89,7 +92,28 @@ inline int32_t umtx_atomic_dec(u_atomic_int32_t *var) {
+ inline int32_t umtx_loadAcquire(u_atomic_int32_t &var) {
+@@ -88,7 +91,28 @@ inline int32_t umtx_atomic_dec(u_atomic_int32_t *var) {
      return var->fetch_sub(1) - 1;
  }
  
@@ -251,7 +251,7 @@ index 8d76b3f3e6f59628779774cbb993307655b2729b..3f3ba1defc5b5d3e532bb4b592dd3d9c
  /*************************************************************************************************
   *
   *  UInitOnce Definitions.
-@@ -231,18 +255,25 @@ class U_COMMON_API UMutex {
+@@ -227,18 +251,25 @@ class U_COMMON_API UMutex {
  
      // requirements for C++ BasicLockable, allows UMutex to work with std::lock_guard
      void lock() {
@@ -279,7 +279,7 @@ index 8d76b3f3e6f59628779774cbb993307655b2729b..3f3ba1defc5b5d3e532bb4b592dd3d9c
      /** All initialized UMutexes are kept in a linked list, so that they can be found,
       * and the underlying std::mutex destructed, by u_cleanup().
       */
-@@ -253,7 +284,9 @@ class U_COMMON_API UMutex {
+@@ -249,7 +280,9 @@ class U_COMMON_API UMutex {
       * Initial fast check is inline, in lock().  The returned value may never
       * be nullptr.
       */
@@ -289,10 +289,10 @@ index 8d76b3f3e6f59628779774cbb993307655b2729b..3f3ba1defc5b5d3e532bb4b592dd3d9c
  };
  
  
-diff --git a/icu/icu4c/source/common/unifiedcache.cpp b/icu/icu4c/source/common/unifiedcache.cpp
-index 493ab79f6d9067e2e90e2dbf20dc41a6d24fae18..c5ca7ef97f018115aee85a09dfcee985a43ed453 100644
---- a/icu/icu4c/source/common/unifiedcache.cpp
-+++ b/icu/icu4c/source/common/unifiedcache.cpp
+diff --git a/icu4c/source/common/unifiedcache.cpp b/icu4c/source/common/unifiedcache.cpp
+index cfb000b2c8..992cc93ca5 100644
+--- a/icu4c/source/common/unifiedcache.cpp
++++ b/icu4c/source/common/unifiedcache.cpp
 @@ -13,15 +13,19 @@
  #include "unifiedcache.h"
  
@@ -310,7 +310,7 @@ index 493ab79f6d9067e2e90e2dbf20dc41a6d24fae18..c5ca7ef97f018115aee85a09dfcee985
  static std::mutex *gCacheMutex = nullptr;
  static std::condition_variable *gInProgressValueAddedCond;
 +#endif
- static icu::UInitOnce gCacheInitOnce = U_INITONCE_INITIALIZER;
+ static icu::UInitOnce gCacheInitOnce {};
  
  static const int32_t MAX_EVICT_ITERATIONS = 10;
 @@ -34,10 +38,12 @@ static UBool U_CALLCONV unifiedcache_cleanup() {
@@ -323,7 +323,7 @@ index 493ab79f6d9067e2e90e2dbf20dc41a6d24fae18..c5ca7ef97f018115aee85a09dfcee985
      gInProgressValueAddedCond->~condition_variable();
      gInProgressValueAddedCond = nullptr;
 +#endif
-     return TRUE;
+     return true;
  }
  U_CDECL_END
 @@ -71,9 +77,10 @@ static void U_CALLCONV cacheInit(UErrorCode &status) {
@@ -405,7 +405,7 @@ index 493ab79f6d9067e2e90e2dbf20dc41a6d24fae18..c5ca7ef97f018115aee85a09dfcee985
 +#ifndef __wasi__
          std::lock_guard<std::mutex> lock(*gCacheMutex);
 +#endif
-         _flush(TRUE);
+         _flush(true);
      }
      uhash_close(fHashtable);
 @@ -325,7 +347,9 @@ void UnifiedCache::_putIfAbsentAndGet(
@@ -447,10 +447,10 @@ index 493ab79f6d9067e2e90e2dbf20dc41a6d24fae18..c5ca7ef97f018115aee85a09dfcee985
  }
  
  void UnifiedCache::_fetch(
-diff --git a/icu/icu4c/source/i18n/decContext.h b/icu/icu4c/source/i18n/decContext.h
-index 59ab65e59271ac769d50864a10cb66cfd9d8607e..20f3526be8101233327be451f8c9d78d9b6f3c8b 100644
---- a/icu/icu4c/source/i18n/decContext.h
-+++ b/icu/icu4c/source/i18n/decContext.h
+diff --git a/icu4c/source/i18n/decContext.h b/icu4c/source/i18n/decContext.h
+index 91c6739739..48324575e3 100644
+--- a/icu4c/source/i18n/decContext.h
++++ b/icu4c/source/i18n/decContext.h
 @@ -61,7 +61,9 @@
  /* #include <stdint.h>   */         /* C99 standard integers           */
    #endif
@@ -461,10 +461,10 @@ index 59ab65e59271ac769d50864a10cb66cfd9d8607e..20f3526be8101233327be451f8c9d78d
  
    /* Extended flags setting -- set this to 0 to use only IEEE flags   */
    #if !defined(DECEXTFLAG)
-diff --git a/icu/icu4c/source/i18n/decimfmt.cpp b/icu/icu4c/source/i18n/decimfmt.cpp
-index daa1129a6ab1d70e9ee83c4f74f31fb640a3066f..9858ac901d841db5ff36be238f93226cadb58a74 100644
---- a/icu/icu4c/source/i18n/decimfmt.cpp
-+++ b/icu/icu4c/source/i18n/decimfmt.cpp
+diff --git a/icu4c/source/i18n/decimfmt.cpp b/icu4c/source/i18n/decimfmt.cpp
+index bca3336679..f6034336d2 100644
+--- a/icu4c/source/i18n/decimfmt.cpp
++++ b/icu4c/source/i18n/decimfmt.cpp
 @@ -479,9 +479,13 @@ DecimalFormat& DecimalFormat::operator=(const DecimalFormat& rhs) {
  
  DecimalFormat::~DecimalFormat() {
@@ -480,7 +480,7 @@ index daa1129a6ab1d70e9ee83c4f74f31fb640a3066f..9858ac901d841db5ff36be238f93226c
      delete fields;
  }
  
-@@ -1626,8 +1630,13 @@ void DecimalFormat::touch(UErrorCode& status) {
+@@ -1637,8 +1641,13 @@ void DecimalFormat::touch(UErrorCode& status) {
      setupFastFormat();
  
      // Delete the parsers if they were made previously
@@ -494,7 +494,7 @@ index daa1129a6ab1d70e9ee83c4f74f31fb640a3066f..9858ac901d841db5ff36be238f93226c
  
      // In order for the getters to work, we need to populate some fields in NumberFormat.
      NumberFormat::setCurrency(fields->exportedProperties.currency.get(status).getISOCurrency(), status);
-@@ -1662,7 +1671,11 @@ const numparse::impl::NumberParserImpl* DecimalFormat::getParser(UErrorCode& sta
+@@ -1673,7 +1682,11 @@ const numparse::impl::NumberParserImpl* DecimalFormat::getParser(UErrorCode& sta
      }
  
      // First try to get the pre-computed parser
@@ -506,7 +506,7 @@ index daa1129a6ab1d70e9ee83c4f74f31fb640a3066f..9858ac901d841db5ff36be238f93226c
      if (ptr != nullptr) {
          return ptr;
      }
-@@ -1681,6 +1694,7 @@ const numparse::impl::NumberParserImpl* DecimalFormat::getParser(UErrorCode& sta
+@@ -1692,6 +1705,7 @@ const numparse::impl::NumberParserImpl* DecimalFormat::getParser(UErrorCode& sta
      // it is set to what is actually stored in the atomic
      // if another thread beat us to computing the parser object.
      auto* nonConstThis = const_cast<DecimalFormat*>(this);
@@ -514,7 +514,7 @@ index daa1129a6ab1d70e9ee83c4f74f31fb640a3066f..9858ac901d841db5ff36be238f93226c
      if (!nonConstThis->fields->atomicParser.compare_exchange_strong(ptr, temp)) {
          // Another thread beat us to computing the parser
          delete temp;
-@@ -1689,13 +1703,21 @@ const numparse::impl::NumberParserImpl* DecimalFormat::getParser(UErrorCode& sta
+@@ -1700,13 +1714,21 @@ const numparse::impl::NumberParserImpl* DecimalFormat::getParser(UErrorCode& sta
          // Our copy of the parser got stored in the atomic
          return temp;
      }
@@ -536,7 +536,7 @@ index daa1129a6ab1d70e9ee83c4f74f31fb640a3066f..9858ac901d841db5ff36be238f93226c
      if (ptr != nullptr) {
          return ptr;
      }
-@@ -1710,6 +1732,7 @@ const numparse::impl::NumberParserImpl* DecimalFormat::getCurrencyParser(UErrorC
+@@ -1721,6 +1743,7 @@ const numparse::impl::NumberParserImpl* DecimalFormat::getCurrencyParser(UErrorC
      // Note: ptr starts as nullptr; during compare_exchange, it is set to what is actually stored in the
      // atomic if another thread beat us to computing the parser object.
      auto* nonConstThis = const_cast<DecimalFormat*>(this);
@@ -544,7 +544,7 @@ index daa1129a6ab1d70e9ee83c4f74f31fb640a3066f..9858ac901d841db5ff36be238f93226c
      if (!nonConstThis->fields->atomicCurrencyParser.compare_exchange_strong(ptr, temp)) {
          // Another thread beat us to computing the parser
          delete temp;
-@@ -1718,6 +1741,10 @@ const numparse::impl::NumberParserImpl* DecimalFormat::getCurrencyParser(UErrorC
+@@ -1729,6 +1752,10 @@ const numparse::impl::NumberParserImpl* DecimalFormat::getCurrencyParser(UErrorC
          // Our copy of the parser got stored in the atomic
          return temp;
      }
@@ -555,10 +555,10 @@ index daa1129a6ab1d70e9ee83c4f74f31fb640a3066f..9858ac901d841db5ff36be238f93226c
  }
  
  void
-diff --git a/icu/icu4c/source/i18n/number_mapper.h b/icu/icu4c/source/i18n/number_mapper.h
-index 9ecd776b3b4795512159c3e60c3b2c32cbb81c50..6f55d27e6c5d93a5bbdfb2aeef7e5b55732a173f 100644
---- a/icu/icu4c/source/i18n/number_mapper.h
-+++ b/icu/icu4c/source/i18n/number_mapper.h
+diff --git a/icu4c/source/i18n/number_mapper.h b/icu4c/source/i18n/number_mapper.h
+index 8879b7a94e..92eab0d261 100644
+--- a/icu4c/source/i18n/number_mapper.h
++++ b/icu4c/source/i18n/number_mapper.h
 @@ -7,7 +7,9 @@
  #ifndef __NUMBER_MAPPER_H__
  #define __NUMBER_MAPPER_H__
@@ -569,7 +569,7 @@ index 9ecd776b3b4795512159c3e60c3b2c32cbb81c50..6f55d27e6c5d93a5bbdfb2aeef7e5b55
  #include "number_types.h"
  #include "unicode/currpinf.h"
  #include "standardplural.h"
-@@ -193,11 +195,18 @@ struct DecimalFormatFields : public UMemory {
+@@ -198,11 +200,18 @@ struct DecimalFormatFields : public UMemory {
      LocalizedNumberFormatter formatter;
  
      /** The lazy-computed parser for .parse() */
@@ -589,11 +589,11 @@ index 9ecd776b3b4795512159c3e60c3b2c32cbb81c50..6f55d27e6c5d93a5bbdfb2aeef7e5b55
      /** Small object ownership warehouse for the formatter and parser */
      DecimalFormatWarehouse warehouse;
  
-diff --git a/icu/icu4c/source/i18n/numrange_fluent.cpp b/icu/icu4c/source/i18n/numrange_fluent.cpp
-index d9286d1d713d2cecc5d803ee4c181a1360c53c99..5568c0a51f4be55439481bd90cebb2373d0d72e6 100644
---- a/icu/icu4c/source/i18n/numrange_fluent.cpp
-+++ b/icu/icu4c/source/i18n/numrange_fluent.cpp
-@@ -240,28 +240,49 @@ LocalizedNumberRangeFormatter::LocalizedNumberRangeFormatter(NFS<LNF>&& src) U_N
+diff --git a/icu4c/source/i18n/numrange_fluent.cpp b/icu4c/source/i18n/numrange_fluent.cpp
+index c36defa369..2cd61f0298 100644
+--- a/icu4c/source/i18n/numrange_fluent.cpp
++++ b/icu4c/source/i18n/numrange_fluent.cpp
+@@ -240,29 +240,50 @@ LocalizedNumberRangeFormatter::LocalizedNumberRangeFormatter(NFS<LNF>&& src) U_N
          : NFS<LNF>(std::move(src)) {
      // Steal the compiled formatter
      LNF&& _src = static_cast<LNF&&>(src);
@@ -608,6 +608,7 @@ index d9286d1d713d2cecc5d803ee4c181a1360c53c99..5568c0a51f4be55439481bd90cebb237
  }
  
  LocalizedNumberRangeFormatter& LocalizedNumberRangeFormatter::operator=(const LNF& other) {
+     if (this == &other) { return *this; }  // self-assignment: no-op
      NFS<LNF>::operator=(static_cast<const NFS<LNF>&>(other));
      // Do not steal; just clear
 +#ifndef __wasi__
@@ -643,7 +644,7 @@ index d9286d1d713d2cecc5d803ee4c181a1360c53c99..5568c0a51f4be55439481bd90cebb237
  }
  
  LocalizedNumberRangeFormatter::LocalizedNumberRangeFormatter(const RangeMacroProps& macros, const Locale& locale) {
-@@ -345,7 +366,11 @@ LocalizedNumberRangeFormatter::getFormatter(UErrorCode& status) const {
+@@ -346,7 +367,11 @@ LocalizedNumberRangeFormatter::getFormatter(UErrorCode& status) const {
      }
  
      // First try to get the pre-computed formatter
@@ -655,7 +656,7 @@ index d9286d1d713d2cecc5d803ee4c181a1360c53c99..5568c0a51f4be55439481bd90cebb237
      if (ptr != nullptr) {
          return ptr;
      }
-@@ -364,6 +389,7 @@ LocalizedNumberRangeFormatter::getFormatter(UErrorCode& status) const {
+@@ -366,6 +391,7 @@ LocalizedNumberRangeFormatter::getFormatter(UErrorCode& status) const {
      // it is set to what is actually stored in the atomic
      // if another thread beat us to computing the formatter object.
      auto* nonConstThis = const_cast<LocalizedNumberRangeFormatter*>(this);
@@ -663,7 +664,7 @@ index d9286d1d713d2cecc5d803ee4c181a1360c53c99..5568c0a51f4be55439481bd90cebb237
      if (!nonConstThis->fAtomicFormatter.compare_exchange_strong(ptr, temp)) {
          // Another thread beat us to computing the formatter
          delete temp;
-@@ -372,6 +398,10 @@ LocalizedNumberRangeFormatter::getFormatter(UErrorCode& status) const {
+@@ -374,6 +400,10 @@ LocalizedNumberRangeFormatter::getFormatter(UErrorCode& status) const {
          // Our copy of the formatter got stored in the atomic
          return temp;
      }
@@ -674,10 +675,10 @@ index d9286d1d713d2cecc5d803ee4c181a1360c53c99..5568c0a51f4be55439481bd90cebb237
  
  }
  
-diff --git a/icu/icu4c/source/i18n/unicode/numberrangeformatter.h b/icu/icu4c/source/i18n/unicode/numberrangeformatter.h
-index 4e0a15badb14b8b7dd907ff34ca0f8e427071546..52253908aee0a39bb940d92f26dffc3675cb918f 100644
---- a/icu/icu4c/source/i18n/unicode/numberrangeformatter.h
-+++ b/icu/icu4c/source/i18n/unicode/numberrangeformatter.h
+diff --git a/icu4c/source/i18n/unicode/numberrangeformatter.h b/icu4c/source/i18n/unicode/numberrangeformatter.h
+index 7f535952d2..1c7ebebd3e 100644
+--- a/icu4c/source/i18n/unicode/numberrangeformatter.h
++++ b/icu4c/source/i18n/unicode/numberrangeformatter.h
 @@ -9,8 +9,9 @@
  #if U_SHOW_CPLUSPLUS_API
  

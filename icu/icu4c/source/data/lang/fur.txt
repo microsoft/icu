@@ -39,12 +39,20 @@ fur{
         cy{"galês"}
         da{"danês"}
         de{"todesc"}
+        de_AT{"todesc de Austrie"}
+        de_CH{"alt todesc de Svuizare"}
         den{"sclâf"}
         egy{"vieri egjizian"}
         el{"grêc"}
         en{"inglês"}
+        en_AU{"inglês australian"}
+        en_CA{"inglês canadês"}
+        en_GB{"inglês britanic"}
+        en_US{"ingles merecan"}
         eo{"esperanto"}
         es{"spagnûl"}
+        es_419{"spagnûl de Americhe Latine"}
+        es_ES{"spagnûl iberic"}
         et{"eston"}
         eu{"basc"}
         fa{"persian"}
@@ -54,6 +62,8 @@ fur{
         fj{"fizian"}
         fo{"faroês"}
         fr{"francês"}
+        fr_CA{"francês dal Canade"}
+        fr_CH{"francês de Svuizare"}
         fro{"vieri francês"}
         fur{"furlan"}
         fy{"frisian"}
@@ -111,6 +121,7 @@ fur{
         nds{"bas todesc"}
         ne{"nepalês"}
         nl{"olandês"}
+        nl_BE{"flamant"}
         nn{"norvegjês nynorsk"}
         no{"norvegjês"}
         non{"vieri norvegjês"}
@@ -127,9 +138,12 @@ fur{
         pro{"vieri provenzâl"}
         ps{"pashto"}
         pt{"portughês"}
+        pt_BR{"portughês brasilian"}
+        pt_PT{"portughês iberic"}
         qu{"quechua"}
         rm{"rumanç"}
         ro{"romen"}
+        ro_MD{"moldâf"}
         ru{"rus"}
         sa{"sanscrit"}
         sc{"sardegnûl"}
@@ -175,6 +189,8 @@ fur{
         yi{"yiddish"}
         yo{"yoruba"}
         zh{"cinês"}
+        zh_Hans{"cinês semplificât"}
+        zh_Hant{"cinês tradizionâl"}
         zu{"zulu"}
     }
     Scripts{
@@ -251,6 +267,7 @@ fur{
             islamic{"calendari islamic"}
             islamic-civil{"calendari islamic civîl"}
             japanese{"calendari gjaponês"}
+            roc{"calendari de Republiche di Cine"}
         }
         collation{
             big5han{"ordin cinês tradizionâl - Big5"}

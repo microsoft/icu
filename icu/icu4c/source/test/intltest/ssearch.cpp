@@ -28,7 +28,7 @@
 #include "ssearch.h"
 #include "xmlparser.h"
 
-#include <stdio.h>  // for sprintf
+#include <stdio.h>  // for snprintf
 
 char testId[100];
 
@@ -228,14 +228,14 @@ void SSearchTest::searchTest()
         if (n==NULL) {
             continue;
         }
-        text = n->getText(FALSE);
+        text = n->getText(false);
         text = text.unescape();
         pattern.append(text);
         nodeCount++;
 
         n = testCase->getChildElement("pre");
         if (n!=NULL) {
-            text = n->getText(FALSE);
+            text = n->getText(false);
             text = text.unescape();
             target.append(text);
             nodeCount++;
@@ -244,7 +244,7 @@ void SSearchTest::searchTest()
         n = testCase->getChildElement("m");
         if (n!=NULL) {
             expectedMatchStart = target.length();
-            text = n->getText(FALSE);
+            text = n->getText(false);
             text = text.unescape();
             target.append(text);
             expectedMatchLimit = target.length();
@@ -253,7 +253,7 @@ void SSearchTest::searchTest()
 
         n = testCase->getChildElement("post");
         if (n!=NULL) {
-            text = n->getText(FALSE);
+            text = n->getText(false);
             text = text.unescape();
             target.append(text);
             nodeCount++;
@@ -293,7 +293,7 @@ void SSearchTest::searchTest()
         if ((foundMatch && expectedMatchStart<0) ||
             (foundStart != expectedMatchStart)   ||
             (foundLimit != expectedMatchLimit)) {
-                TEST_ASSERT(FALSE);   //  ouput generic error position
+                TEST_ASSERT(false);   //  output generic error position
                 infoln("Found, expected match start = %d, %d \n"
                        "Found, expected match limit = %d, %d",
                 foundStart, expectedMatchStart, foundLimit, expectedMatchLimit);
@@ -322,7 +322,7 @@ void SSearchTest::searchTest()
         if ((foundMatch && expectedMatchStart<0) ||
             (foundStart != expectedMatchStart)   ||
             (foundLimit != expectedMatchLimit)) {
-                TEST_ASSERT(FALSE);   //  ouput generic error position
+                TEST_ASSERT(false);   //  output generic error position
                 infoln("Found, expected backwards match start = %d, %d \n"
                        "Found, expected backwards match limit = %d, %d",
                 foundStart, expectedMatchStart, foundLimit, expectedMatchLimit);
@@ -492,18 +492,18 @@ void OrderList::reverse()
 UBool OrderList::compare(const OrderList &other) const
 {
     if (listSize != other.listSize) {
-        return FALSE;
+        return false;
     }
 
     for(int32_t i = 0; i < listSize; i += 1) {
         if (list[i].order  != other.list[i].order ||
             list[i].lowOffset != other.list[i].lowOffset ||
             list[i].highOffset != other.list[i].highOffset) {
-                return FALSE;
+                return false;
         }
     }
 
-    return TRUE;
+    return true;
 }
 
 UBool OrderList::matchesAt(int32_t offset, const OrderList &other) const
@@ -512,19 +512,19 @@ UBool OrderList::matchesAt(int32_t offset, const OrderList &other) const
     int32_t otherSize = other.size() - 1;
 
     if (listSize - 1 - offset < otherSize) {
-        return FALSE;
+        return false;
     }
 
     for (int32_t i = offset, j = 0; j < otherSize; i += 1, j += 1) {
         if (getOrder(i) != other.getOrder(j)) {
-            return FALSE;
+            return false;
         }
     }
 
-    return TRUE;
+    return true;
 }
 
-static char *printOffsets(char *buffer, OrderList &list)
+static char *printOffsets(char *buffer, size_t n, OrderList &list)
 {
     int32_t size = list.size();
     char *s = buffer;
@@ -533,16 +533,16 @@ static char *printOffsets(char *buffer, OrderList &list)
         const Order *order = list.get(i);
 
         if (i != 0) {
-            s += sprintf(s, ", ");
+            s += snprintf(s, n, ", ");
         }
 
-        s += sprintf(s, "(%d, %d)", order->lowOffset, order->highOffset);
+        s += snprintf(s, n, "(%d, %d)", order->lowOffset, order->highOffset);
     }
 
     return buffer;
 }
 
-static char *printOrders(char *buffer, OrderList &list)
+static char *printOrders(char *buffer, size_t n, OrderList &list)
 {
     int32_t size = list.size();
     char *s = buffer;
@@ -551,10 +551,10 @@ static char *printOrders(char *buffer, OrderList &list)
         const Order *order = list.get(i);
 
         if (i != 0) {
-            s += sprintf(s, ", ");
+            s += snprintf(s, n, ", ");
         }
 
-        s += sprintf(s, "%8.8X", order->order);
+        s += snprintf(s, n, "%8.8X", order->order);
     }
 
     return buffer;
@@ -667,26 +667,26 @@ void SSearchTest::offsetTest()
             }
 
             backwardList.add(order, low, high);
-        } while (TRUE);
+        } while (true);
 
         backwardList.reverse();
 
         if (forwardList.compare(backwardList)) {
             logln("Works with \"%s\"", test[i]);
-            logln("Forward offsets:  [%s]", printOffsets(buffer, forwardList));
-//          logln("Backward offsets: [%s]", printOffsets(buffer, backwardList));
+            logln("Forward offsets:  [%s]", printOffsets(buffer, sizeof(buffer), forwardList));
+//          logln("Backward offsets: [%s]", printOffsets(buffer, sizeof(buffer), backwardList));
 
-            logln("Forward CEs:  [%s]", printOrders(buffer, forwardList));
-//          logln("Backward CEs: [%s]", printOrders(buffer, backwardList));
+            logln("Forward CEs:  [%s]", printOrders(buffer, sizeof(buffer), forwardList));
+//          logln("Backward CEs: [%s]", printOrders(buffer, sizeof(buffer), backwardList));
 
             logln();
         } else {
             errln("Fails with \"%s\"", test[i]);
-            infoln("Forward offsets:  [%s]", printOffsets(buffer, forwardList));
-            infoln("Backward offsets: [%s]", printOffsets(buffer, backwardList));
+            infoln("Forward offsets:  [%s]", printOffsets(buffer, sizeof(buffer), forwardList));
+            infoln("Backward offsets: [%s]", printOffsets(buffer, sizeof(buffer), backwardList));
 
-            infoln("Forward CEs:  [%s]", printOrders(buffer, forwardList));
-            infoln("Backward CEs: [%s]", printOrders(buffer, backwardList));
+            infoln("Forward CEs:  [%s]", printOrders(buffer, sizeof(buffer), forwardList));
+            infoln("Backward CEs: [%s]", printOrders(buffer, sizeof(buffer), backwardList));
 
             infoln();
         }
@@ -711,9 +711,9 @@ static UnicodeString &escape(const UnicodeString &string, UnicodeString &buffer)
             char cbuffer[12];
 
             if (ch <= 0xFFFFL) {
-                sprintf(cbuffer, "\\u%4.4X", ch);
+                snprintf(cbuffer, sizeof(cbuffer), "\\u%4.4X", ch);
             } else {
-                sprintf(cbuffer, "\\U%8.8X", ch);
+                snprintf(cbuffer, sizeof(cbuffer), "\\U%8.8X", ch);
             }
 
             buffer.append(cbuffer);
@@ -739,7 +739,7 @@ void SSearchTest::sharpSTest()
                                 "fuss", "ffuss", "fufuss", "fusfuss", "1fuss", "12fuss", "123fuss", "1234fuss", "fu\\u00DF", "1fu\\u00DF", "12fu\\u00DF", "123fu\\u00DF", "1234fu\\u00DF"};
     int32_t start = -1, end = -1;
 
-    coll = ucol_openFromShortString("LEN_S1", FALSE, NULL, &status);
+    coll = ucol_openFromShortString("LEN_S1", false, NULL, &status);
     TEST_ASSERT_SUCCESS(status);
 
     UnicodeString lpUnescaped = lp.unescape();
@@ -1017,7 +1017,7 @@ public:
     SetMonkey(const USet *theSet);
     ~SetMonkey();
 
-    virtual void append(UnicodeString &test, UnicodeString &alternate);
+    virtual void append(UnicodeString &test, UnicodeString &alternate) override;
 
 private:
     const USet *set;
@@ -1051,7 +1051,7 @@ public:
     StringSetMonkey(const USet *theSet, UCollator *theCollator, CollData *theCollData);
     ~StringSetMonkey();
 
-    void append(UnicodeString &testCase, UnicodeString &alternate);
+    void append(UnicodeString &testCase, UnicodeString &alternate) override;
 
 private:
     UnicodeString &generateAlternative(const UnicodeString &testCase, UnicodeString &alternate);
@@ -1127,7 +1127,7 @@ UnicodeString &StringSetMonkey::generateAlternative(const UnicodeString &testCas
         // find random string that generates the same CEList
         const CEList *ceList2 = NULL;
         const UnicodeString *string = NULL;
-              UBool matches = FALSE;
+              UBool matches = false;
 
         do {
             int32_t s = m_rand() % stringCount;
@@ -1198,7 +1198,7 @@ static UBool simpleSearch(UCollator *coll, const UnicodeString &target, int32_t 
         // Searching for an empty pattern always fails
         matchStart = matchEnd = -1;
         ubrk_close(charBreakIterator);
-        return FALSE;
+        return false;
     }
 
     matchStart = matchEnd = -1;
@@ -1267,12 +1267,12 @@ static UBool simpleSearch(UCollator *coll, const UnicodeString &target, int32_t 
             matchEnd   = mend;
 
             ubrk_close(charBreakIterator);
-            return TRUE;
+            return true;
         }
     }
 
     ubrk_close(charBreakIterator);
-    return FALSE;
+    return false;
 }
 
 #if !UCONFIG_NO_REGULAR_EXPRESSIONS
@@ -1366,7 +1366,7 @@ void SSearchTest::monkeyTest(char *params)
     // ook!
     UErrorCode status = U_ZERO_ERROR;
   //UCollator *coll = ucol_open(NULL, &status);
-    UCollator *coll = ucol_openFromShortString("S1", FALSE, NULL, &status);
+    UCollator *coll = ucol_openFromShortString("S1", false, NULL, &status);
 
     if (U_FAILURE(status)) {
         errcheckln(status, "Failed to create collator in MonkeyTest! - %s", u_errorName(status));
@@ -1378,7 +1378,7 @@ void SSearchTest::monkeyTest(char *params)
     USet *expansions   = uset_openEmpty();
     USet *contractions = uset_openEmpty();
 
-    ucol_getContractionsAndExpansions(coll, contractions, expansions, FALSE, &status);
+    ucol_getContractionsAndExpansions(coll, contractions, expansions, false, &status);
 
     U_STRING_DECL(letter_pattern, "[[:letter:]-[:ideographic:]-[:hangul:]]", 39);
     U_STRING_INIT(letter_pattern, "[[:letter:]-[:ideographic:]-[:hangul:]]", 39);
