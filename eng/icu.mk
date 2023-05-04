@@ -99,6 +99,7 @@ endif
 $(eval $(call TargetBuildTemplate,icudt_CJK,icudt_CJK))
 $(eval $(call TargetBuildTemplate,icudt_no_CJK,icudt_no_CJK))
 $(eval $(call TargetBuildTemplate,icudt_EFIGS,icudt_EFIGS))
+$(eval $(call TargetBuildTemplate,icudt_hg_browser,icudt_hg_browser))
 
 # build source+data for the main "icudt" filter and only data for the other filters
-all: lib-icudt data-icudt data-icudt_no_CJK data-icudt_EFIGS data-icudt_CJK
+all: lib-icudt data-icudt data-icudt_no_CJK data-icudt_EFIGS data-icudt_CJK data-icudt_hg_browser
