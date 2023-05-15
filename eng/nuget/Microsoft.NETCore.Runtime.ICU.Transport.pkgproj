@@ -52,7 +52,7 @@
          bundled in the git repo.
 
          To force a build to package using the in-tree files, pass the parameter. -->
-    <File Condition="'$(OverrideBundledDatFiles)' != 'true'" Include="$(RepoRoot)\eng\prebuilts\wasm\*.dat;$(RepoRoot)\eng\prebuilts\hybrid\*.dat" TargetPath="runtimes\browser-wasm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+    <File Condition="'$(OverrideBundledDatFiles)' != 'true'" Include="$(RepoRoot)\eng\prebuilts\wasm\*.dat" TargetPath="runtimes\browser-wasm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
     <File Condition="'$(OverrideBundledDatFiles)' == 'true'" Include="$(RepoRoot)\artifacts\bin\icu-browser-wasm\*.dat" TargetPath="runtimes\browser-wasm\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
     
     <!-- Threads build -->
@@ -65,7 +65,7 @@
          bundled in the git repo.
 
          To force a build to package using the in-tree files, pass the parameter. -->
-    <File Condition="'$(OverrideBundledDatFiles)' != 'true'" Include="$(RepoRoot)\eng\prebuilts\wasm\*.dat;$(RepoRoot)\eng\prebuilts\hybrid\*.dat" TargetPath="runtimes\browser-wasm$(ExtraPackageName)\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
+    <File Condition="'$(OverrideBundledDatFiles)' != 'true'" Include="$(RepoRoot)\eng\prebuilts\wasm\*.dat" TargetPath="runtimes\browser-wasm$(ExtraPackageName)\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
     <File Condition="'$(OverrideBundledDatFiles)' == 'true'" Include="$(RepoRoot)\artifacts\bin\icu-browser-wasm\*.dat" TargetPath="runtimes\browser-wasm$(ExtraPackageName)\native\lib\%(Filename).dat" SkipPackageFileCheck="true" />
   </ItemGroup>
 
