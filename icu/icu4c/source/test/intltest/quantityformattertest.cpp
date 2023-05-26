@@ -29,7 +29,7 @@ public:
     QuantityFormatterTest() {
     }
     void TestBasic();
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=0) override;
+    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=0);
 private:
 };
 
@@ -135,7 +135,7 @@ void QuantityFormatterTest::TestBasic() {
                         *plurrule,
                         appendTo,
                         pos,
-                        status), true);
+                        status), TRUE);
         appendTo.remove();
         assertEquals(
                 "format plural",
@@ -146,7 +146,7 @@ void QuantityFormatterTest::TestBasic() {
                         *plurrule,
                         appendTo,
                         pos,
-                        status), true);
+                        status), TRUE);
     }
     fmt.reset();
     assertFalse("isValid after reset", fmt.isValid());

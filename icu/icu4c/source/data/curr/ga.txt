@@ -764,7 +764,7 @@ ga{
             "Kina Nua-Ghuine Phapua",
         }
         PHP{
-            "₱",
+            "PHP",
             "Peso na nOileán Filipíneach",
         }
         PKR{
@@ -1072,7 +1072,7 @@ ga{
             "UIC-Franc Francach",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "Franc CFA Iarthar na hAfraice",
         }
         XPD{
@@ -2194,10 +2194,10 @@ ga{
             two{"dhollar na Libéire"}
         }
         LSL{
-            few{"loti Leosóta"}
-            many{"loti Leosóta"}
-            one{"loti Leosóta"}
-            other{"loti Leosóta"}
+            few{"Loti Leosóta"}
+            many{"Loti Leosóta"}
+            one{"Loti Leosóta"}
+            other{"Loti Leosóta"}
             two{"Loti Leosóta"}
         }
         LTL{

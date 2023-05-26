@@ -1,0 +1,485 @@
+jobs:
+#-------------------------------------------------------------------------
+- job: ICU4C_MakeDist_Clang_Ubuntu_1804
+  displayName: 'C: MakeDist Linux Clang (Ubuntu 18.04)'
+  timeoutInMinutes: 30
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'ubuntu-18.04'
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    # This is to work-around issue: https://github.com/actions/virtual-environments/issues/3376
+    # Once the Ubuntu 18.04 build bot image is fixed, we can remove this work-around.
+    - script: |
+        sudo apt remove libgcc-11-dev gcc-11
+      displayName: Remove GCC 11 (work-around)
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+    - script: |
+        cd icu/icu4c/source && ./runConfigureICU Linux --disable-layout --disable-layoutex && make -j2 check
+      displayName: 'Build and Test'
+      env:
+        CC: clang
+        CXX: clang++
+    - script: |
+        cd icu/icu4c/source && make dist && ls -al dist
+      displayName: 'Make dist'
+    - script: |
+        mkdir /tmp/icu-tarball
+        cp icu/icu4c/source/dist/icu4c-src.tgz /tmp/icu-tarball
+        mv /tmp/icu-tarball/icu4c-src.tgz /tmp/icu-tarball/msicu-icu4c-v$(ICUVersion)-src.tgz
+      displayName: 'Rename source tarball'
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish: Source tarball'
+      inputs:
+        PathtoPublish: '/tmp/icu-tarball'
+        ArtifactName: '$(Build.BuildNumber)_ICU4C_tarball'
+    - script: |
+        cd icu/icu4c/source/dist
+        timestampVar=`date +%s`
+        mkdir /tmp/icu-$timestampVar
+        tar zxf icu4c-src.tgz -C /tmp/icu-$timestampVar
+        cd /tmp/icu-$timestampVar/icu/source
+        ./runConfigureICU Linux --disable-layout --disable-layoutex && make -j$(nproc) check
+      displayName: 'Build and Test MakeDist using source tarball'
+
+#-------------------------------------------------------------------------
+- job: ICU4C_Clang_Ubuntu_1604_WarningsAsErrors
+  displayName: 'C: Linux Clang WarningsAsErrors (Ubuntu 16.04)'
+  timeoutInMinutes: 30
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+    - script: |
+        export CPPFLAGS="-Werror -Wall -Wextra -Wextra-semi -Wundef -Wnon-virtual-dtor" && cd icu/icu4c/source && ./runConfigureICU Linux && make -j2 tests
+      displayName: 'Build only (WarningsAsErrors)'
+      env:
+        CC: clang
+        CXX: clang++
+
+#-------------------------------------------------------------------------
+- job: ICU4C_Clang_Ubuntu_TestDataFilter_1604
+  displayName: 'C: Linux Clang TestDataFilter (Ubuntu 16.04)'
+  timeoutInMinutes: 30
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'ubuntu-16.04'
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+    - script: |
+        cd icu/icu4c/source && \
+        ICU_DATA_FILTER_FILE=../../../build/filters/test-data-filter.json ./runConfigureICU Linux && \
+        make -j2 tests && \
+        \[ ! -d data/out/build/icudt66l/translit \] && \
+        (cd test/intltest && LD_LIBRARY_PATH=../../lib:../../tools/ctestfw ./intltest translit/TransliteratorTest/TestBasicTransliteratorEvenWithoutData)
+      displayName: 'Build with Data Filter'
+      env:
+        CC: clang
+        CXX: clang++
+
+#-------------------------------------------------------------------------
+- job: ICU4C_Clang_Cpp14_Debug_Ubuntu_1804
+  displayName: 'C: Linux Clang C++14 Debug (Ubuntu 18.04)'
+  timeoutInMinutes: 30
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'ubuntu-18.04'
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    # This is to work-around issue: https://github.com/actions/virtual-environments/issues/3376
+    # Once the Ubuntu 18.04 build bot image is fixed, we can remove this work-around.
+    - script: |
+        sudo apt remove libgcc-11-dev gcc-11
+      displayName: Remove GCC 11 (work-around)
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+    - script: |
+        export CXXFLAGS="-std=c++14 -Winvalid-constexpr" && cd icu/icu4c/source && ./runConfigureICU --enable-debug --disable-release Linux --disable-layout --disable-layoutex && make -j2 check
+      displayName: 'Build and Test C++14'
+      env:
+        CC: clang
+        CXX: clang++
+
+#-------------------------------------------------------------------------
+- job: ICU4C_GCC_Ubuntu_2004
+  displayName: 'C: Linux GCC (Ubuntu 20.04)'
+  timeoutInMinutes: 30
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 10
+    - script: |
+        cd icu/icu4c/source && ./runConfigureICU Linux && make -j2 check
+      displayName: 'Build and Test'
+      env:
+        CC: gcc
+        CXX: g++
+
+#-------------------------------------------------------------------------
+- job: ICU4C_Clang_Ubuntu_2004_LANG
+  displayName: 'C: Linux Clang (Ubuntu 20.04) - LANG has extension tags'
+  timeoutInMinutes: 30
+  pool:
+    vmImage: 'ubuntu-20.04'
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 10
+    - script: |
+        cd icu/icu4c/source && ./runConfigureICU Linux && make -j2 check
+      displayName: 'Build and Test'
+      env:
+        CC: clang
+        CXX: clang++
+        LANG: "en_US@calendar=gregorian;hours=h12"
+
+#-------------------------------------------------------------------------
+# VS 2019 Builds
+#-------------------------------------------------------------------------
+- job: ICU4C_MSVC_x64_Release_Distrelease
+  displayName: 'C: MSVC 64-bit Release (VS 2019) + Distrelease'
+  timeoutInMinutes: 30
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'windows-2019'
+    demands: 
+      - msbuild
+      - visualstudio
+      - Cmd
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+    - task: VSBuild@1
+      displayName: 'Build Solution'
+      inputs:
+        solution: icu/icu4c/source/allinone/allinone.sln
+        platform: x64
+        configuration: Release
+    - task: BatchScript@1
+      displayName: 'Run Tests (icucheck.bat)'
+      inputs:
+        filename: icu/icu4c/source/allinone/icucheck.bat
+        arguments: 'x64 Release'
+    - task: PowerShell@2
+      displayName: 'PowerShell: Distrelease script (x64)'
+      inputs:
+        targetType: filePath
+        filePath: 'icu/icu4c/packaging/distrelease.ps1'
+        arguments: '-arch x64'
+        workingDirectory: icu/icu4c
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish x64 Artifacts: icu-windows.zip'
+      inputs:
+        PathtoPublish: 'icu/icu4c/source/dist/icu-windows.zip'
+        ArtifactName: '$(Build.BuildNumber)_ICU4C_MSVC_x64_Release'
+
+#-------------------------------------------------------------------------
+- job: ICU4C_MSVC_x86_Release_Distrelease
+  displayName: 'C: MSVC 32-bit Release (VS 2019) + Distrelease'
+  timeoutInMinutes: 30
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'windows-2019'
+    demands: 
+      - msbuild
+      - visualstudio
+      - Cmd
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+    - task: VSBuild@1
+      displayName: 'Build Solution'
+      inputs:
+        solution: icu/icu4c/source/allinone/allinone.sln
+        platform: Win32
+        configuration: Release
+    - task: PowerShell@2
+      displayName: 'PowerShell: Distrelease script (x86)'
+      inputs:
+        targetType: filePath
+        filePath: 'icu/icu4c/packaging/distrelease.ps1'
+        arguments: '-arch x86'
+        workingDirectory: icu/icu4c
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish x86 Artifacts: icu-windows.zip'
+      inputs:
+        PathtoPublish: 'icu/icu4c/source/dist/icu-windows.zip'
+        ArtifactName: '$(Build.BuildNumber)_ICU4C_MSVC_x86_Release'
+
+#-------------------------------------------------------------------------
+- job: ICU4C_MSVC_x64_ARM32_ARM64_Release_Distrelease
+  displayName: 'C: MSVC x64 ARM32 ARM64 Release (VS 2019) + Distrelease ARM64'
+  timeoutInMinutes: 60
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'windows-2019'
+    demands: 
+      - msbuild
+      - visualstudio
+      - Cmd
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+    - task: VSBuild@1
+      displayName: 'Build Solution'
+      inputs:
+        solution: icu/icu4c/source/allinone/allinone.sln
+        platform: x64
+        configuration: Release
+    - task: VSBuild@1
+      displayName: 'Build ARM32'
+      inputs:
+        solution: icu/icu4c/source/allinone/allinone.sln
+        platform: ARM
+        configuration: Release
+    - task: VSBuild@1
+      displayName: 'Build ARM64'
+      inputs:
+        solution: icu/icu4c/source/allinone/allinone.sln
+        platform: ARM64
+        configuration: Release
+    - task: PowerShell@2
+      displayName: 'PowerShell: Distrelease script (ARM64)'
+      inputs:
+        targetType: filePath
+        filePath: 'icu/icu4c/packaging/distrelease.ps1'
+        arguments: '-arch ARM64'
+        workingDirectory: icu/icu4c
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish ARM64 Artifacts: icu-windows.zip'
+      inputs:
+        PathtoPublish: 'icu/icu4c/source/dist/icu-windows.zip'
+        ArtifactName: '$(Build.BuildNumber)_ICU4C_MSVC_ARM64_Release'
+
+#-------------------------------------------------------------------------
+- job: ICU4C_MSVC_x64_Release_TestDataFilter
+  displayName: 'C: MSVC 64-bit Release TestDataFilter (VS 2019)'
+  timeoutInMinutes: 30
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'windows-2019'
+    demands: 
+      - msbuild
+      - visualstudio
+      - Cmd
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+    - powershell: |
+        $filterPath = $Env:BUILD_SOURCESDIRECTORY + "\build\filters\test-data-filter.json"
+        $vstsCommandString = "vso[task.setvariable variable=ICU_DATA_FILTER_FILE]" + $filterPath
+        Write-Host "##$vstsCommandString"
+    - task: VSBuild@1
+      displayName: 'Build Solution with Data Filter'
+      inputs:
+        solution: icu/icu4c/source/allinone/allinone.sln
+        platform: x64
+        configuration: Release
+        msbuildArgs: '/p:SkipUWP=true'
+
+#-------------------------------------------------------------------------
+- job: ICU4C_MSVC_x86_Debug
+  displayName: 'C: MSVC 32-bit Debug (VS 2019)'
+  timeoutInMinutes: 60
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'windows-2019'
+    demands: 
+      - msbuild
+      - visualstudio
+      - Cmd
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+    - task: VSBuild@1
+      displayName: 'Build Solution'
+      inputs:
+        solution: icu/icu4c/source/allinone/allinone.sln
+        platform: Win32
+        configuration: Debug
+    - task: BatchScript@1
+      displayName: 'Run Tests (icucheck.bat)'
+      inputs:
+        filename: icu/icu4c/source/allinone/icucheck.bat
+        arguments: 'x86 Debug'
+
+#-------------------------------------------------------------------------
+- job: ICU4C_MSYS2_GCC_x86_64_Release
+  displayName: 'C: MSYS2 GCC x86_64 Release'
+  timeoutInMinutes: 45
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'vs2017-win2016'
+    demands:
+      - Cmd
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    - task: PowerShell@2
+      displayName: 'Set ICU Version'
+      inputs:
+        targetType: filePath
+        filePath: './build/scripts/Set-ICUVersion.ps1'
+        arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
+    - script: |
+       choco install -y msys2
+       rem refreshenv
+      displayName: 'Install MSYS2'
+    - script: |
+       c:\tools\msys64\usr\bin\bash.exe -lc "echo 'Hello World' && uname -a"
+       c:\tools\msys64\usr\bin\bash.exe -lc "pacman --noconfirm -S mingw-w64-x86_64-toolchain"
+       c:\tools\msys64\usr\bin\bash.exe -lc "pacman --noconfirm -S make"
+       exit
+      displayName: 'Install mingw-w64-x86_64-toolchain'
+    - script: |
+       set MSYSTEM=MINGW64
+       c:\tools\msys64\usr\bin\bash.exe -lc "cd $BUILD_SOURCESDIRECTORY && cd icu/icu4c/source && ./runConfigureICU MinGW --prefix='/tmp/build-icu' && make -j2 check"
+      displayName: 'Build and Test'
+    - script: |
+       set MSYSTEM=MINGW64
+       c:\tools\msys64\usr\bin\bash.exe -lc "cd $BUILD_SOURCESDIRECTORY && cd icu/icu4c/source && make install && cd /tmp/build-icu && echo 'Recursive ls' && ls -lR"
+      displayName: 'make install'
+    - script: |
+       set MSYSTEM=MINGW64
+       c:\tools\msys64\usr\bin\bash.exe -lc "echo 'Run icuinfo from MSYS shell' && cd /tmp/build-icu/bin && ./icuinfo.exe"
+       echo 'Run icuinfo from CMD shell' && cd /d C:\tools\msys64\tmp\build-icu\bin && set PATH=C:\tools\msys64\mingw64\bin;%PATH% && icuinfo.exe"
+      displayName: 'run icuinfo'
+
+#-------------------------------------------------------------------------
+- job: ICU4C_Clang_MacOSX_WarningsAsErrors
+  displayName: 'C: macOSX Clang WarningsAsErrors (Mojave 10.14)'
+  timeoutInMinutes: 30
+  workspace:
+      clean: all
+  pool:
+    vmImage: 'macOS-10.14'
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 1
+    - script: |
+        export CPPFLAGS="-Werror -Wall -Wextra -Wextra-semi -Wundef -Wnon-virtual-dtor" && cd icu/icu4c/source && ./runConfigureICU MacOSX && make -j2 check
+      displayName: 'Build and Test (WarningsAsErrors)'
+      env:
+        CC: clang
+        CXX: clang++
+
+#-------------------------------------------------------------------------
+
+- job: ICU4C_Clang_Valgrind_Ubuntu_1604
+  displayName: 'C: Linux Clang Valgrind (Ubuntu 16.04)'
+  timeoutInMinutes: 60
+  pool:
+    vmImage: 'Ubuntu 16.04'
+  steps:
+    - checkout: self
+      lfs: true
+      fetchDepth: 10
+    - script: |
+        set -ex
+        sudo apt -y update
+        sudo apt install -y valgrind
+      displayName: 'Install valgrind'
+      timeoutInMinutes: 5
+    - script: |
+        cd icu/icu4c/source && ./runConfigureICU --enable-debug Linux --disable-renaming && make -j2 tests
+      displayName: 'Build'
+      timeoutInMinutes: 10
+      env:
+        CC: clang
+        CXX: clang++
+    - script: |
+        cd icu/icu4c/source/test/intltest && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./intltest
+      displayName: 'Valgrind intltest'
+      timeoutInMinutes: 45
+    - script: |
+        cd icu/icu4c/source/test/cintltst && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./cintltst
+      displayName: 'Valgrind cintltst'
+      timeoutInMinutes: 15
+    - script: |
+        cd icu/icu4c/source/test/iotest && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./iotest
+      displayName: 'Valgrind iotest'
+      timeoutInMinutes: 5
+    - script: |
+        cd icu/icu4c/source/tools/icuinfo && LD_LIBRARY_PATH=../../lib:../../stubdata:../../tools/ctestfw:$LD_LIBRARY_PATH valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-reachable=yes ./icuinfo
+      displayName: 'Valgrind icuinfo'
+      timeoutInMinutes: 5
+#-------------------------------------------------------------------------

@@ -19,7 +19,6 @@ dictbe.cpp
 dictionarydata.cpp
 dtintrv.cpp
 edits.cpp
-emojiprops.cpp
 errorcode.cpp
 filteredbrk.cpp
 filterednormalizer2.cpp
@@ -41,7 +40,6 @@ locmap.cpp
 locresdata.cpp
 locutil.cpp
 lsr.cpp
-lstmbe.cpp
 messagepattern.cpp
 normalizer2.cpp
 normalizer2impl.cpp

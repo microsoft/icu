@@ -8,16 +8,6 @@ rm{
         ms{"m:ss"}
     }
     units{
-        compound{
-            per{"{0} per {1}"}
-        }
-        coordinate{
-            dnam{"direcziun"}
-            east{"{0} ost"}
-            north{"{0} nord"}
-            south{"{0} sid"}
-            west{"{0} vest"}
-        }
         digital{
             bit{
                 dnam{"bits"}
@@ -184,12 +174,6 @@ rm{
         }
     }
     unitsNarrow{
-        coordinate{
-            dnam{"direcziun"}
-            east{"{0}O"}
-            south{"{0}S"}
-            west{"{0}V"}
-        }
         duration{
             day{
                 dnam{"di"}
@@ -230,12 +214,6 @@ rm{
                 dnam{"onn"}
                 one{"{0} onns"}
                 other{"{0} onns"}
-            }
-        }
-        force{
-            kilowatt-hour-per-100-kilometer{
-                one{"{0}kWh/100km"}
-                other{"{0}kWh/100km"}
             }
         }
         length{
@@ -287,18 +265,6 @@ rm{
             }
         }
         volume{
-            dessert-spoon-imperial{
-                one{"{0}dsp-Imp"}
-                other{"{0}dsp-Imp"}
-            }
-            fluid-ounce-imperial{
-                one{"{0} fl oz imp"}
-                other{"{0} fl oz imp"}
-            }
-            gallon-imperial{
-                one{"{0} gal imp"}
-                other{"{0} gal imp"}
-            }
             liter{
                 dnam{"liter"}
                 one{"{0} l"}
@@ -307,13 +273,6 @@ rm{
         }
     }
     unitsShort{
-        coordinate{
-            dnam{"direcziun"}
-            east{"{0} O"}
-            north{"{0} N"}
-            south{"{0} S"}
-            west{"{0} V"}
-        }
         digital{
             bit{
                 one{"{0} bit"}

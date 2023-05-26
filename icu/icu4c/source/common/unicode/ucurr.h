@@ -115,13 +115,14 @@ typedef enum UCurrNameStyle {
      */
     UCURR_NARROW_SYMBOL_NAME,
 
+#ifndef U_HIDE_DRAFT_API
     /**
      * Selector for getName() indicating the formal currency symbol.
      * The formal currency symbol is similar to the regular currency
      * symbol, but it always takes the form used in formal settings
      * such as banking; for example, "NT$" instead of "$" for TWD in zh-TW.
      *
-     * @stable ICU 68
+     * @draft ICU 68
      */
     UCURR_FORMAL_SYMBOL_NAME,
 
@@ -130,9 +131,10 @@ typedef enum UCurrNameStyle {
      * The variant symbol for a currency is an alternative symbol
      * that is not necessarily as widely used as the regular symbol.
      *
-     * @stable ICU 68
+     * @draft ICU 68
      */
     UCURR_VARIANT_SYMBOL_NAME
+#endif  // U_HIDE_DRAFT_API
     
 } UCurrNameStyle;
 

@@ -127,7 +127,7 @@ void IntlTestDecimalFormatAPI::testAPI(/*char *par*/)
     status = U_ZERO_ERROR;
     DecimalFormat noGrouping("###0.##", status);
     assertEquals("Grouping size should be 0 for no grouping.", 0, noGrouping.getGroupingSize());
-    noGrouping.setGroupingUsed(true);
+    noGrouping.setGroupingUsed(TRUE);
     assertEquals("Grouping size should still be 0.", 0, noGrouping.getGroupingSize());
     // end bug 10864
 
@@ -137,7 +137,7 @@ void IntlTestDecimalFormatAPI::testAPI(/*char *par*/)
         DecimalFormat df("0", {"en", status}, status);
         UnicodeString result;
         assertEquals("pat 0: ", 0, df.getGroupingSize());
-        assertEquals("pat 0: ", (UBool) false, (UBool) df.isGroupingUsed());
+        assertEquals("pat 0: ", (UBool) FALSE, (UBool) df.isGroupingUsed());
         df.setGroupingUsed(false);
         assertEquals("pat 0 then disabled: ", 0, df.getGroupingSize());
         assertEquals("pat 0 then disabled: ", u"1111", df.format(1111, result.remove()));
@@ -149,7 +149,7 @@ void IntlTestDecimalFormatAPI::testAPI(/*char *par*/)
         DecimalFormat df("#,##0", {"en", status}, status);
         UnicodeString result;
         assertEquals("pat #,##0: ", 3, df.getGroupingSize());
-        assertEquals("pat #,##0: ", (UBool) true, (UBool) df.isGroupingUsed());
+        assertEquals("pat #,##0: ", (UBool) TRUE, (UBool) df.isGroupingUsed());
         df.setGroupingUsed(false);
         assertEquals("pat #,##0 then disabled: ", 3, df.getGroupingSize());
         assertEquals("pat #,##0 then disabled: ", u"1111", df.format(1111, result.remove()));
@@ -175,20 +175,15 @@ void IntlTestDecimalFormatAPI::testAPI(/*char *par*/)
     }
 
     status = U_ZERO_ERROR;
-    DecimalFormat cust1(pattern, *symbols, status);
-    if(U_FAILURE(status)) {
-        errln((UnicodeString)"ERROR: Could not create DecimalFormat (pattern, symbols)");
-    }
-
-    // NOTE: The test where you pass "symbols" as a pointer has to come second-- the DecimalFormat
-    // object is _adopting_ this object, meaning it's unavailable for use by this test (e.g.,
-    // to pass to another DecimalFormat) after the call to the DecimalFormat constructor.
-    // The call above, where we're passing it by reference, doesn't take ownership of the
-    // symbols object, so we can reuse it here.
-    status = U_ZERO_ERROR;
-    DecimalFormat cust2(pattern, symbols, status);
+    DecimalFormat cust1(pattern, symbols, status);
     if(U_FAILURE(status)) {
         errln((UnicodeString)"ERROR: Could not create DecimalFormat (pattern, symbols*)");
+    }
+
+    status = U_ZERO_ERROR;
+    DecimalFormat cust2(pattern, *symbols, status);
+    if(U_FAILURE(status)) {
+        errln((UnicodeString)"ERROR: Could not create DecimalFormat (pattern, symbols)");
     }
 
     DecimalFormat copy(pat);
@@ -333,25 +328,25 @@ void IntlTestDecimalFormatAPI::testAPI(/*char *par*/)
         errln((UnicodeString)"ERROR: setGroupingSize() failed");
     }
 
-    pat.setDecimalSeparatorAlwaysShown(true);
+    pat.setDecimalSeparatorAlwaysShown(TRUE);
     UBool tf = pat.isDecimalSeparatorAlwaysShown();
-    logln((UnicodeString)"DecimalSeparatorIsAlwaysShown (should be true) is " + (UnicodeString) (tf ? "true" : "false"));
-    if(tf != true) {
+    logln((UnicodeString)"DecimalSeparatorIsAlwaysShown (should be TRUE) is " + (UnicodeString) (tf ? "TRUE" : "FALSE"));
+    if(tf != TRUE) {
         errln((UnicodeString)"ERROR: setDecimalSeparatorAlwaysShown() failed");
     }
     // Added by Ken Liu testing set/isExponentSignAlwaysShown
-    pat.setExponentSignAlwaysShown(true);
+    pat.setExponentSignAlwaysShown(TRUE);
     UBool esas = pat.isExponentSignAlwaysShown();
-    logln((UnicodeString)"ExponentSignAlwaysShown (should be true) is " + (UnicodeString) (esas ? "true" : "false"));
-    if(esas != true) {
+    logln((UnicodeString)"ExponentSignAlwaysShown (should be TRUE) is " + (UnicodeString) (esas ? "TRUE" : "FALSE"));
+    if(esas != TRUE) {
         errln((UnicodeString)"ERROR: ExponentSignAlwaysShown() failed");
     }
 
     // Added by Ken Liu testing set/isScientificNotation
-    pat.setScientificNotation(true);
+    pat.setScientificNotation(TRUE);
     UBool sn = pat.isScientificNotation();
-    logln((UnicodeString)"isScientificNotation (should be true) is " + (UnicodeString) (sn ? "true" : "false"));
-    if(sn != true) {
+    logln((UnicodeString)"isScientificNotation (should be TRUE) is " + (UnicodeString) (sn ? "TRUE" : "FALSE"));
+    if(sn != TRUE) {
         errln((UnicodeString)"ERROR: setScientificNotation() failed");
     }
 
@@ -532,14 +527,14 @@ void IntlTestDecimalFormatAPI::testRounding(/*char *par*/)
         //for +2.55 with RoundingIncrement=1.0
         pat.setRoundingIncrement(1.0);
         pat.format(Roundingnumber, resultStr);
-        message= (UnicodeString)"round(" + (double)Roundingnumber + UnicodeString(",") + mode + UnicodeString(",false) with RoundingIncrement=1.0==>");
+        message= (UnicodeString)"round(" + (double)Roundingnumber + UnicodeString(",") + mode + UnicodeString(",FALSE) with RoundingIncrement=1.0==>");
         verify(message, resultStr, result[i++]);
         message.remove();
         resultStr.remove();
 
         //for -2.55 with RoundingIncrement=1.0
         pat.format(Roundingnumber1, resultStr);
-        message= (UnicodeString)"round(" + (double)Roundingnumber1 + UnicodeString(",") + mode + UnicodeString(",false) with RoundingIncrement=1.0==>");
+        message= (UnicodeString)"round(" + (double)Roundingnumber1 + UnicodeString(",") + mode + UnicodeString(",FALSE) with RoundingIncrement=1.0==>");
         verify(message, resultStr, result[i++]);
         message.remove();
         resultStr.remove();
@@ -653,12 +648,12 @@ void IntlTestDecimalFormatAPI::TestScale()
     auto lhs = (expect); \
     auto rhs = (actual); \
     char tmp[200]; \
-    snprintf(tmp, sizeof(tmp), "(%g==%g)", (double)lhs, (double)rhs); \
-    assertTrue(tmp, (lhs==rhs), false, true, __FILE__, __LINE__); \
+    sprintf(tmp, "(%g==%g)", (double)lhs, (double)rhs); \
+    assertTrue(tmp, (lhs==rhs), FALSE, TRUE, __FILE__, __LINE__); \
 } UPRV_BLOCK_MACRO_END
 
 #if defined(_MSC_VER)
-// Ignore the noisy warning 4805 (comparisons between int and bool) in the function below as we use the ICU true/false macros
+// Ignore the noisy warning 4805 (comparisons between int and bool) in the function below as we use the ICU TRUE/FALSE macros
 // which are int values, whereas some of the DecimalQuantity methods return C++ bools.
 #pragma warning(push)
 #pragma warning(disable: 4805)
@@ -676,13 +671,13 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     assertSuccess(WHERE, status);
     ASSERT_EQUAL(44, fd.getPluralOperand(PLURAL_OPERAND_N));
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_V));
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     df->formatToDecimalQuantity(-44, fd, status);
     assertSuccess(WHERE, status);
     ASSERT_EQUAL(44, fd.getPluralOperand(PLURAL_OPERAND_N));
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_V));
-    ASSERT_EQUAL(true, fd.isNegative());
+    ASSERT_EQUAL(TRUE, fd.isNegative());
 
     df.adoptInsteadAndCheckErrorCode(new DecimalFormat("###.00##", status), status);
     assertSuccess(WHERE, status);
@@ -693,8 +688,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(456, fd.getPluralOperand(PLURAL_OPERAND_T)); // t
     ASSERT_EQUAL(123, fd.getPluralOperand(PLURAL_OPERAND_I)); // i
     ASSERT_EQUAL(123.456, fd.getPluralOperand(PLURAL_OPERAND_N)); // n
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     df->formatToDecimalQuantity(-123.456, fd, status);
     assertSuccess(WHERE, status);
@@ -703,8 +698,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(456, fd.getPluralOperand(PLURAL_OPERAND_T)); // t
     ASSERT_EQUAL(123, fd.getPluralOperand(PLURAL_OPERAND_I)); // i
     ASSERT_EQUAL(123.456, fd.getPluralOperand(PLURAL_OPERAND_N)); // n
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(true, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(TRUE, fd.isNegative());
 
     // test max int digits
     df->setMaximumIntegerDigits(2);
@@ -715,8 +710,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(456, fd.getPluralOperand(PLURAL_OPERAND_T)); // t
     ASSERT_EQUAL(23, fd.getPluralOperand(PLURAL_OPERAND_I)); // i
     ASSERT_EQUAL(23.456, fd.getPluralOperand(PLURAL_OPERAND_N)); // n
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     df->formatToDecimalQuantity(-123.456, fd, status);
     assertSuccess(WHERE, status);
@@ -725,8 +720,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(456, fd.getPluralOperand(PLURAL_OPERAND_T)); // t
     ASSERT_EQUAL(23, fd.getPluralOperand(PLURAL_OPERAND_I)); // i
     ASSERT_EQUAL(23.456, fd.getPluralOperand(PLURAL_OPERAND_N)); // n
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(true, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(TRUE, fd.isNegative());
 
     // test max fraction digits
     df->setMaximumIntegerDigits(2000000000);
@@ -738,8 +733,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(46, fd.getPluralOperand(PLURAL_OPERAND_T)); // t
     ASSERT_EQUAL(123, fd.getPluralOperand(PLURAL_OPERAND_I)); // i
     ASSERT_EQUAL(123.46, fd.getPluralOperand(PLURAL_OPERAND_N)); // n
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     df->formatToDecimalQuantity(-123.456, fd, status);
     assertSuccess(WHERE, status);
@@ -748,8 +743,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(46, fd.getPluralOperand(PLURAL_OPERAND_T)); // t
     ASSERT_EQUAL(123, fd.getPluralOperand(PLURAL_OPERAND_I)); // i
     ASSERT_EQUAL(123.46, fd.getPluralOperand(PLURAL_OPERAND_N)); // n
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(true, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(TRUE, fd.isNegative());
 
     // test esoteric rounding
     df->setMaximumFractionDigits(6);
@@ -762,8 +757,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(2, fd.getPluralOperand(PLURAL_OPERAND_T)); // t
     ASSERT_EQUAL(29, fd.getPluralOperand(PLURAL_OPERAND_I)); // i
     ASSERT_EQUAL(29.2, fd.getPluralOperand(PLURAL_OPERAND_N)); // n
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     df->formatToDecimalQuantity(-30.0, fd, status);
     assertSuccess(WHERE, status);
@@ -772,8 +767,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(2, fd.getPluralOperand(PLURAL_OPERAND_T)); // t
     ASSERT_EQUAL(29, fd.getPluralOperand(PLURAL_OPERAND_I)); // i
     ASSERT_EQUAL(29.2, fd.getPluralOperand(PLURAL_OPERAND_N)); // n
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(true, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(TRUE, fd.isNegative());
 
     df.adoptInsteadAndCheckErrorCode(new DecimalFormat("###", status), status);
     assertSuccess(WHERE, status);
@@ -783,8 +778,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(123, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(true, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(TRUE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     df.adoptInsteadAndCheckErrorCode(new DecimalFormat("###.0", status), status);
     assertSuccess(WHERE, status);
@@ -794,8 +789,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(123, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(true, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(TRUE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     df.adoptInsteadAndCheckErrorCode(new DecimalFormat("###.0", status), status);
     assertSuccess(WHERE, status);
@@ -805,8 +800,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(1, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(1, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(123, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     df.adoptInsteadAndCheckErrorCode(new DecimalFormat("@@@@@", status), status);  // Significant Digits
     assertSuccess(WHERE, status);
@@ -816,8 +811,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(123, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(true, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(TRUE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     df.adoptInsteadAndCheckErrorCode(new DecimalFormat("@@@@@", status), status);  // Significant Digits
     assertSuccess(WHERE, status);
@@ -827,16 +822,16 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(2300, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(23, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(1, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     df->formatToDecimalQuantity(uprv_getInfinity(), fd, status);
     assertSuccess(WHERE, status);
-    ASSERT_EQUAL(true, fd.isNaN() || fd.isInfinite());
+    ASSERT_EQUAL(TRUE, fd.isNaN() || fd.isInfinite());
     df->formatToDecimalQuantity(0.0, fd, status);
-    ASSERT_EQUAL(false, fd.isNaN() || fd.isInfinite());
+    ASSERT_EQUAL(FALSE, fd.isNaN() || fd.isInfinite());
     df->formatToDecimalQuantity(uprv_getNaN(), fd, status);
-    ASSERT_EQUAL(true, fd.isNaN() || fd.isInfinite());
+    ASSERT_EQUAL(TRUE, fd.isNaN() || fd.isInfinite());
     assertSuccess(WHERE, status);
 
     // Test Big Decimal input.
@@ -853,8 +848,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(34, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(34, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(12, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     fable.setDecimalNumber("12.3456789012345678900123456789", status);
     assertSuccess(WHERE, status);
@@ -864,8 +859,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(3456789012345678900LL, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(34567890123456789LL, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(12, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     // On field overflow, Integer part is truncated on the left, fraction part on the right.
     fable.setDecimalNumber("123456789012345678901234567890.123456789012345678901234567890", status);
@@ -876,8 +871,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(1234567890123456789LL, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(1234567890123456789LL, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(345678901234567890LL, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     // Digits way to the right of the decimal but within the format's precision aren't truncated
     fable.setDecimalNumber("1.0000000000000000000012", status);
@@ -888,8 +883,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(12, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(12, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(1, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     // Digits beyond the precision of the format are rounded away
     fable.setDecimalNumber("1.000000000000000000000012", status);
@@ -900,8 +895,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(1, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(true, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(TRUE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     // Negative numbers come through
     fable.setDecimalNumber("-1.0000000000000000000012", status);
@@ -912,8 +907,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(12, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(12, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(1, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(true, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(TRUE, fd.isNegative());
 
     // MinFractionDigits from format larger than from number.
     fable.setDecimalNumber("1000000000000000000000.3", status);
@@ -924,8 +919,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(30, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(3, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     fable.setDecimalNumber("1000000000000000050000.3", status);
     assertSuccess(WHERE, status);
@@ -935,8 +930,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(30, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(3, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(50000LL, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(false, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(FALSE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     // Test some int64_t values that are out of the range of a double
     fable.setInt64(4503599627370496LL);
@@ -947,8 +942,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(4503599627370496LL, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(true, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(TRUE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     fable.setInt64(4503599627370497LL);
     assertSuccess(WHERE, status);
@@ -958,8 +953,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_F));
     ASSERT_EQUAL(0, fd.getPluralOperand(PLURAL_OPERAND_T));
     ASSERT_EQUAL(4503599627370497LL, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(true, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(TRUE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
     fable.setInt64(9223372036854775807LL);
     assertSuccess(WHERE, status);
@@ -971,8 +966,8 @@ void IntlTestDecimalFormatAPI::TestFixedDecimal() {
     // note: going through DigitList path to FixedDecimal, which is trimming
     //       int64_t fields to 18 digits. See ticket Ticket #10374
     ASSERT_EQUAL(223372036854775807LL, fd.getPluralOperand(PLURAL_OPERAND_I));
-    ASSERT_EQUAL(true, fd.hasIntegerValue());
-    ASSERT_EQUAL(false, fd.isNegative());
+    ASSERT_EQUAL(TRUE, fd.hasIntegerValue());
+    ASSERT_EQUAL(FALSE, fd.isNegative());
 
 }
 #if defined(_MSC_VER)
@@ -992,10 +987,10 @@ void IntlTestDecimalFormatAPI::TestBadFastpath() {
     UnicodeString fmt;
     fmt.remove();
     assertEquals("Format 1234", "1234", df->format((int32_t)1234, fmt));
-    df->setGroupingUsed(false);
+    df->setGroupingUsed(FALSE);
     fmt.remove();
     assertEquals("Format 1234", "1234", df->format((int32_t)1234, fmt));
-    df->setGroupingUsed(true);
+    df->setGroupingUsed(TRUE);
     df->setGroupingSize(3);
     fmt.remove();
     assertEquals("Format 1234 w/ grouping", "1,234", df->format((int32_t)1234, fmt));
@@ -1023,7 +1018,7 @@ void IntlTestDecimalFormatAPI::TestRequiredDecimalPoint() {
     if(U_FAILURE(status)) {
         errln((UnicodeString)"ERROR: parse() failed");
     }
-    df->setDecimalPatternMatchRequired(true);
+    df->setDecimalPatternMatchRequired(TRUE);
     df->parse(text, result1, status);
     if(U_SUCCESS(status)) {
         errln((UnicodeString)"ERROR: unexpected parse()");
@@ -1032,7 +1027,7 @@ void IntlTestDecimalFormatAPI::TestRequiredDecimalPoint() {
 
     status = U_ZERO_ERROR;
     df->applyPattern(pat2, status);
-    df->setDecimalPatternMatchRequired(false);
+    df->setDecimalPatternMatchRequired(FALSE);
     if(U_FAILURE(status)) {
         errln((UnicodeString)"ERROR: applyPattern(2) failed");
     }
@@ -1040,7 +1035,7 @@ void IntlTestDecimalFormatAPI::TestRequiredDecimalPoint() {
     if(U_FAILURE(status)) {
         errln((UnicodeString)"ERROR: parse(2) failed - " + u_errorName(status));
     }
-    df->setDecimalPatternMatchRequired(true);
+    df->setDecimalPatternMatchRequired(TRUE);
     df->parse(text, result1, status);
     if(U_SUCCESS(status)) {
         errln((UnicodeString)"ERROR: unexpected parse(2)");
@@ -1172,7 +1167,7 @@ void IntlTestDecimalFormatAPI::testInvalidObject() {
         assertEquals(WHERE, U_MEMORY_ALLOCATION_ERROR, status);
 
         // Two invalid objects should not be equal.
-        // (Also verify that nullptr isn't t dereferenced in the comparison operator.)
+        // (Also verify that nullptr isn't t dereferenced in the comparision operator.)
         assertTrue(WHERE, dfBogus != dfBogus2);
 
         // Verify the comparison operator works for two valid objects.

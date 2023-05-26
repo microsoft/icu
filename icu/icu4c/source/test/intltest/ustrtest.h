@@ -27,7 +27,7 @@ public:
     UnicodeStringTest() {}
     virtual ~UnicodeStringTest();
     
-    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL ) override;
+    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL );
 
     /**
      * Test some basic methods (insert, remove, replace, ...)

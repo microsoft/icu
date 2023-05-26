@@ -71,7 +71,7 @@ public:
         this->styles = s;
     }
 
-    virtual TestReplaceable *clone() const override {
+    virtual TestReplaceable *clone() const {
         return new TestReplaceable(chars, styles);
     }
 
@@ -89,7 +89,7 @@ public:
         return s;
     }
 
-    void extractBetween(int32_t start, int32_t limit, UnicodeString& result) const override {
+    void extractBetween(int32_t start, int32_t limit, UnicodeString& result) const {
         chars.extractBetween(start, limit, result);
     }
 
@@ -105,18 +105,18 @@ public:
      *
      * @draft ICU 2.2
      */
-    virtual inline UClassID getDynamicClassID() const override { return getStaticClassID(); }
+    virtual inline UClassID getDynamicClassID() const { return getStaticClassID(); }
 
 protected:
-    virtual int32_t getLength() const override {
+    virtual int32_t getLength() const {
         return chars.length();
     }
 
-    virtual UChar getCharAt(int32_t offset) const override {
+    virtual UChar getCharAt(int32_t offset) const{
         return chars.charAt(offset);
     }
 
-    virtual UChar32 getChar32At(int32_t offset) const override {
+    virtual UChar32 getChar32At(int32_t offset) const{
         return chars.char32At(offset);
     }
 
@@ -144,7 +144,7 @@ protected:
         styles.replaceBetween(start, limit, s);
     }
 
-    virtual void handleReplaceBetween(int32_t start, int32_t limit, const UnicodeString& text) override {
+    virtual void handleReplaceBetween(int32_t start, int32_t limit, const UnicodeString& text) {
         UnicodeString s;
         this->extractBetween(start, limit, s);
         if (s == text) return; // NO ACTION!
@@ -153,7 +153,7 @@ protected:
     }
     
 
-    virtual void copy(int32_t start, int32_t limit, int32_t dest) override {
+    virtual void copy(int32_t start, int32_t limit, int32_t dest) {
         chars.copy(start, limit, dest);
         styles.copy(start, limit, dest);
     }
@@ -179,32 +179,32 @@ ReplaceableTest::runIndexedTest(int32_t index, UBool exec,
  */
 class NoopReplaceable : public Replaceable {
 public:
-    virtual int32_t getLength() const override {
+    virtual int32_t getLength() const {
         return 0;
     }
 
-    virtual UChar getCharAt(int32_t /*offset*/) const override {
+    virtual UChar getCharAt(int32_t /*offset*/) const{
         return 0xffff;
     }
 
-    virtual UChar32 getChar32At(int32_t /*offset*/) const override {
+    virtual UChar32 getChar32At(int32_t /*offset*/) const{
         return 0xffff;
     }
 
-    void extractBetween(int32_t /*start*/, int32_t /*limit*/, UnicodeString& result) const override {
+    void extractBetween(int32_t /*start*/, int32_t /*limit*/, UnicodeString& result) const {
         result.remove();
     }
 
-    virtual void handleReplaceBetween(int32_t /*start*/, int32_t /*limit*/, const UnicodeString &/*text*/) override {
+    virtual void handleReplaceBetween(int32_t /*start*/, int32_t /*limit*/, const UnicodeString &/*text*/) {
         /* do nothing */
     }
 
-    virtual void copy(int32_t /*start*/, int32_t /*limit*/, int32_t /*dest*/) override {
+    virtual void copy(int32_t /*start*/, int32_t /*limit*/, int32_t /*dest*/) {
         /* do nothing */
     }
 
     static inline UClassID getStaticClassID() { return (UClassID)&fgClassID; }
-    virtual inline UClassID getDynamicClassID() const override { return getStaticClassID(); }
+    virtual inline UClassID getDynamicClassID() const { return getStaticClassID(); }
 
 private:
     static const char fgClassID;
@@ -250,7 +250,7 @@ void ReplaceableTest::TestReplaceableClass(void) {
     }
 
     if(!noop.hasMetaData()) {
-        errln("Replaceable::hasMetaData() does not return true");
+        errln("Replaceable::hasMetaData() does not return TRUE");
     }
 
     // try to call the compiler-provided

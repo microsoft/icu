@@ -88,60 +88,14 @@ ko{
             }
         }
         compound{
-            1024p1{"키비{0}"}
-            1024p2{"메비{0}"}
-            1024p3{"기비{0}"}
-            1024p4{"테비{0}"}
-            1024p5{"페비{0}"}
-            1024p6{"엑스비{0}"}
-            1024p7{"제비{0}"}
-            1024p8{"요비{0}"}
-            10p-1{"데시{0}"}
-            10p-12{"피코{0}"}
-            10p-15{"펨토{0}"}
-            10p-18{"아토{0}"}
-            10p-2{"센티{0}"}
-            10p-21{"젭토{0}"}
-            10p-24{"욕토{0}"}
-            10p-3{"밀리{0}"}
-            10p-6{"마이크로{0}"}
-            10p-9{"나노{0}"}
-            10p1{"데카{0}"}
-            10p12{"테라{0}"}
-            10p15{"페타{0}"}
-            10p18{"엑사{0}"}
-            10p2{"헥토{0}"}
-            10p21{"제타{0}"}
-            10p24{"요타{0}"}
-            10p3{"킬로{0}"}
-            10p6{"메가{0}"}
-            10p9{"기가{0}"}
             per{"{1}당 {0}"}
-            power2{
-                other{
-                    _{
-                        _{"제곱{0}"}
-                    }
-                }
-            }
-            power3{
-                other{
-                    _{
-                        _{"세제곱{0}"}
-                    }
-                }
-            }
         }
         concentr{
-            item{
-                dnam{"항목"}
-                other{"{0}개 항목"}
-            }
             karat{
                 dnam{"캐럿"}
                 other{"{0}캐럿"}
             }
-            milligram-ofglucose-per-deciliter{
+            milligram-per-deciliter{
                 dnam{"데시리터당 밀리그램"}
                 other{"데시리터당 {0}밀리그램"}
             }
@@ -274,11 +228,6 @@ ko{
                 dnam{"나노초"}
                 other{"{0}나노초"}
             }
-            quarter{
-                dnam{"분기"}
-                other{"{0}분기"}
-                per{"{0}/분기"}
-            }
             second{
                 dnam{"초"}
                 other{"{0}초"}
@@ -352,10 +301,6 @@ ko{
             }
         }
         force{
-            kilowatt-hour-per-100-kilometer{
-                dnam{"100킬로미터당 킬로와트시"}
-                other{"100킬로미터당 {0}킬로와트시"}
-            }
             newton{
                 dnam{"뉴턴"}
                 other{"{0}뉴턴"}
@@ -546,6 +491,10 @@ ko{
                 other{"{0}킬로그램"}
                 per{"킬로그램당 {0}"}
             }
+            metric-ton{
+                dnam{"메트릭 톤"}
+                other{"{0}메트릭 톤"}
+            }
             microgram{
                 dnam{"마이크로그램"}
                 other{"{0}마이크로그램"}
@@ -579,10 +528,6 @@ ko{
             ton{
                 dnam{"톤"}
                 other{"{0}톤"}
-            }
-            tonne{
-                dnam{"메트릭 톤"}
-                other{"{0}메트릭 톤"}
             }
         }
         power{
@@ -892,14 +837,6 @@ ko{
                 dnam{"%"}
                 other{"{0}%"}
             }
-            permille{
-                dnam{"‰"}
-                other{"{0}‰"}
-            }
-            permillion{
-                dnam{"ppm"}
-                other{"{0}ppm"}
-            }
         }
         consumption{
             liter-per-100-kilometer{
@@ -951,11 +888,6 @@ ko{
                 dnam{"ns"}
                 other{"{0}ns"}
             }
-            quarter{
-                dnam{"분기"}
-                other{"{0}분기"}
-                per{"{0}/분기"}
-            }
             second{
                 dnam{"초"}
                 other{"{0}초"}
@@ -970,11 +902,6 @@ ko{
                 dnam{"년"}
                 other{"{0}년"}
                 per{"{0}/년"}
-            }
-        }
-        force{
-            kilowatt-hour-per-100-kilometer{
-                dnam{"kWh/100km"}
             }
         }
         length{
@@ -1024,8 +951,8 @@ ko{
                 per{"{0}/m"}
             }
             micrometer{
-                dnam{"μm"}
-                other{"{0}μm"}
+                dnam{"µm"}
+                other{"{0}µm"}
             }
             mile{
                 dnam{"mi"}
@@ -1079,9 +1006,13 @@ ko{
                 other{"{0}kg"}
                 per{"{0}/kg"}
             }
+            metric-ton{
+                dnam{"t"}
+                other{"{0}t"}
+            }
             microgram{
-                dnam{"μg"}
-                other{"{0}μg"}
+                dnam{"µg"}
+                other{"{0}µg"}
             }
             milligram{
                 dnam{"mg"}
@@ -1109,10 +1040,6 @@ ko{
                 dnam{"tn"}
                 other{"{0}tn"}
             }
-            tonne{
-                dnam{"t"}
-                other{"{0}t"}
-            }
         }
         power{
             horsepower{
@@ -1132,6 +1059,7 @@ ko{
             }
             inch-ofhg{
                 dnam{"inHg"}
+                other{"{0}\u0022Hg"}
             }
             millibar{
                 dnam{"mbar"}
@@ -1188,10 +1116,6 @@ ko{
             }
             cubic-mile{
                 other{"{0}mi³"}
-            }
-            dessert-spoon-imperial{
-                dnam{"dsp Imp"}
-                other{"{0}dsp-Imp"}
             }
             liter{
                 dnam{"ℓ"}
@@ -1284,15 +1208,11 @@ ko{
             times{"{0}⋅{1}"}
         }
         concentr{
-            item{
-                dnam{"항목"}
-                other{"{0}개 항목"}
-            }
             karat{
                 dnam{"kt"}
                 other{"{0}kt"}
             }
-            milligram-ofglucose-per-deciliter{
+            milligram-per-deciliter{
                 dnam{"mg/dL"}
                 other{"{0}mg/dL"}
             }
@@ -1428,11 +1348,6 @@ ko{
                 dnam{"ns"}
                 other{"{0}ns"}
             }
-            quarter{
-                dnam{"분기"}
-                other{"{0}분기"}
-                per{"{0}/분기"}
-            }
             second{
                 dnam{"초"}
                 other{"{0}초"}
@@ -1506,10 +1421,6 @@ ko{
             }
         }
         force{
-            kilowatt-hour-per-100-kilometer{
-                dnam{"kWh/100km"}
-                other{"{0}kWh/100km"}
-            }
             newton{
                 other{"{0}N"}
             }
@@ -1619,8 +1530,8 @@ ko{
                 per{"{0}/m"}
             }
             micrometer{
-                dnam{"μm"}
-                other{"{0}μm"}
+                dnam{"µm"}
+                other{"{0}µm"}
             }
             mile{
                 dnam{"mi"}
@@ -1704,9 +1615,13 @@ ko{
                 other{"{0}kg"}
                 per{"{0}/kg"}
             }
+            metric-ton{
+                dnam{"t"}
+                other{"{0}t"}
+            }
             microgram{
-                dnam{"μg"}
-                other{"{0}μg"}
+                dnam{"µg"}
+                other{"{0}µg"}
             }
             milligram{
                 dnam{"mg"}
@@ -1737,10 +1652,6 @@ ko{
             ton{
                 dnam{"tn"}
                 other{"{0}tn"}
-            }
-            tonne{
-                dnam{"t"}
-                other{"{0}t"}
             }
         }
         power{

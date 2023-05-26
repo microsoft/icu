@@ -37,26 +37,10 @@ mni{
                 "MMM d, y G",
                 "M/d/y GGGGG",
                 "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1}, {0}",
-            }
-            DateTimePatterns%atTime{
                 "{1} গী {0} দা",
                 "{1} গী {0} দা",
                 "{1} {0}",
                 "{1}, {0}",
-            }
-            DateTimeSkeletons{
-                "ahmmsszzzz",
-                "ahmmssz",
-                "ahmmss",
-                "ahmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GGGGGyMd",
             }
             intervalFormats{
                 fallback{"{0} - {1}"}
@@ -81,32 +65,15 @@ mni{
                 "MMM d, y",
                 "d/M/yy",
                 "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-            }
-            DateTimePatterns%atTime{
                 "{1} গী {0} দা",
                 "{1} গী {0} দা",
                 "{1}, {0}",
                 "{1}, {0}",
-            }
-            DateTimeSkeletons{
-                "ahmmsszzzz",
-                "ahmmssz",
-                "ahmmss",
-                "ahmm",
-                "yMMMMEEEEd",
-                "yMMMMd",
-                "yMMMd",
-                "yyMd",
             }
             availableFormats{
                 GyMMM{"G y MMM"}
                 GyMMMEd{"G y MMM d, E"}
                 GyMMMd{"G y MMM d"}
-                GyMd{"GGGGG dd-MM-y"}
                 MEd{"d/M, E"}
                 MMMEd{"MMM d, E"}
                 MMMMd{"MMMM d"}
@@ -135,9 +102,9 @@ mni{
                     narrow{
                         "নোং",
                         "নিং",
-                        "লৈবা",
+                        "লৈ",
                         "য়ুম",
-                        "শগো",
+                        "শগ",
                         "ইরা",
                         "থাং",
                     }
@@ -364,14 +331,9 @@ mni{
         }
         year{
             dn{"চহী"}
-            relative{
-                "-1"{"হাকুম/ মমাংগী চহি"}
-                "0"{"কুমশি"}
-                "1"{"মথং চহি"}
-            }
         }
         zone{
-            dn{"টাইম জোন"}
+            dn{"জোন"}
         }
     }
     listPattern{
@@ -386,22 +348,5 @@ mni{
         UK{"য়ু কে"}
         US{"য়ু এস"}
         metric{"মেত্রিক"}
-    }
-    personNames{
-        nameOrderLocales{
-            givenFirst{
-                "und",
-                "mni",
-            }
-            surnameFirst{
-                "ko",
-                "si",
-                "ta",
-                "te",
-                "vi",
-                "yue",
-                "zh",
-            }
-        }
     }
 }

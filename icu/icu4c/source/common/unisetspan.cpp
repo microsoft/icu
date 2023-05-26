@@ -98,7 +98,7 @@ public:
             i-=capacity;
         }
         if(list[i]) {
-            list[i]=false;
+            list[i]=FALSE;
             --length;
         }
         start=i;
@@ -111,7 +111,7 @@ public:
         if(i>=capacity) {
             i-=capacity;
         }
-        list[i]=true;
+        list[i]=TRUE;
         ++length;
     }
 
@@ -132,7 +132,7 @@ public:
         int32_t i=start, result;
         while(++i<capacity) {
             if(list[i]) {
-                list[i]=false;
+                list[i]=FALSE;
                 --length;
                 result=i-start;
                 start=i;
@@ -148,7 +148,7 @@ public:
         while(!list[i]) {
             ++i;
         }
-        list[i]=false;
+        list[i]=FALSE;
         --length;
         start=i;
         return result+=i;
@@ -226,20 +226,17 @@ UnicodeSetStringSpan::UnicodeSetStringSpan(const UnicodeSet &set,
     int32_t stringsLength=strings.size();
 
     int32_t i, spanLength;
-    UBool someRelevant=false;
+    UBool someRelevant=FALSE;
     for(i=0; i<stringsLength; ++i) {
         const UnicodeString &string=*(const UnicodeString *)strings.elementAt(i);
         const UChar *s16=string.getBuffer();
         int32_t length16=string.length();
-        if (length16==0) {
-            continue;  // skip the empty string
-        }
         UBool thisRelevant;
         spanLength=spanSet.span(s16, length16, USET_SPAN_CONTAINED);
         if(spanLength<length16) {  // Relevant string.
-            someRelevant=thisRelevant=true;
+            someRelevant=thisRelevant=TRUE;
         } else {
-            thisRelevant=false;
+            thisRelevant=FALSE;
         }
         if((which&UTF16) && length16>maxLength16) {
             maxLength16=length16;
@@ -284,7 +281,7 @@ UnicodeSetStringSpan::UnicodeSetStringSpan(const UnicodeSet &set,
     } else {
         utf8Lengths=(int32_t *)uprv_malloc(allocSize);
         if(utf8Lengths==NULL) {
-            maxLength16=maxLength8=0;  // Prevent usage by making needsStringSpanUTF16/8() return false.
+            maxLength16=maxLength8=0;  // Prevent usage by making needsStringSpanUTF16/8() return FALSE.
             return;  // Out of memory.
         }
     }
@@ -315,7 +312,7 @@ UnicodeSetStringSpan::UnicodeSetStringSpan(const UnicodeSet &set,
         const UChar *s16=string.getBuffer();
         int32_t length16=string.length();
         spanLength=spanSet.span(s16, length16, USET_SPAN_CONTAINED);
-        if(spanLength<length16 && length16>0) {  // Relevant string.
+        if(spanLength<length16) {  // Relevant string.
             if(which&UTF16) {
                 if(which&CONTAINED) {
                     if(which&FWD) {
@@ -365,7 +362,7 @@ UnicodeSetStringSpan::UnicodeSetStringSpan(const UnicodeSet &set,
                     addToSpanNotSet(c);
                 }
             }
-        } else {  // Irrelevant string. (Also the empty string.)
+        } else {  // Irrelevant string.
             if(which&UTF8) {
                 if(which&CONTAINED) {  // Only necessary for LONGEST_MATCH.
                     uint8_t *s8=utf8+utf8Count;
@@ -399,7 +396,7 @@ UnicodeSetStringSpan::UnicodeSetStringSpan(const UnicodeSetStringSpan &otherStri
           utf8Lengths(NULL), spanLengths(NULL), utf8(NULL),
           utf8Length(otherStringSpan.utf8Length),
           maxLength16(otherStringSpan.maxLength16), maxLength8(otherStringSpan.maxLength8),
-          all(true) {
+          all(TRUE) {
     if(otherStringSpan.pSpanNotSet==&otherStringSpan.spanSet) {
         pSpanNotSet=&spanSet;
     } else {
@@ -415,7 +412,7 @@ UnicodeSetStringSpan::UnicodeSetStringSpan(const UnicodeSetStringSpan &otherStri
     } else {
         utf8Lengths=(int32_t *)uprv_malloc(allocSize);
         if(utf8Lengths==NULL) {
-            maxLength16=maxLength8=0;  // Prevent usage by making needsStringSpanUTF16/8() return false.
+            maxLength16=maxLength8=0;  // Prevent usage by making needsStringSpanUTF16/8() return FALSE.
             return;  // Out of memory.
         }
     }
@@ -454,20 +451,20 @@ static inline UBool
 matches16(const UChar *s, const UChar *t, int32_t length) {
     do {
         if(*s++!=*t++) {
-            return false;
+            return FALSE;
         }
     } while(--length>0);
-    return true;
+    return TRUE;
 }
 
 static inline UBool
 matches8(const uint8_t *s, const uint8_t *t, int32_t length) {
     do {
         if(*s++!=*t++) {
-            return false;
+            return FALSE;
         }
     } while(--length>0);
-    return true;
+    return TRUE;
 }
 
 // Compare 16-bit Unicode strings (which may be malformed UTF-16)
@@ -656,12 +653,11 @@ int32_t UnicodeSetStringSpan::span(const UChar *s, int32_t length, USetSpanCondi
             for(i=0; i<stringsLength; ++i) {
                 int32_t overlap=spanLengths[i];
                 if(overlap==ALL_CP_CONTAINED) {
-                    continue;  // Irrelevant string. (Also the empty string.)
+                    continue;  // Irrelevant string.
                 }
                 const UnicodeString &string=*(const UnicodeString *)strings.elementAt(i);
                 const UChar *s16=string.getBuffer();
                 int32_t length16=string.length();
-                U_ASSERT(length>0);
 
                 // Try to match this string at pos-overlap..pos.
                 if(overlap>=LONG_SPAN) {
@@ -701,9 +697,6 @@ int32_t UnicodeSetStringSpan::span(const UChar *s, int32_t length, USetSpanCondi
                 const UnicodeString &string=*(const UnicodeString *)strings.elementAt(i);
                 const UChar *s16=string.getBuffer();
                 int32_t length16=string.length();
-                if (length16==0) {
-                    continue;  // skip the empty string
-                }
 
                 // Try to match this string at pos-overlap..pos.
                 if(overlap>=LONG_SPAN) {
@@ -824,12 +817,11 @@ int32_t UnicodeSetStringSpan::spanBack(const UChar *s, int32_t length, USetSpanC
             for(i=0; i<stringsLength; ++i) {
                 int32_t overlap=spanBackLengths[i];
                 if(overlap==ALL_CP_CONTAINED) {
-                    continue;  // Irrelevant string. (Also the empty string.)
+                    continue;  // Irrelevant string.
                 }
                 const UnicodeString &string=*(const UnicodeString *)strings.elementAt(i);
                 const UChar *s16=string.getBuffer();
                 int32_t length16=string.length();
-                U_ASSERT(length>0);
 
                 // Try to match this string at pos-(length16-overlap)..pos-length16.
                 if(overlap>=LONG_SPAN) {
@@ -871,9 +863,6 @@ int32_t UnicodeSetStringSpan::spanBack(const UChar *s, int32_t length, USetSpanC
                 const UnicodeString &string=*(const UnicodeString *)strings.elementAt(i);
                 const UChar *s16=string.getBuffer();
                 int32_t length16=string.length();
-                if (length16==0) {
-                    continue;  // skip the empty string
-                }
 
                 // Try to match this string at pos-(length16-overlap)..pos-length16.
                 if(overlap>=LONG_SPAN) {
@@ -1369,12 +1358,11 @@ int32_t UnicodeSetStringSpan::spanNot(const UChar *s, int32_t length) const {
         // Try to match the strings at pos.
         for(i=0; i<stringsLength; ++i) {
             if(spanLengths[i]==ALL_CP_CONTAINED) {
-                continue;  // Irrelevant string. (Also the empty string.)
+                continue;  // Irrelevant string.
             }
             const UnicodeString &string=*(const UnicodeString *)strings.elementAt(i);
             const UChar *s16=string.getBuffer();
             int32_t length16=string.length();
-            U_ASSERT(length>0);
             if(length16<=rest && matches16CPB(s, pos, length, s16, length16)) {
                 return pos;  // There is a set element at pos.
             }
@@ -1413,12 +1401,11 @@ int32_t UnicodeSetStringSpan::spanNotBack(const UChar *s, int32_t length) const 
             // it is easier and we only need to know whether the string is irrelevant
             // which is the same in either array.
             if(spanLengths[i]==ALL_CP_CONTAINED) {
-                continue;  // Irrelevant string. (Also the empty string.)
+                continue;  // Irrelevant string.
             }
             const UnicodeString &string=*(const UnicodeString *)strings.elementAt(i);
             const UChar *s16=string.getBuffer();
             int32_t length16=string.length();
-            U_ASSERT(length>0);
             if(length16<=pos && matches16CPB(s, pos-length16, length, s16, length16)) {
                 return pos;  // There is a set element at pos.
             }

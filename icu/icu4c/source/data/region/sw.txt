@@ -93,17 +93,14 @@ sw{
         CY{"Saiprasi"}
         CZ{"Chechia"}
         DE{"Ujerumani"}
-        DG{"Diego Garcia"}
         DJ{"Jibuti"}
         DK{"Denmaki"}
         DM{"Dominika"}
         DO{"Jamhuri ya Dominika"}
         DZ{"Aljeria"}
-        EA{"Ceuta na Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Misri"}
-        EH{"Sahara Magharibi"}
         ER{"Eritrea"}
         ES{"Uhispania"}
         ET{"Ethiopia"}
@@ -140,7 +137,6 @@ sw{
         HR{"Croatia"}
         HT{"Haiti"}
         HU{"Hungaria"}
-        IC{"Visiwa vya Kanari"}
         ID{"Indonesia"}
         IE{"Ayalandi"}
         IL{"Israeli"}
@@ -223,7 +219,7 @@ sw{
         PM{"Santapierre na Miquelon"}
         PN{"Visiwa vya Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Maeneo ya Palestina"}
+        PS{"Mamlaka ya Palestina"}
         PT{"Ureno"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -288,8 +284,6 @@ sw{
         VU{"Vanuatu"}
         WF{"Wallis na Futuna"}
         WS{"Samoa"}
-        XA{"Lafudhi Bandia"}
-        XB{"Lafudhi Bidi"}
         XK{"Kosovo"}
         YE{"Yemeni"}
         YT{"Mayotte"}
@@ -297,21 +291,5 @@ sw{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Eneo lisilojulikana"}
-    }
-    Countries%short{
-        HK{"Hong Kong"}
-        MO{"Makau"}
-        PS{"Palestina"}
-        US{"US"}
-    }
-    Countries%variant{
-        CD{"Kongo (DRC)"}
-        CG{"Jamhuri ya Kongo"}
-        CI{"Ivory Coast"}
-        CZ{"Jamhuri ya Cheki"}
-        FK{"Visiwa vya Falkland (Islas Malvinas)"}
-        NZ{"Aotearoa Nyuzilandi"}
-        SZ{"Uswazi"}
-        TL{"Timor ya Mashariki"}
     }
 }

@@ -251,7 +251,7 @@ public:
      * @return a copy of this object
      * @deprecated ICU 49 Use MessageFormat instead, with plural and select arguments.
      */
-    virtual ChoiceFormat* clone() const override;
+    virtual ChoiceFormat* clone() const;
 
     /**
      * Returns true if the given Format objects are semantically equal.
@@ -261,7 +261,7 @@ public:
      * @return         true if other is the same as this.
      * @deprecated ICU 49 Use MessageFormat instead, with plural and select arguments.
      */
-    virtual bool operator==(const Format& other) const override;
+    virtual UBool operator==(const Format& other) const;
 
     /**
      * Sets the pattern.
@@ -375,7 +375,7 @@ public:
      */
     virtual UnicodeString& format(double number,
                                   UnicodeString& appendTo,
-                                  FieldPosition& pos) const override;
+                                  FieldPosition& pos) const;
     /**
      * Formats an int32_t number using this object's choices.
      *
@@ -389,7 +389,7 @@ public:
      */
     virtual UnicodeString& format(int32_t number,
                                   UnicodeString& appendTo,
-                                  FieldPosition& pos) const override;
+                                  FieldPosition& pos) const;
 
     /**
      * Formats an int64_t number using this object's choices.
@@ -404,7 +404,7 @@ public:
      */
     virtual UnicodeString& format(int64_t number,
                                   UnicodeString& appendTo,
-                                  FieldPosition& pos) const override;
+                                  FieldPosition& pos) const;
 
     /**
      * Formats an array of objects using this object's choices.
@@ -444,7 +444,7 @@ public:
     */
     virtual void parse(const UnicodeString& text,
                        Formattable& result,
-                       ParsePosition& parsePosition) const override;
+                       ParsePosition& parsePosition) const;
 
     /**
      * Returns a unique class ID POLYMORPHICALLY. Part of ICU's "poor man's RTTI".
@@ -454,7 +454,7 @@ public:
      *                  other classes have different class IDs.
      * @deprecated ICU 49 Use MessageFormat instead, with plural and select arguments.
      */
-    virtual UClassID getDynamicClassID(void) const override;
+    virtual UClassID getDynamicClassID(void) const;
 
     /**
      * Returns the class ID for this class.  This is useful only for
@@ -478,7 +478,7 @@ private:
      */
     static UnicodeString& dtos(double value, UnicodeString& string);
 
-    ChoiceFormat() = delete; // default constructor not implemented
+    ChoiceFormat(); // default constructor not implemented
 
     /**
      * Construct a new ChoiceFormat with the limits and the corresponding formats
@@ -528,7 +528,7 @@ private:
             const UnicodeString &source, int32_t sourceOffset);
 
     /**
-     * Some of the ChoiceFormat constructors do not have a UErrorCode parameter.
+     * Some of the ChoiceFormat constructors do not have a UErrorCode paramater.
      * We need _some_ way to provide one for the MessagePattern constructor.
      * Alternatively, the MessagePattern could be a pointer field, but that is
      * not nice either.

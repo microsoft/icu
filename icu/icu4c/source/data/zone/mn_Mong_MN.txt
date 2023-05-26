@@ -1,0 +1,69 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+mn_Mong_MN{
+    zoneStrings{
+        "Asia:Choibalsan"{
+            ec{"ᠴᠥᠢᠪᠠᠯᠰᠨᠩ"}
+        }
+        "Asia:Hovd"{
+            ec{"ᠬᠣᠪᠳᠣ"}
+        }
+        "Asia:Ulaanbaatar"{
+            ec{"ᠣᠯᠠᠭᠠᠨᠪᠠᠭᠠᠳᠣᠷ"}
+        }
+        "Etc:UTC"{
+            ls{"ᠣᠯᠠᠨ ᠣᠯᠣᠰ ᠤᠨ ᠵᠣᠬᠢᠴᠡᠭᠣᠯᠣᠯᠳᠠᠳᠠᠢ ᠴᠠᠭ"}
+        }
+        "Etc:Unknown"{
+            ec{"ᠥᠯᠥ ᠮᠡᠳᠡᠭᠳᠡᠬᠥ ᠬᠣᠳᠠ"}
+        }
+        "meta:America_Central"{
+            ld{"ᠲᠥᠪ ᠵᠣᠨ ᠎᠎᠎ᠤ ᠴᠠᠭ"}
+            lg{"ᠲᠥᠪ ᠴᠠᠭ"}
+            ls{"ᠳᠥᠪ ᠰᠲ᠋ᠠᠨ᠋ᠳᠠᠷᠳ᠋ ᠴᠠᠭ"}
+        }
+        "meta:America_Eastern"{
+            ld{"ᠵᠡᠭᠥᠨ ᠡᠷᠭᠡ ᠎ᠢᠢᠨ ᠵᠣᠨ ᠎᠎᠎ᠤ ᠴᠠᠭ"}
+            lg{"ᠵᠡᠭᠥᠨ ᠡᠷᠭᠡ ᠎ᠢᠢᠨ ᠴᠠᠭ"}
+            ls{"ᠵᠡᠭᠥᠨ ᠡᠷᠭᠡ ᠎ᠢᠢᠨ ᠰᠲ᠋ᠠᠨ᠋ᠳᠠᠷᠳ᠋ ᠴᠠᠭ"}
+        }
+        "meta:America_Mountain"{
+            ld{"ᠠᠭᠣᠯᠠ ᠎ᠢᠢᠨ ᠵᠣᠨ ᠎᠎ᠤ ᠴᠠᠭ"}
+            lg{"ᠠᠭᠣᠯᠠ ᠎᠎᠎᠎ᠢᠢᠨ ᠴᠠᠭ"}
+            ls{"ᠠᠭᠣᠯᠠ ᠎᠎᠎᠎ᠢᠢᠨ ᠰᠲ᠋ᠠᠨ᠋ᠳᠠᠷᠳ᠋ ᠴᠠᠭ"}
+        }
+        "meta:America_Pacific"{
+            ld{"ᠨᠣᠮᠣᠬᠠᠨ ᠳᠠᠯᠠᠢ ᠎ᠢᠢᠨ ᠵᠣᠨ ᠎᠎᠎ᠪ ᠴᠠᠭ"}
+            lg{"ᠨᠣᠮᠣᠬᠠᠨ ᠳᠠᠯᠠᠢ ᠎ᠢᠢᠨ ᠴᠠᠭ"}
+            ls{"ᠨᠣᠮᠣᠬᠠᠨ ᠳᠠᠯᠠᠢ ᠎᠎ᠢᠢᠨ ᠰᠲ᠋ᠠᠨ᠋ᠳᠠᠷᠳ᠋ ᠴᠠᠭ"}
+        }
+        "meta:Atlantic"{
+            ld{"ᠠᠲ᠋ᠯᠠᠨ᠋ᠲ ᠎ᠤᠨ ᠵᠣᠨ ᠎ᠪ ᠴᠠᠭ"}
+            lg{"ᠠᠲ᠋ᠯᠠᠨ᠋ᠲ᠋ ᠎ᠤᠨ ᠴᠠᠭ"}
+            ls{"ᠠᠲ᠋ᠯᠠᠨ᠋ᠲ ᠎ᠤᠨ ᠰᠲ᠋ᠠᠨ᠋ᠳᠠᠷᠳ᠋ ᠴᠠᠭ"}
+        }
+        "meta:Europe_Central"{
+            ld{"ᠲᠥᠪ ᠡᠸᠣᠢᠷᠤᠫᠠ  ᠢᠢᠨ  ᠵᠣᠨ ᠎᠎ᠤ ᠴᠠᠭ"}
+            lg{"ᠲᠥᠪ ᠡᠸᠣᠢᠷᠤᠫᠠ ᠢᠢᠨ ᠴᠠᠭ"}
+            ls{"ᠲᠥᠪ ᠡᠸᠣᠢᠷᠤᠫᠠ ᠢᠢᠨ ᠰᠲ᠋ᠠᠨ᠋ᠳᠠᠷᠳ᠋ ᠴᠠᠭ"}
+        }
+        "meta:Europe_Eastern"{
+            ld{"ᠵᠡᠭᠦᠨ ᠡᠸᠣᠢᠷᠤᠫᠠ  ᠢᠢᠨ  ᠵᠣᠨ ᠎᠎ᠤ ᠴᠠᠭ"}
+            lg{"ᠵᠡᠭᠦᠨ ᠡᠸᠣᠢᠷᠤᠫᠠ ᠢᠢᠨ ᠴᠠᠭ"}
+            ls{"ᠵᠡᠭᠦᠨ ᠡᠸᠣᠢᠷᠤᠫᠠ ᠢᠢᠨ ᠰᠲ᠋ᠠᠨ᠋ᠳᠠᠷᠳ᠋ ᠴᠠᠭ"}
+        }
+        "meta:Europe_Western"{
+            ld{"ᠪᠠᠷᠠᠭᠣᠨ ᠡᠸᠣᠢᠷᠤᠫᠠ  ᠢᠢᠨ  ᠵᠣᠨ ᠎᠎ᠤ ᠴᠠᠭ"}
+            lg{"ᠪᠠᠷᠠᠭᠣᠨ ᠡᠸᠣᠢᠷᠤᠫᠠ ᠢᠢᠨ ᠴᠠᠭ"}
+            ls{"ᠪᠠᠷᠠᠭᠣᠨ ᠡᠸᠣᠢᠷᠤᠫᠠ ᠢᠢᠨ ᠰᠲ᠋ᠠᠨ᠋ᠳᠠᠷᠳ᠋ ᠴᠠᠭ"}
+        }
+        "meta:GMT"{
+            ls{"ᠭᠷᠢᠨ᠋ᠸᠢᠴᠢ ᠢᠢᠨ ᠴᠠᠭ"}
+        }
+        gmtFormat{"GMT {0}"}
+        regionFormat{"{0} ᠴᠠᠭ"}
+        regionFormatDaylight{"{0} ᠵᠣᠨ ᠎᠎᠎ᠤ ᠴᠠᠭ"}
+        regionFormatStandard{"{0} ᠰᠲ᠋ᠠᠨ᠋ᠳᠠᠷᠳ᠋ ᠴᠠᠭ"}
+    }
+}

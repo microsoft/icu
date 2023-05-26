@@ -1,0 +1,17 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+aa{
+    collations{
+        standard{
+            Sequence{
+                "&B<t<<<T<s<<<S<e<<<E"
+                "&C<k<<<K<x<<<X<i<<<I"
+                "&D<q<<<Q<r<<<R"
+                "&G<o<<<O"
+                "&W<h<<<H"
+            }
+            Version{"38.1"}
+        }
+    }
+}

@@ -91,8 +91,7 @@ class DateFormat;
 /**
  * <p><strong>IMPORTANT:</strong> New users are strongly encouraged to see if
  * numberformatter.h fits their use case.  Although not deprecated, this header
- * is provided for backwards compatibility only, and has much more limited
- * capabilities.
+ * is provided for backwards compatibility only.
  *
  * @see Format
  * @author Alan Liu
@@ -148,13 +147,13 @@ class U_I18N_API MeasureFormat : public Format {
      * Return true if given Format objects are semantically equal.
      * @stable ICU 53
      */
-    virtual bool operator==(const Format &other) const override;
+    virtual UBool operator==(const Format &other) const;
 
     /**
      * Clones this object polymorphically.
      * @stable ICU 53
      */
-    virtual MeasureFormat *clone() const override;
+    virtual MeasureFormat *clone() const;
 
     /**
      * Formats object to produce a string.
@@ -164,7 +163,7 @@ class U_I18N_API MeasureFormat : public Format {
             const Formattable &obj,
             UnicodeString &appendTo,
             FieldPosition &pos,
-            UErrorCode &status) const override;
+            UErrorCode &status) const;
 
 #ifndef U_FORCE_HIDE_DRAFT_API
     /**
@@ -176,7 +175,7 @@ class U_I18N_API MeasureFormat : public Format {
     virtual void parseObject(
             const UnicodeString &source,
             Formattable &reslt,
-            ParsePosition &pos) const override;
+            ParsePosition &pos) const;
 #endif  // U_FORCE_HIDE_DRAFT_API
 
     /**
@@ -286,7 +285,7 @@ class U_I18N_API MeasureFormat : public Format {
      *                  other classes have different class IDs.
      * @stable ICU 53
      */
-    virtual UClassID getDynamicClassID(void) const override;
+    virtual UClassID getDynamicClassID(void) const;
 
  protected:
     /**

@@ -23,7 +23,7 @@
 class NumberFormatRoundTripTest : public IntlTest {    
     
     // IntlTest override
-    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par ) override;
+    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par );
 public:
 
     static UBool verbose;
@@ -69,7 +69,7 @@ public:
     }
 
 protected:
-    UBool failure(UErrorCode status, const char* msg, UBool possibleDataError=false);
+    UBool failure(UErrorCode status, const char* msg, UBool possibleDataError=FALSE);
 
 };
 

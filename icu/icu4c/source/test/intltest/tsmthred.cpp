@@ -96,9 +96,8 @@ class TestThreadsThread : public SimpleThread
 {
 public:
     TestThreadsThread(char* whatToChange) { fWhatToChange = whatToChange; }
-    virtual void run() override {
-        Mutex m;
-        *fWhatToChange = '*';
+    virtual void run() { Mutex m;
+                         *fWhatToChange = '*';
     }
 private:
     char *fWhatToChange;
@@ -160,7 +159,7 @@ class TestArabicShapeThreads : public SimpleThread
 {
 public:
     TestArabicShapeThreads() {}
-    virtual void run() override { doTailTest(); }
+    virtual void run() { doTailTest(); }
 private:
 	void doTailTest();
 };
@@ -381,7 +380,7 @@ ThreadSafeFormat::ThreadSafeFormat(UErrorCode &status) {
 static const UChar *kUSD = u"USD";
 
 UBool ThreadSafeFormat::doStuff(int32_t offset, UnicodeString &appendErr, UErrorCode &status) const {
-  UBool okay = true;
+  UBool okay = TRUE;
 
   if(u_strcmp(fFormat->getCurrency(), kUSD)) {
     appendErr.append(u"fFormat currency != ")
@@ -389,7 +388,7 @@ UBool ThreadSafeFormat::doStuff(int32_t offset, UnicodeString &appendErr, UError
       .append(u", =")
       .append(fFormat->getCurrency())
       .append(u"! ");
-    okay = false;
+    okay = FALSE;
   }
 
   if(u_strcmp(gSharedData->fFormat->getCurrency(), kUSD)) {
@@ -398,7 +397,7 @@ UBool ThreadSafeFormat::doStuff(int32_t offset, UnicodeString &appendErr, UError
       .append(u", =")
       .append(gSharedData->fFormat->getCurrency())
       .append(u"! ");
-    okay = false;
+    okay = FALSE;
   }
   UnicodeString str;
   const UnicodeString *o=NULL;
@@ -414,13 +413,13 @@ UBool ThreadSafeFormat::doStuff(int32_t offset, UnicodeString &appendErr, UError
 
   if(*o != str) {
     appendErr.append(showDifference(*o, str));
-    okay = false;
+    okay = FALSE;
   }
   return okay;
 }
 
 UBool U_CALLCONV isAcceptable(void *, const char *, const char *, const UDataInfo *) {
-    return true;
+    return TRUE;
 }
 
 //static UMTX debugMutex = NULL;
@@ -451,7 +450,7 @@ public:
     }
 
 
-    virtual void run() override
+    virtual void run()
     {
         fTraceInfo                     = 1;
         LocalPointer<NumberFormat> percentFormatter;
@@ -665,7 +664,7 @@ void MultithreadTest::TestThreadedIntl()
     UErrorCode threadSafeErr = U_ZERO_ERROR;
 
     ThreadSafeFormatSharedData sharedData(threadSafeErr);
-    assertSuccess(WHERE, threadSafeErr, true);
+    assertSuccess(WHERE, threadSafeErr, TRUE);
 
     //
     //  Create and start the test threads
@@ -729,7 +728,7 @@ public:
         coll(NULL),
         lines(NULL),
         noLines(0),
-        isAtLeastUCA62(true)
+        isAtLeastUCA62(TRUE)
     {
     }
     void setCollator(Collator *c, Line *l, int32_t nl, UBool atLeastUCA62)
@@ -739,7 +738,7 @@ public:
         noLines = nl;
         isAtLeastUCA62 = atLeastUCA62;
     }
-    virtual void run() override {
+    virtual void run() {
         uint8_t sk1[1024], sk2[1024];
         uint8_t *oldSk = NULL, *newSk = sk1;
         int32_t oldLen = 0;
@@ -844,7 +843,7 @@ void MultithreadTest::TestCollators()
                     "INFO: Working with the stub file.\n"
                     "If you need the full conformance test, please\n"
                     "download the appropriate data files from:\n"
-                    "https://github.com/unicode-org/cldr/tree/main/common/uca");
+                    "http://source.icu-project.org/repos/icu/tools/trunk/unicodetools/com/ibm/text/data/");
             }
         }
     }
@@ -946,7 +945,7 @@ public:
     }
 
 
-    virtual void run() override
+    virtual void run()
     {
         fTraceInfo    = 1;
         int loopCount = 0;
@@ -1015,7 +1014,7 @@ class TxThread: public SimpleThread {
   public:
     TxThread() {}
     ~TxThread();
-    void run() override;
+    void run();
 };
 
 TxThread::~TxThread() {}
@@ -1109,7 +1108,7 @@ const UCTMultiThreadItem *LocaleCacheKey<UCTMultiThreadItem>::createObject(
             // until other have completed. Verifies that cache doesn't
             // deadlock when a creation is slow.
 
-            // Note that gObjectsCreated needs to be incremented from 0 to 1
+            // Note that gObjectsCreated needs to be incremeneted from 0 to 1
             // early, to keep subsequent threads from entering this path.
             gObjectsCreated = 1;
             while (gObjectsCreated < 3) {
@@ -1148,7 +1147,7 @@ class UnifiedCacheThread: public SimpleThread {
             const char *loc,
             const char *loc2) : fCache(cache), fLoc(loc), fLoc2(loc2) {}
     ~UnifiedCacheThread() {}
-    void run() override;
+    void run();
     void exerciseByLocale(const Locale &);
     const UnifiedCache *fCache;
     Locale fLoc;
@@ -1258,7 +1257,7 @@ class BreakTranslitThread: public SimpleThread {
   public:
     BreakTranslitThread() {}
     ~BreakTranslitThread() {}
-    void run() override;
+    void run();
 };
 
 void BreakTranslitThread::run() {
@@ -1307,7 +1306,7 @@ void MultithreadTest::TestBreakTranslit() {
 class TestIncDecThread : public SimpleThread {
 public:
     TestIncDecThread() {}
-    virtual void run() override;
+    virtual void run();
 };
 
 static u_atomic_int32_t gIncDecCounter;
@@ -1340,7 +1339,7 @@ static Calendar  *gSharedCalendar = {};
 class Test20104Thread : public SimpleThread {
 public:
     Test20104Thread() {}
-    virtual void run() override;
+    virtual void run();
 };
 
 void Test20104Thread::run() {

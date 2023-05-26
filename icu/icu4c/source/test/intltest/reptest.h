@@ -30,7 +30,7 @@
  */
 class ReplaceableTest : public IntlTest {
 public:
-    void runIndexedTest(int32_t index, UBool exec, const char* &name, char* par=NULL) override;
+    void runIndexedTest(int32_t index, UBool exec, const char* &name, char* par=NULL);
 
     /*Tests the Replaceable class according to the API documentation. */
     void TestReplaceableClass(void);

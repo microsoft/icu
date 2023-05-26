@@ -30,8 +30,6 @@
 #include "unicode/uobject.h"
 #include "unicode/ustringtrie.h"
 
-class BytesTrieTest;
-
 U_NAMESPACE_BEGIN
 
 class ByteSink;
@@ -380,7 +378,6 @@ public:
 
 private:
     friend class BytesTrieBuilder;
-    friend class ::BytesTrieTest;
 
     /**
      * Constructs a BytesTrie reader instance.
@@ -394,7 +391,7 @@ private:
               pos_(bytes_), remainingMatchLength_(-1) {}
 
     // No assignment operator.
-    BytesTrie &operator=(const BytesTrie &other) = delete;
+    BytesTrie &operator=(const BytesTrie &other);
 
     inline void stop() {
         pos_=NULL;

@@ -2,7 +2,7 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 root{
-    Version{"42"}
+    Version{"38.1"}
     durationUnits{
         hm{"h:mm"}
         hms{"h:mm:ss"}
@@ -91,61 +91,15 @@ root{
             }
         }
         compound{
-            1024p1{"Ki{0}"}
-            1024p2{"Mi{0}"}
-            1024p3{"Gi{0}"}
-            1024p4{"Ti{0}"}
-            1024p5{"Pi{0}"}
-            1024p6{"Ei{0}"}
-            1024p7{"Zi{0}"}
-            1024p8{"Yi{0}"}
-            10p-1{"d{0}"}
-            10p-12{"p{0}"}
-            10p-15{"f{0}"}
-            10p-18{"a{0}"}
-            10p-2{"c{0}"}
-            10p-21{"z{0}"}
-            10p-24{"y{0}"}
-            10p-3{"m{0}"}
-            10p-6{"μ{0}"}
-            10p-9{"n{0}"}
-            10p1{"da{0}"}
-            10p12{"T{0}"}
-            10p15{"P{0}"}
-            10p18{"E{0}"}
-            10p2{"h{0}"}
-            10p21{"Z{0}"}
-            10p24{"Y{0}"}
-            10p3{"k{0}"}
-            10p6{"M{0}"}
-            10p9{"G{0}"}
             per{"{0}/{1}"}
-            power2{
-                other{
-                    _{
-                        _{"{0}²"}
-                    }
-                }
-            }
-            power3{
-                other{
-                    _{
-                        _{"{0}³"}
-                    }
-                }
-            }
             times{"{0}⋅{1}"}
         }
         concentr{
-            item{
-                dnam{"item"}
-                other{"{0} item"}
-            }
             karat{
                 dnam{"kt"}
                 other{"{0} kt"}
             }
-            milligram-ofglucose-per-deciliter{
+            milligram-per-deciliter{
                 dnam{"mg/dL"}
                 other{"{0} mg/dL"}
             }
@@ -266,8 +220,8 @@ root{
                 per{"{0}/h"}
             }
             microsecond{
-                dnam{"μs"}
-                other{"{0} μs"}
+                dnam{"µs"}
+                other{"{0} µs"}
             }
             millisecond{
                 dnam{"ms"}
@@ -287,11 +241,6 @@ root{
             nanosecond{
                 dnam{"ns"}
                 other{"{0} ns"}
-            }
-            quarter{
-                dnam{"qtr"}
-                other{"{0} q"}
-                per{"{0}/q"}
             }
             second{
                 dnam{"sec"}
@@ -342,7 +291,10 @@ root{
                 dnam{"eV"}
                 other{"{0} eV"}
             }
-            foodcalorie:alias{"/LOCALE/unitsShort/energy/kilocalorie"}
+            foodcalorie{
+                dnam{"Cal"}
+                other{"{0} Cal"}
+            }
             joule{
                 dnam{"joule"}
                 other{"{0} J"}
@@ -365,10 +317,6 @@ root{
             }
         }
         force{
-            kilowatt-hour-per-100-kilometer{
-                dnam{"kWh/100km"}
-                other{"{0} kWh/100km"}
-            }
             newton{
                 dnam{"N"}
                 other{"{0} N"}
@@ -397,9 +345,18 @@ root{
             }
         }
         graphics{
-            dot-per-centimeter:alias{"/LOCALE/unitsShort/graphics/pixel-per-centimeter"}
-            dot-per-inch:alias{"/LOCALE/unitsShort/graphics/pixel-per-inch"}
-            dot:alias{"/LOCALE/unitsShort/graphics/pixel"}
+            dot{
+                dnam{"dot"}
+                other{"{0} dot"}
+            }
+            dot-per-centimeter{
+                dnam{"dpcm"}
+                other{"{0} dpcm"}
+            }
+            dot-per-inch{
+                dnam{"dpi"}
+                other{"{0} dpi"}
+            }
             em{
                 dnam{"em"}
                 other{"{0} em"}
@@ -472,8 +429,8 @@ root{
                 per{"{0}/m"}
             }
             micrometer{
-                dnam{"μm"}
-                other{"{0} μm"}
+                dnam{"µm"}
+                other{"{0} µm"}
             }
             mile{
                 dnam{"mi"}
@@ -561,9 +518,13 @@ root{
                 other{"{0} kg"}
                 per{"{0}/kg"}
             }
+            metric-ton{
+                dnam{"t"}
+                other{"{0} t"}
+            }
             microgram{
-                dnam{"μg"}
-                other{"{0} μg"}
+                dnam{"µg"}
+                other{"{0} µg"}
             }
             milligram{
                 dnam{"mg"}
@@ -594,10 +555,6 @@ root{
             ton{
                 dnam{"tn"}
                 other{"{0} tn"}
-            }
-            tonne{
-                dnam{"t"}
-                other{"{0} t"}
             }
         }
         power{

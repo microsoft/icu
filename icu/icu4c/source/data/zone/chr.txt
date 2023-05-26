@@ -864,9 +864,6 @@ chr{
         "Asia:Ulaanbaatar"{
             ec{"ᎤᎳᏂᏆᏔ"}
         }
-        "Asia:Urumqi"{
-            ec{"ᎤᎷᎻᎩ"}
-        }
         "Asia:Ust-Nera"{
             ec{"ᎤᏍᏔ-ᏁᎳ"}
         }
@@ -1222,9 +1219,6 @@ chr{
         }
         "Pacific:Johnston"{
             ec{"ᏣᏂᏏᏂ"}
-        }
-        "Pacific:Kanton"{
-            ec{"ᎧᏛᏂ"}
         }
         "Pacific:Kiritimati"{
             ec{"ᎩᎵᏘᎹᏘ"}
@@ -1906,9 +1900,6 @@ chr{
             ld{"ᏰᎧᏖᎵᏂᏊᎦ ᎪᎩ ᎠᏟᎢᎵᏒ"}
             lg{"ᏰᎧᏖᎵᏂᏊᎦ ᎠᏟᎢᎵᏒ"}
             ls{"ᏰᎧᏖᎵᏂᏊᎦ ᎠᏟᎶᏍᏗ ᎠᏟᎢᎵᏒ"}
-        }
-        "meta:Yukon"{
-            ls{"ᏳᎧᏂ ᎠᏟᎢᎵᏒ"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

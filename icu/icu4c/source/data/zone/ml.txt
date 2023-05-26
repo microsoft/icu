@@ -867,9 +867,6 @@ ml{
         "Asia:Ulaanbaatar"{
             ec{"ഉലാൻബാത്തർ"}
         }
-        "Asia:Urumqi"{
-            ec{"ഉറുംഖി"}
-        }
         "Asia:Ust-Nera"{
             ec{"യുസ്-നേര"}
         }
@@ -1223,9 +1220,6 @@ ml{
         "Pacific:Johnston"{
             ec{"ജോൺസ്റ്റൺ"}
         }
-        "Pacific:Kanton"{
-            ec{"കാൻട്ടൻ"}
-        }
         "Pacific:Kiritimati"{
             ec{"കിരിറ്റിമാറ്റി"}
         }
@@ -1287,7 +1281,7 @@ ml{
             ec{"ടോംഗാടാപു"}
         }
         "Pacific:Truk"{
-            ec{"ചക്"}
+            ec{"ട്രക്"}
         }
         "Pacific:Wake"{
             ec{"വെയ്ക്"}
@@ -1940,9 +1934,6 @@ ml{
             ld{"യെക്കാറ്റരിൻബർഗ് ഗ്രീഷ്‌മകാല സമയം"}
             lg{"യെക്കാറ്റരിൻബർഗ് സമയം"}
             ls{"യെക്കാറ്റരിൻബർഗ് സ്റ്റാൻഡേർഡ് സമയം"}
-        }
-        "meta:Yukon"{
-            ls{"യൂക്കോൺ സമയം"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"ജിഎംടി {0}"}

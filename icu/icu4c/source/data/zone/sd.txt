@@ -864,9 +864,6 @@ sd{
         "Asia:Ulaanbaatar"{
             ec{"اولان باتر"}
         }
-        "Asia:Urumqi"{
-            ec{"يورمڪي"}
-        }
         "Asia:Ust-Nera"{
             ec{"اسٽ نيرا"}
         }
@@ -1220,9 +1217,6 @@ sd{
         }
         "Pacific:Johnston"{
             ec{"جانسٹن"}
-        }
-        "Pacific:Kanton"{
-            ec{"ڪانٽن"}
         }
         "Pacific:Kiritimati"{
             ec{"ڪريٽمٽي"}
@@ -1883,9 +1877,6 @@ sd{
             ld{"يڪاٽيرنبرگ جي ڏينهن جو وقت"}
             lg{"يڪاٽيرنبرگ جو وقت"}
             ls{"يڪاٽيرنبرگ جو معياري وقت"}
-        }
-        "meta:Yukon"{
-            ls{"يڪون جو وقت"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

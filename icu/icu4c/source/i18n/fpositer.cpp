@@ -45,17 +45,17 @@ FieldPositionIterator::FieldPositionIterator(const FieldPositionIterator &rhs)
   }
 }
 
-bool FieldPositionIterator::operator==(const FieldPositionIterator &rhs) const {
+UBool FieldPositionIterator::operator==(const FieldPositionIterator &rhs) const {
   if (&rhs == this) {
-    return true;
+    return TRUE;
   }
   if (pos != rhs.pos) {
-    return false;
+    return FALSE;
   }
   if (!data) {
     return rhs.data == NULL;
   }
-  return rhs.data ? data->operator==(*rhs.data) : false;
+  return rhs.data ? data->operator==(*rhs.data) : FALSE;
 }
 
 void FieldPositionIterator::setData(UVector32 *adopt, UErrorCode& status) {
@@ -92,7 +92,7 @@ void FieldPositionIterator::setData(UVector32 *adopt, UErrorCode& status) {
 
 UBool FieldPositionIterator::next(FieldPosition& fp) {
   if (pos == -1) {
-    return false;
+    return FALSE;
   }
 
   // Ignore the first element of the tetrad: used for field category
@@ -105,7 +105,7 @@ UBool FieldPositionIterator::next(FieldPosition& fp) {
     pos = -1;
   }
 
-  return true;
+  return TRUE;
 }
 
 U_NAMESPACE_END

@@ -68,15 +68,12 @@ class LanguageBreakEngine : public UMemory {
   * @param startPos The start of the run within the supplied text.
   * @param endPos The end of the run within the supplied text.
   * @param foundBreaks A Vector of int32_t to receive the breaks.
-  * @param status Information on any errors encountered.
   * @return The number of breaks found.
   */
   virtual int32_t findBreaks( UText *text,
                               int32_t startPos,
                               int32_t endPos,
-                              UVector32 &foundBreaks,
-                              UBool isPhraseBreaking,
-                              UErrorCode &status) const = 0;
+                              UVector32 &foundBreaks ) const = 0;
 
 };
 
@@ -177,7 +174,7 @@ class UnhandledEngine : public LanguageBreakEngine {
   * @return true if this engine handles the particular character and break
   * type.
   */
-  virtual UBool handles(UChar32 c) const override;
+  virtual UBool handles(UChar32 c) const;
 
  /**
   * <p>Find any breaks within a run in the supplied text.</p>
@@ -188,15 +185,12 @@ class UnhandledEngine : public LanguageBreakEngine {
   * @param startPos The start of the run within the supplied text.
   * @param endPos The end of the run within the supplied text.
   * @param foundBreaks An allocated C array of the breaks found, if any
-  * @param status Information on any errors encountered.
   * @return The number of breaks found.
   */
   virtual int32_t findBreaks( UText *text,
                               int32_t startPos,
                               int32_t endPos,
-                              UVector32 &foundBreaks,
-                              UBool isPhraseBreaking,
-                              UErrorCode &status) const override;
+                              UVector32 &foundBreaks ) const;
 
  /**
   * <p>Tell the engine to handle a particular character and break type.</p>
@@ -249,7 +243,7 @@ class ICULanguageBreakFactory : public LanguageBreakFactory {
   * sought.
   * @return A LanguageBreakEngine with the desired characteristics, or 0.
   */
-  virtual const LanguageBreakEngine *getEngineFor(UChar32 c) override;
+  virtual const LanguageBreakEngine *getEngineFor(UChar32 c);
 
 protected:
  /**

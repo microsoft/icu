@@ -239,7 +239,7 @@ MessageFormat::MessageFormat(const UnicodeString& pattern,
   argTypes(NULL),
   argTypeCount(0),
   argTypeCapacity(0),
-  hasArgTypeConflicts(false),
+  hasArgTypeConflicts(FALSE),
   defaultNumberFormat(NULL),
   defaultDateFormat(NULL),
   cachedFormatters(NULL),
@@ -261,7 +261,7 @@ MessageFormat::MessageFormat(const UnicodeString& pattern,
   argTypes(NULL),
   argTypeCount(0),
   argTypeCapacity(0),
-  hasArgTypeConflicts(false),
+  hasArgTypeConflicts(FALSE),
   defaultNumberFormat(NULL),
   defaultDateFormat(NULL),
   cachedFormatters(NULL),
@@ -284,7 +284,7 @@ MessageFormat::MessageFormat(const UnicodeString& pattern,
   argTypes(NULL),
   argTypeCount(0),
   argTypeCapacity(0),
-  hasArgTypeConflicts(false),
+  hasArgTypeConflicts(FALSE),
   defaultNumberFormat(NULL),
   defaultDateFormat(NULL),
   cachedFormatters(NULL),
@@ -338,17 +338,17 @@ MessageFormat::~MessageFormat()
 
 /**
  * Allocate argTypes[] to at least the given capacity and return
- * true if successful.  If not, leave argTypes[] unchanged.
+ * TRUE if successful.  If not, leave argTypes[] unchanged.
  *
  * If argTypes is NULL, allocate it.  If it is not NULL, enlarge it
  * if necessary to be at least as large as specified.
  */
 UBool MessageFormat::allocateArgTypes(int32_t capacity, UErrorCode& status) {
     if (U_FAILURE(status)) {
-        return false;
+        return FALSE;
     }
     if (argTypeCapacity >= capacity) {
-        return true;
+        return TRUE;
     }
     if (capacity < DEFAULT_INITIAL_CAPACITY) {
         capacity = DEFAULT_INITIAL_CAPACITY;
@@ -359,11 +359,11 @@ UBool MessageFormat::allocateArgTypes(int32_t capacity, UErrorCode& status) {
             uprv_realloc(argTypes, sizeof(*argTypes) * capacity);
     if (a == NULL) {
         status = U_MEMORY_ALLOCATION_ERROR;
-        return false;
+        return FALSE;
     }
     argTypes = a;
     argTypeCapacity = capacity;
-    return true;
+    return TRUE;
 }
 
 // -------------------------------------
@@ -389,10 +389,10 @@ MessageFormat::operator=(const MessageFormat& that)
     return *this;
 }
 
-bool
+UBool
 MessageFormat::operator==(const Format& rhs) const
 {
-    if (this == &rhs) return true;
+    if (this == &rhs) return TRUE;
 
     MessageFormat& that = (MessageFormat&)rhs;
 
@@ -400,37 +400,37 @@ MessageFormat::operator==(const Format& rhs) const
     if (!Format::operator==(rhs) ||
         msgPattern != that.msgPattern ||
         fLocale != that.fLocale) {
-        return false;
+        return FALSE;
     }
 
     // Compare hashtables.
     if ((customFormatArgStarts == NULL) != (that.customFormatArgStarts == NULL)) {
-        return false;
+        return FALSE;
     }
     if (customFormatArgStarts == NULL) {
-        return true;
+        return TRUE;
     }
 
     UErrorCode ec = U_ZERO_ERROR;
     const int32_t count = uhash_count(customFormatArgStarts);
     const int32_t rhs_count = uhash_count(that.customFormatArgStarts);
     if (count != rhs_count) {
-        return false;
+        return FALSE;
     }
     int32_t idx = 0, rhs_idx = 0, pos = UHASH_FIRST, rhs_pos = UHASH_FIRST;
     for (; idx < count && rhs_idx < rhs_count && U_SUCCESS(ec); ++idx, ++rhs_idx) {
         const UHashElement* cur = uhash_nextElement(customFormatArgStarts, &pos);
         const UHashElement* rhs_cur = uhash_nextElement(that.customFormatArgStarts, &rhs_pos);
         if (cur->key.integer != rhs_cur->key.integer) {
-            return false;
+            return FALSE;
         }
         const Format* format = (const Format*)uhash_iget(cachedFormatters, cur->key.integer);
         const Format* rhs_format = (const Format*)uhash_iget(that.cachedFormatters, rhs_cur->key.integer);
         if (*format != *rhs_format) {
-            return false;
+            return FALSE;
         }
     }
-    return true;
+    return TRUE;
 }
 
 // -------------------------------------
@@ -504,7 +504,7 @@ void MessageFormat::resetPattern() {
     uhash_close(customFormatArgStarts);
     customFormatArgStarts = NULL;
     argTypeCount = 0;
-    hasArgTypeConflicts = false;
+    hasArgTypeConflicts = FALSE;
 }
 
 void
@@ -637,7 +637,7 @@ MessageFormat::adoptFormats(Format** newFormats,
 
 // -------------------------------------
 // Sets the new formats array and updates the array count.
-// This MessageFormat instance makes a copy of the new formats.
+// This MessageFormat instance maks a copy of the new formats.
 
 void
 MessageFormat::setFormats(const Format** newFormats,
@@ -854,21 +854,19 @@ StringEnumeration*
 MessageFormat::getFormatNames(UErrorCode& status) {
     if (U_FAILURE(status))  return NULL;
 
-    LocalPointer<UVector> formatNames(new UVector(status), status);
+    UVector *fFormatNames = new UVector(status);
     if (U_FAILURE(status)) {
-        return nullptr;
+        status = U_MEMORY_ALLOCATION_ERROR;
+        return NULL;
     }
-    formatNames->setDeleter(uprv_deleteUObject);
+    fFormatNames->setDeleter(uprv_deleteUObject);
 
     for (int32_t partIndex = 0; (partIndex = nextTopLevelArgStart(partIndex)) >= 0;) {
-        LocalPointer<UnicodeString> name(getArgName(partIndex + 1).clone(), status);
-        formatNames->adoptElement(name.orphan(), status);
-        if (U_FAILURE(status))  return nullptr;
+        fFormatNames->addElement(new UnicodeString(getArgName(partIndex + 1)), status);
     }
 
-    LocalPointer<StringEnumeration> nameEnumerator(
-        new FormatNameEnumeration(std::move(formatNames), status), status);
-    return U_SUCCESS(status) ? nameEnumerator.orphan() : nullptr;
+    StringEnumeration* nameEnumerator = new FormatNameEnumeration(fFormatNames, status);
+    return nameEnumerator;
 }
 
 // -------------------------------------
@@ -973,7 +971,7 @@ public:
     PluralSelectorContext(int32_t start, const UnicodeString &name,
                           const Formattable &num, double off, UErrorCode &errorCode)
             : startIndex(start), argName(name), offset(off),
-              numberArgIndex(-1), formatter(NULL), forReplaceNumber(false) {
+              numberArgIndex(-1), formatter(NULL), forReplaceNumber(FALSE) {
         // number needs to be set even when select() is not called.
         // Keep it as a Number/Formattable:
         // For format() methods, and to preserve information (e.g., BigDecimal).
@@ -996,7 +994,7 @@ public:
     const Format *formatter;
     /** formatted argument number - plural offset */
     UnicodeString numberString;
-    /** true if number-offset was formatted with the stock number formatter */
+    /** TRUE if number-offset was formatted with the stock number formatter */
     UBool forReplaceNumber;
 };
 
@@ -1048,7 +1046,7 @@ void MessageFormat::format(int32_t msgStart, const void *plNumber,
         UMessagePatternArgType argType = part->getArgType();
         part = &msgPattern.getPart(++i);
         const Formattable* arg;
-        UBool noArg = false;
+        UBool noArg = FALSE;
         UnicodeString argName = msgPattern.getSubstring(*part);
         if (argumentNames == NULL) {
             int32_t argNumber = part->getValue();  // ARG_NUMBER
@@ -1056,12 +1054,12 @@ void MessageFormat::format(int32_t msgStart, const void *plNumber,
                 arg = arguments + argNumber;
             } else {
                 arg = NULL;
-                noArg = true;
+                noArg = TRUE;
             }
         } else {
             arg = getArgFromListByName(arguments, argumentNames, cnt, argName);
             if (arg == NULL) {
-                noArg = true;
+                noArg = TRUE;
             }
         }
         ++i;
@@ -1109,7 +1107,7 @@ void MessageFormat::format(int32_t msgStart, const void *plNumber,
         } else if (argType == UMSGPAT_ARG_TYPE_NONE || (cachedFormatters && uhash_iget(cachedFormatters, i - 2))) {
             // We arrive here if getCachedFormatter returned NULL, but there was actually an element in the hash table.
             // This can only happen if the hash table contained a DummyFormat, so the if statement above is a check
-            // for the hash table containing DummyFormat.
+            // for the hash table containind DummyFormat.
             if (arg->isNumeric()) {
                 const NumberFormat* nf = getDefaultNumberFormat(success);
                 appendTo.formatAndAppend(nf, *arg, success);
@@ -1268,7 +1266,7 @@ MessageFormat::findOtherSubMessage(int32_t partIndex) const {
     }
     // Iterate over (ARG_SELECTOR [ARG_INT|ARG_DOUBLE] message) tuples
     // until ARG_LIMIT or end of plural-only pattern.
-    UnicodeString other(false, OTHER_STRING, 5);
+    UnicodeString other(FALSE, OTHER_STRING, 5);
     do {
         part=&msgPattern.getPart(partIndex++);
         UMessagePatternPartType type=part->getType();
@@ -1393,7 +1391,7 @@ MessageFormat::parse(int32_t msgStart,
     ParsePosition tempStatus(0);
 
     for(int32_t i=msgStart+1; ; ++i) {
-        UBool haveArgResult = false;
+        UBool haveArgResult = FALSE;
         const MessagePattern::Part* part=&msgPattern.getPart(i);
         const UMessagePatternPartType type=part->getType();
         int32_t index=part->getIndex();
@@ -1437,12 +1435,12 @@ MessageFormat::parse(int32_t msgStart,
                 return NULL; // leave index as is to signal error
             }
             sourceOffset = tempStatus.getIndex();
-            haveArgResult = true;
+            haveArgResult = TRUE;
         } else if(
             argType==UMSGPAT_ARG_TYPE_NONE || (cachedFormatters && uhash_iget(cachedFormatters, i -2))) {
             // We arrive here if getCachedFormatter returned NULL, but there was actually an element in the hash table.
             // This can only happen if the hash table contained a DummyFormat, so the if statement above is a check
-            // for the hash table containing DummyFormat.
+            // for the hash table containind DummyFormat.
 
             // Match as a string.
             // if at end, use longest possible match
@@ -1466,7 +1464,7 @@ MessageFormat::parse(int32_t msgStart,
                 compValue.append(RIGHT_CURLY_BRACE);
                 if (0 != strValue.compare(compValue)) {
                     argResult.setString(strValue);
-                    haveArgResult = true;
+                    haveArgResult = TRUE;
                 }
                 sourceOffset = next;
             }
@@ -1478,7 +1476,7 @@ MessageFormat::parse(int32_t msgStart,
                 return NULL; // leave index as is to signal error
             }
             argResult.setDouble(choiceResult);
-            haveArgResult = true;
+            haveArgResult = TRUE;
             sourceOffset = tempStatus.getIndex();
         } else if(UMSGPAT_ARG_TYPE_HAS_PLURAL_STYLE(argType) || argType==UMSGPAT_ARG_TYPE_SELECT) {
             // Parsing not supported.
@@ -1622,7 +1620,7 @@ void MessageFormat::cacheExplicitFormats(UErrorCode& status) {
     for (int32_t i = 0; i < argTypeCount; ++i) {
         argTypes[i] = Formattable::kObject;
     }
-    hasArgTypeConflicts = false;
+    hasArgTypeConflicts = FALSE;
 
     // This loop starts at part index 1 because we do need to examine
     // ARG_START parts. (But we can ignore the MSG_START.)
@@ -1673,7 +1671,7 @@ void MessageFormat::cacheExplicitFormats(UErrorCode& status) {
         }
         if (argNumber != -1) {
             if (argTypes[argNumber] != Formattable::kObject && argTypes[argNumber] != formattableType) {
-                hasArgTypeConflicts = true;
+                hasArgTypeConflicts = TRUE;
             }
             argTypes[argNumber] = formattableType;
         }
@@ -1789,7 +1787,7 @@ int32_t MessageFormat::findKeyword(const UnicodeString& s,
 
     int32_t length = s.length();
     const UChar *ps = PatternProps::trimWhiteSpace(s.getBuffer(), length);
-    UnicodeString buffer(false, ps, length);
+    UnicodeString buffer(FALSE, ps, length);
     // Trims the space characters and turns all characters
     // in s to lower case.
     buffer.toLower("");
@@ -1810,8 +1808,8 @@ MessageFormat::createIntegerFormat(const Locale& locale, UErrorCode& status) con
     DecimalFormat *temp2;
     if (temp != NULL && (temp2 = dynamic_cast<DecimalFormat*>(temp)) != NULL) {
         temp2->setMaximumFractionDigits(0);
-        temp2->setDecimalSeparatorAlwaysShown(false);
-        temp2->setParseIntegerOnly(true);
+        temp2->setDecimalSeparatorAlwaysShown(FALSE);
+        temp2->setParseIntegerOnly(TRUE);
     }
 
     return temp;
@@ -1871,8 +1869,8 @@ UBool MessageFormat::equalFormats(const void* left, const void* right) {
 }
 
 
-bool MessageFormat::DummyFormat::operator==(const Format&) const {
-    return true;
+UBool MessageFormat::DummyFormat::operator==(const Format&) const {
+    return TRUE;
 }
 
 MessageFormat::DummyFormat* MessageFormat::DummyFormat::clone() const {
@@ -1914,9 +1912,9 @@ void MessageFormat::DummyFormat::parseObject(const UnicodeString&,
 }
 
 
-FormatNameEnumeration::FormatNameEnumeration(LocalPointer<UVector> nameList, UErrorCode& /*status*/) {
+FormatNameEnumeration::FormatNameEnumeration(UVector *fNameList, UErrorCode& /*status*/) {
     pos=0;
-    fFormatNames = std::move(nameList);
+    fFormatNames = fNameList;
 }
 
 const UnicodeString*
@@ -1938,6 +1936,7 @@ FormatNameEnumeration::count(UErrorCode& /*status*/) const {
 }
 
 FormatNameEnumeration::~FormatNameEnumeration() {
+    delete fFormatNames;
 }
 
 MessageFormat::PluralSelectorProvider::PluralSelectorProvider(const MessageFormat &mf, UPluralType t)
@@ -1951,13 +1950,13 @@ MessageFormat::PluralSelectorProvider::~PluralSelectorProvider() {
 UnicodeString MessageFormat::PluralSelectorProvider::select(void *ctx, double number,
                                                             UErrorCode& ec) const {
     if (U_FAILURE(ec)) {
-        return UnicodeString(false, OTHER_STRING, 5);
+        return UnicodeString(FALSE, OTHER_STRING, 5);
     }
     MessageFormat::PluralSelectorProvider* t = const_cast<MessageFormat::PluralSelectorProvider*>(this);
     if(rules == NULL) {
         t->rules = PluralRules::forLocale(msgFormat.fLocale, type, ec);
         if (U_FAILURE(ec)) {
-            return UnicodeString(false, OTHER_STRING, 5);
+            return UnicodeString(FALSE, OTHER_STRING, 5);
         }
     }
     // Select a sub-message according to how the number is formatted,
@@ -1975,11 +1974,11 @@ UnicodeString MessageFormat::PluralSelectorProvider::select(void *ctx, double nu
     }
     if(context.formatter == NULL) {
         context.formatter = msgFormat.getDefaultNumberFormat(ec);
-        context.forReplaceNumber = true;
+        context.forReplaceNumber = TRUE;
     }
     if (context.number.getDouble(ec) != number) {
         ec = U_INTERNAL_PROGRAM_ERROR;
-        return UnicodeString(false, OTHER_STRING, 5);
+        return UnicodeString(FALSE, OTHER_STRING, 5);
     }
     context.formatter->format(context.number, context.numberString, ec);
     auto* decFmt = dynamic_cast<const DecimalFormat *>(context.formatter);
@@ -1987,7 +1986,7 @@ UnicodeString MessageFormat::PluralSelectorProvider::select(void *ctx, double nu
         number::impl::DecimalQuantity dq;
         decFmt->formatToDecimalQuantity(context.number, dq, ec);
         if (U_FAILURE(ec)) {
-            return UnicodeString(false, OTHER_STRING, 5);
+            return UnicodeString(FALSE, OTHER_STRING, 5);
         }
         return rules->select(dq);
     } else {

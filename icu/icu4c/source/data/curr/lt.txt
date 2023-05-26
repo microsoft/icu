@@ -1309,6 +1309,7 @@ lt{
         ZMW{"ZK"}
     }
     Currencies%variant{
+        GEL{"₾"}
         RUB{"₽"}
         TRY{"TL"}
     }
@@ -2204,7 +2205,7 @@ lt{
         LSL{
             few{"Lesoto lotis"}
             many{"Lesoto lotis"}
-            one{"Lesoto lotis"}
+            one{"Lesoto loti"}
             other{"Lesoto lotis"}
         }
         LTL{

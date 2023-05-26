@@ -273,7 +273,7 @@ class U_I18N_API EmptyModifier : public Modifier, public UMemory {
 };
 
 /**
- * This implementation of ModifierStore adopts Modifier pointers.
+ * This implementation of ModifierStore adopts Modifer pointers.
  */
 class U_I18N_API AdoptingModifierStore : public ModifierStore, public UMemory {
   public:

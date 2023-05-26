@@ -97,8 +97,6 @@ CalendarRegressionTest::runIndexedTest( int32_t index, UBool exec, const char* &
         CASE(53,TestIslamicCalOverflow);
         CASE(54,TestWeekOfYear13548);
         CASE(55,Test13745);
-        CASE(56,TestUTCWrongAMPM22023);
-        CASE(57,TestAsiaManilaAfterSetGregorianChange22043);
     default: name = ""; break;
     }
 }
@@ -130,10 +128,10 @@ CalendarRegressionTest::failure(UErrorCode status, const char* msg)
 {
     if(U_FAILURE(status)) {
         errcheckln(status, UnicodeString("FAIL: ") + msg + " failed, error " + u_errorName(status));
-        return true;
+        return TRUE;
     }
 
-    return false;
+    return FALSE;
 }
 
 /*
@@ -227,7 +225,7 @@ CalendarRegressionTest::Test9019()
     cal1->set(2011,UCAL_MAY,06);
     cal2->set(2012,UCAL_JANUARY,06);
     printdate(cal1.getAlias(), "cal1: ") ;
-    cal1->setLenient(false);
+    cal1->setLenient(FALSE);
     cal1->add(UCAL_MONTH,8,status);
     failure(status, "->add(UCAL_MONTH,8)");
     printdate(cal1.getAlias(), "cal1 (lenient) after adding 8 months:") ;
@@ -262,12 +260,12 @@ CalendarRegressionTest::test4031502()
     // This bug actually occurs on Windows NT as well, and doesn't
     // require the host zone to be set; it can be set in Java.
     UErrorCode status = U_ZERO_ERROR;
-    StringEnumeration* ids = TimeZone::createEnumeration(status);
-    if (U_FAILURE(status)) {
+    StringEnumeration* ids = TimeZone::createEnumeration();
+    if (ids == NULL) {
         dataerrln("Unable to create TimeZone Enumeration.");
         return;
     }
-    UBool bad = false;
+    UBool bad = FALSE;
     TimeZone* tz =TimeZone::createTimeZone("Asia/Riyadh87");
     failure(status, "new TimeZone");
     GregorianCalendar *cl = new GregorianCalendar(tz, status);
@@ -295,7 +293,7 @@ CalendarRegressionTest::test4031502()
                                cal->get(UCAL_DST_OFFSET,status) / (60*60*1000) + " " +
                                zone->getRawOffset() / (60*60*1000) +
                                ": HOUR = " + cal->get(UCAL_HOUR,status));
-            bad = true;
+            bad = TRUE;
         }
         delete cal;
     }
@@ -330,12 +328,12 @@ void CalendarRegressionTest::test4035301()
 void CalendarRegressionTest::test4040996()
 {
     int32_t count = 0;
-    UErrorCode status = U_ZERO_ERROR;
-    StringEnumeration* ids = TimeZone::createEnumerationForRawOffset(-8 * 60 * 60 * 1000, status);
-    if (U_FAILURE(status)) {
+    StringEnumeration* ids = TimeZone::createEnumeration(-8 * 60 * 60 * 1000);
+    if (ids == NULL) {
         dataerrln("Unable to create TimeZone enumeration.");
         return;
     }
+    UErrorCode status = U_ZERO_ERROR;
     count = ids->count(status);
     (void)count;    // Suppress set but not used warning.
     SimpleTimeZone *pdt = new SimpleTimeZone(-8 * 60 * 60 * 1000, *ids->snext(status));
@@ -387,7 +385,7 @@ void CalendarRegressionTest::test4051765()
       delete cal;
       return;
     }
-    cal->setLenient(false);
+    cal->setLenient(FALSE);
     cal->set(UCAL_DAY_OF_WEEK, 0);
     //try {
         cal->getTime(status);
@@ -576,8 +574,8 @@ CalendarRegressionTest::getAssociatedDate(UDate d, UErrorCode& status)
  */
 void CalendarRegressionTest::test4071197()
 {
-    dowTest(false);
-    dowTest(true);
+    dowTest(FALSE);
+    dowTest(TRUE);
 }
 
 void CalendarRegressionTest::dowTest(UBool lenient)
@@ -1003,7 +1001,7 @@ void CalendarRegressionTest::test4103271()
     testCal->clear();
     sdf.adoptCalendar(testCal);
     sdf.applyPattern("EEE dd MMM yyyy 'WOY'ww'-'YYYY 'DOY'DDD");
-    UBool fail = false;
+    UBool fail = FALSE;
     for (int32_t firstDay=1; firstDay<=2; firstDay++) {
         for (int32_t minDays=1; minDays<=7; minDays++) {
             testCal->setMinimalDaysInFirstWeek((uint8_t)minDays);
@@ -1027,7 +1025,7 @@ void CalendarRegressionTest::test4103271()
                         output = testDesc + " - " + sdf.format(d,temp,pos) + "\t";
                         output = output + "\t" + actWOY;
                         logln(output);
-                        fail = true;
+                        fail = TRUE;
                     }
                 }
             }
@@ -1055,7 +1053,7 @@ void CalendarRegressionTest::test4103271()
                 UnicodeString(" ") + woy);
             if (woy != DATA[j + 1 + i]) {
                 log(" ERROR");
-                fail = true;
+                fail = TRUE;
             }
             logln("");
 
@@ -1070,7 +1068,7 @@ void CalendarRegressionTest::test4103271()
                 str.remove();
                 logln(UnicodeString("  Parse failed: ") +
                       sdf.format(testCal->getTime(status), str));
-                fail= true;
+                fail= TRUE;
             }
 
             testCal->setTime(save,status);
@@ -1141,7 +1139,7 @@ void CalendarRegressionTest::test4103271()
             logln(CalendarTest::calToStr(*testCal));
             testCal->setTime(exp, status);
             logln(CalendarTest::calToStr(*testCal) + UnicodeString( " <<< expected "));
-            fail = true;
+            fail = TRUE;
         }
         logln("");
 
@@ -1157,7 +1155,7 @@ void CalendarRegressionTest::test4103271()
                          " got:" + sdf.format(got, str2));
         if (got != exp) {
             log("  FAIL");
-            fail = true;
+            fail = TRUE;
         }
         logln("");
     }
@@ -1178,10 +1176,10 @@ void CalendarRegressionTest::test4103271()
 
 
     UBool ADDROLL_bool [] = {
-        true,//ADD,
-        true,
-        false,
-        false
+        TRUE,//ADD,
+        TRUE,
+        FALSE,
+        FALSE
     };
 
     testCal->setMinimalDaysInFirstWeek(3);
@@ -1210,7 +1208,7 @@ void CalendarRegressionTest::test4103271()
         if (after != got) {
             str.remove();
             logln(UnicodeString("  exp:") + sdf.format(after, str) + "  FAIL");
-            fail = true;
+            fail = TRUE;
         }
         else logln(" ok");
 
@@ -1227,7 +1225,7 @@ void CalendarRegressionTest::test4103271()
         if (before != got) {
             str.remove();
             logln(UnicodeString("  exp:") + sdf.format(before, str) + "  FAIL");
-            fail = true;
+            fail = TRUE;
         }
         else logln(" ok");
     }
@@ -1332,7 +1330,7 @@ void CalendarRegressionTest::test4114578()
     UDate onset = makeDate(1998, UCAL_APRIL, 5, 1, 0) + ONE_HOUR;
     UDate cease = makeDate(1998, UCAL_OCTOBER, 25, 0, 0) + 2*ONE_HOUR;
 
-    UBool fail = false;
+    UBool fail = FALSE;
 
     const int32_t ADD = 1;
     const int32_t ROLL = 2;
@@ -1372,7 +1370,7 @@ void CalendarRegressionTest::test4114578()
 
         double change = cal->getTime(status) - date;
         if (change != expectedChange) {
-            fail = true;
+            fail = TRUE;
             logln(" FAIL");
         }
         else logln(" OK");
@@ -1589,7 +1587,7 @@ void CalendarRegressionTest::test4142933()
       return;
     }
     //try {
-    calendar->roll((UCalendarDateFields)-1, true, status);
+    calendar->roll((UCalendarDateFields)-1, TRUE, status);
         if(U_SUCCESS(status))
             errln("Test failed, no exception thrown");
     //}
@@ -1692,7 +1690,7 @@ void CalendarRegressionTest::test4147269()
       delete calendar;
       return;
     }
-    calendar->setLenient(false);
+    calendar->setLenient(FALSE);
     UDate date = makeDate(1996, UCAL_JANUARY, 3); // Arbitrary date
     for (int32_t field = 0; field < UCAL_FIELD_COUNT; field++) {
         calendar->setTime(date,status);
@@ -1742,7 +1740,7 @@ CalendarRegressionTest::Test4149677()
     for (int32_t i=0; i < 3; ++i) {
         GregorianCalendar *calendar = new GregorianCalendar(zones[i], status);
         if(U_FAILURE(status)) {
-            dataerrln("Couldn't create calendar.: %s", u_errorName(status));
+            dataerrln("Couldnt' create calendar.: %s", u_errorName(status));
             return;
         }
 
@@ -1895,7 +1893,7 @@ CalendarRegressionTest::Test4166109()
      * 22 23 24 25 26 27 28
      * 29 30 31
      */
-    UBool passed = true;
+    UBool passed = TRUE;
     UErrorCode status = U_ZERO_ERROR;
     UCalendarDateFields field = UCAL_WEEK_OF_MONTH;
 
@@ -1923,7 +1921,7 @@ CalendarRegressionTest::Test4166109()
               ((returned == expected) ? "  ok" : "  FAIL"));
 
         if (returned != expected) {
-            passed = false;
+            passed = FALSE;
         }
     }
     if (!passed) {
@@ -2684,13 +2682,9 @@ void CalendarRegressionTest::TestTimeZoneTransitionAdd() {
     UErrorCode ec = U_ZERO_ERROR;
     Locale locale(Locale::getUS()); // could also be CHINA
     SimpleDateFormat dateFormat("MM/dd/yyyy HH:mm z", locale, ec);
-    if (U_FAILURE(ec)) {
-        dataerrln("FAIL: Constructing SimpleDateFormat");
-        return;
-    }
 
-    StringEnumeration *tz = TimeZone::createEnumeration(ec);
-    if (U_FAILURE(ec)) {
+    StringEnumeration *tz = TimeZone::createEnumeration();
+    if (tz == NULL) {
         dataerrln("FAIL: TimeZone::createEnumeration");
         return;
     }
@@ -2796,8 +2790,8 @@ void CalendarRegressionTest::TestDeprecates(void)
     }
 
     c1->setTime(c2->getTime(status),status);
-    c1->roll(Calendar::HOUR,(UBool)false,status);
-    c2->roll(UCAL_HOUR,(UBool)false,status);
+    c1->roll(Calendar::HOUR,(UBool)FALSE,status);
+    c2->roll(UCAL_HOUR,(UBool)FALSE,status);
 
     if(U_FAILURE(status)) {
         errln("Error code when trying to roll(UBool)");
@@ -2876,7 +2870,7 @@ void CalendarRegressionTest::TestT8057(void) {
         delete cal;
         return;
     }
-    cal->setLenient(false);
+    cal->setLenient(FALSE);
     cal->clear();
     cal->set(2008, UCAL_DECEMBER, 31);
 
@@ -3088,139 +3082,6 @@ void CalendarRegressionTest::TestIslamicCalOverflow(void) {
             }
         }
         delete cal;
-    }
-}
-
-void CalendarRegressionTest::VerifyGetStayInBound(double time) {
-    UErrorCode status = U_ZERO_ERROR;
-    LocalPointer<Calendar> utc(
-        Calendar::createInstance(TimeZone::createTimeZone(u"UTC"), status));
-    utc->setTime(time, status);
-    if (U_FAILURE(status)) {
-        errln("UTC setTime(%e, status)", time);
-    }
-
-    status = U_ZERO_ERROR;
-    LocalPointer<Calendar> gmt(Calendar::createInstance(
-        *TimeZone::getGMT(), status));
-    gmt->setTime(time, status);
-    if (U_FAILURE(status)) {
-        errln("UTC setTime(%e, status)", time);
-    }
-
-    status = U_ZERO_ERROR;
-    int32_t value = utc->get(UCAL_AM_PM, status);
-    if (U_FAILURE(status)) {
-        errln("UTC %e get(UCAL_AM_PM, status)", time);
-    }
-    if (value != UCAL_AM && value != UCAL_PM) {
-        errln("UTC %e UCAL_AM_PM should be either UCAL_AM | UCAL_PM  but is %d",
-              time, value);
-    }
-
-    status = U_ZERO_ERROR;
-    value = gmt->get(UCAL_AM_PM, status);
-    if (U_FAILURE(status)) {
-        errln("GMT %e get(UCAL_AM_PM, status)", time);
-    }
-    if (value != UCAL_AM && value != UCAL_PM) {
-        errln("GMT %e UCAL_AM_PM should be either UCAL_AM | UCAL_PM  but is %d",
-              time, value);
-    }
-
-    int32_t fields[] = {
-        UCAL_WEEK_OF_YEAR,
-        UCAL_YEAR_WOY,
-        UCAL_DAY_OF_MONTH,
-        UCAL_WEEK_OF_MONTH,
-        UCAL_DAY_OF_WEEK_IN_MONTH,
-        UCAL_MILLISECONDS_IN_DAY,
-        UCAL_MILLISECOND,
-        UCAL_SECOND,
-        UCAL_MINUTE,
-        UCAL_HOUR_OF_DAY,
-        UCAL_AM_PM,
-        UCAL_HOUR,
-        UCAL_ZONE_OFFSET,
-        UCAL_DST_OFFSET
-    };
-    for (auto& f : fields) {
-        UnicodeString info("Fields = ");
-        info += f;
-        status = U_ZERO_ERROR;
-        UCalendarDateFields field = static_cast<UCalendarDateFields>(f);
-        value = utc->get(field, status);
-        if (U_FAILURE(status)) {
-            errln("UTC %e get(%d)", time, field);
-        }
-        int32_t min = utc->getMinimum(field);
-        int32_t max = utc->getMaximum(field);
-        if (value < min) {
-            errln("UTC %e get(%d) < getMinimum(%d) : %d < %d", time, field,
-                  field, value, min);
-        }
-        if (max < value) {
-            errln("UTC %e getMaximum(%d) < get(%d) : %d < %d", time, field,
-                  field, max, value);
-        }
-
-        status = U_ZERO_ERROR;
-        value = gmt->get(field, status);
-        if (U_FAILURE(status)) {
-            errln("GMT %e get(%d)", time, field);
-        }
-        min = gmt->getMinimum(field);
-        max = gmt->getMaximum(field);
-        if (value < min) {
-            errln("GMT %e get(%d) < getMinimum(%d) : %d < %d", time, field,
-                  field, value, min);
-        }
-        if (max < value) {
-            errln("GMT %e getMaximum(%d) < get(%d) : %d < %d", time, field,
-                  field, max, value);
-        }
-    }
-}
-
-void CalendarRegressionTest::TestUTCWrongAMPM22023(void) {
-    VerifyGetStayInBound(-1);
-    VerifyGetStayInBound(0);
-    VerifyGetStayInBound(-1e-8);
-    VerifyGetStayInBound(-1e-9);
-    VerifyGetStayInBound(-1e-15);
-}
-
-void CalendarRegressionTest::VerifyNoAssertWithSetGregorianChange(const char* timezone) {
-    UErrorCode status = U_ZERO_ERROR;
-    std::unique_ptr<Calendar> cal(
-        Calendar::createInstance(
-            TimeZone::createTimeZone(UnicodeString(timezone, -1, US_INV)),
-            Locale::getEnglish(),
-            status));
-    cal->setTime(Calendar::getNow(), status);
-
-    if (cal->getDynamicClassID() ==
-        GregorianCalendar::getStaticClassID()) {
-        GregorianCalendar* gc =
-            static_cast<GregorianCalendar*>(cal.get());
-        // The beginning of ECMAScript time, namely -(2**53)
-        const double start_of_time = -9007199254740992;
-        gc->setGregorianChange(start_of_time, status);
-    }
-    cal->get(UCAL_YEAR, status);
-}
-
-void CalendarRegressionTest::TestAsiaManilaAfterSetGregorianChange22043(void) {
-    VerifyNoAssertWithSetGregorianChange("Asia/Malina");
-    UErrorCode status = U_ZERO_ERROR;
-    std::unique_ptr<StringEnumeration> ids(TimeZone::createEnumeration(status));
-    if (U_FAILURE(status)) {
-        errln("TimeZone::createEnumeration failed");
-        return;
-    }
-    const char* id;
-    while ((id = ids->next(nullptr, status)) != nullptr && U_SUCCESS(status)) {
-        VerifyNoAssertWithSetGregorianChange(id);
     }
 }
 

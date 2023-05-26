@@ -30,11 +30,11 @@ SimpleFwdCharIterator::SimpleFwdCharIterator(const UnicodeString& s) {
     fLen = s.length();
     fStart = new UChar[fLen];
     if(fStart == NULL) {
-        fBogus = true;
+        fBogus = TRUE;
     } else {
         fEnd = fStart+fLen;
         fCurrent = fStart;
-        fBogus = false;
+        fBogus = FALSE;
         s.extract(0, fLen, fStart);          
     }
     
@@ -47,20 +47,20 @@ SimpleFwdCharIterator::SimpleFwdCharIterator(UChar *s, int32_t len, UBool adopt)
 
     fLen = len==-1 ? u_strlen(s) : len;
 
-    if(adopt == false) {
+    if(adopt == FALSE) {
         fStart = new UChar[fLen];
         if(fStart == NULL) {
-            fBogus = true;
+            fBogus = TRUE;
         } else {
             uprv_memcpy(fStart, s, fLen);
             fEnd = fStart+fLen;
             fCurrent = fStart;
-            fBogus = false;
+            fBogus = FALSE;
         }
-    } else { // adopt = true
+    } else { // adopt = TRUE
         fCurrent = fStart = s;
         fEnd = fStart + fLen;
-        fBogus = false;
+        fBogus = FALSE;
     }
 
 }
@@ -70,24 +70,24 @@ SimpleFwdCharIterator::~SimpleFwdCharIterator() {
 }
 
 #if 0 // not used
-bool SimpleFwdCharIterator::operator==(const ForwardCharacterIterator& that) const {
+UBool SimpleFwdCharIterator::operator==(const ForwardCharacterIterator& that) const {
     if(this == &that) {
-        return true;
+        return TRUE;
     }
 /*
     if(that->fHashCode != kInvalidHashCode && this->fHashCode = that->fHashCode) {
-        return true;
+        return TRUE;
     }
 
     if(this->fStart == that->fStart) {
-        return true;
+        return TRUE;
     }
 
     if(this->fLen == that->fLen && uprv_memcmp(this->fStart, that->fStart, this->fLen) {
-        return true;
+        return TRUE;
     }
 */
-    return false;
+    return FALSE;
 }
 #endif
 

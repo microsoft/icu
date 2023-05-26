@@ -1004,7 +1004,7 @@ az{
             "Fransız UİC Frankı",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "Fil Dişi Sahili Frankı",
         }
         XPD{
@@ -1177,6 +1177,7 @@ az{
         ZMW{"ZK"}
     }
     Currencies%variant{
+        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{

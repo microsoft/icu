@@ -648,7 +648,7 @@ sw{
             "Dola ya Karibi Mashariki",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "Faranga ya Afrika Magharibi CFA",
         }
         XPF{
@@ -777,6 +777,7 @@ sw{
         ZMW{"ZK"}
     }
     Currencies%variant{
+        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{
@@ -1111,10 +1112,6 @@ sw{
         LRD{
             one{"dola ya Liberia"}
             other{"dola za Liberia"}
-        }
-        LSL{
-            one{"Loti za Lesoto"}
-            other{"Loti za Lesoto"}
         }
         LTL{
             one{"Litas ya Lithuania"}

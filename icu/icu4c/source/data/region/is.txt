@@ -15,7 +15,7 @@ is{
         017{"Mið-Afríka"}
         018{"Suðurhluti Afríku"}
         019{"Ameríka"}
-        021{"Ameríka norðan Mexíkó"}
+        021{"Ameríka norðan Mexikó"}
         029{"Karíbahafið"}
         030{"Austur-Asía"}
         034{"Suður-Asía"}
@@ -93,17 +93,14 @@ is{
         CY{"Kýpur"}
         CZ{"Tékkland"}
         DE{"Þýskaland"}
-        DG{"Diego Garcia"}
         DJ{"Djíbútí"}
         DK{"Danmörk"}
         DM{"Dóminíka"}
         DO{"Dóminíska lýðveldið"}
         DZ{"Alsír"}
-        EA{"Ceuta og Melilla"}
         EC{"Ekvador"}
         EE{"Eistland"}
         EG{"Egyptaland"}
-        EH{"Vestur-Sahara"}
         ER{"Erítrea"}
         ES{"Spánn"}
         ET{"Eþíópía"}
@@ -140,7 +137,6 @@ is{
         HR{"Króatía"}
         HT{"Haítí"}
         HU{"Ungverjaland"}
-        IC{"Kanaríeyjar"}
         ID{"Indónesía"}
         IE{"Írland"}
         IL{"Ísrael"}
@@ -223,7 +219,7 @@ is{
         PM{"Sankti Pierre og Miquelon"}
         PN{"Pitcairn-eyjar"}
         PR{"Púertó Ríkó"}
-        PS{"Heimastjórnarsvæði Palestínumanna"}
+        PS{"Heimastjórn Palestínumanna"}
         PT{"Portúgal"}
         PW{"Palá"}
         PY{"Paragvæ"}
@@ -288,8 +284,6 @@ is{
         VU{"Vanúatú"}
         WF{"Wallis- og Fútúnaeyjar"}
         WS{"Samóa"}
-        XA{"gervihreimur"}
-        XB{"gervistaður"}
         XK{"Kósóvó"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -297,19 +291,5 @@ is{
         ZM{"Sambía"}
         ZW{"Simbabve"}
         ZZ{"Óþekkt svæði"}
-    }
-    Countries%short{
-        HK{"Hong Kong"}
-        MO{"Makaó"}
-        PS{"Palestína"}
-        UN{"SÞ"}
-        US{"BNA"}
-    }
-    Countries%variant{
-        CD{"Kongó (Lýðstjórnarlýðveldið)"}
-        CG{"Kongó (Lýðveldið)"}
-        FK{"Falklandseyjar (Malvinas)"}
-        NZ{"Aotearoa, Nýja-Sjáland"}
-        TL{"Austur-Tímor"}
     }
 }

@@ -66,7 +66,7 @@ class DangiCalendar : public ChineseCalendar {
    * Clone.
    * @internal
    */
-  virtual DangiCalendar* clone() const override;
+  virtual DangiCalendar* clone() const;
 
   //----------------------------------------------------------------------
   // Internal methods & astronomical calculations
@@ -74,7 +74,7 @@ class DangiCalendar : public ChineseCalendar {
 
  private:
 
-  const TimeZone* getDangiCalZoneAstroCalc(UErrorCode &status) const;
+  const TimeZone* getDangiCalZoneAstroCalc(void) const;
 
   // UObject stuff
  public: 
@@ -83,7 +83,7 @@ class DangiCalendar : public ChineseCalendar {
    *           same class ID. Objects of other classes have different class IDs.
    * @internal
    */
-  virtual UClassID getDynamicClassID(void) const override;
+  virtual UClassID getDynamicClassID(void) const;
 
   /**
    * Return the class ID for this class. This is useful only for comparing to a return
@@ -104,7 +104,7 @@ class DangiCalendar : public ChineseCalendar {
    * @return calendar type
    * @internal
    */
-  const char * getType() const override;
+  const char * getType() const;
 
 
  private:

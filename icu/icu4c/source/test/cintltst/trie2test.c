@@ -16,7 +16,6 @@
 *   created by: Markus W. Scherer
 */
 
-#include <stdbool.h>
 #include <stdio.h>
 #include "unicode/utypes.h"
 #include "unicode/utf8.h"
@@ -93,7 +92,7 @@ testEnumRange(const void *context, UChar32 start, UChar32 end, uint32_t value) {
             (long)start, (long)end, (long)value,
             (long)(b-1)->limit, (long)b->limit-1, (long)b->value);
     }
-    return true;
+    return TRUE;
 }
 
 static void
@@ -524,7 +523,7 @@ testFrozenTrie(const char *testName,
     uint32_t value, value2;
 
     if(!utrie2_isFrozen(trie)) {
-        log_err("error: utrie2_isFrozen(frozen %s) returned false (not frozen)\n",
+        log_err("error: utrie2_isFrozen(frozen %s) returned FALSE (not frozen)\n",
                 testName);
         return;
     }
@@ -545,7 +544,7 @@ testFrozenTrie(const char *testName,
     }
 
     errorCode=U_ZERO_ERROR;
-    utrie2_setRange32(trie, 1, 5, 234, true, &errorCode);
+    utrie2_setRange32(trie, 1, 5, 234, TRUE, &errorCode);
     value2=utrie2_get32(trie, 1);
     if(errorCode!=U_NO_WRITE_PERMISSION || value2!=value) {
         log_err("error: utrie2_setRange32(frozen %s) failed: it set %s != U_NO_WRITE_PERMISSION\n",
@@ -907,20 +906,20 @@ testTrieRanges(const char *testName, UBool withClone,
 /* set consecutive ranges, even with value 0 */
 static const SetRange
 setRanges1[]={
-    { 0,        0x40,     0,      false },
-    { 0x40,     0xe7,     0x1234, false },
-    { 0xe7,     0x3400,   0,      false },
-    { 0x3400,   0x9fa6,   0x6162, false },
-    { 0x9fa6,   0xda9e,   0x3132, false },
-    { 0xdada,   0xeeee,   0x87ff, false },
-    { 0xeeee,   0x11111,  1,      false },
-    { 0x11111,  0x44444,  0x6162, false },
-    { 0x44444,  0x60003,  0,      false },
-    { 0xf0003,  0xf0004,  0xf,    false },
-    { 0xf0004,  0xf0006,  0x10,   false },
-    { 0xf0006,  0xf0007,  0x11,   false },
-    { 0xf0007,  0xf0040,  0x12,   false },
-    { 0xf0040,  0x110000, 0,      false }
+    { 0,        0x40,     0,      FALSE },
+    { 0x40,     0xe7,     0x1234, FALSE },
+    { 0xe7,     0x3400,   0,      FALSE },
+    { 0x3400,   0x9fa6,   0x6162, FALSE },
+    { 0x9fa6,   0xda9e,   0x3132, FALSE },
+    { 0xdada,   0xeeee,   0x87ff, FALSE },
+    { 0xeeee,   0x11111,  1,      FALSE },
+    { 0x11111,  0x44444,  0x6162, FALSE },
+    { 0x44444,  0x60003,  0,      FALSE },
+    { 0xf0003,  0xf0004,  0xf,    FALSE },
+    { 0xf0004,  0xf0006,  0x10,   FALSE },
+    { 0xf0006,  0xf0007,  0x11,   FALSE },
+    { 0xf0007,  0xf0040,  0x12,   FALSE },
+    { 0xf0040,  0x110000, 0,      FALSE }
 };
 
 static const CheckRange
@@ -946,18 +945,18 @@ checkRanges1[]={
 /* set some interesting overlapping ranges */
 static const SetRange
 setRanges2[]={
-    { 0x21,     0x7f,     0x5555, true },
-    { 0x2f800,  0x2fedc,  0x7a,   true },
-    { 0x72,     0xdd,     3,      true },
-    { 0xdd,     0xde,     4,      false },
-    { 0x201,    0x240,    6,      true },  /* 3 consecutive blocks with the same pattern but */
-    { 0x241,    0x280,    6,      true },  /* discontiguous value ranges, testing utrie2_enum() */
-    { 0x281,    0x2c0,    6,      true },
-    { 0x2f987,  0x2fa98,  5,      true },
-    { 0x2f777,  0x2f883,  0,      true },
-    { 0x2f900,  0x2ffaa,  1,      false },
-    { 0x2ffaa,  0x2ffab,  2,      true },
-    { 0x2ffbb,  0x2ffc0,  7,      true }
+    { 0x21,     0x7f,     0x5555, TRUE },
+    { 0x2f800,  0x2fedc,  0x7a,   TRUE },
+    { 0x72,     0xdd,     3,      TRUE },
+    { 0xdd,     0xde,     4,      FALSE },
+    { 0x201,    0x240,    6,      TRUE },  /* 3 consecutive blocks with the same pattern but */
+    { 0x241,    0x280,    6,      TRUE },  /* discontiguous value ranges, testing utrie2_enum() */
+    { 0x281,    0x2c0,    6,      TRUE },
+    { 0x2f987,  0x2fa98,  5,      TRUE },
+    { 0x2f777,  0x2f883,  0,      TRUE },
+    { 0x2f900,  0x2ffaa,  1,      FALSE },
+    { 0x2ffaa,  0x2ffab,  2,      TRUE },
+    { 0x2ffbb,  0x2ffc0,  7,      TRUE }
 };
 
 static const CheckRange
@@ -1019,13 +1018,13 @@ checkRanges2_dbff[]={
 /* use a non-zero initial value */
 static const SetRange
 setRanges3[]={
-    { 0x31,     0xa4,     1, false },
-    { 0x3400,   0x6789,   2, false },
-    { 0x8000,   0x89ab,   9, true },
-    { 0x9000,   0xa000,   4, true },
-    { 0xabcd,   0xbcde,   3, true },
-    { 0x55555,  0x110000, 6, true },  /* highStart<U+ffff with non-initialValue */
-    { 0xcccc,   0x55555,  6, true }
+    { 0x31,     0xa4,     1, FALSE },
+    { 0x3400,   0x6789,   2, FALSE },
+    { 0x8000,   0x89ab,   9, TRUE },
+    { 0x9000,   0xa000,   4, TRUE },
+    { 0xabcd,   0xbcde,   3, TRUE },
+    { 0x55555,  0x110000, 6, TRUE },  /* highStart<U+ffff with non-initialValue */
+    { 0xcccc,   0x55555,  6, TRUE }
 };
 
 static const CheckRange
@@ -1046,7 +1045,7 @@ checkRanges3[]={
 /* empty or single-value tries, testing highStart==0 */
 static const SetRange
 setRangesEmpty[]={
-    { 0,        0,        0, false },  /* need some values for it to compile */
+    { 0,        0,        0, FALSE },  /* need some values for it to compile */
 };
 
 static const CheckRange
@@ -1057,7 +1056,7 @@ checkRangesEmpty[]={
 
 static const SetRange
 setRangesSingleValue[]={
-    { 0,        0x110000, 5, true },
+    { 0,        0x110000, 5, TRUE },
 };
 
 static const CheckRange
@@ -1068,23 +1067,23 @@ checkRangesSingleValue[]={
 
 static void
 TrieTest(void) {
-    testTrieRanges("set1", false,
+    testTrieRanges("set1", FALSE,
         setRanges1, UPRV_LENGTHOF(setRanges1),
         checkRanges1, UPRV_LENGTHOF(checkRanges1));
-    testTrieRanges("set2-overlap", false,
+    testTrieRanges("set2-overlap", FALSE,
         setRanges2, UPRV_LENGTHOF(setRanges2),
         checkRanges2, UPRV_LENGTHOF(checkRanges2));
-    testTrieRanges("set3-initial-9", false,
+    testTrieRanges("set3-initial-9", FALSE,
         setRanges3, UPRV_LENGTHOF(setRanges3),
         checkRanges3, UPRV_LENGTHOF(checkRanges3));
-    testTrieRanges("set-empty", false,
+    testTrieRanges("set-empty", FALSE,
         setRangesEmpty, 0,
         checkRangesEmpty, UPRV_LENGTHOF(checkRangesEmpty));
-    testTrieRanges("set-single-value", false,
+    testTrieRanges("set-single-value", FALSE,
         setRangesSingleValue, UPRV_LENGTHOF(setRangesSingleValue),
         checkRangesSingleValue, UPRV_LENGTHOF(checkRangesSingleValue));
 
-    testTrieRanges("set2-overlap.withClone", true,
+    testTrieRanges("set2-overlap.withClone", TRUE,
         setRanges2, UPRV_LENGTHOF(setRanges2),
         checkRanges2, UPRV_LENGTHOF(checkRanges2));
 }
@@ -1092,7 +1091,7 @@ TrieTest(void) {
 static void
 EnumNewTrieForLeadSurrogateTest(void) {
     static const char *const testName="enum-for-lead";
-    UTrie2 *trie=makeTrieWithRanges(testName, false,
+    UTrie2 *trie=makeTrieWithRanges(testName, FALSE,
                                     setRanges2, UPRV_LENGTHOF(setRanges2),
                                     checkRanges2, UPRV_LENGTHOF(checkRanges2));
     while(trie!=NULL) {
@@ -1205,15 +1204,15 @@ FreeBlocksTest(void) {
      * If it fails, it will overflow the data array.
      */
     for(i=0; i<(0x120000>>UTRIE2_SHIFT_2)/2; ++i) {
-        utrie2_setRange32(trie, 0x740, 0x840-1, 1, true, &errorCode);
-        utrie2_setRange32(trie, 0x780, 0x880-1, 1, true, &errorCode);
-        utrie2_setRange32(trie, 0x740, 0x840-1, 2, true, &errorCode);
-        utrie2_setRange32(trie, 0x780, 0x880-1, 3, true, &errorCode);
+        utrie2_setRange32(trie, 0x740, 0x840-1, 1, TRUE, &errorCode);
+        utrie2_setRange32(trie, 0x780, 0x880-1, 1, TRUE, &errorCode);
+        utrie2_setRange32(trie, 0x740, 0x840-1, 2, TRUE, &errorCode);
+        utrie2_setRange32(trie, 0x780, 0x880-1, 3, TRUE, &errorCode);
     }
     /* make blocks that will be free during compaction */
-    utrie2_setRange32(trie, 0x1000, 0x3000-1, 2, true, &errorCode);
-    utrie2_setRange32(trie, 0x2000, 0x4000-1, 3, true, &errorCode);
-    utrie2_setRange32(trie, 0x1000, 0x4000-1, 1, true, &errorCode);
+    utrie2_setRange32(trie, 0x1000, 0x3000-1, 2, TRUE, &errorCode);
+    utrie2_setRange32(trie, 0x2000, 0x4000-1, 3, TRUE, &errorCode);
+    utrie2_setRange32(trie, 0x1000, 0x4000-1, 1, TRUE, &errorCode);
     /* set some values for lead surrogate code units */
     utrie2_set32ForLeadSurrogateCodeUnit(trie, 0xd800, 90, &errorCode);
     utrie2_set32ForLeadSurrogateCodeUnit(trie, 0xd999, 94, &errorCode);
@@ -1225,7 +1224,7 @@ FreeBlocksTest(void) {
         return;
     }
 
-    trie=testTrieSerializeAllValueBits(testName, trie, false,
+    trie=testTrieSerializeAllValueBits(testName, trie, FALSE,
                                        checkRanges, UPRV_LENGTHOF(checkRanges));
     utrie2_close(trie);
 }
@@ -1283,7 +1282,7 @@ GrowDataArrayTest(void) {
         return;
     }
 
-    trie=testTrieSerializeAllValueBits(testName, trie, false,
+    trie=testTrieSerializeAllValueBits(testName, trie, FALSE,
                                           checkRanges, UPRV_LENGTHOF(checkRanges));
     utrie2_close(trie);
 }
@@ -1307,14 +1306,14 @@ makeNewTrie1WithRanges(const char *testName,
     getSpecialValues(checkRanges, countCheckRanges, &initialValue, &errorValue);
     newTrie=utrie_open(NULL, NULL, 2000,
                        initialValue, initialValue,
-                       false);
+                       FALSE);
     if(U_FAILURE(errorCode)) {
         log_err("error: utrie_open(%s) failed: %s\n", testName, u_errorName(errorCode));
         return NULL;
     }
 
     /* set values from setRanges[] */
-    ok=true;
+    ok=TRUE;
     for(i=0; i<countSetRanges; ++i) {
         start=setRanges[i].start;
         limit=setRanges[i].limit;
@@ -1364,9 +1363,9 @@ testTrie2FromTrie1(const char *testName,
     }
     errorCode=U_ZERO_ERROR;
     length16=utrie_serialize(newTrie1_16, memory1_16, sizeof(memory1_16),
-                             NULL, true, &errorCode);
+                             NULL, TRUE, &errorCode);
     length32=utrie_serialize(newTrie1_32, memory1_32, sizeof(memory1_32),
-                             NULL, false, &errorCode);
+                             NULL, FALSE, &errorCode);
     utrie_unserialize(&trie1_16, memory1_16, length16, &errorCode);
     utrie_unserialize(&trie1_32, memory1_32, length32, &errorCode);
     utrie_close(newTrie1_16);

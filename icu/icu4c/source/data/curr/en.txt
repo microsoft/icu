@@ -800,8 +800,8 @@ en{
             "Papua New Guinean Kina",
         }
         PHP{
-            "₱",
-            "Philippine Peso",
+            "PHP",
+            "Philippine Piso",
         }
         PKR{
             "PKR",
@@ -825,7 +825,7 @@ en{
         }
         QAR{
             "QAR",
-            "Qatari Riyal",
+            "Qatari Rial",
         }
         RHD{
             "RHD",
@@ -899,13 +899,9 @@ en{
             "SKK",
             "Slovak Koruna",
         }
-        SLE{
-            "SLE",
-            "Sierra Leonean Leone",
-        }
         SLL{
             "SLL",
-            "Sierra Leonean Leone (1964—2022)",
+            "Sierra Leonean Leone",
         }
         SOS{
             "SOS",
@@ -1051,10 +1047,6 @@ en{
             "VEB",
             "Venezuelan Bolívar (1871–2008)",
         }
-        VED{
-            "VED",
-            "Bolívar Soberano",
-        }
         VEF{
             "VEF",
             "Venezuelan Bolívar (2008–2018)",
@@ -1128,7 +1120,7 @@ en{
             "French UIC-Franc",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "West African CFA Franc",
         }
         XPD{
@@ -2022,8 +2014,8 @@ en{
             other{"Papua New Guinean kina"}
         }
         PHP{
-            one{"Philippine peso"}
-            other{"Philippine pesos"}
+            one{"Philippine piso"}
+            other{"Philippine pisos"}
         }
         PKR{
             one{"Pakistani rupee"}
@@ -2046,8 +2038,8 @@ en{
             other{"Paraguayan guaranis"}
         }
         QAR{
-            one{"Qatari riyal"}
-            other{"Qatari riyals"}
+            one{"Qatari rial"}
+            other{"Qatari rials"}
         }
         RHD{
             one{"Rhodesian dollar"}
@@ -2121,13 +2113,9 @@ en{
             one{"Slovak koruna"}
             other{"Slovak korunas"}
         }
-        SLE{
+        SLL{
             one{"Sierra Leonean leone"}
             other{"Sierra Leonean leones"}
-        }
-        SLL{
-            one{"Sierra Leonean leone (1964—2022)"}
-            other{"Sierra Leonean leones (1964—2022)"}
         }
         SOS{
             one{"Somali shilling"}
@@ -2272,10 +2260,6 @@ en{
         VEB{
             one{"Venezuelan bolívar (1871–2008)"}
             other{"Venezuelan bolívars (1871–2008)"}
-        }
-        VED{
-            one{"Bolívar Soberano"}
-            other{"Bolívar Soberanos"}
         }
         VEF{
             one{"Venezuelan bolívar (2008–2018)"}

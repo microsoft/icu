@@ -59,8 +59,6 @@ ko{
             }
             patterns{
                 accountingFormat{"¤#,##0.00;(¤#,##0.00)"}
-                accountingFormat%alphaNextToNumber{"¤ #,##0.00;(¤ #,##0.00)"}
-                accountingFormat%noCurrency{"#,##0.00;(#,##0.00)"}
                 currencyFormat{"¤#,##0.00"}
                 decimalFormat{"#,##0.###"}
                 percentFormat{"#,##0%"}
@@ -143,44 +141,6 @@ ko{
                     }
                     100000000000000{
                         other{"¤000조"}
-                    }
-                }
-                currencyFormat%alphaNextToNumber{
-                    1000{
-                        other{"¤ 0천"}
-                    }
-                    10000{
-                        other{"¤ 0만"}
-                    }
-                    100000{
-                        other{"¤ 00만"}
-                    }
-                    1000000{
-                        other{"¤ 000만"}
-                    }
-                    10000000{
-                        other{"¤ 0000만"}
-                    }
-                    100000000{
-                        other{"¤ 0억"}
-                    }
-                    1000000000{
-                        other{"¤ 00억"}
-                    }
-                    10000000000{
-                        other{"¤ 000억"}
-                    }
-                    100000000000{
-                        other{"¤ 0000억"}
-                    }
-                    1000000000000{
-                        other{"¤ 0조"}
-                    }
-                    10000000000000{
-                        other{"¤ 00조"}
-                    }
-                    100000000000000{
-                        other{"¤ 000조"}
                     }
                 }
                 decimalFormat{
@@ -290,16 +250,6 @@ ko{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "ahmszzzz",
-                "ahmsz",
-                "ahmmss",
-                "ahmm",
-                "UMMMEEEEd",
-                "UMMMd",
-                "yMd",
-                "yMd",
-            }
             availableFormats{
                 Bh{"B h시"}
                 Bhm{"B h:mm"}
@@ -313,9 +263,6 @@ ko{
                 GyMMM{"r년(U년) MMM"}
                 GyMMMEEEEd{"r년(U년) MMM d일 EEEE"}
                 GyMMMEd{"r년(U년) MMM d일 (E)"}
-                GyMMMM{"r년(U년) MMMM"}
-                GyMMMMEd{"r년(U년) MMMM d일 (E)"}
-                GyMMMMd{"r년(U년) MMMM d일"}
                 GyMMMd{"r년 MMM d일"}
                 H{"H시"}
                 Hm{"HH:mm"}
@@ -348,8 +295,6 @@ ko{
                 yyyyMMMEEEEd{"r년(U년) MMM d일 EEEE"}
                 yyyyMMMEd{"r년(U년) MMM d일 (E)"}
                 yyyyMMMM{"r년(U년) MMMM"}
-                yyyyMMMMEd{"r년(U년) MMMM d일(E)"}
-                yyyyMMMMd{"r년(U년) MMMM d일"}
                 yyyyMMMd{"r년 MMM d일"}
                 yyyyMd{"r. M. d."}
                 yyyyQQQ{"r년(U년) QQQ"}
@@ -666,16 +611,6 @@ ko{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "ahmszzzz",
-                "ahmsz",
-                "ahmmss",
-                "ahmm",
-                "UMMMEEEEd",
-                "UMMMd",
-                "yMd",
-                "yMd",
             }
             cyclicNameSets{
                 dayParts{
@@ -1031,16 +966,6 @@ ko{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "ahmszzzz",
-                "ahmsz",
-                "ahmmss",
-                "ahmm",
-                "GyMEEEEd",
-                "GyMd",
-                "GyMd",
-                "GyMd",
-            }
             availableFormats{
                 Bh{"B h시"}
                 Bhm{"B h:mm"}
@@ -1059,7 +984,6 @@ ko{
                 GyMMMEEEEd{"G y년 M월 d일 EEEE"}
                 GyMMMEd{"G y년 M월 d일 (E)"}
                 GyMMMd{"G y년 M월 d일"}
-                GyMd{"GGGGG y/M/d"}
                 H{"H시"}
                 HHmmss{"HH:mm:ss"}
                 Hm{"HH:mm"}
@@ -1275,16 +1199,6 @@ ko{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "ahmszzzz",
-                "ahmsz",
-                "ahmmss",
-                "ahmm",
-                "yMEEEEd",
-                "yMd",
-                "yMd",
-                "yyMd",
-            }
             appendItems{
                 Timezone{"{0} {1}"}
             }
@@ -1306,7 +1220,6 @@ ko{
                 GyMMMEEEEd{"G y년 MMM d일 EEEE"}
                 GyMMMEd{"G y년 MMM d일 (E)"}
                 GyMMMd{"G y년 MMM d일"}
-                GyMd{"GGGGG y/M/d"}
                 H{"H시"}
                 HHmmss{"HH:mm:ss"}
                 Hm{"HH:mm"}
@@ -1508,8 +1421,8 @@ ko{
                     "서기",
                 }
                 wide%variant{
-                    "기원전",
-                    "서기",
+                    "BCE",
+                    "CE",
                 }
             }
             intervalFormats{
@@ -2248,29 +2161,6 @@ ko{
                         "바흐만",
                         "에스판드",
                     }
-                }
-            }
-        }
-        roc{
-            availableFormats{
-                GyMMM{"G y년 MMM"}
-                GyMMMEEEEd{"G y년 MMM d일 EEEE"}
-                GyMMMEd{"G y년 MMM d일 (E)"}
-                GyMMMd{"G y년 MMM d일"}
-                MMMEEEEd{"MMM d일 EEEE"}
-                MMMEd{"MMM d일 (E)"}
-                MMMMd{"MMMM d일"}
-                MMMd{"MMM d일"}
-                yyyyMMM{"G y년 MMM"}
-                yyyyMMMEEEEd{"G y년 MMM d일 EEEE"}
-                yyyyMMMEd{"G y년 MMM d일 (E)"}
-                yyyyMMMM{"G y년 MMMM"}
-                yyyyMMMd{"G y년 MMM d일"}
-            }
-            eras{
-                abbreviated{
-                    "중화민국전",
-                    "중화민국",
                 }
             }
         }
@@ -3125,62 +3015,6 @@ ko{
                 "[,٫︐﹐，]",
                 "[.․﹒．｡]",
             }
-        }
-    }
-    personNames{
-        nameOrderLocales{
-            surnameFirst{
-                "hu",
-                "ja",
-                "ko",
-                "vi",
-                "yue",
-                "zh",
-            }
-        }
-        namePattern{
-            givenFirst-long-addressing-formal{"{surname} {suffix}"}
-            givenFirst-long-addressing-informal{"{given-informal}"}
-            givenFirst-long-monogram-formal{"{given-monogram-allCaps}"}
-            givenFirst-long-monogram-informal{"{given-monogram-allCaps}"}
-            givenFirst-long-referring-formal{"{given} {given2} {surname} {suffix}"}
-            givenFirst-long-referring-informal{"{given-informal} {surname}"}
-            givenFirst-medium-addressing-formal{"{surname} {suffix}"}
-            givenFirst-medium-addressing-informal{"{given-informal}"}
-            givenFirst-medium-monogram-formal{"{given-monogram-allCaps}"}
-            givenFirst-medium-monogram-informal{"{given-monogram-allCaps}"}
-            givenFirst-medium-referring-formal{"{given} {surname} {suffix}"}
-            givenFirst-medium-referring-informal{"{given-informal} {surname}"}
-            givenFirst-short-addressing-formal{"{surname} {suffix}"}
-            givenFirst-short-addressing-informal{"{given-informal}"}
-            givenFirst-short-monogram-formal{"{given-monogram-allCaps}"}
-            givenFirst-short-monogram-informal{"{given-monogram-allCaps}"}
-            givenFirst-short-referring-formal{"{given} {surname}"}
-            givenFirst-short-referring-informal{"{given-informal} {surname}"}
-            sorting-long-referring-formal{"{surname-core}{given} {given2} {surname-prefix}"}
-            sorting-long-referring-informal{"{surname}{given-informal}"}
-            sorting-medium-referring-formal{"{surname-core}{given} {given2} {surname-prefix}"}
-            sorting-medium-referring-informal{"{surname}{given-informal}"}
-            sorting-short-referring-formal{"{surname}{given}"}
-            sorting-short-referring-informal{"{surname}{given-informal}"}
-            surnameFirst-long-addressing-formal{"{surname} {suffix}"}
-            surnameFirst-long-addressing-informal{"{given-informal}"}
-            surnameFirst-long-monogram-formal{"{given-monogram-allCaps}"}
-            surnameFirst-long-monogram-informal{"{given-monogram-allCaps}"}
-            surnameFirst-long-referring-formal{"{surname}{given} {given2} {suffix}"}
-            surnameFirst-long-referring-informal{"{surname}{given-informal}"}
-            surnameFirst-medium-addressing-formal{"{surname} {suffix}"}
-            surnameFirst-medium-addressing-informal{"{given-informal}"}
-            surnameFirst-medium-monogram-formal{"{given-monogram-allCaps}"}
-            surnameFirst-medium-monogram-informal{"{given-monogram-allCaps}"}
-            surnameFirst-medium-referring-formal{"{surname}{given} {suffix}"}
-            surnameFirst-medium-referring-informal{"{surname}{given-informal}"}
-            surnameFirst-short-addressing-formal{"{surname} {suffix}"}
-            surnameFirst-short-addressing-informal{"{given-informal}"}
-            surnameFirst-short-monogram-formal{"{given-monogram-allCaps}"}
-            surnameFirst-short-monogram-informal{"{given-monogram-allCaps}"}
-            surnameFirst-short-referring-formal{"{surname}{given}"}
-            surnameFirst-short-referring-informal{"{surname}{given-informal}"}
         }
     }
 }

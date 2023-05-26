@@ -168,17 +168,17 @@ le_bool GnomeFontInstance::getGlyphPoint(LEGlyphID glyph, le_int32 pointNumber, 
     error = FT_Load_Glyph(fFace, glyph, FT_LOAD_DEFAULT);
 
     if (error != 0) {
-        return false;
+        return FALSE;
     }
 
     if (pointNumber >= fFace->glyph->outline.n_points) {
-        return false;
+        return FALSE;
     }
 
     point.fX = fFace->glyph->outline.points[pointNumber].x >> 6;
     point.fY = fFace->glyph->outline.points[pointNumber].y >> 6;
 
-    return true;
+    return TRUE;
 }
 
 void GnomeFontInstance::rasterizeGlyphs(cairo_t *cairo, const LEGlyphID *glyphs, le_int32 glyphCount, const float *positions,

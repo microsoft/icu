@@ -36,7 +36,6 @@
 
 /**
  * \file
- * \brief C API: Encoding/charset encoding selector
  *
  * A converter selector is built with a set of encoding/charset names
  * and given an input string returns the set of names of the
@@ -46,11 +45,11 @@
  * from the serialized form.
  */
 
-struct UConverterSelector;
 /**
  * @{
- * Typedef for selector data structure.
+ * The selector data structure
  */
+struct UConverterSelector;
 typedef struct UConverterSelector UConverterSelector;
 /** @} */
 

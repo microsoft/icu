@@ -610,7 +610,7 @@ zh{
             ec{"戴维斯"}
         }
         "Antarctica:DumontDUrville"{
-            ec{"迪蒙·迪维尔"}
+            ec{"迪蒙迪尔维尔"}
         }
         "Antarctica:Macquarie"{
             ec{"麦格理"}
@@ -622,7 +622,7 @@ zh{
             ec{"麦克默多"}
         }
         "Antarctica:Palmer"{
-            ec{"帕尔默"}
+            ec{"帕默尔"}
         }
         "Antarctica:Rothera"{
             ec{"罗瑟拉"}
@@ -866,9 +866,6 @@ zh{
         }
         "Asia:Ulaanbaatar"{
             ec{"乌兰巴托"}
-        }
-        "Asia:Urumqi"{
-            ec{"乌鲁木齐"}
         }
         "Asia:Ust-Nera"{
             ec{"乌斯内拉"}
@@ -1223,9 +1220,6 @@ zh{
         "Pacific:Johnston"{
             ec{"约翰斯顿"}
         }
-        "Pacific:Kanton"{
-            ec{"坎顿岛"}
-        }
         "Pacific:Kiritimati"{
             ec{"基里地马地岛"}
         }
@@ -1502,7 +1496,7 @@ zh{
             ls{"戴维斯时间"}
         }
         "meta:DumontDUrville"{
-            ls{"迪蒙·迪维尔时间"}
+            ls{"迪蒙迪尔维尔时间"}
         }
         "meta:East_Timor"{
             ls{"东帝汶时间"}
@@ -1607,7 +1601,7 @@ zh{
             ls{"印度洋时间"}
         }
         "meta:Indochina"{
-            ls{"中南半岛时间"}
+            ls{"印度支那时间"}
         }
         "meta:Indonesia_Central"{
             ls{"印度尼西亚中部时间"}
@@ -1942,9 +1936,6 @@ zh{
             ld{"叶卡捷琳堡夏令时间"}
             lg{"叶卡捷琳堡时间"}
             ls{"叶卡捷琳堡标准时间"}
-        }
-        "meta:Yukon"{
-            ls{"育空时间"}
         }
         fallbackFormat{"{1}（{0}）"}
         gmtFormat{"GMT{0}"}

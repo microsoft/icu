@@ -867,9 +867,6 @@ th{
         "Asia:Ulaanbaatar"{
             ec{"อูลานบาตอร์"}
         }
-        "Asia:Urumqi"{
-            ec{"อุรุมชี"}
-        }
         "Asia:Ust-Nera"{
             ec{"อุสต์เนรา"}
         }
@@ -889,7 +886,7 @@ th{
             ec{"เยเรวาน"}
         }
         "Atlantic:Azores"{
-            ec{"อะโซร์ส"}
+            ec{"อาซอเรส"}
         }
         "Atlantic:Bermuda"{
             ec{"เบอร์มิวดา"}
@@ -1222,9 +1219,6 @@ th{
         }
         "Pacific:Johnston"{
             ec{"จอห์นสตัน"}
-        }
-        "Pacific:Kanton"{
-            ec{"แคนทอน"}
         }
         "Pacific:Kiritimati"{
             ec{"คิริทิมาตี"}
@@ -1942,9 +1936,6 @@ th{
             ld{"เวลาฤดูร้อนเยคาเตรินบูร์ก"}
             lg{"เวลาเยคาเตรินบูร์ก"}
             ls{"เวลามาตรฐานเยคาเตรินบูร์ก"}
-        }
-        "meta:Yukon"{
-            ls{"เวลายูคอน"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

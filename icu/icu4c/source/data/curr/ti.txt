@@ -8,20 +8,16 @@ ti{
             "የብራዚል ሪል",
         }
         CNY{
-            "CNY",
-            "ዩዋን ቻይና",
-        }
-        ERN{
-            "ERN",
-            "ናቕፋ",
+            "CN¥",
+            "የቻይና ዩአን ረንሚንቢ",
         }
         ETB{
             "Br",
-            "ብር",
+            "የኢትዮጵያ ብር",
         }
         EUR{
             "€",
-            "ዩሮ",
+            "አውሮ",
         }
         GBP{
             "£",
@@ -32,8 +28,8 @@ ti{
             "የሕንድ ሩፒ",
         }
         JPY{
-            "JPY",
-            "የን ጃፓን",
+            "JP¥",
+            "የጃፓን የን",
         }
         RUB{
             "RUB",
@@ -41,64 +37,7 @@ ti{
         }
         USD{
             "US$",
-            "ዶላር ኣመሪካ",
-        }
-        XAG{
-            "XAG",
-            "ብሩር",
-        }
-        XAU{
-            "XAU",
-            "ወርቂ",
-        }
-        XXX{
-            "¤",
-            "ዘይተፈልጠ ባጤራ",
-        }
-    }
-    Currencies%narrow{
-        BMD{"$"}
-        CNY{"¥"}
-        EUR{"€"}
-        JPY{"¥"}
-        USD{"$"}
-    }
-    CurrencyPlurals{
-        CNY{
-            one{"ዩዋን ቻይና"}
-            other{"ዩዋን ቻይና"}
-        }
-        ERN{
-            one{"ናቕፋ"}
-            other{"ናቕፋ"}
-        }
-        ETB{
-            one{"ብር"}
-            other{"ብር"}
-        }
-        EUR{
-            one{"ዩሮ"}
-            other{"ዩሮ"}
-        }
-        JPY{
-            one{"የን ጃፓን"}
-            other{"የን ጃፓን"}
-        }
-        USD{
-            one{"ዶላር ኣመሪካ"}
-            other{"ዶላር ኣመሪካ"}
-        }
-        XAG{
-            one{"ብሩር"}
-            other{"ብሩር"}
-        }
-        XAU{
-            one{"ወርቂ"}
-            other{"ወርቂ"}
-        }
-        XXX{
-            one{"(ዘይተፈልጠ ባጤራ)"}
-            other{"(ዘይተፈልጠ ባጤራ)"}
+            "የአሜሪካን ዶላር",
         }
     }
     CurrencyUnitPatterns{

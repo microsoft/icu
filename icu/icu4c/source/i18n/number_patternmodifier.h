@@ -116,10 +116,8 @@ class U_I18N_API MutablePatternModifier
      *            Whether to force a plus sign on positive numbers.
      * @param perMille
      *            Whether to substitute the percent sign in the pattern with a permille sign.
-     * @param approximately
-     *            Whether to prepend approximately to the sign
      */
-    void setPatternAttributes(UNumberSignDisplay signDisplay, bool perMille, bool approximately);
+    void setPatternAttributes(UNumberSignDisplay signDisplay, bool perMille);
 
     /**
      * Sets locale-specific details that affect the symbols substituted into the pattern string affixes.
@@ -195,11 +193,6 @@ class U_I18N_API MutablePatternModifier
      */
     UnicodeString getSymbol(AffixPatternType type) const U_OVERRIDE;
 
-    /**
-     * Returns the currency symbol for the unit width specified in setSymbols()
-     */
-    UnicodeString getCurrencySymbolForUnitWidth(UErrorCode& status) const;
-
     UnicodeString toUnicodeString() const;
 
   private:
@@ -211,7 +204,6 @@ class U_I18N_API MutablePatternModifier
     Field fField;
     UNumberSignDisplay fSignDisplay;
     bool fPerMilleReplacesPercent;
-    bool fApproximately;
 
     // Symbol details (initialized in setSymbols)
     const DecimalFormatSymbols *fSymbols;

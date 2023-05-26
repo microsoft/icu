@@ -144,7 +144,7 @@ private:
 
     UnicodeSet                     fRuleSets[10];    // Unicode Sets that are needed during
                                                      //  the scanning of RBBI rules.  The
-                                                     //  indices for these are assigned by the
+                                                     //  indicies for these are assigned by the
                                                      //  perl script that builds the state tables.
                                                      //  See rbbirpt.h.
 
@@ -158,8 +158,8 @@ private:
     UnicodeSet *gRuleSet_name_char;
     UnicodeSet *gRuleSet_name_start_char;
 
-    RBBIRuleScanner(const RBBIRuleScanner &other) = delete; // forbid copying of this class
-    RBBIRuleScanner &operator=(const RBBIRuleScanner &other) = delete; // forbid copying of this class
+    RBBIRuleScanner(const RBBIRuleScanner &other); // forbid copying of this class
+    RBBIRuleScanner &operator=(const RBBIRuleScanner &other); // forbid copying of this class
 };
 
 U_NAMESPACE_END

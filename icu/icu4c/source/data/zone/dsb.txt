@@ -174,9 +174,6 @@ dsb{
         "Asia:Kamchatka"{
             ec{"Kamčatka"}
         }
-        "Asia:Karachi"{
-            ec{"Karači"}
-        }
         "Asia:Katmandu"{
             ec{"Kathmandu"}
         }
@@ -203,9 +200,6 @@ dsb{
         }
         "Asia:Qatar"{
             ec{"Katar"}
-        }
-        "Asia:Rangoon"{
-            ec{"Rangun"}
         }
         "Asia:Riyadh"{
             ec{"Riad"}
@@ -269,9 +263,6 @@ dsb{
         }
         "Atlantic:St_Helena"{
             ec{"St. Helena"}
-        }
-        "Etc:UTC"{
-            ls{"koordiněrowany swětowy cas"}
         }
         "Etc:Unknown"{
             ec{"Njeznate"}
@@ -565,17 +556,17 @@ dsb{
             ls{"Ekuadorski cas"}
         }
         "meta:Europe_Central"{
-            ld{"Srjejźnoeuropejski lěśojski cas"}
-            lg{"Srjejźnoeuropejski cas"}
-            ls{"Srjejźnoeuropejski standardny cas"}
+            ld{"Srjejźoeuropski lěśojski cas"}
+            lg{"Srjejźoeuropski cas"}
+            ls{"Srjejźoeuropski standardny cas"}
             sd{"MESZ"}
             sg{"MEZ"}
             ss{"MEZ"}
         }
         "meta:Europe_Eastern"{
-            ld{"Pódzajtšnoeuropejski lěśojski cas"}
-            lg{"Pódzajtšnoeuropejski cas"}
-            ls{"Pódzajtšnoeuropejski standardny cas"}
+            ld{"Pódzajtšnoeuropski lěśojski cas"}
+            lg{"Pódzajtšnoeuropski cas"}
+            ls{"Pódzajtšnoeuropski standardny cas"}
             sd{"OESZ"}
             sg{"OEZ"}
             ss{"OEZ"}
@@ -584,9 +575,9 @@ dsb{
             ls{"Kaliningradski cas"}
         }
         "meta:Europe_Western"{
-            ld{"Pódwjacornoeuropejski lěśojski cas"}
-            lg{"Pódwjacornoeuropejski cas"}
-            ls{"Pódwjacornoeuropejski standardny cas"}
+            ld{"Pódwjacornoeuropski lěśojski cas"}
+            lg{"Pódwjacornoeuropski cas"}
+            ls{"Pódwjacornoeuropski standardny cas"}
             sd{"WESZ"}
             sg{"WEZ"}
             ss{"WEZ"}
@@ -858,9 +849,6 @@ dsb{
         "meta:Ponape"{
             ls{"Ponapski cas"}
         }
-        "meta:Pyongyang"{
-            ls{"Pjöngjangski cas"}
-        }
         "meta:Reunion"{
             ls{"Reunionski cas"}
         }
@@ -971,9 +959,6 @@ dsb{
             ld{"Jekaterinburgski lěśojski cas"}
             lg{"Jekaterinburgski cas"}
             ls{"Jekaterinburgski standardny cas"}
-        }
-        "meta:Yukon"{
-            ls{"Yukonowy cas"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

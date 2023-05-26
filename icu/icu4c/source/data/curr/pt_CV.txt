@@ -16,6 +16,11 @@ pt_CV{
         PTE{
             "PTE",
             "escudo português",
+            {
+                "#,##0.00 ¤",
+                ",",
+                " ",
+            }
         }
     }
 }

@@ -163,7 +163,7 @@ outerEnd:
 
     // Compare it to the golden file
     const char* codePage = "UTF-8";
-    LocalUCHARBUFPointer f(ucbuf_open(goldenFilePath.data(), &codePage, true, false, status));
+    LocalUCHARBUFPointer f(ucbuf_open(goldenFilePath.data(), &codePage, TRUE, FALSE, status));
     if (!assertSuccess("Can't open data file", status)) {
         return;
     }

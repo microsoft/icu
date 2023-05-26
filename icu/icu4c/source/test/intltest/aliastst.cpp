@@ -196,15 +196,15 @@ LocaleAliasTest::~LocaleAliasTest(){
 }
 UBool LocaleAliasTest::isLocaleAvailable(const char* loc){
     if(resIndex==NULL){
-        return false;
+        return FALSE;
     }
     UErrorCode status = U_ZERO_ERROR;
     int32_t len = 0;
     ures_getStringByKey(resIndex, loc,&len, &status);
     if(U_FAILURE(status)){
-        return false; 
+        return FALSE; 
     }
-    return true;
+    return TRUE;
 }
 void LocaleAliasTest::TestDisplayName() {
     int32_t availableNum =0;

@@ -208,14 +208,14 @@ void readTestFile(const char *testFilePath, TestCaseCallback callback)
                     fontCksum = getCString(element->getAttribute(cksum_attr));
 
                 } else if (tag.compare(test_text) == 0) {
-                    text = element->getText(true);
+                    text = element->getText(TRUE);
                     charCount = text.length();
                 } else if (tag.compare(result_glyphs) == 0) {
-                    glyphs = element->getText(true);
+                    glyphs = element->getText(TRUE);
                 } else if (tag.compare(result_indices) == 0) {
-                    indices = element->getText(true);
+                    indices = element->getText(TRUE);
                 } else if (tag.compare(result_positions) == 0) {
-                    positions = element->getText(true);
+                    positions = element->getText(TRUE);
                 } else {
                     // an unknown tag...
                     char *cTag = getCString(&tag);

@@ -335,10 +335,6 @@ uz{
             "LRD",
             "Liberiya dollari",
         }
-        LSL{
-            "LSL",
-            "Lesoto lotisi",
-        }
         LTL{
             "LTL",
             "Litva liti",
@@ -632,7 +628,7 @@ uz{
             "Sharqiy Karib dollari",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "G‘arbiy Afrika CFA franki",
         }
         XPF{
@@ -753,6 +749,7 @@ uz{
         ZMW{"ZK"}
     }
     Currencies%variant{
+        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{
@@ -1087,10 +1084,6 @@ uz{
         LRD{
             one{"Liberiya dollari"}
             other{"Liberiya dollari"}
-        }
-        LSL{
-            one{"Lesoto lotisi"}
-            other{"Lesoto lotisi"}
         }
         LTL{
             one{"Litva liti"}

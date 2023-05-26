@@ -355,10 +355,6 @@ pt_PT{
             "LRD",
             "dólar liberiano",
         }
-        LSL{
-            "LSL",
-            "loti lesotiano",
-        }
         LTL{
             "LTL",
             "Litas da Lituânia",
@@ -669,7 +665,7 @@ pt_PT{
             "dólar das Caraíbas Orientais",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "franco CFA (BCEAO)",
         }
         XPF{
@@ -1028,10 +1024,6 @@ pt_PT{
         LRD{
             one{"dólar liberiano"}
             other{"dólares liberianos"}
-        }
-        LSL{
-            one{"loti lesotiano"}
-            other{"lotis lesotianos"}
         }
         LTL{
             one{"Litas da Lituânia"}

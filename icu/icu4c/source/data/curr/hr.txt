@@ -376,7 +376,7 @@ hr{
             "etiopski bir",
         }
         EUR{
-            "€",
+            "EUR",
             "euro",
         }
         FIM{
@@ -468,7 +468,7 @@ hr{
             "hrvatski dinar",
         }
         HRK{
-            "kn",
+            "HRK",
             "hrvatska kuna",
         }
         HTG{
@@ -597,7 +597,7 @@ hr{
         }
         LSL{
             "LSL",
-            "lesotski loti",
+            "lesoto loti",
         }
         LTL{
             "LTL",
@@ -1116,7 +1116,7 @@ hr{
             "francuski UIC-franak",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "CFA franak BCEAO",
         }
         XPD{
@@ -1315,6 +1315,7 @@ hr{
         ZMW{"ZK"}
     }
     Currencies%variant{
+        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{
@@ -2054,9 +2055,9 @@ hr{
             other{"liberijskih dolara"}
         }
         LSL{
-            few{"lesotska lotija"}
-            one{"lesotski loti"}
-            other{"lesotskih lotija"}
+            few{"lesoto lotija"}
+            one{"lesoto loti"}
+            other{"lesoto lotija"}
         }
         LTL{
             few{"litavska litasa"}

@@ -93,17 +93,14 @@ to{
         CY{"Saipalesi"}
         CZ{"Sēkia"}
         DE{"Siamane"}
-        DG{"Tieko Kāsia"}
         DJ{"Siputi"}
         DK{"Tenimaʻake"}
         DM{"Tominika"}
         DO{"Lepupelika Tominika"}
         DZ{"ʻAlisilia"}
-        EA{"Siuta mo Melila"}
         EC{"ʻEkuetoa"}
         EE{"ʻEsitōnia"}
         EG{"ʻIsipite"}
-        EH{"Sahala fakahihifo"}
         ER{"ʻElitulia"}
         ES{"Sipeini"}
         ET{"ʻĪtiōpia"}
@@ -140,7 +137,6 @@ to{
         HR{"Kuloisia"}
         HT{"Haiti"}
         HU{"Hungakalia"}
-        IC{"ʻOtumotu Kaneli"}
         ID{"ʻInitonēsia"}
         IE{"ʻAealani"}
         IL{"ʻIsileli"}
@@ -223,7 +219,7 @@ to{
         PM{"Sā Piea mo Mikeloni"}
         PN{"ʻOtumotu Pitikeni"}
         PR{"Puēto Liko"}
-        PS{"Potu Palesitaine"}
+        PS{"Palestinian Authority"}
         PT{"Potukali"}
         PW{"Palau"}
         PY{"Palakuai"}
@@ -288,8 +284,6 @@ to{
         VU{"Vanuatu"}
         WF{"ʻUvea mo Futuna"}
         WS{"Haʻamoa"}
-        XA{"fasiʻalea loi"}
-        XB{"fua-ua loi"}
         XK{"Kōsovo"}
         YE{"Iemeni"}
         YT{"Maiote"}
@@ -297,18 +291,5 @@ to{
         ZM{"Semipia"}
         ZW{"Simipapuei"}
         ZZ{"Potu fonua taʻeʻiloa pe hala"}
-    }
-    Countries%short{
-        HK{"Hongi Kongi"}
-        MO{"Makau"}
-        PS{"Palesitaine"}
-        US{"ʻAmelika"}
-    }
-    Countries%variant{
-        CD{"Kongo (LTK)"}
-        CG{"Kongo (Lepupelika)"}
-        CZ{"Lepupelika Seki"}
-        FK{"ʻOtumotu Malivina"}
-        SZ{"Suasilani"}
     }
 }

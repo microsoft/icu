@@ -331,10 +331,6 @@ ig{
             "LRD",
             "Ego Dollar obodo Liberia",
         }
-        LSL{
-            "LSL",
-            "Ego loti obodo Lesotho",
-        }
         LYD{
             "LYD",
             "Ego Dinar obodo Libya",
@@ -436,7 +432,7 @@ ig{
             "Ego Kina obodo Papua New Guinea",
         }
         PHP{
-            "₱",
+            "PHP",
             "Ego piso obodo Philippine",
         }
         PKR{
@@ -608,7 +604,7 @@ ig{
             "Ego Dollar obodo East Carribbean",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "Ego CFA Franc obodo West Africa",
         }
         XPF{
@@ -710,9 +706,6 @@ ig{
         }
         LBP{
             other{"Ego Pound Obodo Lebanon"}
-        }
-        LSL{
-            other{"Ego loti obodo Lesotho"}
         }
         MDL{
             other{"Ego leu mba Moldova"}

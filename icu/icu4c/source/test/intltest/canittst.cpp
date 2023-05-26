@@ -130,11 +130,11 @@ void CanonicalIteratorTest::TestBasic() {
     // check permute
     // NOTE: we use a TreeSet below to sort the output, which is not guaranteed to be sorted!
 
-    Hashtable *permutations = new Hashtable(false, status);
+    Hashtable *permutations = new Hashtable(FALSE, status);
     permutations->setValueDeleter(uprv_deleteUObject);
     UnicodeString toPermute("ABC");
 
-    CanonicalIterator::permute(toPermute, false, permutations, status);
+    CanonicalIterator::permute(toPermute, FALSE, permutations, status);
 
     logln("testing permutation");
   
@@ -144,7 +144,7 @@ void CanonicalIteratorTest::TestBasic() {
     
     // try samples
     logln("testing samples");
-    Hashtable *set = new Hashtable(false, status);
+    Hashtable *set = new Hashtable(FALSE, status);
     set->setValueDeleter(uprv_deleteUObject);
     int32_t i = 0;
     CanonicalIterator it("", status);
@@ -177,12 +177,12 @@ void CanonicalIteratorTest::characterTest(UnicodeString &s, UChar32 ch, Canonica
 {
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString decomp, comp;
-    UBool gotDecomp = false;
-    UBool gotComp = false;
-    UBool gotSource = false;
+    UBool gotDecomp = FALSE;
+    UBool gotComp = FALSE;
+    UBool gotSource = FALSE;
 
-    Normalizer::decompose(s, false, 0, decomp, status);
-    Normalizer::compose(s, false, 0, comp, status);
+    Normalizer::decompose(s, FALSE, 0, decomp, status);
+    Normalizer::compose(s, FALSE, 0, comp, status);
     
     // skip characters that don't have either decomp.
     // need quick test for this!
@@ -195,9 +195,9 @@ void CanonicalIteratorTest::characterTest(UnicodeString &s, UChar32 ch, Canonica
     for (;;) {
         UnicodeString item = it.next();
         if (item.isBogus()) break;
-        if (item == s) gotSource = true;
-        if (item == decomp) gotDecomp = true;
-        if (item == comp) gotComp = true;
+        if (item == s) gotSource = TRUE;
+        if (item == decomp) gotDecomp = TRUE;
+        if (item == comp) gotComp = TRUE;
     }
     
     if (!gotSource || !gotDecomp || !gotComp) {

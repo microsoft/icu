@@ -56,7 +56,7 @@ class NumberRangeFormatterImpl : public UMemory {
     UNumberRangeIdentityFallback fIdentityFallback;
 
     SimpleFormatter fRangeFormatter;
-    NumberFormatterImpl fApproximatelyFormatter;
+    SimpleModifier fApproximatelyModifier;
 
     StandardPluralRanges fPluralRanges;
 

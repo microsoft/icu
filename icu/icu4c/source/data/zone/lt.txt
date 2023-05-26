@@ -867,9 +867,6 @@ lt{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Batoras"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumči"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust Nera"}
         }
@@ -1939,9 +1936,6 @@ lt{
             ld{"Jekaterinburgo vasaros laikas"}
             lg{"Jekaterinburgo laikas"}
             ls{"Jekaterinburgo žiemos laikas"}
-        }
-        "meta:Yukon"{
-            ls{"Jukono laikas"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

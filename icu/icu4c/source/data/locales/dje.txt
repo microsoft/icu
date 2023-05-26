@@ -36,16 +36,6 @@ dje{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GGGGGyMd",
-            }
             availableFormats{
                 Ed{"E d"}
                 Hm{"HH:mm"}
@@ -57,8 +47,8 @@ dje{
                 MMMd{"d MMM"}
                 Md{"d/M"}
                 d{"d"}
-                hm{"h:mm a"}
-                hms{"h:mm:ss a"}
+                hm{"h:mm a"}
+                hms{"h:mm:ss a"}
                 ms{"m:ss"}
                 y{"y"}
                 yM{"M/y"}
@@ -78,7 +68,7 @@ dje{
             }
             AmPmMarkersAbbr{
                 "Subbaahi",
-                "Zaarikay b",
+                "Zaarikay b",
             }
             DateTimePatterns{
                 "HH:mm:ss zzzz",
@@ -95,16 +85,6 @@ dje{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "yMMMMEEEEd",
-                "yMMMMd",
-                "yMMMd",
-                "yMd",
-            }
             availableFormats{
                 Ed{"E d"}
                 Hm{"HH:mm"}
@@ -116,8 +96,8 @@ dje{
                 MMMd{"d MMM"}
                 Md{"d/M"}
                 d{"d"}
-                hm{"h:mm a"}
-                hms{"h:mm:ss a"}
+                hm{"h:mm a"}
+                hms{"h:mm:ss a"}
                 ms{"m:ss"}
                 y{"y"}
                 yM{"M/y"}

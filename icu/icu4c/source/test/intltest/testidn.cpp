@@ -43,7 +43,7 @@
 #include "punyref.h"
 #include <stdlib.h>
 
-UBool beVerbose=false, haveCopyright=true;
+UBool beVerbose=FALSE, haveCopyright=TRUE;
 
 /* prototypes --------------------------------------------------------------- */
 
@@ -127,7 +127,7 @@ testData(TestIDNA& test) {
     
     /* process unassigned */
     uprv_strcpy(basename,fileNames[0]);
-    parseMappings(filename,true, test,&errorCode);
+    parseMappings(filename,TRUE, test,&errorCode);
     if(U_FAILURE(errorCode)) {
         test.errln( "Could not open file %s for reading \n", filename);
         return errorCode;
@@ -230,29 +230,29 @@ getValues(uint32_t result, int32_t& value, UBool& isIndex){
          * the source codepoint is copied to the destination
          */
         type = USPREP_TYPE_LIMIT;
-        isIndex =false;
+        isIndex =FALSE;
         value = 0;
     }else if(result >= _SPREP_TYPE_THRESHOLD){
         type = (UStringPrepType) (result - _SPREP_TYPE_THRESHOLD);
-        isIndex =false;
+        isIndex =FALSE;
         value = 0;
     }else{
         /* get the state */
         type = USPREP_MAP;
         /* ascertain if the value is index or delta */
         if(result & 0x02){
-            isIndex = true;
+            isIndex = TRUE;
             value = result  >> 2; //mask off the lower 2 bits and shift
 
         }else{
-            isIndex = false;
+            isIndex = FALSE;
             value = (int16_t)result;
             value =  (value >> 2);
 
         }
         if((result>>2) == _SPREP_MAX_INDEX_VALUE){
             type = USPREP_DELETE;
-            isIndex =false;
+            isIndex =FALSE;
             value = 0;
         }
     }
@@ -292,7 +292,7 @@ testAllCodepoints(TestIDNA& test){
 
     UStringPrepType type;
     int32_t value;
-    UBool isIndex = false;
+    UBool isIndex = FALSE;
 
     for(i=0;i<=0x10FFFF;i++){
         uint32_t result = 0;
@@ -316,7 +316,7 @@ testAllCodepoints(TestIDNA& test){
         }
     }
 
-    test.logln("Number of Unassigned code points : %i \n",unassigned);
+    test.logln("Number of Unassinged code points : %i \n",unassigned);
     test.logln("Number of Prohibited code points : %i \n",prohibited);
     test.logln("Number of Mapped code points : %i \n",mapped);
     test.logln("Number of Mapped with NFKC code points : %i \n",mappedWithNorm);
@@ -407,7 +407,7 @@ compareFlagsForRange(uint32_t start, uint32_t end,
 
     uint32_t result =0 ;
     UStringPrepType retType;
-    UBool isIndex=false;
+    UBool isIndex=FALSE;
     int32_t value=0;
 /*
     // supplementary code point 

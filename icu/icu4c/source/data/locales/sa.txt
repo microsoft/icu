@@ -59,29 +59,10 @@ sa{
                 "G d MMM y",
                 "G d/M/y",
                 "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-            }
-            DateTimePatterns%atTime{
                 "{1} तेन {0}",
                 "{1} तेन {0}",
                 "{1}, {0}",
                 "{1}, {0}",
-            }
-            DateTimeSkeletons{
-                "ahmmsszzzz",
-                "ahmmssz",
-                "ahmmss",
-                "ahmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GyMd",
-            }
-            intervalFormats{
-                fallback{"{0}-{1}"}
             }
         }
         gregorian{
@@ -107,26 +88,10 @@ sa{
                 "d MMM y",
                 "d/M/yy",
                 "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-            }
-            DateTimePatterns%atTime{
                 "{1} तदा {0}",
                 "{1} तदा {0}",
                 "{1}, {0}",
                 "{1}, {0}",
-            }
-            DateTimeSkeletons{
-                "ahmmsszzzz",
-                "ahmmssz",
-                "ahmmss",
-                "ahmm",
-                "yMMMMEEEEd",
-                "yMMMMd",
-                "yMMMd",
-                "yyMd",
             }
             appendItems{
                 Timezone{"{0} {1}"}
@@ -283,7 +248,7 @@ sa{
                     "CE",
                 }
                 abbreviated%variant{
-                    "इ.स.पू.",
+                    "ईसवी पूर्व",
                     "संवत्",
                 }
                 wide{
@@ -530,14 +495,10 @@ sa{
             }
         }
         day-narrow{
-            dn{"दिनम्"}
-            relative{
-                "-1"{"ह्यः"}
-                "0"{"अद्य"}
-                "1"{"श्वः"}
-            }
+            dn{"दिवा"}
         }
         day-short{
+            dn{"अहन्"}
             relative{
                 "-1"{"ह्यः"}
                 "0"{"अद्य"}
@@ -627,25 +588,8 @@ sa{
         }
     }
     measurementSystemNames{
-        UK{"सं.अ."}
-        US{"सं.रा."}
+        UK{"यूके"}
+        US{"यूएस"}
         metric{"छन्दोमान"}
-    }
-    personNames{
-        nameOrderLocales{
-            givenFirst{
-                "und",
-                "sa",
-            }
-            surnameFirst{
-                "ko",
-                "si",
-                "ta",
-                "te",
-                "vi",
-                "yue",
-                "zh",
-            }
-        }
     }
 }

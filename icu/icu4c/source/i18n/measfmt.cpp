@@ -183,10 +183,10 @@ static UBool getString(
     int32_t len = 0;
     const UChar *resStr = ures_getString(resource, &len, &status);
     if (U_FAILURE(status)) {
-        return false;
+        return FALSE;
     }
-    result.setTo(true, resStr, len);
-    return true;
+    result.setTo(TRUE, resStr, len);
+    return TRUE;
 }
 
 static UnicodeString loadNumericDateFormatterPattern(
@@ -239,7 +239,7 @@ static NumericDateFormatters *loadNumericDateFormatters(
     return result;
 }
 
-template<> 
+template<> U_I18N_API
 const MeasureFormatCacheData *LocaleCacheKey<MeasureFormatCacheData>::createObject(
         const void * /*unused*/, UErrorCode &status) const {
     const char *localeId = fLoc.getName();
@@ -427,12 +427,12 @@ MeasureFormat::~MeasureFormat() {
     delete listFormatter;
 }
 
-bool MeasureFormat::operator==(const Format &other) const {
+UBool MeasureFormat::operator==(const Format &other) const {
     if (this == &other) { // Same object, equal
-        return true;
+        return TRUE;
     }
     if (!Format::operator==(other)) {
-        return false;
+        return FALSE;
     }
     const MeasureFormat &rhs = static_cast<const MeasureFormat &>(other);
 
@@ -441,7 +441,7 @@ bool MeasureFormat::operator==(const Format &other) const {
 
     // differing widths aren't equivalent
     if (fWidth != rhs.fWidth) {
-        return false;
+        return FALSE;
     }
     // Width the same check locales.
     // We don't need to check locales if both objects have same cache.
@@ -451,10 +451,10 @@ bool MeasureFormat::operator==(const Format &other) const {
         const char *rhsLocaleId = rhs.getLocaleID(status);
         if (U_FAILURE(status)) {
             // On failure, assume not equal
-            return false;
+            return FALSE;
         }
         if (uprv_strcmp(localeId, rhsLocaleId) != 0) {
-            return false;
+            return FALSE;
         }
     }
     // Locales same, check NumberFormat if shared data differs.
@@ -581,10 +581,7 @@ void MeasureFormat::initMeasureFormat(
         UMeasureFormatWidth w,
         NumberFormat *nfToAdopt,
         UErrorCode &status) {
-    static const UListFormatterWidth listWidths[] = {
-        ULISTFMT_WIDTH_WIDE,
-        ULISTFMT_WIDTH_SHORT,
-        ULISTFMT_WIDTH_NARROW};
+    static const char *listStyles[] = {"unit", "unit-short", "unit-narrow"};
     LocalPointer<NumberFormat> nf(nfToAdopt);
     if (U_FAILURE(status)) {
         return;
@@ -623,8 +620,7 @@ void MeasureFormat::initMeasureFormat(
     delete listFormatter;
     listFormatter = ListFormatter::createInstance(
             locale,
-            ULISTFMT_TYPE_UNITS,
-            listWidths[getRegularWidth(fWidth)],
+            listStyles[getRegularWidth(fWidth)],
             status);
 }
 
@@ -645,7 +641,7 @@ void MeasureFormat::adoptNumberFormat(
 
 UBool MeasureFormat::setMeasureFormatLocale(const Locale &locale, UErrorCode &status) {
     if (U_FAILURE(status) || locale == getLocale(status)) {
-        return false;
+        return FALSE;
     }
     initMeasureFormat(locale, fWidth, NULL, status);
     return U_SUCCESS(status);
@@ -769,7 +765,7 @@ UnicodeString &MeasureFormat::formatNumeric(
 
     FormattedStringBuilder fsb;
 
-    UBool protect = false;
+    UBool protect = FALSE;
     const int32_t patternLength = pattern.length();
     for (int32_t i = 0; i < patternLength; i++) {
         char16_t c = pattern[i];

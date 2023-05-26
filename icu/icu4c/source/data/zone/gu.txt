@@ -867,9 +867,6 @@ gu{
         "Asia:Ulaanbaatar"{
             ec{"ઉલાંબાતર"}
         }
-        "Asia:Urumqi"{
-            ec{"ઉરુમ્કી"}
-        }
         "Asia:Ust-Nera"{
             ec{"ઉસ્ત-નેરા"}
         }
@@ -1222,9 +1219,6 @@ gu{
         }
         "Pacific:Johnston"{
             ec{"જોહ્નસ્ટોન"}
-        }
-        "Pacific:Kanton"{
-            ec{"કેન્ટન"}
         }
         "Pacific:Kiritimati"{
             ec{"કિરિતિમાતી"}
@@ -1940,9 +1934,6 @@ gu{
             ld{"યેકાટેરિનબર્ગ ગ્રીષ્મ સમય"}
             lg{"યેકાટેરિનબર્ગ સમય"}
             ls{"યેકાટેરિનબર્ગ માનક સમય"}
-        }
-        "meta:Yukon"{
-            ls{"યુકોન સમય"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

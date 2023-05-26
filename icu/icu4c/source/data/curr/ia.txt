@@ -456,7 +456,7 @@ ia{
             "dollar del Caribes Oriental",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "franco CFA de Africa Occidental",
         }
         XPF{
@@ -482,23 +482,23 @@ ia{
             other{"lekë albanese"}
         }
         ANG{
-            one{"florino antillan"}
+            one{"florinos antillan"}
             other{"florinos antillan"}
         }
         AOA{
-            one{"kwanza angolan"}
+            one{"kwanzas angolan"}
             other{"kwanzas angolan"}
         }
         ARS{
-            one{"peso argentin"}
+            one{"pesos argentin"}
             other{"pesos argentin"}
         }
         AUD{
-            one{"dollar australian"}
+            one{"dollares australian"}
             other{"dollares australian"}
         }
         AWG{
-            one{"florino aruban"}
+            one{"florinos aruban"}
             other{"florinos aruban"}
         }
         BAM{
@@ -506,7 +506,7 @@ ia{
             other{"marcos convertibile de Bosnia-Herzegovina"}
         }
         BBD{
-            one{"dollar barbadian"}
+            one{"dollares barbadian"}
             other{"dollares barbadian"}
         }
         BGN{
@@ -514,51 +514,51 @@ ia{
             other{"leva bulgare"}
         }
         BIF{
-            one{"franco burundese"}
+            one{"francos burundese"}
             other{"francos burundese"}
         }
         BMD{
-            one{"dollar bermudan"}
+            one{"dollares bermudan"}
             other{"dollares bermudan"}
         }
         BOB{
-            one{"boliviano bolivian"}
+            one{"bolivianos bolivian"}
             other{"bolivianos bolivian"}
         }
         BRL{
-            one{"real brasilian"}
+            one{"reales brasilian"}
             other{"reales brasilian"}
         }
         BSD{
-            one{"dollar bahamian"}
+            one{"dollares bahamian"}
             other{"dollares bahamian"}
         }
         BWP{
             one{"pula botswanese"}
-            other{"pulas botswanese"}
+            other{"pula botswanese"}
         }
         BYN{
             one{"rublos bielorusse"}
             other{"rublos bielorusse"}
         }
         BZD{
-            one{"dollar belizan"}
+            one{"dollares belizan"}
             other{"dollares belizan"}
         }
         CAD{
-            one{"dollar canadian"}
+            one{"dollares canadian"}
             other{"dollares canadian"}
         }
         CDF{
-            one{"franco congolese"}
+            one{"francos congolese"}
             other{"francos congolese"}
         }
         CHF{
-            one{"franco suisse"}
+            one{"francos suisse"}
             other{"francos suisse"}
         }
         CLP{
-            one{"peso chilen"}
+            one{"pesos chilen"}
             other{"pesos chilen"}
         }
         CNY{
@@ -566,23 +566,23 @@ ia{
             other{"yuan chinese"}
         }
         COP{
-            one{"peso colombian"}
+            one{"pesos colombian"}
             other{"pesos colombian"}
         }
         CRC{
-            one{"colon costarican"}
+            one{"colones costarican"}
             other{"colones costarican"}
         }
         CUC{
-            one{"peso cuban convertibile"}
+            one{"pesos cuban convertibile"}
             other{"pesos cuban convertibile"}
         }
         CUP{
-            one{"peso cuban"}
+            one{"pesos cuban"}
             other{"pesos cuban"}
         }
         CVE{
-            one{"escudo capoverdian"}
+            one{"escudos capoverdian"}
             other{"escudos capoverdian"}
         }
         CZK{
@@ -590,67 +590,67 @@ ia{
             other{"coronas chec"}
         }
         DEM{
-            one{"marco german"}
+            one{"marcos german"}
             other{"marcos german"}
         }
         DJF{
-            one{"franco djibutian"}
+            one{"francos djibutian"}
             other{"francos djibutian"}
         }
         DKK{
-            one{"corona danese"}
+            one{"coronas danese"}
             other{"coronas danese"}
         }
         DOP{
-            one{"peso dominican"}
+            one{"pesos dominican"}
             other{"pesos dominican"}
         }
         DZD{
-            one{"dinar algerin"}
+            one{"dinares algerin"}
             other{"dinares algerin"}
         }
         EEK{
-            one{"corona estonian"}
+            one{"coronas estonian"}
             other{"coronas estonian"}
         }
         EGP{
-            one{"libra egyptie"}
+            one{"libras egyptie"}
             other{"libras egyptie"}
         }
         ERN{
-            one{"nakfa eritree"}
+            one{"nakfas eritree"}
             other{"nakfas eritree"}
         }
         ETB{
-            one{"birr ethiope"}
+            one{"birres ethiope"}
             other{"birres ethiope"}
         }
         EUR{
-            one{"euro"}
+            one{"euros"}
             other{"euros"}
         }
         FIM{
-            one{"marco finnese"}
+            one{"marcos finnese"}
             other{"marcos finnese"}
         }
         FJD{
-            one{"dollar fijian"}
+            one{"dollares fijian"}
             other{"dollares fijian"}
         }
         FKP{
-            one{"libra falklandese"}
+            one{"libras falklandese"}
             other{"libras falklandese"}
         }
         FRF{
-            one{"franco francese"}
+            one{"francos francese"}
             other{"francos francese"}
         }
         GBP{
-            one{"libra sterling"}
+            one{"libras sterling"}
             other{"libras sterling"}
         }
         GHS{
-            one{"cedi ghanese"}
+            one{"cedis ghanese"}
             other{"cedis ghanese"}
         }
         GIP{
@@ -666,15 +666,15 @@ ia{
             other{"francos guinean"}
         }
         GTQ{
-            one{"quetzal guatemaltec"}
+            one{"quetzales guatemaltec"}
             other{"quetzales guatemaltec"}
         }
         GYD{
-            one{"dollar guyanese"}
+            one{"dollares guyanese"}
             other{"dollares guyanese"}
         }
         HNL{
-            one{"lempira hondurese"}
+            one{"lempiras hondurese"}
             other{"lempiras hondurese"}
         }
         HRK{
@@ -682,7 +682,7 @@ ia{
             other{"kunas croate"}
         }
         HTG{
-            one{"gourde haitian"}
+            one{"gourdes haitian"}
             other{"gourdes haitian"}
         }
         HUF{
@@ -690,19 +690,19 @@ ia{
             other{"forintes hungare"}
         }
         IEP{
-            one{"libra irlandese"}
+            one{"libras irlandese"}
             other{"libras irlandese"}
         }
         INR{
-            one{"rupia indian"}
+            one{"rupias indian"}
             other{"rupias indian"}
         }
         ISK{
-            one{"corona islandese"}
+            one{"coronas islandese"}
             other{"coronas islandese"}
         }
         JMD{
-            one{"dollar jamaican"}
+            one{"dollares jamaican"}
             other{"dollares jamaican"}
         }
         JPY{
@@ -710,27 +710,27 @@ ia{
             other{"yen japonese"}
         }
         KES{
-            one{"shilling kenyan"}
+            one{"shillings kenyan"}
             other{"shillings kenyan"}
         }
         KMF{
-            one{"franco comorian"}
+            one{"francos comorian"}
             other{"francos comorian"}
         }
         KYD{
-            one{"dollar del Insulas Caiman"}
+            one{"dollares del Insulas Caiman"}
             other{"dollares del Insulas Caiman"}
         }
         LRD{
-            one{"dollar liberian"}
+            one{"dollares liberian"}
             other{"dollares liberian"}
         }
         LYD{
-            one{"dinar libyc"}
+            one{"dinares libyc"}
             other{"dinares libyc"}
         }
         MAD{
-            one{"dirham marocchin"}
+            one{"dirhams marocchin"}
             other{"dirhams marocchin"}
         }
         MDL{
@@ -746,7 +746,7 @@ ia{
             other{"denari macedonie"}
         }
         MRO{
-            one{"ouguiya mauritan (1973–2017)"}
+            one{"ouguiyas mauritan (1973–2017)"}
             other{"ouguiyas mauritan (1973–2017)"}
         }
         MRU{
@@ -754,7 +754,7 @@ ia{
             other{"ouguiyas mauritan"}
         }
         MUR{
-            one{"rupia mauritian"}
+            one{"rupias mauritian"}
             other{"rupias mauritian"}
         }
         MWK{
@@ -762,15 +762,15 @@ ia{
             other{"kwacha malawian"}
         }
         MXN{
-            one{"peso mexican"}
+            one{"pesos mexican"}
             other{"pesos mexican"}
         }
         MZN{
-            one{"metical mozambican"}
+            one{"meticales mozambican"}
             other{"meticales mozambican"}
         }
         NAD{
-            one{"dollar namibian"}
+            one{"dollares namibian"}
             other{"dollares namibian"}
         }
         NGN{
@@ -778,31 +778,31 @@ ia{
             other{"nairas nigerian"}
         }
         NIO{
-            one{"cordoba nicaraguan"}
+            one{"cordobas nicaraguan"}
             other{"cordobas nicaraguan"}
         }
         NLG{
-            one{"florino nederlandese"}
+            one{"florinos nederlandese"}
             other{"florinos nederlandese"}
         }
         NOK{
-            one{"corona norvegian"}
+            one{"coronas norvegian"}
             other{"coronas norvegian"}
         }
         NZD{
-            one{"dollar neozelandese"}
+            one{"dollares neozelandese"}
             other{"dollares neozelandese"}
         }
         PAB{
-            one{"balboa panamen"}
+            one{"balboas panamen"}
             other{"balboas panamen"}
         }
         PEN{
-            one{"sol peruvian"}
+            one{"soles peruvian"}
             other{"soles peruvian"}
         }
         PGK{
-            one{"kina papuan"}
+            one{"kinas papuan"}
             other{"kinas papuan"}
         }
         PLN{
@@ -810,7 +810,7 @@ ia{
             other{"zlotys polonese"}
         }
         PYG{
-            one{"guarani paraguayan"}
+            one{"guaranis paraguayan"}
             other{"guaranis paraguayan"}
         }
         RON{
@@ -826,27 +826,27 @@ ia{
             other{"rublos russe"}
         }
         RWF{
-            one{"franco ruandese"}
+            one{"francos ruandese"}
             other{"francos ruandese"}
         }
         SBD{
-            one{"dollar del insulas Salomon"}
+            one{"dollares del insulas Salomon"}
             other{"dollares del insulas Salomon"}
         }
         SCR{
-            one{"rupia seychellese"}
+            one{"rupias seychellese"}
             other{"rupias seychellese"}
         }
         SDG{
-            one{"libra sudanese"}
+            one{"libras sudanese"}
             other{"libras sudanese"}
         }
         SEK{
-            one{"corona svedese"}
+            one{"coronas svedese"}
             other{"coronas svedese"}
         }
         SHP{
-            one{"libra de St. Helena"}
+            one{"libras de St. Helena"}
             other{"libras de St. Helena"}
         }
         SLL{
@@ -854,39 +854,39 @@ ia{
             other{"leones sierraleonese"}
         }
         SOS{
-            one{"shilling somali"}
+            one{"shillings somali"}
             other{"shillings somali"}
         }
         SRD{
-            one{"dollar surinamese"}
+            one{"dollares surinamese"}
             other{"dollares surinamese"}
         }
         SSP{
-            one{"libra sud-sudanese"}
+            one{"libras sud-sudanese"}
             other{"libras sud-sudanese"}
         }
         STN{
-            one{"dobra de São Tomé e Príncipe"}
+            one{"dobras de São Tomé e Príncipe"}
             other{"dobras de São Tomé e Príncipe"}
         }
         SZL{
-            one{"lilangeni swazilandese"}
+            one{"emalangeni swazilandese"}
             other{"emalangeni swazilandese"}
         }
         TND{
-            one{"dinar tunisian"}
+            one{"dinares tunisian"}
             other{"dinares tunisian"}
         }
         TOP{
-            one{"paʻanga tongan"}
+            one{"paʻangas tongan"}
             other{"paʻangas tongan"}
         }
         TTD{
-            one{"dollar de Trinidad e Tobago"}
+            one{"dollares de Trinidad e Tobago"}
             other{"dollares de Trinidad e Tobago"}
         }
         TZS{
-            one{"shilling tanzanian"}
+            one{"shillings tanzanian"}
             other{"shillings tanzanian"}
         }
         UAH{
@@ -894,39 +894,39 @@ ia{
             other{"hryvni ukrainian"}
         }
         UGX{
-            one{"shilling ugandese"}
+            one{"shillings ugandese"}
             other{"shillings ugandese"}
         }
         USD{
-            one{"dollar statounitese"}
+            one{"dollares statounitese"}
             other{"dollares statounitese"}
         }
         UYU{
-            one{"peso uruguayan"}
+            one{"pesos uruguayan"}
             other{"pesos uruguayan"}
         }
         VEF{
-            one{"bolivar venezuelan (2008–2018)"}
+            one{"bolivares venezuelan (2008–2018)"}
             other{"bolivares venezuelan (2008–2018)"}
         }
         VES{
-            one{"bolivar venezuelan"}
+            one{"bolivares venezuelan"}
             other{"bolivares venezuelan"}
         }
         VUV{
-            one{"vatu vanuatuan"}
+            one{"vatus vanuatuan"}
             other{"vatus vanuatuan"}
         }
         WST{
-            one{"tala samoan"}
+            one{"talas samoan"}
             other{"talas samoan"}
         }
         XAF{
-            one{"franco CFA de Africa Central"}
+            one{"francos CFA de Africa Central"}
             other{"francos CFA de Africa Central"}
         }
         XCD{
-            one{"dollar del Caribes Oriental"}
+            one{"dollares del Caribes Oriental"}
             other{"dollares del Caribes Oriental"}
         }
         XOF{
@@ -934,7 +934,7 @@ ia{
             other{"francos CFA de Africa Occidental"}
         }
         XPF{
-            one{"franco CFP"}
+            one{"francos CFP"}
             other{"francos CFP"}
         }
         XXX{

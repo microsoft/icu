@@ -584,7 +584,7 @@ public:
    * @return comparison result
    * @deprecated ICU 56 Use Normalizer2 instead.
    */
-  bool         operator==(const Normalizer& that) const;
+  UBool        operator==(const Normalizer& that) const;
 
   /**
    * Returns false when both iterators refer to the same character in the same
@@ -594,7 +594,7 @@ public:
    * @return comparison result
    * @deprecated ICU 56 Use Normalizer2 instead.
    */
-  inline bool         operator!=(const Normalizer& that) const;
+  inline UBool        operator!=(const Normalizer& that) const;
 
   /**
    * Returns a pointer to a new Normalizer that is a clone of this one.
@@ -732,7 +732,7 @@ public:
    * @return a UClassID for the actual class.
    * @deprecated ICU 56 Use Normalizer2 instead.
    */
-  virtual UClassID getDynamicClassID() const override;
+  virtual UClassID getDynamicClassID() const;
 #endif  // U_FORCE_HIDE_DEPRECATED_API
 
 private:
@@ -740,8 +740,8 @@ private:
   // Private functions
   //-------------------------------------------------------------------------
 
-  Normalizer() = delete; // default constructor not implemented
-  Normalizer &operator=(const Normalizer &that) = delete; // assignment operator not implemented
+  Normalizer(); // default constructor not implemented
+  Normalizer &operator=(const Normalizer &that); // assignment operator not implemented
 
   // Private utility methods for iteration
   // For documentation, see the source code
@@ -777,7 +777,7 @@ private:
 //-------------------------------------------------------------------------
 
 #ifndef U_HIDE_DEPRECATED_API
-inline bool
+inline UBool
 Normalizer::operator!= (const Normalizer& other) const
 { return ! operator==(other); }
 

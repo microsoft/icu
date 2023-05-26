@@ -17,7 +17,7 @@
 U_NAMESPACE_BEGIN namespace number {
 namespace impl {
 
-static const int32_t COMPACT_MAX_DIGITS = 20;
+static const int32_t COMPACT_MAX_DIGITS = 15;
 
 class CompactData : public MultiplierProducer {
   public:
@@ -28,10 +28,7 @@ class CompactData : public MultiplierProducer {
 
     int32_t getMultiplier(int32_t magnitude) const U_OVERRIDE;
 
-    const UChar *getPattern(
-        int32_t magnitude,
-        const PluralRules *rules,
-        const DecimalQuantity &dq) const;
+    const UChar *getPattern(int32_t magnitude, StandardPlural::Form plural) const;
 
     void getUniquePatterns(UVector &output, UErrorCode &status) const;
 

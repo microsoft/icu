@@ -25,7 +25,7 @@ U_NAMESPACE_BEGIN
 
 TransliterationRuleData::TransliterationRuleData(UErrorCode& status)
  : UMemory(), ruleSet(status), variableNames(status),
-    variables(0), variablesAreOwned(true)
+    variables(0), variablesAreOwned(TRUE)
 {
     if (U_FAILURE(status)) {
         return;
@@ -37,7 +37,7 @@ TransliterationRuleData::TransliterationRuleData(UErrorCode& status)
 
 TransliterationRuleData::TransliterationRuleData(const TransliterationRuleData& other) :
     UMemory(other), ruleSet(other.ruleSet),
-    variablesAreOwned(true),
+    variablesAreOwned(TRUE),
     variablesBase(other.variablesBase),
     variablesLength(other.variablesLength)
 {
@@ -72,7 +72,7 @@ TransliterationRuleData::TransliterationRuleData(const TransliterationRuleData& 
             }
         }
     }
-    // Remove the array and exit if memory allocation error occurred.
+    // Remove the array and exit if memory allocation error occured.
     if (U_FAILURE(status)) {
         for (int32_t n = i-1; n >= 0; n--) {
             delete variables[n];

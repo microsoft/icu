@@ -26,9 +26,7 @@ pt_PT{
         CZ{"Chéquia"}
         DJ{"Jibuti"}
         DM{"Domínica"}
-        EA{"Ceuta e Melilha"}
         EE{"Estónia"}
-        EH{"Sara Ocidental"}
         EZ{"Zona Euro"}
         FK{"Ilhas Falkland"}
         GG{"Guernesey"}
@@ -44,16 +42,16 @@ pt_PT{
         LK{"Sri Lanca"}
         LV{"Letónia"}
         MC{"Mónaco"}
-        MF{"São Martinho (Saint-Martin)"}
         MG{"Madagáscar"}
         MK{"Macedónia do Norte"}
+        MO{"Macau, RAE da China"}
         MS{"Monserrate"}
         MU{"Maurícia"}
         MW{"Maláui"}
         NC{"Nova Caledónia"}
         NU{"Niuê"}
         PL{"Polónia"}
-        PS{"Territórios palestinianos"}
+        PS{"Autoridade Palestiniana"}
         QO{"Oceânia Insular"}
         RO{"Roménia"}
         SI{"Eslovénia"}
@@ -69,19 +67,8 @@ pt_PT{
         UZ{"Usbequistão"}
         VI{"Ilhas Virgens dos EUA"}
         VN{"Vietname"}
-        XA{"Pseudoacentos"}
         YE{"Iémen"}
         YT{"Maiote"}
         ZW{"Zimbabué"}
-    }
-    Countries%short{
-        GB{"GB"}
-    }
-    Countries%variant{
-        CG{"República do Congo"}
-        CI{"Costa do Marfim"}
-        CZ{"República Checa"}
-        FK{"Ilhas Falkland (Malvinas)"}
-        NZ{"Aotearoa"}
     }
 }

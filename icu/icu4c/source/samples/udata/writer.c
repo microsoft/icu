@@ -58,7 +58,7 @@ static const UDataInfo dataInfo={
 };
 
 
-/* Exercise: add writing out other data types */
+/* Excersise: add writing out other data types */
 /* see icu/source/tools/toolutil/unewdata.h    */
 /* for other possibilities                     */
 

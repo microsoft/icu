@@ -70,7 +70,7 @@ en_AU{
         }
         BOB{
             "BOB",
-            "Bolivian boliviano",
+            "Boliviano",
         }
         BRL{
             "BRL",
@@ -100,6 +100,10 @@ en_AU{
             "CLP",
             "Chilean Peso",
         }
+        CNH{
+            "CNH",
+            "CNH",
+        }
         CNY{
             "CNY",
             "Chinese Yuan",
@@ -107,10 +111,6 @@ en_AU{
         COP{
             "COP",
             "Colombian Peso",
-        }
-        CUP{
-            "CUP",
-            "Cuban Peso",
         }
         CVE{
             "CVE",
@@ -428,6 +428,10 @@ en_AU{
             "SHP",
             "St Helena Pound",
         }
+        SLL{
+            "SLL",
+            "Sierra Leonean Leone",
+        }
         SOS{
             "SOS",
             "Somali Shilling",
@@ -502,7 +506,7 @@ en_AU{
         }
         VES{
             "VES",
-            "Venezuelan bolívar",
+            "VES",
         }
         VND{
             "VND",
@@ -600,6 +604,14 @@ en_AU{
             one{"Bermuda dollar"}
             other{"Bermuda dollars"}
         }
+        BOB{
+            one{"boliviano"}
+            other{"bolivianos"}
+        }
+        CNH{
+            one{"CNH"}
+            other{"CNH"}
+        }
         ETB{
             one{"Ethiopian birr"}
             other{"Ethiopian birrs"}
@@ -655,6 +667,14 @@ en_AU{
         UZS{
             one{"Uzbekistani som"}
             other{"Uzbekistani soms"}
+        }
+        VEF{
+            one{"Venezuelan bolívar"}
+            other{"Venezuelan bolívars"}
+        }
+        VES{
+            one{"VES"}
+            other{"VES"}
         }
         VND{
             one{"Vietnamese dong"}

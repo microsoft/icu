@@ -2,7 +2,12 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 root{
-    Version{"42"}
+    Types{
+        calendar{
+            roc{"Taiwan Calendar"}
+        }
+    }
+    Version{"38.1"}
     characterLabelPattern{
         all{"{0} — all"}
         category-list{"{0}: {1}"}

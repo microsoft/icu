@@ -109,7 +109,7 @@ void dumpLongs(FILE *file, const char *tag, le_int32 *longs, le_int32 count) {
             bufp = 0;
         }
 
-        bufp += snprintf(&lineBuffer[bufp], sizeof(lineBuffer) - bufp, "0x%8.8X, ", longs[i]);
+        bufp += sprintf(&lineBuffer[bufp], "0x%8.8X, ", longs[i]);
     }
 
     if (bufp != 0) {
@@ -132,7 +132,7 @@ void dumpFloats(FILE *file, const char *tag, float *floats, le_int32 count) {
             bufp = 0;
         }
 
-        bufp += snprintf(&lineBuffer[bufp], sizeof(lineBuffer) - bufp, "%f, ", floats[i]);
+        bufp += sprintf(&lineBuffer[bufp], "%f, ", floats[i]);
     }
 
     if (bufp != 0) {
@@ -283,7 +283,7 @@ int main(int argc, char *argv[])
                 } else if (tag.compare(test_text) == 0) {
                     char *utf8 = NULL;
 
-                    text = element->getText(true);
+                    text = element->getText(TRUE);
                     charCount = text.length();
 
                     utf8 = getUTF8String(&text);

@@ -24,7 +24,7 @@
 class NumberFormatRegressionTest: public IntlTest {
 
     // IntlTest override
-    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par ) override;
+    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par );
 public:
 
     void Test4075713(void);
@@ -98,9 +98,9 @@ public:
     void Test9677(void);
     void Test10361(void);
 protected:
-    UBool failure(UErrorCode status, const UnicodeString& msg, UBool possibleDataError=false);
-    UBool failure(UErrorCode status, const UnicodeString& msg, const char *l, UBool possibleDataError=false);
-    UBool failure(UErrorCode status, const UnicodeString& msg, const Locale& l, UBool possibleDataError=false);
+    UBool failure(UErrorCode status, const UnicodeString& msg, UBool possibleDataError=FALSE);
+    UBool failure(UErrorCode status, const UnicodeString& msg, const char *l, UBool possibleDataError=FALSE);
+    UBool failure(UErrorCode status, const UnicodeString& msg, const Locale& l, UBool possibleDataError=FALSE);
 };
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

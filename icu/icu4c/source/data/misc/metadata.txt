@@ -36,10 +36,6 @@ metadata:table(nofallback){
                 reason{"deprecated"}
                 replacement{"ami"}
             }
-            ajt{
-                reason{"deprecated"}
-                replacement{"aeb"}
-            }
             aju{
                 reason{"macrolanguage"}
                 replacement{"jrb"}
@@ -164,10 +160,6 @@ metadata:table(nofallback){
                 reason{"deprecated"}
                 replacement{"fbl"}
             }
-            bic{
-                reason{"deprecated"}
-                replacement{"bir"}
-            }
             bih{
                 reason{"overlong"}
                 replacement{"bho"}
@@ -187,10 +179,6 @@ metadata:table(nofallback){
             bkb{
                 reason{"deprecated"}
                 replacement{"ebk"}
-            }
-            blg{
-                reason{"deprecated"}
-                replacement{"iba"}
             }
             bod{
                 reason{"overlong"}
@@ -928,10 +916,6 @@ metadata:table(nofallback){
                 reason{"deprecated"}
                 replacement{"dtp"}
             }
-            lak{
-                reason{"deprecated"}
-                replacement{"ksp"}
-            }
             lao{
                 reason{"overlong"}
                 replacement{"lo"}
@@ -1164,6 +1148,10 @@ metadata:table(nofallback){
                 reason{"deprecated"}
                 replacement{"ngv"}
             }
+            no{
+                reason{"legacy"}
+                replacement{"nb"}
+            }
             no_bok{
                 reason{"deprecated"}
                 replacement{"nb"}
@@ -1190,7 +1178,7 @@ metadata:table(nofallback){
             }
             nor{
                 reason{"overlong"}
-                replacement{"no"}
+                replacement{"nb"}
             }
             npi{
                 reason{"macrolanguage"}
@@ -1243,10 +1231,6 @@ metadata:table(nofallback){
             pan{
                 reason{"overlong"}
                 replacement{"pa"}
-            }
-            pat{
-                reason{"deprecated"}
-                replacement{"kxr"}
             }
             pbu{
                 reason{"macrolanguage"}
@@ -1492,10 +1476,6 @@ metadata:table(nofallback){
                 reason{"overlong"}
                 replacement{"sl"}
             }
-            smd{
-                reason{"deprecated"}
-                replacement{"kmb"}
-            }
             sme{
                 reason{"overlong"}
                 replacement{"se"}
@@ -1507,10 +1487,6 @@ metadata:table(nofallback){
             sna{
                 reason{"overlong"}
                 replacement{"sn"}
-            }
-            snb{
-                reason{"deprecated"}
-                replacement{"iba"}
             }
             snd{
                 reason{"overlong"}
@@ -5103,54 +5079,6 @@ metadata:table(nofallback){
                 replacement{"ZZ"}
             }
         }
-        unit{
-            inch-hg{
-                reason{"deprecated"}
-                replacement{"inch-ofhg"}
-            }
-            liter-per-100kilometers{
-                reason{"deprecated"}
-                replacement{"liter-per-100-kilometer"}
-            }
-            meter-per-second-squared{
-                reason{"deprecated"}
-                replacement{"meter-per-square-second"}
-            }
-            metric-ton{
-                reason{"deprecated"}
-                replacement{"tonne"}
-            }
-            milligram-per-deciliter{
-                reason{"deprecated"}
-                replacement{"milligram-ofglucose-per-deciliter"}
-            }
-            millimeter-of-mercury{
-                reason{"deprecated"}
-                replacement{"millimeter-ofhg"}
-            }
-            part-per-million{
-                reason{"deprecated"}
-                replacement{"permillion"}
-            }
-            pound-foot{
-                reason{"deprecated"}
-                replacement{"pound-force-foot"}
-            }
-            pound-per-square-inch{
-                reason{"deprecated"}
-                replacement{"pound-force-per-square-inch"}
-            }
-        }
-        usage{
-            music-track{
-                reason{"deprecated"}
-                replacement{"media"}
-            }
-            tv-program{
-                reason{"deprecated"}
-                replacement{"media"}
-            }
-        }
         variant{
             heploc{
                 reason{"deprecated"}
@@ -5164,13 +5092,11 @@ metadata:table(nofallback){
     }
     defaultContent{
         "aa_ET",
-        "ab_GE",
         "af_ZA",
         "agq_CM",
         "ak_GH",
         "am_ET",
         "an_ES",
-        "ann_NG",
         "ar_001",
         "arn_CL",
         "as_IN",
@@ -5181,17 +5107,12 @@ metadata:table(nofallback){
         "az_Latn",
         "az_Latn_AZ",
         "ba_RU",
-        "bal_Arab",
-        "bal_Arab_PK",
-        "bal_Latn_PK",
         "bas_CM",
         "be_BY",
         "bem_ZM",
         "bez_TZ",
         "bg_BG",
-        "bgc_IN",
         "bgn_PK",
-        "bho_IN",
         "blt_VN",
         "bm_ML",
         "bm_Nkoo_ML",
@@ -5233,7 +5154,6 @@ metadata:table(nofallback){
         "ee_GH",
         "el_GR",
         "en_Dsrt_US",
-        "en_Shaw_GB",
         "en_US",
         "eo_001",
         "es_ES",
@@ -5248,7 +5168,6 @@ metadata:table(nofallback){
         "fil_PH",
         "fo_FO",
         "fr_FR",
-        "frr_DE",
         "fur_IT",
         "fy_NL",
         "ga_IE",
@@ -5267,8 +5186,6 @@ metadata:table(nofallback){
         "he_IL",
         "hi_IN",
         "hi_Latn_IN",
-        "hnj_Hmnp",
-        "hnj_Hmnp_US",
         "hr_HR",
         "hsb_DE",
         "hu_HU",
@@ -5333,7 +5250,6 @@ metadata:table(nofallback){
         "lv_LV",
         "mai_IN",
         "mas_KE",
-        "mdf_RU",
         "mer_KE",
         "mfe_MU",
         "mg_MG",
@@ -5358,7 +5274,6 @@ metadata:table(nofallback){
         "myv_RU",
         "mzn_IR",
         "naq_NA",
-        "nb",
         "nb_NO",
         "nd_ZW",
         "nds_DE",
@@ -5383,16 +5298,12 @@ metadata:table(nofallback){
         "pa_Guru",
         "pa_Guru_IN",
         "pcm_NG",
-        "pis_SB",
         "pl_PL",
         "prg_001",
         "ps_AF",
         "pt_BR",
         "qu_PE",
         "quc_GT",
-        "raj_IN",
-        "rhg_Rohg",
-        "rhg_Rohg_MM",
         "rm_CH",
         "rn_BI",
         "ro_RO",
@@ -5420,7 +5331,6 @@ metadata:table(nofallback){
         "shi_Latn_MA",
         "shi_Tfng",
         "shi_Tfng_MA",
-        "shn_MM",
         "si_LK",
         "sid_ET",
         "sk_SK",
@@ -5454,8 +5364,6 @@ metadata:table(nofallback){
         "tk_TM",
         "tn_ZA",
         "to_TO",
-        "tok_001",
-        "tpi_PG",
         "tr_TR",
         "trv_TW",
         "trw_PK",
@@ -5474,7 +5382,6 @@ metadata:table(nofallback){
         "vai_Vaii",
         "vai_Vaii_LR",
         "ve_ZA",
-        "vec_IT",
         "vi_VN",
         "vo_001",
         "vun_TZ",
@@ -5488,7 +5395,6 @@ metadata:table(nofallback){
         "yav_CM",
         "yi_001",
         "yo_NG",
-        "yrl_BR",
         "yue_Hans_CN",
         "yue_Hant",
         "yue_Hant_HK",

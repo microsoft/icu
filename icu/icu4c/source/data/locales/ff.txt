@@ -34,16 +34,6 @@ ff{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GGGGGyMd",
-            }
             availableFormats{
                 M{"M"}
                 MMM{"MMM"}
@@ -90,16 +80,6 @@ ff{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "yMMMMEEEEd",
-                "yMMMMd",
-                "yMMMd",
-                "yMd",
             }
             appendItems{
                 Day{"{0} ({2}: {1})"}
@@ -289,20 +269,6 @@ ff{
         }
         zone{
             dn{"Diiwaan waktu"}
-        }
-    }
-    personNames{
-        nameOrderLocales{
-            givenFirst{
-                "und",
-                "ff",
-            }
-            surnameFirst{
-                "ko",
-                "vi",
-                "yue",
-                "zh",
-            }
         }
     }
 }

@@ -867,9 +867,6 @@ km{
         "Asia:Ulaanbaatar"{
             ec{"អ៊ូឡង់បាទ័រ"}
         }
-        "Asia:Urumqi"{
-            ec{"អ៊ូរាំហ្គី"}
-        }
         "Asia:Ust-Nera"{
             ec{"អូស្តណេរ៉ា"}
         }
@@ -1222,9 +1219,6 @@ km{
         }
         "Pacific:Johnston"{
             ec{"ចនស្តុន"}
-        }
-        "Pacific:Kanton"{
-            ec{"កាន់តុន"}
         }
         "Pacific:Kiritimati"{
             ec{"គិរីទីម៉ាទិ"}
@@ -1885,9 +1879,6 @@ km{
             ld{"ម៉ោង​នៅ​អ៊ិខាធឺរីនប៊័កនា​រដូវ​​ក្ដៅ"}
             lg{"ម៉ោង​នៅ​អ៊ិខាធឺរីនប៊័ក"}
             ls{"ម៉ោង​ស្តង់ដារ​នៅ​អ៊ិខាធឺរីនប៊័ក"}
-        }
-        "meta:Yukon"{
-            ls{"ម៉ោងនៅយូខន់"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"ម៉ោង​សកល {0}"}

@@ -115,7 +115,7 @@ NFRule::makeRules(UnicodeString& description,
     // we know we're making at least one rule, so go ahead and
     // new it up and initialize its basevalue and divisor
     // (this also strips the rule descriptor, if any, off the
-    // description string)
+    // descripton string)
     NFRule* rule1 = new NFRule(rbnf, description, status);
     /* test for NULL */
     if (rule1 == 0) {
@@ -193,7 +193,7 @@ NFRule::makeRules(UnicodeString& description,
             rule2->radix = rule1->radix;
             rule2->exponent = rule1->exponent;
 
-            // rule2's rule text omits the stuff in brackets: initialize
+            // rule2's rule text omits the stuff in brackets: initalize
             // its rule text and substitutions accordingly
             sbuf.append(description, 0, brack1);
             if (brack2 + 1 < description.length()) {
@@ -621,9 +621,9 @@ util_equalSubstitutions(const NFSubstitution* sub1, const NFSubstitution* sub2)
             return *sub1 == *sub2;
         }
     } else if (!sub2) {
-        return true;
+        return TRUE;
     }
-    return false;
+    return FALSE;
 }
 
 /**
@@ -631,7 +631,7 @@ util_equalSubstitutions(const NFSubstitution* sub1, const NFSubstitution* sub2)
 * @param that The rule to compare this one against
 * @return True is the two rules are functionally equivalent
 */
-bool
+UBool
 NFRule::operator==(const NFRule& rhs) const
 {
     return baseValue == rhs.baseValue
@@ -856,7 +856,7 @@ NFRule::shouldRollBack(int64_t number) const
         int64_t re = util64_pow(radix, exponent);
         return (number % re) == 0 && (baseValue % re) != 0;
     }
-    return false;
+    return FALSE;
 }
 
 //-----------------------------------------------------------------------
@@ -943,19 +943,19 @@ NFRule::doParse(const UnicodeString& text,
         // restored for ICU4C port
         parsePosition.setErrorIndex(pp.getErrorIndex());
         resVal.setLong(0);
-        return true;
+        return TRUE;
     }
     if (baseValue == kInfinityRule) {
         // If you match this, don't try to perform any calculations on it.
         parsePosition.setIndex(pp.getIndex());
         resVal.setDouble(uprv_getInfinity());
-        return true;
+        return TRUE;
     }
     if (baseValue == kNaNRule) {
         // If you match this, don't try to perform any calculations on it.
         parsePosition.setIndex(pp.getIndex());
         resVal.setDouble(uprv_getNaN());
-        return true;
+        return TRUE;
     }
 
     // this is the fun part.  The basic guts of the rule-matching
@@ -1083,7 +1083,7 @@ NFRule::doParse(const UnicodeString& text,
     }
 
     resVal.setDouble(result);
-    return true; // ??? do we need to worry if it is a long or a double?
+    return TRUE; // ??? do we need to worry if it is a long or a double?
 }
 
 /**
@@ -1191,7 +1191,7 @@ NFRule::matchToDelimiter(const UnicodeString& text,
             if (subText.length() > 0) {
                 UBool success = sub->doParse(subText, tempPP, _baseValue, upperBound,
 #if UCONFIG_NO_COLLATION
-                    false,
+                    FALSE,
 #else
                     formatter->isLenient(),
 #endif
@@ -1245,7 +1245,7 @@ NFRule::matchToDelimiter(const UnicodeString& text,
         // try to match the whole string against the substitution
         UBool success = sub->doParse(text, tempPP, _baseValue, upperBound,
 #if UCONFIG_NO_COLLATION
-            false,
+            FALSE,
 #else
             formatter->isLenient(),
 #endif
@@ -1533,7 +1533,7 @@ NFRule::findTextLenient(const UnicodeString& str,
     // in JDK 1.2, CollationElementIterator provides us with an
     // API to map between character offsets and collation elements
     // and we can do this by marching through the string comparing
-    // collation elements.  We can't do that in JDK 1.1.  Instead,
+    // collation elements.  We can't do that in JDK 1.1.  Insted,
     // we have to go through this horrible slow mess:
     int32_t p = startingAt;
     int32_t keyLen = 0;
@@ -1579,7 +1579,7 @@ NFRule::allIgnorable(const UnicodeString& str, UErrorCode& status) const
 {
     // if the string is empty, we can just return true
     if (str.length() == 0) {
-        return true;
+        return TRUE;
     }
 
 #if !UCONFIG_NO_COLLATION
@@ -1590,14 +1590,14 @@ NFRule::allIgnorable(const UnicodeString& str, UErrorCode& status) const
         const RuleBasedCollator* collator = formatter->getCollator();
         if (collator == NULL) {
             status = U_MEMORY_ALLOCATION_ERROR;
-            return false;
+            return FALSE;
         }
         LocalPointer<CollationElementIterator> iter(collator->createCollationElementIterator(str));
 
         // Memory allocation error check.
         if (iter.isNull()) {
             status = U_MEMORY_ALLOCATION_ERROR;
-            return false;
+            return FALSE;
         }
 
         UErrorCode err = U_ZERO_ERROR;
@@ -1613,7 +1613,7 @@ NFRule::allIgnorable(const UnicodeString& str, UErrorCode& status) const
 
     // if lenient parsing is turned off, there is no such thing as
     // an ignorable character: return true only if the string is empty
-    return false;
+    return FALSE;
 }
 
 void

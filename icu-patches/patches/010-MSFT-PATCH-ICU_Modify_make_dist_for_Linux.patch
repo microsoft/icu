@@ -6,10 +6,10 @@ Subject: MSFT-PATCH: Modify make dist for MS-ICU GitHub paths.
 Modify `make dist` paths for the MS-ICU GitHub path location, plus omit
 the Doxygen docs as we don't currently build the docs.
 
-diff --git a/icu4c/source/config/dist.mk b/icu4c/source/config/dist.mk
-index d82863221b..8399201eee 100644
---- a/icu4c/source/config/dist.mk
-+++ b/icu4c/source/config/dist.mk
+diff --git a/icu/icu4c/source/config/dist.mk b/icu/icu4c/source/config/dist.mk
+index f45133eddb5186839da59067906cb3b494b1b97e..2b4cc161afa8f666e07775d7bc739d78ba8c5bce 100644
+--- a/icu/icu4c/source/config/dist.mk
++++ b/icu/icu4c/source/config/dist.mk
 @@ -37,7 +37,9 @@ DISTY_DATA_ZIP=$(DISTY_FILE_DIR)/$(DISTY_PREFIX)-$(DISTY_VER)-$(GITVER)-data.zip
  DISTY_DAT:=$(firstword $(wildcard data/out/tmp/icudt$(SO_TARGET_VERSION_MAJOR)*.dat))
  
@@ -18,7 +18,7 @@ index d82863221b..8399201eee 100644
 +# MSFT-Change: We only want the tgz for now, as we don't currently build the docs.
 +#DISTY_FILES=$(DISTY_FILES_SRC) $(DISTY_DOC_ZIP)
 +DISTY_FILES=$(DISTY_FILES_SRC)
- # colon-equals because we want to run this once!
+ # colon-equals because we watn to run this once!
  EXCLUDES_FILE:=$(shell mktemp)
  
 @@ -65,7 +67,8 @@ $(DISTY_FILE_TGZ) $(DISTY_FILE_ZIP) $(DISTY_DATA_ZIP):  $(DISTY_DAT) $(DISTY_TMP

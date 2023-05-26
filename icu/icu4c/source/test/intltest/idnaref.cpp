@@ -47,15 +47,15 @@ static const UChar ACE_PREFIX[] ={ 0x0078,0x006E,0x002d,0x002d } ;
 
 inline static UBool
 startsWithPrefix(const UChar* src , int32_t srcLength){
-    UBool startsWithPrefix = true;
+    UBool startsWithPrefix = TRUE;
 
     if(srcLength < ACE_PREFIX_LENGTH){
-        return false;
+        return FALSE;
     }
 
     for(int8_t i=0; i< ACE_PREFIX_LENGTH; i++){
         if(u_tolower(src[i]) != ACE_PREFIX[i]){
-            startsWithPrefix = false;
+            startsWithPrefix = FALSE;
         }
     }
     return startsWithPrefix;
@@ -282,9 +282,9 @@ idnaref_toASCII(const UChar* src, int32_t srcLength,
     UBool* caseFlags = NULL;
 
     // assume the source contains all ascii codepoints
-    UBool srcIsASCII  = true;
+    UBool srcIsASCII  = TRUE;
     // assume the source contains all LDH codepoints
-    UBool srcIsLDH = true;
+    UBool srcIsLDH = TRUE;
     int32_t j=0;
 
     if(srcLength == -1){
@@ -294,7 +294,7 @@ idnaref_toASCII(const UChar* src, int32_t srcLength,
     // step 1
     for( j=0;j<srcLength;j++){
         if(src[j] > 0x7F){
-            srcIsASCII = false;
+            srcIsASCII = FALSE;
         }
         b1[b1Len++] = src[j];
     }
@@ -332,19 +332,19 @@ idnaref_toASCII(const UChar* src, int32_t srcLength,
         goto CLEANUP;
     }
 
-    srcIsASCII = true;
+    srcIsASCII = TRUE;
     // step 3 & 4
     for( j=0;j<b1Len;j++){
         if(b1[j] > 0x7F){// check if output of usprep_prepare is all ASCII
-            srcIsASCII = false;
-        }else if(prep->isLDHChar(b1[j])==false){  // if the char is in ASCII range verify that it is an LDH character{
-            srcIsLDH = false;
+            srcIsASCII = FALSE;
+        }else if(prep->isLDHChar(b1[j])==FALSE){  // if the char is in ASCII range verify that it is an LDH character{
+            srcIsLDH = FALSE;
         }
     }
 
-    if(useSTD3ASCIIRules == true){
+    if(useSTD3ASCIIRules == TRUE){
         // verify 3a and 3b
-        if( srcIsLDH == false /* source contains some non-LDH characters */
+        if( srcIsLDH == FALSE /* source contains some non-LDH characters */
             || b1[0] ==  HYPHEN || b1[b1Len-1] == HYPHEN){
             *status = U_IDNA_STD3_ASCII_RULES_ERROR;
             goto CLEANUP;
@@ -458,8 +458,8 @@ idnaref_toUnicode(const UChar* src, int32_t srcLength,
     UBool allowUnassigned   = (UBool)((options & IDNAREF_ALLOW_UNASSIGNED) != 0);
     UBool useSTD3ASCIIRules = (UBool)((options & IDNAREF_USE_STD3_RULES) != 0);
 
-    UBool srcIsASCII = true;
-    UBool srcIsLDH = true;
+    UBool srcIsASCII = TRUE;
+    UBool srcIsLDH = TRUE;
     int32_t failPos =0;
 
     if(U_FAILURE(*status)){
@@ -470,12 +470,12 @@ idnaref_toUnicode(const UChar* src, int32_t srcLength,
         srcLength = 0;
         for(;src[srcLength]!=0;){
             if(src[srcLength]> 0x7f){
-                srcIsASCII = false;
-            }if(prep->isLDHChar(src[srcLength])==false){
+                srcIsASCII = FALSE;
+            }if(prep->isLDHChar(src[srcLength])==FALSE){
                 // here we do not assemble surrogates
                 // since we know that LDH code points
                 // are in the ASCII range only
-                srcIsLDH = false;
+                srcIsLDH = FALSE;
                 failPos = srcLength;
             }
             srcLength++;
@@ -483,18 +483,18 @@ idnaref_toUnicode(const UChar* src, int32_t srcLength,
     }else{
         for(int32_t j=0; j<srcLength; j++){
             if(src[j]> 0x7f){
-                srcIsASCII = false;
-            }else if(prep->isLDHChar(src[j])==false){
+                srcIsASCII = FALSE;
+            }else if(prep->isLDHChar(src[j])==FALSE){
                 // here we do not assemble surrogates
                 // since we know that LDH code points
                 // are in the ASCII range only
-                srcIsLDH = false;
+                srcIsLDH = FALSE;
                 failPos = j;
             }
         }
     }
 
-    if(srcIsASCII == false){
+    if(srcIsASCII == FALSE){
         // step 2: process the string
         b1Len = prep->process(src,srcLength,b1,b1Capacity,allowUnassigned, parseError, *status);
         if(*status == U_BUFFER_OVERFLOW_ERROR){
@@ -592,13 +592,13 @@ idnaref_toUnicode(const UChar* src, int32_t srcLength,
         }
     }else{
         // verify that STD3 ASCII rules are satisfied
-        if(useSTD3ASCIIRules == true){
-            if( srcIsLDH == false /* source contains some non-LDH characters */
+        if(useSTD3ASCIIRules == TRUE){
+            if( srcIsLDH == FALSE /* source contains some non-LDH characters */
                 || src[0] ==  HYPHEN || src[srcLength-1] == HYPHEN){
                 *status = U_IDNA_STD3_ASCII_RULES_ERROR;
 
                 /* populate the parseError struct */
-                if(srcIsLDH==false){
+                if(srcIsLDH==FALSE){
                     // failPos is always set the index of failure
                     uprv_syntaxError(src,failPos, srcLength,parseError);
                 }else if(src[0] == HYPHEN){
@@ -661,7 +661,7 @@ getNextSeparator(UChar *src,int32_t srcLength,NamePrepTransform* prep,
         for(i=0 ; ;i++){
             if(src[i] == 0){
                 *limit = src + i; // point to null
-                *done = true;
+                *done = TRUE;
                 return i;
             }
             if(prep->isLabelSeparator(src[i],*status)){
@@ -681,7 +681,7 @@ getNextSeparator(UChar *src,int32_t srcLength,NamePrepTransform* prep,
         // we have not found the delimiter
         if(i==srcLength){
             *limit = src+srcLength;
-            *done = true;
+            *done = TRUE;
         }
         return i;
     }
@@ -719,7 +719,7 @@ idnaref_IDNToASCII(  const UChar* src, int32_t srcLength,
     //get the options
 //    UBool allowUnassigned   = (UBool)((options & IDNAREF_ALLOW_UNASSIGNED) != 0);
 //    UBool useSTD3ASCIIRules = (UBool)((options & IDNAREF_USE_STD3_RULES) != 0);
-    UBool done = false;
+    UBool done = FALSE;
 
     if(U_FAILURE(*status)){
         goto CLEANUP;
@@ -769,7 +769,7 @@ idnaref_IDNToASCII(  const UChar* src, int32_t srcLength,
             reqLength = tempLen;
 
             // add the label separator
-            if(done == false){
+            if(done == FALSE){
                 if(reqLength < destCapacity){
                     dest[reqLength] = FULL_STOP;
                 }
@@ -818,7 +818,7 @@ idnaref_IDNToASCII(  const UChar* src, int32_t srcLength,
             reqLength = tempLen;
 
             // add the label separator
-            if(done == false){
+            if(done == FALSE){
                 if(reqLength < destCapacity){
                     dest[reqLength] = FULL_STOP;
                 }
@@ -859,7 +859,7 @@ idnaref_IDNToUnicode(  const UChar* src, int32_t srcLength,
 
     int32_t reqLength = 0;
 
-    UBool done = false;
+    UBool done = FALSE;
 
     NamePrepTransform* prep = getInstance(*status);
 
@@ -889,7 +889,7 @@ idnaref_IDNToUnicode(  const UChar* src, int32_t srcLength,
 
             labelLen = getNextSeparator(labelStart, -1, prep, &delimiter, &done, status);
 
-           if(labelLen==0 && done==false){
+           if(labelLen==0 && done==FALSE){
                 *status = U_IDNA_ZERO_LENGTH_LABEL_ERROR;
             }
             b1Len = idnaref_toUnicode(labelStart, labelLen, b1, b1Capacity,
@@ -922,7 +922,7 @@ idnaref_IDNToUnicode(  const UChar* src, int32_t srcLength,
 
             reqLength = tempLen;
             // add the label separator
-            if(done == false){
+            if(done == FALSE){
                 if(reqLength < destCapacity){
                     dest[reqLength] = FULL_STOP;
                 }
@@ -940,7 +940,7 @@ idnaref_IDNToUnicode(  const UChar* src, int32_t srcLength,
 
             labelLen = getNextSeparator(labelStart, remainingLen, prep, &delimiter, &done, status);
 
-            if(labelLen==0 && done==false){
+            if(labelLen==0 && done==FALSE){
                 *status = U_IDNA_ZERO_LENGTH_LABEL_ERROR;
             }
 
@@ -975,7 +975,7 @@ idnaref_IDNToUnicode(  const UChar* src, int32_t srcLength,
             reqLength = tempLen;
 
             // add the label separator
-            if(done == false){
+            if(done == FALSE){
                 if(reqLength < destCapacity){
                     dest[reqLength] = FULL_STOP;
                 }

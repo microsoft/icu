@@ -867,9 +867,6 @@ hr{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumqi"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1436,9 +1433,9 @@ hr{
             ls{"bolivijsko vrijeme"}
         }
         "meta:Brasilia"{
-            ld{"brazilsko ljetno vrijeme"}
-            lg{"brazilsko vrijeme"}
-            ls{"brazilsko standardno vrijeme"}
+            ld{"brazilijsko ljetno vrijeme"}
+            lg{"brazilijsko vrijeme"}
+            ls{"brazilijsko standardno vrijeme"}
         }
         "meta:Brunei"{
             ls{"vrijeme za Brunej Darussalam"}
@@ -1949,9 +1946,6 @@ hr{
             ld{"jekaterinburško ljetno vrijeme"}
             lg{"jekaterinburško vrijeme"}
             ls{"jekaterinburško standardno vrijeme"}
-        }
-        "meta:Yukon"{
-            ls{"jukonško vrijeme"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

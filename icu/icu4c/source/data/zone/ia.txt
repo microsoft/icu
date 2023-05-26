@@ -6,9 +6,6 @@ ia{
         "Africa:Ceuta"{
             ec{"Ceuta"}
         }
-        "Africa:Djibouti"{
-            ec{"Djibuti"}
-        }
         "America:Adak"{
             ec{"Adak"}
         }
@@ -342,9 +339,6 @@ ia{
         "Asia:Chita"{
             ec{"Chita"}
         }
-        "Asia:Hong_Kong"{
-            ec{"Hongkong"}
-        }
         "Asia:Irkutsk"{
             ec{"Irkutsk"}
         }
@@ -398,9 +392,6 @@ ia{
         }
         "Atlantic:Canary"{
             ec{"Canarias"}
-        }
-        "Atlantic:Cape_Verde"{
-            ec{"Capo Verde"}
         }
         "Atlantic:Faeroe"{
             ec{"Feroe"}
@@ -595,15 +586,6 @@ ia{
         }
         "Europe:Zurich"{
             ec{"Zurich"}
-        }
-        "Indian:Maldives"{
-            ec{"Maldivas"}
-        }
-        "Indian:Mauritius"{
-            ec{"Mauritio"}
-        }
-        "Indian:Mayotte"{
-            ec{"Mayotta"}
         }
         "meta:Alaska"{
             ld{"hora estive de Alaska"}

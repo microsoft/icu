@@ -326,20 +326,20 @@ public:
      * Checks if two locale keys are the same.
      *
      * @param other The locale key object to be compared with this.
-     * @return      true if the two locale keys are the same, false otherwise.
+     * @return      True if the two locale keys are the same, false otherwise.
      * @stable ICU 2.0
      */
-    bool    operator==(const    Locale&     other) const;
+    UBool   operator==(const    Locale&     other) const;
 
     /**
      * Checks if two locale keys are not the same.
      *
      * @param other The locale key object to be compared with this.
-     * @return      true if the two locale keys are not the same, false
+     * @return      True if the two locale keys are not the same, false
      *              otherwise.
      * @stable ICU 2.0
      */
-    inline bool    operator!=(const    Locale&     other) const;
+    inline UBool   operator!=(const    Locale&     other) const;
 
     /**
      * Clone this object.
@@ -571,13 +571,15 @@ public:
      */
     void minimizeSubtags(UErrorCode& status);
 
+#ifndef U_HIDE_DRAFT_API
     /**
      * Canonicalize the locale ID of this object according to CLDR.
      * @param status the status code
-     * @stable ICU 67
+     * @draft ICU 67
      * @see createCanonical
      */
     void canonicalize(UErrorCode& status);
+#endif  // U_HIDE_DRAFT_API
 
     /**
      * Gets the list of keywords for the specified locale.
@@ -1005,7 +1007,7 @@ public:
      *
      * @stable ICU 2.2
      */
-    virtual UClassID getDynamicClassID() const override;
+    virtual UClassID getDynamicClassID() const;
 
     /**
      * A Locale iterator interface similar to a Java Iterator<Locale>.
@@ -1163,7 +1165,7 @@ private:
     friend void U_CALLCONV locale_available_init();
 };
 
-inline bool
+inline UBool
 Locale::operator!=(const    Locale&     other) const
 {
     return !operator==(other);

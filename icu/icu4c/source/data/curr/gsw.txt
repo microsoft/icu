@@ -629,7 +629,7 @@ gsw{
         }
         MVR{
             "MVR",
-            "Malediven-Rufiyaa",
+            "Rufiyaa",
         }
         MWK{
             "MWK",
@@ -720,7 +720,7 @@ gsw{
             "Kina",
         }
         PHP{
-            "₱",
+            "PHP",
             "Philippiinische Peso",
         }
         PKR{
@@ -1024,7 +1024,7 @@ gsw{
             "Französische UIC-Franc",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "CFA-Franc (Wescht)",
         }
         XPD{
@@ -1694,8 +1694,8 @@ gsw{
             other{"Maurizius-Rupie"}
         }
         MVR{
-            one{"Malediven-Rufiyaa"}
-            other{"Malediven-Rupien"}
+            one{"Rufiyaa"}
+            other{"Rufiyaa"}
         }
         MWK{
             one{"Malawi-Kwacha"}

@@ -84,7 +84,7 @@
  *
  * <pre>
  * \code
- *#include <unicode/ubidi.h>
+ *#include "unicode/ubidi.h"
  *
  *typedef enum {
  *     styleNormal=0, styleSelected=1,
@@ -136,11 +136,11 @@
  *         int styleLimit;
  *
  *         for(i=0; i<styleRunCount; ++i) {
- *             styleLimit=styleRuns[i].limit;
+ *             styleLimit=styleRun[i].limit;
  *             if(start<styleLimit) {
  *                 if(styleLimit>limit) { styleLimit=limit; }
  *                 renderRun(text, start, styleLimit,
- *                           direction, styleRuns[i].style);
+ *                           direction, styleRun[i].style);
  *                 if(styleLimit==limit) { break; }
  *                 start=styleLimit;
  *             }
@@ -150,14 +150,14 @@
  *
  *         for(i=styleRunCount-1; i>=0; --i) {
  *             if(i>0) {
- *                 styleStart=styleRuns[i-1].limit;
+ *                 styleStart=styleRun[i-1].limit;
  *             } else {
  *                 styleStart=0;
  *             }
  *             if(limit>=styleStart) {
  *                 if(styleStart<start) { styleStart=start; }
  *                 renderRun(text, styleStart, limit,
- *                           direction, styleRuns[i].style);
+ *                           direction, styleRun[i].style);
  *                 if(styleStart==start) { break; }
  *                 limit=styleStart;
  *             }
@@ -168,8 +168,7 @@
  * // the line object represents text[start..limit-1]
  * void renderLine(UBiDi *line, const UChar *text,
  *                 int32_t start, int32_t limit,
- *                 const StyleRun *styleRuns, int styleRunCount,
- *                 UErrorCode *pErrorCode) {
+ *                 const StyleRun *styleRuns, int styleRunCount) {
  *     UBiDiDirection direction=ubidi_getDirection(line);
  *     if(direction!=UBIDI_MIXED) {
  *         // unidirectional
@@ -184,14 +183,14 @@
  *         int32_t count, i, length;
  *         UBiDiLevel level;
  *
- *         count=ubidi_countRuns(line, pErrorCode);
+ *         count=ubidi_countRuns(para, pErrorCode);
  *         if(U_SUCCESS(*pErrorCode)) {
  *             if(styleRunCount<=1) {
  *                 Style style=styleRuns[0].style;
  *
  *                 // iterate over directional runs
  *                for(i=0; i<count; ++i) {
- *                    direction=ubidi_getVisualRun(line, i, &start, &length);
+ *                    direction=ubidi_getVisualRun(para, i, &start, &length);
  *                     renderRun(text, start, start+length, direction, style);
  *                }
  *             } else {
@@ -245,7 +244,7 @@
  *             startLine(paraLevel, width);
  *
  *             renderLine(para, text, 0, length,
- *                        styleRuns, styleRunCount, pErrorCode);
+ *                        styleRuns, styleRunCount);
  *         } else {
  *             UBiDi *line;
  *
@@ -269,7 +268,7 @@
  *
  *                         renderLine(line, text, start, limit,
  *                                    styleRuns+styleRunStart,
- *                                    styleRunLimit-styleRunStart, pErrorCode);
+ *                                    styleRunLimit-styleRunStart);
  *                     }
  *                     if(limit==length) { break; }
  *                     start=limit;

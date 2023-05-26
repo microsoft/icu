@@ -236,7 +236,7 @@ public:
     UPerfFunction* TestQC_FCD_NFC_Text();
     UPerfFunction* TestQC_FCD_Orig_Text();
 
-    /* IsNormalized performance */
+    /* IsNormalized performnace */
     UPerfFunction* TestIsNormalized_NFC_NFD_Text();
     UPerfFunction* TestIsNormalized_NFC_NFC_Text();
     UPerfFunction* TestIsNormalized_NFC_Orig_Text();

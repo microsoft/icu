@@ -15,14 +15,6 @@ es_419{
             "EUR",
             "euro",
         }
-        HTG{
-            "HTG",
-            "gourde haitiano",
-        }
-        KZT{
-            "KZT",
-            "tenge kazajo",
-        }
         MWK{
             "MWK",
             "kwacha malauí",
@@ -60,21 +52,17 @@ es_419{
             one{"florín de las Antillas Neerlandesas"}
             other{"florines de las Antillas Neerlandesas"}
         }
+        BGN{
+            one{"lev búlgaro"}
+            other{"leva búlgaros"}
+        }
         BMD{
             one{"dólar de Bermudas"}
             other{"dólares de Bermudas"}
         }
-        HTG{
-            one{"gourde haitiano"}
-            other{"gourdes haitianos"}
-        }
-        KZT{
-            one{"tenge kazajo"}
-            other{"tengues kazajos"}
-        }
         MWK{
             one{"kwacha malauí"}
-            other{"kwachas malauíes"}
+            other{"kwachas malauís"}
         }
         NIO{
             one{"córdoba nicaragüense"}

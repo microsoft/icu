@@ -10,7 +10,7 @@ es{
             ec{"Acra"}
         }
         "Africa:Addis_Ababa"{
-            ec{"Adís Abeba"}
+            ec{"Addis Abeba"}
         }
         "Africa:Algiers"{
             ec{"Argel"}
@@ -49,13 +49,13 @@ es{
             ec{"Ceuta"}
         }
         "Africa:Conakry"{
-            ec{"Conakri"}
+            ec{"Conakry"}
         }
         "Africa:Dakar"{
             ec{"Dakar"}
         }
         "Africa:Dar_es_Salaam"{
-            ec{"Dar es-Salam"}
+            ec{"Dar es Salaam"}
         }
         "Africa:Djibouti"{
             ec{"Yibuti"}
@@ -85,7 +85,7 @@ es{
             ec{"Kampala"}
         }
         "Africa:Khartoum"{
-            ec{"Jartum"}
+            ec{"Jartún"}
         }
         "Africa:Kigali"{
             ec{"Kigali"}
@@ -754,7 +754,7 @@ es{
             ec{"Katmandú"}
         }
         "Asia:Khandyga"{
-            ec{"Khandiga"}
+            ec{"Khandyga"}
         }
         "Asia:Krasnoyarsk"{
             ec{"Krasnoyarsk"}
@@ -866,9 +866,6 @@ es{
         }
         "Asia:Ulaanbaatar"{
             ec{"Ulán Bator"}
-        }
-        "Asia:Urumqi"{
-            ec{"Ürümqi"}
         }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
@@ -1941,9 +1938,6 @@ es{
             ld{"hora de verano de Ekaterimburgo"}
             lg{"hora de Ekaterimburgo"}
             ls{"hora estándar de Ekaterimburgo"}
-        }
-        "meta:Yukon"{
-            ls{"hora de Yukón"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

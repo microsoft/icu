@@ -30,8 +30,6 @@
 *   ### links in design doc to here and to ucnvbocu.c
 */
 
-#include <stdbool.h>
-
 #include "unicode/utypes.h"
 #include "unicode/ustring.h"
 #include "unicode/ucnv.h"
@@ -207,7 +205,7 @@ bocu1TrailToByte[BOCU1_TRAIL_CONTROLS_COUNT]={
  * what we need here.
  * This macro adjust the results so that the modulo-value m is always >=0.
  *
- * For positive n, the if() condition is always false.
+ * For positive n, the if() condition is always FALSE.
  *
  * @param n Number to be split into quotient and rest.
  *          Will be modified to contain the quotient.
@@ -275,7 +273,7 @@ bocu1Prev(int32_t c) {
  * Encode a difference -0x10ffff..0x10ffff in 1..4 bytes
  * and return a packed integer with them.
  *
- * The encoding favors small absolute differences with short encodings
+ * The encoding favors small absolut differences with short encodings
  * to compress runs of same-script characters.
  *
  * @param diff difference value -0x10ffff..0x10ffff

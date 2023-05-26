@@ -165,7 +165,7 @@ sbp{
         PM{"Santapieli ni Mikeloni"}
         PN{"Pitikailini"}
         PR{"Pwetoliko"}
-        PS{"Munjema gwa Kusikha nu Luvala lwa Gasa lwa Palesit"}
+        PS{"Mamlaka ya Palestina"}
         PT{"Wuleno"}
         PW{"Palawu"}
         PY{"Palagwayi"}

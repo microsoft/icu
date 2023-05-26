@@ -586,7 +586,7 @@ et{
         }
         MGF{
             "MGF",
-            "Madagaskari frank",
+            "Madagaskar frank",
         }
         MKD{
             "MKD",
@@ -1037,7 +1037,7 @@ et{
             "Prantsuse UIC-frank",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "Lääne-Aafrika CFA frank",
         }
         XPD{
@@ -1718,7 +1718,7 @@ et{
             other{"Madagaskari ariarit"}
         }
         MGF{
-            one{"Madagaskari frank"}
+            one{"Madagaskar frank"}
             other{"Madagaskar franki"}
         }
         MKD{

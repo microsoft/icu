@@ -44,7 +44,7 @@ public:
             return;
         }
 
-        UNewTrie *newTrie=utrie_open(NULL, NULL, 0x11000, 0, 0, true);
+        UNewTrie *newTrie=utrie_open(NULL, NULL, 0x11000, 0, 0, TRUE);
         UChar32 start, end;
 
         UnicodeSetIterator iter(set);
@@ -58,7 +58,7 @@ public:
             if(end>0xffff) {
                 end=0xffff;
             }
-            if(!utrie_setRange32(newTrie, start, end+1, true, true)) {
+            if(!utrie_setRange32(newTrie, start, end+1, TRUE, TRUE)) {
                 errorCode=U_INTERNAL_PROGRAM_ERROR;
                 return;
             }

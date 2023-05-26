@@ -192,7 +192,7 @@ public:
      *
      * @stable ICU 4.2
      */
-    virtual UClassID getDynamicClassID() const override;
+    virtual UClassID getDynamicClassID() const;
 
 
 private:
@@ -208,6 +208,10 @@ private:
     void setDesc(const UnicodeString &desc);
 
     void setName(const char* name);
+
+    static UBool isValidDigitString(const UnicodeString &str);
+
+    UBool hasContiguousDecimalDigits() const;
 };
 
 U_NAMESPACE_END

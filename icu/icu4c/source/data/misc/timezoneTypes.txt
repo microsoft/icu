@@ -8,7 +8,6 @@ timezoneTypes:table(nofallback){
             cnckg{"cnsha"}
             cnhrb{"cnsha"}
             cnkhg{"cnurc"}
-            gaza{"gazastrp"}
             usnavajo{"usden"}
         }
     }
@@ -42,7 +41,6 @@ timezoneTypes:table(nofallback){
             "Asia:Harbin"{"Asia/Shanghai"}
             "Asia:Ho_Chi_Minh"{"Asia/Saigon"}
             "Asia:Istanbul"{"Europe/Istanbul"}
-            "Asia:Kashgar"{"Asia/Urumqi"}
             "Asia:Kathmandu"{"Asia/Katmandu"}
             "Asia:Kolkata"{"Asia/Calcutta"}
             "Asia:Macao"{"Asia/Macau"}
@@ -87,14 +85,12 @@ timezoneTypes:table(nofallback){
             "Etc:Universal"{"Etc/UTC"}
             "Etc:Zulu"{"Etc/UTC"}
             "Europe:Belfast"{"Europe/London"}
-            "Europe:Kyiv"{"Europe/Kiev"}
             "Europe:Nicosia"{"Asia/Nicosia"}
             "Europe:Tiraspol"{"Europe/Chisinau"}
             "Mexico:BajaNorte"{"America/Tijuana"}
             "Mexico:BajaSur"{"America/Mazatlan"}
             "Mexico:General"{"America/Mexico_City"}
             "Pacific:Chuuk"{"Pacific/Truk"}
-            "Pacific:Kanton"{"Pacific/Enderbury"}
             "Pacific:Pohnpei"{"Pacific/Ponape"}
             "Pacific:Samoa"{"Pacific/Pago_Pago"}
             "Pacific:Yap"{"Pacific/Truk"}
@@ -390,7 +386,7 @@ timezoneTypes:table(nofallback){
             "Asia:Dubai"{"aedxb"}
             "Asia:Dushanbe"{"tjdyu"}
             "Asia:Famagusta"{"cyfmg"}
-            "Asia:Gaza"{"gazastrp"}
+            "Asia:Gaza"{"gaza"}
             "Asia:Hebron"{"hebron"}
             "Asia:Hong_Kong"{"hkhkg"}
             "Asia:Hovd"{"mnhvd"}
@@ -440,7 +436,6 @@ timezoneTypes:table(nofallback){
             "Asia:Tokyo"{"jptyo"}
             "Asia:Tomsk"{"rutof"}
             "Asia:Ulaanbaatar"{"mnuln"}
-            "Asia:Urumqi"{"cnurc"}
             "Asia:Ust-Nera"{"ruunera"}
             "Asia:Vientiane"{"lavte"}
             "Asia:Vladivostok"{"ruvvo"}

@@ -132,7 +132,7 @@ class NumberFormat;
  *   <li>messageText can contain quoted literal strings including syntax characters.
  *       A quoted literal string begins with an ASCII apostrophe and a syntax character
  *       (usually a {curly brace}) and continues until the next single apostrophe.
- *       A double ASCII apostrophe inside or outside of a quoted string represents
+ *       A double ASCII apostrohpe inside or outside of a quoted string represents
  *       one literal apostrophe.
  *   <li>Quotable syntax characters are the {curly braces} in all messageText parts,
  *       plus the '#' sign in a messageText immediately inside a pluralStyle,
@@ -420,7 +420,7 @@ public:
      * result and should delete it when done.
      * @stable ICU 2.0
      */
-    virtual MessageFormat* clone() const override;
+    virtual MessageFormat* clone() const;
 
     /**
      * Returns true if the given Format objects are semantically equal.
@@ -429,7 +429,7 @@ public:
      * @return       true if the given Format objects are semantically equal.
      * @stable ICU 2.0
      */
-    virtual bool operator==(const Format& other) const override;
+    virtual UBool operator==(const Format& other) const;
 
     /**
      * Sets the locale to be used for creating argument Format objects.
@@ -589,7 +589,7 @@ public:
      * arguments. If numbered, the formatName is the
      * corresponding UnicodeStrings (e.g. "0", "1", "2"...).
      * The returned Format object should not be deleted by the caller,
-     * nor should the pointer of other object .  The pointer and its
+     * nor should the ponter of other object .  The pointer and its
      * contents remain valid only until the next call to any method
      * of this class is made with this object.
      * @param formatName the name or number specifying a format
@@ -715,7 +715,7 @@ public:
     virtual UnicodeString& format(const Formattable& obj,
                                   UnicodeString& appendTo,
                                   FieldPosition& pos,
-                                  UErrorCode& status) const override;
+                                  UErrorCode& status) const;
 
     /**
      * Formats the given array of arguments into a user-defined argument name
@@ -790,7 +790,7 @@ public:
      */
     virtual void parseObject(const UnicodeString& source,
                              Formattable& result,
-                             ParsePosition& pos) const override;
+                             ParsePosition& pos) const;
 
     /**
      * Convert an 'apostrophe-friendly' pattern into a standard
@@ -850,7 +850,7 @@ public:
      *                  other classes have different class IDs.
      * @stable ICU 2.0
      */
-    virtual UClassID getDynamicClassID(void) const override;
+    virtual UClassID getDynamicClassID(void) const;
 
     /**
      * Return the class ID for this class.  This is useful only for
@@ -886,7 +886,7 @@ private:
     Format**            formatAliases; // see getFormats
     int32_t             formatAliasesCapacity;
 
-    MessageFormat() = delete; // default constructor not implemented
+    MessageFormat(); // default constructor not implemented
 
      /**
       * This provider helps defer instantiation of a PluralRules object
@@ -898,7 +898,7 @@ private:
     public:
         PluralSelectorProvider(const MessageFormat &mf, UPluralType type);
         virtual ~PluralSelectorProvider();
-        virtual UnicodeString select(void *ctx, double number, UErrorCode& ec) const override;
+        virtual UnicodeString select(void *ctx, double number, UErrorCode& ec) const;
 
         void reset();
     private:
@@ -1011,6 +1011,8 @@ private:
 
     void cacheExplicitFormats(UErrorCode& status);
 
+    int32_t skipLeadingSpaces(UnicodeString& style);
+
     Format* createAppropriateFormat(UnicodeString& type,
                                     UnicodeString& style,
                                     Formattable::Type& formattableType,
@@ -1086,22 +1088,22 @@ private:
      */
     class U_I18N_API DummyFormat : public Format {
     public:
-        virtual bool operator==(const Format&) const override;
-        virtual DummyFormat* clone() const override;
+        virtual UBool operator==(const Format&) const;
+        virtual DummyFormat* clone() const;
         virtual UnicodeString& format(const Formattable& obj,
                               UnicodeString& appendTo,
                               UErrorCode& status) const;
         virtual UnicodeString& format(const Formattable&,
                                       UnicodeString& appendTo,
                                       FieldPosition&,
-                                      UErrorCode& status) const override;
+                                      UErrorCode& status) const;
         virtual UnicodeString& format(const Formattable& obj,
                                       UnicodeString& appendTo,
                                       FieldPositionIterator* posIter,
-                                      UErrorCode& status) const override;
+                                      UErrorCode& status) const;
         virtual void parseObject(const UnicodeString&,
                                  Formattable&,
-                                 ParsePosition&) const override;
+                                 ParsePosition&) const;
     };
 
     friend class MessageFormatAdapter; // getFormatTypeList() access

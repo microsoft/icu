@@ -32,7 +32,6 @@ lb{
         ang{"Alenglesch"}
         anp{"Angika"}
         ar{"Arabesch"}
-        ar_001{"Modernt Héicharabesch"}
         arc{"Aramäesch"}
         arn{"Mapudungun"}
         aro{"Araona"}
@@ -123,8 +122,6 @@ lb{
         dar{"Darginesch"}
         dav{"Taita"}
         de{"Däitsch"}
-        de_AT{"Éisträichescht Däitsch"}
-        de_CH{"Schwäizer Héichdäitsch"}
         del{"Delaware-Sprooch"}
         den{"Slave"}
         dgr{"Dogrib"}
@@ -149,16 +146,9 @@ lb{
         el{"Griichesch"}
         elx{"Elamesch"}
         en{"Englesch"}
-        en_AU{"Australescht Englesch"}
-        en_CA{"Kanadescht Englesch"}
-        en_GB{"Britescht Englesch"}
-        en_US{"Amerikanescht Englesch"}
         enm{"Mëttelenglesch"}
         eo{"Esperanto"}
         es{"Spuenesch"}
-        es_419{"Latäinamerikanescht Spuenesch"}
-        es_ES{"Europäescht Spuenesch"}
-        es_MX{"Mexikanescht Spuenesch"}
         esu{"Yup’ik"}
         et{"Estnesch"}
         eu{"Baskesch"}
@@ -175,8 +165,6 @@ lb{
         fo{"Färöesch"}
         fon{"Fon-Sprooch"}
         fr{"Franséisch"}
-        fr_CA{"Kanadescht Franséisch"}
-        fr_CH{"Schwäizer Franséisch"}
         frc{"Cajun"}
         frm{"Mëttelfranséisch"}
         fro{"Alfranséisch"}
@@ -393,7 +381,6 @@ lb{
         niu{"Niue-Sprooch"}
         njo{"Ao Naga"}
         nl{"Hollännesch"}
-        nl_BE{"Flämesch"}
         nmg{"Kwasio"}
         nn{"Norwegesch Nynorsk"}
         nnh{"Ngiemboon"}
@@ -440,8 +427,6 @@ lb{
         pro{"Alprovenzalesch"}
         ps{"Paschtu"}
         pt{"Portugisesch"}
-        pt_BR{"Brasilianescht Portugisesch"}
-        pt_PT{"Europäescht Portugisesch"}
         qu{"Quechua"}
         quc{"Quiché-Sprooch"}
         qug{"Kichwa (Chimborazo-Gebidder)"}
@@ -453,9 +438,9 @@ lb{
         rm{"Rätoromanesch"}
         rn{"Rundi-Sprooch"}
         ro{"Rumänesch"}
-        ro_MD{"Moldawesch"}
         rof{"Rombo"}
         rom{"Romani"}
+        root{"Root"}
         rtm{"Rotumanesch"}
         ru{"Russesch"}
         rue{"Russinesch"}
@@ -487,7 +472,6 @@ lb{
         sg{"Sango"}
         sga{"Aliresch"}
         sgs{"Samogitesch"}
-        sh{"Serbo-Kroatesch"}
         shi{"Taschelhit"}
         shn{"Schan-Sprooch"}
         shu{"Tschadesch-Arabesch"}
@@ -520,7 +504,6 @@ lb{
         sux{"Sumeresch"}
         sv{"Schwedesch"}
         sw{"Suaheli"}
-        sw_CD{"Kongo-Swahili"}
         swb{"Komoresch"}
         syc{"Alsyresch"}
         syr{"Syresch"}
@@ -609,16 +592,10 @@ lb{
         zen{"Zenaga"}
         zgh{"Marokkanescht Standard-Tamazight"}
         zh{"Chinesesch"}
-        zh_Hans{"Chinesesch (vereinfacht)"}
-        zh_Hant{"Chinesesch (traditionell)"}
         zu{"Zulu"}
         zun{"Zuni-Sprooch"}
         zxx{"Keng Sproochinhalter"}
         zza{"Zaza"}
-    }
-    Languages%short{
-        en_GB{"Englesch (UK)"}
-        en_US{"Englesch (US)"}
     }
     Scripts{
         Arab{"Arabesch"}
@@ -762,7 +739,6 @@ lb{
             iso8601{"ISO-8601-Kalenner"}
             japanese{"Japanesche Kalenner"}
             persian{"Persesche Kalenner"}
-            roc{"Kalenner vun der Republik China"}
         }
         collation{
             big5han{"Traditionellt Chinesesch - Big5"}

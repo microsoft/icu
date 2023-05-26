@@ -18,7 +18,6 @@
  */
 
 #include <windows.h>
-#include <stdbool.h>
 #include <stdio.h>
 
 #include "playout.h"
@@ -71,7 +70,7 @@ void InitParagraph(HWND hwnd, Context *context)
         si.nMin = 0;
         si.nMax = pf_getLineCount(context->paragraph) - 1;
         si.nPage = context->height / pf_getLineHeight(context->paragraph);
-        SetScrollInfo(hwnd, SB_VERT, &si, true);
+        SetScrollInfo(hwnd, SB_VERT, &si, TRUE);
     }
 }
 
@@ -220,7 +219,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
 
         si.fMask = SIF_POS;
-        SetScrollInfo(hwnd, SB_VERT, &si, true);
+        SetScrollInfo(hwnd, SB_VERT, &si, TRUE);
         GetScrollInfo(hwnd, SB_VERT, &si);
 
         context = (Context *) GetWindowLongPtr(hwnd, 0);
@@ -315,7 +314,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
                     context->paragraph = newParagraph;
                     InitParagraph(hwnd, context);
                     PrettyTitle(hwnd, szTitleName);
-                    InvalidateRect(hwnd, NULL, true);
+                    InvalidateRect(hwnd, NULL, TRUE);
 
                 }
             }

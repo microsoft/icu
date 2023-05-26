@@ -30,7 +30,7 @@ public:
     StringTest() {}
     virtual ~StringTest();
 
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL) override;
+    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL);
 
 private:
     void TestEndian();
@@ -57,7 +57,6 @@ private:
     void TestSTLCompatibility();
     void TestCharString();
     void TestCStr();
-    void TestCharStrAppendNumber();
     void Testctou();
 };
 

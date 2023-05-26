@@ -15,7 +15,6 @@
  *   created on: 2003jul11
  *   created by: Ram Viswanadha
  */
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
 #include "unicode/utypes.h"
@@ -80,7 +79,7 @@ testAPI(const UChar* src, const UChar* expected, const char* testName,
     int32_t destLen = 0;
     UChar* dest = NULL;
     int32_t expectedLen = (expected != NULL) ? u_strlen(expected) : 0;
-    int32_t options = (useSTD3ASCIIRules == true) ? UIDNA_USE_STD3_RULES : UIDNA_DEFAULT;
+    int32_t options = (useSTD3ASCIIRules == TRUE) ? UIDNA_USE_STD3_RULES : UIDNA_DEFAULT;
     UParseError parseError;
     int32_t tSrcLen = 0;
     UChar* tSrc = NULL;
@@ -100,7 +99,7 @@ testAPI(const UChar* src, const UChar* expected, const char* testName,
             dest = destStack;
             destLen = func(src,-1,dest,destLen+1,options, &parseError, &status);
             /* TODO : compare output with expected */
-            if(U_SUCCESS(status) && expectedStatus != U_IDNA_STD3_ASCII_RULES_ERROR&& (doCompare==true) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
+            if(U_SUCCESS(status) && expectedStatus != U_IDNA_STD3_ASCII_RULES_ERROR&& (doCompare==TRUE) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
                 log_err("Did not get the expected result for  null terminated source.\n" );
             }
         }else{
@@ -122,7 +121,7 @@ testAPI(const UChar* src, const UChar* expected, const char* testName,
                 dest = destStack;
                 destLen = func(src,-1,dest,destLen+1,options | UIDNA_ALLOW_UNASSIGNED, &parseError, &status);
                 /* TODO : compare output with expected */
-                if(U_SUCCESS(status) && (doCompare==true) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
+                if(U_SUCCESS(status) && (doCompare==TRUE) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
                     log_err("Did not get the expected result for %s null terminated source with both options set.\n",testName);
 
                 }
@@ -146,7 +145,7 @@ testAPI(const UChar* src, const UChar* expected, const char* testName,
             dest = destStack;
             destLen = func(src,u_strlen(src),dest,destLen+1,options, &parseError, &status);
             /* TODO : compare output with expected */
-            if(U_SUCCESS(status) && (doCompare==true) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
+            if(U_SUCCESS(status) && (doCompare==TRUE) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
                 log_err("Did not get the expected result for %s with source length.\n",testName);
             }
         }else{
@@ -168,7 +167,7 @@ testAPI(const UChar* src, const UChar* expected, const char* testName,
                 dest = destStack;
                 destLen = func(src,u_strlen(src),dest,destLen+1,options | UIDNA_ALLOW_UNASSIGNED, &parseError, &status);
                 /* TODO : compare output with expected */
-                if(U_SUCCESS(status) && (doCompare==true) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
+                if(U_SUCCESS(status) && (doCompare==TRUE) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
                     log_err("Did not get the expected result for %s with source length and both options set.\n",testName);
                 }
             }else{
@@ -189,7 +188,7 @@ testAPI(const UChar* src, const UChar* expected, const char* testName,
             dest = destStack;
             destLen = func(src,-1,dest,destLen+1,options | UIDNA_USE_STD3_RULES, &parseError, &status);
             /* TODO : compare output with expected*/
-            if(U_SUCCESS(status) && (doCompare==true) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
+            if(U_SUCCESS(status) && (doCompare==TRUE) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
                 log_err("Did not get the expected result for %s null terminated source with both options set.\n",testName);
 
             }
@@ -212,7 +211,7 @@ testAPI(const UChar* src, const UChar* expected, const char* testName,
             dest = destStack;
             destLen = func(src,u_strlen(src),dest,destLen+1,options | UIDNA_USE_STD3_RULES, &parseError, &status);
             /* TODO : compare output with expected*/
-            if(U_SUCCESS(status) && (doCompare==true) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
+            if(U_SUCCESS(status) && (doCompare==TRUE) && u_strCaseCompare(dest,destLen, expected,expectedLen,0,&status)!=0){
                 log_err("Did not get the expected result for %s with source length and both options set.\n",testName);
             }
         }else{
@@ -418,7 +417,7 @@ static const char * const domainNames[] = {
     /*"www.\\u0021.com",*/
     /*"www.\\u0024.com",*/
     /*"\\u003f",*/
-    /* These yield U_IDNA_PROHIBITED_ERROR*/
+    /* These yeild U_IDNA_PROHIBITED_ERROR*/
     /*"\\u00CF\\u0082.com",*/
     /*"\\u00CE\\u00B2\\u00C3\\u009Fss.com",*/
     /*"\\u00E2\\u0098\\u00BA.com",*/
@@ -435,7 +434,7 @@ TestToASCII(){
     TestFunc func = uidna_toASCII;
     for(i=0;i< UPRV_LENGTHOF(unicodeIn); i++){
         u_charsToUChars(asciiIn[i],buf, (int32_t)strlen(asciiIn[i])+1);
-        testAPI(unicodeIn[i], buf,testName, false,U_ZERO_ERROR, true, true, func);
+        testAPI(unicodeIn[i], buf,testName, FALSE,U_ZERO_ERROR, TRUE, TRUE, func);
 
     }
 }
@@ -449,7 +448,7 @@ TestToUnicode(){
     TestFunc func = uidna_toUnicode;
     for(i=0;i< UPRV_LENGTHOF(asciiIn); i++){
         u_charsToUChars(asciiIn[i],buf, (int32_t)strlen(asciiIn[i])+1);
-        testAPI(buf,unicodeIn[i],testName,false,U_ZERO_ERROR, true, true, func);
+        testAPI(buf,unicodeIn[i],testName,FALSE,U_ZERO_ERROR, TRUE, TRUE, func);
     }
 }
 
@@ -472,9 +471,9 @@ TestIDNToUnicode(){
             log_err_status(status,  "%s failed to convert domainNames[%i].Error: %s \n",testName, i, u_errorName(status));
             break;
         }
-        testAPI(buf,expected,testName,false,U_ZERO_ERROR, true, true, func);
+        testAPI(buf,expected,testName,FALSE,U_ZERO_ERROR, TRUE, TRUE, func);
          /*test toUnicode with all labels in the string*/
-        testAPI(buf,expected,testName, false,U_ZERO_ERROR, true, true, func);
+        testAPI(buf,expected,testName, FALSE,U_ZERO_ERROR, TRUE, TRUE, func);
         if(U_FAILURE(status)){
             log_err( "%s failed to convert domainNames[%i].Error: %s \n",testName,i, u_errorName(status));
             break;
@@ -502,9 +501,9 @@ TestIDNToASCII(){
             log_err_status(status,  "%s failed to convert domainNames[%i].Error: %s \n",testName,i, u_errorName(status));
             break;
         }
-        testAPI(buf,expected,testName, false,U_ZERO_ERROR, true, true, func);
+        testAPI(buf,expected,testName, FALSE,U_ZERO_ERROR, TRUE, TRUE, func);
         /*test toASCII with all labels in the string*/
-        testAPI(buf,expected,testName, false,U_ZERO_ERROR, false, true, func);
+        testAPI(buf,expected,testName, FALSE,U_ZERO_ERROR, FALSE, TRUE, func);
         if(U_FAILURE(status)){
             log_err( "%s failed to convert domainNames[%i].Error: %s \n",testName,i, u_errorName(status));
             break;
@@ -524,7 +523,7 @@ testCompareWithSrc(const UChar* s1, int32_t s1Len,
     UErrorCode status = U_ZERO_ERROR;
     int32_t retVal = func(s1,-1,s2,-1,UIDNA_DEFAULT,&status);
 
-    if(isEqual==true &&  retVal !=0){
+    if(isEqual==TRUE &&  retVal !=0){
         log_err("Did not get the expected result for %s with null termniated strings.\n",testName);
     }
     if(U_FAILURE(status)){
@@ -534,7 +533,7 @@ testCompareWithSrc(const UChar* s1, int32_t s1Len,
     status = U_ZERO_ERROR;
     retVal = func(s1,-1,s2,-1,UIDNA_ALLOW_UNASSIGNED,&status);
 
-    if(isEqual==true &&  retVal !=0){
+    if(isEqual==TRUE &&  retVal !=0){
         log_err("Did not get the expected result for %s with null termniated strings with options set.\n", testName);
     }
     if(U_FAILURE(status)){
@@ -544,7 +543,7 @@ testCompareWithSrc(const UChar* s1, int32_t s1Len,
     status = U_ZERO_ERROR;
     retVal = func(s1,s1Len,s2,s2Len,UIDNA_DEFAULT,&status);
 
-    if(isEqual==true &&  retVal !=0){
+    if(isEqual==TRUE &&  retVal !=0){
         log_err("Did not get the expected result for %s with string length.\n",testName);
     }
     if(U_FAILURE(status)){
@@ -554,7 +553,7 @@ testCompareWithSrc(const UChar* s1, int32_t s1Len,
     status = U_ZERO_ERROR;
     retVal = func(s1,s1Len,s2,s2Len,UIDNA_ALLOW_UNASSIGNED,&status);
 
-    if(isEqual==true &&  retVal !=0){
+    if(isEqual==TRUE &&  retVal !=0){
         log_err("Did not get the expected result for %s with string length and options set.\n",testName);
     }
     if(U_FAILURE(status)){
@@ -620,22 +619,22 @@ TestCompare(){
         src = source;
         srcLen = u_strlen(src);
 
-        testCompareWithSrc(src,srcLen,src,srcLen,testName, func, true);
+        testCompareWithSrc(src,srcLen,src,srcLen,testName, func, TRUE);
 
         /* b) compare it with asciiIn equivalent */
-        testCompareWithSrc(src,srcLen,buf,u_strlen(buf),testName, func,true);
+        testCompareWithSrc(src,srcLen,buf,u_strlen(buf),testName, func,TRUE);
 
         /* c) compare it with unicodeIn not equivalent*/
         if(i==0){
-            testCompareWithSrc(src,srcLen,uni1,u_strlen(uni1),testName, func,false);
+            testCompareWithSrc(src,srcLen,uni1,u_strlen(uni1),testName, func,FALSE);
         }else{
-            testCompareWithSrc(src,srcLen,uni0,u_strlen(uni0),testName, func,false);
+            testCompareWithSrc(src,srcLen,uni0,u_strlen(uni0),testName, func,FALSE);
         }
         /* d) compare it with asciiIn not equivalent */
         if(i==0){
-            testCompareWithSrc(src,srcLen,ascii1,u_strlen(ascii1),testName, func,false);
+            testCompareWithSrc(src,srcLen,ascii1,u_strlen(ascii1),testName, func,FALSE);
         }else{
-            testCompareWithSrc(src,srcLen,ascii0,u_strlen(ascii0),testName, func,false);
+            testCompareWithSrc(src,srcLen,ascii0,u_strlen(ascii0),testName, func,FALSE);
         }
 
     }

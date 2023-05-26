@@ -21,7 +21,7 @@
 #define RESLIST_H
 
 #define KEY_SPACE_SIZE 65536
-#define RESLIST_INT_VECTOR_INIT_SIZE 2048
+#define RESLIST_MAX_INT_VECTOR 2048
 
 #include <functional>
 
@@ -294,9 +294,9 @@ public:
 
     void add(SResource *res);
 
-    virtual void handleWrite16(SRBRoot *bundle) override;
-    virtual void handlePreWrite(uint32_t *byteOffset) override;
-    virtual void handleWrite(UNewDataMemory *mem, uint32_t *byteOffset) override;
+    virtual void handleWrite16(SRBRoot *bundle);
+    virtual void handlePreWrite(uint32_t *byteOffset);
+    virtual void handleWrite(UNewDataMemory *mem, uint32_t *byteOffset);
 
     SResource *fLast;
 };
@@ -313,7 +313,7 @@ public:
 
     void add(SResource *res);
 
-    virtual void handleWrite16(SRBRoot *bundle) override;
+    virtual void handleWrite16(SRBRoot *bundle);
 };
 
 class StringBaseResource : public SResource {
@@ -329,8 +329,8 @@ public:
     const UChar *getBuffer() const { return icu::toUCharPtr(fString.getBuffer()); }
     int32_t length() const { return fString.length(); }
 
-    virtual void handlePreWrite(uint32_t *byteOffset) override;
-    virtual void handleWrite(UNewDataMemory *mem, uint32_t *byteOffset) override;
+    virtual void handlePreWrite(uint32_t *byteOffset);
+    virtual void handleWrite(UNewDataMemory *mem, uint32_t *byteOffset);
 
     // TODO: private with getter?
     icu::UnicodeString fString;
@@ -363,8 +363,8 @@ public:
         return fNumCharsForLength + length() + 1;  // +1 for the NUL
     }
 
-    virtual void handlePreflightStrings(SRBRoot *bundle, UHashtable *stringSet, UErrorCode &errorCode) override;
-    virtual void handleWrite16(SRBRoot *bundle) override;
+    virtual void handlePreflightStrings(SRBRoot *bundle, UHashtable *stringSet, UErrorCode &errorCode);
+    virtual void handleWrite16(SRBRoot *bundle);
 
     void writeUTF16v2(int32_t base, icu::UnicodeString &dest);
 
@@ -401,12 +401,11 @@ public:
 
     void add(int32_t value, UErrorCode &errorCode);
 
-    virtual void handlePreWrite(uint32_t *byteOffset) override;
-    virtual void handleWrite(UNewDataMemory *mem, uint32_t *byteOffset) override;
+    virtual void handlePreWrite(uint32_t *byteOffset);
+    virtual void handleWrite(UNewDataMemory *mem, uint32_t *byteOffset);
 
     // TODO: UVector32
-    size_t fCount;
-    size_t fSize;
+    uint32_t fCount;
     uint32_t *fArray;
 };
 
@@ -417,8 +416,8 @@ public:
                    const UString* comment, UErrorCode &errorCode);
     virtual ~BinaryResource();
 
-    virtual void handlePreWrite(uint32_t *byteOffset) override;
-    virtual void handleWrite(UNewDataMemory *mem, uint32_t *byteOffset) override;
+    virtual void handlePreWrite(uint32_t *byteOffset);
+    virtual void handleWrite(UNewDataMemory *mem, uint32_t *byteOffset);
 
     // TODO: CharString?
     uint32_t fLength;

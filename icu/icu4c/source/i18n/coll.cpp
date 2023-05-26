@@ -65,9 +65,9 @@ static icu::Locale* availableLocaleList = NULL;
 static int32_t  availableLocaleListCount;
 #if !UCONFIG_NO_SERVICE
 static icu::ICULocaleService* gService = NULL;
-static icu::UInitOnce gServiceInitOnce {};
+static icu::UInitOnce gServiceInitOnce = U_INITONCE_INITIALIZER;
 #endif
-static icu::UInitOnce gAvailableLocaleListInitOnce {};
+static icu::UInitOnce gAvailableLocaleListInitOnce = U_INITONCE_INITIALIZER;
 
 /**
  * Release all static memory held by collator.
@@ -87,7 +87,7 @@ static UBool U_CALLCONV collator_cleanup(void) {
     }
     availableLocaleListCount = 0;
     gAvailableLocaleListInitOnce.reset();
-    return true;
+    return TRUE;
 }
 
 U_CDECL_END
@@ -109,7 +109,7 @@ CollatorFactory::~CollatorFactory() {}
 
 UBool
 CollatorFactory::visible(void) const {
-    return true;
+    return TRUE;
 }
 
 //-------------------------------------------
@@ -129,7 +129,7 @@ class ICUCollatorFactory : public ICUResourceBundleFactory {
     ICUCollatorFactory() : ICUResourceBundleFactory(UnicodeString(U_ICUDATA_COLL, -1, US_INV)) { }
     virtual ~ICUCollatorFactory();
  protected:
-    virtual UObject* create(const ICUServiceKey& key, const ICUService* service, UErrorCode& status) const override;
+    virtual UObject* create(const ICUServiceKey& key, const ICUService* service, UErrorCode& status) const;
 };
 
 ICUCollatorFactory::~ICUCollatorFactory() {}
@@ -162,11 +162,11 @@ public:
 
     virtual ~ICUCollatorService();
 
-    virtual UObject* cloneInstance(UObject* instance) const override {
+    virtual UObject* cloneInstance(UObject* instance) const {
         return ((Collator*)instance)->clone();
     }
     
-    virtual UObject* handleDefault(const ICUServiceKey& key, UnicodeString* actualID, UErrorCode& status) const override {
+    virtual UObject* handleDefault(const ICUServiceKey& key, UnicodeString* actualID, UErrorCode& status) const {
         LocaleKey& lkey = (LocaleKey&)key;
         if (actualID) {
             // Ugly Hack Alert! We return an empty actualID to signal
@@ -179,7 +179,7 @@ public:
         return Collator::makeInstance(loc, status);
     }
     
-    virtual UObject* getKey(ICUServiceKey& key, UnicodeString* actualReturn, UErrorCode& status) const override {
+    virtual UObject* getKey(ICUServiceKey& key, UnicodeString* actualReturn, UErrorCode& status) const {
         UnicodeString ar;
         if (actualReturn == NULL) {
             actualReturn = &ar;
@@ -187,7 +187,7 @@ public:
         return (Collator*)ICULocaleService::getKey(key, actualReturn, status);
     }
 
-    virtual UBool isDefault() const override {
+    virtual UBool isDefault() const {
         return countFactories() == 1;
     }
 };
@@ -372,7 +372,7 @@ void setAttributesFromKeywords(const Locale &loc, Collator &coll, UErrorCode &er
         return;
     }
     if (length != 0) {
-        int32_t codes[USCRIPT_CODE_LIMIT + (UCOL_REORDER_CODE_LIMIT - UCOL_REORDER_CODE_FIRST)];
+        int32_t codes[USCRIPT_CODE_LIMIT + UCOL_REORDER_CODE_LIMIT - UCOL_REORDER_CODE_FIRST];
         int32_t codesLength = 0;
         char *scriptName = value;
         for (;;) {
@@ -604,7 +604,7 @@ UnicodeString& U_EXPORT2 Collator::getDisplayName(const Locale& objectLocale,
 /**
 * Default constructor.
 * Constructor is different from the old default Collator constructor.
-* The task for determining the default collation strength and normalization mode
+* The task for determing the default collation strength and normalization mode
 * is left to the child class.
 */
 Collator::Collator()
@@ -636,15 +636,15 @@ Collator::Collator(const Collator &other)
 {
 }
 
-bool Collator::operator==(const Collator& other) const
+UBool Collator::operator==(const Collator& other) const
 {
     // Subclasses: Call this method and then add more specific checks.
     return typeid(*this) == typeid(other);
 }
 
-bool Collator::operator!=(const Collator& other) const
+UBool Collator::operator!=(const Collator& other) const
 {
-    return !operator==(other);
+    return (UBool)!(*this == other);
 }
 
 int32_t U_EXPORT2 Collator::getBound(const uint8_t       *source,
@@ -721,10 +721,10 @@ public:
 
     virtual ~CFactory();
 
-    virtual UObject* create(const ICUServiceKey& key, const ICUService* service, UErrorCode& status) const override;
+    virtual UObject* create(const ICUServiceKey& key, const ICUService* service, UErrorCode& status) const;
     
 protected:
-    virtual const Hashtable* getSupportedIDs(UErrorCode& status) const override
+    virtual const Hashtable* getSupportedIDs(UErrorCode& status) const
     {
         if (U_SUCCESS(status)) {
             return _ids;
@@ -733,7 +733,7 @@ protected:
     }
     
     virtual UnicodeString&
-        getDisplayName(const UnicodeString& id, const Locale& locale, UnicodeString& result) const override;
+        getDisplayName(const UnicodeString& id, const Locale& locale, UnicodeString& result) const;
 };
 
 CFactory::~CFactory()
@@ -794,7 +794,7 @@ Collator::unregister(URegistryKey key, UErrorCode& status)
         }
         status = U_ILLEGAL_ARGUMENT_ERROR;
     }
-    return false;
+    return FALSE;
 }
 #endif /* UCONFIG_NO_SERVICE */
 
@@ -803,7 +803,7 @@ private:
     int32_t index;
 public:
     static UClassID U_EXPORT2 getStaticClassID(void);
-    virtual UClassID getDynamicClassID(void) const override;
+    virtual UClassID getDynamicClassID(void) const;
 public:
     CollationLocaleListEnumeration()
         : index(0)
@@ -814,7 +814,7 @@ public:
 
     virtual ~CollationLocaleListEnumeration();
 
-    virtual StringEnumeration * clone() const override
+    virtual StringEnumeration * clone() const
     {
         CollationLocaleListEnumeration *result = new CollationLocaleListEnumeration();
         if (result) {
@@ -823,11 +823,11 @@ public:
         return result;
     }
 
-    virtual int32_t count(UErrorCode &/*status*/) const override {
+    virtual int32_t count(UErrorCode &/*status*/) const {
         return availableLocaleListCount;
     }
 
-    virtual const char* next(int32_t* resultLength, UErrorCode& /*status*/) override {
+    virtual const char* next(int32_t* resultLength, UErrorCode& /*status*/) {
         const char* result;
         if(index < availableLocaleListCount) {
             result = availableLocaleList[index++].getName();
@@ -843,13 +843,13 @@ public:
         return result;
     }
 
-    virtual const UnicodeString* snext(UErrorCode& status) override {
+    virtual const UnicodeString* snext(UErrorCode& status) {
         int32_t resultLength = 0;
         const char *s = next(&resultLength, status);
         return setChars(s, resultLength, status);
     }
 
-    virtual void reset(UErrorCode& /*status*/) override {
+    virtual void reset(UErrorCode& /*status*/) {
         index = 0;
     }
 };

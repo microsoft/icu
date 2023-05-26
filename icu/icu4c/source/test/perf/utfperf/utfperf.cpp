@@ -183,12 +183,12 @@ public:
         pInterLimit=intermediate+testcase.chunkLength;
 
         encodedLength=outputLength=0;
-        flush=false;
+        flush=FALSE;
 
         do {
             /* convert a block of [pIn..pInLimit[ to the encoding in intermediate[] */
             pInter=intermediate;
-            ucnv_fromUnicode(cnv, &pInter, pInterLimit, &pIn, pInLimit, NULL, true, pErrorCode);
+            ucnv_fromUnicode(cnv, &pInter, pInterLimit, &pIn, pInLimit, NULL, TRUE, pErrorCode);
             encodedLength+=(int32_t)(pInter-intermediate);
 
             if(*pErrorCode==U_BUFFER_OVERFLOW_ERROR) {
@@ -197,7 +197,7 @@ public:
             } else if(U_FAILURE(*pErrorCode)) {
                 return;
             } else if(pIn==pInLimit) {
-                flush=true;
+                flush=TRUE;
             }
 
             /* convert the block [intermediate..pInter[ back to UTF-16 */
@@ -247,7 +247,7 @@ public:
 
         for(;;) {
             pInter=intermediate;
-            ucnv_fromUnicode(cnv, &pInter, pInterLimit, &pIn, pInLimit, NULL, true, pErrorCode);
+            ucnv_fromUnicode(cnv, &pInter, pInterLimit, &pIn, pInLimit, NULL, TRUE, pErrorCode);
             encodedLength+=(int32_t)(pInter-intermediate);
 
             if(*pErrorCode==U_BUFFER_OVERFLOW_ERROR) {
@@ -309,7 +309,7 @@ public:
                            &pInter, pInterLimit,
                            &pIn, pInLimit,
                            pivot, &pivotSource, &pivotTarget, pivotLimit,
-                           false, true, pErrorCode);
+                           FALSE, TRUE, pErrorCode);
             encodedLength+=(int32_t)(pInter-intermediate);
 
             if(*pErrorCode==U_BUFFER_OVERFLOW_ERROR) {
@@ -354,7 +354,7 @@ int main(int argc, const char *argv[])
         return status;
     }
         
-    if (test.run() == false){
+    if (test.run() == FALSE){
         fprintf(stderr, "FAILED: Tests could not be run please check the "
 			            "arguments.\n");
         return -1;

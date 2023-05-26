@@ -91,6 +91,8 @@ enum ULocMatchDemotion {
 typedef enum ULocMatchDemotion ULocMatchDemotion;
 #endif
 
+#ifndef U_FORCE_HIDE_DRAFT_API
+
 /**
  * Builder option for whether to include or ignore one-way (fallback) match data.
  * The LocaleMatcher uses CLDR languageMatch data which includes fallback (oneway=true) entries.
@@ -106,26 +108,28 @@ typedef enum ULocMatchDemotion ULocMatchDemotion;
  * but not if it is merely a fallback.
  *
  * @see LocaleMatcher::Builder#setDirection(ULocMatchDirection)
- * @stable ICU 67
+ * @draft ICU 67
  */
 enum ULocMatchDirection {
     /**
      * Locale matching includes one-way matches such as Breton→French. (default)
      *
-     * @stable ICU 67
+     * @draft ICU 67
      */
     ULOCMATCH_DIRECTION_WITH_ONE_WAY,
     /**
      * Locale matching limited to two-way matches including e.g. Danish↔Norwegian
      * but ignoring one-way matches.
      *
-     * @stable ICU 67
+     * @draft ICU 67
      */
     ULOCMATCH_DIRECTION_ONLY_TWO_WAY
 };
 #ifndef U_IN_DOXYGEN
 typedef enum ULocMatchDirection ULocMatchDirection;
 #endif
+
+#endif  // U_FORCE_HIDE_DRAFT_API
 
 struct UHashtable;
 
@@ -413,15 +417,17 @@ public:
          */
         Builder &addSupportedLocale(const Locale &locale);
 
+#ifndef U_HIDE_DRAFT_API
         /**
          * Sets no default locale.
          * There will be no explicit or implicit default locale.
          * If there is no good match, then the matcher will return nullptr for the
          * best supported locale.
          *
-         * @stable ICU 68
+         * @draft ICU 68
          */
         Builder &setNoDefaultLocale();
+#endif  // U_HIDE_DRAFT_API
 
         /**
          * Sets the default locale; if nullptr, or if it is not set explicitly,
@@ -457,21 +463,24 @@ public:
          */
         Builder &setDemotionPerDesiredLocale(ULocMatchDemotion demotion);
 
+#ifndef U_HIDE_DRAFT_API
         /**
          * Option for whether to include or ignore one-way (fallback) match data.
          * By default, they are included.
          *
-         * @param matchDirection the match direction to set.
+         * @param direction the match direction to set.
          * @return this Builder object
-         * @stable ICU 67
+         * @draft ICU 67
          */
-        Builder &setDirection(ULocMatchDirection matchDirection) {
+        Builder &setDirection(ULocMatchDirection direction) {
             if (U_SUCCESS(errorCode_)) {
-                direction_ = matchDirection;
+                direction_ = direction;
             }
             return *this;
         }
+#endif  // U_HIDE_DRAFT_API
 
+#ifndef U_HIDE_DRAFT_API
         /**
          * Sets the maximum distance for an acceptable match.
          * The matcher will return a match for a pair of locales only if
@@ -491,9 +500,10 @@ public:
          * @param desired the desired locale for distance comparison.
          * @param supported the supported locale for distance comparison.
          * @return this Builder object
-         * @stable ICU 68
+         * @draft ICU 68
          */
         Builder &setMaxDistance(const Locale &desired, const Locale &supported);
+#endif  // U_HIDE_DRAFT_API
 
         /**
          * Sets the UErrorCode if an error occurred while setting parameters.
@@ -634,6 +644,7 @@ public:
      */
     Result getBestMatchResult(Locale::Iterator &desiredLocales, UErrorCode &errorCode) const;
 
+#ifndef U_HIDE_DRAFT_API
     /**
      * Returns true if the pair of locales matches acceptably.
      * This is influenced by Builder options such as setDirection(), setFavorSubtag(),
@@ -645,9 +656,10 @@ public:
      *                  or else the function returns immediately. Check for U_FAILURE()
      *                  on output or use with function chaining. (See User Guide for details.)
      * @return true if the pair of locales matches acceptably.
-     * @stable ICU 68
+     * @draft ICU 68
      */
     UBool isMatch(const Locale &desired, const Locale &supported, UErrorCode &errorCode) const;
+#endif  // U_HIDE_DRAFT_API
 
 #ifndef U_HIDE_INTERNAL_API
     /**
@@ -692,7 +704,7 @@ private:
     LSR *lsrs;
     int32_t supportedLocalesLength;
     // These are in preference order: 1. Default locale 2. paradigm locales 3. others.
-    UHashtable *supportedLsrToIndex;  // Map<LSR, Integer>
+    UHashtable *supportedLsrToIndex;  // Map<LSR, Integer> stores index+1 because 0 is "not found"
     // Array versions of the supportedLsrToIndex keys and values.
     // The distance lookup loops over the supportedLSRs and returns the index of the best match.
     const LSR **supportedLSRs;

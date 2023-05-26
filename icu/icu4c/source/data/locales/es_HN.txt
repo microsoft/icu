@@ -13,22 +13,12 @@ es_HN{
                 "EEEE dd 'de' MMMM 'de' y G",
                 "dd 'de' MMMM 'de' y G",
                 "d 'de' MMM 'de' y G",
-                "d/M/y GGGGG",
+                "dd/MM/yy GGGGG",
                 "{1} {0}",
                 "{1}, {0}",
                 "{1}, {0}",
                 "{1} {0}",
                 "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEdd",
-                "GyMMMMdd",
-                "GyMMMd",
-                "GGGGGyyMMdd",
             }
         }
         gregorian{
@@ -45,17 +35,7 @@ es_HN{
                 "{1}, {0}",
                 "{1}, {0}",
                 "{1} {0}",
-                "{1}, {0}",
-            }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "yMMMMEEEEdd",
-                "yMMMMdd",
-                "yMMMd",
-                "yyMd",
+                "{1} {0}",
             }
         }
     }

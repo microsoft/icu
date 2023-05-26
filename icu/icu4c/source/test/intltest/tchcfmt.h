@@ -50,9 +50,9 @@ class TestChoiceFormat: public IntlTest {
                       double v2, const char* str2,
                       double v3, const char* str3);
     /** 
-     *    runs tests in local functions:
+     *    runs tests in local funtions:
      **/
-    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL ) override;
+    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL );
 };
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

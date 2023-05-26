@@ -164,7 +164,7 @@ public:
      * @return        true if the two field positions are equal, false otherwise.
      * @stable ICU 2.0
      */
-    bool               operator==(const FieldPosition& that) const;
+    UBool              operator==(const FieldPosition& that) const;
 
     /** 
      * Equality operator.
@@ -172,7 +172,7 @@ public:
      * @return        true if the two field positions are not equal, false otherwise.
      * @stable ICU 2.0
      */
-    bool               operator!=(const FieldPosition& that) const;
+    UBool              operator!=(const FieldPosition& that) const;
 
     /**
      * Clone this object.
@@ -236,7 +236,7 @@ public:
      *
      * @stable ICU 2.2
      */
-    virtual UClassID getDynamicClassID() const override;
+    virtual UClassID getDynamicClassID() const;
 
     /**
      * ICU "poor man's RTTI", returns a UClassID for this class.
@@ -274,7 +274,7 @@ FieldPosition::operator=(const FieldPosition& copy)
     return *this;
 }
 
-inline bool
+inline UBool
 FieldPosition::operator==(const FieldPosition& copy) const
 {
     return (fField == copy.fField &&
@@ -282,7 +282,7 @@ FieldPosition::operator==(const FieldPosition& copy) const
         fBeginIndex == copy.fBeginIndex);
 }
 
-inline bool
+inline UBool
 FieldPosition::operator!=(const FieldPosition& copy) const
 {
     return !operator==(copy);

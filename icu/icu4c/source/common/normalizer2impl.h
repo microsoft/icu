@@ -131,7 +131,7 @@ public:
         }
     }
 private:
-    Hangul() = delete;  // no instantiation
+    Hangul();  // no instantiation
 };
 
 class Normalizer2Impl;
@@ -241,7 +241,7 @@ private:
  * Low-level implementation of the Unicode Normalization Algorithm.
  * For the data structure and details see the documentation at the end of
  * this normalizer2impl.h and in the design doc at
- * https://icu.unicode.org/design/normalization/custom
+ * http://site.icu-project.org/design/normalization/custom
  */
 class U_COMMON_API Normalizer2Impl : public UObject {
 public:
@@ -491,12 +491,6 @@ public:
                             UnicodeString &safeMiddle,
                             ReorderingBuffer &buffer,
                             UErrorCode &errorCode) const;
-
-    /** sink==nullptr: isNormalized()/spanQuickCheckYes() */
-    const uint8_t *decomposeUTF8(uint32_t options,
-                                 const uint8_t *src, const uint8_t *limit,
-                                 ByteSink *sink, Edits *edits, UErrorCode &errorCode) const;
-
     UBool compose(const UChar *src, const UChar *limit,
                   UBool onlyContiguous,
                   UBool doCompose,
@@ -655,9 +649,6 @@ private:
                                                 UChar32 minNeedDataCP,
                                                 ReorderingBuffer *buffer,
                                                 UErrorCode &errorCode) const;
-
-    enum StopAt { STOP_AT_LIMIT, STOP_AT_DECOMP_BOUNDARY, STOP_AT_COMP_BOUNDARY };
-
     const UChar *decomposeShort(const UChar *src, const UChar *limit,
                                 UBool stopAtCompBoundary, UBool onlyContiguous,
                                 ReorderingBuffer &buffer, UErrorCode &errorCode) const;
@@ -665,7 +656,7 @@ private:
                     ReorderingBuffer &buffer, UErrorCode &errorCode) const;
 
     const uint8_t *decomposeShort(const uint8_t *src, const uint8_t *limit,
-                                  StopAt stopAt, UBool onlyContiguous,
+                                  UBool stopAtCompBoundary, UBool onlyContiguous,
                                   ReorderingBuffer &buffer, UErrorCode &errorCode) const;
 
     static int32_t combine(const uint16_t *list, UChar32 trail);
@@ -730,7 +721,7 @@ private:
     const uint16_t *extraData;  // mappings and/or compositions for yesYes, yesNo & noNo characters
     const uint8_t *smallFCD;  // [0x100] one bit per 32 BMP code points, set if any FCD!=0
 
-    UInitOnce       fCanonIterDataInitOnce {};
+    UInitOnce       fCanonIterDataInitOnce = U_INITONCE_INITIALIZER;
     CanonIterData  *fCanonIterData;
 };
 
@@ -759,7 +750,7 @@ public:
     // Must be used only when it is known that norm2 is a Normalizer2WithImpl instance.
     static const Normalizer2Impl *getImpl(const Normalizer2 *norm2);
 private:
-    Normalizer2Factory() = delete;  // No instantiation.
+    Normalizer2Factory();  // No instantiation.
 };
 
 U_NAMESPACE_END
@@ -806,7 +797,7 @@ unorm_getFCD16(UChar32 c);
  * Constants are defined as enum values of the Normalizer2Impl class.
  *
  * Many details of the data structures are described in the design doc
- * which is at https://icu.unicode.org/design/normalization/custom
+ * which is at http://site.icu-project.org/design/normalization/custom
  *
  * int32_t indexes[indexesLength]; -- indexesLength=indexes[IX_NORM_TRIE_OFFSET]/4;
  *

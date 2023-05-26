@@ -1,0 +1,89 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+mn_Mong_MN{
+    Currencies{
+        BRL{
+            "R$",
+            "ᠪᠷᠠᠽᠢᠯ ᠤᠨ ᠷᠧᠠᠯ",
+        }
+        CNY{
+            "CN¥",
+            "ᠬᠢᠲᠠᠳ ᠶᠤᠸᠠᠨ",
+        }
+        EUR{
+            "€",
+            "ᠶᠧᠸᠷᠣ",
+        }
+        GBP{
+            "£",
+            "ᠪᠷᠢᠲ᠋ᠠᠨᠢ ᠢᠢᠨ ᠫᠤᠢᠨᠳ᠋",
+        }
+        INR{
+            "₹",
+            "ᠡᠨᠡᠳᠬᠡᠭ᠌ ᠷᠦᠫᠢ",
+        }
+        JPY{
+            "JP¥",
+            "ᠶᠠᠫᠣᠨ ᠧᠨ",
+        }
+        MNT{
+            "₮",
+            "ᠳᠥᠬᠥᠷᠢᠭ᠌",
+        }
+        RUB{
+            "RUB",
+            "ᠣᠷᠥᠰ ᠷᠥᠪᠯᠢ",
+        }
+        USD{
+            "$",
+            "ᠠᠮᠸᠷᠢᠻᠠ ᠳ᠋ᠣᠯᠯᠠᠷ",
+        }
+        XXX{
+            "¤",
+            "ᠲᠣᠳᠣᠷᠬᠠᠢ ᠥᠭᠡᠢ ᠮᠥᠩᠭᠥᠨ ᠲᠡᠮᠳᠡᠭᠳᠥ",
+        }
+    }
+    CurrencyPlurals{
+        BRL{
+            one{"ᠪᠷᠠᠽᠢᠯ ᠤᠨ ᠷᠧᠠᠯ"}
+            other{"ᠪᠷᠠᠽᠢᠯ ᠤᠨ ᠷᠧᠠᠯ"}
+        }
+        CNY{
+            one{"ᠬᠢᠲᠠᠳ ᠶᠤᠸᠠᠨ"}
+            other{"ᠬᠢᠲᠠᠳ ᠶᠤᠸᠠᠨ"}
+        }
+        EUR{
+            one{"ᠶᠧᠸᠷᠣ"}
+            other{"ᠶᠧᠸᠷᠣ"}
+        }
+        GBP{
+            one{"ᠪᠷᠢᠲ᠋ᠠᠨᠢ ᠢᠢᠨ ᠫᠤᠢᠨᠳ᠋"}
+            other{"ᠪᠷᠢᠲ᠋ᠠᠨᠢ ᠢᠢᠨ ᠫᠤᠢᠨᠳ᠋"}
+        }
+        INR{
+            one{"ᠡᠨᠡᠳᠬᠡᠭ᠌ ᠷᠦᠫᠢ"}
+            other{"ᠡᠨᠡᠳᠬᠡᠭ᠌ ᠷᠦᠫᠢ"}
+        }
+        JPY{
+            one{"ᠶᠠᠫᠣᠨ ᠧᠨ"}
+            other{"ᠶᠠᠫᠣᠨ ᠧᠨ"}
+        }
+        MNT{
+            one{"ᠳᠥᠬᠥᠷᠢᠭ᠌"}
+            other{"ᠳᠥᠬᠥᠷᠢᠭ᠌"}
+        }
+        RUB{
+            one{"ᠣᠷᠥᠰ ᠷᠥᠪᠯᠢ"}
+            other{"ᠣᠷᠥᠰ ᠷᠥᠪᠯᠢ"}
+        }
+        USD{
+            one{"ᠠᠮᠸᠷᠢᠻᠠ ᠳ᠋ᠣᠯᠯᠠᠷ"}
+            other{"ᠠᠮᠸᠷᠢᠻᠠ ᠳ᠋ᠣᠯᠯᠠᠷ"}
+        }
+        XXX{
+            one{"ᠲᠣᠳᠣᠷᠬᠠᠢ ᠥᠭᠡᠢ ᠮᠥᠩᠭᠥᠨ ᠲᠡᠮᠳᠡᠭᠳᠥ ᠢᠢᠨ ᠨᠢᠭᠡᠴᠡ"}
+            other{"(ᠲᠣᠳᠣᠷᠬᠠᠢ ᠥᠭᠡᠢ ᠮᠥᠩᠭᠥᠨ ᠲᠡᠮᠳᠡᠭᠳᠥ)"}
+        }
+    }
+}

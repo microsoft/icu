@@ -10,8 +10,6 @@
 
 #if !UCONFIG_NO_FORMATTING && !UCONFIG_NO_BREAK_ITERATION
 
-#include <stdbool.h>
-
 #include "unicode/ureldatefmt.h"
 #include "unicode/unum.h"
 #include "unicode/udisplaycontext.h"
@@ -484,8 +482,8 @@ static void TestNumericField()
 
                 FieldsDat expectedAttr = itemPtr->expectedAttributes[iOffset*2];
                 UConstrainedFieldPosition* cfpos = ucfpos_open(&status);
-                UBool foundNumeric = false;
-                while (true) {
+                UBool foundNumeric = FALSE;
+                while (TRUE) {
                     foundNumeric = ufmtval_nextPosition(ureldatefmt_resultAsValue(fv, &status), cfpos, &status);
                     if (!foundNumeric) {
                         break;
@@ -539,8 +537,8 @@ static void TestNumericField()
 
                 FieldsDat expectedAttr = itemPtr->expectedAttributes[iOffset*2 + 1];
                 UConstrainedFieldPosition* cfpos = ucfpos_open(&status);
-                UBool foundNumeric = false;
-                while (true) {
+                UBool foundNumeric = FALSE;
+                while (TRUE) {
                     foundNumeric = ufmtval_nextPosition(ureldatefmt_resultAsValue(fv, &status), cfpos, &status);
                     if (!foundNumeric) {
                         break;

@@ -50,7 +50,7 @@ struct DayPeriodRulesDataSink : public ResourceSink {
     }
     virtual ~DayPeriodRulesDataSink();
 
-    virtual void put(const char *key, ResourceValue &value, UBool, UErrorCode &errorCode) override {
+    virtual void put(const char *key, ResourceValue &value, UBool, UErrorCode &errorCode) {
         ResourceTable dayPeriodData = value.getTable(errorCode);
         if (U_FAILURE(errorCode)) { return; }
 
@@ -196,9 +196,9 @@ struct DayPeriodRulesDataSink : public ResourceSink {
             // AT cutoffs must be either midnight or noon.
             if (cutoffs[startHour] & (1 << CUTOFF_TYPE_AT)) {
                 if (startHour == 0 && period == DayPeriodRules::DAYPERIOD_MIDNIGHT) {
-                    rule.fHasMidnight = true;
+                    rule.fHasMidnight = TRUE;
                 } else if (startHour == 12 && period == DayPeriodRules::DAYPERIOD_NOON) {
-                    rule.fHasNoon = true;
+                    rule.fHasNoon = TRUE;
                 } else {
                     errorCode = U_INVALID_FORMAT_ERROR;  // Bad data.
                     return;
@@ -282,7 +282,7 @@ struct DayPeriodRulesDataSink : public ResourceSink {
 struct DayPeriodRulesCountSink : public ResourceSink {
     virtual ~DayPeriodRulesCountSink();
 
-    virtual void put(const char *key, ResourceValue &value, UBool, UErrorCode &errorCode) override {
+    virtual void put(const char *key, ResourceValue &value, UBool, UErrorCode &errorCode) {
         ResourceTable rules = value.getTable(errorCode);
         if (U_FAILURE(errorCode)) { return; }
 
@@ -301,14 +301,14 @@ DayPeriodRulesCountSink::~DayPeriodRulesCountSink() {}
 
 namespace {
 
-UInitOnce initOnce {};
+UInitOnce initOnce = U_INITONCE_INITIALIZER;
 
 U_CFUNC UBool U_CALLCONV dayPeriodRulesCleanup() {
     delete[] data->rules;
     uhash_close(data->localeToRuleSetNumMap);
     delete data;
     data = NULL;
-    return true;
+    return TRUE;
 }
 
 }  // namespace
@@ -381,7 +381,7 @@ const DayPeriodRules *DayPeriodRules::getInstance(const Locale &locale, UErrorCo
     }
 }
 
-DayPeriodRules::DayPeriodRules() : fHasMidnight(false), fHasNoon(false) {
+DayPeriodRules::DayPeriodRules() : fHasMidnight(FALSE), fHasNoon(FALSE) {
     for (int32_t i = 0; i < 24; ++i) {
         fDayPeriodForHour[i] = DayPeriodRules::DAYPERIOD_UNKNOWN;
     }
@@ -504,10 +504,10 @@ void DayPeriodRules::add(int32_t startHour, int32_t limitHour, DayPeriod period)
 
 UBool DayPeriodRules::allHoursAreSet() {
     for (int32_t i = 0; i < 24; ++i) {
-        if (fDayPeriodForHour[i] == DAYPERIOD_UNKNOWN) { return false; }
+        if (fDayPeriodForHour[i] == DAYPERIOD_UNKNOWN) { return FALSE; }
     }
 
-    return true;
+    return TRUE;
 }
 
 

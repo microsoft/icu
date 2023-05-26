@@ -46,10 +46,10 @@ DateFormatMiscTests::failure(UErrorCode status, const char* msg)
 {
     if(U_FAILURE(status)) {
         errcheckln(status, UnicodeString("FAIL: ") + msg + " failed, error " + u_errorName(status));
-        return true;
+        return TRUE;
     }
 
-    return false;
+    return FALSE;
 }
 
 /*
@@ -96,20 +96,20 @@ DateFormatMiscTests::test4097450()
     };
     
 /*    UBool dresult [] = {
-        true, 
-        false, 
-        false,  
-        true,
-        true, 
-        false, 
-        false,  
-        true,
-        false,
-        false,
-        true, 
-        false,
-        false, 
-        false
+        TRUE, 
+        FALSE, 
+        FALSE,  
+        TRUE,
+        TRUE, 
+        FALSE, 
+        FALSE,  
+        TRUE,
+        FALSE,
+        FALSE,
+        TRUE, 
+        FALSE,
+        FALSE, 
+        FALSE
     };*/
 
     UErrorCode status = U_ZERO_ERROR;

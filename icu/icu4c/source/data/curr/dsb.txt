@@ -211,10 +211,6 @@ dsb{
             "CLP",
             "chilski peso",
         }
-        CNH{
-            "CNH",
-            "chinski yuan (offshore)",
-        }
         CNY{
             "CN¥",
             "chinski yuan",
@@ -427,10 +423,6 @@ dsb{
             "LRD",
             "liberiski dolar",
         }
-        LSL{
-            "LSL",
-            "lesothiski loti",
-        }
         LTL{
             "LTL",
             "litawski litas",
@@ -552,7 +544,7 @@ dsb{
             "papua-neuguinejska kina",
         }
         PHP{
-            "₱",
+            "PHP",
             "filipinski peso",
         }
         PKR{
@@ -736,7 +728,7 @@ dsb{
             "pódzajtšnokaribiski dolar",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "CFA-frank (BCEAO)",
         }
         XPF{
@@ -1076,12 +1068,6 @@ dsb{
             other{"chilskich peso"}
             two{"chilskej peso"}
         }
-        CNH{
-            few{"chinske yuany (offshore)"}
-            one{"chinski yuan (offshore)"}
-            other{"chinskich yuanow (offshore)"}
-            two{"chinskej yuanaj (offshore)"}
-        }
         CNY{
             few{"chinske yuany"}
             one{"chinski yuan"}
@@ -1399,12 +1385,6 @@ dsb{
             one{"liberiski dolar"}
             other{"liberiskich dolarow"}
             two{"liberiskej dolara"}
-        }
-        LSL{
-            few{"lesothiske lotije"}
-            one{"lesothiski loti"}
-            other{"lesothiskich lotijow"}
-            two{"lesothiskej lotija"}
         }
         LTL{
             few{"litawske litasy"}

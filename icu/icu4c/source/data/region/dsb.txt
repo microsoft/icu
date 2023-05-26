@@ -32,7 +32,6 @@ dsb{
         151{"pódzajtšna Europa"}
         154{"pódpołnocna Europa"}
         155{"pódwjacorna Europa"}
-        202{"subsaharojska Afrika"}
         419{"Łatyńska Amerika"}
         AC{"Ascension"}
         AD{"Andorra"}
@@ -93,22 +92,18 @@ dsb{
         CY{"Cypriska"}
         CZ{"Česka republika"}
         DE{"Nimska"}
-        DG{"Diego Garcia"}
         DJ{"Džibuti"}
         DK{"Dańska"}
         DM{"Dominika"}
         DO{"Dominikańska republika"}
         DZ{"Algeriska"}
-        EA{"Ceuta a Melilla"}
         EC{"Ekwador"}
         EE{"Estniska"}
         EG{"Egyptojska"}
-        EH{"Pódwjacorna Sahara"}
         ER{"Eritreja"}
         ES{"Špańska"}
         ET{"Etiopiska"}
         EU{"Europska unija"}
-        EZ{"europasmo"}
         FI{"Finska"}
         FJ{"Fidži"}
         FK{"Falklandske kupy"}
@@ -140,7 +135,6 @@ dsb{
         HR{"Chorwatska"}
         HT{"Haiti"}
         HU{"Hungorska"}
-        IC{"Kanariske kupy"}
         ID{"Indoneziska"}
         IE{"Irska"}
         IL{"Israel"}
@@ -184,7 +178,6 @@ dsb{
         MF{"St. Martin"}
         MG{"Madagaskar"}
         MH{"Marshallowe kupy"}
-        MK{"Pódpołnocna Makedańska"}
         ML{"Mali"}
         MM{"Myanmar"}
         MN{"Mongolska"}
@@ -223,7 +216,7 @@ dsb{
         PM{"St. Pierre a Miquelon"}
         PN{"Pitcairnowe kupy"}
         PR{"Puerto Rico"}
-        PS{"Palestinski awtonomny teritorium"}
+        PS{"Palästinensische Behörde"}
         PT{"Portugalska"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -275,7 +268,6 @@ dsb{
         UA{"Ukraina"}
         UG{"Uganda"}
         UM{"Ameriska Oceaniska"}
-        UN{"Zjadnośone narody"}
         US{"Zjadnośone staty Ameriki"}
         UY{"Uruguay"}
         UZ{"Uzbekistan"}
@@ -288,8 +280,6 @@ dsb{
         VU{"Vanuatu"}
         WF{"Wallis a Futuna"}
         WS{"Samoa"}
-        XA{"pseudo-akcenty"}
-        XB{"pseudo-bidi"}
         XK{"Kosowo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -297,20 +287,5 @@ dsb{
         ZM{"Sambija"}
         ZW{"Simbabwe"}
         ZZ{"njeznaty region"}
-    }
-    Countries%short{
-        GB{"UK"}
-        HK{"Hongkong"}
-        MO{"Macao"}
-        PS{"Palestina"}
-        US{"USA"}
-    }
-    Countries%variant{
-        CD{"Kongo (Demokratiska republika)"}
-        CG{"Kongo (Republika)"}
-        CI{"Słonowokósćowy pśibrjog"}
-        FK{"Falklandske kupy (Malwiny)"}
-        NZ{"Aotearoa Nowoseelandska"}
-        TL{"Pódzajtšny Timor"}
     }
 }

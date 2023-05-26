@@ -867,9 +867,6 @@ mr{
         "Asia:Ulaanbaatar"{
             ec{"उलानबातर"}
         }
-        "Asia:Urumqi"{
-            ec{"उरुम्की"}
-        }
         "Asia:Ust-Nera"{
             ec{"उस्त-नेरा"}
         }
@@ -1222,9 +1219,6 @@ mr{
         }
         "Pacific:Johnston"{
             ec{"जोहान्स्टन"}
-        }
-        "Pacific:Kanton"{
-            ec{"कँटन"}
         }
         "Pacific:Kiritimati"{
             ec{"किरितिमाती"}
@@ -1940,9 +1934,6 @@ mr{
             ld{"येकतरिनबर्ग उन्हाळी वेळ"}
             lg{"येकतरिनबर्ग वेळ"}
             ls{"येकतरिनबर्ग प्रमाण वेळ"}
-        }
-        "meta:Yukon"{
-            ls{"युकोन वेळ"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"[GMT]{0}"}

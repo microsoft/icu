@@ -302,22 +302,7 @@ typedef enum UNumberFormatRoundingMode {
       * ROUND_UNNECESSARY reports an error if formatted result is not exact.
       * @stable ICU 4.8
       */
-    UNUM_ROUND_UNNECESSARY,
-    /**
-     * Rounds ties toward the odd number.
-     * @stable ICU 69
-     */
-    UNUM_ROUND_HALF_ODD,
-    /**
-     * Rounds ties toward +∞.
-     * @stable ICU 69
-     */
-    UNUM_ROUND_HALF_CEILING,
-    /**
-     * Rounds ties toward -∞.
-     * @stable ICU 69
-     */
-    UNUM_ROUND_HALF_FLOOR,
+    UNUM_ROUND_UNNECESSARY
 } UNumberFormatRoundingMode;
 
 /** The possible number format pad positions. 
@@ -399,49 +384,40 @@ typedef enum UNumberFormatFields {
     UNUM_MEASURE_UNIT_FIELD,
     /** @stable ICU 64 */
     UNUM_COMPACT_FIELD,
-#ifndef U_HIDE_DRAFT_API
-    /**
-     * Approximately sign. In ICU 70, this was categorized under the generic SIGN field.
-     * @draft ICU 71
-     */
-    UNUM_APPROXIMATELY_SIGN_FIELD,
-#endif // U_HIDE_DRAFT_API
 
 #ifndef U_HIDE_DEPRECATED_API
     /**
      * One more than the highest normal UNumberFormatFields value.
      * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
      */
-#ifndef U_HIDE_DRAFT_API
-    UNUM_FIELD_COUNT = UNUM_COMPACT_FIELD + 2
-#else  // U_HIDE_DRAFT_API (for UNUM_APPROXIMATELY_SIGN_FIELD)
-    UNUM_FIELD_COUNT = UNUM_COMPACT_FIELD + 1
-#endif  // U_HIDE_DRAFT_API (for UNUM_APPROXIMATELY_SIGN_FIELD)
+    UNUM_FIELD_COUNT = UNUM_SIGN_FIELD + 3
 #endif  /* U_HIDE_DEPRECATED_API */
 } UNumberFormatFields;
 
 
+#ifndef U_HIDE_DRAFT_API
 /**
  * Selectors with special numeric values to use locale default minimum grouping
  * digits for the DecimalFormat/UNumberFormat setMinimumGroupingDigits method.
  * Do not use these constants with the [U]NumberFormatter API.
  *
- * @stable ICU 68
+ * @draft ICU 68
  */
 typedef enum UNumberFormatMinimumGroupingDigits {
     /**
      * Display grouping using the default strategy for all locales.
-     * @stable ICU 68
+     * @draft ICU 68
      */
     UNUM_MINIMUM_GROUPING_DIGITS_AUTO = -2,
     /**
      * Display grouping using locale defaults, except do not show grouping on
      * values smaller than 10000 (such that there is a minimum of two digits
      * before the first separator).
-     * @stable ICU 68
+     * @draft ICU 68
      */
     UNUM_MINIMUM_GROUPING_DIGITS_MIN2 = -3,
 } UNumberFormatMinimumGroupingDigits;
+#endif  // U_HIDE_DRAFT_API
 
 /**
  * Create and return a new UNumberFormat for formatting and parsing
@@ -716,12 +692,6 @@ unum_formatDecimal(    const    UNumberFormat*  fmt,
 /**
  * Format a double currency amount using a UNumberFormat.
  * The double will be formatted according to the UNumberFormat's locale.
- *
- * To format an exact decimal value with a currency, use
- * `unum_setTextAttribute(UNUM_CURRENCY_CODE, ...)` followed by unum_formatDecimal.
- * Your UNumberFormat must be created with the UNUM_CURRENCY style. Alternatively,
- * consider using unumf_openForSkeletonAndLocale.
- *
  * @param fmt the formatter to use
  * @param number the number to format
  * @param currency the 3-letter null-terminated ISO 4217 currency code
@@ -1099,7 +1069,7 @@ typedef enum UNumberFormatAttribute {
 
   /** 
    * if this attribute is set to 0, it is set to UNUM_CURRENCY_STANDARD purpose,
-   * otherwise it is UNUM_CASH_CURRENCY purpose
+   * otherwise it is UNUM_CURRENCY_CASH purpose
    * Default: 0 (UNUM_CURRENCY_STANDARD purpose)
    * @stable ICU 54
    */
@@ -1161,26 +1131,6 @@ typedef enum UNumberFormatAttribute {
 
 } UNumberFormatAttribute;
 
-#ifndef U_HIDE_DRAFT_API
-/**
-* Returns true if the formatter supports the specified attribute and false if not.
-* @param fmt The formatter to query.
-* @param attr The attribute to query.  This can be any value of UNumberFormatterAttribute,
-* regardless of type.
-* @return True if the requested attribute is supported by the formatter; false if not.
-* @see unum_getAttribute
-* @see unum_setAttribute
-* @see unum_getDoubleAttribute
-* @see unum_setDoubleAttribute
-* @see unum_getTextAttribute
-* @see unum_setTextAttribute
-* @draft ICU 72
-*/
-U_CAPI bool U_EXPORT2
-unum_hasAttribute(const UNumberFormat*          fmt,
-          UNumberFormatAttribute  attr);
-#endif // U_HIDE_DRAFT_API
-
 /**
 * Get a numeric attribute associated with a UNumberFormat.
 * An example of a numeric attribute is the number of integer digits a formatter will produce.
@@ -1190,12 +1140,12 @@ unum_hasAttribute(const UNumberFormat*          fmt,
 * UNUM_MAX_FRACTION_DIGITS, UNUM_MIN_FRACTION_DIGITS, UNUM_FRACTION_DIGITS, UNUM_MULTIPLIER,
 * UNUM_GROUPING_SIZE, UNUM_ROUNDING_MODE, UNUM_FORMAT_WIDTH, UNUM_PADDING_POSITION, UNUM_SECONDARY_GROUPING_SIZE,
 * UNUM_SCALE, UNUM_MINIMUM_GROUPING_DIGITS.
-* @return The value of attr, or -1 if the formatter doesn't have the requested attribute.  The caller should use unum_hasAttribute() to tell if the attribute
-* is available, rather than relaying on this function returning -1.
-* @see unum_hasAttribute
+* @return The value of attr.
 * @see unum_setAttribute
 * @see unum_getDoubleAttribute
 * @see unum_setDoubleAttribute
+* @see unum_getTextAttribute
+* @see unum_setTextAttribute
 * @stable ICU 2.0
 */
 U_CAPI int32_t U_EXPORT2 
@@ -1206,7 +1156,7 @@ unum_getAttribute(const UNumberFormat*          fmt,
 * Set a numeric attribute associated with a UNumberFormat.
 * An example of a numeric attribute is the number of integer digits a formatter will produce.  If the
 * formatter does not understand the attribute, the call is ignored.  Rule-based formatters only understand
-* the lenient-parse attribute.  The caller can use unum_hasAttribute() to find out if the formatter supports the attribute.
+* the lenient-parse attribute.
 * @param fmt The formatter to set.
 * @param attr The attribute to set; one of UNUM_PARSE_INT_ONLY, UNUM_GROUPING_USED,
 * UNUM_DECIMAL_ALWAYS_SHOWN, UNUM_MAX_INTEGER_DIGITS, UNUM_MIN_INTEGER_DIGITS, UNUM_INTEGER_DIGITS,
@@ -1214,7 +1164,6 @@ unum_getAttribute(const UNumberFormat*          fmt,
 * UNUM_GROUPING_SIZE, UNUM_ROUNDING_MODE, UNUM_FORMAT_WIDTH, UNUM_PADDING_POSITION, UNUM_SECONDARY_GROUPING_SIZE,
 * UNUM_LENIENT_PARSE, UNUM_SCALE, UNUM_MINIMUM_GROUPING_DIGITS.
 * @param newValue The new value of attr.
-* @see unum_hasAttribute
 * @see unum_getAttribute
 * @see unum_getDoubleAttribute
 * @see unum_setDoubleAttribute
@@ -1231,12 +1180,10 @@ unum_setAttribute(    UNumberFormat*          fmt,
 /**
 * Get a numeric attribute associated with a UNumberFormat.
 * An example of a numeric attribute is the number of integer digits a formatter will produce.
-* If the formatter does not understand the attribute, -1 is returned.  The caller should use unum_hasAttribute()
-* to determine if the attribute is supported, rather than relying on this function returning -1.
+* If the formatter does not understand the attribute, -1 is returned.
 * @param fmt The formatter to query.
 * @param attr The attribute to query; e.g. UNUM_ROUNDING_INCREMENT.
-* @return The value of attr, or -1 if the formatter doesn't understand the attribute.
-* @see unum_hasAttribute
+* @return The value of attr.
 * @see unum_getAttribute
 * @see unum_setAttribute
 * @see unum_setDoubleAttribute
@@ -1251,12 +1198,10 @@ unum_getDoubleAttribute(const UNumberFormat*          fmt,
 /**
 * Set a numeric attribute associated with a UNumberFormat.
 * An example of a numeric attribute is the number of integer digits a formatter will produce.
-* If the formatter does not understand the attribute, this call is ignored.  The caller can use
-* unum_hasAttribute() to tell in advance whether the formatter understands the attribute.
+* If the formatter does not understand the attribute, this call is ignored.
 * @param fmt The formatter to set.
 * @param attr The attribute to set; e.g. UNUM_ROUNDING_INCREMENT.
 * @param newValue The new value of attr.
-* @see unum_hasAttribute
 * @see unum_getAttribute
 * @see unum_setAttribute
 * @see unum_getDoubleAttribute
@@ -1461,19 +1406,12 @@ typedef enum UNumberFormatSymbol {
    */
   UNUM_EXPONENT_MULTIPLICATION_SYMBOL = 27,
 
-#ifndef U_HIDE_INTERNAL_API
-  /** Approximately sign.
-   * @internal
-   */
-  UNUM_APPROXIMATELY_SIGN_SYMBOL = 28,
-#endif
-
 #ifndef U_HIDE_DEPRECATED_API
     /**
      * One more than the highest normal UNumberFormatSymbol value.
      * @deprecated ICU 58 The numeric value may change over time, see ICU ticket #12420.
      */
-  UNUM_FORMAT_SYMBOL_COUNT = 29
+  UNUM_FORMAT_SYMBOL_COUNT = 28
 #endif  /* U_HIDE_DEPRECATED_API */
 } UNumberFormatSymbol;
 

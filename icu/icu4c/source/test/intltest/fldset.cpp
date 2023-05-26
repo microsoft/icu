@@ -160,7 +160,7 @@ UBool FieldsSet::isSameType(const FieldsSet& other) const {
 void FieldsSet::clear() {
     for (int i=0; i<fieldCount(); i++) {
         fValue[i]=-1;
-        fIsSet[i]=false;
+        fIsSet[i]=FALSE;
     }
 }
 
@@ -169,19 +169,19 @@ void FieldsSet::clear(int32_t field) {
         return;
     }
     fValue[field] = -1;
-    fIsSet[field] = false;
+    fIsSet[field] = FALSE;
 }
 void FieldsSet::set(int32_t field, int32_t amount) {
     if (field<0|| field>=fieldCount()) {
         return;
     }
     fValue[field] = amount;
-    fIsSet[field] = true;
+    fIsSet[field] = TRUE;
 }
 
 UBool FieldsSet::isSet(int32_t field) const {
     if (field<0|| field>=fieldCount()) {
-        return false;
+        return FALSE;
     }
     return fIsSet[field];
 }
@@ -274,17 +274,17 @@ void CalendarFieldsSet::setOnCalendar(Calendar *cal, UErrorCode& /*status*/) con
  */
 UBool CalendarFieldsSet::matches(Calendar *cal, CalendarFieldsSet &diffSet,
         UErrorCode& status) const {
-    UBool match = true;
+    UBool match = TRUE;
     if (U_FAILURE(status)) {
-        return false;
+        return FALSE;
     }
     for (int i=0; i<UDAT_FIELD_COUNT; i++) {
         if (isSet((UCalendarDateFields)i)) {
             int32_t calVal = cal->get((UCalendarDateFields)i, status);
             if (U_FAILURE(status))
-                return false;
+                return FALSE;
             if (calVal != get((UCalendarDateFields)i)) {
-                match = false;
+                match = FALSE;
                 diffSet.set((UCalendarDateFields)i, calVal);
                 //fprintf(stderr, "match failed: %s#%d=%d != %d\n",udbg_enumName(UDBG_UCalendarDateFields,i),i,cal->get((UCalendarDateFields)i,status), get((UCalendarDateFields)i));;
             }

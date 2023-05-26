@@ -17,9 +17,6 @@
 *******************************************************************************
 */
 
-#include <stdio.h>
-#include <stdlib.h>
-
 #include "unicode/uchar.h"
 #include "unicode/ustring.h"
 #include "unicode/utypes.h"

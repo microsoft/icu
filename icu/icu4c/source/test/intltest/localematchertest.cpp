@@ -51,7 +51,7 @@ class LocaleMatcherTest : public IntlTest {
 public:
     LocaleMatcherTest() {}
 
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL) override;
+    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL);
 
     void testEmpty();
     void testCopyErrorTo();
@@ -437,8 +437,8 @@ void LocaleMatcherTest::testMatch() {
     double matchEnHantTw = matcher.internalMatch(en_Hant_TW, zh_Hant, errorCode);
     assertTrue("zh_Hant should be closer to und_TW than to en_Hant_TW",
                matchEnHantTw < matchZhHant);
-    assertTrue("zh should not match und_TW or en_Hant_TW",
-               matchZh == 0.0 && matchEnHantTw == 0.0); // with changes in CLDR-1435
+    assertTrue("zh should be closer to und_TW than to en_Hant_TW",
+               matchEnHantTw < matchZh);
 }
 
 void LocaleMatcherTest::testResolvedLocale() {
@@ -572,20 +572,20 @@ UBool LocaleMatcherTest::dataDriven(const TestCase &test, IcuTestErrorCode &erro
             favor = ULOCMATCH_FAVOR_SCRIPT;
         } else {
             errln(UnicodeString(u"unsupported FavorSubtag value ") + test.favor);
-            return false;
+            return FALSE;
         }
         builder.setFavorSubtag(favor);
     }
     if (!test.threshold.isEmpty()) {
         infoln("skipping test case on line %d with non-default threshold: not exposed via API",
                (int)test.lineNr);
-        return true;
+        return TRUE;
         // int32_t threshold = Integer.valueOf(test.threshold);
         // builder.internalSetThresholdDistance(threshold);
     }
     LocaleMatcher matcher = builder.build(errorCode);
     if (errorCode.errIfFailureAndReset("LocaleMatcher::Builder::build()")) {
-        return false;
+        return FALSE;
     }
 
     Locale expMatchLocale("");
@@ -595,7 +595,7 @@ UBool LocaleMatcherTest::dataDriven(const TestCase &test, IcuTestErrorCode &erro
         const Locale *bestSupported = matcher.getBestMatchForListString(desiredSP, errorCode);
         if (!assertEquals("bestSupported from string",
                           locString(expMatch), locString(bestSupported))) {
-            return false;
+            return FALSE;
         }
         LocalePriorityList desired(test.desired.toStringPiece(), errorCode);
         LocalePriorityList::Iterator desiredIter = desired.iterator();
@@ -646,7 +646,7 @@ void LocaleMatcherTest::testDataDriven() {
     CharString path(getSourceTestData(errorCode), errorCode);
     path.appendPathPart("localeMatcherTest.txt", errorCode);
     const char *codePage = "UTF-8";
-    LocalUCHARBUFPointer f(ucbuf_open(path.data(), &codePage, true, false, errorCode));
+    LocalUCHARBUFPointer f(ucbuf_open(path.data(), &codePage, TRUE, FALSE, errorCode));
     if(errorCode.errIfFailureAndReset("ucbuf_open(localeMatcherTest.txt)")) {
         return;
     }
@@ -657,7 +657,7 @@ void LocaleMatcherTest::testDataDriven() {
     int32_t numPassed = 0;
     while ((p = ucbuf_readline(f.getAlias(), &lineLength, errorCode)) != nullptr &&
             errorCode.isSuccess()) {
-        line.setTo(false, p, lineLength);
+        line.setTo(FALSE, p, lineLength);
         if (!readTestCase(line, test, errorCode)) {
             if (errorCode.errIfFailureAndReset(
                     "test data syntax error on line %d", (int)test.lineNr)) {

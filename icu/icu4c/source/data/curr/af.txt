@@ -185,7 +185,7 @@ af{
         }
         EUR{
             "€",
-            "Euro",
+            "euro",
         }
         FJD{
             "FJD",
@@ -656,7 +656,7 @@ af{
             "Oos-Karibiese dollar",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "Wes-Afrikaanse CFA-frank",
         }
         XPF{
@@ -665,7 +665,7 @@ af{
         }
         XXX{
             "¤",
-            "Onbekende geldeenheid",
+            "onbekende geldeenheid",
         }
         YER{
             "YER",
@@ -785,6 +785,7 @@ af{
         ZMW{"ZK"}
     }
     Currencies%variant{
+        GEL{"₾"}
         RUB{"₽"}
         TRY{"TL"}
     }

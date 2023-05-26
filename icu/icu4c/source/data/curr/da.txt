@@ -529,7 +529,7 @@ da{
         }
         LSL{
             "LSL",
-            "lesothisk loti",
+            "Lesothisk loti",
         }
         LTL{
             "LTL",
@@ -1008,7 +1008,7 @@ da{
             "Fransk UIC-franc",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "CFA-franc BCEAO",
         }
         XPD{
@@ -1105,7 +1105,7 @@ da{
         BRL{"R$"}
         BSD{"$"}
         BWP{"P"}
-        BYN{"Br."}
+        BYN{"р."}
         BZD{"$"}
         CAD{"$"}
         CLP{"$"}
@@ -1189,6 +1189,7 @@ da{
         ZMW{"ZK"}
     }
     Currencies%variant{
+        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{
@@ -1717,8 +1718,8 @@ da{
             other{"liberiske dollar"}
         }
         LSL{
-            one{"lesothisk loti"}
-            other{"lesothiske loti"}
+            one{"Lesothisk loti"}
+            other{"Lesothiske loti"}
         }
         LTL{
             one{"Litauisk litas"}
@@ -2157,7 +2158,7 @@ da{
             other{"samoanske tala"}
         }
         XAF{
-            one{"centralafrikansk CFA-franc"}
+            one{"beninsk CFA-franc"}
             other{"CFA-franc (BEAC)"}
         }
         XCD{

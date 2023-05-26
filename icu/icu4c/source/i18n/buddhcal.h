@@ -94,7 +94,7 @@ public:
      * @return    return a polymorphic copy of this calendar.
      * @internal
      */
-    virtual BuddhistCalendar* clone() const override;
+    virtual BuddhistCalendar* clone() const;
 
 public:
     /**
@@ -107,7 +107,7 @@ public:
      *           same class ID. Objects of other classes have different class IDs.
      * @internal
      */
-    virtual UClassID getDynamicClassID(void) const override;
+    virtual UClassID getDynamicClassID(void) const;
 
     /**
      * Return the class ID for this class. This is useful only for comparing to a return
@@ -128,7 +128,7 @@ public:
      * @return calendar type
      * @internal
      */
-    virtual const char * getType() const override;
+    virtual const char * getType() const;
 
 private:
     BuddhistCalendar(); // default constructor not implemented
@@ -142,13 +142,13 @@ private:
      * @return the extended year
      * @internal
      */
-    virtual int32_t handleGetExtendedYear() override;
+    virtual int32_t handleGetExtendedYear();
     /**
      * Subclasses may override this method to compute several fields
      * specific to each calendar system.  
      * @internal
      */
-    virtual void handleComputeFields(int32_t julianDay, UErrorCode& status) override;
+    virtual void handleComputeFields(int32_t julianDay, UErrorCode& status);
     /**
      * Subclass API for defining limits of different types.
      * @param field one of the field numbers
@@ -156,7 +156,7 @@ private:
      * <code>LEAST_MAXIMUM</code>, or <code>MAXIMUM</code>
      * @internal
      */
-    virtual int32_t handleGetLimit(UCalendarDateFields field, ELimitType limitType) const override;
+    virtual int32_t handleGetLimit(UCalendarDateFields field, ELimitType limitType) const;
         /**
      * Return the Julian day number of day before the first day of the
      * given month in the given extended year.  Subclasses should override
@@ -171,26 +171,26 @@ private:
      * @internal
      */
     virtual int32_t handleComputeMonthStart(int32_t eyear, int32_t month,
-                                            UBool useMonth) const override;
+                                            UBool useMonth) const;
 
     /**
      * Returns true because the Buddhist Calendar does have a default century
      * @internal
      */
-    virtual UBool haveDefaultCentury() const override;
+    virtual UBool haveDefaultCentury() const;
 
     /**
      * Returns the date of the start of the default century
      * @return start of century - in milliseconds since epoch, 1970
      * @internal
      */
-    virtual UDate defaultCenturyStart() const override;
+    virtual UDate defaultCenturyStart() const;
 
     /**
      * Returns the year in which the default century begins
      * @internal
      */
-    virtual int32_t defaultCenturyStartYear() const override;
+    virtual int32_t defaultCenturyStartYear() const;
 };
 
 U_NAMESPACE_END

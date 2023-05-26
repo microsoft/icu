@@ -72,7 +72,7 @@ my $dataFiles = {
         "TestNames_SerbianSH.txt",
         "TestNames_SerbianSR.txt",
         "TestNames_Thai.txt",
-        "TestNames_Russian.txt",
+        "Testnames_Russian.txt",
     ],
     "th",
     [

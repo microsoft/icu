@@ -1,0 +1,27 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+ssy{
+    AuxExemplarCharacters{"[j p v z]"}
+    ExemplarCharacters{"[a b c d e f g h i k l m n o q r s t u w x y]"}
+    ExemplarCharactersIndex{"[A B C D E F G H I K L M N O Q R S T U W X Y]"}
+    calendar{
+        gregorian{
+            DateTimePatterns{
+                "h:mm:ss a zzzz",
+                "h:mm:ss a z",
+                "HH:mm:ss",
+                "HH:mm",
+                "y MMMM d, EEEE",
+                "y MMMM d",
+                "y MMM d",
+                "y-MM-dd",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+            }
+        }
+    }
+}

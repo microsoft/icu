@@ -43,49 +43,32 @@ Precision UnitsRouter::parseSkeletonToPrecision(icu::UnicodeString precisionSkel
     return result;
 }
 
-UnitsRouter::UnitsRouter(StringPiece inputUnitIdentifier, const Locale &locale, StringPiece usage,
+UnitsRouter::UnitsRouter(MeasureUnit inputUnit, StringPiece region, StringPiece usage,
                          UErrorCode &status) {
-    this->init(MeasureUnit::forIdentifier(inputUnitIdentifier, status), locale, usage, status);
-}
-
-UnitsRouter::UnitsRouter(const MeasureUnit &inputUnit, const Locale &locale, StringPiece usage,
-                         UErrorCode &status) {
-    this->init(std::move(inputUnit), locale, usage, status);
-}
-
-void UnitsRouter::init(const MeasureUnit &inputUnit, const Locale &locale, StringPiece usage,
-                       UErrorCode &status) {
-
-    if (U_FAILURE(status)) {
-        return;
-    }
-
     // TODO: do we want to pass in ConversionRates and UnitPreferences instead
     // of loading in each UnitsRouter instance? (Or make global?)
     ConversionRates conversionRates(status);
     UnitPreferences prefs(status);
 
     MeasureUnitImpl inputUnitImpl = MeasureUnitImpl::forMeasureUnitMaybeCopy(inputUnit, status);
-    MeasureUnitImpl baseUnitImpl =
-        (extractCompoundBaseUnit(inputUnitImpl, conversionRates, status));
-    CharString category = getUnitQuantity(baseUnitImpl, status);
-    if (U_FAILURE(status)) {
-        return;
-    }
+    MeasureUnit baseUnit =
+        (extractCompoundBaseUnit(inputUnitImpl, conversionRates, status)).build(status);
+    CharString category = getUnitCategory(baseUnit.getIdentifier(), status);
 
-    const MaybeStackVector<UnitPreference> unitPrefs =
-        prefs.getPreferencesFor(category.toStringPiece(), usage, locale, status);
-    for (int32_t i = 0, n = unitPrefs.length(); i < n; ++i) {
-        U_ASSERT(unitPrefs[i] != nullptr);
-        const auto preference = unitPrefs[i];
+    const UnitPreference *const *unitPreferences;
+    int32_t preferencesCount;
+    prefs.getPreferencesFor(category.data(), usage, region, unitPreferences, preferencesCount, status);
+
+    for (int i = 0; i < preferencesCount; ++i) {
+        const auto &preference = *unitPreferences[i];
 
         MeasureUnitImpl complexTargetUnitImpl =
-            MeasureUnitImpl::forIdentifier(preference->unit.data(), status);
+            MeasureUnitImpl::forIdentifier(preference.unit.data(), status);
         if (U_FAILURE(status)) {
             return;
         }
 
-        UnicodeString precision = preference->skeleton;
+        UnicodeString precision = preference.skeleton;
 
         // For now, we only have "precision-increment" in Units Preferences skeleton.
         // Therefore, we check if the skeleton starts with "precision-increment" and force the program to
@@ -100,7 +83,7 @@ void UnitsRouter::init(const MeasureUnit &inputUnit, const Locale &locale, Strin
         outputUnits_.emplaceBackAndCheckErrorCode(status,
                                                   complexTargetUnitImpl.copy(status).build(status));
         converterPreferences_.emplaceBackAndCheckErrorCode(status, inputUnitImpl, complexTargetUnitImpl,
-                                                           preference->geq, std::move(precision),
+                                                           preference.geq, std::move(precision),
                                                            conversionRates, status);
 
         if (U_FAILURE(status)) {

@@ -66,18 +66,18 @@ public:
     /**
      * Transliterator API.
      */
-    virtual AnyTransliterator* clone() const override;
+    virtual AnyTransliterator* clone() const;
 
     /**
      * Implements {@link Transliterator#handleTransliterate}.
      */
     virtual void handleTransliterate(Replaceable& text, UTransPosition& index,
-                                     UBool incremental) const override;
+                                     UBool incremental) const;
 
     /**
      * ICU "poor man's RTTI", returns a UClassID for the actual class.
      */
-    virtual UClassID getDynamicClassID() const override;
+    virtual UClassID getDynamicClassID() const;
 
     /**
      * ICU "poor man's RTTI", returns a UClassID for this class.

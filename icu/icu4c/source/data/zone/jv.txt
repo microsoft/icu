@@ -864,9 +864,6 @@ jv{
         "Asia:Ulaanbaatar"{
             ec{"Ulaanbaatar"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumqi"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1876,9 +1873,6 @@ jv{
             ld{"Wektu Ketigo Yekaterinburg"}
             lg{"Wektu Yekaterinburg"}
             ls{"Wektu Standar Yekaterinburg"}
-        }
-        "meta:Yukon"{
-            ls{"Wektu Yukon"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

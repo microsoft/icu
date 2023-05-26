@@ -18,10 +18,9 @@
 
 #if !UCONFIG_NO_FORMATTING
 
-#include <stdarg.h>
-#include <stdbool.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdarg.h>
 #include "unicode/uloc.h"
 #include "unicode/umsg.h"
 #include "unicode/udat.h"
@@ -44,7 +43,7 @@ static const char* const txt_testResultStrings[] = {
     "Quotes ', {, a 1 {0}",
     "Quotes ', {, a 1 {0}",
     "You deposited 1 times an amount of $3,456.00 on 1/12/70",
-    "{2,time,full}, for 3,456, 1 is 5:46:40\\u202FAM Pacific Standard Time and full date is Monday, January 12, 1970",
+    "{2,time,full}, for 3,456, 1 is 5:46:40 AM Pacific Standard Time and full date is Monday, January 12, 1970",
     "{1,number,percent} for 1 is 345,600%"
 };
 
@@ -53,7 +52,7 @@ static UChar* testCasePatterns[5];
 
 static UChar* testResultStrings[5];
 
-static UBool strings_initialized = false;
+static UBool strings_initialized = FALSE;
 
 /* function used to create the test patterns for testing Message formatting */
 static void InitStrings( void )
@@ -70,10 +69,10 @@ static void InitStrings( void )
     for (i=0; i < cnt_testCases; i++ ) {
         uint32_t strSize = (uint32_t)strlen(txt_testResultStrings[i]) + 1;
         testResultStrings[i] = (UChar*)malloc(sizeof(UChar) * strSize);
-        u_unescape(txt_testResultStrings[i], testResultStrings[i], strSize);
+        u_uastrncpy(testResultStrings[i], txt_testResultStrings[i], strSize);
     }
 
-    strings_initialized = true;
+    strings_initialized = TRUE;
 }
 
 static void FreeStrings( void )
@@ -88,7 +87,7 @@ static void FreeStrings( void )
     for (i=0; i < cnt_testCases; i++ ) {
         free(testResultStrings[i]);
     }
-    strings_initialized = false;
+    strings_initialized = FALSE;
 }
 
 #if (U_PLATFORM == U_PF_LINUX) /* add platforms here .. */

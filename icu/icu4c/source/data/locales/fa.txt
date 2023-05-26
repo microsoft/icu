@@ -34,7 +34,6 @@ fa{
         arabext{
             patterns{
                 currencyFormat{"‎¤#,##0.00"}
-                currencyFormat%noCurrency{"#,##0.00"}
                 percentFormat{"#,##0%"}
                 scientificFormat{"#E0"}
             }
@@ -62,9 +61,7 @@ fa{
             }
             patterns{
                 accountingFormat{"‎¤ #,##0.00;‎(¤ #,##0.00)"}
-                accountingFormat%noCurrency{"#,##0.00;(#,##0.00)"}
                 currencyFormat{"‎¤ #,##0.00"}
-                currencyPatternAppendISO{"{0} ¤¤"}
                 decimalFormat{"#,##0.###"}
                 percentFormat{"#,##0%"}
                 scientificFormat{"#E0"}
@@ -194,32 +191,32 @@ fa{
                         other{"00 میلیون"}
                     }
                     100000000{
-                        one{"000 میلیون"}
-                        other{"000 میلیون"}
+                        one{"000 م"}
+                        other{"000 م"}
                     }
                     1000000000{
-                        one{"0 میلیارد"}
-                        other{"0 میلیارد"}
+                        one{"0 م"}
+                        other{"0 م"}
                     }
                     10000000000{
-                        one{"00 میلیارد"}
-                        other{"00 میلیارد"}
+                        one{"00 م"}
+                        other{"00 م"}
                     }
                     100000000000{
-                        one{"000 میلیارد"}
-                        other{"000 میلیارد"}
+                        one{"000 ب"}
+                        other{"000B"}
                     }
                     1000000000000{
-                        one{"0 تریلیون"}
+                        one{"0 ت"}
                         other{"0 تریلیون"}
                     }
                     10000000000000{
-                        one{"00 تریلیون"}
-                        other{"00 تریلیون"}
+                        one{"00 ت"}
+                        other{"00 ت"}
                     }
                     100000000000000{
-                        one{"000 تریلیون"}
-                        other{"000 تریلیون"}
+                        one{"000 ت"}
+                        other{"000 ت"}
                     }
                 }
             }
@@ -465,16 +462,6 @@ fa{
                 "{1}،‏ {0}",
                 "{1}،‏ {0}",
             }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "Hmmss",
-                "Hmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GGGGGyMd",
-            }
             appendItems{
                 Day-Of-Week{"{1} {0}"}
                 Timezone{"{0} ({1})"}
@@ -495,7 +482,6 @@ fa{
                 GyMMM{"MMM y G"}
                 GyMMMEd{"E d MMM y G"}
                 GyMMMd{"d MMM y G"}
-                GyMd{"M/d/y GGGGG"}
                 H{"H"}
                 HHmmZ{"HH:mm (Z)"}
                 Hm{"H:mm"}
@@ -696,22 +682,6 @@ fa{
                 "{1}،‏ {0}",
                 "{1}،‏ {0}",
             }
-            DateTimePatterns%atTime{
-                "{1} ساعت {0}",
-                "{1} ساعت {0}",
-                "{1}، {0}",
-                "{1}, {0}",
-            }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "Hmmss",
-                "Hmm",
-                "yMMMMEEEEd",
-                "yMMMMd",
-                "yMMMd",
-                "yMd",
-            }
             appendItems{
                 Day-Of-Week{"{1} {0}"}
                 Timezone{"{0} ({1})"}
@@ -732,7 +702,6 @@ fa{
                 GyMMM{"MMM y G"}
                 GyMMMEd{"E d MMM y G"}
                 GyMMMd{"d MMM y G"}
-                GyMd{"y/M/d GGGGG"}
                 H{"H"}
                 HHmmZ{"HH:mm (Z)"}
                 Hm{"H:mm"}
@@ -872,7 +841,7 @@ fa{
                         night2{"ن"}
                     }
                     wide{
-                        afternoon1{"بعدازظهر"}
+                        afternoon1{"ظهر"}
                         afternoon2{"عصر"}
                         morning1{"بامداد"}
                         morning2{"صبح"}
@@ -1084,13 +1053,13 @@ fa{
             monthNames{
                 format{
                     abbreviated{
-                        "ژانویه",
-                        "فوریه",
+                        "ژانویهٔ",
+                        "فوریهٔ",
                         "مارس",
                         "آوریل",
-                        "مه",
+                        "مهٔ",
                         "ژوئن",
-                        "ژوئیه",
+                        "ژوئیهٔ",
                         "اوت",
                         "سپتامبر",
                         "اکتبر",
@@ -1420,16 +1389,6 @@ fa{
                 "{1}،‏ {0}",
                 "{1}،‏ {0}",
             }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "Hmmss",
-                "Hmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GyMd",
-            }
             availableFormats{
                 E{"ccc"}
                 Ed{"E dم"}
@@ -1437,7 +1396,6 @@ fa{
                 GyMMM{"MMM y G"}
                 GyMMMEd{"E d MMM y G"}
                 GyMMMd{"d MMM y G"}
-                GyMd{"M/d/y GGGGG"}
                 H{"H"}
                 Hm{"H:mm"}
                 HmZ{"HH:mm (Z)"}
@@ -2370,16 +2328,6 @@ fa{
                 "{1}،‏ {0}",
                 "{1}،‏ {0}",
             }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "Hmmss",
-                "Hmm",
-                "yMMMMEEEEd",
-                "yMMMMd",
-                "yMMMd",
-                "yMd",
-            }
             availableFormats{
                 Ed{"E dم"}
                 y{"y"}
@@ -2574,22 +2522,6 @@ fa{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    "قبل از R.O.C.",
-                    "تقویم مینگو",
-                }
-                narrow{
-                    "قبل از R.O.C.",
-                    "تقویم مینگو",
-                }
-                wide{
-                    "قبل از R.O.C.",
-                    "تقویم مینگو",
-                }
-            }
-        }
     }
     characterLabel{
         activities{"فعالیت"}
@@ -2697,8 +2629,8 @@ fa{
             }
             relativeTime{
                 future{
-                    one{"{0} روز دیگر"}
-                    other{"{0} روز دیگر"}
+                    one{"{0} روز بعد"}
+                    other{"{0} روز بعد"}
                 }
                 past{
                     one{"{0} روز پیش"}
@@ -2737,8 +2669,8 @@ fa{
             }
             relativeTime{
                 future{
-                    one{"{0} روز دیگر"}
-                    other{"{0} روز دیگر"}
+                    one{"{0} روز بعد"}
+                    other{"{0} روز بعد"}
                 }
                 past{
                     one{"{0} روز پیش"}
@@ -3601,52 +3533,6 @@ fa{
                 "[,٫︐﹐，]",
                 "[.․﹒．｡]",
             }
-        }
-    }
-    personNames{
-        nameOrderLocales{
-            givenFirst{
-                "und",
-                "fa",
-            }
-            surnameFirst{
-                "ko",
-                "vi",
-                "yue",
-                "zh",
-            }
-        }
-        namePattern{
-            givenFirst-long-addressing-formal{"{prefix} {surname}"}
-            givenFirst-long-addressing-informal{"{given-informal}"}
-            givenFirst-long-referring-formal{"{given} {given2} {surname} {suffix}"}
-            givenFirst-long-referring-informal{"{given-informal} {surname}"}
-            givenFirst-medium-addressing-formal{"{prefix} {surname}"}
-            givenFirst-medium-addressing-informal{"{given-informal}"}
-            givenFirst-medium-referring-formal{"{given} {given2-initial} {surname} {suffix}"}
-            givenFirst-medium-referring-informal{"{given-informal} {surname}"}
-            givenFirst-short-addressing-formal{"{prefix} {surname}"}
-            givenFirst-short-addressing-informal{"{given-informal}"}
-            givenFirst-short-referring-formal{"{given-initial} {given2-initial} {surname}"}
-            givenFirst-short-referring-informal{"{given-informal} {surname-initial}"}
-            sorting-long-referring-formal{"{surname}، {given} {given2} {suffix}"}
-            sorting-long-referring-informal{"{surname}، {given-informal}"}
-            sorting-medium-referring-formal{"{surname}، {given} {given2-initial} {suffix}"}
-            sorting-medium-referring-informal{"{surname}، {given-informal}"}
-            sorting-short-referring-formal{"{surname}، {given-initial} {given2-initial}"}
-            sorting-short-referring-informal{"{surname}، {given-informal}"}
-            surnameFirst-long-addressing-formal{"{prefix} {surname}"}
-            surnameFirst-long-addressing-informal{"{given-informal}"}
-            surnameFirst-long-referring-formal{"{surname} {given} {given2} {suffix}"}
-            surnameFirst-long-referring-informal{"{surname} {given-informal}"}
-            surnameFirst-medium-addressing-formal{"{prefix} {surname}"}
-            surnameFirst-medium-addressing-informal{"{given-informal}"}
-            surnameFirst-medium-referring-formal{"{surname} {given} {given2-initial} {suffix}"}
-            surnameFirst-medium-referring-informal{"{surname} {given-informal}"}
-            surnameFirst-short-addressing-formal{"{prefix} {surname}"}
-            surnameFirst-short-addressing-informal{"{given-informal}"}
-            surnameFirst-short-referring-formal{"{surname} {given-initial} {given2-initial}"}
-            surnameFirst-short-referring-informal{"{surname} {given-initial}"}
         }
     }
 }

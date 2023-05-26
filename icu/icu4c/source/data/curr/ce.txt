@@ -616,7 +616,7 @@ ce{
             "Малхбален Карибийн доллар",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "Малхбузен Африкан КФА франк",
         }
         XPF{
@@ -735,6 +735,7 @@ ce{
         ZMW{"ZK"}
     }
     Currencies%variant{
+        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{

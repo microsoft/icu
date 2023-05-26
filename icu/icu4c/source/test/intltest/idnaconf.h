@@ -21,7 +21,7 @@
 
 class IdnaConfTest: public IntlTest {
 public:
-    void runIndexedTest(int32_t index, UBool exec, const char* &name, char* par=NULL) override;
+    void runIndexedTest(int32_t index, UBool exec, const char* &name, char* par=NULL);
     IdnaConfTest();
     virtual ~IdnaConfTest();
 private:
@@ -32,6 +32,7 @@ private:
     int len ;
     int curOffset;
 
+    UBool  ReadAndConvertFile();
     int isNewlineMark();
     UBool ReadOneLine(UnicodeString&);
 

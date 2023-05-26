@@ -868,9 +868,6 @@ sr_Latn{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumći"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }
@@ -1223,9 +1220,6 @@ sr_Latn{
         }
         "Pacific:Johnston"{
             ec{"Džonston"}
-        }
-        "Pacific:Kanton"{
-            ec{"Kanton"}
         }
         "Pacific:Kiritimati"{
             ec{"Kiritimati"}
@@ -1950,9 +1944,6 @@ sr_Latn{
             ld{"Jekaterinburg, letnje vreme"}
             lg{"Jekaterinburg vreme"}
             ls{"Jekaterinburg, standardno vreme"}
-        }
-        "meta:Yukon"{
-            ls{"Jukon"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

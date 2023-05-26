@@ -36,7 +36,7 @@
 
 U_NAMESPACE_BEGIN
 
-// Note these constants and the struct are only used when dealing with the fallback path for RDP sessions.
+// Note these constants and the struct are only used when dealing with the fallback path for RDP sesssions.
 
 // This is the location of the time zones in the registry on Vista+ systems.
 // See: https://docs.microsoft.com/windows/win32/api/timezoneapi/ns-timezoneapi-dynamic_time_zone_information
@@ -143,7 +143,7 @@ uprv_detectWindowsTimeZone()
             //
             // For example, a time zone that is 3 hours ahead of UTC (UTC+03:00) would have a Bias value of -180, and the
             // corresponding time zone ID would be "Etc/GMT-3". (So there is no need to negate utcOffsetMins below.)
-            int ret = snprintf(gmtOffsetTz, sizeof(gmtOffsetTz), "Etc/GMT%+ld", utcOffsetMins / 60);
+            int ret = snprintf(gmtOffsetTz, UPRV_LENGTHOF(gmtOffsetTz), "Etc/GMT%+ld", utcOffsetMins / 60);
             if (ret > 0 && ret < UPRV_LENGTHOF(gmtOffsetTz)) {
                 return uprv_strdup(gmtOffsetTz);
             }
@@ -274,7 +274,7 @@ uprv_detectWindowsTimeZone()
 
     CharString winTZ;
     UErrorCode status = U_ZERO_ERROR;
-    winTZ.appendInvariantChars(UnicodeString(true, windowsTimeZoneName, -1), status);
+    winTZ.appendInvariantChars(UnicodeString(TRUE, windowsTimeZoneName, -1), status);
 
     // Map Windows Timezone name (non-localized) to ICU timezone ID (~ Olson timezone id).
     StackUResourceBundle winTZBundle;

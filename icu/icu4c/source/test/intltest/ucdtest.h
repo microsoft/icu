@@ -32,7 +32,7 @@ public:
     UnicodeTest();
     virtual ~UnicodeTest();
     
-    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL ) override;
+    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL );
 
     void TestAdditionalProperties();
     void TestBinaryValues();
@@ -41,7 +41,6 @@ public:
     void TestScriptMetadata();
     void TestBidiPairedBracketType();
     void TestEmojiProperties();
-    void TestEmojiPropertiesOfStrings();
     void TestIndicPositionalCategory();
     void TestIndicSyllabicCategory();
     void TestVerticalOrientation();

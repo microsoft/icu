@@ -259,7 +259,7 @@ bg{
             ec{"Чиуауа"}
         }
         "America:Coral_Harbour"{
-            ec{"Атикокан"}
+            ec{"Корал Харбър"}
         }
         "America:Cordoba"{
             ec{"Кордоба"}
@@ -867,9 +867,6 @@ bg{
         "Asia:Ulaanbaatar"{
             ec{"Улан Батор"}
         }
-        "Asia:Urumqi"{
-            ec{"Урумчи"}
-        }
         "Asia:Ust-Nera"{
             ec{"Уст-Нера"}
         }
@@ -1222,9 +1219,6 @@ bg{
         }
         "Pacific:Johnston"{
             ec{"Джонстън"}
-        }
-        "Pacific:Kanton"{
-            ec{"Кантон"}
         }
         "Pacific:Kiritimati"{
             ec{"Киритимати"}
@@ -1900,9 +1894,6 @@ bg{
             ld{"Екатеринбургско лятно часово време"}
             lg{"Екатеринбургско време"}
             ls{"Екатеринбургско стандартно време"}
-        }
-        "meta:Yukon"{
-            ls{"Юкон"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"Гринуич{0}"}

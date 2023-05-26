@@ -114,12 +114,7 @@ static ExpectedResult kJapaneseShort[] = {
   {1.23456789E11, "1200\\u5104"},
   {1.23456789E12, "1.2\\u5146"},
   {1.23456789E13, "12\\u5146"},
-  {1.23456789E14, "120\\u5146"},
-  {1.23456789E15, "1200\\u5146"},
-  {1.23456789E16, "1.2\\u4EAC"},
-  {1.23456789E17, "12\\u4EAC"},
-  {1.23456789E18, "120\\u4EAC"},
-  {1.23456789E19, "1200\\u4EAC"}};
+  {1.23456789E14, "120\\u5146"}};
 
 static ExpectedResult kSwahiliShort[] = {
   {1234.0, "elfu\\u00a01.2"},
@@ -231,7 +226,7 @@ public:
     CompactDecimalFormatTest() {
     }
 
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=0) override;
+    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=0);
 private:
     void TestEnglishShort();
     void TestSerbianShort();
@@ -513,7 +508,7 @@ void CompactDecimalFormatTest::CheckLocale(const Locale& locale, UNumberCompactS
     return;
   }
   char description[256];
-  snprintf(description, sizeof(description), "%s - %s", locale.getName(), StyleStr(style));
+  sprintf(description,"%s - %s", locale.getName(), StyleStr(style));
   for (int32_t i = 0; i < expectedResultLength; i++) {
     CheckExpectedResult(cdf.getAlias(), &expectedResults[i], description);
   }
@@ -532,7 +527,7 @@ void CompactDecimalFormatTest::CheckLocaleWithCurrency(const Locale& locale, UNu
     cdf->setCurrency(currency, status);
     assertSuccess("Failed to set currency", status);
     char description[256];
-    snprintf(description, sizeof(description), "%s - %s", locale.getName(), StyleStr(style));
+    sprintf(description,"%s - %s", locale.getName(), StyleStr(style));
     for (int32_t i = 0; i < expectedResultLength; i++) {
         CheckExpectedResult(cdf.getAlias(), &expectedResults[i], description);
     }

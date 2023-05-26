@@ -85,12 +85,12 @@ public:
      * equal if they are of the same size and all elements are equal,
      * as compared using this object's comparer.
      */
-    bool operator==(const UVector64& other);
+    UBool operator==(const UVector64& other);
 
     /**
      * Equivalent to !operator==()
      */
-    inline bool operator!=(const UVector64& other);
+    inline UBool operator!=(const UVector64& other);
 
     //------------------------------------------------------------
     // subset of java.util.Vector API
@@ -170,16 +170,16 @@ public:
     /**
      * ICU "poor man's RTTI", returns a UClassID for the actual class.
      */
-    virtual UClassID getDynamicClassID() const override;
+    virtual UClassID getDynamicClassID() const;
 
 private:
     void _init(int32_t initialCapacity, UErrorCode &status);
 
     // Disallow
-    UVector64(const UVector64&) = delete;
+    UVector64(const UVector64&);
 
     // Disallow
-    UVector64& operator=(const UVector64&) = delete;
+    UVector64& operator=(const UVector64&);
 
 
     //  API Functions for Stack operations.
@@ -249,7 +249,7 @@ inline int64_t UVector64::lastElementi(void) const {
     return elementAti(count-1);
 }
 
-inline bool UVector64::operator!=(const UVector64& other) {
+inline UBool UVector64::operator!=(const UVector64& other) {
     return !operator==(other);
 }
 

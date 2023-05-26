@@ -35,7 +35,6 @@
 #include "unicode/unistr.h"
 #include "unicode/parsepos.h"
 #include "unicode/uniset.h"
-#include "unicode/usetiter.h"
 #include "unicode/ustring.h"
 #include "unicode/ures.h"
 #include "unicode/utf16.h"
@@ -442,7 +441,7 @@ ConversionTest::TestGetUnicodeSet() {
                 // are there items that must be in cnvSet but are not?
                 (diffSet=mapSet).removeAll(cnvSet);
                 if(!diffSet.isEmpty()) {
-                    diffSet.toPattern(s, true);
+                    diffSet.toPattern(s, TRUE);
                     if(s.length()>100) {
                         s.replace(100, 0x7fffffff, ellipsis, UPRV_LENGTHOF(ellipsis));
                     }
@@ -454,7 +453,7 @@ ConversionTest::TestGetUnicodeSet() {
                 // are there items that must not be in cnvSet but are?
                 (diffSet=mapnotSet).retainAll(cnvSet);
                 if(!diffSet.isEmpty()) {
-                    diffSet.toPattern(s, true);
+                    diffSet.toPattern(s, TRUE);
                     if(s.length()>100) {
                         s.replace(100, 0x7fffffff, ellipsis, UPRV_LENGTHOF(ellipsis));
                     }
@@ -570,7 +569,7 @@ ConversionTest::TestGetUnicodeSet2() {
         UConverterUnicodeSet which;
         for(which=UCNV_ROUNDTRIP_SET; which<UCNV_SET_COUNT; which=(UConverterUnicodeSet)((int)which+1)) {
             if(which==UCNV_ROUNDTRIP_AND_FALLBACK_SET) {
-                ucnv_setFallback(cnv.getAlias(), true);
+                ucnv_setFallback(cnv.getAlias(), TRUE);
             }
             expected.add(0, cpLimit-1);
             s=s0;
@@ -617,7 +616,7 @@ ConversionTest::TestGetUnicodeSet2() {
                 // are there items that must be in the set but are not?
                 (diffSet=expected).removeAll(set);
                 if(!diffSet.isEmpty()) {
-                    diffSet.toPattern(out, true);
+                    diffSet.toPattern(out, TRUE);
                     if(out.length()>100) {
                         out.replace(100, 0x7fffffff, ellipsis, UPRV_LENGTHOF(ellipsis));
                     }
@@ -629,7 +628,7 @@ ConversionTest::TestGetUnicodeSet2() {
                 // are there items that must not be in the set but are?
                 (diffSet=set).removeAll(expected);
                 if(!diffSet.isEmpty()) {
-                    diffSet.toPattern(out, true);
+                    diffSet.toPattern(out, TRUE);
                     if(out.length()>100) {
                         out.replace(100, 0x7fffffff, ellipsis, UPRV_LENGTHOF(ellipsis));
                     }
@@ -644,21 +643,14 @@ ConversionTest::TestGetUnicodeSet2() {
     delete [] s0;
 }
 
-// Test that all code points which have the default ignorable Unicode property
-// are ignored if they have no mapping.
-// If there are any failures, the hard coded list (IS_DEFAULT_IGNORABLE_CODE_POINT)
-// in ucnv_err.cpp should be updated.
+// Test all codepoints which has the default ignorable Unicode property are ignored if they have no mapping
+// If there are any failures, the hard coded list (IS_DEFAULT_IGNORABLE_CODE_POINT) in ucnv_err.c should be updated
 void
 ConversionTest::TestDefaultIgnorableCallback() {
     UErrorCode status = U_ZERO_ERROR;
     const char *cnv_name = "euc-jp-2007";
     const char *pattern_ignorable = "[:Default_Ignorable_Code_Point:]";
-    const char *pattern_not_ignorable =
-        "[[:^Default_Ignorable_Code_Point:]"
-        // For test performance, skip large ranges that will likely remain unassigned
-        // for a long time, and private use code points.
-        "-[\\U00040000-\\U000DFFFF]-[:Co:]"
-        "]";
+    const char *pattern_not_ignorable = "[:^Default_Ignorable_Code_Point:]";
 
     LocalPointer<UnicodeSet> set_ignorable(new UnicodeSet(pattern_ignorable, status));
     if (U_FAILURE(status)) {
@@ -686,12 +678,12 @@ ConversionTest::TestDefaultIgnorableCallback() {
     int32_t outputLength;
     
     // test default ignorables are ignored
-    UnicodeSetIterator iter(*set_ignorable);
-    while (iter.next()) {
+    int size = set_ignorable->size();
+    for (int i = 0; i < size; i++) {
         status = U_ZERO_ERROR;
         outputLength= 0;
 
-        input[0] = iter.getCodepoint();
+        input[0] = set_ignorable->charAt(i);
 
         outputLength = ucnv_fromUChars(cnv.getAlias(), output, 10, UnicodeString::fromUTF32(input, 1).getTerminatedBuffer(), -1, &status);
         if (U_FAILURE(status) || outputLength != 0) {
@@ -700,12 +692,12 @@ ConversionTest::TestDefaultIgnorableCallback() {
     }
 
     // test non-ignorables are not ignored
-    iter.reset(*set_not_ignorable);
-    while (iter.next()) {
+    size = set_not_ignorable->size();
+    for (int i = 0; i < size; i++) {
         status = U_ZERO_ERROR;
         outputLength= 0;
 
-        input[0] = iter.getCodepoint();
+        input[0] = set_not_ignorable->charAt(i);
 
         if (input[0] == 0) {
             continue;
@@ -740,7 +732,7 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
     ucnv_convertEx(cnv2.getAlias(), cnv1.getAlias(),
                    &target, result + 2, &source, sourceLimit,
                    buffer16, &pivotSource, &pivotTarget, pivotLimit,
-                   false, false, errorCode);
+                   FALSE, FALSE, errorCode);
     assertEquals("overflow", U_BUFFER_OVERFLOW_ERROR, errorCode.reset());
     length = (int32_t)(target - result);
     assertEquals("number of bytes written", 2, length);
@@ -750,7 +742,7 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
     ucnv_convertEx(cnv2.getAlias(), cnv1.getAlias(),
                    &target, targetLimit, &source, sourceLimit,
                    buffer16, &pivotSource, &pivotTarget, pivotLimit,
-                   false, true, errorCode);
+                   FALSE, TRUE, errorCode);
 
     assertSuccess("UTF-8->UTF-8", errorCode);
     length = (int32_t)(target - result);
@@ -773,7 +765,7 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
     ucnv_convertEx(cnv2.getAlias(), cnv1.getAlias(),
                    &target, result + 3, &source, sourceLimit,
                    buffer16, &pivotSource, &pivotTarget, pivotLimit,
-                   false, false, errorCode);
+                   FALSE, FALSE, errorCode);
     assertEquals("text2 overflow", U_BUFFER_OVERFLOW_ERROR, errorCode.reset());
     length = (int32_t)(target - result);
     assertEquals("text2 number of bytes written", 3, length);
@@ -783,7 +775,7 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
     ucnv_convertEx(cnv2.getAlias(), cnv1.getAlias(),
                    &target, targetLimit, &source, sourceLimit,
                    buffer16, &pivotSource, &pivotTarget, pivotLimit,
-                   false, true, errorCode);
+                   FALSE, TRUE, errorCode);
 
     assertSuccess("text2 UTF-8->UTF-8", errorCode);
     length = (int32_t)(target - result);
@@ -810,7 +802,7 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
     ucnv_convertEx(cnv2.getAlias(), cnv1.getAlias(),
                    &target, targetLimit, &source, source + 2,
                    buffer16, &pivotSource, &pivotTarget, pivotLimit,
-                   false, true, errorCode);
+                   FALSE, TRUE, errorCode);
     assertEquals("illFormed truncated", U_TRUNCATED_CHAR_FOUND, errorCode.reset());
     length = (int32_t)(target - result);
     assertEquals("illFormed number of bytes written", 0, length);
@@ -826,7 +818,7 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
     ucnv_convertEx(cnv2.getAlias(), cnv1.getAlias(),
                    &target, targetLimit, &source, sourceLimit,
                    buffer16, &pivotSource, &pivotTarget, pivotLimit,
-                   false, true, errorCode);
+                   FALSE, TRUE, errorCode);
 
     assertEquals("illFormed trail byte", U_ILLEGAL_CHAR_FOUND, errorCode.reset());
     length = (int32_t)(target - result);
@@ -875,7 +867,7 @@ ConversionTest::TestUTF8ToUTF8Streaming() {
     ucnv_convertEx(cnv2.getAlias(), cnv1.getAlias(),
         &target, result + targetLen, &source, sourceLimit,
         buffer16, &pivotSource, &pivotTarget, pivotLimit,
-        false, false, errorCode);
+        FALSE, FALSE, errorCode);
 
     length = (int32_t)(target - result);
     targetLen -= length;
@@ -888,7 +880,7 @@ ConversionTest::TestUTF8ToUTF8Streaming() {
     ucnv_convertEx(cnv2.getAlias(), cnv1.getAlias(),
         &target, targetLimit, &source, sourceLimit,
         buffer16, &pivotSource, &pivotTarget, pivotLimit,
-        false, true, errorCode);
+        FALSE, TRUE, errorCode);
 
     length = (int32_t)(target - result - length);
     targetLen -= length;
@@ -1034,7 +1026,7 @@ stepToUnicode(ConversionCase &cc, UConverter *cnv,
             // start with empty partial buffers
             sourceLimit=source;
             targetLimit=target;
-            flush=false;
+            flush=FALSE;
 
             // output offsets only for bulk conversion
             resultOffsets=NULL;
@@ -1183,7 +1175,7 @@ stepToUnicode(ConversionCase &cc, UConverter *cnv,
                         break;
                     }
 
-                    // we are done (flush==true) but we continue, to get the index out of bounds error above
+                    // we are done (flush==TRUE) but we continue, to get the index out of bounds error above
                 }
 
                 --step;
@@ -1204,7 +1196,7 @@ ConversionTest::ToUnicodeCase(ConversionCase &cc, UConverterToUCallback callback
         errcheckln(errorCode, "toUnicode[%d](%s cb=\"%s\" fb=%d flush=%d) ucnv_open() failed - %s",
                 cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, errorCode.errorName());
         errorCode.reset();
-        return false;
+        return FALSE;
     }
 
     // set the callback
@@ -1213,7 +1205,7 @@ ConversionTest::ToUnicodeCase(ConversionCase &cc, UConverterToUCallback callback
         if(U_FAILURE(errorCode)) {
             errln("toUnicode[%d](%s cb=\"%s\" fb=%d flush=%d) ucnv_setToUCallBack() failed - %s",
                     cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, u_errorName(errorCode));
-            return false;
+            return FALSE;
         }
     }
 
@@ -1240,7 +1232,7 @@ ConversionTest::ToUnicodeCase(ConversionCase &cc, UConverterToUCallback callback
     };
     int32_t i, step;
 
-    ok=true;
+    ok=TRUE;
     for(i=0; i<UPRV_LENGTHOF(steps) && ok; ++i) {
         step=steps[i].step;
         if(step<0 && !cc.finalFlush) {
@@ -1346,7 +1338,7 @@ ConversionTest::checkToUnicode(ConversionCase &cc, UConverter *cnv, const char *
     if(U_FAILURE(errorCode)) {
         errln("toUnicode[%d](%s cb=\"%s\" fb=%d flush=%d %s) ucnv_getInvalidChars() failed - %s",
                 cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, name, u_errorName(errorCode));
-        return false;
+        return FALSE;
     }
 
     // check everything that might have gone wrong
@@ -1365,7 +1357,7 @@ ConversionTest::checkToUnicode(ConversionCase &cc, UConverter *cnv, const char *
     }
 
     if(msg==NULL) {
-        return true;
+        return TRUE;
     } else {
         char buffer[2000]; // one buffer for all strings
         char *s, *bytesString, *unicodeString, *resultString,
@@ -1404,7 +1396,7 @@ ConversionTest::checkToUnicode(ConversionCase &cc, UConverter *cnv, const char *
               u_errorName(cc.outErrorCode), u_errorName(resultErrorCode),
               invalidCharsString, resultInvalidCharsString);
 
-        return false;
+        return FALSE;
     }
 }
 
@@ -1444,7 +1436,7 @@ stepFromUTF8(ConversionCase &cc,
         // start with empty partial buffers
         sourceLimit=source;
         targetLimit=target;
-        flush=false;
+        flush=FALSE;
 
         // empty pivot is not allowed, make it of length step
         pivotLimit=pivotBuffer+step;
@@ -1460,7 +1452,7 @@ stepFromUTF8(ConversionCase &cc,
             &target, targetLimit,
             &source, sourceLimit,
             pivotBuffer, &pivotSource, &pivotTarget, pivotLimit,
-            false, flush, pErrorCode);
+            FALSE, flush, pErrorCode);
 
         // check pointers and errors
         if(source>sourceLimit || target>targetLimit) {
@@ -1545,7 +1537,7 @@ stepFromUnicode(ConversionCase &cc, UConverter *cnv,
         // start with empty partial buffers
         sourceLimit=source;
         targetLimit=target;
-        flush=false;
+        flush=FALSE;
 
         // output offsets only for bulk conversion
         resultOffsets=NULL;
@@ -1614,7 +1606,7 @@ ConversionTest::FromUnicodeCase(ConversionCase &cc, UConverterFromUCallback call
     if(U_FAILURE(errorCode)) {
         errcheckln(errorCode, "fromUnicode[%d](%s cb=\"%s\" fb=%d flush=%d) ucnv_open() failed - %s",
                 cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, u_errorName(errorCode));
-        return false;
+        return FALSE;
     }
     ucnv_resetToUnicode(utf8Cnv);
 
@@ -1625,7 +1617,7 @@ ConversionTest::FromUnicodeCase(ConversionCase &cc, UConverterFromUCallback call
             errln("fromUnicode[%d](%s cb=\"%s\" fb=%d flush=%d) ucnv_setFromUCallBack() failed - %s",
                     cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, u_errorName(errorCode));
             ucnv_close(cnv);
-            return false;
+            return FALSE;
         }
     }
 
@@ -1643,7 +1635,7 @@ ConversionTest::FromUnicodeCase(ConversionCase &cc, UConverterFromUCallback call
             errln("fromUnicode[%d](%s cb=\"%s\" fb=%d flush=%d) ucnv_setSubstChars() failed - %s",
                     cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, u_errorName(errorCode));
             ucnv_close(cnv);
-            return false;
+            return FALSE;
         }
     } else if(cc.setSub<0) {
         ucnv_setSubstString(cnv, cc.subString, -1, &errorCode);
@@ -1651,7 +1643,7 @@ ConversionTest::FromUnicodeCase(ConversionCase &cc, UConverterFromUCallback call
             errln("fromUnicode[%d](%s cb=\"%s\" fb=%d flush=%d) ucnv_setSubstString() failed - %s",
                     cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, u_errorName(errorCode));
             ucnv_close(cnv);
-            return false;
+            return FALSE;
         }
     }
 
@@ -1684,7 +1676,7 @@ ConversionTest::FromUnicodeCase(ConversionCase &cc, UConverterFromUCallback call
     };
     int32_t i, step;
 
-    ok=true;
+    ok=TRUE;
     for(i=0; i<UPRV_LENGTHOF(steps) && ok; ++i) {
         step=steps[i].step;
         for (int32_t i = 0; i < UPRV_LENGTHOF(resultOffsets); i++) {
@@ -1801,7 +1793,7 @@ ConversionTest::checkFromUnicode(ConversionCase &cc, UConverter *cnv, const char
     if(U_FAILURE(errorCode)) {
         errln("fromUnicode[%d](%s cb=\"%s\" fb=%d flush=%d %s) ucnv_getInvalidUChars() failed - %s",
                 cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, name, u_errorName(errorCode));
-        return false;
+        return FALSE;
     }
 
     // check everything that might have gone wrong
@@ -1820,7 +1812,7 @@ ConversionTest::checkFromUnicode(ConversionCase &cc, UConverter *cnv, const char
     }
 
     if(msg==NULL) {
-        return true;
+        return TRUE;
     } else {
         char buffer[2000]; // one buffer for all strings
         char *s, *unicodeString, *bytesString, *resultString,
@@ -1859,7 +1851,7 @@ ConversionTest::checkFromUnicode(ConversionCase &cc, UConverter *cnv, const char
               u_errorName(cc.outErrorCode), u_errorName(resultErrorCode),
               invalidCharsString, resultInvalidUCharsString);
 
-        return false;
+        return FALSE;
     }
 }
 

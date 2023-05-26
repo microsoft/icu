@@ -867,9 +867,6 @@ pa{
         "Asia:Ulaanbaatar"{
             ec{"ਉਲਾਨਬਾਤਰ"}
         }
-        "Asia:Urumqi"{
-            ec{"ਊਰੂਮਕੀ"}
-        }
         "Asia:Ust-Nera"{
             ec{"ਉਸਤ-ਨੇਰਾ"}
         }
@@ -1222,9 +1219,6 @@ pa{
         }
         "Pacific:Johnston"{
             ec{"ਜੋਨਸਟਨ"}
-        }
-        "Pacific:Kanton"{
-            ec{"ਕੈਂਟੋਨ"}
         }
         "Pacific:Kiritimati"{
             ec{"ਕਿਰਿਤਿਮਤੀ"}
@@ -1923,9 +1917,6 @@ pa{
             ld{"ਯਕੇਤਰਿਨਬਰਗ ਗਰਮੀਆਂ ਦਾ ਵੇਲਾ"}
             lg{"ਯਕੇਤਰਿਨਬਰਗ ਵੇਲਾ"}
             ls{"ਯਕੇਤਰਿਨਬਰਗ ਮਿਆਰੀ ਵੇਲਾ"}
-        }
-        "meta:Yukon"{
-            ls{"ਯੂਕੋਨ ਸਮਾਂ"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

@@ -541,7 +541,7 @@ sl{
         }
         LSL{
             "LSL",
-            "lesotski loti",
+            "lesoški loti",
         }
         LTL{
             "LTL",
@@ -1036,7 +1036,7 @@ sl{
             "frank UIC",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "zahodnoafriški frank CFA",
         }
         XPD{
@@ -1209,6 +1209,7 @@ sl{
         ZMW{"ZK"}
     }
     Currencies%variant{
+        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{
@@ -1709,12 +1710,6 @@ sl{
             one{"liberijski dolar"}
             other{"liberijskih dolarjev"}
             two{"liberijska dolarja"}
-        }
-        LSL{
-            few{"lesotski loti"}
-            one{"lesotski lot"}
-            other{"lesotskih lotov"}
-            two{"lesotska lota"}
         }
         LTL{
             few{"litovski litas"}

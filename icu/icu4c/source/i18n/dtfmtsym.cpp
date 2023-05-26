@@ -272,7 +272,7 @@ DateFormatSymbols::DateFormatSymbols(const Locale& locale,
 DateFormatSymbols::DateFormatSymbols(UErrorCode& status)
     : UObject()
 {
-  initializeData(Locale::getDefault(), NULL, status, true);
+  initializeData(Locale::getDefault(), NULL, status, TRUE);
 }
 
 
@@ -287,7 +287,7 @@ DateFormatSymbols::DateFormatSymbols(const Locale& locale,
 DateFormatSymbols::DateFormatSymbols(const char *type, UErrorCode& status)
     : UObject()
 {
-  initializeData(Locale::getDefault(), type, status, true);
+  initializeData(Locale::getDefault(), type, status, TRUE);
 }
 
 DateFormatSymbols::DateFormatSymbols(const DateFormatSymbols& other)
@@ -333,7 +333,7 @@ void
 DateFormatSymbols::createZoneStrings(const UnicodeString *const * otherStrings)
 {
     int32_t row, col;
-    UBool failed = false;
+    UBool failed = FALSE;
 
     fZoneStrings = (UnicodeString **)uprv_malloc(fZoneStringsRowCount * sizeof(UnicodeString *));
     if (fZoneStrings != NULL) {
@@ -341,7 +341,7 @@ DateFormatSymbols::createZoneStrings(const UnicodeString *const * otherStrings)
         {
             fZoneStrings[row] = newUnicodeStringArray(fZoneStringsColCount);
             if (fZoneStrings[row] == NULL) {
-                failed = true;
+                failed = TRUE;
                 break;
             }
             for (col=0; col<fZoneStringsColCount; ++col) {
@@ -392,10 +392,8 @@ DateFormatSymbols::copyData(const DateFormatSymbols& other) {
     fTimeSeparator.fastCopyFrom(other.fTimeSeparator);  // fastCopyFrom() - see assignArray comments
     assignArray(fQuarters, fQuartersCount, other.fQuarters, other.fQuartersCount);
     assignArray(fShortQuarters, fShortQuartersCount, other.fShortQuarters, other.fShortQuartersCount);
-    assignArray(fNarrowQuarters, fNarrowQuartersCount, other.fNarrowQuarters, other.fNarrowQuartersCount);
     assignArray(fStandaloneQuarters, fStandaloneQuartersCount, other.fStandaloneQuarters, other.fStandaloneQuartersCount);
     assignArray(fStandaloneShortQuarters, fStandaloneShortQuartersCount, other.fStandaloneShortQuarters, other.fStandaloneShortQuartersCount);
-    assignArray(fStandaloneNarrowQuarters, fStandaloneNarrowQuartersCount, other.fStandaloneNarrowQuarters, other.fStandaloneNarrowQuartersCount);
     assignArray(fWideDayPeriods, fWideDayPeriodsCount,
                 other.fWideDayPeriods, other.fWideDayPeriodsCount);
     assignArray(fNarrowDayPeriods, fNarrowDayPeriodsCount,
@@ -452,7 +450,6 @@ DateFormatSymbols::copyData(const DateFormatSymbols& other) {
  */
 DateFormatSymbols& DateFormatSymbols::operator=(const DateFormatSymbols& other)
 {
-    if (this == &other) { return *this; }  // self-assignment: no-op
     dispose();
     copyData(other);
 
@@ -487,10 +484,8 @@ void DateFormatSymbols::dispose()
     delete[] fNarrowAmPms;
     delete[] fQuarters;
     delete[] fShortQuarters;
-    delete[] fNarrowQuarters;
     delete[] fStandaloneQuarters;
     delete[] fStandaloneShortQuarters;
-    delete[] fStandaloneNarrowQuarters;
     delete[] fLeapMonthPatterns;
     delete[] fShortYearNames;
     delete[] fShortZodiacNames;
@@ -530,21 +525,21 @@ DateFormatSymbols::arrayCompare(const UnicodeString* array1,
                                 const UnicodeString* array2,
                                 int32_t count)
 {
-    if (array1 == array2) return true;
+    if (array1 == array2) return TRUE;
     while (count>0)
     {
         --count;
-        if (array1[count] != array2[count]) return false;
+        if (array1[count] != array2[count]) return FALSE;
     }
-    return true;
+    return TRUE;
 }
 
-bool
+UBool
 DateFormatSymbols::operator==(const DateFormatSymbols& other) const
 {
     // First do cheap comparisons
     if (this == &other) {
-        return true;
+        return TRUE;
     }
     if (fErasCount == other.fErasCount &&
         fEraNamesCount == other.fEraNamesCount &&
@@ -567,10 +562,8 @@ DateFormatSymbols::operator==(const DateFormatSymbols& other) const
         fNarrowAmPmsCount == other.fNarrowAmPmsCount &&
         fQuartersCount == other.fQuartersCount &&
         fShortQuartersCount == other.fShortQuartersCount &&
-        fNarrowQuartersCount == other.fNarrowQuartersCount &&
         fStandaloneQuartersCount == other.fStandaloneQuartersCount &&
         fStandaloneShortQuartersCount == other.fStandaloneShortQuartersCount &&
-        fStandaloneNarrowQuartersCount == other.fStandaloneNarrowQuartersCount &&
         fLeapMonthPatternsCount == other.fLeapMonthPatternsCount &&
         fShortYearNamesCount == other.fShortYearNamesCount &&
         fShortZodiacNamesCount == other.fShortZodiacNamesCount &&
@@ -605,10 +598,8 @@ DateFormatSymbols::operator==(const DateFormatSymbols& other) const
             fTimeSeparator == other.fTimeSeparator &&
             arrayCompare(fQuarters, other.fQuarters, fQuartersCount) &&
             arrayCompare(fShortQuarters, other.fShortQuarters, fShortQuartersCount) &&
-            arrayCompare(fNarrowQuarters, other.fNarrowQuarters, fNarrowQuartersCount) &&
             arrayCompare(fStandaloneQuarters, other.fStandaloneQuarters, fStandaloneQuartersCount) &&
             arrayCompare(fStandaloneShortQuarters, other.fStandaloneShortQuarters, fStandaloneShortQuartersCount) &&
-            arrayCompare(fStandaloneNarrowQuarters, other.fStandaloneNarrowQuarters, fStandaloneNarrowQuartersCount) &&
             arrayCompare(fLeapMonthPatterns, other.fLeapMonthPatterns, fLeapMonthPatternsCount) &&
             arrayCompare(fShortYearNames, other.fShortYearNames, fShortYearNamesCount) &&
             arrayCompare(fShortZodiacNames, other.fShortZodiacNames, fShortZodiacNamesCount) &&
@@ -625,22 +616,22 @@ DateFormatSymbols::operator==(const DateFormatSymbols& other) const
             // Compare the contents of fZoneStrings
             if (fZoneStrings == NULL && other.fZoneStrings == NULL) {
                 if (fZSFLocale == other.fZSFLocale) {
-                    return true;
+                    return TRUE;
                 }
             } else if (fZoneStrings != NULL && other.fZoneStrings != NULL) {
                 if (fZoneStringsRowCount == other.fZoneStringsRowCount
                     && fZoneStringsColCount == other.fZoneStringsColCount) {
-                    bool cmpres = true;
+                    UBool cmpres = TRUE;
                     for (int32_t i = 0; (i < fZoneStringsRowCount) && cmpres; i++) {
                         cmpres = arrayCompare(fZoneStrings[i], other.fZoneStrings[i], fZoneStringsColCount);
                     }
                     return cmpres;
                 }
             }
-            return false;
+            return FALSE;
         }
     }
-    return false;
+    return FALSE;
 }
 
 //------------------------------------------------------
@@ -817,8 +808,8 @@ DateFormatSymbols::getQuarters(int32_t &count, DtContextType context, DtWidthTyp
             returnValue = fShortQuarters;
             break;
         case NARROW :
-            count = fNarrowQuartersCount;
-            returnValue = fNarrowQuarters;
+            count = 0;
+            returnValue = NULL;
             break;
         case DT_WIDTH_COUNT :
             break;
@@ -836,8 +827,8 @@ DateFormatSymbols::getQuarters(int32_t &count, DtContextType context, DtWidthTyp
             returnValue = fStandaloneShortQuarters;
             break;
         case NARROW :
-            count = fStandaloneNarrowQuartersCount;
-            returnValue = fStandaloneNarrowQuarters;
+            count = 0;
+            returnValue = NULL;
             break;
         case DT_WIDTH_COUNT :
             break;
@@ -1186,11 +1177,13 @@ DateFormatSymbols::setQuarters(const UnicodeString* quartersArray, int32_t count
             fShortQuartersCount = count;
             break;
         case NARROW :
+        /*
             if (fNarrowQuarters)
                 delete[] fNarrowQuarters;
             fNarrowQuarters = newUnicodeStringArray(count);
             uprv_arrayCopy( quartersArray,fNarrowQuarters,count);
             fNarrowQuartersCount = count;
+        */
             break;
         default :
             break;
@@ -1213,11 +1206,13 @@ DateFormatSymbols::setQuarters(const UnicodeString* quartersArray, int32_t count
             fStandaloneShortQuartersCount = count;
             break;
         case NARROW :
+        /*
            if (fStandaloneNarrowQuarters)
                 delete[] fStandaloneNarrowQuarters;
             fStandaloneNarrowQuarters = newUnicodeStringArray(count);
             uprv_arrayCopy( quartersArray,fStandaloneNarrowQuarters,count);
             fStandaloneNarrowQuartersCount = count;
+        */
             break;
         default :
             break;
@@ -1334,7 +1329,7 @@ DateFormatSymbols::initZoneStringsArray(void) {
             i++;
         }
 
-    } while (false);
+    } while (FALSE);
 
     if (U_FAILURE(status)) {
         if (zarray) {
@@ -1422,7 +1417,7 @@ static const uint64_t kNumericFieldsForCount12 =
 UBool U_EXPORT2
 DateFormatSymbols::isNumericField(UDateFormatField f, int32_t count) {
     if (f == UDAT_FIELD_COUNT) {
-        return false;
+        return FALSE;
     }
     uint64_t flag = ((uint64_t)1 << f);
     return ((kNumericFieldsAlways & flag) != 0 || ((kNumericFieldsForCount12 & flag) != 0 && count < 3));
@@ -1524,7 +1519,7 @@ struct CalendarDataSink : public ResourceSink {
 
     // Initializes CalendarDataSink with default values
     CalendarDataSink(UErrorCode& status)
-    :   arrays(false, status), arraySizes(false, status), maps(false, status),
+    :   arrays(FALSE, status), arraySizes(FALSE, status), maps(FALSE, status),
         mapRefs(),
         aliasPathPairs(uprv_deleteUObject, uhash_compareUnicodeString, status),
         currentCalendarType(), nextCalendarType(),
@@ -1545,7 +1540,7 @@ struct CalendarDataSink : public ResourceSink {
         aliasPathPairs.removeAllElements();
     }
 
-    virtual void put(const char *key, ResourceValue &value, UBool, UErrorCode &errorCode) override {
+    virtual void put(const char *key, ResourceValue &value, UBool, UErrorCode &errorCode) {
         if (U_FAILURE(errorCode)) { return; }
         U_ASSERT(!currentCalendarType.isEmpty());
 
@@ -1574,20 +1569,26 @@ struct CalendarDataSink : public ResourceSink {
                                                        errorCode);
                     if (U_FAILURE(errorCode)) { return; }
                 }
-                LocalPointer<UnicodeString> aliasRelativePathCopy(aliasRelativePath.clone(), errorCode);
-                resourcesToVisitNext->adoptElement(aliasRelativePathCopy.orphan(), errorCode);
+                LocalPointer<UnicodeString> aliasRelativePathCopy(new UnicodeString(aliasRelativePath), errorCode);
+                resourcesToVisitNext->addElement(aliasRelativePathCopy.getAlias(), errorCode);
                 if (U_FAILURE(errorCode)) { return; }
+                // Only release ownership after resourcesToVisitNext takes it (no error happened):
+                aliasRelativePathCopy.orphan();
                 continue;
 
             } else if (aliasType == SAME_CALENDAR) {
                 // Register same-calendar alias
                 if (arrays.get(aliasRelativePath) == NULL && maps.get(aliasRelativePath) == NULL) {
-                    LocalPointer<UnicodeString> aliasRelativePathCopy(aliasRelativePath.clone(), errorCode);
-                    aliasPathPairs.adoptElement(aliasRelativePathCopy.orphan(), errorCode);
+                    LocalPointer<UnicodeString> aliasRelativePathCopy(new UnicodeString(aliasRelativePath), errorCode);
+                    aliasPathPairs.addElement(aliasRelativePathCopy.getAlias(), errorCode);
                     if (U_FAILURE(errorCode)) { return; }
-                    LocalPointer<UnicodeString> keyUStringCopy(keyUString.clone(), errorCode);
-                    aliasPathPairs.adoptElement(keyUStringCopy.orphan(), errorCode);
+                    // Only release ownership after aliasPathPairs takes it (no error happened):
+                    aliasRelativePathCopy.orphan();
+                    LocalPointer<UnicodeString> keyUStringCopy(new UnicodeString(keyUString), errorCode);
+                    aliasPathPairs.addElement(keyUStringCopy.getAlias(), errorCode);
                     if (U_FAILURE(errorCode)) { return; }
+                    // Only release ownership after aliasPathPairs takes it (no error happened):
+                    keyUStringCopy.orphan();
                 }
                 continue;
             }
@@ -1690,7 +1691,7 @@ struct CalendarDataSink : public ResourceSink {
                 // We are on a leaf, store the map elements into the stringMap
                 if (i == 0) {
                     // mapRefs will keep ownership of 'stringMap':
-                    stringMap = mapRefs.create(false, errorCode);
+                    stringMap = mapRefs.create(FALSE, errorCode);
                     if (stringMap == NULL) {
                         errorCode = U_MEMORY_ALLOCATION_ERROR;
                         return;
@@ -1703,7 +1704,7 @@ struct CalendarDataSink : public ResourceSink {
                 int32_t valueStringSize;
                 const UChar *valueString = value.getString(valueStringSize, errorCode);
                 if (U_FAILURE(errorCode)) { return; }
-                LocalPointer<UnicodeString> valueUString(new UnicodeString(true, valueString, valueStringSize), errorCode);
+                LocalPointer<UnicodeString> valueUString(new UnicodeString(TRUE, valueString, valueStringSize), errorCode);
                 stringMap->put(keyUString, valueUString.orphan(), errorCode);
                 if (U_FAILURE(errorCode)) { return; }
                 continue;
@@ -1717,7 +1718,7 @@ struct CalendarDataSink : public ResourceSink {
             // In cyclicNameSets ignore everything but years/format/abbreviated
             // and zodiacs/format/abbreviated
             if (path.startsWith(kCyclicNameSetsTagUChar, UPRV_LENGTHOF(kCyclicNameSetsTagUChar))) {
-                UBool skip = true;
+                UBool skip = TRUE;
                 int32_t startIndex = UPRV_LENGTHOF(kCyclicNameSetsTagUChar);
                 int32_t length = 0;
                 if (startIndex == path.length()
@@ -1732,7 +1733,7 @@ struct CalendarDataSink : public ResourceSink {
                         length = 0;
                         if (startIndex == path.length()
                             || path.compare(startIndex, (length = UPRV_LENGTHOF(kAbbrTagUChar)), kAbbrTagUChar, 0, UPRV_LENGTHOF(kAbbrTagUChar)) == 0) {
-                            skip = false;
+                            skip = FALSE;
                         }
                     }
                 }
@@ -1754,12 +1755,16 @@ struct CalendarDataSink : public ResourceSink {
             if (U_FAILURE(errorCode)) { return; }
             if (aliasType == SAME_CALENDAR) {
                 // Store the alias path and the current path on aliasPathPairs
-                LocalPointer<UnicodeString> aliasRelativePathCopy(aliasRelativePath.clone(), errorCode);
-                aliasPathPairs.adoptElement(aliasRelativePathCopy.orphan(), errorCode);
+                LocalPointer<UnicodeString> aliasRelativePathCopy(new UnicodeString(aliasRelativePath), errorCode);
+                aliasPathPairs.addElement(aliasRelativePathCopy.getAlias(), errorCode);
                 if (U_FAILURE(errorCode)) { return; }
-                LocalPointer<UnicodeString> pathCopy(path.clone(), errorCode);
-                aliasPathPairs.adoptElement(pathCopy.orphan(), errorCode);
+                // Only release ownership after aliasPathPairs takes it (no error happened):
+                aliasRelativePathCopy.orphan();
+                LocalPointer<UnicodeString> pathCopy(new UnicodeString(path), errorCode);
+                aliasPathPairs.addElement(pathCopy.getAlias(), errorCode);
                 if (U_FAILURE(errorCode)) { return; }
+                // Only release ownership after aliasPathPairs takes it (no error happened):
+                pathCopy.orphan();
 
                 // Drop the latest key on the path and continue
                 path.retainBetween(0, pathLength);
@@ -1854,7 +1859,7 @@ initField(UnicodeString **field, int32_t& length, const UChar *data, LastResortS
             for(int32_t i = 0; i<length; i++) {
                 // readonly aliases - all "data" strings are constant
                 // -1 as length for variable-length strings (gLastResortDayNames[0] is empty)
-                (*(field)+i)->setTo(true, data+(i*((int32_t)strLen)), -1);
+                (*(field)+i)->setTo(TRUE, data+(i*((int32_t)strLen)), -1);
             }
         }
         else {
@@ -1911,7 +1916,7 @@ initLeapMonthPattern(UnicodeString *field, int32_t index, CalendarDataSink &sink
         UnicodeString pathUString(path.data(), -1, US_INV);
         Hashtable *leapMonthTable = static_cast<Hashtable*>(sink.maps.get(pathUString));
         if (leapMonthTable != NULL) {
-            UnicodeString leapLabel(false, kLeapTagUChar, UPRV_LENGTHOF(kLeapTagUChar));
+            UnicodeString leapLabel(FALSE, kLeapTagUChar, UPRV_LENGTHOF(kLeapTagUChar));
             UnicodeString *leapMonthPattern = static_cast<UnicodeString*>(leapMonthTable->get(leapLabel));
             if (leapMonthPattern != NULL) {
                 field[index].fastCopyFrom(*leapMonthPattern);
@@ -2061,14 +2066,10 @@ DateFormatSymbols::initializeData(const Locale& locale, const char *type, UError
     fQuartersCount = 0;
     fShortQuarters = NULL;
     fShortQuartersCount = 0;
-    fNarrowQuarters = NULL;
-    fNarrowQuartersCount = 0;
     fStandaloneQuarters = NULL;
     fStandaloneQuartersCount = 0;
     fStandaloneShortQuarters = NULL;
     fStandaloneShortQuartersCount = 0;
-    fStandaloneNarrowQuarters = NULL;
-    fStandaloneNarrowQuartersCount = 0;
     fLeapMonthPatterns = NULL;
     fLeapMonthPatternsCount = 0;
     fShortYearNames = NULL;
@@ -2101,7 +2102,7 @@ DateFormatSymbols::initializeData(const Locale& locale, const char *type, UError
 
     if (U_FAILURE(status)) return;
 
-    // Create a CalendarDataSink to process this data and the resource bundles
+    // Create a CalendarDataSink to process this data and the resouce bundles
     CalendarDataSink calendarSink(status);
     UResourceBundle *rb = ures_open(NULL, locale.getBaseName(), &status);
     UResourceBundle *cb = ures_getByKey(rb, gCalendarTag, NULL, &status);
@@ -2122,7 +2123,7 @@ DateFormatSymbols::initializeData(const Locale& locale, const char *type, UError
         if (status == U_MISSING_RESOURCE_ERROR) {
             ures_close(ctb);
             if (uprv_strcmp(calendarTypeCArray, gGregorianTag) != 0) {
-                calendarType.setTo(false, kGregorianTagUChar, UPRV_LENGTHOF(kGregorianTagUChar));
+                calendarType.setTo(FALSE, kGregorianTagUChar, UPRV_LENGTHOF(kGregorianTagUChar));
                 calendarSink.visitAllResources();
                 status = oldStatus;
                 continue;
@@ -2145,7 +2146,7 @@ DateFormatSymbols::initializeData(const Locale& locale, const char *type, UError
 
         // Gregorian is always the last fallback
         if (calendarType.isBogus()) {
-            calendarType.setTo(false, kGregorianTagUChar, UPRV_LENGTHOF(kGregorianTagUChar));
+            calendarType.setTo(FALSE, kGregorianTagUChar, UPRV_LENGTHOF(kGregorianTagUChar));
             calendarSink.visitAllResources();
         }
     }
@@ -2329,7 +2330,7 @@ DateFormatSymbols::initializeData(const Locale& locale, const char *type, UError
         // If format/narrow not available, use standalone/narrow
         assignArray(fNarrowMonths, fNarrowMonthsCount, fStandaloneNarrowMonths, fStandaloneNarrowMonthsCount);
     } else if (narrowMonthsEC != U_MISSING_RESOURCE_ERROR && standaloneNarrowMonthsEC == U_MISSING_RESOURCE_ERROR) {
-        // If standalone/narrow not available, use format/narrow
+        // If standalone/narrow not availabe, use format/narrow
         assignArray(fStandaloneNarrowMonths, fStandaloneNarrowMonthsCount, fNarrowMonths, fNarrowMonthsCount);
     } else if (narrowMonthsEC == U_MISSING_RESOURCE_ERROR && standaloneNarrowMonthsEC == U_MISSING_RESOURCE_ERROR) {
         // If neither is available, use format/abbreviated
@@ -2372,28 +2373,18 @@ DateFormatSymbols::initializeData(const Locale& locale, const char *type, UError
         assignArray(fStandaloneShortQuarters, fStandaloneShortQuartersCount, fShortQuarters, fShortQuartersCount);
     }
 
-    // unlike the fields above, narrow format quarters fall back on narrow standalone quarters
-    initField(&fStandaloneNarrowQuarters, fStandaloneNarrowQuartersCount, calendarSink,
-              buildResourcePath(path, gQuartersTag, gNamesStandaloneTag, gNamesNarrowTag, status), status);
-    initField(&fNarrowQuarters, fNarrowQuartersCount, calendarSink,
-              buildResourcePath(path, gQuartersTag, gNamesFormatTag, gNamesNarrowTag, status), status);
-    if(status == U_MISSING_RESOURCE_ERROR) {
-        status = U_ZERO_ERROR;
-        assignArray(fNarrowQuarters, fNarrowQuartersCount, fStandaloneNarrowQuarters, fStandaloneNarrowQuartersCount);
-    }
-    
     // ICU 3.8 or later version no longer uses localized date-time pattern characters by default (ticket#5597)
     /*
     // fastCopyFrom()/setTo() - see assignArray comments
     resStr = ures_getStringByKey(fResourceBundle, gLocalPatternCharsTag, &len, &status);
-    fLocalPatternChars.setTo(true, resStr, len);
+    fLocalPatternChars.setTo(TRUE, resStr, len);
     // If the locale data does not include new pattern chars, use the defaults
     // TODO: Consider making this an error, since this may add conflicting characters.
     if (len < PATTERN_CHARS_LEN) {
-        fLocalPatternChars.append(UnicodeString(true, &gPatternChars[len], PATTERN_CHARS_LEN-len));
+        fLocalPatternChars.append(UnicodeString(TRUE, &gPatternChars[len], PATTERN_CHARS_LEN-len));
     }
     */
-    fLocalPatternChars.setTo(true, gPatternChars, PATTERN_CHARS_LEN);
+    fLocalPatternChars.setTo(TRUE, gPatternChars, PATTERN_CHARS_LEN);
 
     // Format wide weekdays -> fWeekdays
     // {sfb} fixed to handle 1-based weekdays
@@ -2490,11 +2481,9 @@ DateFormatSymbols::initializeData(const Locale& locale, const char *type, UError
             initField(&fNarrowAmPms, fNarrowAmPmsCount, (const UChar *)gLastResortAmPmMarkers, kAmPmNum, kAmPmLen, status);
             initField(&fQuarters, fQuartersCount, (const UChar *)gLastResortQuarters, kQuarterNum, kQuarterLen, status);
             initField(&fShortQuarters, fShortQuartersCount, (const UChar *)gLastResortQuarters, kQuarterNum, kQuarterLen, status);
-            initField(&fNarrowQuarters, fNarrowQuartersCount, (const UChar *)gLastResortQuarters, kQuarterNum, kQuarterLen, status);
             initField(&fStandaloneQuarters, fStandaloneQuartersCount, (const UChar *)gLastResortQuarters, kQuarterNum, kQuarterLen, status);
             initField(&fStandaloneShortQuarters, fStandaloneShortQuartersCount, (const UChar *)gLastResortQuarters, kQuarterNum, kQuarterLen, status);
-            initField(&fStandaloneNarrowQuarters, fStandaloneNarrowQuartersCount, (const UChar *)gLastResortQuarters, kQuarterNum, kQuarterLen, status);
-            fLocalPatternChars.setTo(true, gPatternChars, PATTERN_CHARS_LEN);
+            fLocalPatternChars.setTo(TRUE, gPatternChars, PATTERN_CHARS_LEN);
         }
     }
 

@@ -174,9 +174,6 @@ hsb{
         "Asia:Kamchatka"{
             ec{"Kamčatka"}
         }
-        "Asia:Karachi"{
-            ec{"Karači"}
-        }
         "Asia:Katmandu"{
             ec{"Kathmandu"}
         }
@@ -203,9 +200,6 @@ hsb{
         }
         "Asia:Qatar"{
             ec{"Katar"}
-        }
-        "Asia:Rangoon"{
-            ec{"Rangun"}
         }
         "Asia:Riyadh"{
             ec{"Riad"}
@@ -269,9 +263,6 @@ hsb{
         }
         "Atlantic:St_Helena"{
             ec{"St. Helena"}
-        }
-        "Etc:UTC"{
-            ls{"koordinowany swětowy čas"}
         }
         "Etc:Unknown"{
             ec{"njeznate"}
@@ -858,9 +849,6 @@ hsb{
         "meta:Ponape"{
             ls{"ponapeski čas"}
         }
-        "meta:Pyongyang"{
-            ls{"Pjöngjangski čas"}
-        }
         "meta:Reunion"{
             ls{"reunionski čas"}
         }
@@ -971,9 +959,6 @@ hsb{
             ld{"Jekaterinburgski lětni čas"}
             lg{"Jekaterinburgski čas"}
             ls{"Jekaterinburgski standardny čas"}
-        }
-        "meta:Yukon"{
-            ls{"Yukonowy čas"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

@@ -22,7 +22,7 @@ const int32_t ARG_NUM_LIMIT = 0x100;
 // These are the default currency spacing UnicodeSets in CLDR.
 // Pre-compute them for performance.
 // The Java unit test testCurrencySpacingPatternStability() will start failing if these change in CLDR.
-icu::UInitOnce gDefaultCurrencySpacingInitOnce {};
+icu::UInitOnce gDefaultCurrencySpacingInitOnce = U_INITONCE_INITIALIZER;
 
 UnicodeSet *UNISET_DIGIT = nullptr;
 UnicodeSet *UNISET_NOTSZ = nullptr;
@@ -33,7 +33,7 @@ UBool U_CALLCONV cleanupDefaultCurrencySpacing() {
     delete UNISET_NOTSZ;
     UNISET_NOTSZ = nullptr;
     gDefaultCurrencySpacingInitOnce.reset();
-    return true;
+    return TRUE;
 }
 
 void U_CALLCONV initDefaultCurrencySpacing(UErrorCode &status) {
@@ -92,13 +92,13 @@ bool ConstantAffixModifier::isStrong() const {
 bool ConstantAffixModifier::containsField(Field field) const {
     (void)field;
     // This method is not currently used.
-    UPRV_UNREACHABLE_EXIT;
+    UPRV_UNREACHABLE;
 }
 
 void ConstantAffixModifier::getParameters(Parameters& output) const {
     (void)output;
     // This method is not currently used.
-    UPRV_UNREACHABLE_EXIT;
+    UPRV_UNREACHABLE;
 }
 
 bool ConstantAffixModifier::semanticallyEquivalent(const Modifier& other) const {
@@ -181,7 +181,7 @@ bool SimpleModifier::isStrong() const {
 bool SimpleModifier::containsField(Field field) const {
     (void)field;
     // This method is not currently used.
-    UPRV_UNREACHABLE_EXIT;
+    UPRV_UNREACHABLE;
 }
 
 void SimpleModifier::getParameters(Parameters& output) const {

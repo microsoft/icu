@@ -7,8 +7,6 @@
  *
  */
 
-#include <stdbool.h>
-
 #include "unicode/utypes.h"
 #include "unicode/uchar.h"
 #include "unicode/ubidi.h"
@@ -174,7 +172,7 @@ pf_flow *pf_create(const LEUnicode chars[], le_int32 charCount, const pl_fontRun
             pl_addLocaleRun(locales, TEST_LOCALE, pEnd - pStart);
 #endif
 
-            paragraphLayout = pl_create(pStart, pEnd - pStart, fr, NULL, NULL, locales, flow->fParagraphLevel, false, status);
+            paragraphLayout = pl_create(pStart, pEnd - pStart, fr, NULL, NULL, locales, flow->fParagraphLevel, FALSE, status);
 
             if (LE_FAILURE(*status)) {
                 break; /* return? something else? */

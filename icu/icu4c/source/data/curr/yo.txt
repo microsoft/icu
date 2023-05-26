@@ -13,7 +13,7 @@ yo{
         }
         ALL{
             "ALL",
-            "Lẹ́ẹ̀kì Àlìbáníà",
+            "Lẹ́kẹ̀ Àlìbéníà",
         }
         AMD{
             "AMD",
@@ -113,7 +113,7 @@ yo{
         }
         CHF{
             "CHF",
-            "Faransí Síwíìsì",
+            "Faransi ti Orílẹ́ède Siwisi",
         }
         CLP{
             "CLP",
@@ -209,7 +209,7 @@ yo{
         }
         GIP{
             "GIP",
-            "Pọ́n-ùn Gibúrátà",
+            "Pọ́n-ùn Gibraltar",
         }
         GMD{
             "GMD",
@@ -241,7 +241,7 @@ yo{
         }
         HRK{
             "HRK",
-            "Kúnà Kúróṣíà",
+            "Kúnà Croatian",
         }
         HTG{
             "HTG",
@@ -425,7 +425,7 @@ yo{
         }
         NOK{
             "NOK",
-            "kórónì Nọ́wè",
+            "Kírónì Nọ́ọ́wè",
         }
         NPR{
             "NPR",
@@ -452,7 +452,7 @@ yo{
             "Kínà Papua Guinea Tuntun",
         }
         PHP{
-            "₱",
+            "PHP",
             "Písò Fílípìnì",
         }
         PKR{
@@ -632,7 +632,7 @@ yo{
             "Dọ́là Ilà Oòrùn Karíbíà",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "Faransì ìwọ̀-oorùn Afíríkà",
         }
         XPF{
@@ -777,7 +777,7 @@ yo{
             other{"àwọn sídì Gana"}
         }
         GIP{
-            other{"àwọn pọ́n-ùn Gibúrátà"}
+            other{"àwọn pọ́n-ùn Gibraltar"}
         }
         GMD{
             other{"àwọn dalasi Gamibia"}
@@ -795,7 +795,7 @@ yo{
             other{"àwọn Lẹmipírà Ọ́ńdúrà"}
         }
         HRK{
-            other{"àwọn kúnà Kúróṣíà"}
+            other{"àwọn kúnà Croatian"}
         }
         HTG{
             other{"àwọn gọ́dì Àítì"}
@@ -804,7 +804,7 @@ yo{
             other{"àwọn fọ́ríǹtì Họ̀ngérí"}
         }
         ISK{
-            other{"kórónọ̀ Áílándíìkì"}
+            other{"kòrónà aílandíìkì"}
         }
         JMD{
             other{"àwọn dọ́là Jàmáíkà"}
@@ -820,9 +820,6 @@ yo{
         }
         LRD{
             other{"àwọn dọla Liberia"}
-        }
-        LSL{
-            other{"Lótì ti Lẹ̀sótò"}
         }
         LYD{
             other{"àwọn dínà Líbíyà"}
@@ -861,7 +858,7 @@ yo{
             other{"àwọn kọ̀dóbà Naikarágúà"}
         }
         NOK{
-            other{"kórónà Nọ́wè"}
+            other{"kìrónà Nọ́ọ́wè"}
         }
         PAB{
             other{"àwọn bálíbóà Pànámà"}

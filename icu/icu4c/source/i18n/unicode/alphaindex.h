@@ -44,7 +44,7 @@ typedef enum UAlphabeticIndexLabelType {
     U_ALPHAINDEX_NORMAL    = 0,
 
     /**
-     * Underflow Label.  The bucket with this label contains names
+     * Undeflow Label.  The bucket with this label contains names
      * in scripts that sort before any of the bucket labels in this index.
      * @stable ICU 4.8
      */
@@ -61,7 +61,7 @@ typedef enum UAlphabeticIndexLabelType {
     U_ALPHAINDEX_INFLOW    = 2,
 
     /**
-     * Overflow Label. The bucket with this label contains names in scripts
+     * Overflow Label. Te bucket with this label contains names in scripts
      * that sort after all of the bucket labels in this index.
      * @stable ICU 4.8
      */
@@ -647,9 +647,9 @@ public:
 private:
      /**
       * No Copy constructor.
-      * @internal (private)
+      * @internal
       */
-     AlphabeticIndex(const AlphabeticIndex &other) = delete;
+     AlphabeticIndex(const AlphabeticIndex &other);
 
      /**
       *   No assignment.
@@ -658,15 +658,15 @@ private:
 
     /**
      * No Equality operators.
-     * @internal (private)
+     * @internal
      */
-     virtual bool operator==(const AlphabeticIndex& other) const;
+     virtual UBool operator==(const AlphabeticIndex& other) const;
 
     /**
      * Inequality operator.
-     * @internal (private)
+     * @internal
      */
-     virtual bool operator!=(const AlphabeticIndex& other) const;
+     virtual UBool operator!=(const AlphabeticIndex& other) const;
 
      // Common initialization, for use from all constructors.
      void init(const Locale *locale, UErrorCode &status);
@@ -723,7 +723,7 @@ private:
     /**
      * Holds all user records before they are distributed into buckets.
      * Type of contents is (Record *)
-     * @internal (private)
+     * @internal
      */
     UVector  *inputList_;
 

@@ -21,10 +21,10 @@
 //       options:   -v         verbose
 //                  -? or -h   help
 //
-//   The input rule file are plain text files containing confusable character
+//   The input rule filew is are plain text files containing confusable character
 //    definitions in the input format defined by Unicode UAX39 for the files
 //    confusables.txt.  This source (.txt) format
-//    is also accepted by ICU spoof detectors. The
+//    is also accepted direaccepted by ICU spoof detedtors.  The
 //    files must be encoded in utf-8 format, with or without a BOM.
 //
 //   The script used to compile confusablesWholeScript.txt into the CFU file
@@ -193,7 +193,7 @@ int  main(int argc, char **argv) {
     char msg[1024];
 
     /* write message with just the name */
-    snprintf(msg, sizeof(msg), "gencfu writes dummy %s because of UCONFIG_NO_REGULAR_EXPRESSIONS and/or UCONFIG_NO_NORMALIZATION and/or UCONFIG_NO_FILE_IO, see uconfig.h", outFileName);
+    sprintf(msg, "gencfu writes dummy %s because of UCONFIG_NO_REGULAR_EXPRESSIONS and/or UCONFIG_NO_NORMALIZATION and/or UCONFIG_NO_FILE_IO, see uconfig.h", outFileName);
     fprintf(stderr, "%s\n", msg);
 
     /* write the dummy data file */

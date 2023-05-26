@@ -143,7 +143,7 @@ ufmt_uto64(const UChar     *buffer,
     uint64_t        result;
     
     
-    /* initialize parameters */
+    /* intialize parameters */
     limit     = buffer + *len;
     count     = 0;
     result    = 0;
@@ -175,7 +175,7 @@ ufmt_utop(const UChar     *buffer,
         uint8_t bytes[sizeof(void*)];
     } result;
     
-    /* initialize variables */
+    /* intialize variables */
     count      = 0;
     offset     = 0;
     result.ptr = NULL;
@@ -243,7 +243,7 @@ ufmt_defaultCPToUnicode(const char *s, int32_t sSize,
         
         alias = target;
         ucnv_toUnicode(defConverter, &alias, alias + tSize, &s, s + sSize - 1, 
-            NULL, true, &status);
+            NULL, TRUE, &status);
         
         
         /* add the null terminator */

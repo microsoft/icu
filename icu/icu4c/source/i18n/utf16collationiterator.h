@@ -42,11 +42,11 @@ public:
 
     virtual ~UTF16CollationIterator();
 
-    virtual bool operator==(const CollationIterator &other) const override;
+    virtual UBool operator==(const CollationIterator &other) const;
 
-    virtual void resetToOffset(int32_t newOffset) override;
+    virtual void resetToOffset(int32_t newOffset);
 
-    virtual int32_t getOffset() const override;
+    virtual int32_t getOffset() const;
 
     void setText(const UChar *s, const UChar *lim) {
         reset();
@@ -54,9 +54,9 @@ public:
         limit = lim;
     }
 
-    virtual UChar32 nextCodePoint(UErrorCode &errorCode) override;
+    virtual UChar32 nextCodePoint(UErrorCode &errorCode);
 
-    virtual UChar32 previousCodePoint(UErrorCode &errorCode) override;
+    virtual UChar32 previousCodePoint(UErrorCode &errorCode);
 
 protected:
     // Copy constructor only for subclasses which set the pointers.
@@ -64,15 +64,15 @@ protected:
             : CollationIterator(other),
               start(NULL), pos(NULL), limit(NULL) {}
 
-    virtual uint32_t handleNextCE32(UChar32 &c, UErrorCode &errorCode) override;
+    virtual uint32_t handleNextCE32(UChar32 &c, UErrorCode &errorCode);
 
-    virtual UChar handleGetTrailSurrogate() override;
+    virtual UChar handleGetTrailSurrogate();
 
-    virtual UBool foundNULTerminator() override;
+    virtual UBool foundNULTerminator();
 
-    virtual void forwardNumCodePoints(int32_t num, UErrorCode &errorCode) override;
+    virtual void forwardNumCodePoints(int32_t num, UErrorCode &errorCode);
 
-    virtual void backwardNumCodePoints(int32_t num, UErrorCode &errorCode) override;
+    virtual void backwardNumCodePoints(int32_t num, UErrorCode &errorCode);
 
     // UTF-16 string pointers.
     // limit can be NULL for NUL-terminated strings.
@@ -95,24 +95,24 @@ public:
 
     virtual ~FCDUTF16CollationIterator();
 
-    virtual bool operator==(const CollationIterator &other) const override;
+    virtual UBool operator==(const CollationIterator &other) const;
 
-    virtual void resetToOffset(int32_t newOffset) override;
+    virtual void resetToOffset(int32_t newOffset);
 
-    virtual int32_t getOffset() const override;
+    virtual int32_t getOffset() const;
 
-    virtual UChar32 nextCodePoint(UErrorCode &errorCode) override;
+    virtual UChar32 nextCodePoint(UErrorCode &errorCode);
 
-    virtual UChar32 previousCodePoint(UErrorCode &errorCode) override;
+    virtual UChar32 previousCodePoint(UErrorCode &errorCode);
 
 protected:
-    virtual uint32_t handleNextCE32(UChar32 &c, UErrorCode &errorCode) override;
+    virtual uint32_t handleNextCE32(UChar32 &c, UErrorCode &errorCode);
 
-    virtual UBool foundNULTerminator() override;
+    virtual UBool foundNULTerminator();
 
-    virtual void forwardNumCodePoints(int32_t num, UErrorCode &errorCode) override;
+    virtual void forwardNumCodePoints(int32_t num, UErrorCode &errorCode);
 
-    virtual void backwardNumCodePoints(int32_t num, UErrorCode &errorCode) override;
+    virtual void backwardNumCodePoints(int32_t num, UErrorCode &errorCode);
 
 private:
     /**

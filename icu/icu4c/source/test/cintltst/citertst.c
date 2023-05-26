@@ -39,7 +39,6 @@
 #include "cstring.h"
 #include "ucol_imp.h"
 #include "uparse.h"
-#include <stdbool.h>
 #include <stdio.h>
 
 extern uint8_t ucol_uprv_getCaseBits(const UChar *, uint32_t, UErrorCode *);
@@ -784,7 +783,7 @@ static void TestMaxExpansion()
     UChar32             unassigned = 0xEFFFD;
     UChar               supplementary[2];
     uint32_t            stringOffset = 0;
-    UBool               isError = false;
+    UBool               isError = FALSE;
     uint32_t            sorder = 0;
     UCollationElements *iter   ;/*= ucol_openElements(coll, &ch, 1, &status);*/
     uint32_t            temporder = 0;
@@ -1005,7 +1004,7 @@ static void TestSmallBuffer()
 }
 
 /**
-* Testing the discontiguous contractions
+* Testing the discontigous contractions
 */
 static void TestDiscontiguos() {
     const char               *rulestr    =
@@ -1091,7 +1090,7 @@ static void TestDiscontiguos() {
             while (ce != UCOL_NULLORDER) {
                 if (ce != ucol_next(iter, &status) ||
                     U_FAILURE(status)) {
-                    log_err("Discontiguous contraction test mismatch\n");
+                    log_err("Discontiguos contraction test mismatch\n");
                     return;
                 }
                 ce = ucol_next(resultiter, &status);

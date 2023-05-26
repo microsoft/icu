@@ -60,12 +60,12 @@ Measure::~Measure() {
     delete unit;
 }
 
-bool Measure::operator==(const UObject& other) const {
+UBool Measure::operator==(const UObject& other) const {
     if (this == &other) {  // Same object, equal
-        return true;
+        return TRUE;
     }
     if (typeid(*this) != typeid(other)) { // Different types, not equal
-        return false;
+        return FALSE;
     }
     const Measure &m = static_cast<const Measure&>(other);
     return number == m.number &&

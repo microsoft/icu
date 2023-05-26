@@ -584,7 +584,7 @@ mzn{
             "شرقی کاراییب ِدولار",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "غربی آفریقای ِسی‌اف‌ای فرانک",
         }
         YER{
@@ -690,6 +690,7 @@ mzn{
         ZMW{"ZK"}
     }
     Currencies%variant{
+        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{

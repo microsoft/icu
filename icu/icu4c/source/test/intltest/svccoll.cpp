@@ -111,14 +111,14 @@ void CollationServiceTest::TestRegister()
 
         UnicodeString locName = fu_FU.getName();
         StringEnumeration* localeEnum = Collator::getAvailableLocales();
-        UBool found = false;
+        UBool found = FALSE;
         const UnicodeString* locStr, *ls2;
         for (locStr = localeEnum->snext(status);
         !found && locStr != NULL;
         locStr = localeEnum->snext(status)) {
             //
             if (locName == *locStr) {
-                found = true;
+                found = TRUE;
             }
         }
 
@@ -286,7 +286,7 @@ public:
     delete[] ids;
   }
 
-  virtual Collator* createCollator(const Locale& loc) override {
+  virtual Collator* createCollator(const Locale& loc) {
     const CollatorInfo* ci = getInfo(loc);
     if (ci) {
       return ci->collator->clone();
@@ -296,7 +296,7 @@ public:
 
   virtual UnicodeString& getDisplayName(const Locale& objectLocale,
                                         const Locale& displayLocale,
-                                        UnicodeString& result) override
+                                        UnicodeString& result)
   {
     const CollatorInfo* ci = getInfo(objectLocale);
     if (ci) {
@@ -307,7 +307,7 @@ public:
     return result;
   }
 
-  const UnicodeString* getSupportedIDs(int32_t& _count, UErrorCode& status) override {
+  const UnicodeString* getSupportedIDs(int32_t& _count, UErrorCode& status) {
     if (U_SUCCESS(status)) {
       if (!ids) {
         ids = new UnicodeString[count];
@@ -328,7 +328,7 @@ public:
     return NULL;
   }
 
-  virtual inline UClassID getDynamicClassID() const override {
+  virtual inline UClassID getDynamicClassID() const {
     return (UClassID)&gClassID;
   }
 
@@ -352,7 +352,7 @@ void CollationServiceTest::TestRegisterFactory(void)
 
     UErrorCode status = U_ZERO_ERROR;
 
-    Hashtable* fuFUNames = new Hashtable(false, status);
+    Hashtable* fuFUNames = new Hashtable(FALSE, status);
     if (!fuFUNames) {
         errln("memory allocation error");
         return;
@@ -429,14 +429,14 @@ void CollationServiceTest::TestRegisterFactory(void)
 
         UnicodeString locName = fu_FU.getName();
         StringEnumeration* localeEnum = Collator::getAvailableLocales();
-        UBool found = false;
+        UBool found = FALSE;
         const UnicodeString* locStr;
         for (locStr = localeEnum->snext(status);
             !found && locStr != NULL;
             locStr = localeEnum->snext(status))
         {
             if (locName == *locStr) {
-                found = true;
+                found = TRUE;
             }
         }
         delete localeEnum;
@@ -560,9 +560,7 @@ static const int32_t KW_COUNT = UPRV_LENGTHOF(KW);
 
 static const char* KWVAL[] = {
     "phonebook",
-    "stroke",
-    "emoji",
-    "eor"
+    "stroke"
 };
 static const int32_t KWVAL_COUNT = UPRV_LENGTHOF(KWVAL);
 
@@ -575,7 +573,7 @@ void CollationServiceTest::TestSeparateTree() {
     delete iter;
 
     iter = Collator::getKeywordValues(KW[0], ec);
-    if (!assertTrue("getKeywordValues != NULL", iter!=NULL, false, true)) return;
+    if (!assertTrue("getKeywordValues != NULL", iter!=NULL, FALSE, TRUE)) return;
     if (!assertSuccess("getKeywordValues", ec)) return;
     checkStringEnumeration("getKeywordValues", *iter, KWVAL, KWVAL_COUNT);
     delete iter;
@@ -586,32 +584,32 @@ void CollationServiceTest::TestSeparateTree() {
                                                      isAvailable, ec);
     assertSuccess("getFunctionalEquivalent", ec);
     assertEquals("getFunctionalEquivalent(de)", "", equiv.getName());
-    assertTrue("getFunctionalEquivalent(de).isAvailable==true",
-               isAvailable == true);
+    assertTrue("getFunctionalEquivalent(de).isAvailable==TRUE",
+               isAvailable == TRUE);
 
     equiv = Collator::getFunctionalEquivalent("collation",
                                               Locale::createFromName("de_DE"),
                                               isAvailable, ec);
     assertSuccess("getFunctionalEquivalent", ec);
     assertEquals("getFunctionalEquivalent(de_DE)", "", equiv.getName());
-    assertTrue("getFunctionalEquivalent(de_DE).isAvailable==false",
-               isAvailable == false);
+    assertTrue("getFunctionalEquivalent(de_DE).isAvailable==FALSE",
+               isAvailable == FALSE);
 
     equiv = Collator::getFunctionalEquivalent("collation",
                                                      Locale::createFromName("sv"),
                                                      isAvailable, ec);
     assertSuccess("getFunctionalEquivalent", ec);
     assertEquals("getFunctionalEquivalent(sv)", "sv", equiv.getName());
-    assertTrue("getFunctionalEquivalent(sv).isAvailable==true",
-               isAvailable == true);
+    assertTrue("getFunctionalEquivalent(sv).isAvailable==TRUE",
+               isAvailable == TRUE);
 
     equiv = Collator::getFunctionalEquivalent("collation",
                                               Locale::createFromName("sv_SE"),
                                               isAvailable, ec);
     assertSuccess("getFunctionalEquivalent", ec);
     assertEquals("getFunctionalEquivalent(sv_SE)", "sv", equiv.getName());
-    assertTrue("getFunctionalEquivalent(sv_SE).isAvailable==false",
-               isAvailable == false);
+    assertTrue("getFunctionalEquivalent(sv_SE).isAvailable==FALSE",
+               isAvailable == FALSE);
 }
 
 #endif

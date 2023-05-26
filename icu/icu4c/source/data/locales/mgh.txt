@@ -31,16 +31,6 @@ mgh{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GGGGGyMMdd",
-            }
             availableFormats{
                 Ed{"E d"}
                 Hm{"HH:mm"}
@@ -52,8 +42,8 @@ mgh{
                 MMMd{"MMM d"}
                 Md{"d/M"}
                 d{"d"}
-                hm{"h:mm a"}
-                hms{"h:mm:ss a"}
+                hm{"h:mm a"}
+                hms{"h:mm:ss a"}
                 ms{"m:ss"}
                 y{"y"}
                 yM{"M/y"}
@@ -90,16 +80,6 @@ mgh{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "yMMMMEEEEd",
-                "yMMMMd",
-                "yMMMd",
-                "yMMdd",
-            }
             availableFormats{
                 Ed{"E d"}
                 Hm{"HH:mm"}
@@ -111,8 +91,8 @@ mgh{
                 MMMd{"MMM d"}
                 Md{"d/M"}
                 d{"d"}
-                hm{"h:mm a"}
-                hms{"h:mm:ss a"}
+                hm{"h:mm a"}
+                hms{"h:mm:ss a"}
                 ms{"m:ss"}
                 y{"y"}
                 yM{"M/y"}

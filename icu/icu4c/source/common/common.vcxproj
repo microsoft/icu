@@ -43,7 +43,7 @@
       <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
       <ObjectFileName>$(OutDir)/</ObjectFileName>
       <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDataBaseFileName>$(OutDir)/icuuc$(IcuMajorVersion).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)/icuuc68.pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <!-- The icudt.lib is for U_ICUDATA_ENTRY_POINT -->
@@ -60,9 +60,9 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <OutputFile>..\..\$(IcuBinOutputDir)\icuuc$(IcuMajorVersion)d.dll</OutputFile>
+      <OutputFile>..\..\$(IcuBinOutputDir)\icuuc68d.dll</OutputFile>
       <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc$(IcuMajorVersion)d.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc68d.pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuucd.lib</ImportLibrary>
       <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
       <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
@@ -77,9 +77,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
-      <OutputFile>..\..\$(IcuBinOutputDir)\icuuc$(IcuMajorVersion).dll</OutputFile>
+      <OutputFile>..\..\$(IcuBinOutputDir)\icuuc68.dll</OutputFile>
       <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc$(IcuMajorVersion).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc68.pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuuc.lib</ImportLibrary>
       <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
       <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
@@ -98,7 +98,6 @@
     <ClCompile Include="brkeng.cpp" />
     <ClCompile Include="brkiter.cpp" />
     <ClCompile Include="dictbe.cpp" />
-    <ClCompile Include="lstmbe.cpp" />
     <ClCompile Include="pluralmap.cpp" />
     <ClCompile Include="rbbi.cpp" />
     <ClCompile Include="rbbidata.cpp" />
@@ -215,7 +214,6 @@
     <ClCompile Include="ucase.cpp" />
     <ClCompile Include="uchar.cpp" />
     <ClCompile Include="characterproperties.cpp" />
-    <ClCompile Include="emojiprops.cpp" />
     <ClCompile Include="unames.cpp" />
     <ClCompile Include="unifiedcache.cpp" />
     <ClCompile Include="unifilt.cpp" />
@@ -292,7 +290,6 @@
     <ClInclude Include="ubidiimp.h" />
     <ClInclude Include="brkeng.h" />
     <ClInclude Include="dictbe.h" />
-    <ClInclude Include="lstmbe.h" />
     <ClInclude Include="rbbidata.h" />
     <ClInclude Include="rbbinode.h" />
     <ClInclude Include="rbbirb.h" />
@@ -377,7 +374,6 @@
     <ClInclude Include="patternprops.h" />
     <ClInclude Include="propname.h" />
     <ClInclude Include="ruleiter.h" />
-    <ClInclude Include="emojiprops.h" />
     <ClInclude Include="ucase.h" />
     <ClInclude Include="ulayout_props.h" />
     <ClInclude Include="unisetspan.h" />

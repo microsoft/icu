@@ -33,8 +33,8 @@ U_NAMESPACE_USE
 
 static TimeZone*
 _createTimeZone(const UChar* zoneID, int32_t len, UErrorCode* ec) {
-    TimeZone* zone = nullptr;
-    if (ec != nullptr && U_SUCCESS(*ec)) {
+    TimeZone* zone = NULL;
+    if (ec != NULL && U_SUCCESS(*ec)) {
         // Note that if zoneID is invalid, we get back GMT. This odd
         // behavior is by design and goes back to the JDK. The only
         // failure we will see is a memory allocation failure.
@@ -42,7 +42,7 @@ _createTimeZone(const UChar* zoneID, int32_t len, UErrorCode* ec) {
         UnicodeString zoneStrID;
         zoneStrID.setTo((UBool)(len < 0), zoneID, l); /* temporary read-only alias */
         zone = TimeZone::createTimeZone(zoneStrID);
-        if (zone == nullptr) {
+        if (zone == NULL) {
             *ec = U_MEMORY_ALLOCATION_ERROR;
         }
     }
@@ -58,20 +58,20 @@ ucal_openTimeZoneIDEnumeration(USystemTimeZoneType zoneType, const char* region,
 
 U_CAPI UEnumeration* U_EXPORT2
 ucal_openTimeZones(UErrorCode* ec) {
-    return ucal_openTimeZoneIDEnumeration(UCAL_ZONE_TYPE_ANY, nullptr, nullptr, ec);
+    return uenum_openFromStringEnumeration(TimeZone::createEnumeration(), ec);
 }
 
 U_CAPI UEnumeration* U_EXPORT2
 ucal_openCountryTimeZones(const char* country, UErrorCode* ec) {
-    return ucal_openTimeZoneIDEnumeration(UCAL_ZONE_TYPE_ANY, country, nullptr, ec);
+    return uenum_openFromStringEnumeration(TimeZone::createEnumeration(country), ec);
 }
 
 U_CAPI int32_t U_EXPORT2
 ucal_getDefaultTimeZone(UChar* result, int32_t resultCapacity, UErrorCode* ec) {
     int32_t len = 0;
-    if (ec != nullptr && U_SUCCESS(*ec)) {
+    if (ec != NULL && U_SUCCESS(*ec)) {
         TimeZone* zone = TimeZone::createDefault();
-        if (zone == nullptr) {
+        if (zone == NULL) {
             *ec = U_MEMORY_ALLOCATION_ERROR;
         } else {
             UnicodeString id;
@@ -86,7 +86,7 @@ ucal_getDefaultTimeZone(UChar* result, int32_t resultCapacity, UErrorCode* ec) {
 U_CAPI void U_EXPORT2
 ucal_setDefaultTimeZone(const UChar* zoneID, UErrorCode* ec) {
     TimeZone* zone = _createTimeZone(zoneID, -1, ec);
-    if (zone != nullptr) {
+    if (zone != NULL) {
         TimeZone::adoptDefault(zone);
     }
 }
@@ -94,9 +94,9 @@ ucal_setDefaultTimeZone(const UChar* zoneID, UErrorCode* ec) {
 U_CAPI int32_t U_EXPORT2
 ucal_getHostTimeZone(UChar* result, int32_t resultCapacity, UErrorCode* ec) {
     int32_t len = 0;
-    if (ec != nullptr && U_SUCCESS(*ec)) {
+    if (ec != NULL && U_SUCCESS(*ec)) {
         TimeZone *zone = TimeZone::detectHostTimeZone();
-        if (zone == nullptr) {
+        if (zone == NULL) {
             *ec = U_MEMORY_ALLOCATION_ERROR;
         } else {
             UnicodeString id;
@@ -114,7 +114,7 @@ ucal_getDSTSavings(const UChar* zoneID, UErrorCode* ec) {
     TimeZone* zone = _createTimeZone(zoneID, -1, ec);
     if (U_SUCCESS(*ec)) {
         SimpleTimeZone* stz = dynamic_cast<SimpleTimeZone*>(zone);
-        if (stz != nullptr) {
+        if (stz != NULL) {
             result = stz->getDSTSavings();
         } else {
             // Since there is no getDSTSavings on TimeZone, we use a
@@ -124,7 +124,7 @@ ucal_getDSTSavings(const UChar* zoneID, UErrorCode* ec) {
             UDate d = Calendar::getNow();
             for (int32_t i=0; i<53; ++i, d+=U_MILLIS_PER_DAY*7.0) {
                 int32_t raw, dst;
-                zone->getOffset(d, false, raw, dst, *ec);
+                zone->getOffset(d, FALSE, raw, dst, *ec);
                 if (U_FAILURE(*ec)) {
                     break;
                 } else if (dst != 0) {
@@ -219,10 +219,10 @@ ucal_setTimeZone(    UCalendar*      cal,
   if(U_FAILURE(*status))
     return;
 
-  TimeZone* zone = (zoneID==nullptr) ? TimeZone::createDefault()
+  TimeZone* zone = (zoneID==NULL) ? TimeZone::createDefault()
       : _createTimeZone(zoneID, len, status);
 
-  if (zone != nullptr) {
+  if (zone != NULL) {
       ((Calendar*)cal)->adoptTimeZone(zone);
   }
 }
@@ -255,27 +255,27 @@ ucal_getTimeZoneDisplayName(const     UCalendar*                 cal,
 
     const TimeZone& tz = ((Calendar*)cal)->getTimeZone();
     UnicodeString id;
-    if (!(result == nullptr && resultLength == 0)) {
-        // Null destination for pure preflighting: empty dummy string
+    if(!(result==NULL && resultLength==0)) {
+        // NULL destination for pure preflighting: empty dummy string
         // otherwise, alias the destination buffer
         id.setTo(result, 0, resultLength);
     }
 
     switch(type) {
   case UCAL_STANDARD:
-      tz.getDisplayName(false, TimeZone::LONG, Locale(locale), id);
+      tz.getDisplayName(FALSE, TimeZone::LONG, Locale(locale), id);
       break;
 
   case UCAL_SHORT_STANDARD:
-      tz.getDisplayName(false, TimeZone::SHORT, Locale(locale), id);
+      tz.getDisplayName(FALSE, TimeZone::SHORT, Locale(locale), id);
       break;
 
   case UCAL_DST:
-      tz.getDisplayName(true, TimeZone::LONG, Locale(locale), id);
+      tz.getDisplayName(TRUE, TimeZone::LONG, Locale(locale), id);
       break;
 
   case UCAL_SHORT_DST:
-      tz.getDisplayName(true, TimeZone::SHORT, Locale(locale), id);
+      tz.getDisplayName(TRUE, TimeZone::SHORT, Locale(locale), id);
       break;
     }
 
@@ -298,12 +298,12 @@ ucal_setGregorianChange(UCalendar *cal, UDate date, UErrorCode *pErrorCode) {
     }
     Calendar *cpp_cal = (Calendar *)cal;
     GregorianCalendar *gregocal = dynamic_cast<GregorianCalendar *>(cpp_cal);
-    // Not if(gregocal == nullptr) {
+    // Not if(gregocal == NULL) {
     // because we really want to work only with a GregorianCalendar, not with
     // its subclasses like BuddhistCalendar.
-    if (cpp_cal == nullptr) {
-        // We normally don't check "this" pointers for nullptr, but this here avoids
-        // compiler-generated exception-throwing code in case cal == nullptr.
+    if (cpp_cal == NULL) {
+        // We normally don't check "this" pointers for NULL, but this here avoids
+        // compiler-generated exception-throwing code in case cal == NULL.
         *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
         return;
     }
@@ -321,11 +321,11 @@ ucal_getGregorianChange(const UCalendar *cal, UErrorCode *pErrorCode) {
     }
     const Calendar *cpp_cal = (const Calendar *)cal;
     const GregorianCalendar *gregocal = dynamic_cast<const GregorianCalendar *>(cpp_cal);
-    // Not if(gregocal == nullptr) {
+    // Not if(gregocal == NULL) {
     // see comments in ucal_setGregorianChange().
-    if (cpp_cal == nullptr) {
-        // We normally don't check "this" pointers for nullptr, but this here avoids
-        // compiler-generated exception-throwing code in case cal == nullptr.
+    if (cpp_cal == NULL) {
+        // We normally don't check "this" pointers for NULL, but this here avoids
+        // compiler-generated exception-throwing code in case cal == NULL.
         *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
         return (UDate)0;
     }
@@ -572,11 +572,11 @@ ucal_getLimit(    const    UCalendar*              cal,
 U_CAPI const char * U_EXPORT2
 ucal_getLocaleByType(const UCalendar *cal, ULocDataLocaleType type, UErrorCode* status) 
 {
-    if (cal == nullptr) {
+    if (cal == NULL) {
         if (U_SUCCESS(*status)) {
             *status = U_ILLEGAL_ARGUMENT_ERROR;
         }
-        return nullptr;
+        return NULL;
     }
     return ((Calendar*)cal)->getLocaleID(type, *status);
 }
@@ -594,7 +594,7 @@ ucal_getCanonicalTimeZoneID(const UChar* id, int32_t len,
         return 0;
     }
     if (isSystemID) {
-        *isSystemID = false;
+        *isSystemID = FALSE;
     }
     if (id == 0 || len == 0 || result == 0 || resultCapacity <= 0) {
         *status = U_ILLEGAL_ARGUMENT_ERROR;
@@ -602,7 +602,7 @@ ucal_getCanonicalTimeZoneID(const UChar* id, int32_t len,
     }
     int32_t reslen = 0;
     UnicodeString canonical;
-    UBool systemID = false;
+    UBool systemID = FALSE;
     TimeZone::getCanonicalID(UnicodeString(id, len), canonical, systemID, *status);
     if (U_SUCCESS(*status)) {
         if (isSystemID) {
@@ -617,7 +617,7 @@ U_CAPI const char * U_EXPORT2
 ucal_getType(const UCalendar *cal, UErrorCode* status)
 {
     if (U_FAILURE(*status)) {
-        return nullptr;
+        return NULL;
     }
     return ((Calendar*)cal)->getType();
 }
@@ -644,7 +644,7 @@ U_CAPI UBool U_EXPORT2
 ucal_isWeekend(const UCalendar *cal, UDate date, UErrorCode *status)
 {
     if (U_FAILURE(*status)) {
-        return false;
+        return FALSE;
     }
     return ((Calendar*)cal)->isWeekend(date, *status);
 }
@@ -662,8 +662,8 @@ ucal_getFieldDifference(UCalendar* cal, UDate target,
 
 
 static const UEnumeration defaultKeywordValues = {
-    nullptr,
-    nullptr,
+    NULL,
+    NULL,
     ulist_close_keyword_values_iterator,
     ulist_count_keyword_values,
     uenum_unextDefault,
@@ -690,26 +690,26 @@ static const char * const CAL_TYPES[] = {
         "islamic-umalqura",
         "islamic-tbla",
         "islamic-rgsa",
-        nullptr
+        NULL
 };
 
 U_CAPI UEnumeration* U_EXPORT2
 ucal_getKeywordValuesForLocale(const char * /* key */, const char* locale, UBool commonlyUsed, UErrorCode *status) {
     // Resolve region
     char prefRegion[ULOC_COUNTRY_CAPACITY];
-    (void)ulocimp_getRegionForSupplementalData(locale, true, prefRegion, sizeof(prefRegion), status);
+    (void)ulocimp_getRegionForSupplementalData(locale, TRUE, prefRegion, sizeof(prefRegion), status);
     
     // Read preferred calendar values from supplementalData calendarPreference
-    UResourceBundle *rb = ures_openDirect(nullptr, "supplementalData", status);
+    UResourceBundle *rb = ures_openDirect(NULL, "supplementalData", status);
     ures_getByKey(rb, "calendarPreferenceData", rb, status);
-    UResourceBundle *order = ures_getByKey(rb, prefRegion, nullptr, status);
-    if (*status == U_MISSING_RESOURCE_ERROR && rb != nullptr) {
+    UResourceBundle *order = ures_getByKey(rb, prefRegion, NULL, status);
+    if (*status == U_MISSING_RESOURCE_ERROR && rb != NULL) {
         *status = U_ZERO_ERROR;
-        order = ures_getByKey(rb, "001", nullptr, status);
+        order = ures_getByKey(rb, "001", NULL, status);
     }
 
     // Create a list of calendar type strings
-    UList *values = nullptr;
+    UList *values = NULL;
     if (U_SUCCESS(*status)) {
         values = ulist_createEmptyList(status);
         if (U_SUCCESS(*status)) {
@@ -717,14 +717,14 @@ ucal_getKeywordValuesForLocale(const char * /* key */, const char* locale, UBool
                 int32_t len;
                 const UChar *type = ures_getStringByIndex(order, i, &len, status);
                 char *caltype = (char*)uprv_malloc(len + 1);
-                if (caltype == nullptr) {
+                if (caltype == NULL) {
                     *status = U_MEMORY_ALLOCATION_ERROR;
                     break;
                 }
                 u_UCharsToChars(type, caltype, len);
                 *(caltype + len) = 0;
 
-                ulist_addItemEndList(values, caltype, true, status);
+                ulist_addItemEndList(values, caltype, TRUE, status);
                 if (U_FAILURE(*status)) {
                     break;
                 }
@@ -732,9 +732,9 @@ ucal_getKeywordValuesForLocale(const char * /* key */, const char* locale, UBool
 
             if (U_SUCCESS(*status) && !commonlyUsed) {
                 // If not commonlyUsed, add other available values
-                for (int32_t i = 0; CAL_TYPES[i] != nullptr; i++) {
+                for (int32_t i = 0; CAL_TYPES[i] != NULL; i++) {
                     if (!ulist_containsString(values, CAL_TYPES[i], (int32_t)uprv_strlen(CAL_TYPES[i]))) {
-                        ulist_addItemEndList(values, CAL_TYPES[i], false, status);
+                        ulist_addItemEndList(values, CAL_TYPES[i], FALSE, status);
                         if (U_FAILURE(*status)) {
                             break;
                         }
@@ -743,7 +743,7 @@ ucal_getKeywordValuesForLocale(const char * /* key */, const char* locale, UBool
             }
             if (U_FAILURE(*status)) {
                 ulist_deleteList(values);
-                values = nullptr;
+                values = NULL;
             }
         }
     }
@@ -751,16 +751,16 @@ ucal_getKeywordValuesForLocale(const char * /* key */, const char* locale, UBool
     ures_close(order);
     ures_close(rb);
 
-    if (U_FAILURE(*status) || values == nullptr) {
-        return nullptr;
+    if (U_FAILURE(*status) || values == NULL) {
+        return NULL;
     }
 
     // Create string enumeration
     UEnumeration *en = (UEnumeration*)uprv_malloc(sizeof(UEnumeration));
-    if (en == nullptr) {
+    if (en == NULL) {
         *status = U_MEMORY_ALLOCATION_ERROR;
         ulist_deleteList(values);
-        return nullptr;
+        return NULL;
     }
     ulist_resetList(values);
     memcpy(en, &defaultKeywordValues, sizeof(UEnumeration));
@@ -773,12 +773,12 @@ ucal_getTimeZoneTransitionDate(const UCalendar* cal, UTimeZoneTransitionType typ
                                UDate* transition, UErrorCode* status)
 {
     if (U_FAILURE(*status)) {
-        return false;
+        return FALSE;
     }
     UDate base = ((Calendar*)cal)->getTime(*status);
     const TimeZone& tz = ((Calendar*)cal)->getTimeZone();
     const BasicTimeZone * btz = dynamic_cast<const BasicTimeZone *>(&tz);
-    if (btz != nullptr && U_SUCCESS(*status)) {
+    if (btz != NULL && U_SUCCESS(*status)) {
         TimeZoneTransition tzt;
         UBool inclusive = (type == UCAL_TZ_TRANSITION_NEXT_INCLUSIVE || type == UCAL_TZ_TRANSITION_PREVIOUS_INCLUSIVE);
         UBool result = (type == UCAL_TZ_TRANSITION_NEXT || type == UCAL_TZ_TRANSITION_NEXT_INCLUSIVE)?
@@ -786,10 +786,10 @@ ucal_getTimeZoneTransitionDate(const UCalendar* cal, UTimeZoneTransitionType typ
                         btz->getPreviousTransition(base, inclusive, tzt);
         if (result) {
             *transition = tzt.getTime();
-            return true;
+            return TRUE;
         }
     }
-    return false;
+    return FALSE;
 }
 
 U_CAPI int32_t U_EXPORT2
@@ -826,30 +826,6 @@ ucal_getTimeZoneIDForWindowsID(const UChar* winid, int32_t len, const char* regi
     }
 
     return resultLen;
-}
-
-U_CAPI void U_EXPORT2 ucal_getTimeZoneOffsetFromLocal(
-    const UCalendar* cal,
-    UTimeZoneLocalOption nonExistingTimeOpt,
-    UTimeZoneLocalOption duplicatedTimeOpt,
-    int32_t* rawOffset, int32_t* dstOffset, UErrorCode* status)
-{
-    if (U_FAILURE(*status)) {
-        return;
-    }
-    UDate date = ((Calendar*)cal)->getTime(*status);
-    if (U_FAILURE(*status)) {
-        return;
-    }
-    const TimeZone& tz = ((Calendar*)cal)->getTimeZone();
-    const BasicTimeZone* btz = dynamic_cast<const BasicTimeZone *>(&tz);
-    if (btz == nullptr) {
-        *status = U_ILLEGAL_ARGUMENT_ERROR;
-        return;
-    }
-    btz->getOffsetFromLocal(
-        date, nonExistingTimeOpt, duplicatedTimeOpt,
-        *rawOffset, *dstOffset, *status);
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

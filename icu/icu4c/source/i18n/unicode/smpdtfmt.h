@@ -756,7 +756,7 @@ public:
      * names of the months), but not to provide the pattern.
      * <P>
      * A numbering system override is a string containing either the name of a known numbering system,
-     * or a set of field and numbering system pairs that specify which fields are to be formatted with
+     * or a set of field and numbering system pairs that specify which fields are to be formattied with
      * the alternate numbering system.  For example, to specify that all numeric fields in the specified
      * date or time pattern are to be rendered using Thai digits, simply specify the numbering system override
      * as "thai".  To specify that just the year portion of the date be formatted using Hebrew numbering,
@@ -797,7 +797,7 @@ public:
      * names of the months), but not to provide the pattern.
      * <P>
      * A numbering system override is a string containing either the name of a known numbering system,
-     * or a set of field and numbering system pairs that specify which fields are to be formatted with
+     * or a set of field and numbering system pairs that specify which fields are to be formattied with
      * the alternate numbering system.  For example, to specify that all numeric fields in the specified
      * date or time pattern are to be rendered using Thai digits, simply specify the numbering system override
      * as "thai".  To specify that just the year portion of the date be formatted using Hebrew numbering,
@@ -867,7 +867,7 @@ public:
      * @return    A copy of the object.
      * @stable ICU 2.0
      */
-    virtual SimpleDateFormat* clone() const override;
+    virtual SimpleDateFormat* clone() const;
 
     /**
      * Return true if the given Format objects are semantically equal. Objects
@@ -876,7 +876,7 @@ public:
      * @return         true if the given Format objects are semantically equal.
      * @stable ICU 2.0
      */
-    virtual bool operator==(const Format& other) const override;
+    virtual UBool operator==(const Format& other) const;
 
 
     using DateFormat::format;
@@ -899,7 +899,7 @@ public:
      */
     virtual UnicodeString& format(  Calendar& cal,
                                     UnicodeString& appendTo,
-                                    FieldPosition& pos) const override;
+                                    FieldPosition& pos) const;
 
     /**
      * Format a date or time, which is the standard millis since 24:00 GMT, Jan
@@ -922,7 +922,7 @@ public:
     virtual UnicodeString& format(  Calendar& cal,
                                     UnicodeString& appendTo,
                                     FieldPositionIterator* posIter,
-                                    UErrorCode& status) const override;
+                                    UErrorCode& status) const;
 
     using DateFormat::parse;
 
@@ -954,7 +954,7 @@ public:
      */
     virtual void parse( const UnicodeString& text,
                         Calendar& cal,
-                        ParsePosition& pos) const override;
+                        ParsePosition& pos) const;
 
 
     /**
@@ -1097,7 +1097,7 @@ public:
      *                  other classes have different class IDs.
      * @stable ICU 2.0
      */
-    virtual UClassID getDynamicClassID(void) const override;
+    virtual UClassID getDynamicClassID(void) const;
 
     /**
      * Set the calendar to be used by this date format. Initially, the default
@@ -1108,7 +1108,7 @@ public:
      * @param calendarToAdopt    Calendar object to be adopted.
      * @stable ICU 2.0
      */
-    virtual void adoptCalendar(Calendar* calendarToAdopt) override;
+    virtual void adoptCalendar(Calendar* calendarToAdopt);
 
     /* Cannot use #ifndef U_HIDE_INTERNAL_API for the following methods since they are virtual */
     /**
@@ -1144,7 +1144,7 @@ public:
      *               updated with any new status from the function.
      * @stable ICU 53
      */
-    virtual void setContext(UDisplayContext value, UErrorCode& status) override;
+    virtual void setContext(UDisplayContext value, UErrorCode& status);
 
     /**
      * Overrides base class method and
@@ -1153,7 +1153,7 @@ public:
      * @param formatToAdopt the NumbeferFormat used
      * @stable ICU 54
      */
-    void adoptNumberFormat(NumberFormat *formatToAdopt) override;
+    void adoptNumberFormat(NumberFormat *formatToAdopt);
 
     /**
      * Allow the user to set the NumberFormat for several fields
@@ -1226,7 +1226,7 @@ private:
 
     void initializeBooleanAttributes(void);
 
-    SimpleDateFormat() = delete; // default constructor not implemented
+    SimpleDateFormat(); // default constructor not implemented
 
     /**
      * Used by the DateFormat factory methods to construct a SimpleDateFormat.
@@ -1299,7 +1299,7 @@ private:
                            int32_t maxDigits) const;
 
     /**
-     * Return true if the given format character, occurring count
+     * Return true if the given format character, occuring count
      * times, represents a numeric field.
      */
     static UBool isNumeric(char16_t formatChar, int32_t count);
@@ -1360,22 +1360,6 @@ private:
                         const UnicodeString* monthPattern, Calendar& cal) const;
 
     /**
-     * Private code-size reduction function used by subParse. Only for UCAL_MONTH
-     * @param text the time text being parsed.
-     * @param start where to start parsing.
-     * @param wideStringArray the wide string array to parsed.
-     * @param shortStringArray the short string array to parsed.
-     * @param stringArrayCount the size of the string arrays.
-     * @param cal a Calendar set to the date and time to be formatted
-     *            into a date/time string.
-     * @return the new start position if matching succeeded; a negative number
-     * indicating matching failure, otherwise.
-     */
-    int32_t matchAlphaMonthStrings(const UnicodeString& text, int32_t start,
-                        const UnicodeString* wideStringArray, const UnicodeString* shortStringArray,
-                        int32_t stringArrayCount, Calendar& cal) const;
-
-    /**
      * Private code-size reduction function used by subParse.
      * @param text the time text being parsed.
      * @param start where to start parsing.
@@ -1402,7 +1386,7 @@ private:
      *
      * @param pattern the pattern string
      * @param patternOffset the starting offset into the pattern text. On
-     *        output will be set the offset of the first non-literal character in the pattern
+     *        outupt will be set the offset of the first non-literal character in the pattern
      * @param text the text being parsed
      * @param textOffset the starting offset into the text. On output
      *                   will be set to the offset of the character after the match

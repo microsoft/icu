@@ -49,7 +49,7 @@ public:
      * @return clone, or nullptr if an error occurred
      * @stable ICU 3.8
      */
-    virtual BasicTimeZone* clone() const override = 0;
+    virtual BasicTimeZone* clone() const = 0;
 
     /**
      * Gets the first time zone transition after the base time.
@@ -84,7 +84,7 @@ public:
      *              changes will be ignored, except either of them is zero.
      *              For example, a transition from rawoffset 3:00/dstsavings 1:00
      *              to rawoffset 2:00/dstsavings 2:00 is excluded from the comparison,
-     *              but a transition from rawoffset 2:00/dstsavings 1:00 to
+     *              but a transtion from rawoffset 2:00/dstsavings 1:00 to
      *              rawoffset 3:00/dstsavings 0:00 is included.
      * @param ec    Output param to filled in with a success or an error.
      * @return      true if the other time zone has the equivalent transitions in the
@@ -152,15 +152,6 @@ public:
     virtual void getSimpleRulesNear(UDate date, InitialTimeZoneRule*& initial,
         AnnualTimeZoneRule*& std, AnnualTimeZoneRule*& dst, UErrorCode& status) const;
 
-    /**
-     * Get time zone offsets from local wall time.
-     * @stable ICU 69
-     */
-    virtual void getOffsetFromLocal(
-        UDate date, UTimeZoneLocalOption nonExistingTimeOpt,
-        UTimeZoneLocalOption duplicatedTimeOpt, int32_t& rawOffset,
-        int32_t& dstOffset, UErrorCode& status) const;
-
 
 #ifndef U_HIDE_INTERNAL_API
     /**
@@ -170,31 +161,29 @@ public:
     enum {
         kStandard = 0x01,
         kDaylight = 0x03,
-        kFormer = 0x04, /* UCAL_TZ_LOCAL_FORMER */
-        kLatter = 0x0C  /* UCAL_TZ_LOCAL_LATTER */
+        kFormer = 0x04,
+        kLatter = 0x0C
     };
+#endif  /* U_HIDE_INTERNAL_API */
 
     /**
      * Get time zone offsets from local wall time.
      * @internal
      */
-    void getOffsetFromLocal(UDate date, int32_t nonExistingTimeOpt, int32_t duplicatedTimeOpt,
+    virtual void getOffsetFromLocal(UDate date, int32_t nonExistingTimeOpt, int32_t duplicatedTimeOpt,
         int32_t& rawOffset, int32_t& dstOffset, UErrorCode& status) const;
-#endif  /* U_HIDE_INTERNAL_API */
 
 protected:
 
 #ifndef U_HIDE_INTERNAL_API
     /**
-     * A time type option bit mask used by getOffsetFromLocal.
+     * The time type option bit masks used by getOffsetFromLocal
      * @internal
      */
-    static constexpr int32_t kStdDstMask = kDaylight;
-    /**
-     * A time type option bit mask used by getOffsetFromLocal.
-     * @internal
-     */
-    static constexpr int32_t kFormerLatterMask = kLatter;
+    enum {
+        kStdDstMask = kDaylight,
+        kFormerLatterMask = kLatter
+    };
 #endif  /* U_HIDE_INTERNAL_API */
 
     /**
@@ -226,11 +215,8 @@ protected:
     /**
      * Gets the set of TimeZoneRule instances applicable to the specified time and after.
      * @param start     The start date used for extracting time zone rules
-     * @param initial   Output parameter, receives the InitialTimeZone.
-     *                  Always not nullptr (except in case of error)
-     * @param transitionRules   Output parameter, a UVector of transition rules.
-     *                  May be nullptr, if there are no transition rules.
-     *                  The caller owns the returned vector; the UVector owns the rules.
+     * @param initial   Receives the InitialTimeZone, always not NULL
+     * @param transitionRules   Receives the transition rules, could be NULL
      * @param status    Receives error status code
      */
     void getTimeZoneRulesAfter(UDate start, InitialTimeZoneRule*& initial, UVector*& transitionRules,

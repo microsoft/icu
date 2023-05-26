@@ -23,7 +23,7 @@
 #include "cmemory.h"
 #include "cstring.h"
 #include "caltest.h"  // for fieldName
-#include <stdio.h> // for snprintf
+#include <stdio.h> // for sprintf
 
 #if U_PLATFORM_USES_ONLY_WIN32_API
 #include "windttst.h"
@@ -130,7 +130,6 @@ void DateFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &nam
     TESTCASE_AUTO(TestParseRegression13744);
     TESTCASE_AUTO(TestAdoptCalendarLeak);
     TESTCASE_AUTO(Test20741_ABFields);
-    TESTCASE_AUTO(Test22023_UTCWithMinusZero);
 
     TESTCASE_AUTO_END;
 }
@@ -140,58 +139,58 @@ void DateFormatTest::TestPatterns() {
         const char *actualPattern;
         const char *expectedPattern;
         const char *localeID;
-        const UChar *expectedLocalPattern;
+        const char *expectedLocalPattern;
     } EXPECTED[] = {
-        {UDAT_YEAR, "y", "en",u"y"},
+        {UDAT_YEAR, "y","en","y"},
 
-        {UDAT_QUARTER, "QQQQ", "en", u"QQQQ"},
-        {UDAT_ABBR_QUARTER, "QQQ", "en", u"QQQ"},
-        {UDAT_YEAR_QUARTER, "yQQQQ", "en", u"QQQQ y"},
-        {UDAT_YEAR_ABBR_QUARTER, "yQQQ", "en", u"QQQ y"},
+        {UDAT_QUARTER, "QQQQ", "en", "QQQQ"},
+        {UDAT_ABBR_QUARTER, "QQQ", "en", "QQQ"},
+        {UDAT_YEAR_QUARTER, "yQQQQ", "en", "QQQQ y"},
+        {UDAT_YEAR_ABBR_QUARTER, "yQQQ", "en", "QQQ y"},
 
-        {UDAT_NUM_MONTH, "M", "en", u"L"},
-        {UDAT_ABBR_MONTH, "MMM", "en", u"LLL"},
-        {UDAT_MONTH, "MMMM", "en", u"LLLL"},
-        {UDAT_YEAR_NUM_MONTH, "yM","en",u"M/y"},
-        {UDAT_YEAR_ABBR_MONTH, "yMMM","en",u"MMM y"},
-        {UDAT_YEAR_MONTH, "yMMMM","en",u"MMMM y"},
+        {UDAT_NUM_MONTH, "M", "en", "L"},
+        {UDAT_ABBR_MONTH, "MMM", "en", "LLL"},
+        {UDAT_MONTH, "MMMM", "en", "LLLL"},
+        {UDAT_YEAR_NUM_MONTH, "yM","en","M/y"},
+        {UDAT_YEAR_ABBR_MONTH, "yMMM","en","MMM y"},
+        {UDAT_YEAR_MONTH, "yMMMM","en","MMMM y"},
 
-        {UDAT_DAY, "d","en",u"d"},
-        {UDAT_YEAR_NUM_MONTH_DAY, "yMd", "en", u"M/d/y"},
-        {UDAT_YEAR_ABBR_MONTH_DAY, "yMMMd", "en", u"MMM d, y"},
-        {UDAT_YEAR_MONTH_DAY, "yMMMMd", "en", u"MMMM d, y"},
-        {UDAT_YEAR_NUM_MONTH_WEEKDAY_DAY, "yMEd", "en", u"EEE, M/d/y"},
-        {UDAT_YEAR_ABBR_MONTH_WEEKDAY_DAY, "yMMMEd", "en", u"EEE, MMM d, y"},
-        {UDAT_YEAR_MONTH_WEEKDAY_DAY, "yMMMMEEEEd", "en", u"EEEE, MMMM d, y"},
+        {UDAT_DAY, "d","en","d"},
+        {UDAT_YEAR_NUM_MONTH_DAY, "yMd", "en", "M/d/y"},
+        {UDAT_YEAR_ABBR_MONTH_DAY, "yMMMd", "en", "MMM d, y"},
+        {UDAT_YEAR_MONTH_DAY, "yMMMMd", "en", "MMMM d, y"},
+        {UDAT_YEAR_NUM_MONTH_WEEKDAY_DAY, "yMEd", "en", "EEE, M/d/y"},
+        {UDAT_YEAR_ABBR_MONTH_WEEKDAY_DAY, "yMMMEd", "en", "EEE, MMM d, y"},
+        {UDAT_YEAR_MONTH_WEEKDAY_DAY, "yMMMMEEEEd", "en", "EEEE, MMMM d, y"},
 
-        {UDAT_NUM_MONTH_DAY, "Md","en",u"M/d"},
-        {UDAT_ABBR_MONTH_DAY, "MMMd","en",u"MMM d"},
-        {UDAT_MONTH_DAY, "MMMMd","en",u"MMMM d"},
-        {UDAT_NUM_MONTH_WEEKDAY_DAY, "MEd","en",u"EEE, M/d"},
-        {UDAT_ABBR_MONTH_WEEKDAY_DAY, "MMMEd","en",u"EEE, MMM d"},
-        {UDAT_MONTH_WEEKDAY_DAY, "MMMMEEEEd","en",u"EEEE, MMMM d"},
+        {UDAT_NUM_MONTH_DAY, "Md","en","M/d"},
+        {UDAT_ABBR_MONTH_DAY, "MMMd","en","MMM d"},
+        {UDAT_MONTH_DAY, "MMMMd","en","MMMM d"},
+        {UDAT_NUM_MONTH_WEEKDAY_DAY, "MEd","en","EEE, M/d"},
+        {UDAT_ABBR_MONTH_WEEKDAY_DAY, "MMMEd","en","EEE, MMM d"},
+        {UDAT_MONTH_WEEKDAY_DAY, "MMMMEEEEd","en","EEEE, MMMM d"},
 
-        {UDAT_HOUR, "j", "en", u"h\u202Fa"}, // (fixed expected result per ticket 6872<-6626)
-        {UDAT_HOUR24, "H", "en", u"HH"}, // (fixed expected result per ticket 6872<-6626
+        {UDAT_HOUR, "j", "en", "h a"}, // (fixed expected result per ticket 6872<-6626)
+        {UDAT_HOUR24, "H", "en", "HH"}, // (fixed expected result per ticket 6872<-6626
 
-        {UDAT_MINUTE, "m", "en", u"m"},
-        {UDAT_HOUR_MINUTE, "jm","en",u"h:mm\u202Fa"}, // (fixed expected result per ticket 6872<-7180)
-        {UDAT_HOUR24_MINUTE, "Hm", "en", u"HH:mm"}, // (fixed expected result per ticket 6872<-6626)
+        {UDAT_MINUTE, "m", "en", "m"},
+        {UDAT_HOUR_MINUTE, "jm","en","h:mm a"}, // (fixed expected result per ticket 6872<-7180)
+        {UDAT_HOUR24_MINUTE, "Hm", "en", "HH:mm"}, // (fixed expected result per ticket 6872<-6626)
 
-        {UDAT_SECOND, "s", "en", u"s"},
-        {UDAT_HOUR_MINUTE_SECOND, "jms","en",u"h:mm:ss\u202Fa"}, // (fixed expected result per ticket 6872<-7180)
-        {UDAT_HOUR24_MINUTE_SECOND, "Hms","en",u"HH:mm:ss"}, // (fixed expected result per ticket 6872<-6626)
-        {UDAT_MINUTE_SECOND, "ms", "en", u"mm:ss"}, // (fixed expected result per ticket 6872<-6626)
+        {UDAT_SECOND, "s", "en", "s"},
+        {UDAT_HOUR_MINUTE_SECOND, "jms","en","h:mm:ss a"}, // (fixed expected result per ticket 6872<-7180)
+        {UDAT_HOUR24_MINUTE_SECOND, "Hms","en","HH:mm:ss"}, // (fixed expected result per ticket 6872<-6626)
+        {UDAT_MINUTE_SECOND, "ms", "en", "mm:ss"}, // (fixed expected result per ticket 6872<-6626)
 
-        {UDAT_LOCATION_TZ, "VVVV", "en", u"VVVV"},
-        {UDAT_GENERIC_TZ, "vvvv", "en", u"vvvv"},
-        {UDAT_ABBR_GENERIC_TZ, "v", "en", u"v"},
-        {UDAT_SPECIFIC_TZ, "zzzz", "en", u"zzzz"},
-        {UDAT_ABBR_SPECIFIC_TZ, "z", "en", u"z"},
-        {UDAT_ABBR_UTC_TZ, "ZZZZ", "en", u"ZZZZ"},
+        {UDAT_LOCATION_TZ, "VVVV", "en", "VVVV"},
+        {UDAT_GENERIC_TZ, "vvvv", "en", "vvvv"},
+        {UDAT_ABBR_GENERIC_TZ, "v", "en", "v"},
+        {UDAT_SPECIFIC_TZ, "zzzz", "en", "zzzz"},
+        {UDAT_ABBR_SPECIFIC_TZ, "z", "en", "z"},
+        {UDAT_ABBR_UTC_TZ, "ZZZZ", "en", "ZZZZ"},
 
-        {UDAT_YEAR_NUM_MONTH_DAY UDAT_ABBR_UTC_TZ, "yMdZZZZ", "en", u"M/d/y, ZZZZ"},
-        {UDAT_MONTH_DAY UDAT_LOCATION_TZ, "MMMMdVVVV", "en", u"MMMM d 'at' VVVV"}
+        {UDAT_YEAR_NUM_MONTH_DAY UDAT_ABBR_UTC_TZ, "yMdZZZZ", "en", "M/d/y, ZZZZ"},
+        {UDAT_MONTH_DAY UDAT_LOCATION_TZ, "MMMMdVVVV", "en", "MMMM d, VVVV"}
     };
 
     IcuTestErrorCode errorCode(*this, "TestPatterns()");
@@ -228,7 +227,7 @@ void DateFormatTest::TestPatterns() {
             continue;
         }
 
-        UnicodeString expectedLocalPattern(EXPECTED[i].expectedLocalPattern, -1);
+        UnicodeString expectedLocalPattern(EXPECTED[i].expectedLocalPattern, -1, US_INV);
         UnicodeString actualLocalPattern1;
         UnicodeString actualLocalPattern2;
         date1.toLocalizedPattern(actualLocalPattern1, errorCode);
@@ -265,8 +264,8 @@ void DateFormatTest::TestWallyWedel()
      * A String array for the time zone ids.
      */
     int32_t ids_length;
-    StringEnumeration* ids = TimeZone::createEnumeration(status);
-    if (U_FAILURE(status)) {
+    StringEnumeration* ids = TimeZone::createEnumeration();
+    if (ids == NULL) {
         dataerrln("Unable to create TimeZone enumeration.");
         if (sdf != NULL) {
             delete sdf;
@@ -401,7 +400,7 @@ DateFormatTest::TestTwoDigitYearDSTParse(void)
     UnicodeString str;
 
     if(U_FAILURE(status)) {
-        dataerrln("Could not set up test. exiting - %s", u_errorName(status));
+        dataerrln("Could not set up test. exitting - %s", u_errorName(status));
         return;
     }
 
@@ -561,7 +560,7 @@ void DateFormatTest::TestFieldPosition() {
 #endif
 
         "", "1997", "ao\\u00FBt", "13", "", "14", "34", "12", "", "mercredi",
-        "", "", "", "", "", "", "", "heure d\\u2019\\u00E9t\\u00E9 du Pacifique nord-am\\u00E9ricain", "", "",
+        "", "", "", "", "", "", "", "heure d\\u2019\\u00E9t\\u00E9 du Pacifique", "", "",
         "", "", "", "", "",  "", "", "", "", "", "", "", "", "", "", "", "",
 #if UDAT_HAS_PATTERN_CHAR_FOR_TIME_SEPARATOR
         ":",
@@ -988,12 +987,12 @@ DateFormatTest::TestBadInput135()
         "Mar 15", "Mar 15 1997", "asdf", "3/1/97 1:23:", "3/1/00 1:23:45 AM"
     };
     int32_t strings_length = UPRV_LENGTHOF(strings);
-    DateFormat *longFmt = DateFormat::createDateTimeInstance(DateFormat::LONG, DateFormat::MEDIUM, Locale::getEnglish());
-    if(longFmt==NULL) {
+    DateFormat *full = DateFormat::createDateTimeInstance(DateFormat::LONG, DateFormat::LONG);
+    if(full==NULL) {
       dataerrln("could not create date time instance");
       return;
     }
-    UnicodeString expected(u"March 1, 2000 at 1:23:45\u202FAM", -1);
+    UnicodeString expected("March 1, 2000 at 1:23:45 AM ");
     for (int32_t i = 0; i < strings_length;++i) {
         const char* text = strings[i];
         for (int32_t j = 0; j < looks_length;++j) {
@@ -1020,7 +1019,7 @@ DateFormatTest::TestBadInput135()
                         if (sdtfmt != NULL) {
                             sdtfmt->toPattern(pattern);
                         }
-                        longFmt->format(when, format);
+                        full->format(when, format);
                         logln(prefix + "OK: " + format);
                         if (0!=format.compareBetween(0, expected.length(), expected, 0, expected.length()))
                             errln((UnicodeString)"FAIL: Parse \"" + text + "\", pattern \"" + pattern + "\", expected " + expected + " got " + format);
@@ -1037,7 +1036,7 @@ DateFormatTest::TestBadInput135()
             }
         }
     }
-    delete longFmt;
+    delete full;
     if (U_FAILURE(status))
         errln((UnicodeString)"FAIL: UErrorCode received during test: " + (int32_t)status);
 }
@@ -1330,9 +1329,9 @@ DateFormatTest::TestLocaleDateFormat() // Bug 495
         DateFormat::FULL, Locale::getFrench());
     DateFormat *dfUS = DateFormat::createDateTimeInstance(DateFormat::FULL,
         DateFormat::FULL, Locale::getUS());
-    UnicodeString expectedFRENCH ( u"lundi 15 septembre 1997 à 00:00:00 heure d’été du Pacifique nord-américain", -1 );
+    UnicodeString expectedFRENCH ( "lundi 15 septembre 1997 \\u00E0 00:00:00 heure d\\u2019\\u00E9t\\u00E9 du Pacifique", -1, US_INV );
     expectedFRENCH = expectedFRENCH.unescape();
-    UnicodeString expectedUS ( u"Monday, September 15, 1997 at 12:00:00\u202FAM Pacific Daylight Time", -1 );
+    UnicodeString expectedUS ( "Monday, September 15, 1997 at 12:00:00 AM Pacific Daylight Time" );
     logln((UnicodeString)"Date set to : " + dateToString(testDate));
     UnicodeString out;
     if (dfUS == NULL || dfFrench == NULL){
@@ -1343,14 +1342,14 @@ DateFormatTest::TestLocaleDateFormat() // Bug 495
     }
 
     dfFrench->format(testDate, out);
-    logln((UnicodeString)"Date Formatted with French Locale " + out);
+    logln((UnicodeString)"Date Formated with French Locale " + out);
     if (!(out == expectedFRENCH))
-        errln((UnicodeString)"FAIL: Expected " + expectedFRENCH + ", got " + out);
+        errln((UnicodeString)"FAIL: Expected " + expectedFRENCH);
     out.truncate(0);
     dfUS->format(testDate, out);
-    logln((UnicodeString)"Date Formatted with US Locale " + out);
+    logln((UnicodeString)"Date Formated with US Locale " + out);
     if (!(out == expectedUS))
-        errln((UnicodeString)"FAIL: Expected " + expectedUS + ", got " + out);
+        errln((UnicodeString)"FAIL: Expected " + expectedUS);
     delete dfUS;
     delete dfFrench;
 }
@@ -1860,8 +1859,8 @@ void DateFormatTest::TestNarrowNames()
 
             "h:mm a",     "2015 01 01 10:00:00", "10:00 a.\\u00A0m.",
             "h:mm a",     "2015 01 01 22:00:00", "10:00 p.\\u00A0m.",
-            "h:mm aaaaa", "2015 01 01 10:00:00", "10:00 a.\\u202Fm.",
-            "h:mm aaaaa", "2015 01 01 22:00:00", "10:00 p.\\u202Fm.",
+            "h:mm aaaaa", "2015 01 01 10:00:00", "10:00 a.\\u00A0m.",
+            "h:mm aaaaa", "2015 01 01 22:00:00", "10:00 p.\\u00A0m.",
         };
 
       expectFormat(EN_DATA, UPRV_LENGTHOF(EN_DATA), Locale("en", "", ""));
@@ -1893,34 +1892,21 @@ void DateFormatTest::TestQuarters()
     const char *EN_DATA[] = {
         "yyyy MM dd",
 
-        "Q",     "fp", "1970 01 01", "1",           "1970 01 01",
-        "QQ",    "fp", "1970 04 01", "02",          "1970 04 01",
-        "QQQ",   "fp", "1970 07 01", "Q3",          "1970 07 01",
-        "QQQQ",  "fp", "1970 10 01", "4th quarter", "1970 10 01",
-        "QQQQQ", "fp", "1970 10 01", "4",           "1970 10 01",
+        "Q",    "fp", "1970 01 01", "1",           "1970 01 01",
+        "QQ",   "fp", "1970 04 01", "02",          "1970 04 01",
+        "QQQ",  "fp", "1970 07 01", "Q3",          "1970 07 01",
+        "QQQQ", "fp", "1970 10 01", "4th quarter", "1970 10 01",
 
-        "q",     "fp", "1970 01 01", "1",           "1970 01 01",
-        "qq",    "fp", "1970 04 01", "02",          "1970 04 01",
-        "qqq",   "fp", "1970 07 01", "Q3",          "1970 07 01",
-        "qqqq",  "fp", "1970 10 01", "4th quarter", "1970 10 01",
-        "qqqqq", "fp", "1970 10 01", "4",           "1970 10 01",
+        "q",    "fp", "1970 01 01", "1",           "1970 01 01",
+        "qq",   "fp", "1970 04 01", "02",          "1970 04 01",
+        "qqq",  "fp", "1970 07 01", "Q3",          "1970 07 01",
+        "qqqq", "fp", "1970 10 01", "4th quarter", "1970 10 01",
 
-        "Qyy",   "fp", "2015 04 01", "215",         "2015 04 01",
-        "QQyy",  "fp", "2015 07 01", "0315",        "2015 07 01",
-    };
-    const char *ES_MX_DATA[] = {
-        "yyyy MM dd",
-
-        "QQQQ y",  "fp", "1970 01 01", "1.er trimestre 1970", "1970 01 01",
-        "QQQ y",   "fp", "1970 01 01", "T1 1970",             "1970 01 01",
-        "QQQQQ y", "fp", "1970 01 01", "1 1970",              "1970 01 01",
-        "qqqq",    "fp", "1970 01 01", "1.er trimestre",      "1970 01 01",
-        "qqq",     "fp", "1970 01 01", "T1",                  "1970 01 01",
-        "qqqqq",   "fp", "1970 01 01", "1T",                  "1970 01 01",
+        "Qyy",  "fp", "2015 04 01", "215",         "2015 04 01",
+        "QQyy", "fp", "2015 07 01", "0315",        "2015 07 01",
     };
 
     expect(EN_DATA, UPRV_LENGTHOF(EN_DATA), Locale("en", "", ""));
-    expect(ES_MX_DATA, UPRV_LENGTHOF(ES_MX_DATA), Locale("es", "MX", ""));
 }
 
 /**
@@ -2349,7 +2335,7 @@ void DateFormatTest::TestZTimeZoneParsing(void) {
     UnicodeString test;
     //SimpleDateFormat univ("yyyy-MM-dd'T'HH:mm Z", en, status);
     SimpleDateFormat univ("HH:mm Z", en, status);
-    if (failure(status, "construct SimpleDateFormat", true)) return;
+    if (failure(status, "construct SimpleDateFormat", TRUE)) return;
     const TimeZone *t = TimeZone::getGMT();
     univ.setTimeZone(*t);
 
@@ -2401,7 +2387,7 @@ void DateFormatTest::TestRelative(int daysdelta,
                                   const Locale& loc,
                                   const char *expectChars) {
     char banner[25];
-    snprintf(banner, sizeof(banner), "%d", daysdelta);
+    sprintf(banner, "%d", daysdelta);
     UnicodeString bannerStr(banner, "");
 
     UErrorCode status = U_ZERO_ERROR;
@@ -2599,11 +2585,11 @@ static UBool getActualAndValidLocales(
         const Format &fmt, Locale &valid, Locale &actual) {
     const SimpleDateFormat* dat = dynamic_cast<const SimpleDateFormat*>(&fmt);
     if (dat == NULL) {
-        return false;
+        return FALSE;
     }
     const DateFormatSymbols *sym = dat->getDateFormatSymbols();
     if (sym == NULL) {
-        return false;
+        return FALSE;
     }
     UErrorCode status = U_ZERO_ERROR;
     valid = sym->getLocale(ULOC_VALID_LOCALE, status);
@@ -2785,7 +2771,7 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "de", "America/Los_Angeles", "2004-07-15T00:00:00Z", "ZZZZ", "GMT-07:00", "-7:00" },
         { "de", "America/Los_Angeles", "2004-07-15T00:00:00Z", "z", "GMT-7", "-7:00" },
         { "de", "America/Los_Angeles", "2004-07-15T00:00:00Z", "zzzz", "Nordamerikanische Westk\\u00fcsten-Sommerzeit", "-7:00" },
-        { "de", "America/Los_Angeles", "2004-07-15T00:00:00Z", "v", "Los Angeles (Ortszeit)", "America/Los_Angeles" },
+        { "de", "America/Los_Angeles", "2004-07-15T00:00:00Z", "v", "Los Angeles Zeit", "America/Los_Angeles" },
         { "de", "America/Los_Angeles", "2004-07-15T00:00:00Z", "vvvv", "Nordamerikanische Westk\\u00fcstenzeit", "America/Los_Angeles" },
 
         { "de", "America/Argentina/Buenos_Aires", "2004-01-15T00:00:00Z", "Z", "-0300", "-3:00" },
@@ -2796,7 +2782,7 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "de", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "ZZZZ", "GMT-03:00", "-3:00" },
         { "de", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "z", "GMT-3", "-3:00" },
         { "de", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "zzzz", "Argentinische Normalzeit", "-3:00" },
-        { "de", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "v", "Buenos Aires (Ortszeit)", "America/Buenos_Aires" },
+        { "de", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "v", "Buenos Aires Zeit", "America/Buenos_Aires" },
         { "de", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "vvvv", "Argentinische Normalzeit", "America/Buenos_Aires" },
 
         { "de", "America/Buenos_Aires", "2004-01-15T00:00:00Z", "Z", "-0300", "-3:00" },
@@ -2807,7 +2793,7 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "de", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "ZZZZ", "GMT-03:00", "-3:00" },
         { "de", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "z", "GMT-3", "-3:00" },
         { "de", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "zzzz", "Argentinische Normalzeit", "-3:00" },
-        { "de", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "v", "Buenos Aires (Ortszeit)", "America/Buenos_Aires" },
+        { "de", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "v", "Buenos Aires Zeit", "America/Buenos_Aires" },
         { "de", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "vvvv", "Argentinische Normalzeit", "America/Buenos_Aires" },
 
         { "de", "America/Havana", "2004-01-15T00:00:00Z", "Z", "-0500", "-5:00" },
@@ -2818,10 +2804,10 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "de", "America/Havana", "2004-07-15T00:00:00Z", "ZZZZ", "GMT-04:00", "-4:00" },
         { "de", "America/Havana", "2004-07-15T00:00:00Z", "z", "GMT-4", "-4:00" },
         { "de", "America/Havana", "2004-07-15T00:00:00Z", "zzzz", "Kubanische Sommerzeit", "-4:00" },
-        { "de", "America/Havana", "2004-07-15T00:00:00Z", "v", "Kuba (Ortszeit)", "America/Havana" },
+        { "de", "America/Havana", "2004-07-15T00:00:00Z", "v", "Kuba Zeit", "America/Havana" },
         { "de", "America/Havana", "2004-07-15T00:00:00Z", "vvvv", "Kubanische Zeit", "America/Havana" },
         // added to test proper fallback of country name
-        { "de_CH", "America/Havana", "2004-07-15T00:00:00Z", "v", "Kuba (Ortszeit)", "America/Havana" },
+        { "de_CH", "America/Havana", "2004-07-15T00:00:00Z", "v", "Kuba Zeit", "America/Havana" },
         { "de_CH", "America/Havana", "2004-07-15T00:00:00Z", "vvvv", "Kubanische Zeit", "America/Havana" },
 
         { "de", "Australia/ACT", "2004-01-15T00:00:00Z", "Z", "+1100", "+11:00" },
@@ -2832,7 +2818,7 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "de", "Australia/ACT", "2004-07-15T00:00:00Z", "ZZZZ", "GMT+10:00", "+10:00" },
         { "de", "Australia/ACT", "2004-07-15T00:00:00Z", "z", "GMT+10", "+10:00" },
         { "de", "Australia/ACT", "2004-07-15T00:00:00Z", "zzzz", "Ostaustralische Normalzeit", "+10:00" },
-        { "de", "Australia/ACT", "2004-07-15T00:00:00Z", "v", "Sydney (Ortszeit)", "Australia/Sydney" },
+        { "de", "Australia/ACT", "2004-07-15T00:00:00Z", "v", "Sydney Zeit", "Australia/Sydney" },
         { "de", "Australia/ACT", "2004-07-15T00:00:00Z", "vvvv", "Ostaustralische Zeit", "Australia/Sydney" },
 
         { "de", "Australia/Sydney", "2004-01-15T00:00:00Z", "Z", "+1100", "+11:00" },
@@ -2843,7 +2829,7 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "de", "Australia/Sydney", "2004-07-15T00:00:00Z", "ZZZZ", "GMT+10:00", "+10:00" },
         { "de", "Australia/Sydney", "2004-07-15T00:00:00Z", "z", "GMT+10", "+10:00" },
         { "de", "Australia/Sydney", "2004-07-15T00:00:00Z", "zzzz", "Ostaustralische Normalzeit", "+10:00" },
-        { "de", "Australia/Sydney", "2004-07-15T00:00:00Z", "v", "Sydney (Ortszeit)", "Australia/Sydney" },
+        { "de", "Australia/Sydney", "2004-07-15T00:00:00Z", "v", "Sydney Zeit", "Australia/Sydney" },
         { "de", "Australia/Sydney", "2004-07-15T00:00:00Z", "vvvv", "Ostaustralische Zeit", "Australia/Sydney" },
 
         { "de", "Europe/London", "2004-01-15T00:00:00Z", "Z", "+0000", "+0:00" },
@@ -2854,8 +2840,8 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "de", "Europe/London", "2004-07-15T00:00:00Z", "ZZZZ", "GMT+01:00", "+1:00" },
         { "de", "Europe/London", "2004-07-15T00:00:00Z", "z", "GMT+1", "+1:00" },
         { "de", "Europe/London", "2004-07-15T00:00:00Z", "zzzz", "Britische Sommerzeit", "+1:00" },
-        { "de", "Europe/London", "2004-07-15T00:00:00Z", "v", "Vereinigtes K\\u00f6nigreich (Ortszeit)", "Europe/London" },
-        { "de", "Europe/London", "2004-07-15T00:00:00Z", "vvvv", "Vereinigtes K\\u00f6nigreich (Ortszeit)", "Europe/London" },
+        { "de", "Europe/London", "2004-07-15T00:00:00Z", "v", "Vereinigtes K\\u00f6nigreich Zeit", "Europe/London" },
+        { "de", "Europe/London", "2004-07-15T00:00:00Z", "vvvv", "Vereinigtes K\\u00f6nigreich Zeit", "Europe/London" },
 
         { "de", "Etc/GMT+3", "2004-01-15T00:00:00Z", "Z", "-0300", "-3:00" },
         { "de", "Etc/GMT+3", "2004-01-15T00:00:00Z", "ZZZZ", "GMT-03:00", "-3:00" },
@@ -2877,7 +2863,7 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "ZZZZ", "GMT+05:30", "+5:30" },
         { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "z", "GMT+5:30", "+05:30" },
         { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "zzzz", "Indische Normalzeit", "+5:30" },
-        { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "v", "Indien (Ortszeit)", "Asia/Calcutta" },
+        { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "v", "Indien Zeit", "Asia/Calcutta" },
         { "de", "Asia/Calcutta", "2004-07-15T00:00:00Z", "vvvv", "Indische Normalzeit", "Asia/Calcutta" },
 
         // ==========
@@ -3309,30 +3295,30 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "ti", "America/Los_Angeles", "2004-07-15T00:00:00Z", "ZZZZ", "GMT-07:00", "-7:00" },
         { "ti", "America/Los_Angeles", "2004-07-15T00:00:00Z", "z", "GMT-7", "-7:00" },
         { "ti", "America/Los_Angeles", "2004-07-15T00:00:00Z", "zzzz", "GMT-07:00", "-7:00" },
-        { "ti", "America/Los_Angeles", "2004-07-15T00:00:00Z", "v", "\\u130D\\u12DC \\u120E\\u1235 \\u12A3\\u1295\\u1300\\u1208\\u1235", "America/Los_Angeles" },
-        { "ti", "America/Los_Angeles", "2004-07-15T00:00:00Z", "vvvv", "\\u130D\\u12DC \\u120E\\u1235 \\u12A3\\u1295\\u1300\\u1208\\u1235", "America/Los_Angeles" },
+        { "ti", "America/Los_Angeles", "2004-07-15T00:00:00Z", "v", "Los Angeles", "America/Los_Angeles" },
+        { "ti", "America/Los_Angeles", "2004-07-15T00:00:00Z", "vvvv", "Los Angeles", "America/Los_Angeles" },
 
         { "ti", "America/Argentina/Buenos_Aires", "2004-01-15T00:00:00Z", "Z", "-0300", "-3:00" },
         { "ti", "America/Argentina/Buenos_Aires", "2004-01-15T00:00:00Z", "ZZZZ", "GMT-03:00", "-3:00" },
         { "ti", "America/Argentina/Buenos_Aires", "2004-01-15T00:00:00Z", "z", "GMT-3", "-3:00" },
-        { "ti", "America/Argentina/Buenos_Aires", "2004-01-15T00:00:00Z", "zzzz", "\\u121D\\u12F1\\u1265 \\u130D\\u12DC \\u12A3\\u122D\\u1300\\u1295\\u1272\\u1293", "-3:00" },
+        { "ti", "America/Argentina/Buenos_Aires", "2004-01-15T00:00:00Z", "zzzz", "GMT-03:00", "-3:00" },
         { "ti", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "Z", "-0300", "-3:00" },
         { "ti", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "ZZZZ", "GMT-03:00", "-3:00" },
         { "ti", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "z", "GMT-3", "-3:00" },
-        { "ti", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "zzzz", "\\u121D\\u12F1\\u1265 \\u130D\\u12DC \\u12A3\\u122D\\u1300\\u1295\\u1272\\u1293", "-3:00" },
-        { "ti", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "v", "\\u130D\\u12DC \\u1265\\u12C8\\u1296\\u1235 \\u12A3\\u12ED\\u1228\\u1235", "America/Buenos_Aires" },
-        { "ti", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "vvvv", "\\u121D\\u12F1\\u1265 \\u130D\\u12DC \\u12A3\\u122D\\u1300\\u1295\\u1272\\u1293", "America/Buenos_Aires" },
+        { "ti", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "zzzz", "GMT-03:00", "-3:00" },
+        { "ti", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "v", "Buenos Aires", "America/Buenos_Aires" },
+        { "ti", "America/Argentina/Buenos_Aires", "2004-07-15T00:00:00Z", "vvvv", "Buenos Aires", "America/Buenos_Aires" },
 
         { "ti", "America/Buenos_Aires", "2004-01-15T00:00:00Z", "Z", "-0300", "-3:00" },
         { "ti", "America/Buenos_Aires", "2004-01-15T00:00:00Z", "ZZZZ", "GMT-03:00", "-3:00" },
         { "ti", "America/Buenos_Aires", "2004-01-15T00:00:00Z", "z", "GMT-3", "-3:00" },
-        { "ti", "America/Buenos_Aires", "2004-01-15T00:00:00Z", "zzzz", "\\u121D\\u12F1\\u1265 \\u130D\\u12DC \\u12A3\\u122D\\u1300\\u1295\\u1272\\u1293", "-3:00" },
+        { "ti", "America/Buenos_Aires", "2004-01-15T00:00:00Z", "zzzz", "GMT-03:00", "-3:00" },
         { "ti", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "Z", "-0300", "-3:00" },
         { "ti", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "ZZZZ", "GMT-03:00", "-3:00" },
         { "ti", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "z", "GMT-3", "-3:00" },
-        { "ti", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "zzzz", "\\u121D\\u12F1\\u1265 \\u130D\\u12DC \\u12A3\\u122D\\u1300\\u1295\\u1272\\u1293", "-3:00" },
-        { "ti", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "v", "\\u130D\\u12DC \\u1265\\u12C8\\u1296\\u1235 \\u12A3\\u12ED\\u1228\\u1235", "America/Buenos_Aires" },
-        { "ti", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "vvvv", "\\u121D\\u12F1\\u1265 \\u130D\\u12DC \\u12A3\\u122D\\u1300\\u1295\\u1272\\u1293", "America/Buenos_Aires" },
+        { "ti", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "zzzz", "GMT-03:00", "-3:00" },
+        { "ti", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "v", "Buenos Aires", "America/Buenos_Aires" },
+        { "ti", "America/Buenos_Aires", "2004-07-15T00:00:00Z", "vvvv", "Buenos Aires", "America/Buenos_Aires" },
 
         { "ti", "America/Havana", "2004-01-15T00:00:00Z", "Z", "-0500", "-5:00" },
         { "ti", "America/Havana", "2004-01-15T00:00:00Z", "ZZZZ", "GMT-05:00", "-5:00" },
@@ -3342,8 +3328,8 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "ti", "America/Havana", "2004-07-15T00:00:00Z", "ZZZZ", "GMT-04:00", "-4:00" },
         { "ti", "America/Havana", "2004-07-15T00:00:00Z", "z", "GMT-4", "-4:00" },
         { "ti", "America/Havana", "2004-07-15T00:00:00Z", "zzzz", "GMT-04:00", "-4:00" },
-        { "ti", "America/Havana", "2004-07-15T00:00:00Z", "v", "\\u130D\\u12DC \\u12A9\\u1263", "America/Havana" },
-        { "ti", "America/Havana", "2004-07-15T00:00:00Z", "vvvv", "\\u130D\\u12DC \\u12A9\\u1263", "America/Havana" },
+        { "ti", "America/Havana", "2004-07-15T00:00:00Z", "v", "\\u12A9\\u1263", "America/Havana" },
+        { "ti", "America/Havana", "2004-07-15T00:00:00Z", "vvvv", "\\u12A9\\u1263", "America/Havana" },
 
         { "ti", "Australia/ACT", "2004-01-15T00:00:00Z", "Z", "+1100", "+11:00" },
         { "ti", "Australia/ACT", "2004-01-15T00:00:00Z", "ZZZZ", "GMT+11:00", "+11:00" },
@@ -3353,8 +3339,8 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "ti", "Australia/ACT", "2004-07-15T00:00:00Z", "ZZZZ", "GMT+10:00", "+10:00" },
         { "ti", "Australia/ACT", "2004-07-15T00:00:00Z", "z", "GMT+10", "+10:00" },
         { "ti", "Australia/ACT", "2004-07-15T00:00:00Z", "zzzz", "GMT+10:00", "+10:00" },
-        { "ti", "Australia/ACT", "2004-07-15T00:00:00Z", "v", "\\u130D\\u12DC \\u1232\\u12F5\\u1292", "Australia/Sydney" },
-        { "ti", "Australia/ACT", "2004-07-15T00:00:00Z", "vvvv", "\\u130D\\u12DC \\u1232\\u12F5\\u1292", "Australia/Sydney" },
+        { "ti", "Australia/ACT", "2004-07-15T00:00:00Z", "v", "Sydney", "Australia/Sydney" },
+        { "ti", "Australia/ACT", "2004-07-15T00:00:00Z", "vvvv", "Sydney", "Australia/Sydney" },
 
         { "ti", "Australia/Sydney", "2004-01-15T00:00:00Z", "Z", "+1100", "+11:00" },
         { "ti", "Australia/Sydney", "2004-01-15T00:00:00Z", "ZZZZ", "GMT+11:00", "+11:00" },
@@ -3364,8 +3350,8 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "ti", "Australia/Sydney", "2004-07-15T00:00:00Z", "ZZZZ", "GMT+10:00", "+10:00" },
         { "ti", "Australia/Sydney", "2004-07-15T00:00:00Z", "z", "GMT+10", "+10:00" },
         { "ti", "Australia/Sydney", "2004-07-15T00:00:00Z", "zzzz", "GMT+10:00", "+10:00" },
-        { "ti", "Australia/Sydney", "2004-07-15T00:00:00Z", "v", "\\u130D\\u12DC \\u1232\\u12F5\\u1292", "Australia/Sydney" },
-        { "ti", "Australia/Sydney", "2004-07-15T00:00:00Z", "vvvv", "\\u130D\\u12DC \\u1232\\u12F5\\u1292", "Australia/Sydney" },
+        { "ti", "Australia/Sydney", "2004-07-15T00:00:00Z", "v", "Sydney", "Australia/Sydney" },
+        { "ti", "Australia/Sydney", "2004-07-15T00:00:00Z", "vvvv", "Sydney", "Australia/Sydney" },
 
         { "ti", "Europe/London", "2004-01-15T00:00:00Z", "Z", "+0000", "+0:00" },
         { "ti", "Europe/London", "2004-01-15T00:00:00Z", "ZZZZ", "GMT", "+0:00" },
@@ -3374,9 +3360,9 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "ti", "Europe/London", "2004-07-15T00:00:00Z", "Z", "+0100", "+1:00" },
         { "ti", "Europe/London", "2004-07-15T00:00:00Z", "ZZZZ", "GMT+01:00", "+1:00" },
         { "ti", "Europe/London", "2004-07-15T00:00:00Z", "z", "GMT+1", "+1:00" },
-        { "ti", "Europe/London", "2004-07-15T00:00:00Z", "zzzz", "\\u130D\\u12DC \\u12AD\\u1228\\u121D\\u1272 \\u1265\\u122A\\u1323\\u1295\\u12EB", "+1:00" },
-        { "ti", "Europe/London", "2004-07-15T00:00:00Z", "v", "\\u130D\\u12DC \\u1265\\u122A\\u1323\\u1295\\u12EB", "Europe/London" },
-        { "ti", "Europe/London", "2004-07-15T00:00:00Z", "vvvv", "\\u130D\\u12DC \\u1265\\u122A\\u1323\\u1295\\u12EB", "Europe/London" },
+        { "ti", "Europe/London", "2004-07-15T00:00:00Z", "zzzz", "British Summer Time", "+1:00" },
+        { "ti", "Europe/London", "2004-07-15T00:00:00Z", "v", "\\u12A5\\u1295\\u130D\\u120A\\u12DD", "Europe/London" },
+        { "ti", "Europe/London", "2004-07-15T00:00:00Z", "vvvv", "\\u12A5\\u1295\\u130D\\u120A\\u12DD", "Europe/London" },
 
         { "ti", "Etc/GMT+3", "2004-01-15T00:00:00Z", "Z", "-0300", "-3:00" },
         { "ti", "Etc/GMT+3", "2004-01-15T00:00:00Z", "ZZZZ", "GMT-03:00", "-3:00" },
@@ -3398,8 +3384,8 @@ void DateFormatTest::TestTimeZoneDisplayName()
         { "ti", "Asia/Calcutta", "2004-07-15T00:00:00Z", "ZZZZ", "GMT+05:30", "+5:30" },
         { "ti", "Asia/Calcutta", "2004-07-15T00:00:00Z", "z", "GMT+5:30", "+05:30" },
         { "ti", "Asia/Calcutta", "2004-07-15T00:00:00Z", "zzzz", "GMT+05:30", "+5:30" },
-        { "ti", "Asia/Calcutta", "2004-07-15T00:00:00Z", "v", "\\u130D\\u12DC \\u1205\\u1295\\u12F2", "Alna/Calcutta" },
-        { "ti", "Asia/Calcutta", "2004-07-15T00:00:00Z", "vvvv", "\\u130D\\u12DC \\u1205\\u1295\\u12F2", "Asia/Calcutta" },
+        { "ti", "Asia/Calcutta", "2004-07-15T00:00:00Z", "v", "\\u1205\\u1295\\u12F2", "Alna/Calcutta" },
+        { "ti", "Asia/Calcutta", "2004-07-15T00:00:00Z", "vvvv", "\\u1205\\u1295\\u12F2", "Asia/Calcutta" },
 
         // Ticket#8589 Partial location name to use country name if the zone is the golden
         // zone for the time zone's country.
@@ -3422,9 +3408,9 @@ void DateFormatTest::TestTimeZoneDisplayName()
 
     UErrorCode status = U_ZERO_ERROR;
     LocalPointer<Calendar> cal(GregorianCalendar::createInstance(status));
-    if (failure(status, "GregorianCalendar::createInstance", true)) return;
+    if (failure(status, "GregorianCalendar::createInstance", TRUE)) return;
     SimpleDateFormat testfmt(UnicodeString("yyyy-MM-dd'T'HH:mm:ss'Z'"), status);
-    if (failure(status, "SimpleDateFormat constructor", true)) return;
+    if (failure(status, "SimpleDateFormat constructor", TRUE)) return;
     testfmt.setTimeZone(*TimeZone::getGMT());
 
     for (int i = 0; fallbackTests[i][0]; i++) {
@@ -3681,7 +3667,7 @@ void DateFormatTest::Test6338(void)
     UErrorCode status = U_ZERO_ERROR;
 
     SimpleDateFormat fmt1(UnicodeString(u"y-M-d"), Locale("ar"), status);
-    if (failure(status, "new SimpleDateFormat", true)) return;
+    if (failure(status, "new SimpleDateFormat", TRUE)) return;
 
     UDate dt1 = date(2008-1900, UCAL_JUNE, 10, 12, 00);
     UnicodeString str1;
@@ -3857,7 +3843,7 @@ void DateFormatTest::Test6880() {
 
     TimeZone *tz = TimeZone::createTimeZone("Asia/Shanghai");
     GregorianCalendar gcal(*tz, status);
-    if (failure(status, "construct GregorianCalendar", true)) return;
+    if (failure(status, "construct GregorianCalendar", TRUE)) return;
 
     gcal.clear();
     gcal.set(1900, UCAL_JULY, 1, 12, 00);   // offset 8:05:43
@@ -3915,29 +3901,29 @@ void DateFormatTest::TestNumberAsStringParsing()
 {
     const NumAsStringItem items[] = {
         // loc lenient fail?  datePattern                                         dateString
-        { "",   false, true,  UnicodeString("y MMMM d HH:mm:ss"),                 UnicodeString("2009 7 14 08:43:57") },
-        { "",   true,  false, UnicodeString("y MMMM d HH:mm:ss"),                 UnicodeString("2009 7 14 08:43:57") },
-        { "en", false, false, UnicodeString("MMM d, y"),                          UnicodeString("Jul 14, 2009") },
-        { "en", true,  false, UnicodeString("MMM d, y"),                          UnicodeString("Jul 14, 2009") },
-        { "en", false, true,  UnicodeString("MMM d, y"),                          UnicodeString("7 14, 2009") },
-        { "en", true,  false, UnicodeString("MMM d, y"),                          UnicodeString("7 14, 2009") },
-        { "ja", false, false, UnicodeString("yyyy/MM/dd"),                        UnicodeString("2009/07/14")         },
-        { "ja", true,  false, UnicodeString("yyyy/MM/dd"),                        UnicodeString("2009/07/14")         },
-      //{ "ja", false, false, UnicodeString("yyyy/MMMMM/d"),                      UnicodeString("2009/7/14")          }, // #8860 covers test failure
-        { "ja", true,  false, UnicodeString("yyyy/MMMMM/d"),                      UnicodeString("2009/7/14")          },
-        { "ja", false, false, CharsToUnicodeString("y\\u5E74M\\u6708d\\u65E5"),   CharsToUnicodeString("2009\\u5E747\\u670814\\u65E5")   },
-        { "ja", true,  false, CharsToUnicodeString("y\\u5E74M\\u6708d\\u65E5"),   CharsToUnicodeString("2009\\u5E747\\u670814\\u65E5")   },
-        { "ja", false, false, CharsToUnicodeString("y\\u5E74MMMd\\u65E5"),        CharsToUnicodeString("2009\\u5E747\\u670814\\u65E5")   },
-        { "ja", true,  false, CharsToUnicodeString("y\\u5E74MMMd\\u65E5"),        CharsToUnicodeString("2009\\u5E747\\u670814\\u65E5")   }, // #8820 fixes test failure
-        { "ko", false, false, UnicodeString("yyyy. M. d."),                       UnicodeString("2009. 7. 14.")       },
-        { "ko", true,  false, UnicodeString("yyyy. M. d."),                       UnicodeString("2009. 7. 14.")       },
-        { "ko", false, false, UnicodeString("yyyy. MMMMM d."),                    CharsToUnicodeString("2009. 7\\uC6D4 14.")             },
-        { "ko", true,  false, UnicodeString("yyyy. MMMMM d."),                    CharsToUnicodeString("2009. 7\\uC6D4 14.")             }, // #8820 fixes test failure
-        { "ko", false, false, CharsToUnicodeString("y\\uB144 M\\uC6D4 d\\uC77C"), CharsToUnicodeString("2009\\uB144 7\\uC6D4 14\\uC77C") },
-        { "ko", true,  false, CharsToUnicodeString("y\\uB144 M\\uC6D4 d\\uC77C"), CharsToUnicodeString("2009\\uB144 7\\uC6D4 14\\uC77C") },
-        { "ko", false, false, CharsToUnicodeString("y\\uB144 MMM d\\uC77C"),      CharsToUnicodeString("2009\\uB144 7\\uC6D4 14\\uC77C") },
-        { "ko", true,  false, CharsToUnicodeString("y\\uB144 MMM d\\uC77C"),      CharsToUnicodeString("2009\\uB144 7\\uC6D4 14\\uC77C") }, // #8820 fixes test failure
-        { NULL, false, false, UnicodeString(""),                                  UnicodeString("")                   }
+        { "",   FALSE, TRUE,  UnicodeString("y MMMM d HH:mm:ss"),                 UnicodeString("2009 7 14 08:43:57") },
+        { "",   TRUE,  FALSE, UnicodeString("y MMMM d HH:mm:ss"),                 UnicodeString("2009 7 14 08:43:57") },
+        { "en", FALSE, FALSE, UnicodeString("MMM d, y"),                          UnicodeString("Jul 14, 2009") },
+        { "en", TRUE,  FALSE, UnicodeString("MMM d, y"),                          UnicodeString("Jul 14, 2009") },
+        { "en", FALSE, TRUE,  UnicodeString("MMM d, y"),                          UnicodeString("7 14, 2009") },
+        { "en", TRUE,  FALSE, UnicodeString("MMM d, y"),                          UnicodeString("7 14, 2009") },
+        { "ja", FALSE, FALSE, UnicodeString("yyyy/MM/dd"),                        UnicodeString("2009/07/14")         },
+        { "ja", TRUE,  FALSE, UnicodeString("yyyy/MM/dd"),                        UnicodeString("2009/07/14")         },
+      //{ "ja", FALSE, FALSE, UnicodeString("yyyy/MMMMM/d"),                      UnicodeString("2009/7/14")          }, // #8860 covers test failure
+        { "ja", TRUE,  FALSE, UnicodeString("yyyy/MMMMM/d"),                      UnicodeString("2009/7/14")          },
+        { "ja", FALSE, FALSE, CharsToUnicodeString("y\\u5E74M\\u6708d\\u65E5"),   CharsToUnicodeString("2009\\u5E747\\u670814\\u65E5")   },
+        { "ja", TRUE,  FALSE, CharsToUnicodeString("y\\u5E74M\\u6708d\\u65E5"),   CharsToUnicodeString("2009\\u5E747\\u670814\\u65E5")   },
+        { "ja", FALSE, FALSE, CharsToUnicodeString("y\\u5E74MMMd\\u65E5"),        CharsToUnicodeString("2009\\u5E747\\u670814\\u65E5")   },
+        { "ja", TRUE,  FALSE, CharsToUnicodeString("y\\u5E74MMMd\\u65E5"),        CharsToUnicodeString("2009\\u5E747\\u670814\\u65E5")   }, // #8820 fixes test failure
+        { "ko", FALSE, FALSE, UnicodeString("yyyy. M. d."),                       UnicodeString("2009. 7. 14.")       },
+        { "ko", TRUE,  FALSE, UnicodeString("yyyy. M. d."),                       UnicodeString("2009. 7. 14.")       },
+        { "ko", FALSE, FALSE, UnicodeString("yyyy. MMMMM d."),                    CharsToUnicodeString("2009. 7\\uC6D4 14.")             },
+        { "ko", TRUE,  FALSE, UnicodeString("yyyy. MMMMM d."),                    CharsToUnicodeString("2009. 7\\uC6D4 14.")             }, // #8820 fixes test failure
+        { "ko", FALSE, FALSE, CharsToUnicodeString("y\\uB144 M\\uC6D4 d\\uC77C"), CharsToUnicodeString("2009\\uB144 7\\uC6D4 14\\uC77C") },
+        { "ko", TRUE,  FALSE, CharsToUnicodeString("y\\uB144 M\\uC6D4 d\\uC77C"), CharsToUnicodeString("2009\\uB144 7\\uC6D4 14\\uC77C") },
+        { "ko", FALSE, FALSE, CharsToUnicodeString("y\\uB144 MMM d\\uC77C"),      CharsToUnicodeString("2009\\uB144 7\\uC6D4 14\\uC77C") },
+        { "ko", TRUE,  FALSE, CharsToUnicodeString("y\\uB144 MMM d\\uC77C"),      CharsToUnicodeString("2009\\uB144 7\\uC6D4 14\\uC77C") }, // #8820 fixes test failure
+        { NULL, FALSE, FALSE, UnicodeString(""),                                  UnicodeString("")                   }
     };
     const NumAsStringItem * itemPtr;
     for (itemPtr = items; itemPtr->localeStr != NULL; itemPtr++ ) {
@@ -3987,7 +3973,7 @@ void DateFormatTest::TestISOEra() {
 
     // create formatter
     SimpleDateFormat *fmt1 = new SimpleDateFormat(UnicodeString("GGG yyyy-MM-dd'T'HH:mm:ss'Z"), status);
-    failure(status, "new SimpleDateFormat", true);
+    failure(status, "new SimpleDateFormat", TRUE);
     if (status == U_MISSING_RESOURCE_ERROR) {
         if (fmt1 != NULL) {
             delete fmt1;
@@ -4000,7 +3986,7 @@ void DateFormatTest::TestISOEra() {
 
         // parse string to date
         UDate dt1 = fmt1->parse(in, status);
-        failure(status, "fmt->parse", true);
+        failure(status, "fmt->parse", TRUE);
 
         // format date back to string
         UnicodeString out;
@@ -4092,7 +4078,7 @@ void DateFormatTest::TestParsePosition() {
     for (int32_t i = 0; TestData[i][0]; i++) {
         UErrorCode status = U_ZERO_ERROR;
         SimpleDateFormat sdf(UnicodeString(TestData[i][0]), status);
-        if (failure(status, "new SimpleDateFormat", true)) return;
+        if (failure(status, "new SimpleDateFormat", TRUE)) return;
 
         int32_t startPos, resPos;
 
@@ -4505,7 +4491,7 @@ static const UDate TEST_DATE = 1326585600000.;  // 2012-jan-15
 
 void DateFormatTest::TestDotAndAtLeniency() {
     // Test for date/time parsing regression with CLDR 22.1/ICU 50 pattern strings.
-    // For details see https://unicode-org.atlassian.net/browse/ICU-9789
+    // For details see http://bugs.icu-project.org/trac/ticket/9789
     static const char *locales[] = { "en", "fr" };
     for (int32_t i = 0; i < UPRV_LENGTHOF(locales); ++i) {
         Locale locale(locales[i]);
@@ -4577,7 +4563,7 @@ typedef struct {
 } TestDateFormatLeniencyItem;
 
 void DateFormatTest::TestDateFormatLeniency() {
-    // For details see https://unicode-org.atlassian.net/browse/ICU-10261
+    // For details see http://bugs.icu-project.org/trac/ticket/10261
 
     const UDate july022008 = 1215000001979.0;
     const TestDateFormatLeniencyItem items[] = {
@@ -4656,7 +4642,7 @@ typedef struct {
 } TestMultiPatternMatchItem;
 
 void DateFormatTest::TestParseMultiPatternMatch() {
-        // For details see https://unicode-org.atlassian.net/browse/ICU-10336
+        // For details see http://bugs.icu-project.org/trac/ticket/10336
     const TestMultiPatternMatchItem items[] = {
           // leniency    parse String                                 pattern                               expected result
             {true,       UnicodeString("2013-Sep 13"),                UnicodeString("yyyy-MMM dd"),         UnicodeString("2013-Sep 13")},
@@ -4756,39 +4742,39 @@ void DateFormatTest::TestParseLeniencyAPIs() {
     assertTrue("MULTIPLE_PATTERNS default", fmt->getBooleanAttribute(UDAT_PARSE_MULTIPLE_PATTERNS_FOR_MATCH, status));
 
     // Set calendar to strict
-    fmt->setCalendarLenient(false);
+    fmt->setCalendarLenient(FALSE);
 
-    assertFalse("isLenient after setCalendarLenient(false)", fmt->isLenient());
-    assertFalse("isCalendarLenient after setCalendarLenient(false)", fmt->isCalendarLenient());
-    assertTrue("ALLOW_WHITESPACE after setCalendarLenient(false)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, status));
-    assertTrue("ALLOW_NUMERIC  after setCalendarLenient(false)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_NUMERIC, status));
+    assertFalse("isLeninent after setCalendarLenient(FALSE)", fmt->isLenient());
+    assertFalse("isCalendarLenient after setCalendarLenient(FALSE)", fmt->isCalendarLenient());
+    assertTrue("ALLOW_WHITESPACE after setCalendarLenient(FALSE)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, status));
+    assertTrue("ALLOW_NUMERIC  after setCalendarLenient(FALSE)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_NUMERIC, status));
 
     // Set to strict
-    fmt->setLenient(false);
+    fmt->setLenient(FALSE);
 
-    assertFalse("isLenient after setLenient(false)", fmt->isLenient());
-    assertFalse("isCalendarLenient after setLenient(false)", fmt->isCalendarLenient());
-    assertFalse("ALLOW_WHITESPACE after setLenient(false)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, status));
-    assertFalse("ALLOW_NUMERIC  after setLenient(false)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_NUMERIC, status));
+    assertFalse("isLeninent after setLenient(FALSE)", fmt->isLenient());
+    assertFalse("isCalendarLenient after setLenient(FALSE)", fmt->isCalendarLenient());
+    assertFalse("ALLOW_WHITESPACE after setLenient(FALSE)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, status));
+    assertFalse("ALLOW_NUMERIC  after setLenient(FALSE)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_NUMERIC, status));
     // These two boolean attributes are NOT affected according to the API specification
-    assertTrue("PARTIAL_MATCH after setLenient(false)", fmt->getBooleanAttribute(UDAT_PARSE_PARTIAL_LITERAL_MATCH, status));
-    assertTrue("MULTIPLE_PATTERNS after setLenient(false)", fmt->getBooleanAttribute(UDAT_PARSE_MULTIPLE_PATTERNS_FOR_MATCH, status));
+    assertTrue("PARTIAL_MATCH after setLenient(FALSE)", fmt->getBooleanAttribute(UDAT_PARSE_PARTIAL_LITERAL_MATCH, status));
+    assertTrue("MULTIPLE_PATTERNS after setLenient(FALSE)", fmt->getBooleanAttribute(UDAT_PARSE_MULTIPLE_PATTERNS_FOR_MATCH, status));
 
     // Allow white space leniency
-    fmt->setBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, true, status);
+    fmt->setBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, TRUE, status);
 
-    assertFalse("isLenient after ALLOW_WHITESPACE/true", fmt->isLenient());
-    assertFalse("isCalendarLenient after ALLOW_WHITESPACE/true", fmt->isCalendarLenient());
-    assertTrue("ALLOW_WHITESPACE after ALLOW_WHITESPACE/true", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, status));
-    assertFalse("ALLOW_NUMERIC  after ALLOW_WHITESPACE/true", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_NUMERIC, status));
+    assertFalse("isLeninent after ALLOW_WHITESPACE/TRUE", fmt->isLenient());
+    assertFalse("isCalendarLenient after ALLOW_WHITESPACE/TRUE", fmt->isCalendarLenient());
+    assertTrue("ALLOW_WHITESPACE after ALLOW_WHITESPACE/TRUE", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, status));
+    assertFalse("ALLOW_NUMERIC  after ALLOW_WHITESPACE/TRUE", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_NUMERIC, status));
 
     // Set to lenient
-    fmt->setLenient(true);
+    fmt->setLenient(TRUE);
 
-    assertTrue("isLenient after setLenient(true)", fmt->isLenient());
-    assertTrue("isCalendarLenient after setLenient(true)", fmt->isCalendarLenient());
-    assertTrue("ALLOW_WHITESPACE after setLenient(true)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, status));
-    assertTrue("ALLOW_NUMERIC after setLenient(true)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_NUMERIC, status));
+    assertTrue("isLenient after setLenient(TRUE)", fmt->isLenient());
+    assertTrue("isCalendarLenient after setLenient(TRUE)", fmt->isCalendarLenient());
+    assertTrue("ALLOW_WHITESPACE after setLenient(TRUE)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_WHITESPACE, status));
+    assertTrue("ALLOW_NUMERIC after setLenient(TRUE)", fmt->getBooleanAttribute(UDAT_PARSE_ALLOW_NUMERIC, status));
 }
 
 void DateFormatTest::TestNumberFormatOverride() {
@@ -4850,7 +4836,7 @@ void DateFormatTest::TestNumberFormatOverride() {
             assertSuccess("adoptNumberFormat singleOverrideNF", status);
 
             fmt->adoptNumberFormat(overrideNF);
-        } else if (fields == (UnicodeString) "Mo"){ // o is invalid field
+        } else if (fields == (UnicodeString) "Mo"){ // o is invlid field
             fmt->adoptNumberFormat(fields, overrideNF, status);
             if(status == U_INVALID_FORMAT_ERROR) {
                 status = U_ZERO_ERROR;
@@ -4998,43 +4984,43 @@ void DateFormatTest::TestPatternFromSkeleton() {
     static const struct {
         const Locale& locale;
         const char* const skeleton;
-        const UChar* const pattern;
+        const char* const pattern;
     } TESTDATA[] = {
         // Ticket #11985
-        {Locale::getEnglish(), "jjmm", u"h:mm\u202Fa"},
-        {Locale::getEnglish(), "JJmm", u"hh:mm"},
-        {Locale::getGerman(), "jjmm", u"HH:mm"},
-        {Locale::getGerman(), "JJmm", u"HH:mm"},
+        {Locale::getEnglish(), "jjmm", "h:mm a"},
+        {Locale::getEnglish(), "JJmm", "hh:mm"},
+        {Locale::getGerman(), "jjmm", "HH:mm"},
+        {Locale::getGerman(), "JJmm", "HH:mm"},
         // Ticket #20739
         // minutes+milliseconds, seconds missing, should be repaired
-        {Locale::getEnglish(), "SSSSm", u"mm:ss.SSSS"},
-        {Locale::getEnglish(), "mSSSS", u"mm:ss.SSSS"},
-        {Locale::getEnglish(), "SSSm", u"mm:ss.SSS"},
-        {Locale::getEnglish(), "mSSS", u"mm:ss.SSS"},
-        {Locale::getEnglish(), "SSm", u"mm:ss.SS"},
-        {Locale::getEnglish(), "mSS", u"mm:ss.SS"},
-        {Locale::getEnglish(), "Sm", u"mm:ss.S"},
-        {Locale::getEnglish(), "mS", u"mm:ss.S"},
+        {Locale::getEnglish(), "SSSSm", "mm:ss.SSSS"},
+        {Locale::getEnglish(), "mSSSS", "mm:ss.SSSS"},
+        {Locale::getEnglish(), "SSSm", "mm:ss.SSS"},
+        {Locale::getEnglish(), "mSSS", "mm:ss.SSS"},
+        {Locale::getEnglish(), "SSm", "mm:ss.SS"},
+        {Locale::getEnglish(), "mSS", "mm:ss.SS"},
+        {Locale::getEnglish(), "Sm", "mm:ss.S"},
+        {Locale::getEnglish(), "mS", "mm:ss.S"},
         // only milliseconds, untouched, no repairs
-        {Locale::getEnglish(), "S", u"S"},
-        {Locale::getEnglish(), "SS", u"SS"},
-        {Locale::getEnglish(), "SSS", u"SSS"},
-        {Locale::getEnglish(), "SSSS", u"SSSS"},
+        {Locale::getEnglish(), "S", "S"},
+        {Locale::getEnglish(), "SS", "SS"},
+        {Locale::getEnglish(), "SSS", "SSS"},
+        {Locale::getEnglish(), "SSSS", "SSSS"},
         // hour:minute+seconds+milliseconds, correct, no repairs, proper pattern
-        {Locale::getEnglish(), "jmsSSS", u"h:mm:ss.SSS\u202Fa"},
-        {Locale::getEnglish(), "jmSSS", u"h:mm:ss.SSS\u202Fa"},
+        {Locale::getEnglish(), "jmsSSS", "h:mm:ss.SSS a"},
+        {Locale::getEnglish(), "jmSSS", "h:mm:ss.SSS a"},
         // Ticket #20738
         // seconds+milliseconds, correct, no repairs, proper pattern
-        {Locale::getEnglish(), "sS", u"s.S"},
-        {Locale::getEnglish(), "sSS", u"s.SS"},
-        {Locale::getEnglish(), "sSSS", u"s.SSS"},
-        {Locale::getEnglish(), "sSSSS", u"s.SSSS"},
-        {Locale::getEnglish(), "sS", u"s.S"},
+        {Locale::getEnglish(), "sS", "s.S"},
+        {Locale::getEnglish(), "sSS", "s.SS"},
+        {Locale::getEnglish(), "sSSS", "s.SSS"},
+        {Locale::getEnglish(), "sSSSS", "s.SSSS"},
+        {Locale::getEnglish(), "sS", "s.S"},
         // minutes+seconds+milliseconds, correct, no repairs, proper pattern
-        {Locale::getEnglish(), "msS", u"mm:ss.S"},
-        {Locale::getEnglish(), "msSS", u"mm:ss.SS"},
-        {Locale::getEnglish(), "msSSS", u"mm:ss.SSS"},
-        {Locale::getEnglish(), "msSSSS", u"mm:ss.SSSS"}
+        {Locale::getEnglish(), "msS", "mm:ss.S"},
+        {Locale::getEnglish(), "msSS", "mm:ss.SS"},
+        {Locale::getEnglish(), "msSSS", "mm:ss.SSS"},
+        {Locale::getEnglish(), "msSSSS", "mm:ss.SSSS"}
     };
 
     for (size_t i = 0; i < UPRV_LENGTHOF(TESTDATA); i++) {
@@ -5725,22 +5711,6 @@ void DateFormatTest::Test20741_ABFields() {
             }
         }
     }
-}
-
-void DateFormatTest::Test22023_UTCWithMinusZero() {
-    IcuTestErrorCode status(*this, "Test22023_UTCWithMinusZero");
-    Locale locale("en");
-    SimpleDateFormat fmt("h a", locale, status);
-    ASSERT_OK(status);
-    fmt.adoptCalendar(Calendar::createInstance(
-        TimeZone::createTimeZone("UTC"), locale, status));
-    ASSERT_OK(status);
-    FieldPositionIterator fp_iter;
-    icu::UnicodeString formatted;
-    // very small negative value in double cause it to be -0
-    // internally and trigger the assertion and bug.
-    fmt.format(-1e-9, formatted, &fp_iter, status);
-    ASSERT_OK(status);
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

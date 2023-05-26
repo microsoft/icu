@@ -233,16 +233,16 @@ void CollationAPITest::TestKeywordValues() {
     }
 
     LocalPointer<StringEnumeration> kwEnum(
-        col->getKeywordValuesForLocale("collation", Locale::getEnglish(), true, errorCode));
+        col->getKeywordValuesForLocale("collation", Locale::getEnglish(), TRUE, errorCode));
     if (errorCode.errIfFailureAndReset("Get Keyword Values for English Collator failed")) {
         return;
     }
     assertTrue("expect at least one collation tailoring for English", kwEnum->count(errorCode) > 0);
     const char *kw;
-    UBool hasStandard = false;
+    UBool hasStandard = FALSE;
     while ((kw = kwEnum->next(NULL, errorCode)) != NULL) {
         if (strcmp(kw, "standard") == 0) {
-            hasStandard = true;
+            hasStandard = TRUE;
         }
     }
     assertTrue("expect at least the 'standard' collation tailoring for English", hasStandard);
@@ -525,7 +525,7 @@ CollationAPITest::TestCollationKey(/* char* par */)
     col->getCollationKey(NULL, 0, sortkEmpty, key1Status);
     // key gets reset here
     const uint8_t* byteArrayEmpty = sortkEmpty.getByteArray(length);
-    doAssert(sortkEmpty.isBogus() == false && length == 3 &&
+    doAssert(sortkEmpty.isBogus() == FALSE && length == 3 &&
              byteArrayEmpty[0] == 1 && byteArrayEmpty[1] == 1 && byteArrayEmpty[2] == 0,
              "Empty string should return a collation key with empty levels");
     doAssert(sortkNone.compareTo(sortkEmpty) == Collator::LESS,
@@ -804,11 +804,11 @@ CollationAPITest::TestElemIter(/* char* par */)
     coliter->reset();
     coliter->setText(*chariter, success);
     if(!U_FAILURE(success)){
-        errln("Expected error");
+        errln("Expeceted error");
     }
     iterator1->setText((UnicodeString)"hello there", success);
     if(!U_FAILURE(success)){
-        errln("Expected error");
+        errln("Expeceted error");
     }
 
     delete chariter;
@@ -914,7 +914,7 @@ CollationAPITest::TestDuplicate(/* char* par */)
         return;
     }
     Collator *col2 = col1->clone();
-    doAssert((*col1 == *col2), "Cloned object is not equal to the original");
+    doAssert((*col1 == *col2), "Cloned object is not equal to the orginal");
     UnicodeString ruleset("&9 < a, A < b, B < c, C < d, D, e, E");
     RuleBasedCollator *col3 = new RuleBasedCollator(ruleset, status);
     if (U_FAILURE(status)) {
@@ -923,7 +923,7 @@ CollationAPITest::TestDuplicate(/* char* par */)
     }
     doAssert((*col1 != *col3), "Cloned object is equal to some dummy");
     *col3 = *((RuleBasedCollator*)col1);
-    doAssert((*col1 == *col3), "Copied object is not equal to the original");
+    doAssert((*col1 == *col3), "Copied object is not equal to the orginal");
 
     UCollationResult res;
     UnicodeString first((UChar)0x0061);
@@ -1173,7 +1173,7 @@ void CollationAPITest::TestSortKey()
     doAssert(memcmp(tempkey, sortkey3, keylength) == 0,
         "Test3 string should have the same collation key and sort key");
 
-    logln("Use secondary comparison level testing ...\n");
+    logln("Use secondary comparision level testing ...\n");
     col->setStrength(Collator::SECONDARY);
 
     col->getCollationKey(test1, u_strlen(test1), key1, status);
@@ -1268,7 +1268,7 @@ void CollationAPITest::TestSortKeyOverflow() {
     // For i_and_phi we expect 6 bytes, then the NUL terminator.
     const int32_t maxPrefixLength = longCapacity - 6 - 1;
     LocalArray<uint8_t> longSortKey(new uint8_t[longCapacity]);
-    UnicodeString s(false, i_and_phi, 2);
+    UnicodeString s(FALSE, i_and_phi, 2);
     for (int32_t prefixLength = 0; prefixLength < maxPrefixLength; ++prefixLength) {
         length = col->getSortKey(s, longSortKey.getAlias(), longCapacity);
         CollationKey collKey;
@@ -2002,66 +2002,66 @@ void CollationAPITest::TestUClassID()
 class TestCollator  : public Collator
 {
 public:
-    virtual TestCollator* clone() const override;
+    virtual TestCollator* clone() const;
 
     using Collator::compare;
 
     virtual UCollationResult compare(const UnicodeString& source, 
                                       const UnicodeString& target,
-                                      UErrorCode& status) const override;
+                                      UErrorCode& status) const;
     virtual UCollationResult compare(const UnicodeString& source,
                                       const UnicodeString& target,
                                       int32_t length,
-                                      UErrorCode& status) const override;
+                                      UErrorCode& status) const;
     virtual UCollationResult compare(const UChar* source, 
                                       int32_t sourceLength, 
                                       const UChar* target, 
                                       int32_t targetLength,
-                                      UErrorCode& status) const override;
+                                      UErrorCode& status) const;
     virtual CollationKey& getCollationKey(const UnicodeString&  source,
                                           CollationKey& key,
-                                          UErrorCode& status) const override;
+                                          UErrorCode& status) const;
     virtual CollationKey& getCollationKey(const UChar*source, 
                                           int32_t sourceLength,
                                           CollationKey& key,
-                                          UErrorCode& status) const override;
-    virtual int32_t hashCode(void) const override;
-    virtual Locale getLocale(ULocDataLocaleType type, UErrorCode& status) const override;
-    virtual ECollationStrength getStrength(void) const override;
-    virtual void setStrength(ECollationStrength newStrength) override;
-    virtual UClassID getDynamicClassID(void) const override;
-    virtual void getVersion(UVersionInfo info) const override;
+                                          UErrorCode& status) const;
+    virtual int32_t hashCode(void) const;
+    virtual Locale getLocale(ULocDataLocaleType type, UErrorCode& status) const;
+    virtual ECollationStrength getStrength(void) const;
+    virtual void setStrength(ECollationStrength newStrength);
+    virtual UClassID getDynamicClassID(void) const;
+    virtual void getVersion(UVersionInfo info) const;
     virtual void setAttribute(UColAttribute attr, UColAttributeValue value, 
-                              UErrorCode &status) override;
+                              UErrorCode &status);
     virtual UColAttributeValue getAttribute(UColAttribute attr, 
-                                            UErrorCode &status) const override;
+                                            UErrorCode &status) const;
     virtual uint32_t setVariableTop(const UChar *varTop, int32_t len, 
-                                    UErrorCode &status) override;
+                                    UErrorCode &status);
     virtual uint32_t setVariableTop(const UnicodeString &varTop, 
-                                    UErrorCode &status) override;
-    virtual void setVariableTop(uint32_t varTop, UErrorCode &status) override;
-    virtual uint32_t getVariableTop(UErrorCode &status) const override;
+                                    UErrorCode &status);
+    virtual void setVariableTop(uint32_t varTop, UErrorCode &status);
+    virtual uint32_t getVariableTop(UErrorCode &status) const;
     virtual int32_t getSortKey(const UnicodeString& source,
                             uint8_t* result,
-                            int32_t resultLength) const override;
+                            int32_t resultLength) const;
     virtual int32_t getSortKey(const UChar*source, int32_t sourceLength,
-                             uint8_t*result, int32_t resultLength) const override;
-    virtual UnicodeSet *getTailoredSet(UErrorCode &status) const override;
-    virtual bool operator==(const Collator& other) const override;
+                             uint8_t*result, int32_t resultLength) const;
+    virtual UnicodeSet *getTailoredSet(UErrorCode &status) const;
+    virtual UBool operator==(const Collator& other) const;
     // Collator::operator!= calls !Collator::operator== which works for all subclasses.
-    virtual void setLocales(const Locale& requestedLocale, const Locale& validLocale, const Locale& actualLocale) override;
+    virtual void setLocales(const Locale& requestedLocale, const Locale& validLocale, const Locale& actualLocale);
     TestCollator() : Collator() {}
     TestCollator(UCollationStrength collationStrength, 
            UNormalizationMode decompositionMode) : Collator(collationStrength, decompositionMode) {}
 };
 
-inline bool TestCollator::operator==(const Collator& other) const {
+inline UBool TestCollator::operator==(const Collator& other) const {
     // TestCollator has no fields, so we test for identity.
     return this == &other;
 
     // Normally, subclasses should do something like the following:
-    //    if (this == &other) { return true; }
-    //    if (!Collator::operator==(other)) { return false; }  // not the same class
+    //    if (this == &other) { return TRUE; }
+    //    if (!Collator::operator==(other)) { return FALSE; }  // not the same class
     //
     //    const TestCollator &o = (const TestCollator&)other;
     //    (compare this vs. o's subclass fields)

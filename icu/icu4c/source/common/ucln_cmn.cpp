@@ -146,5 +146,5 @@ U_CFUNC UBool ucln_lib_cleanup(void) {
 #if !UCLN_NO_AUTO_CLEANUP && (defined(UCLN_AUTO_ATEXIT) || defined(UCLN_AUTO_LOCAL))
     ucln_unRegisterAutomaticCleanup();
 #endif
-    return true;
+    return TRUE;
 }

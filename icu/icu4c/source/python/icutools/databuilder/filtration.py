@@ -273,10 +273,7 @@ def _preprocess_file_filters(requests, config, io):
     default_filter_json = "exclude" if config.strategy == "additive" else "include"
     for category in all_categories:
         filter_json = default_filter_json
-        # Special default for category "brkitr_lstm" as "exclude" for now.
-        if "brkitr_lstm" == category:
-            filter_json = "exclude"
-        # Figure out the correct filter to create for now.
+        # Figure out the correct filter to create
         if "featureFilters" in json_data and category in json_data["featureFilters"]:
             filter_json = json_data["featureFilters"][category]
         if filter_json == "include" and "localeFilter" in json_data and category.endswith("_tree"):

@@ -37,7 +37,7 @@
         }                             \
         break;
 
-// public constructors and destructors --------------------------------------
+// public contructors and destructors --------------------------------------
 
 StringSearchTest::StringSearchTest() 
 #if !UCONFIG_NO_BREAK_ITERATION
@@ -111,11 +111,11 @@ void StringSearchTest::runIndexedTest(int32_t index, UBool exec,
                                       const char* &name, char* ) 
 {
 #if !UCONFIG_NO_BREAK_ITERATION
-    UBool areBroken = false;
+    UBool areBroken = FALSE;
     if (m_en_us_ == NULL && m_fr_fr_ == NULL && m_de_ == NULL &&
         m_es_ == NULL && m_en_wordbreaker_ == NULL &&
         m_en_characterbreaker_ == NULL && exec) {
-        areBroken = true;
+        areBroken = TRUE;
     }
 
     switch (index) {
@@ -229,7 +229,7 @@ char * StringSearchTest::toCharString(const UnicodeString &text)
             result[index ++] = (char)ch;
         }
         else {
-            snprintf(result+index, sizeof(result)-index, "\\u%04x", ch);
+            sprintf(result+index, "\\u%04x", ch);
             index += 6; /* \uxxxx */
         }
     }
@@ -266,7 +266,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
     strsrch->setAttribute(USEARCH_ELEMENT_COMPARISON, search->elemCompare, status);
     if (U_FAILURE(status)) {
         errln("Error setting USEARCH_ELEMENT_COMPARISON attribute %s", u_errorName(status));
-        return false;
+        return FALSE;
     }   
 
     if (strsrch->getMatchedStart() != USEARCH_DONE ||
@@ -287,7 +287,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
             errln("Error next match found at %d (len:%d); expected %d (len:%d)", 
                     strsrch->getMatchedStart(), strsrch->getMatchedLength(),
                     matchindex, matchlength);
-            return false;
+            return FALSE;
         }
         count ++;
         
@@ -312,7 +312,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
             errln("Pattern: %s", str);
             errln("Error next match found at %d (len:%d); expected <NO MATCH>", 
                     strsrch->getMatchedStart(), strsrch->getMatchedLength());
-            return false;
+            return FALSE;
     }
 
     // start of previous matches
@@ -330,7 +330,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
             errln("Error previous match found at %d (len:%d); expected %d (len:%d)",
                     strsrch->getMatchedStart(), strsrch->getMatchedLength(),
                     matchindex, matchlength);
-            return false;
+            return FALSE;
         }
         
         strsrch->getMatchedText(matchtext);
@@ -355,7 +355,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
         errln("Pattern: %s", str);
         errln("Error previous match found at %d (len:%d); expected <NO MATCH>", 
                 strsrch->getMatchedStart(), strsrch->getMatchedLength());
-        return false;
+        return FALSE;
     }
 
     int32_t nextStart;
@@ -366,7 +366,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
     matchindex = search->offset[count];
     nextStart = 0;
 
-    while (true) {
+    while (TRUE) {
         strsrch->following(nextStart, status);
 
         if (matchindex < 0) {
@@ -379,7 +379,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
                 errln("Error following match starting at %d (overlap:%d) found at %d (len:%d); expected <NO MATCH>",
                         nextStart, isOverlap,
                         strsrch->getMatchedStart(), strsrch->getMatchedLength());
-                return false;
+                return FALSE;
             }
             // no more matches
             break;
@@ -397,7 +397,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
                         nextStart, isOverlap,
                         strsrch->getMatchedStart(), strsrch->getMatchedLength(),
                         matchindex, matchlength);
-            return false;
+            return FALSE;
         }
 
         if (isOverlap || strsrch->getMatchedLength() == 0) {
@@ -417,7 +417,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
     }
     nextStart = strsrch->getText().length();
 
-    while (true) {
+    while (TRUE) {
         strsrch->preceding(nextStart, status);
 
         if (count < 0) {
@@ -430,7 +430,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
                             nextStart, isOverlap,
                             strsrch->getMatchedStart(), 
                             strsrch->getMatchedLength());
-                return false;
+                return FALSE;
             }
             // no more matches
             break;
@@ -449,7 +449,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
                         nextStart, isOverlap,
                         strsrch->getMatchedStart(), strsrch->getMatchedLength(),
                         matchindex, matchlength);
-            return false;
+            return FALSE;
         }
 
         nextStart = matchindex;
@@ -457,7 +457,7 @@ UBool StringSearchTest::assertEqualWithStringSearch(StringSearch *strsrch,
     }
 
     strsrch->setAttribute(USEARCH_ELEMENT_COMPARISON, USEARCH_STANDARD_ELEMENT_COMPARISON, status);
-    return true;
+    return TRUE;
 }
     
 UBool StringSearchTest::assertEqual(const SearchData *search)
@@ -471,7 +471,7 @@ UBool StringSearchTest::assertEqual(const SearchData *search)
     
 #if UCONFIG_NO_BREAK_ITERATION
     if(search->breaker) {
-      return true; /* skip test */
+      return TRUE; /* skip test */
     }
 #endif
     u_unescape(search->text, temp, 128);
@@ -491,13 +491,13 @@ UBool StringSearchTest::assertEqual(const SearchData *search)
                                breaker, status);
     if (U_FAILURE(status)) {
         errln("Error opening string search %s", u_errorName(status));
-        return false;
+        return FALSE;
     }   
     
     if (!assertEqualWithStringSearch(strsrch, search)) {
         collator->setStrength(getECollationStrength(UCOL_TERTIARY));
         delete strsrch;
-        return false;
+        return FALSE;
     }
 
 
@@ -509,13 +509,13 @@ UBool StringSearchTest::assertEqual(const SearchData *search)
         collator->setStrength(getECollationStrength(UCOL_TERTIARY));
         delete strsrch;
         delete strsrch2;
-        return false;
+        return FALSE;
     }
     delete strsrch2;
 
     collator->setStrength(getECollationStrength(UCOL_TERTIARY));
     delete strsrch;
-    return true;
+    return TRUE;
 }
  
 UBool StringSearchTest::assertCanonicalEqual(const SearchData *search)
@@ -525,11 +525,11 @@ UBool StringSearchTest::assertCanonicalEqual(const SearchData *search)
     BreakIterator *breaker  = getBreakIterator(search->breaker);
     StringSearch  *strsrch; 
     UChar          temp[128];
-    UBool          result = true;
+    UBool          result = TRUE;
     
 #if UCONFIG_NO_BREAK_ITERATION
     if(search->breaker) {
-      return true; /* skip test */
+      return TRUE; /* skip test */
     }
 #endif
 
@@ -552,12 +552,12 @@ UBool StringSearchTest::assertCanonicalEqual(const SearchData *search)
     strsrch->setAttribute(USEARCH_CANONICAL_MATCH, USEARCH_ON, status);
     if (U_FAILURE(status)) {
         errln("Error opening string search %s", u_errorName(status));
-        result = false;
+        result = FALSE;
         goto bail;
     }   
     
     if (!assertEqualWithStringSearch(strsrch, search)) {
-        result = false;
+        result = FALSE;
         goto bail;
     }
 
@@ -582,7 +582,7 @@ UBool StringSearchTest::assertEqualWithAttribute(const SearchData *search,
 
 #if UCONFIG_NO_BREAK_ITERATION
     if(search->breaker) {
-      return true; /* skip test */
+      return TRUE; /* skip test */
     }
 #endif
 
@@ -606,17 +606,17 @@ UBool StringSearchTest::assertEqualWithAttribute(const SearchData *search,
     
     if (U_FAILURE(status)) {
         errln("Error opening string search %s", u_errorName(status));
-        return false;
+        return FALSE;
     }   
     
     if (!assertEqualWithStringSearch(strsrch, search)) {
         collator->setStrength(getECollationStrength(UCOL_TERTIARY));
         delete strsrch;
-        return false;
+        return FALSE;
     }
     collator->setStrength(getECollationStrength(UCOL_TERTIARY));
     delete strsrch;
-    return true;
+    return TRUE;
 }
 
 void StringSearchTest::TestOpenClose()
@@ -1527,7 +1527,7 @@ void StringSearchTest::TestSetMatch()
                                                 search.size[index + 1] + 1, 
                                        status) != search.offset[index + 1] ||
                     U_FAILURE(status)) {
-                    errln("Error getting preceding match at index %d", 
+                    errln("Error getting preceeding match at index %d", 
                           search.offset[index + 1] + 1);
                 }
             }
@@ -2265,9 +2265,9 @@ public:
                const UnicodeString &pattern);
     ~TestSearch();
 
-    void        setOffset(int32_t position, UErrorCode &status) override;
-    int32_t     getOffset() const override;
-    SearchIterator* safeClone() const override;
+    void        setOffset(int32_t position, UErrorCode &status);
+    int32_t     getOffset() const;
+    SearchIterator* safeClone() const;
 
 
     /**
@@ -2275,7 +2275,7 @@ public:
      *
      * @draft ICU 2.2
      */
-    virtual inline UClassID getDynamicClassID() const override { return getStaticClassID(); }
+    virtual inline UClassID getDynamicClassID() const { return getStaticClassID(); }
 
     /**
      * ICU "poor man's RTTI", returns a UClassID for this class.
@@ -2284,13 +2284,13 @@ public:
      */
     static inline UClassID getStaticClassID() { return (UClassID)&fgClassID; }
 
-    bool operator!=(const TestSearch &that) const;
+    UBool operator!=(const TestSearch &that) const;
 
     UnicodeString m_pattern_;
 
 protected:
-    int32_t      handleNext(int32_t position, UErrorCode &status) override;
-    int32_t      handlePrev(int32_t position, UErrorCode &status) override;
+    int32_t      handleNext(int32_t position, UErrorCode &status);
+    int32_t      handlePrev(int32_t position, UErrorCode &status);
     TestSearch & operator=(const TestSearch &that);
 
 private:
@@ -2347,10 +2347,10 @@ SearchIterator * TestSearch::safeClone() const
     return new TestSearch(m_text_, m_breakiterator_, m_pattern_);
 }
 
-bool TestSearch::operator!=(const TestSearch &that) const
+UBool TestSearch::operator!=(const TestSearch &that) const
 {
     if (SearchIterator::operator !=(that)) {
-        return false;
+        return FALSE;
     }
     return m_offset_ != that.m_offset_ || m_pattern_ != that.m_pattern_;
 }
@@ -2452,12 +2452,12 @@ void StringSearchTest::TestSubclass()
 class StubSearchIterator:public SearchIterator{
 public:
     StubSearchIterator(){}
-    virtual void setOffset(int32_t , UErrorCode &) override {}
-    virtual int32_t getOffset(void) const override {return 0;}
-    virtual SearchIterator* safeClone(void) const override {return NULL;}
-    virtual int32_t handleNext(int32_t , UErrorCode &) override {return 0;}
-    virtual int32_t handlePrev(int32_t , UErrorCode &) override {return 0;}
-    virtual UClassID getDynamicClassID() const override {
+    virtual void setOffset(int32_t , UErrorCode &) {}
+    virtual int32_t getOffset(void) const {return 0;}
+    virtual SearchIterator* safeClone(void) const {return NULL;}
+    virtual int32_t handleNext(int32_t , UErrorCode &){return 0;}
+    virtual int32_t handlePrev(int32_t , UErrorCode &) {return 0;}
+    virtual UClassID getDynamicClassID() const {
         static char classID = 0;
         return (UClassID)&classID; 
     }

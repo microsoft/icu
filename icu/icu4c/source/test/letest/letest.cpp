@@ -146,10 +146,10 @@ static void U_CALLCONV ParamTest(void)
     DELETE_ARRAY(glyphs);
 
     status = LE_NO_ERROR;
-    glyphCount = engine->layoutChars(NULL, 0, 0, 0, false, 0.0, 0.0, status);
+    glyphCount = engine->layoutChars(NULL, 0, 0, 0, FALSE, 0.0, 0.0, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling layoutChars(NULL, 0, 0, 0, false, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling layoutChars(NULL, 0, 0, 0, FALSE, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     LEUnicode chars[] = {
@@ -159,40 +159,40 @@ static void U_CALLCONV ParamTest(void)
     };
 
     status = LE_NO_ERROR;
-    glyphCount = engine->layoutChars(chars, -1, 6, 20, true, 0.0, 0.0, status);
+    glyphCount = engine->layoutChars(chars, -1, 6, 20, TRUE, 0.0, 0.0, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling layoutChars(chars, -1, 6, 20, true, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling layoutChars(chars, -1, 6, 20, TRUE, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     status = LE_NO_ERROR;
-    glyphCount = engine->layoutChars(chars, 8, -1, 20, true, 0.0, 0.0, status);
+    glyphCount = engine->layoutChars(chars, 8, -1, 20, TRUE, 0.0, 0.0, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling layoutChars(chars, 8, -1, 20, true, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling layoutChars(chars, 8, -1, 20, TRUE, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     status = LE_NO_ERROR;
-    glyphCount = engine->layoutChars(chars, 8, 6, -1, true, 0.0, 0.0, status);
+    glyphCount = engine->layoutChars(chars, 8, 6, -1, TRUE, 0.0, 0.0, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling layoutChars((chars, 8, 6, -1, true, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling layoutChars((chars, 8, 6, -1, TRUE, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     status = LE_NO_ERROR;
-    glyphCount = engine->layoutChars(chars, 8, 6, 10, true, 0.0, 0.0, status);
+    glyphCount = engine->layoutChars(chars, 8, 6, 10, TRUE, 0.0, 0.0, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling layoutChars(chars, 8, 6, 10, true, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling layoutChars(chars, 8, 6, 10, TRUE, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     float x = 0.0, y = 0.0;
 
     status = LE_NO_ERROR;
-    glyphCount = engine->layoutChars(chars, 8, 6, 20, true, 0.0, 0.0, status);
+    glyphCount = engine->layoutChars(chars, 8, 6, 20, TRUE, 0.0, 0.0, status);
 
     if (LE_FAILURE(status)) {
-        log_err("Calling layoutChars(chars, 8, 6, 20, true, 0.0, 0.0, status) failed.\n");
+        log_err("Calling layoutChars(chars, 8, 6, 20, TRUE, 0.0, 0.0, status) failed.\n");
         goto bail;
     }
 
@@ -258,10 +258,10 @@ static void U_CALLCONV AccessTest(void)
         goto bail;
     }
 
-    glyphCount = engine->layoutChars(chars, 8, 6, 20, true, 0.0, 0.0, status);
+    glyphCount = engine->layoutChars(chars, 8, 6, 20, TRUE, 0.0, 0.0, status);
 
     if (LE_FAILURE(status) || glyphCount != 6) {
-        log_err("layoutChars(chars, 8, 6, 20, true, 0.0, 0.0, status) failed.\n");
+        log_err("layoutChars(chars, 8, 6, 20, TRUE, 0.0, 0.0, status) failed.\n");
         goto bail;
     }
 
@@ -331,9 +331,9 @@ le_bool compareResults(const char *testID, TestResult *expected, TestResult *act
 {
     /* NOTE: we'll stop on the first failure 'cause once there's one error, it may cascade... */
     if (actual->glyphCount != expected->glyphCount) {
-        log_err("Test %s: incorrect glyph count: expected %d, got %d\n",
+        log_err("Test %s: incorrect glyph count: exptected %d, got %d\n",
             testID, expected->glyphCount, actual->glyphCount);
-        return false;
+        return FALSE;
     }
 
     le_int32 i;
@@ -342,7 +342,7 @@ le_bool compareResults(const char *testID, TestResult *expected, TestResult *act
         if (actual->glyphs[i] != expected->glyphs[i]) {
             log_err("Test %s: incorrect id for glyph %d: expected %4X, got %4X\n",
                 testID, i, expected->glyphs[i], actual->glyphs[i]);
-            return false;
+            return FALSE;
         }
     }
 
@@ -350,7 +350,7 @@ le_bool compareResults(const char *testID, TestResult *expected, TestResult *act
         if (actual->indices[i] != expected->indices[i]) {
             log_err("Test %s: incorrect index for glyph %d: expected %8X, got %8X\n",
                 testID, i, expected->indices[i], actual->indices[i]);
-            return false;
+            return FALSE;
         }
     }
 
@@ -360,7 +360,7 @@ le_bool compareResults(const char *testID, TestResult *expected, TestResult *act
         if (xError > 0.0001) {
             log_err("Test %s: incorrect x position for glyph %d: expected %f, got %f\n",
                 testID, i, expected->positions[i * 2], actual->positions[i * 2]);
-            return false;
+            return FALSE;
         }
 
         double yError = uprv_fabs(actual->positions[i * 2 + 1] - expected->positions[i * 2 + 1]);
@@ -372,11 +372,11 @@ le_bool compareResults(const char *testID, TestResult *expected, TestResult *act
         if (yError > 0.0001) {
             log_err("Test %s: incorrect y position for glyph %d: expected %f, got %f\n",
                 testID, i, expected->positions[i * 2 + 1], actual->positions[i * 2 + 1]);
-            return false;
+            return FALSE;
         }
     }
 
-    return true;
+    return TRUE;
 }
 
 static void checkFontVersion(PortableFontInstance *fontInstance, const char *testVersionString,
@@ -652,14 +652,14 @@ static void U_CALLCONV DataDrivenTest(void)
                         goto free_c_strings;
                     }
                 } else if (tag.compare(test_text) == 0) {
-                    text = element->getText(true);
+                    text = element->getText(TRUE);
                     charCount = text.length();
                 } else if (tag.compare(result_glyphs) == 0) {
-                    glyphs = element->getText(true);
+                    glyphs = element->getText(TRUE);
                 } else if (tag.compare(result_indices) == 0) {
-                    indices = element->getText(true);
+                    indices = element->getText(TRUE);
                 } else if (tag.compare(result_positions) == 0) {
-                    positions = element->getText(true);
+                    positions = element->getText(TRUE);
                 } else {
                     // an unknown tag...
                     char *cTag = getCString(&tag);
@@ -885,7 +885,7 @@ static void U_CALLCONV GlyphToCharTest(void)
 
     fontRuns.add(font, charCount);
 
-    paragraphLayout = new ParagraphLayout(chars, charCount, &fontRuns, NULL, NULL, NULL, 0, false, status);
+    paragraphLayout = new ParagraphLayout(chars, charCount, &fontRuns, NULL, NULL, NULL, 0, FALSE, status);
 
     if (LE_FAILURE(status)) {
         goto close_font;

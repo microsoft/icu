@@ -65,52 +65,38 @@ UnicodeString& ICU_Utility::appendNumber(UnicodeString& result, int32_t n,
     return result;
 }
 
+/**
+ * Return true if the character is NOT printable ASCII.
+ */
 UBool ICU_Utility::isUnprintable(UChar32 c) {
     return !(c >= 0x20 && c <= 0x7E);
 }
 
-UBool ICU_Utility::shouldAlwaysBeEscaped(UChar32 c) {
-    if (c < 0x20) {
-        return true;  // C0 control codes
-    } else if (c <= 0x7e) {
-        return false;  // printable ASCII
-    } else if (c <= 0x9f) {
-        return true;  // C1 control codes
-    } else if (c < 0xd800) {
-        return false;  // most of the BMP
-    } else if (c <= 0xdfff || (0xfdd0 <= c && c <= 0xfdef) || (c & 0xfffe) == 0xfffe) {
-        return true;  // surrogate or noncharacter code points
-    } else if (c <= 0x10ffff) {
-        return false;  // all else
-    } else {
-        return true;  // not a code point
-    }
-}
-
+/**
+ * Escape unprintable characters using \uxxxx notation for U+0000 to
+ * U+FFFF and \Uxxxxxxxx for U+10000 and above.  If the character is
+ * printable ASCII, then do nothing and return FALSE.  Otherwise,
+ * append the escaped notation and return TRUE.
+ */
 UBool ICU_Utility::escapeUnprintable(UnicodeString& result, UChar32 c) {
     if (isUnprintable(c)) {
-        escape(result, c);
-        return true;
+        result.append(BACKSLASH);
+        if (c & ~0xFFFF) {
+            result.append(UPPER_U);
+            result.append(DIGITS[0xF&(c>>28)]);
+            result.append(DIGITS[0xF&(c>>24)]);
+            result.append(DIGITS[0xF&(c>>20)]);
+            result.append(DIGITS[0xF&(c>>16)]);
+        } else {
+            result.append(LOWER_U);
+        }
+        result.append(DIGITS[0xF&(c>>12)]);
+        result.append(DIGITS[0xF&(c>>8)]);
+        result.append(DIGITS[0xF&(c>>4)]);
+        result.append(DIGITS[0xF&c]);
+        return TRUE;
     }
-    return false;
-}
-
-UnicodeString &ICU_Utility::escape(UnicodeString& result, UChar32 c) {
-    result.append(BACKSLASH);
-    if (c & ~0xFFFF) {
-        result.append(UPPER_U);
-        result.append(DIGITS[0xF&(c>>28)]);
-        result.append(DIGITS[0xF&(c>>24)]);
-        result.append(DIGITS[0xF&(c>>20)]);
-        result.append(DIGITS[0xF&(c>>16)]);
-    } else {
-        result.append(LOWER_U);
-    }
-    result.append(DIGITS[0xF&(c>>12)]);
-    result.append(DIGITS[0xF&(c>>8)]);
-    result.append(DIGITS[0xF&(c>>4)]);
-    result.append(DIGITS[0xF&c]);
-    return result;
+    return FALSE;
 }
 
 /**
@@ -214,14 +200,14 @@ int32_t ICU_Utility::skipWhitespace(const UnicodeString& str, int32_t& pos,
  */
 UBool ICU_Utility::parseChar(const UnicodeString& id, int32_t& pos, UChar ch) {
     int32_t start = pos;
-    skipWhitespace(id, pos, true);
+    skipWhitespace(id, pos, TRUE);
     if (pos == id.length() ||
         id.charAt(pos) != ch) {
         pos = start;
-        return false;
+        return FALSE;
     }
     ++pos;
-    return true;
+    return TRUE;
 }
 
 /**
@@ -302,7 +288,7 @@ int32_t ICU_Utility::parseAsciiInteger(const UnicodeString& str, int32_t& pos) {
 
 /**
  * Append a character to a rule that is being built up.  To flush
- * the quoteBuf to rule, make one final call with isLiteral == true.
+ * the quoteBuf to rule, make one final call with isLiteral == TRUE.
  * If there is no final character, pass in (UChar32)-1 as c.
  * @param rule the string to append the character to
  * @param c the character to append, or (UChar32)-1 if none.
@@ -428,7 +414,7 @@ void ICU_Utility::appendToRule(UnicodeString& rule,
     if (matcher != NULL) {
         UnicodeString pat;
         appendToRule(rule, matcher->toPattern(pat, escapeUnprintable),
-                     true, escapeUnprintable, quoteBuf);
+                     TRUE, escapeUnprintable, quoteBuf);
     }
 }
 

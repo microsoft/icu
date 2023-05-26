@@ -867,9 +867,6 @@ ar{
         "Asia:Ulaanbaatar"{
             ec{"آلانباتار"}
         }
-        "Asia:Urumqi"{
-            ec{"أرومكي"}
-        }
         "Asia:Ust-Nera"{
             ec{"أوست نيرا"}
         }
@@ -1222,9 +1219,6 @@ ar{
         }
         "Pacific:Johnston"{
             ec{"جونستون"}
-        }
-        "Pacific:Kanton"{
-            ec{"كانتون"}
         }
         "Pacific:Kiritimati"{
             ec{"كيريتي ماتي"}
@@ -1907,9 +1901,6 @@ ar{
             ld{"توقيت يكاترينبورغ الصيفي"}
             lg{"توقيت يكاترينبورغ"}
             ls{"توقيت يكاترينبورغ الرسمي"}
-        }
-        "meta:Yukon"{
-            ls{"توقيت يوكون"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"غرينتش{0}"}

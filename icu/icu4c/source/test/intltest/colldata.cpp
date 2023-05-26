@@ -149,16 +149,16 @@ uint32_t &CEList::operator[](int32_t index) const
 UBool CEList::matchesAt(int32_t offset, const CEList *other) const
 {
     if (other == NULL || listSize - offset < other->size()) {
-        return false;
+        return FALSE;
     }
 
     for (int32_t i = offset, j = 0; j < other->size(); i += 1, j += 1) {
         if (ces[i] != (*other)[j]) {
-            return false;
+            return FALSE;
         }
     }
 
-    return true;
+    return TRUE;
 }
 
 int32_t CEList::size() const
@@ -321,7 +321,7 @@ CollData::CollData(UCollator *collator, UErrorCode &status)
     USet *charsToTest = uset_openPattern(test_pattern, 20, &status);
 
     // Han ext. A, Han, Jamo, Hangul, Han Ext. B
-    // i.e. all the characters we handle implicitly
+    // i.e. all the characers we handle implicitly
     U_STRING_DECL(remove_pattern, "[[\\u3400-\\u9FFF][\\u1100-\\u11F9][\\uAC00-\\uD7AF][\\U00020000-\\U0002A6DF]]", 70);
     U_STRING_INIT(remove_pattern, "[[\\u3400-\\u9FFF][\\u1100-\\u11F9][\\uAC00-\\uD7AF][\\U00020000-\\U0002A6DF]]", 70);
     USet *charsToRemove = uset_openPattern(remove_pattern, 70, &status);
@@ -350,7 +350,7 @@ CollData::CollData(UCollator *collator, UErrorCode &status)
     coll = collator;
 #endif
 
-    ucol_getContractionsAndExpansions(coll, contractions, expansions, false, &status);
+    ucol_getContractionsAndExpansions(coll, contractions, expansions, FALSE, &status);
 
     uset_addAll(charsToTest, contractions);
     uset_addAll(charsToTest, expansions);
@@ -428,7 +428,7 @@ bail:
     // Maybe use [:HST=T:] and look for the end of the last range?
     // Maybe use script boundary mappings instead of this code??
     UChar  jamoRanges[] = {Hangul::JAMO_L_BASE, Hangul::JAMO_V_BASE, Hangul::JAMO_T_BASE + 1, 0x11FF};
-     UnicodeString jamoString(false, jamoRanges, UPRV_LENGTHOF(jamoRanges));
+     UnicodeString jamoString(FALSE, jamoRanges, UPRV_LENGTHOF(jamoRanges));
      CEList hanList(coll, hanString, status);
      CEList jamoList(coll, jamoString, status);
      int32_t j = 0;

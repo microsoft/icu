@@ -174,7 +174,7 @@ public:
      * @return         true if other is semantically equal to this.
      * @stable ICU 2.0
      */
-    bool operator==(const DateFormatSymbols& other) const;
+    UBool operator==(const DateFormatSymbols& other) const;
 
     /**
      * Return true if another object is semantically unequal to this one.
@@ -183,7 +183,7 @@ public:
      * @return         true if other is semantically unequal to this.
      * @stable ICU 2.0
      */
-    bool operator!=(const DateFormatSymbols& other) const { return !operator==(other); }
+    UBool operator!=(const DateFormatSymbols& other) const { return !operator==(other); }
 
     /**
      * Gets abbreviated era strings. For example: "AD" and "BC".
@@ -388,7 +388,8 @@ public:
      * Gets quarter strings by width and context. For example: "1st Quarter", "2nd Quarter", etc.
      * @param count Filled in with length of the array.
      * @param context The formatting context, either FORMAT or STANDALONE
-     * @param width   The width of returned strings, either WIDE, ABBREVIATED, or NARROW.
+     * @param width   The width of returned strings, either WIDE or ABBREVIATED. There
+     *                are no NARROW quarters.
      * @return the quarter strings. (DateFormatSymbols retains ownership.)
      * @stable ICU 3.6
      */
@@ -400,7 +401,8 @@ public:
      * @param quarters  The new quarter strings. (not adopted; caller retains ownership)
      * @param count   Filled in with length of the array.
      * @param context The formatting context, either FORMAT or STANDALONE
-     * @param width   The width of returned strings, either WIDE, ABBREVIATED, or NARROW.
+     * @param width   The width of returned strings, either WIDE or ABBREVIATED. There
+     *                are no NARROW quarters.
      * @stable ICU 3.6
      */
     void setQuarters(const UnicodeString* quarters, int32_t count, DtContextType context, DtWidthType width);
@@ -552,7 +554,7 @@ public:
     /**
      * Sets timezone strings. These strings are stored in a 2-dimensional array.
      * <p><b>Note:</b> SimpleDateFormat no longer use the zone strings stored in
-     * a DateFormatSymbols. Therefore, the time zone strings set by this method
+     * a DateFormatSymbols. Therefore, the time zone strings set by this mthod
      * have no effects in an instance of SimpleDateFormat for formatting time
      * zones.
      * @param strings       The timezone strings as a 2-d array to be copied. (not adopted; caller retains ownership)
@@ -628,7 +630,7 @@ public:
      *
      * @stable ICU 2.2
      */
-    virtual UClassID getDynamicClassID() const override;
+    virtual UClassID getDynamicClassID() const;
 
     /**
      * ICU "poor man's RTTI", returns a UClassID for this class.
@@ -774,13 +776,6 @@ private:
     int32_t         fShortQuartersCount;
 
     /**
-     * Narrow quarters. For example: "1", "2", etc.
-     * (In many, but not all, locales, this is the same as "Q", but there are locales for which this isn't true.)
-     */
-    UnicodeString  *fNarrowQuarters;
-    int32_t         fNarrowQuartersCount;
-    
-    /**
      * Standalone quarter strings. For example: "1st quarter", "2nd quarter", etc.
      */
     UnicodeString  *fStandaloneQuarters;
@@ -792,13 +787,6 @@ private:
     UnicodeString  *fStandaloneShortQuarters;
     int32_t         fStandaloneShortQuartersCount;
 
-    /**
-     * Standalone narrow quarter strings. For example: "1", "2", etc.
-     * (In many, but not all, locales, this is the same as "q", but there are locales for which this isn't true.)
-     */
-    UnicodeString  *fStandaloneNarrowQuarters;
-    int32_t         fStandaloneNarrowQuartersCount;
-    
     /**
      * All leap month patterns, for example "{0}bis".
      */
@@ -920,7 +908,7 @@ private:
     char validLocale[ULOC_FULLNAME_CAPACITY];
     char actualLocale[ULOC_FULLNAME_CAPACITY];
 
-    DateFormatSymbols() = delete; // default constructor not implemented
+    DateFormatSymbols(); // default constructor not implemented
 
     /**
      * Called by the constructors to actually load data from the resources
@@ -938,7 +926,7 @@ private:
      * Copy or alias an array in another object, as appropriate.
      *
      * @param dstArray    the copy destination array.
-     * @param dstCount    fill in with the length of 'dstArray'.
+     * @param dstCount    fill in with the lenth of 'dstArray'.
      * @param srcArray    the source array to be copied.
      * @param srcCount    the length of items to be copied from the 'srcArray'.
      */

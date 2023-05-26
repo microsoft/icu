@@ -22,7 +22,6 @@
 #include "cmemory.h"
 #include "cstring.h"
 #include "cintltst.h"
-#include <stdbool.h>
 #include <stdio.h>
 
 // Obsolete macro from obsolete unicode/utf_old.h, for some old test data.
@@ -136,7 +135,7 @@ static void TestCharLength()
               log_verbose("The no: of code units for %lx is %d\n",c, U16_LENGTH(c));
         }
 #if !U_HIDE_OBSOLETE_UTF_OLD_H
-        multiple=(UBool)(codepoint[i] == 1 ? false : true);
+        multiple=(UBool)(codepoint[i] == 1 ? FALSE : TRUE);
         if(UTF16_NEED_MULTIPLE_UCHAR(c) != multiple){
               log_err("ERROR: UTF16_NEED_MULTIPLE_UCHAR failed for %lx\n", c);
         }
@@ -198,7 +197,7 @@ static void TestGetChar()
         }
         expected=result[i+1];
 #if !U_HIDE_OBSOLETE_UTF_OLD_H
-        UTF16_GET_CHAR_SAFE(input, 0, offset, UPRV_LENGTHOF(input), c, false);
+        UTF16_GET_CHAR_SAFE(input, 0, offset, UPRV_LENGTHOF(input), c, FALSE);
         if(c != expected) {
             log_err("ERROR: UTF16_GET_CHAR_SAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, expected, c);
         }
@@ -214,7 +213,7 @@ static void TestGetChar()
             log_err("ERROR: U16_GET_OR_FFFD failed for offset=%ld. Expected:%lx Got:%lx\n", offset, expected, c);
         }
 #if !U_HIDE_OBSOLETE_UTF_OLD_H
-        UTF16_GET_CHAR_SAFE(input, 0, offset, UPRV_LENGTHOF(input), c, true);
+        UTF16_GET_CHAR_SAFE(input, 0, offset, UPRV_LENGTHOF(input), c, TRUE);
         if(c != result[i+2]){
             log_err("ERROR: UTF16_GET_CHAR_SAFE(strict) failed for offset=%ld. Expected:%lx Got:%lx\n", offset, result[i+2], c);
         }
@@ -285,7 +284,7 @@ static void TestNextPrevChar(){
         expected=result[i+1];
 #if !U_HIDE_OBSOLETE_UTF_OLD_H
          setOffset=offset;
-         UTF16_NEXT_CHAR_SAFE(input, setOffset, UPRV_LENGTHOF(input), c, false);
+         UTF16_NEXT_CHAR_SAFE(input, setOffset, UPRV_LENGTHOF(input), c, FALSE);
          if(setOffset != movedOffset[i+1]){
              log_err("ERROR: UTF16_NEXT_CHAR_SAFE failed to move the offset correctly at %d\n ExpectedOffset:%d Got %d\n",
                  offset, movedOffset[i+1], setOffset);
@@ -316,7 +315,7 @@ static void TestNextPrevChar(){
         }
 #if !U_HIDE_OBSOLETE_UTF_OLD_H
          setOffset=offset;
-         UTF16_NEXT_CHAR_SAFE(input, setOffset, UPRV_LENGTHOF(input), c, true);
+         UTF16_NEXT_CHAR_SAFE(input, setOffset, UPRV_LENGTHOF(input), c, TRUE);
          if(setOffset != movedOffset[i+1]){
              log_err("ERROR: UTF16_NEXT_CHAR_SAFE(strict) failed to move the offset correctly at %d\n ExpectedOffset:%d Got %d\n",
                  offset, movedOffset[i+2], setOffset);
@@ -351,7 +350,7 @@ static void TestNextPrevChar(){
          }
 #if !U_HIDE_OBSOLETE_UTF_OLD_H
          setOffset=offset;
-         UTF16_PREV_CHAR_SAFE(input, 0, setOffset, c, false);
+         UTF16_PREV_CHAR_SAFE(input, 0, setOffset, c, FALSE);
          if(setOffset != movedOffset[i+4]){
              log_err("ERROR: UTF16_PREV_CHAR_SAFE failed to move the offset correctly at %d\n ExpectedOffset:%d Got %d\n",
                  offset, movedOffset[i+4], setOffset);
@@ -383,7 +382,7 @@ static void TestNextPrevChar(){
         }
 #if !U_HIDE_OBSOLETE_UTF_OLD_H
          setOffset=offset;
-         UTF16_PREV_CHAR_SAFE(input, 0,  setOffset, c, true);
+         UTF16_PREV_CHAR_SAFE(input, 0,  setOffset, c, TRUE);
          if(setOffset != movedOffset[i+5]){
              log_err("ERROR: UTF16_PREV_CHAR_SAFE(strict) failed to move the offset correctly at %d\n ExpectedOffset:%d Got %d\n",
                  offset, movedOffset[i+5], setOffset);
@@ -847,11 +846,11 @@ static void TestAppend() {
     }
 
     length=0;
-    wrongIsError=false;
+    wrongIsError=FALSE;
     for(i=0; i<UPRV_LENGTHOF(codePoints); ++i) {
         c=codePoints[i];
         expectIsError= c<0 || 0x10ffff<c; /* || U_IS_SURROGATE(c); */ /* surrogates in UTF-32 shouldn't be used, but it's okay to pass them around internally. */
-        isError=false;
+        isError=FALSE;
 
         U16_APPEND(buffer, length, UPRV_LENGTHOF(buffer), c, isError);
         wrongIsError|= isError!=expectIsError;

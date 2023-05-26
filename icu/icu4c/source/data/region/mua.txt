@@ -36,7 +36,7 @@ mua{
         BY{"belarussiya"}
         BZ{"beliziya"}
         CA{"kanada"}
-        CD{"Sǝr Kongo ma dii ne zair"}
+        CD{"Congo (RDC)"}
         CF{"centrafrika"}
         CG{"kongo"}
         CH{"Sǝr Swiss"}
@@ -165,7 +165,7 @@ mua{
         PM{"Sǝr Pǝtar ne Mikǝlon"}
         PN{"Pitkairn"}
         PR{"Porto Riko"}
-        PS{"Sǝr Palestiniya"}
+        PS{"Autorité palestinienne"}
         PT{"Sǝr Portugal"}
         PW{"Sǝr Palau"}
         PY{"Paragwai"}

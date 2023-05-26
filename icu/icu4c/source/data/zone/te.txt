@@ -867,9 +867,6 @@ te{
         "Asia:Ulaanbaatar"{
             ec{"ఉలాన్బాటర్"}
         }
-        "Asia:Urumqi"{
-            ec{"ఉరుమ్‌కీ"}
-        }
         "Asia:Ust-Nera"{
             ec{"అస్ట్-నెరా"}
         }
@@ -1222,9 +1219,6 @@ te{
         }
         "Pacific:Johnston"{
             ec{"జాన్సటన్"}
-        }
-        "Pacific:Kanton"{
-            ec{"కాంతోన్"}
         }
         "Pacific:Kiritimati"{
             ec{"కిరీటిమాటి"}
@@ -1598,7 +1592,7 @@ te{
             ls{"హోవ్డ్ ప్రామాణిక సమయం"}
         }
         "meta:India"{
-            ls{"భారతదేశ ప్రామాణిక సమయం"}
+            ls{"భారతదేశ సమయం"}
             ss{"IST"}
         }
         "meta:Indian_Ocean"{
@@ -1940,9 +1934,6 @@ te{
             ld{"యెకటెరిన్‌బర్గ్ వేసవి సమయం"}
             lg{"యెకటెరిన్‌బర్గ్ సమయం"}
             ls{"యెకటెరిన్‌బర్గ్ ప్రామాణిక సమయం"}
-        }
-        "meta:Yukon"{
-            ls{"యుకోన్ సమయం"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

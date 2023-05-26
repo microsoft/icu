@@ -11,7 +11,7 @@
 //
 //   Note: please... no character literals cast to UChars.. use (UChar)0xZZZZ
 
-#include <stdio.h>  // for snprintf
+#include <stdio.h>  // for sprintf
 
 #include "intltest.h"
 #include "alphaindextst.h"
@@ -80,7 +80,7 @@ void AlphabeticIndexTest::runIndexedTest( int32_t index, UBool exec, const char*
 } UPRV_BLOCK_MACRO_END
 
 #define TEST_ASSERT(expr) UPRV_BLOCK_MACRO_BEGIN { \
-    if ((expr)==false) { \
+    if ((expr)==FALSE) { \
         errln("%s:%d: Test failure \n", __FILE__, __LINE__); \
     } \
 } UPRV_BLOCK_MACRO_END
@@ -228,7 +228,7 @@ void AlphabeticIndexTest::APITest() {
         TEST_CHECK_STATUS;
         while (index->nextRecord(status)) {
             TEST_CHECK_STATUS;
-            TEST_ASSERT(false);   // No items have been added.
+            TEST_ASSERT(FALSE);   // No items have been added.
         }
         TEST_CHECK_STATUS;
     }
@@ -250,10 +250,10 @@ void AlphabeticIndexTest::APITest() {
     TEST_CHECK_STATUS;
     TEST_ASSERT(itemCount == 4);
 
-    TEST_ASSERT(index->nextBucket(status) == false);
+    TEST_ASSERT(index->nextBucket(status) == FALSE);
     index->resetBucketIterator(status);
     TEST_CHECK_STATUS;
-    TEST_ASSERT(index->nextBucket(status) == true);
+    TEST_ASSERT(index->nextBucket(status) == TRUE);
 
     index->clearRecords(status);
     TEST_CHECK_STATUS;
@@ -261,7 +261,7 @@ void AlphabeticIndexTest::APITest() {
     while (index->nextBucket(status)) {
         TEST_CHECK_STATUS;
         while (index->nextRecord(status)) {
-            TEST_ASSERT(false);   // No items have been added.
+            TEST_ASSERT(FALSE);   // No items have been added.
         }
     }
     TEST_CHECK_STATUS;
@@ -290,7 +290,7 @@ void AlphabeticIndexTest::APITest() {
             TEST_ASSERT(type == U_ALPHAINDEX_OVERFLOW);
             TEST_ASSERT(label == charlie);
         } else {
-            TEST_ASSERT(false);
+            TEST_ASSERT(FALSE);
         }
     }
     TEST_ASSERT(i==28);
@@ -464,9 +464,9 @@ void AlphabeticIndexTest::HackPinyinTest() {
         // std::string s;
         // std::cout << label.toUTF8String(s) << ":  ";
 
-        UBool  bucketHasContents = false;
+        UBool  bucketHasContents = FALSE;
         while (aindex.nextRecord(status)) {
-            bucketHasContents = true;
+            bucketHasContents = TRUE;
             UnicodeString name = aindex.getRecordName();
             if (aindex.getBucketLabelType() != U_ALPHAINDEX_NORMAL) {
                 errln("File %s, Line %d, Name \"\\u%x\" is in an under or overflow bucket.",
@@ -647,11 +647,11 @@ void AlphabeticIndexTest::TestSchSt() {
         UnicodeString name = UnicodeString(testCase.name).unescape();
         UnicodeString label = UnicodeString(testCase.bucketLabel).unescape();
         char msg[100];
-        snprintf(msg, sizeof(msg), "getBucketIndex(%s)", testCase.name);
+        sprintf(msg, "getBucketIndex(%s)", testCase.name);
         assertEquals(msg, testCase.bucketIndex, index.getBucketIndex(name, status));
-        snprintf(msg, sizeof(msg), "immutable getBucketIndex(%s)", testCase.name);
+        sprintf(msg, "immutable getBucketIndex(%s)", testCase.name);
         assertEquals(msg, testCase.bucketIndex, immIndex->getBucketIndex(name, status));
-        snprintf(msg, sizeof(msg), "immutable bucket label (%s)", testCase.name);
+        sprintf(msg, "immutable bucket label (%s)", testCase.name);
         assertEquals(msg, label, immIndex->getBucket(testCase.bucketIndex)->getLabel());
     }
 }
@@ -698,7 +698,7 @@ void AlphabeticIndexTest::TestJapaneseKanji() {
     int32_t overflowIndex = immIndex->getBucketCount() - 1;
     for(int32_t i = 0; i < UPRV_LENGTHOF(kanji); ++i) {
         char msg[40];
-        snprintf(msg, sizeof(msg), "kanji[%d]=U+%04lX in overflow bucket", (int)i, (long)kanji[i]);
+        sprintf(msg, "kanji[%d]=U+%04lX in overflow bucket", (int)i, (long)kanji[i]);
         assertEquals(msg, overflowIndex, immIndex->getBucketIndex(UnicodeString(kanji[i]), status));
         TEST_CHECK_STATUS;
     }

@@ -35,8 +35,6 @@ th{
             }
             patterns{
                 accountingFormat{"¤#,##0.00;(¤#,##0.00)"}
-                accountingFormat%alphaNextToNumber{"¤ #,##0.00;(¤ #,##0.00)"}
-                accountingFormat%noCurrency{"#,##0.00;(#,##0.00)"}
                 currencyFormat{"¤#,##0.00"}
                 decimalFormat{"#,##0.###"}
                 percentFormat{"#,##0%"}
@@ -121,44 +119,6 @@ th{
                         other{"¤000T"}
                     }
                 }
-                currencyFormat%alphaNextToNumber{
-                    1000{
-                        other{"¤ 0K"}
-                    }
-                    10000{
-                        other{"¤ 00K"}
-                    }
-                    100000{
-                        other{"¤ 000K"}
-                    }
-                    1000000{
-                        other{"¤ 0M"}
-                    }
-                    10000000{
-                        other{"¤ 00M"}
-                    }
-                    100000000{
-                        other{"¤ 000M"}
-                    }
-                    1000000000{
-                        other{"¤ 0B"}
-                    }
-                    10000000000{
-                        other{"¤ 00B"}
-                    }
-                    100000000000{
-                        other{"¤ 000B"}
-                    }
-                    1000000000000{
-                        other{"¤ 0T"}
-                    }
-                    10000000000000{
-                        other{"¤ 00T"}
-                    }
-                    100000000000000{
-                        other{"¤ 000T"}
-                    }
-                }
                 decimalFormat{
                     1000{
                         other{"0K"}
@@ -241,16 +201,6 @@ th{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "yMMMMd",
-                "yMMMd",
-                "yyMd",
-            }
             availableFormats{
                 E{"ccc"}
                 Ed{"E d"}
@@ -259,7 +209,6 @@ th{
                 GyMMMEEEEd{"EEEEที่ d MMM G y"}
                 GyMMMEd{"E d MMM G y"}
                 GyMMMd{"d MMM G y"}
-                GyMd{"d/M/GGGGG y"}
                 H{"HH"}
                 Hm{"HH:mm"}
                 Hms{"HH:mm:ss"}
@@ -419,16 +368,6 @@ th{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "HHmmss",
-                "HHmm",
-                "UMMMMEEEEd",
-                "UMMMMd",
-                "UMMMd",
-                "yMd",
             }
             cyclicNameSets{
                 dayParts{
@@ -769,16 +708,6 @@ th{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "HHmmss",
-                "HHmm",
-                "UMMMMEEEEd",
-                "UMMMMd",
-                "UMMMd",
-                "yMd",
-            }
             cyclicNameSets{
                 dayParts{
                     format{
@@ -1089,22 +1018,6 @@ th{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimePatterns%atTime{
-                "{1} เวลา {0}",
-                "{1} เวลา {0}",
-                "{1} {0}",
-                "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GyMd",
-            }
             availableFormats{
                 Bh{"h B"}
                 Bhm{"h:mm B"}
@@ -1122,7 +1035,6 @@ th{
                 GyMMMEEEEd{"EEEEที่ d MMM G y"}
                 GyMMMEd{"E d MMM G y"}
                 GyMMMd{"d MMM G y"}
-                GyMd{"d/M/y GGGGG"}
                 H{"HH"}
                 Hm{"HH:mm"}
                 Hms{"HH:mm:ss"}
@@ -1303,6 +1215,10 @@ th{
                 "ก่อนเที่ยง",
                 "หลังเที่ยง",
             }
+            AmPmMarkersAbbr{
+                "ก่อนเที่ยง",
+                "หลังเที่ยง",
+            }
             AmPmMarkersNarrow{
                 "a",
                 "p",
@@ -1321,22 +1237,6 @@ th{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
-            }
-            DateTimePatterns%atTime{
-                "{1} เวลา {0}",
-                "{1} เวลา {0}",
-                "{1} {0}",
-                "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "yMMMd",
-                "yyMd",
             }
             appendItems{
                 Timezone{"{0} {1}"}
@@ -1358,7 +1258,6 @@ th{
                 GyMMMEEEEd{"EEEEที่ d MMM G y"}
                 GyMMMEd{"E d MMM G y"}
                 GyMMMd{"d MMM G y"}
-                GyMd{"d/M/GGGGG y"}
                 H{"HH"}
                 Hm{"HH:mm น."}
                 Hms{"HH:mm:ss"}
@@ -1391,10 +1290,10 @@ th{
                 yMMM{"MMM y"}
                 yMMMEEEEd{"EEEEที่ d MMM y"}
                 yMMMEd{"E d MMM y"}
-                yMMMM{"MMMM y"}
-                yMMMMEEEEd{"EEEEที่ d MMMM y"}
-                yMMMMEd{"E d MMMM y"}
-                yMMMMd{"d MMMM y"}
+                yMMMM{"MMMM G y"}
+                yMMMMEEEEd{"EEEEที่ d MMMM G y"}
+                yMMMMEd{"E d MMMM G y"}
+                yMMMMd{"d MMMM G y"}
                 yMMMd{"d MMM y"}
                 yMd{"d/M/y"}
                 yQQQ{"QQQ y"}
@@ -1607,7 +1506,7 @@ th{
                     G{"E d MMM G y – E d MMM G y"}
                     M{"E d MMM – E d MMM G y"}
                     d{"E d MMM – E d MMM G y"}
-                    y{"E d MMM G y – E d MMM y"}
+                    y{"E d MMM y – E d MMM y"}
                 }
                 GyMMMd{
                     G{"d MMM G y – d MMM G y"}
@@ -1719,14 +1618,14 @@ th{
                     y{"EEEEที่ d MMMM G y – EEEEที่ d MMMM y"}
                 }
                 yMMMMEd{
-                    M{"E d MMMM – E d MMMM y"}
-                    d{"E d – E d MMMM y"}
-                    y{"E d MMMM y – E d MMMM y"}
+                    M{"E d MMMM – E d MMMM G y"}
+                    d{"E d – E d MMMM G y"}
+                    y{"E d MMMM G y – E d MMMM y"}
                 }
                 yMMMMd{
-                    M{"d MMMM – d MMMM y"}
-                    d{"d–d MMMM y"}
-                    y{"d MMMM y – d MMMM y"}
+                    M{"d MMMM – d MMMM G y"}
+                    d{"d–d MMMM G y"}
+                    y{"d MMMM G y – d MMMM y"}
                 }
                 yMMMd{
                     M{"d MMM – d MMM y"}
@@ -1887,16 +1786,6 @@ th{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GyMd",
             }
             eras{
                 abbreviated{
@@ -2119,16 +2008,6 @@ th{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GyMd",
-            }
             availableFormats{
                 Ed{"E d"}
                 Gy{"G y"}
@@ -2267,16 +2146,6 @@ th{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GyyMd",
             }
             availableFormats{
                 Ed{"E d"}
@@ -2645,69 +2514,6 @@ th{
                         "บาฮ์มาน",
                         "เอสฟานด์",
                     }
-                }
-            }
-        }
-        roc{
-            DateTimePatterns{
-                "H นาฬิกา mm นาที ss วินาที zzzz",
-                "H นาฬิกา mm นาที ss วินาที z",
-                "HH:mm:ss",
-                "HH:mm",
-                "EEEEที่ d MMMM ปีGที่ y",
-                "d MMMM ปีG y",
-                "d MMM G y",
-                "d/M/y G",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "Hmmsszzzz",
-                "Hmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GyMd",
-            }
-            availableFormats{
-                Ed{"E d"}
-                Gy{"ปีGที่ y"}
-                GyMMM{"MMM G y"}
-                GyMMMEd{"E d MMM G y"}
-                GyMMMd{"d MMM G y"}
-                H{"HH"}
-                Hm{"HH:mm"}
-                Hms{"HH:mm:ss"}
-                M{"L"}
-                MEd{"E, d/M"}
-                MMM{"LLL"}
-                MMMEd{"E d MMM"}
-                MMMd{"d MMM"}
-                Md{"d/M"}
-                d{"d"}
-                h{"h a"}
-                hm{"h:mm a"}
-                hms{"h:mm:ss a"}
-                ms{"mm:ss"}
-                y{"ปีGที่ y"}
-                yyyy{"ปีGที่ y"}
-                yyyyM{"M/GGGGG y"}
-                yyyyMEd{"E d/M/GGGGG y"}
-                yyyyMMM{"MMM G y"}
-                yyyyMMMEd{"E d MMM G y"}
-                yyyyMMMd{"d MMM G y"}
-                yyyyMd{"d/M/GGGGG y"}
-                yyyyQQQ{"QQQ G y"}
-            }
-            eras{
-                abbreviated{
-                    "ปีก่อนไต้หวัน",
-                    "ไต้หวัน",
                 }
             }
         }
@@ -3623,42 +3429,6 @@ th{
                 "[,٫︐﹐，]",
                 "[.․﹒．｡]",
             }
-        }
-    }
-    personNames{
-        nameOrderLocales{
-            givenFirst{
-                "und",
-                "th",
-            }
-            surnameFirst{
-                "ko",
-                "vi",
-                "yue",
-                "zh",
-            }
-        }
-        namePattern{
-            givenFirst-long-addressing-informal{"{given-informal}"}
-            givenFirst-long-monogram-formal{"{given-informal-monogram-allCaps}"}
-            givenFirst-long-monogram-informal{"{given-informal-monogram-allCaps}"}
-            givenFirst-long-referring-informal{"{given}{given2}{surname}{surname2}{suffix}"}
-            givenFirst-medium-addressing-informal{"{given-informal}"}
-            givenFirst-medium-monogram-formal{"{given-informal-monogram-allCaps}"}
-            givenFirst-medium-monogram-informal{"{given-informal-monogram-allCaps}"}
-            givenFirst-medium-referring-informal{"{given-informal}{surname}"}
-            givenFirst-short-addressing-informal{"{given-informal}"}
-            givenFirst-short-referring-informal{"{given}{given2}{surname}{surname2}"}
-            sorting-long-referring-formal{"{surname-core}{given}{given2}{surname-prefix}"}
-            sorting-long-referring-informal{"{surname}{given-informal}"}
-            surnameFirst-long-addressing-informal{"{given-informal}"}
-            surnameFirst-long-monogram-formal{"{surname-monogram-allCaps}"}
-            surnameFirst-long-monogram-informal{"{surname-monogram-allCaps}"}
-            surnameFirst-medium-monogram-formal{"{surname-monogram-allCaps}"}
-            surnameFirst-medium-monogram-informal{"{given-informal-monogram-allCaps}"}
-            surnameFirst-short-addressing-informal{"{given-informal}"}
-            surnameFirst-short-monogram-formal{"{given-informal-monogram-allCaps}"}
-            surnameFirst-short-monogram-informal{"{given-informal-monogram-allCaps}"}
         }
     }
 }

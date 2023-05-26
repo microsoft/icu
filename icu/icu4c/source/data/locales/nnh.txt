@@ -46,16 +46,6 @@ nnh{
                 "{1} {0}",
                 "{1} {0}",
             }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GGGGGyyMMdd",
-            }
             availableFormats{
                 yMEd{"E , 'lyɛ'̌ʼ d 'na' M, y"}
                 yMMM{"MMM y"}
@@ -87,16 +77,6 @@ nnh{
                 "{1}, {0}",
                 "{1} {0}",
                 "{1} {0}",
-            }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "yMMMMEEEEd",
-                "yMMMMd",
-                "yMMMd",
-                "yyMMdd",
             }
             availableFormats{
                 yMEd{"E , 'lyɛ'̌ʼ d 'na' M, y"}

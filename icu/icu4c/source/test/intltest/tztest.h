@@ -21,7 +21,7 @@
  **/
 class TimeZoneTest: public CalendarTimeZoneTest {
     // IntlTest override
-    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par ) override;
+    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par );
 public: // package
     static const int32_t millisPerHour;
  
@@ -103,8 +103,6 @@ public:
 
     void TestGetWindowsID(void);
     void TestGetIDForWindowsID(void);
-    void TestCasablancaNameAndOffset22041(void);
-    void TestRawOffsetAndOffsetConsistency22041(void);
 
     static const UDate INTERVAL;
 

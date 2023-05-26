@@ -95,7 +95,7 @@ NamePrepTransform::NamePrepTransform(UParseError& parseError, UErrorCode& status
                 printf("The string contains 0x644 ... !!\n");
             }
             UnicodeString temp;
-            prohibited.toPattern(temp,true);
+            prohibited.toPattern(temp,TRUE);
 
             for(int32_t i=0;i<temp.length();i++){
                 printf("%c", (char)temp.charAt(i));
@@ -158,7 +158,7 @@ int32_t NamePrepTransform::map(const UChar* src, int32_t srcLength,
     const UChar* buffer = rsource.getBuffer();
     int32_t bufLen = rsource.length();
     // check if unassigned
-    if(allowUnassigned == false){
+    if(allowUnassigned == FALSE){
         int32_t bufIndex=0;
         UChar32 ch =0 ;
         for(;bufIndex<bufLen;){
@@ -202,7 +202,7 @@ int32_t NamePrepTransform::process( const UChar* src, int32_t srcLength,
 
     int32_t b1Index = 0;
     UCharDirection direction=U_CHAR_DIRECTION_COUNT, firstCharDir=U_CHAR_DIRECTION_COUNT;
-    UBool leftToRight=false, rightToLeft=false;
+    UBool leftToRight=FALSE, rightToLeft=FALSE;
 
     b1Len = map(src, srcLength, b1, b1String.getCapacity(), allowUnassigned, parseError, status);
     b1String.releaseBuffer(b1Len);
@@ -239,27 +239,27 @@ int32_t NamePrepTransform::process( const UChar* src, int32_t srcLength,
             firstCharDir = direction;
         }
         if(direction == U_LEFT_TO_RIGHT){
-            leftToRight = true;
+            leftToRight = TRUE;
         }
         if(direction == U_RIGHT_TO_LEFT || direction == U_RIGHT_TO_LEFT_ARABIC){
-            rightToLeft = true;
+            rightToLeft = TRUE;
         }
     }       
     
     // satisfy 2
-    if( leftToRight == true && rightToLeft == true){
+    if( leftToRight == TRUE && rightToLeft == TRUE){
         status = U_IDNA_CHECK_BIDI_ERROR;
         b1Len = 0;
         goto CLEANUP;
     }
 
     //satisfy 3
-    if( rightToLeft == true && 
+    if( rightToLeft == TRUE && 
         !((firstCharDir == U_RIGHT_TO_LEFT || firstCharDir == U_RIGHT_TO_LEFT_ARABIC) &&
           (direction == U_RIGHT_TO_LEFT || direction == U_RIGHT_TO_LEFT_ARABIC))
        ){
         status = U_IDNA_CHECK_BIDI_ERROR;
-        return false;
+        return FALSE;
     }
 
     if(b1Len <= destCapacity){
@@ -273,7 +273,7 @@ CLEANUP:
 UBool NamePrepTransform::isLabelSeparator(UChar32 ch, UErrorCode& status){
     // check error status
     if(U_FAILURE(status)){
-        return false;
+        return FALSE;
     }
 
     return labelSeparatorSet.contains(ch);

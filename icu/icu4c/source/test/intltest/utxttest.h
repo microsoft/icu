@@ -6,7 +6,7 @@
  * others. All Rights Reserved.
  ********************************************************************/
 /************************************************************************
-*   Tests for the UText and UTextIterator text abstraction classes
+*   Tests for the UText and UTextIterator text abstraction classses
 *
 ************************************************************************/
 
@@ -29,7 +29,7 @@ public:
     UTextTest();
     virtual ~UTextTest();
 
-    void runIndexedTest(int32_t index, UBool exec, const char* &name, char* par=NULL) override;
+    void runIndexedTest(int32_t index, UBool exec, const char* &name, char* par=NULL);
     void TextTest();
     void ErrorTest();
     void FreezeTest();

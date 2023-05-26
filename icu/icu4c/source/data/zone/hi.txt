@@ -769,7 +769,7 @@ hi{
             ec{"कुवैत"}
         }
         "Asia:Macau"{
-            ec{"मकाऊ"}
+            ec{"मकाउ"}
         }
         "Asia:Magadan"{
             ec{"मागादान"}
@@ -866,9 +866,6 @@ hi{
         }
         "Asia:Ulaanbaatar"{
             ec{"उलानबातर"}
-        }
-        "Asia:Urumqi"{
-            ec{"उरूम्की"}
         }
         "Asia:Ust-Nera"{
             ec{"यूस्ट–नेरा"}
@@ -1219,15 +1216,11 @@ hi{
         }
         "Pacific:Honolulu"{
             ec{"होनोलुलु"}
-            sd{"HST"}
             sg{"एचएसटी"}
             ss{"एचएसटी"}
         }
         "Pacific:Johnston"{
             ec{"जॉनस्टन"}
-        }
-        "Pacific:Kanton"{
-            ec{"कैंटन"}
         }
         "Pacific:Kiritimati"{
             ec{"किरीतिमाति"}
@@ -1904,9 +1897,6 @@ hi{
             ld{"येकातेरिनबर्ग ग्रीष्मकालीन समय"}
             lg{"येकातेरिनबर्ग समय"}
             ls{"येकातेरिनबर्ग मानक समय"}
-        }
-        "meta:Yukon"{
-            ls{"युकॉन समय"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

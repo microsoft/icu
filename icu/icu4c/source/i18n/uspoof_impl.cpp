@@ -320,10 +320,10 @@ URestrictionLevel SpoofImpl::getRestrictionLevel(const UnicodeString& input, UEr
     // Section 5.2 step 2
     // Java use a static UnicodeSet for this test.  In C++, avoid the static variable
     // and just do a simple for loop.
-    UBool allASCII = true;
+    UBool allASCII = TRUE;
     for (int32_t i=0, length=input.length(); i<length; i++) {
         if (input.charAt(i) > 0x7f) {
-            allASCII = false;
+            allASCII = FALSE;
             break;
         }
     }
@@ -495,9 +495,9 @@ UBool SpoofData::validateDataVersion(UErrorCode &status) const {
         fRawData->fFormatVersion[2] != 0 ||
         fRawData->fFormatVersion[3] != 0) {
             status = U_INVALID_FORMAT_ERROR;
-            return false;
+            return FALSE;
     }
-    return true;
+    return TRUE;
 }
 
 static UBool U_CALLCONV
@@ -518,9 +518,9 @@ spoofDataIsAcceptable(void *context,
         if(version != NULL) {
             uprv_memcpy(version, pInfo->dataVersion, 4);
         }
-        return true;
+        return TRUE;
     } else {
-        return false;
+        return FALSE;
     }
 }
 
@@ -538,7 +538,7 @@ spoofDataIsAcceptable(void *context,
 //  uspoof_cleanupDefaultData - Called during cleanup.
 //
 
-static UInitOnce gSpoofInitDefaultOnce {};
+static UInitOnce gSpoofInitDefaultOnce = U_INITONCE_INITIALIZER;
 static SpoofData* gDefaultSpoofData;
 
 static UBool U_CALLCONV
@@ -549,7 +549,7 @@ uspoof_cleanupDefaultData(void) {
         gDefaultSpoofData = nullptr;
         gSpoofInitDefaultOnce.reset();
     }
-    return true;
+    return TRUE;
 }
 
 static void U_CALLCONV uspoof_loadDefaultData(UErrorCode& status) {
@@ -655,7 +655,7 @@ SpoofData::SpoofData(UErrorCode &status) {
 //           Called by constructors to put things in a known initial state.
 void SpoofData::reset() {
    fRawData = NULL;
-   fDataOwned = false;
+   fDataOwned = FALSE;
    fUDM      = NULL;
    fMemLimit = 0;
    fRefCount = 1;
@@ -729,7 +729,7 @@ void *SpoofData::reserveSpace(int32_t numBytes,  UErrorCode &status) {
         return NULL;
     }
     if (!fDataOwned) {
-        UPRV_UNREACHABLE_EXIT;
+        UPRV_UNREACHABLE;
     }
 
     numBytes = (numBytes + 15) & ~15;   // Round up to a multiple of 16
@@ -945,7 +945,7 @@ uspoof_swap(const UDataSwapper *ds, const void *inData, int32_t length, void *ou
     uint32_t magic = ds->readUInt32(spoofDH->fMagic);
     ds->writeUInt32((uint32_t *)&outputDH->fMagic, magic);
 
-    if (inBytes != outBytes) {
+    if (outputDH->fFormatVersion != spoofDH->fFormatVersion) {
         uprv_memcpy(outputDH->fFormatVersion, spoofDH->fFormatVersion, sizeof(spoofDH->fFormatVersion));
     }
     // swap starting at fLength

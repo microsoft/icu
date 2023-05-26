@@ -38,7 +38,7 @@ RBBIDataWrapper::RBBIDataWrapper(const RBBIDataHeader *data, UErrorCode &status)
 RBBIDataWrapper::RBBIDataWrapper(const RBBIDataHeader *data, enum EDontAdopt, UErrorCode &status) {
     init0();
     init(data, status);
-    fDontFreeData = true;
+    fDontFreeData = TRUE;
 }
 
 RBBIDataWrapper::RBBIDataWrapper(UDataMemory* udm, UErrorCode &status) {
@@ -86,7 +86,7 @@ void RBBIDataWrapper::init0() {
     fTrie         = NULL;
     fUDataMem     = NULL;
     fRefCount     = 0;
-    fDontFreeData = true;
+    fDontFreeData = TRUE;
 }
 
 void RBBIDataWrapper::init(const RBBIDataHeader *data, UErrorCode &status) {
@@ -102,7 +102,7 @@ void RBBIDataWrapper::init(const RBBIDataHeader *data, UErrorCode &status) {
     //       that is no longer supported.  At that time fFormatVersion was
     //       an int32_t field, rather than an array of 4 bytes.
 
-    fDontFreeData = false;
+    fDontFreeData = FALSE;
     if (data->fFTableLen != 0) {
         fForwardTable = (RBBIStateTable *)((char *)data + fHeader->fFTable);
     }
@@ -170,17 +170,17 @@ RBBIDataWrapper::~RBBIDataWrapper() {
 //                  should still be ==.
 //
 //-----------------------------------------------------------------------------
-bool RBBIDataWrapper::operator ==(const RBBIDataWrapper &other) const {
+UBool RBBIDataWrapper::operator ==(const RBBIDataWrapper &other) const {
     if (fHeader == other.fHeader) {
-        return true;
+        return TRUE;
     }
     if (fHeader->fLength != other.fHeader->fLength) {
-        return false;
+        return FALSE;
     }
     if (uprv_memcmp(fHeader, other.fHeader, fHeader->fLength) == 0) {
-        return true;
+        return TRUE;
     }
-    return false;
+    return FALSE;
 }
 
 int32_t  RBBIDataWrapper::hashCode() {
@@ -283,7 +283,7 @@ void  RBBIDataWrapper::printData() {
     printTable("Forward State Transition Table", fForwardTable);
     printTable("Reverse State Transition Table", fReverseTable);
 
-    RBBIDebugPrintf("\nOriginal Rules source:\n");
+    RBBIDebugPrintf("\nOrignal Rules source:\n");
     for (int32_t c=0; fRuleSource[c] != 0; c++) {
         RBBIDebugPrintf("%c", fRuleSource[c]);
     }

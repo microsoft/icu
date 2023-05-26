@@ -165,7 +165,7 @@ seh{
         PM{"Saint Pierre e Miquelon"}
         PN{"Pitcairn"}
         PR{"Porto Rico"}
-        PS{"Território da Palestina"}
+        PS{"Autoridade Palestiniana"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguai"}

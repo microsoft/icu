@@ -83,11 +83,11 @@ static UOption options[OPTIONS_COUNT+20]={
 UPerfTest::UPerfTest(int32_t argc, const char* argv[], UErrorCode& status)
         : _argc(argc), _argv(argv), _addUsage(NULL),
           ucharBuf(NULL), encoding(""),
-          uselen(false),
+          uselen(FALSE),
           fileName(NULL), sourceDir("."),
-          lines(NULL), numLines(0), line_mode(true),
+          lines(NULL), numLines(0), line_mode(TRUE),
           buffer(NULL), bufferLen(0),
-          verbose(false), bulk_mode(false),
+          verbose(FALSE), bulk_mode(FALSE),
           passes(1), iterations(0), time(0),
           locale(NULL) {
     init(NULL, 0, status);
@@ -99,11 +99,11 @@ UPerfTest::UPerfTest(int32_t argc, const char* argv[],
                      UErrorCode& status)
         : _argc(argc), _argv(argv), _addUsage(addUsage),
           ucharBuf(NULL), encoding(""),
-          uselen(false),
+          uselen(FALSE),
           fileName(NULL), sourceDir("."),
-          lines(NULL), numLines(0), line_mode(true),
+          lines(NULL), numLines(0), line_mode(TRUE),
           buffer(NULL), bufferLen(0),
-          verbose(false), bulk_mode(false),
+          verbose(FALSE), bulk_mode(FALSE),
           passes(1), iterations(0), time(0),
           locale(NULL) {
     init(addOptions, addOptionsCount, status);
@@ -138,7 +138,7 @@ void UPerfTest::init(UOption addOptions[], int32_t addOptionsCount,
     }
 
     if(options[VERBOSE].doesOccur) {
-        verbose = true;
+        verbose = TRUE;
     }
 
     if(options[SOURCEDIR].doesOccur) {
@@ -150,7 +150,7 @@ void UPerfTest::init(UOption addOptions[], int32_t addOptionsCount,
     }
 
     if(options[USELEN].doesOccur) {
-        uselen = true;
+        uselen = TRUE;
     }
 
     if(options[FILE_NAME].doesOccur){
@@ -173,13 +173,13 @@ void UPerfTest::init(UOption addOptions[], int32_t addOptionsCount,
     }
 
     if(options[LINE_MODE].doesOccur) {
-        line_mode = true;
-        bulk_mode = false;
+        line_mode = TRUE;
+        bulk_mode = FALSE;
     }
 
     if(options[BULK_MODE].doesOccur) {
-        bulk_mode = true;
-        line_mode = false;
+        bulk_mode = TRUE;
+        line_mode = FALSE;
     }
     
     if(options[LOCALE].doesOccur) {
@@ -199,7 +199,7 @@ void UPerfTest::init(UOption addOptions[], int32_t addOptionsCount,
             status = U_ZERO_ERROR;
         }
         ucbuf_resolveFileName(sourceDir, fileName, resolvedFileName, &len, &status);
-        ucharBuf = ucbuf_open(resolvedFileName,&encoding,true,false,&status);
+        ucharBuf = ucbuf_open(resolvedFileName,&encoding,TRUE,FALSE,&status);
 
         if(U_FAILURE(status)){
             printf("Could not open the input file %s. Error: %s\n", fileName, u_errorName(status));
@@ -264,12 +264,12 @@ UBool UPerfTest::run(){
         // Testing all methods
         return runTest();
     }
-    UBool res=false;
-    // Test only the specified function
+    UBool res=FALSE;
+    // Test only the specified fucntion
     for (int i = 1; i < _remainingArgc; ++i) {
         if (_argv[i][0] != '-') {
             char* name = (char*) _argv[i];
-            if(verbose==true){
+            if(verbose==TRUE){
                 //fprintf(stdout, "\n=== Handling test: %s: ===\n", name);
                 //fprintf(stdout, "\n%s:\n", name);
             }
@@ -282,7 +282,7 @@ UBool UPerfTest::run(){
             res = runTest( name, parameter );
             if (!res || (execCount <= 0)) {
                 fprintf(stdout, "\n---ERROR: Test doesn't exist: %s!\n", name);
-                return false;
+                return FALSE;
             }
         }
     }
@@ -306,7 +306,7 @@ UBool UPerfTest::runTest(char* name, char* par ){
 
     }else if (strcmp( name, "LIST" ) == 0) {
         this->usage();
-        rval = true;
+        rval = TRUE;
 
     }else{
         rval = runTestLoop( name, par );
@@ -344,7 +344,7 @@ UBool UPerfTest::runTestLoop( char* testname, char* par )
     int32_t    index = 0;
     const char*   name;
     UBool  run_this_test;
-    UBool  rval = false;
+    UBool  rval = FALSE;
     UErrorCode status = U_ZERO_ERROR;
     UPerfTest* saveTest = gTest;
     gTest = this;
@@ -353,31 +353,31 @@ UBool UPerfTest::runTestLoop( char* testname, char* par )
     int32_t n = 1;
     long ops;
     do {
-        this->runIndexedTest( index, false, name );
+        this->runIndexedTest( index, FALSE, name );
         if (!name || (name[0] == 0))
             break;
         if (!testname) {
-            run_this_test = true;
+            run_this_test = TRUE;
         }else{
             run_this_test = (UBool) (strcmp( name, testname ) == 0);
         }
         if (run_this_test) {
-            UPerfFunction* testFunction = this->runIndexedTest( index, true, name, par );
+            UPerfFunction* testFunction = this->runIndexedTest( index, TRUE, name, par );
             execCount++;
-            rval=true;
+            rval=TRUE;
             if(testFunction==NULL){
                 fprintf(stderr,"%s function returned NULL", name);
-                return false;
+                return FALSE;
             }
             ops = testFunction->getOperationsPerIteration();
             if (ops < 1) {
                 fprintf(stderr, "%s returned an illegal operations/iteration()\n", name);
-                return false;
+                return FALSE;
             }
             if(iterations == 0) {
                 n = time;
                 // Run for specified duration in seconds
-                if(verbose==true){
+                if(verbose==TRUE){
                     fprintf(stdout,"= %s calibrating %i seconds \n", name, (int)n);
                 }
 
@@ -390,11 +390,11 @@ UBool UPerfTest::runTestLoop( char* testname, char* par )
                         loops = failsafe;
                         failsafe *= 10;
                     } else {
-                        //System.out.println("# " + meth.getName() + " x " + loops + " = " + t);
+                        //System.out.println("# " + meth.getName() + " x " + loops + " = " + t);                            
                         loops = (int)((double)n / t * loops + 0.5);
                         if (loops == 0) {
                             fprintf(stderr,"Unable to converge on desired duration");
-                            return false;
+                            return FALSE;
                         }
                     }
                     //System.out.println("# " + meth.getName() + " x " + loops);
@@ -412,13 +412,15 @@ UBool UPerfTest::runTestLoop( char* testname, char* par )
             long events = -1;
 
             for(int32_t ps =0; ps < passes; ps++){
-                if(verbose==true){
-                    fprintf(stdout,"= %s begin " ,name);
+                fprintf(stdout,"= %s begin " ,name);
+                if(verbose==TRUE){
                     if(iterations > 0) {
                         fprintf(stdout, "%i\n", (int)loops);
                     } else {
                         fprintf(stdout, "%i\n", (int)n);
                     }
+                } else {
+                    fprintf(stdout, "\n");
                 }
                 t = testFunction->time(loops, &status);
                 if(U_FAILURE(status)){
@@ -431,11 +433,17 @@ UBool UPerfTest::runTestLoop( char* testname, char* par )
                 }
                 events = testFunction->getEventsPerIteration();
                 //print info only in verbose mode
-                if(verbose==true){
+                if(verbose==TRUE){
                     if(events == -1){
                         fprintf(stdout, "= %s end: %f loops: %i operations: %li \n", name, t, (int)loops, ops);
                     }else{
                         fprintf(stdout, "= %s end: %f loops: %i operations: %li events: %li\n", name, t, (int)loops, ops, events);
+                    }
+                }else{
+                    if(events == -1){
+                        fprintf(stdout,"= %s end %f %i %li\n", name, t, (int)loops, ops);
+                    }else{
+                        fprintf(stdout,"= %s end %f %i %li %li\n", name, t, (int)loops, ops, events);
                     }
                 }
             }
@@ -457,12 +465,6 @@ UBool UPerfTest::runTestLoop( char* testname, char* par )
                             name, min_t, (int)loops, (min_t*1E9)/(loops*ops), (min_t*1E9)/(loops*events));
                 }
             }
-            else if(U_SUCCESS(status)) {
-                // Print results in ndjson format for GHA Benchmark to process.
-                fprintf(stdout,
-                        "{\"biggerIsBetter\":false,\"name\":\"%s\",\"unit\":\"ns/iter\",\"value\":%.4f}\n",
-                        name, (min_t*1E9)/(loops*ops));
-            }
             delete testFunction;
         }
         index++;
@@ -483,14 +485,14 @@ void UPerfTest::usage( void )
     }
 
     UBool save_verbose = verbose;
-    verbose = true;
+    verbose = TRUE;
     fprintf(stdout,"Test names:\n");
     fprintf(stdout,"-----------\n");
 
     int32_t index = 0;
     const char* name = NULL;
     do{
-        this->runIndexedTest( index, false, name );
+        this->runIndexedTest( index, FALSE, name );
         if (!name)
             break;
         fprintf(stdout, "%s\n", name);

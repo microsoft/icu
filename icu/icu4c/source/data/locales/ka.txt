@@ -33,7 +33,6 @@ ka{
             }
             patterns{
                 accountingFormat{"#,##0.00 ¤"}
-                accountingFormat%noCurrency{"#,##0.00"}
                 currencyFormat{"#,##0.00 ¤"}
                 decimalFormat{"#,##0.###"}
                 percentFormat{"#,##0%"}
@@ -241,16 +240,6 @@ ka{
                 "{1}, {0}",
                 "{1}, {0}",
             }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEdd",
-                "GyMMMMd",
-                "GyMMMd",
-                "GGGGGyMMdd",
-            }
             availableFormats{
                 Bh{"h B"}
                 Bhm{"h:mm B"}
@@ -267,7 +256,6 @@ ka{
                 GyMMM{"MMM, y G"}
                 GyMMMEd{"E, d MMM, y G"}
                 GyMMMd{"d MMM, y G"}
-                GyMd{"d.M.y GGGGG"}
                 H{"HH"}
                 Hm{"HH:mm"}
                 Hms{"HH:mm:ss"}
@@ -437,22 +425,6 @@ ka{
                 "{1}, {0}",
                 "{1}, {0}",
             }
-            DateTimePatterns%atTime{
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-            }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "yMMMMEEEEdd",
-                "yMMMMd",
-                "yMMMd",
-                "yyMMdd",
-            }
             appendItems{
                 Timezone{"{0} {1}"}
             }
@@ -472,7 +444,6 @@ ka{
                 GyMMM{"MMM. y G"}
                 GyMMMEd{"E, d MMM. y G"}
                 GyMMMd{"d MMM. y G"}
-                GyMd{"d.M.y GGGGG"}
                 H{"HH"}
                 Hm{"HH:mm"}
                 Hms{"HH:mm:ss"}
@@ -1862,19 +1833,5 @@ ka{
         UK{"ბრიტანული"}
         US{"ამერიკული"}
         metric{"მეტრული"}
-    }
-    personNames{
-        nameOrderLocales{
-            givenFirst{
-                "und",
-                "ka",
-            }
-            surnameFirst{
-                "ko",
-                "vi",
-                "yue",
-                "zh",
-            }
-        }
     }
 }

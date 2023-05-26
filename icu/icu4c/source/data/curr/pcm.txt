@@ -331,10 +331,6 @@ pcm{
             "LRD",
             "Laibẹ́riá Dọ́la",
         }
-        LSL{
-            "LSL",
-            "Lẹsóto Lọ́ti",
-        }
         LYD{
             "LYD",
             "Líbia Dínar",
@@ -608,7 +604,7 @@ pcm{
             "Íst Karíbián Dọla",
         }
         XOF{
-            "F CFA",
+            "CFA",
             "Wẹ́st Afríká Sẹ́fa Frank",
         }
         XPF{
@@ -617,7 +613,7 @@ pcm{
         }
         XXX{
             "¤",
-            "Mọní Wé Pípul Nọ́ No",
+            "Mọní Wé Pípol Nọ No",
         }
         YER{
             "YER",
@@ -1059,10 +1055,6 @@ pcm{
             one{"Laibẹ́riá dọ́la"}
             other{"Laibẹ́riá dọ́las"}
         }
-        LSL{
-            one{"Lẹsóto Lọ́ti"}
-            other{"Lẹsóto Lọ́tis"}
-        }
         LYD{
             one{"Líbia Dínar"}
             other{"Líbia Dínar"}
@@ -1344,8 +1336,8 @@ pcm{
             other{"Frẹ́nch Poliníshiá franks"}
         }
         XXX{
-            one{"mọní wé pípul nọ́ no"}
-            other{"(mọní wé pípul nọ́ no)"}
+            one{"Amaúnt dẹm raít fọ mọní wé pípol nọ no"}
+            other{"(mọní wé pípol nọ no)"}
         }
         YER{
             one{"Yẹ́mẹ́n rial"}

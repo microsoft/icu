@@ -12,11 +12,11 @@ data. The modifications are generally for the following reasons:
    ICU tests to fail as they don't meet the ICU expectations.
  - Removal of the yue-* locales.
 
-diff --git a/icu4c/source/test/cintltst/cldrtest.c b/icu4c/source/test/cintltst/cldrtest.c
-index 9bd36e208b..576bafba07 100644
---- a/icu4c/source/test/cintltst/cldrtest.c
-+++ b/icu4c/source/test/cintltst/cldrtest.c
-@@ -963,6 +963,25 @@ static void VerifyTranslation(void) {
+diff --git a/icu/icu4c/source/test/cintltst/cldrtest.c b/icu/icu4c/source/test/cintltst/cldrtest.c
+index e50ccb3cd1f9431afbd15c7d8a21a34632131c89..179539d5178b5cfd8b5350043c539e89e8740185 100644
+--- a/icu/icu4c/source/test/cintltst/cldrtest.c
++++ b/icu/icu4c/source/test/cintltst/cldrtest.c
+@@ -957,6 +957,25 @@ static void VerifyTranslation(void) {
          //else if (uprv_strncmp(currLoc,"bem",3) == 0 || uprv_strncmp(currLoc,"mgo",3) == 0 || uprv_strncmp(currLoc,"nl",2) == 0) {
          //    log_verbose("skipping test for %s, some month and country names known to use aux exemplars\n", currLoc);
          //}
@@ -42,10 +42,10 @@ index 9bd36e208b..576bafba07 100644
          else {
              UChar langBuffer[128];
              int32_t langSize;
-@@ -1253,7 +1272,14 @@ static void TestExemplarSet(void){
+@@ -1231,7 +1250,14 @@ static void TestExemplarSet(void){
              }
  
-             if (existsInScript == false){
+             if (existsInScript == FALSE){
 -                log_err("ExemplarSet containment failed for locale : %s\n", locale);
 +                /* MSFT Change */
 +                if (uprv_strncmp(locale, "oc", 2) == 0 || uprv_strncmp(locale, "oc_FR", 5) == 0) {
@@ -58,11 +58,11 @@ index 9bd36e208b..576bafba07 100644
              }
          }
          assertTrue("case-folded is a superset",
-diff --git a/icu4c/source/test/cintltst/cloctst.c b/icu4c/source/test/cintltst/cloctst.c
-index de2db69f4a..6d91259b37 100644
---- a/icu4c/source/test/cintltst/cloctst.c
-+++ b/icu4c/source/test/cintltst/cloctst.c
-@@ -1188,8 +1188,10 @@ typedef struct {
+diff --git a/icu/icu4c/source/test/cintltst/cloctst.c b/icu/icu4c/source/test/cintltst/cloctst.c
+index 61cfd4cb7cfeb78861932b9acd09b5743b42e483..aeb2c2a64d0f11c2d87bce4fb05fab4fc6480507 100644
+--- a/icu/icu4c/source/test/cintltst/cloctst.c
++++ b/icu/icu4c/source/test/cintltst/cloctst.c
+@@ -1177,8 +1177,10 @@ typedef struct {
  
  static const DisplayNameBracketsItem displayNameBracketsItems[] = {
      { "en", "CC", "en_CC",      "Cocos (Keeling) Islands",  "English (Cocos [Keeling] Islands)"  },
@@ -75,10 +75,10 @@ index de2db69f4a..6d91259b37 100644
      { "zh", "CC", "en_CC",      "\\u79D1\\u79D1\\u65AF\\uFF08\\u57FA\\u6797\\uFF09\\u7FA4\\u5C9B", "\\u82F1\\u8BED\\uFF08\\u79D1\\u79D1\\u65AF\\uFF3B\\u57FA\\u6797\\uFF3D\\u7FA4\\u5C9B\\uFF09" },
      { "zh", "CG", "fr_CG",      "\\u521A\\u679C\\uFF08\\u5E03\\uFF09",                             "\\u6CD5\\u8BED\\uFF08\\u521A\\u679C\\uFF3B\\u5E03\\uFF3D\\uFF09" },
      { NULL, NULL, NULL,         NULL,                       NULL                                 }
-diff --git a/icu4c/source/test/intltest/apicoll.cpp b/icu4c/source/test/intltest/apicoll.cpp
-index 6d8f5429e0..50655fe405 100644
---- a/icu4c/source/test/intltest/apicoll.cpp
-+++ b/icu4c/source/test/intltest/apicoll.cpp
+diff --git a/icu/icu4c/source/test/intltest/apicoll.cpp b/icu/icu4c/source/test/intltest/apicoll.cpp
+index 88eefa92b98ee35051dc44011ee1e4d932123f19..249d98747d92e677c5f78b81ce06ad61042c307f 100644
+--- a/icu/icu4c/source/test/intltest/apicoll.cpp
++++ b/icu/icu4c/source/test/intltest/apicoll.cpp
 @@ -1664,18 +1664,20 @@ void CollationAPITest::TestGetLocale() {
      { "zh_TW", "zh_Hant_TW", "zh@collation=stroke" },
      { "zh_TW@collation=pinyin", "zh_Hant_TW@collation=pinyin", "zh" },
@@ -111,16 +111,15 @@ index 6d8f5429e0..50655fe405 100644
    };
  
    u_unescape(rules, rlz, 256);
-diff --git a/icu4c/source/test/intltest/dtptngts.cpp b/icu4c/source/test/intltest/dtptngts.cpp
-index 6c5acef234..61818ec2ac 100644
---- a/icu4c/source/test/intltest/dtptngts.cpp
-+++ b/icu4c/source/test/intltest/dtptngts.cpp
-@@ -1401,8 +1401,25 @@ void IntlTestDateTimePatternGeneratorAPI::testJjMapping() {
+diff --git a/icu/icu4c/source/test/intltest/dtptngts.cpp b/icu/icu4c/source/test/intltest/dtptngts.cpp
+index faa850aa8384c09720fed2b637d82d11a2608b2c..dc86355f93fa68f509a0023dc95fc17a548170c1 100644
+--- a/icu/icu4c/source/test/intltest/dtptngts.cpp
++++ b/icu/icu4c/source/test/intltest/dtptngts.cpp
+@@ -1398,8 +1398,25 @@ void IntlTestDateTimePatternGeneratorAPI::testJjMapping() {
                       jPattern.extract(0, jPattern.length(), jpBuf, 32);
                       const char* dfmtCalType = (dfmt->getCalendar())->getType();
                       const char* validLoc = dfmt->getLocaleID(ULOC_VALID_LOCALE, status);
 -                     errln("ERROR: locale %s (valid %s), expected j resolved char %s to occur in short time pattern '%s' for %s (best pattern: '%s')",
--                             localeID, validLoc, jcBuf, spBuf, dfmtCalType, jpBuf);
 +                     /* MSFT Change: Begin */
 +                     if (
 +                        uprv_strncmp(localeID, "byn", 3) == 0 || uprv_strncmp(localeID, "byn_ER", 6) == 0   ||
@@ -137,16 +136,16 @@ index 6c5acef234..61818ec2ac 100644
 +                     }
 +                     else {
 +                         errln("ERROR: locale %s (valid %s), expected j resolved char %s to occur in short time pattern '%s' for %s (best pattern: '%s')",
-+                              localeID, validLoc, jcBuf, spBuf, dfmtCalType, jpBuf);
+                              localeID, validLoc, jcBuf, spBuf, dfmtCalType, jpBuf);
 +                     }
 +                     /* MSFT Change: End */
                   }
                   break;
               }
-diff --git a/icu4c/source/test/intltest/locnmtst.cpp b/icu4c/source/test/intltest/locnmtst.cpp
-index 811988b5ac..00e4030d8b 100644
---- a/icu4c/source/test/intltest/locnmtst.cpp
-+++ b/icu4c/source/test/intltest/locnmtst.cpp
+diff --git a/icu/icu4c/source/test/intltest/locnmtst.cpp b/icu/icu4c/source/test/intltest/locnmtst.cpp
+index 61baca2e4634a08d83a4dbdd69990df7c9bf2471..68d55de958e0228a393cedc0fa06120c54753603 100644
+--- a/icu/icu4c/source/test/intltest/locnmtst.cpp
++++ b/icu/icu4c/source/test/intltest/locnmtst.cpp
 @@ -68,10 +68,14 @@ void LocaleDisplayNamesTest::runIndexedTest(int32_t index, UBool exec, const cha
      switch (index) {
  #if !UCONFIG_NO_FORMATTING
@@ -164,10 +163,10 @@ index 811988b5ac..00e4030d8b 100644
          TESTCASE(5, TestUldnWithKeywordsAndEverything);
          TESTCASE(6, TestUldnComponents);
          TESTCASE(7, TestRootEtc);
-diff --git a/icu4c/source/test/intltest/numfmtst.cpp b/icu4c/source/test/intltest/numfmtst.cpp
-index 2e18592d30..cf23bb841a 100644
---- a/icu4c/source/test/intltest/numfmtst.cpp
-+++ b/icu4c/source/test/intltest/numfmtst.cpp
+diff --git a/icu/icu4c/source/test/intltest/numfmtst.cpp b/icu/icu4c/source/test/intltest/numfmtst.cpp
+index dc193f2cc42b26d0c544e8c24701d4e4aefeff92..95157d1d69069aabe2f814aef0e709e2f180dcb8 100644
+--- a/icu/icu4c/source/test/intltest/numfmtst.cpp
++++ b/icu/icu4c/source/test/intltest/numfmtst.cpp
 @@ -199,7 +199,9 @@ void NumberFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &n
    TESTCASE_AUTO(Test11640_getAffixes);
    TESTCASE_AUTO(Test11649_toPatternWithMultiCurrency);
@@ -179,3 +178,6 @@ index 2e18592d30..cf23bb841a 100644
    TESTCASE_AUTO(Test11735_ExceptionIssue);
    TESTCASE_AUTO(Test11035_FormatCurrencyAmount);
    TESTCASE_AUTO(Test11318_DoubleConversion);
+@@ -1022,19 +1024,21 @@ void NumberFormatTest::TestCurrencyObject() {
+         return;
+     }

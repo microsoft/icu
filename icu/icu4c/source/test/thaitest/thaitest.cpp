@@ -28,7 +28,7 @@
  * breaks.
  *
  * NOTE: by it's very nature, Thai word breaking is not exact, so it is
- * expected that this program will always report some differences.
+ * exptected that this program will always report some differences.
  */
 
 /*
@@ -128,7 +128,7 @@ private:
     // spaceCount - the number of UChars in the spaces array
     // noSpaces   - the address of the UChar array for the text without spaces
     // noSpaceCount - the number of UChars in the noSpaces array
-    // returns      - true if all breaks match, false otherwise
+    // returns      - true if all breaks match, FALSE otherwise
     UBool compareWordBreaks(const UChar *spaces, int32_t spaceCount,
                             const UChar *noSpaces, int32_t noSpaceCount);
 
@@ -208,7 +208,7 @@ inline int32_t ThaiWordbreakTest::getWordCount()
 }
 
 /*
- * This method does the actual break comparison and reports the results.
+ * This method does the acutal break comparison and reports the results.
  * It uses a SpaceBreakIterator to iterate over the text with spaces,
  * and a word instance of a Thai BreakIterator to iterate over the text
  * without spaces.
@@ -216,7 +216,7 @@ inline int32_t ThaiWordbreakTest::getWordCount()
 UBool ThaiWordbreakTest::compareWordBreaks(const UChar *spaces, int32_t spaceCount,
                                            const UChar *noSpaces, int32_t noSpaceCount)
 {
-    UBool result = true;
+    UBool result = TRUE;
     Locale thai("th");
     UCharCharacterIterator *noSpaceIter = new UCharCharacterIterator(noSpaces, noSpaceCount);
     UErrorCode status = U_ZERO_ERROR;
@@ -230,7 +230,7 @@ UBool ThaiWordbreakTest::compareWordBreaks(const UChar *spaces, int32_t spaceCou
     int32_t nextSpaceBreak = 0;
     int32_t iterCount = 0;
     
-    while (true) {
+    while (TRUE) {
         nextSpaceBreak = spaceIter.next();
         nextBreak = breakIter->next();
         
@@ -248,11 +248,11 @@ UBool ThaiWordbreakTest::compareWordBreaks(const UChar *spaces, int32_t spaceCou
                nextSpaceBreak != BreakIterator::DONE && nextBreak != BreakIterator::DONE) {
             if (nextSpaceBreak < nextBreak) {
                 breakNotFound(nextSpaceBreak);
-                result = false;
+                result = FALSE;
                 nextSpaceBreak = spaceIter.next();
             } else if (nextSpaceBreak > nextBreak) {
                 foundInvalidBreak(nextBreak);
-                result = false;
+                result = FALSE;
                 nextBreak = breakIter->next();
             }
         }
@@ -441,16 +441,16 @@ int main(int argc, char **argv)
 {
     char *fileName = "space.txt";
     int arg = 1;
-    UBool verbose = false;
-    UBool generate = false;
+    UBool verbose = FALSE;
+    UBool generate = FALSE;
 
     if (argc >= 2 && strcmp(argv[1], "-generate") == 0) {
-        generate = true;
+        generate = TRUE;
         arg += 1;
     }
 
     if (argc >= 2 && strcmp(argv[1], "-verbose") == 0) {
-        verbose = true;
+        verbose = TRUE;
         arg += 1;
     }
 
@@ -496,7 +496,7 @@ int main(int argc, char **argv)
  * word instance of a BreakIterator.
  */
 SpaceBreakIterator::SpaceBreakIterator(const UChar *text, int32_t count)
-  : fBreakIter(0), fText(text), fTextCount(count), fWordCount(0), fSpaceCount(0), fDone(false)
+  : fBreakIter(0), fText(text), fTextCount(count), fWordCount(0), fSpaceCount(0), fDone(FALSE)
 {
     UCharCharacterIterator *iter = new UCharCharacterIterator(text, count);
     UErrorCode status = U_ZERO_ERROR;
@@ -534,7 +534,7 @@ int32_t SpaceBreakIterator::next()
         nextBreak = fBreakIter->next();
         
         if (nextBreak == BreakIterator::DONE) {
-            fDone = true;
+            fDone = TRUE;
             return BreakIterator::DONE;
         }
     }

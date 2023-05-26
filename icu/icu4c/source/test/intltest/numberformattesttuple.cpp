@@ -137,9 +137,9 @@ static void strToInt(
     }
     int32_t len = str.length();
     int32_t start = 0;
-    UBool neg = false;
+    UBool neg = FALSE;
     if (len > 0 && str[0] == 0x2D) { // negative
-        neg = true;
+        neg = TRUE;
         start = 1;
     }
     if (start == len) {
@@ -192,7 +192,7 @@ static void doubleToStr(
         const void *doublePtr, UnicodeString &appendTo) {
     char buffer[256];
     double x = *static_cast<const double *>(doublePtr);
-    snprintf(buffer, sizeof(buffer), "%f", x);
+    sprintf(buffer, "%f", x);
     appendTo.append(buffer);
 }
 
@@ -346,19 +346,19 @@ NumberFormatTestTuple::setField(
         const UnicodeString &fieldValue,
         UErrorCode &status) {
     if (U_FAILURE(status)) {
-        return false;
+        return FALSE;
     }
     if (fieldId == kNumberFormatTestTupleFieldCount) {
         status = U_ILLEGAL_ARGUMENT_ERROR;
-        return false;
+        return FALSE;
     }
     gFieldData[fieldId].ops->toValue(
             fieldValue, getMutableFieldAddress(fieldId), status);
     if (U_FAILURE(status)) {
-        return false;
+        return FALSE;
     }
-    setFlag(fieldId, true);
-    return true;
+    setFlag(fieldId, TRUE);
+    return TRUE;
 }
 
 UBool
@@ -366,20 +366,20 @@ NumberFormatTestTuple::clearField(
         ENumberFormatTestTupleField fieldId, 
         UErrorCode &status) {
     if (U_FAILURE(status)) {
-        return false;
+        return FALSE;
     }
     if (fieldId == kNumberFormatTestTupleFieldCount) {
         status = U_ILLEGAL_ARGUMENT_ERROR;
-        return false;
+        return FALSE;
     }
-    setFlag(fieldId, false);
-    return true;
+    setFlag(fieldId, FALSE);
+    return TRUE;
 }
 
 void
 NumberFormatTestTuple::clear() {
     for (int32_t i = 0; i < kNumberFormatTestTupleFieldCount; ++i) {
-        setFlag(i, false);
+        setFlag(i, FALSE);
     }
 }
 
@@ -387,7 +387,7 @@ UnicodeString &
 NumberFormatTestTuple::toString(
         UnicodeString &appendTo) const {
     appendTo.append("{");
-    UBool first = true;
+    UBool first = TRUE;
     for (int32_t i = 0; i < kNumberFormatTestTupleFieldCount; ++i) {
         if (!isFlag(i)) {
             continue;
@@ -395,7 +395,7 @@ NumberFormatTestTuple::toString(
         if (!first) {
             appendTo.append(", ");
         }
-        first = false;
+        first = FALSE;
         appendTo.append(gFieldData[i].name);
         appendTo.append(": ");
         gFieldData[i].ops->toString(getFieldAddress(i), appendTo);

@@ -373,7 +373,7 @@ void readzoneinfo(ifstream& file, ZoneInfo& info, bool is64bitData) {
                     }
                 } else if (transitionTimes[i] > HIGHEST_TIME32) {
                     // Skipping the rest of the transition data.  We cannot put such
-                    // transitions into zoneinfo.res, because data is limited to signed
+                    // transitions into zoneinfo.res, because data is limited to singed
                     // 32bit int by the ICU resource bundle.
                     break;
                 } else {
@@ -774,16 +774,16 @@ struct FinalRulePart {
     // wall time, local standard time, and GMT standard time.
     // Here is how the isstd & isgmt flags are set by zic:
     //| case 's':       /* Standard */
-    //|         rp->r_todisstd = true;
-    //|         rp->r_todisgmt = false;
+    //|         rp->r_todisstd = TRUE;
+    //|         rp->r_todisgmt = FALSE;
     //| case 'w':       /* Wall */
-    //|         rp->r_todisstd = false;
-    //|         rp->r_todisgmt = false;
+    //|         rp->r_todisstd = FALSE;
+    //|         rp->r_todisgmt = FALSE;
     //| case 'g':       /* Greenwich */
     //| case 'u':       /* Universal */
     //| case 'z':       /* Zulu */
-    //|         rp->r_todisstd = true;
-    //|         rp->r_todisgmt = true;
+    //|         rp->r_todisstd = TRUE;
+    //|         rp->r_todisgmt = TRUE;
     bool isstd;
     bool isgmt;
 
@@ -1047,7 +1047,7 @@ void ZoneInfo::print(ostream& os, const string& id) const {
             os << " }" << endl;
         }
 
-        // 32bit transitions
+        // 32bit transtions
         if (trn != transitions.end() && trn->time < HIGHEST_TIME32) {
             os << "    trans:intvector { ";
             for (first = true; trn != transitions.end() && trn->time < HIGHEST_TIME32; ++trn) {
@@ -1060,7 +1060,7 @@ void ZoneInfo::print(ostream& os, const string& id) const {
             os << " }" << endl;
         }
 
-        // post 32bit transitions
+        // post 32bit transitons
         if (trn != transitions.end()) {
             os << "    transPost32:intvector { ";
             for (first = true; trn != transitions.end(); ++trn) {
