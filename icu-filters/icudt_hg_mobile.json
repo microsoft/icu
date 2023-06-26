@@ -230,7 +230,8 @@
         "brkitr_dictionaries": "exclude",
         "brkitr_rules": {
             "whitelist": ["char"]
-        }
+        },
+        "coll_tree": "exclude"
     },
     "resourceFilters": [
         {
@@ -259,16 +260,6 @@
                 "-/ExemplarCharactersNumbers",
                 "-/ExemplarCharactersPunctuation",
                 "-/MoreInformation"
-            ]
-        },
-        {
-            "categories": ["coll_tree"],
-            "rules": [
-                "-/*/*",
-                "+/collations/default",
-                "+/collations/standard",
-                "+/collations/private-kana",
-                "-/UCARules"
             ]
         },
         {
