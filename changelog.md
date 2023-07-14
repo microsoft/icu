@@ -2,6 +2,10 @@
 
 ## ICU 72.1.0.1
 
+Updated collations for zh locale required for GB18030-2022 certification.
+
+## ICU 72.1.0.0
+
 Changes/modifications compared to the upstream `maint/maint-72` branch.
 
 #### General changes:
