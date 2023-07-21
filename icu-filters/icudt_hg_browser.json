@@ -236,6 +236,7 @@
         {
             "categories": ["locales_tree"],
             "rules": [
+                "-/calendar/*",
                 "-/characterLabel",
                 "-/measurementSystemNames",
                 "-/listPattern",
@@ -255,31 +256,6 @@
                 "-/ExemplarCharactersNumbers",
                 "-/ExemplarCharactersPunctuation",
                 "-/MoreInformation"
-            ]
-        },
-        {
-            "categories": ["locales_tree"],
-            "files": {
-                "blacklist": ["root"]
-            },
-            "rules": [
-                "-/calendar/*",
-                "+/calendar/default",
-                "+/calendar/gregorian",
-                "+/calendar/generic"
-            ]
-        },
-        {
-            "categories": ["locales_tree"],
-            "files": {
-                "whitelist": ["ja"]
-            },
-            "rules": [
-                "-/calendar/*",
-                "+/calendar/default",
-                "+/calendar/gregorian",
-                "+/calendar/generic",
-                "+/calendar/japanese"
             ]
         },
         {
