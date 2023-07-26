@@ -1962,6 +1962,15 @@ uloc_getISO3Language(const char* localeID)
 }
 
 U_CAPI const char*  U_EXPORT2
+uloc_getISO3LanguageByLangCode(const char* langCode)
+{
+    int16_t offset = _findIndex(LANGUAGES, langCode);
+    if (offset < 0)
+        return "";
+    return LANGUAGES_3[offset];
+}
+
+U_CAPI const char*  U_EXPORT2
 uloc_getISO3Country(const char* localeID)
 {
     int16_t offset;
@@ -1976,6 +1985,16 @@ uloc_getISO3Country(const char* localeID)
     if (U_FAILURE(err))
         return "";
     offset = _findIndex(COUNTRIES, cntry);
+    if (offset < 0)
+        return "";
+
+    return COUNTRIES_3[offset];
+}
+
+U_CAPI const char*  U_EXPORT2
+uloc_getISO3CountryByCountryCode(const char* countryCode)
+{
+    int16_t offset = _findIndex(COUNTRIES, countryCode);
     if (offset < 0)
         return "";
 
