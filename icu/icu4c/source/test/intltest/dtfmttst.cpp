@@ -171,15 +171,18 @@ void DateFormatTest::TestPatterns() {
         {UDAT_ABBR_MONTH_WEEKDAY_DAY, "MMMEd","en",u"EEE, MMM d"},
         {UDAT_MONTH_WEEKDAY_DAY, "MMMMEEEEd","en",u"EEEE, MMMM d"},
 
-        {UDAT_HOUR, "j", "en", u"h\u202Fa"}, // (fixed expected result per ticket 6872<-6626)
+        /*MSFT-Change : Restore /u202f to ascii space*/
+        {UDAT_HOUR, "j", "en", u"h a"}, // (fixed expected result per ticket 6872<-6626)
         {UDAT_HOUR24, "H", "en", u"HH"}, // (fixed expected result per ticket 6872<-6626
 
         {UDAT_MINUTE, "m", "en", u"m"},
-        {UDAT_HOUR_MINUTE, "jm","en",u"h:mm\u202Fa"}, // (fixed expected result per ticket 6872<-7180)
+        /*MSFT-Change : Restore /u202f to ascii space*/
+        {UDAT_HOUR_MINUTE, "jm","en",u"h:mm a"}, // (fixed expected result per ticket 6872<-7180)
         {UDAT_HOUR24_MINUTE, "Hm", "en", u"HH:mm"}, // (fixed expected result per ticket 6872<-6626)
 
         {UDAT_SECOND, "s", "en", u"s"},
-        {UDAT_HOUR_MINUTE_SECOND, "jms","en",u"h:mm:ss\u202Fa"}, // (fixed expected result per ticket 6872<-7180)
+        /*MSFT-Change : Restore /u202f to ascii space*/
+        {UDAT_HOUR_MINUTE_SECOND, "jms","en",u"h:mm:ss a"}, // (fixed expected result per ticket 6872<-7180)
         {UDAT_HOUR24_MINUTE_SECOND, "Hms","en",u"HH:mm:ss"}, // (fixed expected result per ticket 6872<-6626)
         {UDAT_MINUTE_SECOND, "ms", "en", u"mm:ss"}, // (fixed expected result per ticket 6872<-6626)
 
