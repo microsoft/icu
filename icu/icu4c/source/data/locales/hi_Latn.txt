@@ -210,8 +210,13 @@ hi_Latn{
     calendar{
         chinese{
             availableFormats{
+                Ehm{"E h:mm a"}
+                Ehms{"E h:mm:ss a"}
                 GyMMM{"MMM r(U)"}
                 GyMMMEd{"E, d MMM r(U)"}
+                h{"h a"}
+                hm{"h:mm a"}
+                hms{"h:mm:ss a"}
                 yMd{"dd/MM/r"}
                 yyyyMMM{"MMM r(U)"}
                 yyyyMMMEd{"E, d MMM r(U)"}
@@ -241,6 +246,11 @@ hi_Latn{
             }
             availableFormats{
                 Bhms{"h:mm.ss B"}
+                Ehm{"E, h:mm a"}
+                Ehms{"E, h:mm:ss a"}
+                h{"h a"}
+                hm{"h:mm a"}
+                hms{"h:mm:ss a"}
                 yyyyMd{"d/M/y GGGGG"}
             }
             intervalFormats{
@@ -313,6 +323,8 @@ hi_Latn{
                 "yMMdd",
             }
             availableFormats{
+                Ehm{"E, h:mm a"}
+                Ehms{"E, h:mm:ss a"}
                 Gy{"G y"}
                 GyMMM{"G y MMM"}
                 GyMMMEd{"G y, dd MMM, E"}

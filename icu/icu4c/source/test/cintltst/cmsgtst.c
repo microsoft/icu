@@ -44,7 +44,8 @@ static const char* const txt_testResultStrings[] = {
     "Quotes ', {, a 1 {0}",
     "Quotes ', {, a 1 {0}",
     "You deposited 1 times an amount of $3,456.00 on 1/12/70",
-    "{2,time,full}, for 3,456, 1 is 5:46:40\\u202FAM Pacific Standard Time and full date is Monday, January 12, 1970",
+    /*MSFT-Change: Replace NNBSP with ascii space*/
+    "{2,time,full}, for 3,456, 1 is 5:46:40 AM Pacific Standard Time and full date is Monday, January 12, 1970",
     "{1,number,percent} for 1 is 345,600%"
 };
 

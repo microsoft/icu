@@ -494,7 +494,7 @@ void DateIntervalFormatTest::testFormat() {
 
         "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EddMMy", "Wed, 10/10/2007\\u2009\\u2013\\u2009Fri, 10/10/2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmm", "10/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmm", "10/10/2007, 10:10 AM\\u2009\\u2013\\u200910/10/2008, 10:10 AM",
 
         "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmmzz", "10/10/2007, 10:10\\u202FAM PDT\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM PDT",
 
@@ -631,7 +631,7 @@ void DateIntervalFormatTest::testFormat() {
 
         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EddMMy", "Sat, 11/10/2007\\u2009\\u2013\\u2009Tue, 11/20/2007",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmm", "11/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmm", "11/10/2007, 10:10 AM\\u2009\\u2013\\u200911/20/2007, 10:10 AM",
 
         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmmzz", "11/10/2007, 10:10\\u202FAM PST\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM PST",
 
@@ -819,7 +819,7 @@ void DateIntervalFormatTest::testFormat() {
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "EEddMMyyyy", "Wed, 01/10/2007",
 
 
-        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmm", "10:10\\u202FAM",
+        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmm", "10:10 AM",
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "HHmm", "10:10",
 
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmmzz", "10:10\\u202FAM PST",
@@ -2381,7 +2381,8 @@ void DateIntervalFormatTest::testTicket21939() {
         const DateFormat* df = dif->getDateFormat();
         const SimpleDateFormat* sdf = dynamic_cast<const SimpleDateFormat*>(df);
         UnicodeString pattern;
-        assertEquals("Wrong pattern", u"M/d/r, h:mm\u202Fa", sdf->toPattern(pattern));
+        /*MSFT-CHange: Replace NNBSP with ascii space*/
+        assertEquals("Wrong pattern", u"M/d/r, h:mm a", sdf->toPattern(pattern));
     }
 }
 

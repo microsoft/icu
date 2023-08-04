@@ -398,12 +398,13 @@ typedef struct DTPtnGenOptionsData {
 } DTPtnGenOptionsData;
 enum { kTestOptionsPatLenMax = 32 };
 
+/*MSFT-Change: Replace NNBSP with ascii space*/
 static const UChar skel_Hmm[]     = u"Hmm";
 static const UChar skel_HHmm[]    = u"HHmm";
 static const UChar skel_hhmm[]    = u"hhmm";
-static const UChar patn_hcmm_a[]  = u"h:mm\u202Fa";
+static const UChar patn_hcmm_a[]  = u"h:mm a";
 static const UChar patn_HHcmm[]   = u"HH:mm";
-static const UChar patn_hhcmm_a[] = u"hh:mm\u202Fa";
+static const UChar patn_hhcmm_a[] = u"hh:mm a";
 static const UChar patn_HHpmm[]   = u"HH.mm";
 static const UChar patn_hpmm_a[]  = u"h.mm\u202Fa";
 static const UChar patn_Hpmm[]    = u"H.mm";
@@ -641,11 +642,12 @@ static void TestDateTimePatterns(void) {
     };
     // The following tests some locales in which there are differences between the
     // DateTimePatterns of various length styles.
+    /* MSFT-Change: Replace NNBSP with ascii space*/
     DTPLocaleAndResults localeAndResults[] = {
-        { "en", { u"EEEE, MMMM d, y 'at' h:mm\u202Fa", // long != medium
-                  u"MMMM d, y 'at' h:mm\u202Fa",
-                  u"MMM d, y, h:mm\u202Fa",
-                  u"M/d/y, h:mm\u202Fa" } },
+        { "en", { u"EEEE, MMMM d, y 'at' h:mm a", // long != medium
+                  u"MMMM d, y 'at' h:mm a",
+                  u"MMM d, y, h:mm a",
+                  u"M/d/y, h:mm a" } },
         { "fr", { u"EEEE d MMMM y 'à' HH:mm", // medium != short
                   u"d MMMM y 'à' HH:mm",
                   u"d MMM y, HH:mm",
@@ -669,10 +671,10 @@ static void TestDateTimePatterns(void) {
         u"{1} _2_ {0}",
         u"{1} _3_ {0}"
     };
-    DTPLocaleAndResults enModResults = { "en", { u"EEEE, MMMM d, y _0_ h:mm\u202Fa",
-                                                 u"MMMM d, y _1_ h:mm\u202Fa",
-                                                 u"MMM d, y _2_ h:mm\u202Fa",
-                                                 u"M/d/y _3_ h:mm\u202Fa" }
+    DTPLocaleAndResults enModResults = { "en", { u"EEEE, MMMM d, y _0_ h:mm a",
+                                                 u"MMMM d, y _1_ h:mm a",
+                                                 u"MMM d, y _2_ h:mm a",
+                                                 u"M/d/y _3_ h:mm a" }
     };
 
     // Test various locales with standard data
@@ -803,7 +805,7 @@ static void TestRegionOverride(void) {
     } RegionOverrideTest;
 
     const RegionOverrideTest testCases[] = {
-        { "en_US",           u"h:mm\u202fa", UDAT_HOUR_CYCLE_12 },
+        { "en_US",           u"h:mm a", UDAT_HOUR_CYCLE_12 },
         { "en_GB",           u"HH:mm",  UDAT_HOUR_CYCLE_23 },
         { "en_US@rg=GBZZZZ", u"HH:mm",  UDAT_HOUR_CYCLE_23 },
         { "en_US@hours=h23", u"HH:mm",  UDAT_HOUR_CYCLE_23 },

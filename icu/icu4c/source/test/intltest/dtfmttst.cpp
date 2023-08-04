@@ -171,18 +171,15 @@ void DateFormatTest::TestPatterns() {
         {UDAT_ABBR_MONTH_WEEKDAY_DAY, "MMMEd","en",u"EEE, MMM d"},
         {UDAT_MONTH_WEEKDAY_DAY, "MMMMEEEEd","en",u"EEEE, MMMM d"},
 
-        /*MSFT-Change : Restore /u202f to ascii space*/
-        {UDAT_HOUR, "j", "en", u"h a"}, // (fixed expected result per ticket 6872<-6626)
+        {UDAT_HOUR, "j", "en", u"h\u202fa"}, // (fixed expected result per ticket 6872<-6626)
         {UDAT_HOUR24, "H", "en", u"HH"}, // (fixed expected result per ticket 6872<-6626
 
         {UDAT_MINUTE, "m", "en", u"m"},
-        /*MSFT-Change : Restore /u202f to ascii space*/
-        {UDAT_HOUR_MINUTE, "jm","en",u"h:mm a"}, // (fixed expected result per ticket 6872<-7180)
+        {UDAT_HOUR_MINUTE, "jm","en",u"h:mm\u202fa"}, // (fixed expected result per ticket 6872<-7180)
         {UDAT_HOUR24_MINUTE, "Hm", "en", u"HH:mm"}, // (fixed expected result per ticket 6872<-6626)
 
         {UDAT_SECOND, "s", "en", u"s"},
-        /*MSFT-Change : Restore /u202f to ascii space*/
-        {UDAT_HOUR_MINUTE_SECOND, "jms","en",u"h:mm:ss a"}, // (fixed expected result per ticket 6872<-7180)
+        {UDAT_HOUR_MINUTE_SECOND, "jms","en",u"h:mm:ss\u202fa"}, // (fixed expected result per ticket 6872<-7180)
         {UDAT_HOUR24_MINUTE_SECOND, "Hms","en",u"HH:mm:ss"}, // (fixed expected result per ticket 6872<-6626)
         {UDAT_MINUTE_SECOND, "ms", "en", u"mm:ss"}, // (fixed expected result per ticket 6872<-6626)
 
@@ -996,7 +993,8 @@ DateFormatTest::TestBadInput135()
       dataerrln("could not create date time instance");
       return;
     }
-    UnicodeString expected(u"March 1, 2000 at 1:23:45\u202FAM", -1);
+    /*MSFT-Change: Replace NNBSP with ascii space*/
+    UnicodeString expected(u"March 1, 2000 at 1:23:45 AM", -1);
     for (int32_t i = 0; i < strings_length;++i) {
         const char* text = strings[i];
         for (int32_t j = 0; j < looks_length;++j) {
@@ -1335,7 +1333,8 @@ DateFormatTest::TestLocaleDateFormat() // Bug 495
         DateFormat::FULL, Locale::getUS());
     UnicodeString expectedFRENCH ( u"lundi 15 septembre 1997 à 00:00:00 heure d’été du Pacifique nord-américain", -1 );
     expectedFRENCH = expectedFRENCH.unescape();
-    UnicodeString expectedUS ( u"Monday, September 15, 1997 at 12:00:00\u202FAM Pacific Daylight Time", -1 );
+    /*MSFT-Change: Replace NNBSP with ascii space*/
+    UnicodeString expectedUS ( u"Monday, September 15, 1997 at 12:00:00 AM Pacific Daylight Time", -1 );
     logln((UnicodeString)"Date set to : " + dateToString(testDate));
     UnicodeString out;
     if (dfUS == NULL || dfFrench == NULL){
@@ -5004,7 +5003,7 @@ void DateFormatTest::TestPatternFromSkeleton() {
         const UChar* const pattern;
     } TESTDATA[] = {
         // Ticket #11985
-        {Locale::getEnglish(), "jjmm", u"h:mm\u202Fa"},
+        {Locale::getEnglish(), "jjmm", u"h:mm a"},
         {Locale::getEnglish(), "JJmm", u"hh:mm"},
         {Locale::getGerman(), "jjmm", u"HH:mm"},
         {Locale::getGerman(), "JJmm", u"HH:mm"},
