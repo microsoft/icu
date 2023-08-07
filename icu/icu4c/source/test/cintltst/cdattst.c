@@ -168,7 +168,7 @@ static void TestDateFormat()
 
     /*Testing udat_format()*/
     log_verbose("\nTesting the udat_format() function of date format\n");
-    u_strcpy(temp, u"7/10/96, 4:05\u202FPM");
+    u_strcpy(temp, u"7/10/96, 4:05 PM");
     /*format using def */
     resultlength=0;
     resultlengthneeded=udat_format(def, d, NULL, resultlength, NULL, &status);
@@ -237,7 +237,7 @@ static void TestDateFormat()
 
     /*Testing parsing using udat_parse()*/
     log_verbose("\nTesting parsing using udat_parse()\n");
-    u_strcpy(temp, u"2/3/76, 2:50\u202FAM");
+    u_strcpy(temp, u"2/3/76, 2:50 AM");
     parsepos=0;
     status=U_ZERO_ERROR;
 
@@ -944,7 +944,7 @@ static void TestDateFormatCalendar() {
                 u_errorName(ec));
         goto FAIL;
     }
-    u_strcpy(uExpected, u"5:45\u202FPM");
+    u_strcpy(uExpected, u"5:45 PM");
     u_austrcpy(cbuf, uExpected);
     if (u_strlen(uExpected) != len1 || u_strncmp(uExpected, buf1, len1) != 0) {
         log_err("FAIL: udat_formatCalendar(17:45), expected: %s", cbuf);
