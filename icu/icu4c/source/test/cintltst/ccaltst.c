@@ -715,7 +715,7 @@ static void TestGetSetDateAPI()
 
     /*Testing  if setDate works fine  */
     log_verbose("\nTesting the ucal_setDate() function \n");
-    u_strcpy(temp, u"Dec 17, 1971, 11:05:28\u202FPM");
+    u_strcpy(temp, u"Dec 17, 1971, 11:05:28 PM");
     ucal_setDate(caldef,1971, UCAL_DECEMBER, 17, &status);
     if(U_FAILURE(status)){
         log_err("error in setting the calendar date : %s\n", u_errorName(status));
@@ -746,7 +746,7 @@ static void TestGetSetDateAPI()
 
     /*Testing if setDateTime works fine */
     log_verbose("\nTesting the ucal_setDateTime() function \n");
-    u_strcpy(temp, u"May 3, 1972, 4:30:42\u202FPM");
+    u_strcpy(temp, u"May 3, 1972, 4:30:42 PM");
     ucal_setDateTime(caldef,1972, UCAL_MAY, 3, 16, 30, 42, &status);
     if(U_FAILURE(status)){
         log_err("error in setting the calendar date : %s\n", u_errorName(status));

@@ -38,6 +38,11 @@ en_GB{
                 "yMMMd",
                 "yMMdd",
             }
+            availableFormats{
+                h{"h a"}
+                hm{"h:mm a"}
+                hms{"h:mm:ss a"}
+            }
             dayNames{
                 format{
                     narrow{
