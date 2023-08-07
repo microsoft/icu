@@ -1,4 +1,9 @@
 # Changelog
+## ICU 72.1.0.2
+
+- Restore NNBSP with ASCII space for English locales
+- Add en_CA official date format
+- Revert treating of @ as ALetter for word break
 
 ## ICU 72.1.0.1
 
