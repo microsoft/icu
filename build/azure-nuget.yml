@@ -15,7 +15,7 @@ stages:
   - job: BuildLinux
     pool:
       name: Azure Pipelines
-      vmImage: 'ubuntu-18.04'
+      vmImage: 'ubuntu-latest'
     workspace:
       clean: all
 

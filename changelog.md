@@ -1,4 +1,8 @@
 # Changelog
+## ICU 68.2.0.10
+#### Misc changes:
+- Add uprefs library to ICU to obtain the default locale as a full BCP47 tag [#112](https://github.com/microsoft/icu/pull/112)
+
 ## ICU 68.2.0.9
 #### Misc changes:
 - Migrate from PackageES build agents to public Microsoft hosted agents [#113](https://github.com/microsoft/icu/pull/113)
