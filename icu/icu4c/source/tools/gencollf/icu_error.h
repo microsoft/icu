@@ -4,7 +4,7 @@
 
 #include <exception>
 #include <string>
-#include <icu.h>
+#include "unicode/utypes.h"
 
 struct icu_error final : std::exception
 {

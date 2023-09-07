@@ -1,12 +1,15 @@
 // © Microsoft Corporation. All rights reserved.
 
 #pragma once
-
 #include <cassert>
 #include <cstdint>
 #include <string>
 #include <stdexcept>
 #include <system_error>
+
+#ifndef NOMINMAX
+    #define NOMINMAX
+#endif
 #include <Windows.h>
 
 inline bool try_to_utf8(std::wstring_view text, std::string& result, std::error_code& error) noexcept

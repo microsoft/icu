@@ -6,7 +6,10 @@
 #include <cstdint>
 #include <optional>
 #include <stdexcept>
-#include <icu.h>
+#include "unicode/ucol.h"
+#include "unicode/ucoleitr.h"
+#include "unicode/ustring.h"
+#include "unicode/ulocdata.h"
 #include "icu_error.h"
 
 enum class icu_resource_search_mode
