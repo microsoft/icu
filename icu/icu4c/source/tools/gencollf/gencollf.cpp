@@ -1,5 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
+#include <iostream>
 #include <array>
 #include <map>
 #include <span>
@@ -11,6 +12,65 @@
 #include "icu_cpp.h"
 #include "icu_error.h"
 #include "utf8.h"
+
+#include "unicode/udata.h"
+
+#include "uoptions.h"
+#include "unewdata.h"
+#include "ucmndata.h"
+#include "cmemory.h"
+
+static char *progName;
+static UOption options[] = {
+    UOPTION_HELP_H,                                         /* 0 */
+    UOPTION_HELP_QUESTION_MARK,                             /* 1 */
+    UOPTION_VERBOSE,                                        /* 2 */
+    {"colldatadir", NULL, NULL, NULL, 'r', UOPT_REQUIRES_ARG, 0}, /* 3 */
+    {"out", NULL, NULL, NULL, 'o', UOPT_REQUIRES_ARG, 0}, /* 4 */
+    UOPTION_ICUDATADIR,                                   /* 5 */
+    UOPTION_DESTDIR,                                      /* 6 */
+    UOPTION_COPYRIGHT,                                      /* 7 */
+    UOPTION_QUIET,                                          /* 8 */
+};
+
+void usageAndDie(int retCode) {
+    printf("Usage: %s [-v] [-options] -r coll-data-dir -o output-file\n", progName);
+    printf("\tRead in collation data and write out collation folding binary data\n"
+           "options:\n"
+           "\t-h or -? or --help  this usage text\n"
+           "\t-V or --version     show a version message\n"
+           "\t-c or --copyright   include a copyright notice\n"
+           "\t-v or --verbose     turn on verbose output\n"
+           "\t-q or --quiet       do not display warnings and progress\n"
+           "\t-i or --icudatadir  directory for locating any needed intermediate data files,\n"
+           "\t                    followed by path, defaults to %s\n"
+           "\t-d or --destdir     destination directory, followed by the path\n",
+           u_getDataDirectory());
+    exit(retCode);
+}
+
+//
+//  Set up the ICU data header, defined in ucmndata.h
+//
+DataHeader dh = {
+    {sizeof(DataHeader), // Struct MappedData
+        0xda,
+        0x27},
+
+    {                               // struct UDataInfo
+        sizeof(UDataInfo),          //     size
+        0,                          //     reserved
+        U_IS_BIG_ENDIAN,
+        U_CHARSET_FAMILY,
+        U_SIZEOF_UCHAR,
+        0,                          //     reserved
+
+        {0x43, 0x6c, 0x66, 0x20},   //     dataFormat="Clf "
+        {0xff, 0, 0, 0},            //     formatVersion. Filled in later with values
+                                    //     from the  builder. The values declared
+                                    //     here should never appear in any real data.
+        {15, 1, 0, 0}               //     dataVersion (Unicode version)
+    }};
 
 namespace
 {
@@ -480,11 +540,109 @@ namespace
         fflush(stdout);
 
         run_locale("root-u-co-search", UCollationStrength::UCOL_PRIMARY);
+
+        /*
+        size_t bytesWritten;
+        UNewDataMemory *pData;
+        pData = udata_create(outDir, NULL, outFileName, &(dh.info), copyright, &status);
+        if (U_FAILURE(status)) {
+            fprintf(stderr, "gencfu: Could not open output file \"%s\", \"%s\"\n", outFileName,
+                    u_errorName(status));
+            exit(status);
+        }
+
+        //  Write the data itself.
+        udata_writeBlock(pData, outData, outDataSize);
+        // finish up
+        bytesWritten = udata_finish(pData, &status);
+        if (U_FAILURE(status)) {
+            fprintf(stderr, "gencfu: Error %d writing the output file\n", status);
+            exit(status);
+        }
+
+        if (bytesWritten != outDataSize) {
+            fprintf(stderr, "gencfu: Error writing to output file \"%s\"\n", outFileName);
+            exit(-1);
+        }
+        */
     }
 }
 
-int main()
-{
+int main(/*int argc, char **argv*/) {
+    // std::cout << "help\n";
+    // UErrorCode status = U_ZERO_ERROR;
+    // const char *collDataDir = nullptr;
+    // const char *outFileName = nullptr;
+    // const char *outDir = nullptr;
+    // const char *copyright = nullptr;
+
+    // //
+    // // Pick up and check the command line arguments,
+    // //    using the standard ICU tool utils option handling.
+    // //
+    // U_MAIN_INIT_ARGS(argc, argv);
+    // progName = argv[0];
+    // argc = u_parseArgs(argc, argv, UPRV_LENGTHOF(options), options);
+    // if (argc < 0) {
+    //     // Unrecognized option
+    //     fprintf(stderr, "error in command line argument \"%s\"\n", argv[-argc]);
+    // }
+    // if (options[0].doesOccur || options[1].doesOccur) {
+    //     //  -? or -h for help.
+    //     usageAndDie(0);
+    // }
+    // if (!(options[3].doesOccur && options[4].doesOccur)) {
+    //     fprintf(stderr, "collation-data-dir and output-file must all be specified.\n");
+    //     usageAndDie(U_ILLEGAL_ARGUMENT_ERROR);
+    // }
+    // collDataDir = options[3].value;
+    // outFileName = options[4].value;
+
+    // if (options[5].doesOccur) {
+    //     u_setDataDirectory(options[5].value);
+    // }
+    // /* Combine the directory with the file name */
+    // if (options[6].doesOccur) {
+    //     outDir = options[6].value;
+    // }
+    // if (options[7].doesOccur) {
+    //     copyright = U_COPYRIGHT_STRING;
+    // }
+
+    // //
+    // //  Create the output file
+    // //
+    // size_t bytesWritten;
+    // UNewDataMemory *pData;
+    // pData = udata_create(outDir, NULL, outFileName, &(dh.info), copyright, &status);
+    // if (U_FAILURE(status)) {
+    //     fprintf(stderr, "gencollf: Could not open output file \"%s\", \"%s\"\n", outFileName,
+    //             u_errorName(status));
+    //     exit(status);
+    // }
+
+    // char msg[1024];
+
+    // /* write message with just the name */
+    // snprintf(msg, sizeof(msg), "gencollf writes dummy %s, see uconfig.h", outFileName);
+    // fprintf(stderr, "%s\n", msg);
+
+    // //  Write the data itself.
+    // udata_writeBlock(pData, msg, strlen(msg));
+    // // finish up
+    // bytesWritten = udata_finish(pData, &status);
+    // if (U_FAILURE(status)) {
+    //     fprintf(stderr, "gencollf: Error %d writing the output file\n", status);
+    //     exit(status);
+    // }
+
+    // fwprintf(stderr, L"gencollf: written output file");
+    // /*
+    // if (bytesWritten != outDataSize) {
+    //     fprintf(stderr, "gencfu: Error writing to output file \"%s\"\n", outFileName);
+    //     exit(-1);
+    // }
+    // */
     try
     {
         run();

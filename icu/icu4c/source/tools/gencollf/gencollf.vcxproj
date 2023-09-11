@@ -74,7 +74,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="program.cpp" />
+    <ClCompile Include="gencollf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="icu_cpp.h" />
