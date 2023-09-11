@@ -534,10 +534,10 @@ namespace
         wprintf(L"ICU Version %u.%u.%u.%u\n", icuVersion.major, icuVersion.minor, icuVersion.milli, icuVersion.micro);
         fflush(stdout);
 
-        icu_version cldrVersion{ ulocdata_get_cldr_version_cpp() };
-        wprintf(
-            L"CLDR Version %u.%u.%u.%u\n", cldrVersion.major, cldrVersion.minor, cldrVersion.milli, cldrVersion.micro);
-        fflush(stdout);
+        // icu_version cldrVersion{ ulocdata_get_cldr_version_cpp() };
+        // wprintf(
+        //     L"CLDR Version %u.%u.%u.%u\n", cldrVersion.major, cldrVersion.minor, cldrVersion.milli, cldrVersion.micro);
+        // fflush(stdout);
 
         run_locale("root-u-co-search", UCollationStrength::UCOL_PRIMARY);
 
@@ -616,7 +616,7 @@ int main(/*int argc, char **argv*/) {
     // UNewDataMemory *pData;
     // pData = udata_create(outDir, NULL, outFileName, &(dh.info), copyright, &status);
     // if (U_FAILURE(status)) {
-    //     fprintf(stderr, "gencollf: Could not open output file \"%s\", \"%s\"\n", outFileName,
+    //     fprintf(stderr, "gencolf: Could not open output file \"%s\", \"%s\"\n", outFileName,
     //             u_errorName(status));
     //     exit(status);
     // }
@@ -624,7 +624,7 @@ int main(/*int argc, char **argv*/) {
     // char msg[1024];
 
     // /* write message with just the name */
-    // snprintf(msg, sizeof(msg), "gencollf writes dummy %s, see uconfig.h", outFileName);
+    // snprintf(msg, sizeof(msg), "gencolf writes dummy %s, see uconfig.h", outFileName);
     // fprintf(stderr, "%s\n", msg);
 
     // //  Write the data itself.
@@ -632,11 +632,11 @@ int main(/*int argc, char **argv*/) {
     // // finish up
     // bytesWritten = udata_finish(pData, &status);
     // if (U_FAILURE(status)) {
-    //     fprintf(stderr, "gencollf: Error %d writing the output file\n", status);
+    //     fprintf(stderr, "gencolf: Error %d writing the output file\n", status);
     //     exit(status);
     // }
 
-    // fwprintf(stderr, L"gencollf: written output file");
+    // fwprintf(stderr, L"gencolf: written output file");
     // /*
     // if (bytesWritten != outDataSize) {
     //     fprintf(stderr, "gencfu: Error writing to output file \"%s\"\n", outFileName);

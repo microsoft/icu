@@ -2,6 +2,7 @@
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup Label="Globals">
     <ProjectGuid>{800F101D-4E3F-412B-8015-7096B3298C64}</ProjectGuid>
+    <ProjectName>gencolf</ProjectName>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -29,21 +30,21 @@
   <!-- Options that are common to *all* configurations -->
   <ItemDefinitionGroup>
     <Midl>
-      <TypeLibraryName>$(OutDir)/gencollf.tlb</TypeLibraryName>
+      <TypeLibraryName>$(OutDir)/gencolf.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <CompileAs>Default</CompileAs>
       <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <AdditionalIncludeDirectories>..\..\..\include;..\..\common;..\toolutil;..\..\i18n;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeaderOutputFile>$(OutDir)/gencollf.pch</PrecompiledHeaderOutputFile>
+      <PrecompiledHeaderOutputFile>$(OutDir)/gencolf.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
       <ObjectFileName>$(OutDir)/</ObjectFileName>
-      <ProgramDataBaseFileName>$(OutDir)/gencollf.pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)/gencolf.pdb</ProgramDataBaseFileName>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <OutputFile>$(OutDir)/gencollf.exe</OutputFile>
+      <OutputFile>$(OutDir)/gencolf.exe</OutputFile>
       <AdditionalLibraryDirectories>..\..\..\$(IcuLibOutputDir);%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <CustomBuildStep>
@@ -74,7 +75,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="gencollf.cpp" />
+    <ClCompile Include="gencolf.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="icu_cpp.h" />
