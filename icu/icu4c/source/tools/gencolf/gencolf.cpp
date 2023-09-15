@@ -19,18 +19,18 @@
 #include "unewdata.h"
 #include "ucmndata.h"
 #include "cmemory.h"
+#include "toolutil.h"
 
 static char *progName;
 static UOption options[] = {
     UOPTION_HELP_H,                                         /* 0 */
     UOPTION_HELP_QUESTION_MARK,                             /* 1 */
     UOPTION_VERBOSE,                                        /* 2 */
-    {"colldatadir", NULL, NULL, NULL, 'r', UOPT_REQUIRES_ARG, 0}, /* 3 */
-    {"out", NULL, NULL, NULL, 'o', UOPT_REQUIRES_ARG, 0}, /* 4 */
-    UOPTION_ICUDATADIR,                                   /* 5 */
-    UOPTION_DESTDIR,                                      /* 6 */
-    UOPTION_COPYRIGHT,                                      /* 7 */
-    UOPTION_QUIET,                                          /* 8 */
+    {"out", NULL, NULL, NULL, 'o', UOPT_REQUIRES_ARG, 0},   /* 3 */
+    UOPTION_ICUDATADIR,                                     /* 4 */
+    UOPTION_DESTDIR,                                        /* 5 */
+    UOPTION_COPYRIGHT,                                      /* 6 */
+    UOPTION_QUIET,                                          /* 7 */
 };
 
 void usageAndDie(int retCode) {
@@ -455,7 +455,7 @@ namespace
         return result;
     }
 
-    void print_collation_folding_map(const std::map<std::u16string, std::u16string>& value)
+    void print_collation_folding_map(const std::map<std::u16string, std::u16string>& value, FILE* stream)
     {
         for (const auto& pair : value)
         {
@@ -470,9 +470,7 @@ namespace
                 fromDisplay = u"";
             }
 
-            wprintf(L"%s (%s) => %s (%s)\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()),
-                to_utf32_debug_string(from).c_str(), reinterpret_cast<const wchar_t*>(to.c_str()),
-                to_utf32_debug_string(to).c_str());
+            fwprintf(stream, L"\t\t%s{\"%s\"}\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()), reinterpret_cast<const wchar_t*>(to.c_str()));
             fflush(stdout);
         }
     }
@@ -496,50 +494,54 @@ namespace
         }
     }
 
-    void run_locale(const char* locale, UCollationStrength strength)
+    void run_locale(const char* locale, UCollationStrength strength, FILE* stream)
     {
-        wprintf(L"%s locale\n", locale != nullptr ? from_utf8(locale).c_str() : L"root");
+        fwprintf(stream, L"%s locale\n", locale != nullptr ? from_utf8(locale).c_str() : L"root");
 
         unique_UCollator collator{ ucol_open_cpp(locale, icu_resource_search_mode::exact_match) };
         ucol_setStrength(collator.get(), strength);
 
         {
             icu_version version{ ucol_get_version_cpp(collator.get()) };
-            wprintf(L"Collator Version %u.%u.%u.%u\n", version.major, version.minor, version.milli, version.micro);
+            fwprintf(stream, L"Collator Version %u.%u.%u.%u\n", version.major, version.minor,
+                     version.milli, version.micro);
 
             icu_version ucaVersion{ ucol_get_uca_version_cpp(collator.get()) };
-            wprintf(L"Collator UCA Version %u.%u.%u.%u\n", ucaVersion.major, ucaVersion.minor, ucaVersion.milli,
+            fwprintf(stream, L"Collator UCA Version %u.%u.%u.%u\n", ucaVersion.major, ucaVersion.minor,
+                     ucaVersion.milli,
                 ucaVersion.micro);
 
             UCollationStrength actualStrength{ ucol_getStrength(collator.get()) };
-            wprintf(L"%s strength\n", strength_to_string(actualStrength));
+            fwprintf(stream, L"%s strength\n", strength_to_string(actualStrength));
         }
 
         fflush(stdout);
 
-        wprintf(L"Collation folding map:\n");
+        fwprintf(stream, L"Collation folding map:\n");
         fflush(stdout);
 
         std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
             collator.get(), strength) };
-        print_collation_folding_map(to_map(collationFoldingMap));
+        print_collation_folding_map(to_map(collationFoldingMap), stream);
     }
 
-    void run()
+    void run(FILE* stream)
     {
         set_mode_or_throw(_fileno(stdout), _O_U8TEXT);
         set_mode_or_throw(_fileno(stderr), _O_U8TEXT);
 
         icu_version icuVersion{ u_get_version_cpp() };
-        wprintf(L"ICU Version %u.%u.%u.%u\n", icuVersion.major, icuVersion.minor, icuVersion.milli, icuVersion.micro);
+        fwprintf(stream, L"// © 2023 and later: Unicode, Inc. and others.\n");
+        fwprintf(stream, L"// License & terms of use: http://www.unicode.org/copyright.html\n");
+        fwprintf(stream, L"// Generated using source/tools/gencolf\n");
         fflush(stdout);
 
         // icu_version cldrVersion{ ulocdata_get_cldr_version_cpp() };
-        // wprintf(
+        // fwprintf(
         //     L"CLDR Version %u.%u.%u.%u\n", cldrVersion.major, cldrVersion.minor, cldrVersion.milli, cldrVersion.micro);
         // fflush(stdout);
 
-        run_locale("root-u-co-search", UCollationStrength::UCOL_PRIMARY);
+        run_locale("root-u-co-search", UCollationStrength::UCOL_PRIMARY, stream);
 
         /*
         size_t bytesWritten;
@@ -569,8 +571,7 @@ namespace
 }
 
 int main(/*int argc, char **argv*/) {
-    // std::cout << "help\n";
-    // UErrorCode status = U_ZERO_ERROR;
+    UErrorCode status = U_ZERO_ERROR;
     // const char *collDataDir = nullptr;
     // const char *outFileName = nullptr;
     // const char *outDir = nullptr;
@@ -578,7 +579,7 @@ int main(/*int argc, char **argv*/) {
 
     // //
     // // Pick up and check the command line arguments,
-    // //    using the standard ICU tool utils option handling.
+    // // using the standard ICU tool utils option handling.
     // //
     // U_MAIN_INIT_ARGS(argc, argv);
     // progName = argv[0];
@@ -591,21 +592,20 @@ int main(/*int argc, char **argv*/) {
     //     //  -? or -h for help.
     //     usageAndDie(0);
     // }
-    // if (!(options[3].doesOccur && options[4].doesOccur)) {
-    //     fprintf(stderr, "collation-data-dir and output-file must all be specified.\n");
+    // if (!options[3].doesOccur) {
+    //     fprintf(stderr, "output file must all be specified.\n");
     //     usageAndDie(U_ILLEGAL_ARGUMENT_ERROR);
     // }
-    // collDataDir = options[3].value;
-    // outFileName = options[4].value;
+    // outFileName = options[3].value;
 
-    // if (options[5].doesOccur) {
-    //     u_setDataDirectory(options[5].value);
+    // if (options[4].doesOccur) {
+    //     u_setDataDirectory(options[4].value);
     // }
     // /* Combine the directory with the file name */
-    // if (options[6].doesOccur) {
-    //     outDir = options[6].value;
+    // if (options[5].doesOccur) {
+    //     outDir = options[5].value;
     // }
-    // if (options[7].doesOccur) {
+    // if (options[6].doesOccur) {
     //     copyright = U_COPYRIGHT_STRING;
     // }
 
@@ -643,9 +643,26 @@ int main(/*int argc, char **argv*/) {
     //     exit(-1);
     // }
     // */
+
+    const char* colfDir = "colf";
+    uprv_mkdir(colfDir, &status);
+    if (U_FAILURE(status)) {
+        fprintf(stderr, "Error creating colf directory: %s\n", colfDir);
+        exit(-1);
+    }
+
+    FILE *stream;
+    std::string filename = colfDir + std::string("/root.txt");
+    stream = fopen(filename.c_str(), "w");
+    if (stream == nullptr) {
+        fprintf(stderr, "Cannot open file \"%s\"\n\n", filename.c_str());
+        exit(-1);
+    }
+
     try
     {
-        run();
+        run(stream);
+        fclose(stream);
     }
     catch (const icu_error& exception)
     {

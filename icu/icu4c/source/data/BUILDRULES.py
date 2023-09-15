@@ -37,8 +37,7 @@ def generate(config, io, common_vars):
     requests += generate_curr_supplemental(config, io, common_vars)
     requests += generate_zone_supplemental(config, io, common_vars)
     requests += generate_translit(config, io, common_vars)
-    requests += generate_collf_txt(config, io, common_vars)
-    # requests += generate_collf(config, io, common_vars)
+    requests += generate_colf_txt(config, io, common_vars)
 
     # Res Tree Files
     # (input dirname, output dirname, resfiles.mk path, mk version var, mk source var, use pool file, dep files)
@@ -102,11 +101,7 @@ def generate(config, io, common_vars):
         False,
         [])
 
-    # requests += generate_tree(config, io, common_vars,
-    #     "collf",
-    #     "collf",
-    #     config.use_pool_bundle,
-    #     [])
+    # requests += generate_colf_txt(config, io, common_vars)
 
     requests += [
         ListRequest(
@@ -514,41 +509,40 @@ def generate_brkitr_lstm(config, io, common_vars):
         )
     ]
 
-def generate_collf_txt(config, io, common_vars):
-    # Collf Data Txt Files
-    input_files = [InFile(filename) for filename in io.glob("coll/*.txt")]
-    input_basenames = [v.filename[5:] for v in input_files]
-    output_files = [OutFile("%s_collf.txt" % v[:-4]) for v in input_basenames]
+def generate_colf_txt(config, io, common_vars):
+    if not config.gencolf:
+        return []
+    # colf Data Txt Files
+    # input_files = [InFile(filename) for filename in io.glob("coll/*.txt")]
+    # input_basenames = [v.filename[5:] for v in input_files]
+    # output_files = [OutFile("%s_colf.txt" % v[:-4]) for v in input_basenames]
     return [
-        RepeatedExecutionRequest(
-            name = "collf_txt",
-            category = "collf",
+        SingleExecutionRequest(
+            name = "colf_txt",
+            category = "colf",
             dep_targets = [],
-            input_files = input_files,
-            output_files = output_files,
-            tool = IcuTool("gencollf"),
+            input_files = [],
+            output_files = [],
+            tool = IcuTool("gencolf"),
             args = "",
-            format_with = {},
-            repeat_with = {
-                "INPUT_BASENAME": input_basenames
-            }
+            format_with = {}
         )
     ]
 
-# def generate_collf(config, io, common_vars):
-#     # Collf Data Res Files
-#     input_files = [InFile(filename) for filename in io.glob("collf/*.txt")]
-#     input_basenames = [v.filename[6:] for v in input_files]
+# def generate_colf(config, io, common_vars):
+#     # colf Data Res Files
+#     input_files = [InFile(filename) for filename in io.glob("colf/*.txt")]
+#     input_basenames = [v.filename[5:] for v in input_files]
 #     output_files = [OutFile("%s.res" % v[:-4]) for v in input_basenames]
 #     return [
 #         RepeatedExecutionRequest(
-#             name = "collf_res",
-#             category = "collf",
+#             name = "colf_res",
+#             category = "colf",
 #             dep_targets = [],
 #             input_files = input_files,
 #             output_files = output_files,
 #             tool = IcuTool("genrb"),
-#             args = "-s {IN_DIR}/collf -d {OUT_DIR} -i {OUT_DIR} "
+#             args = "-s {IN_DIR}/colf -d {OUT_DIR} -i {OUT_DIR} "
 #                 "-k "
 #                 "{INPUT_BASENAME}",
 #             format_with = {},

@@ -96,6 +96,12 @@ flag_parser.add_argument(
     default = False,
     action = "store_true"
 )
+flag_parser.add_argument(
+    "--gencolf",
+    help = "Generate collation folding data.",
+    default = False,
+    action = "store_true"
+)
 
 arg_group_exec = flag_parser.add_argument_group("arguments for unix-exec and windows-exec modes")
 arg_group_exec.add_argument(
@@ -128,6 +134,9 @@ class Config(object):
 
         # Boolean: Whether to include core Unicode data files in the .dat file
         self.include_uni_core_data = args.include_uni_core_data
+
+        # Boolean: Whether to generate collation folding data and include it in the .dat file.
+        self.gencolf = args.gencolf
 
         # Default fields before processing filter file
         self.filters_json_data = {}
@@ -278,9 +287,11 @@ def main(argv):
         }
         common["FILTERS_DIR"] = config.filter_dir
         common["CWD_DIR"] = os.getcwd()
+        # add gencolf
     else:
         makefile_vars = None
         common = {
+            "GENCOLF": args.gencolf,
             "SRC_DIR": args.src_dir,
             "IN_DIR": args.src_dir,
             "OUT_DIR": args.out_dir,

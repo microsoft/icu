@@ -299,6 +299,24 @@ $(TOOLS_TS): "$(ICUTOOLS)\genrb\$(CFGTOOLS)\genrb.exe" "$(ICUTOOLS)\gencnval\$(C
 # Currently, the entire script needs to run even for small changes to data. Maybe consider
 # checking file-changed timestamps in Python to build only the required subset of data.
 
+!IF "$(UWP)" == "UWP"
+# Generate collation folding data, which depends on the ICU data file being available.
+$(COREDATA_TS):
+	@cd "$(ICUSRCDATA)"
+	set PYTHONPATH=$(ICUP)\source\python;%PYTHONPATH%
+	py -3 -B -m icutools.databuilder \
+		--mode windows-exec \
+		--gencolf \
+		--src_dir "$(ICUSRCDATA)" \
+		--tool_dir "$(ICUTOOLS)" \
+		--tool_cfg "$(CFGTOOLS)" \
+		--out_dir "$(ICUBLD_PKG)" \
+		--tmp_dir "$(ICUTMP)" \
+		--filter_file "$(ICU_DATA_FILTER_FILE)" \
+		$(ICU_DATA_BUILD_VERBOSE) \
+		$(ICU_DATA_BUILDTOOL_OPTS)
+	@echo "timestamp" > $(COREDATA_TS)
+!ELSE
 $(COREDATA_TS):
 	@cd "$(ICUSRCDATA)"
 	set PYTHONPATH=$(ICUP)\source\python;%PYTHONPATH%
@@ -312,7 +330,7 @@ $(COREDATA_TS):
 		--filter_file "$(ICU_DATA_FILTER_FILE)" \
 		$(ICU_DATA_BUILD_VERBOSE) \
 		$(ICU_DATA_BUILDTOOL_OPTS)
-	@echo "timestamp" > $(COREDATA_TS)
+!ENDIF
 
 	
 # The core Unicode properties files (uprops.icu, ucase.icu, ubidi.icu)
