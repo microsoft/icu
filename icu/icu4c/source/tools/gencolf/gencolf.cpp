@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <array>
+#include <functional>
 #include <map>
 #include <span>
 #include <string>
@@ -12,8 +13,6 @@
 #include "icu_cpp.h"
 #include "icu_error.h"
 #include "utf8.h"
-
-#include "unicode/udata.h"
 
 #include "uoptions.h"
 #include "unewdata.h"
@@ -49,28 +48,101 @@ void usageAndDie(int retCode) {
     exit(retCode);
 }
 
-//
-//  Set up the ICU data header, defined in ucmndata.h
-//
-DataHeader dh = {
-    {sizeof(DataHeader), // Struct MappedData
-        0xda,
-        0x27},
+namespace
+{
+    struct collation_key_sequence
+    {
+        std::vector<uint16_t> primary;
+        std::vector<uint8_t> secondary;
+        std::vector<uint8_t> tertiary;
 
-    {                               // struct UDataInfo
-        sizeof(UDataInfo),          //     size
-        0,                          //     reserved
-        U_IS_BIG_ENDIAN,
-        U_CHARSET_FAMILY,
-        U_SIZEOF_UCHAR,
-        0,                          //     reserved
+        constexpr bool operator==(const collation_key_sequence& other) const noexcept
+        {
+            if (primary.size() != other.primary.size())
+            {
+                return false;
+            }
 
-        {0x43, 0x6c, 0x66, 0x20},   //     dataFormat="Clf "
-        {0xff, 0, 0, 0},            //     formatVersion. Filled in later with values
-                                    //     from the  builder. The values declared
-                                    //     here should never appear in any real data.
-        {15, 1, 0, 0}               //     dataVersion (Unicode version)
-    }};
+            if (secondary.size() != other.secondary.size())
+            {
+                return false;
+            }
+            
+            if (tertiary.size() != other.tertiary.size())
+            {
+                return false;
+            }
+
+            for (size_t index = 0; index < primary.size(); ++index)
+            {
+                if (primary[index] != other.primary[index])
+                {
+                    return false;
+                }
+            }
+
+            for (size_t index = 0; index < secondary.size(); ++index)
+            {
+                if (secondary[index] != other.secondary[index])
+                {
+                    return false;
+                }
+            }
+
+            for (size_t index = 0; index < tertiary.size(); ++index)
+            {
+                if (tertiary[index] != other.tertiary[index])
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+    };
+}
+
+namespace std
+{
+    template <>
+    struct hash<collation_key_sequence>
+    {
+        constexpr size_t operator()(const collation_key_sequence& value) const noexcept
+        {
+            // See MSVC's type_traits (_FNV_offset_basis, _FNV_prime and the related _Fnv1a_append_bytes).
+#if defined(_WIN64)
+            constexpr size_t seed = 14695981039346656037ULL;
+            constexpr size_t prime= 1099511628211ULL;
+#else
+            constexpr size_t seed = 2166136261U;
+            constexpr size_t prime = 16777619U;
+#endif
+
+            size_t hash{ seed };
+
+            for (uint16_t item : value.primary)
+            {
+                hash ^= item;
+                hash *= prime;
+            }
+
+            for (uint8_t item : value.secondary)
+            {
+                hash ^= item;
+                hash *= prime;
+            }
+
+            for (uint8_t item : value.tertiary)
+            {
+                hash ^= item;
+                hash *= prime;
+            }
+
+            return hash;
+        }
+    };
+}
+
 
 namespace
 {
@@ -114,41 +186,7 @@ namespace
         add_hex_8(static_cast<uint8_t>(value & 0xFF), result);
     }
 
-    std::u16string get_collation_key_sequence(
-        std::span<uint16_t> primary, std::span<uint8_t> secondary, std::span<uint8_t> tertiary)
-    {
-        std::u16string result{};
-        result.reserve(2 + (primary.size() + secondary.size() + tertiary.size()) * 2);
-
-        for (uint16_t item : primary)
-        {
-            add_hex_16(item, result);
-        }
-
-        if (!secondary.empty() || !tertiary.empty())
-        {
-            result.push_back(u' ');
-
-            for (uint8_t item : secondary)
-            {
-                add_hex_8(item, result);
-            }
-
-            if (!tertiary.empty())
-            {
-                result.push_back(u' ');
-
-                for (uint8_t item : tertiary)
-                {
-                    add_hex_8(item, result);
-                }
-            }
-        }
-
-        return result;
-    }
-
-    std::u16string get_collation_key_sequence(
+    collation_key_sequence get_collation_key_sequence(
         std::u16string_view text, const UCollator* collator, UCollationStrength strength)
     {
         unique_UCollationElements elements{ ucol_open_elements_cpp(collator, text) };
@@ -193,18 +231,18 @@ namespace
             }
         }
 
-        return get_collation_key_sequence(combinedPrimary, combinedSecondary, combinedTertiary);
+        return collation_key_sequence{combinedPrimary, combinedSecondary, combinedTertiary};
     }
 
     void add_collation_item(std::u16string_view text, const UCollator* collator, UCollationStrength strength,
-        std::unordered_multimap<std::u16string, std::u16string>& textByCollationKeySequence)
+        std::unordered_multimap<collation_key_sequence, std::u16string> &textByCollationKeySequence)
     {
-        std::u16string collationKeySequence{ get_collation_key_sequence(text, collator, strength) };
+        collation_key_sequence collationKeySequence{ get_collation_key_sequence(text, collator, strength) };
         textByCollationKeySequence.emplace(collationKeySequence, text);
     }
 
     void add_collation_item(char32_t value, const UCollator* collator, UCollationStrength strength,
-        std::unordered_multimap<std::u16string, std::u16string>& textByCollationKeySequence)
+        std::unordered_multimap<collation_key_sequence, std::u16string> &textByCollationKeySequence)
     {
         icu_utf32_to_utf16_converter valueUtf16{ value };
 
@@ -223,7 +261,7 @@ namespace
     }
 
     void add_code_point_collation_items(const UCollator* collator, UCollationStrength strength,
-        std::unordered_multimap<std::u16string, std::u16string>& textByCollationKeySequence)
+        std::unordered_multimap<collation_key_sequence, std::u16string> &textByCollationKeySequence)
     {
         for (char32_t item = u'\0'; item <= U'\U0010FFFF'; ++item)
         {
@@ -237,7 +275,7 @@ namespace
     }
 
     void add_contraction_and_prefix_collation_items(const UCollator* collator, UCollationStrength strength,
-        std::unordered_multimap<std::u16string, std::u16string>& textByCollationKeySequence)
+        std::unordered_multimap<collation_key_sequence, std::u16string> &textByCollationKeySequence)
     {
         unique_USet contractions{ uset_open_empty_cpp() };
         constexpr bool addPrefixes{ true };
@@ -408,7 +446,7 @@ namespace
     }
 
     std::unordered_map<std::u16string, std::u16string> create_collation_folding_map(
-        const std::unordered_multimap<std::u16string, std::u16string>& textByCollationKeySequence)
+        const std::unordered_multimap<collation_key_sequence, std::u16string>& textByCollationKeySequence)
     {
         std::unordered_map<std::u16string, std::u16string> result{};
         std::vector<std::u16string_view> equivalenceClass{};
@@ -417,7 +455,7 @@ namespace
         for (auto iterator = textByCollationKeySequence.cbegin(); iterator != textByCollationKeySequence.cend();)
         {
             equivalenceClass.clear();
-            const std::u16string& key{ iterator->first };
+            const collation_key_sequence& key{ iterator->first };
             equivalenceClass.push_back(std::u16string_view{ iterator->second });
 
             while (++iterator != textByCollationKeySequence.cend() &&
@@ -429,15 +467,13 @@ namespace
             add_collation_folding_map_items(equivalenceClass, result);
         }
 
-        std::ignore = textByCollationKeySequence;
-
         return result;
     }
 
     std::unordered_map<std::u16string, std::u16string> create_collation_folding_map(
         const UCollator* collator, UCollationStrength strength)
     {
-        std::unordered_multimap<std::u16string, std::u16string> textByCollationKeySequence{};
+        std::unordered_multimap<collation_key_sequence, std::u16string> textByCollationKeySequence{};
         add_code_point_collation_items(collator, strength, textByCollationKeySequence);
         add_contraction_and_prefix_collation_items(collator, strength, textByCollationKeySequence);
         return create_collation_folding_map(textByCollationKeySequence);
