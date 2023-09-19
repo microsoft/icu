@@ -669,7 +669,8 @@ unique_UCollator ucol_open_cpp(const char* locale, icu_resource_search_mode reso
         }
         else
         {
-            throw icu_error{ status, "ucol_open" };
+            // throw icu_error{ status, "ucol_open" };
+            exit(0);
         }
     }
     else

@@ -22,29 +22,19 @@
 
 static char *progName;
 static UOption options[] = {
-    UOPTION_HELP_H,                                         /* 0 */
-    UOPTION_HELP_QUESTION_MARK,                             /* 1 */
-    UOPTION_VERBOSE,                                        /* 2 */
-    {"out", NULL, NULL, NULL, 'o', UOPT_REQUIRES_ARG, 0},   /* 3 */
-    UOPTION_ICUDATADIR,                                     /* 4 */
-    UOPTION_DESTDIR,                                        /* 5 */
-    UOPTION_COPYRIGHT,                                      /* 6 */
-    UOPTION_QUIET,                                          /* 7 */
+    UOPTION_HELP_H,                                          /* 0 */
+    UOPTION_HELP_QUESTION_MARK,                              /* 1 */
+    {"locale", NULL, NULL, NULL, 'l', UOPT_REQUIRES_ARG, 0}, /* 2 */
+    UOPTION_DESTDIR,                                         /* 3 */
 };
 
 void usageAndDie(int retCode) {
     printf("Usage: %s [-v] [-options] -r coll-data-dir -o output-file\n", progName);
-    printf("\tRead in collation data and write out collation folding binary data\n"
+    printf("\tCalls ICU Collation APIs to write out collation folding data under icu4c/source/data/colf/*.txt.\n"
            "options:\n"
            "\t-h or -? or --help  this usage text\n"
-           "\t-V or --version     show a version message\n"
-           "\t-c or --copyright   include a copyright notice\n"
-           "\t-v or --verbose     turn on verbose output\n"
-           "\t-q or --quiet       do not display warnings and progress\n"
-           "\t-i or --icudatadir  directory for locating any needed intermediate data files,\n"
-           "\t                    followed by path, defaults to %s\n"
-           "\t-d or --destdir     destination directory, followed by the path\n",
-           u_getDataDirectory());
+           "\t-l or --locale      locale to generate collation folding data for\n"
+           "\t-d or --destdir     destination directory, followed by the path\n");
     exit(retCode);
 }
 
@@ -530,175 +520,141 @@ namespace
         }
     }
 
-    void run_locale(const char* locale, UCollationStrength strength, FILE* stream)
+    void run_locale(const char* locale, UCollationStrength strength, const char* outDir)
     {
-        fwprintf(stream, L"%s locale\n", locale != nullptr ? from_utf8(locale).c_str() : L"root");
+        std::string searchLocale(locale);
+        searchLocale.append("-u-co-search");
+        wprintf(L"%s locale\n", locale != nullptr ? from_utf8(locale).c_str() : L"root");
 
-        unique_UCollator collator{ ucol_open_cpp(locale, icu_resource_search_mode::exact_match) };
+        unique_UCollator collator{ ucol_open_cpp(searchLocale.c_str(), icu_resource_search_mode::exact_match) };
         ucol_setStrength(collator.get(), strength);
 
         {
             icu_version version{ ucol_get_version_cpp(collator.get()) };
-            fwprintf(stream, L"Collator Version %u.%u.%u.%u\n", version.major, version.minor,
+            wprintf(L"Collator Version %u.%u.%u.%u\n", version.major, version.minor,
                      version.milli, version.micro);
 
             icu_version ucaVersion{ ucol_get_uca_version_cpp(collator.get()) };
-            fwprintf(stream, L"Collator UCA Version %u.%u.%u.%u\n", ucaVersion.major, ucaVersion.minor,
+            wprintf(L"Collator UCA Version %u.%u.%u.%u\n", ucaVersion.major, ucaVersion.minor,
                      ucaVersion.milli,
                 ucaVersion.micro);
 
             UCollationStrength actualStrength{ ucol_getStrength(collator.get()) };
-            fwprintf(stream, L"%s strength\n", strength_to_string(actualStrength));
+            wprintf(L"%s strength\n", strength_to_string(actualStrength));
         }
 
         fflush(stdout);
 
-        fwprintf(stream, L"Collation folding map:\n");
+        wprintf(L"Collation folding map:\n");
         fflush(stdout);
 
         std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
             collator.get(), strength) };
+
+
+        UErrorCode status = U_ZERO_ERROR;
+        uprv_mkdir(outDir, &status);
+        if (U_FAILURE(status)) {
+            fprintf(stderr, "Error creating colf directory: %s\n", outDir);
+            exit(-1);
+        }
+        
+        FILE *stream;
+        std::string filename(outDir);
+        filename.append("/").append(locale).append(".txt");
+        stream = fopen(filename.c_str(), "w");
+        if (stream == nullptr) {
+            fprintf(stderr, "Cannot open file \"%s\"\n\n", filename.c_str());
+            exit(-1);
+        }
+        
+        // copyright
+        fwprintf(stream, L"// Generated using icu4c/source/tools/gencolf\n");
         print_collation_folding_map(to_map(collationFoldingMap), stream);
     }
 
-    void run(FILE* stream)
-    {
-        set_mode_or_throw(_fileno(stdout), _O_U8TEXT);
-        set_mode_or_throw(_fileno(stderr), _O_U8TEXT);
+    // void run(FILE* stream)
+    // {
+    //     set_mode_or_throw(_fileno(stdout), _O_U8TEXT);
+    //     set_mode_or_throw(_fileno(stderr), _O_U8TEXT);
 
-        icu_version icuVersion{ u_get_version_cpp() };
-        fwprintf(stream, L"// © 2023 and later: Unicode, Inc. and others.\n");
-        fwprintf(stream, L"// License & terms of use: http://www.unicode.org/copyright.html\n");
-        fwprintf(stream, L"// Generated using source/tools/gencolf\n");
-        fflush(stdout);
+    //     icu_version icuVersion{ u_get_version_cpp() };
 
-        // icu_version cldrVersion{ ulocdata_get_cldr_version_cpp() };
-        // fwprintf(
-        //     L"CLDR Version %u.%u.%u.%u\n", cldrVersion.major, cldrVersion.minor, cldrVersion.milli, cldrVersion.micro);
-        // fflush(stdout);
+    //     // icu_version cldrVersion{ ulocdata_get_cldr_version_cpp() };
+    //     // fwprintf(
+    //     //     L"CLDR Version %u.%u.%u.%u\n", cldrVersion.major, cldrVersion.minor, cldrVersion.milli, cldrVersion.micro);
+    //     // fflush(stdout);
 
-        run_locale("root-u-co-search", UCollationStrength::UCOL_PRIMARY, stream);
-
-        /*
-        size_t bytesWritten;
-        UNewDataMemory *pData;
-        pData = udata_create(outDir, NULL, outFileName, &(dh.info), copyright, &status);
-        if (U_FAILURE(status)) {
-            fprintf(stderr, "gencfu: Could not open output file \"%s\", \"%s\"\n", outFileName,
-                    u_errorName(status));
-            exit(status);
-        }
-
-        //  Write the data itself.
-        udata_writeBlock(pData, outData, outDataSize);
-        // finish up
-        bytesWritten = udata_finish(pData, &status);
-        if (U_FAILURE(status)) {
-            fprintf(stderr, "gencfu: Error %d writing the output file\n", status);
-            exit(status);
-        }
-
-        if (bytesWritten != outDataSize) {
-            fprintf(stderr, "gencfu: Error writing to output file \"%s\"\n", outFileName);
-            exit(-1);
-        }
-        */
-    }
+    //     run_locale("root-u-co-search", UCollationStrength::UCOL_PRIMARY, stream);
+    // }
 }
 
-int main(/*int argc, char **argv*/) {
+int main(int argc, char **argv) {
     UErrorCode status = U_ZERO_ERROR;
-    // const char *collDataDir = nullptr;
-    // const char *outFileName = nullptr;
-    // const char *outDir = nullptr;
-    // const char *copyright = nullptr;
+    const char *collDataDir = nullptr;
+    const char *locale = nullptr;
+    const char *outDir = nullptr;
+    const char *copyright = nullptr;
 
-    // //
-    // // Pick up and check the command line arguments,
-    // // using the standard ICU tool utils option handling.
-    // //
-    // U_MAIN_INIT_ARGS(argc, argv);
-    // progName = argv[0];
-    // argc = u_parseArgs(argc, argv, UPRV_LENGTHOF(options), options);
-    // if (argc < 0) {
-    //     // Unrecognized option
-    //     fprintf(stderr, "error in command line argument \"%s\"\n", argv[-argc]);
-    // }
-    // if (options[0].doesOccur || options[1].doesOccur) {
-    //     //  -? or -h for help.
-    //     usageAndDie(0);
-    // }
-    // if (!options[3].doesOccur) {
-    //     fprintf(stderr, "output file must all be specified.\n");
-    //     usageAndDie(U_ILLEGAL_ARGUMENT_ERROR);
-    // }
-    // outFileName = options[3].value;
-
-    // if (options[4].doesOccur) {
-    //     u_setDataDirectory(options[4].value);
-    // }
-    // /* Combine the directory with the file name */
-    // if (options[5].doesOccur) {
-    //     outDir = options[5].value;
-    // }
-    // if (options[6].doesOccur) {
-    //     copyright = U_COPYRIGHT_STRING;
-    // }
-
-    // //
-    // //  Create the output file
-    // //
-    // size_t bytesWritten;
-    // UNewDataMemory *pData;
-    // pData = udata_create(outDir, NULL, outFileName, &(dh.info), copyright, &status);
-    // if (U_FAILURE(status)) {
-    //     fprintf(stderr, "gencolf: Could not open output file \"%s\", \"%s\"\n", outFileName,
-    //             u_errorName(status));
-    //     exit(status);
-    // }
-
-    // char msg[1024];
-
-    // /* write message with just the name */
-    // snprintf(msg, sizeof(msg), "gencolf writes dummy %s, see uconfig.h", outFileName);
-    // fprintf(stderr, "%s\n", msg);
-
-    // //  Write the data itself.
-    // udata_writeBlock(pData, msg, strlen(msg));
-    // // finish up
-    // bytesWritten = udata_finish(pData, &status);
-    // if (U_FAILURE(status)) {
-    //     fprintf(stderr, "gencolf: Error %d writing the output file\n", status);
-    //     exit(status);
-    // }
-
-    // fwprintf(stderr, L"gencolf: written output file");
-    // /*
-    // if (bytesWritten != outDataSize) {
-    //     fprintf(stderr, "gencfu: Error writing to output file \"%s\"\n", outFileName);
-    //     exit(-1);
-    // }
-    // */
-
-    const char* colfDir = "colf";
-    uprv_mkdir(colfDir, &status);
-    if (U_FAILURE(status)) {
-        fprintf(stderr, "Error creating colf directory: %s\n", colfDir);
-        exit(-1);
+    //
+    // Pick up and check the command line arguments,
+    // using the standard ICU tool utils option handling.
+    //
+    U_MAIN_INIT_ARGS(argc, argv);
+    progName = argv[0];
+    argc = u_parseArgs(argc, argv, UPRV_LENGTHOF(options), options);
+    if (argc < 0) {
+        // Unrecognized option
+        fprintf(stderr, "error in command line argument \"%s\"\n", argv[-argc]);
     }
-
-    FILE *stream;
-    std::string filename = colfDir + std::string("/root.txt");
-    stream = fopen(filename.c_str(), "w");
-    if (stream == nullptr) {
-        fprintf(stderr, "Cannot open file \"%s\"\n\n", filename.c_str());
-        exit(-1);
+    if (options[0].doesOccur || options[1].doesOccur) {
+        //  -? or -h for help.
+        usageAndDie(0);
     }
+    if (!(options[2].doesOccur && options[3].doesOccur)) {
+        fprintf(stderr, "locale and outDir must be specified.\n");
+        usageAndDie(U_ILLEGAL_ARGUMENT_ERROR);
+    }
+    locale = options[2].value;
+    outDir = options[3].value;
 
     try
     {
-        run(stream);
-        fclose(stream);
+        // Convert to cpp helpers later.
+
+        // UEnumeration* keywords = ucol_getKeywordValuesForLocale_cpp("collation", locale, false);
+        UEnumeration* uenum = ucol_getKeywordValuesForLocale("collation", locale, false, &status);
+        if (U_FAILURE(status))
+        {
+            // todo: cpp helpers
+            exit(-1);
+        }
+
+        int32_t count = uenum_count(uenum, &status);
+        bool searchCollationFound = false;
+        for (int32_t i = 0; i < count; i++)
+        {
+            int32_t resultLength = 0;
+            const char* collationKeyword = uenum_next(uenum, &resultLength, &status);
+            if (U_FAILURE(status))
+            {
+                // todo: cpp helpers
+                exit(-1);
+            }
+
+            if (strcmp(collationKeyword, "search") == 0)
+            {
+                searchCollationFound = true;
+            }
+        }
+
+        if (!searchCollationFound)
+        {
+            fwprintf(stderr, L"No search collation type.\n");
+            exit(0);
+        }
+
+        run_locale(locale, UCollationStrength::UCOL_PRIMARY, outDir);
     }
     catch (const icu_error& exception)
     {
