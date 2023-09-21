@@ -512,7 +512,7 @@ namespace
 
     void print_collation_folding_map(const std::map<std::u16string, std::u16string>& value, UCollationStrength strength, FILE* stream)
     {
-        fwprintf(stream, L"\t%ls{\n", strength_to_string(strength));
+        fwprintf(stream, L"\t%s{\n", strength_to_string(strength));
         for (const auto& pair : value)
         {
             std::u16string from{ pair.first };
@@ -526,7 +526,7 @@ namespace
                 fromDisplay = u"";
             }
 
-            fwprintf(stream, L"\t\t%ls{\"%ls\"}\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()), reinterpret_cast<const wchar_t*>(to.c_str()));
+            fwprintf(stream, L"\t\t%s{\"%s\"}\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()), reinterpret_cast<const wchar_t*>(to.c_str()));
             // fflush(stdout);
         }
         fwprintf(stream, L"\t}\n");
@@ -550,7 +550,7 @@ namespace
         return false;
     }
 
-    void run_locale(const char* locale, const char* outDir)
+    void run_locale(std::string locale, const char* outDir)
     {
         std::string searchLocale(locale);
         searchLocale.append("-u-co-search");
@@ -558,69 +558,57 @@ namespace
         unique_UCollator collator{ ucol_open_cpp(searchLocale.c_str(), searchResult) };
         if (searchResult != icu_resource_search_result::exact_match)
         {
-            // Locale does not support 'search' collation type, and a fallback locale would be used. Skip.
+            // Specific locale does not support 'search' collation type, and a fallback locale would be used. Skip.
+            printf("Skipping specific locale to due using fallback data: %s.\n", locale.c_str());
             return;
         }
+        printf("Generating collation folding data for locale: %s.\n", locale.c_str());
 
         UErrorCode status = U_ZERO_ERROR;
         uprv_mkdir(outDir, &status);
         if (U_FAILURE(status))
         {
-            fprintf(stderr, "Error creating colf directory: %s\n", outDir);
+            fprintf(stderr, "Error creating colf directory: %s\n\n", outDir);
             exit(-1);
         }
 
         FILE *stream;
         std::string filename(outDir);
         filename.append("/").append(locale).append(".txt");
-        stream = fopen(filename.c_str(), "w");
+        stream = fopen(filename.c_str(), "w+,ccs=UTF-8");
         if (stream == nullptr)
         {
             fprintf(stderr, "Cannot open file \"%s\"\n\n", filename.c_str());
             exit(-1);
         }
 
-        // set_mode_or_throw(_fileno(stream), _O_U8TEXT);
+        // TODO: Include copyright
         fwprintf(stream, L"// Generated using gencolf.exe located under icu4c/source/tools/gencolf.\n");
-        fprintf(stream, "%s{\n", locale);
+        fflush(stream);
+        
+        // ICU locales only include ASCII letters and the following symbols: -, _, @, =, and ;
+        // Convert to wstring.
+        std::wstring loc(locale.begin(), locale.end());
+        fwprintf(stream, L"%s{\n", loc.c_str());
+        fflush(stream);
+
         for (UCollationStrength strength : colfStrengths)
         {
             ucol_setStrength(collator.get(), strength);
 
-            // {
-            //     icu_version version{ ucol_get_version_cpp(collator.get()) };
-            //     wprintf(L"Collator Version %u.%u.%u.%u\n", version.major, version.minor,
-            //              version.milli, version.micro);
-
-            //     icu_version ucaVersion{ ucol_get_uca_version_cpp(collator.get()) };
-            //     wprintf(L"Collator UCA Version %u.%u.%u.%u\n", ucaVersion.major, ucaVersion.minor,
-            //              ucaVersion.milli,
-            //         ucaVersion.micro);
-
-            //     UCollationStrength actualStrength{ ucol_getStrength(collator.get()) };
-            //     wprintf(L"%s strength\n", strength_to_string(actualStrength));
-            // }
-
-            // fflush(stdout);
-
-            // wprintf(L"Collation folding map:\n");
-            // fflush(stdout);
-
             std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
                 collator.get(), strength) };
             
-            // copyright
             print_collation_folding_map(to_map(collationFoldingMap), strength, stream);
         }
         fwprintf(stream, L"}\n");
+        fflush(stream);
+        fclose(stream);
     }
 
     void run(const char* inDir, const char* outDir)
     {
-        // set_mode_or_throw(_fileno(stdout), _O_U8TEXT);
-        // set_mode_or_throw(_fileno(stderr), _O_U8TEXT);
-
-        // ICU locales only include ASCII letters and the following symbols: -, _, @, =, and ;
+        // Get collation locales.
         std::set<std::string> locales;
         for (const auto& dirEntry : std::filesystem::recursive_directory_iterator(inDir))
         {
@@ -642,32 +630,19 @@ namespace
             }
         }
 
-        // Generate 'root' data first.
+        // Generate 'root' collation folding data first.
         run_locale("root", outDir);
 
-        // // TODO: uncomment
-        // // Only generate collation folding data on locales that support the 'search' collation type.
-        // for (const auto& locale : locales)
-        // {
-        //     if (!supports_search_collation(locale.c_str()))
-        //     {
-        //         fprintf(stderr, "No 'search' collation type for locale: %s.\n", locale.c_str());
-        //         exit(0);
-        //     }
-        //     run_locale(locale.c_str(), UCollationStrength::UCOL_PRIMARY, outDir);
-        // }
-
-
-
-
-        // icu_version icuVersion{ u_get_version_cpp() };
-
-        // icu_version cldrVersion{ ulocdata_get_cldr_version_cpp() };
-        // fwprintf(
-        //     L"CLDR Version %u.%u.%u.%u\n", cldrVersion.major, cldrVersion.minor, cldrVersion.milli, cldrVersion.micro);
-        // fflush(stdout);
-
-        // run_locale("root-u-co-search", UCollationStrength::UCOL_PRIMARY, stream);
+        // Only generate collation folding data on locales that support the 'search' collation type.
+        for (const auto& locale : locales)
+        {
+            if (!supports_search_collation(locale.c_str()))
+            {
+                fprintf(stderr, "No 'search' collation type for locale: %s.\n", locale.c_str());
+                continue;
+            }
+            run_locale(locale, outDir);
+        }
     }
 }
 
