@@ -563,6 +563,55 @@ struct USet_item_result final
     std::optional<size_t> string_size;
 };
 
+struct unique_UEnumeration final
+{
+    constexpr unique_UEnumeration() noexcept : m_value{} {}
+
+    constexpr explicit unique_UEnumeration(UEnumeration* value) noexcept : m_value{ value } {}
+
+    unique_UEnumeration(const unique_UEnumeration&) = delete;
+
+    unique_UEnumeration(unique_UEnumeration&& other) noexcept : m_value{ other.m_value }
+    {
+        other.m_value = nullptr;
+    }
+
+    ~unique_UEnumeration() noexcept
+    {
+        if (m_value == nullptr)
+        {
+            return;
+        }
+
+        uenum_close(m_value);
+    }
+
+    unique_UEnumeration& operator=(const unique_UEnumeration&) = delete;
+
+    unique_UEnumeration& operator=(unique_UEnumeration&& other) noexcept
+    {
+        if (this != &other)
+        {
+            if (m_value != nullptr)
+            {
+                uenum_close(m_value);
+            }
+
+            m_value = other.m_value;
+            other.m_value = nullptr;
+        }
+
+        return *this;
+    }
+
+    constexpr UEnumeration* get() noexcept { return m_value; }
+
+    operator bool() const noexcept { return m_value != nullptr; }
+
+private:
+    UEnumeration* m_value;
+};
+
 inline icu_version to_icu_version(UVersionInfo value) noexcept { return { value[0], value[1], value[2], value[3] }; }
 
 constexpr UBool to_ubool(bool value) noexcept { return value ? 1 : 0; }
@@ -651,26 +700,24 @@ inline icu_version ucol_get_version_cpp(const UCollator* collator) noexcept
     return to_icu_version(version);
 }
 
-unique_UCollator ucol_open_cpp(const char* locale, icu_resource_search_mode resource_search_mode,
-    icu_resource_search_result& resource_search_result)
+unique_UCollator ucol_open_cpp(const char* locale, icu_resource_search_result& resource_search_result)
 {
     UErrorCode status{};
     unique_UCollator result{ ucol_open(locale, &status) };
 
     if (status != U_ZERO_ERROR)
     {
-        if (status == U_USING_FALLBACK_WARNING && resource_search_mode >= icu_resource_search_mode::allow_fallback)
+        if (status == U_USING_FALLBACK_WARNING)
         {
             resource_search_result = icu_resource_search_result::fallback;
         }
-        else if (status == U_USING_DEFAULT_WARNING && resource_search_mode == icu_resource_search_mode::allow_root)
+        else if (status == U_USING_DEFAULT_WARNING)
         {
             resource_search_result = icu_resource_search_result::root;
         }
         else
         {
-            // throw icu_error{ status, "ucol_open" };
-            exit(0);
+            throw icu_error{ status, "ucol_open" };
         }
     }
     else
@@ -681,11 +728,11 @@ unique_UCollator ucol_open_cpp(const char* locale, icu_resource_search_mode reso
     return result;
 }
 
-inline unique_UCollator ucol_open_cpp(const char* locale, icu_resource_search_mode resource_search_mode)
-{
-    icu_resource_search_result ignore{};
-    return ucol_open_cpp(locale, resource_search_mode, ignore);
-}
+// inline unique_UCollator ucol_open_cpp(const char* locale, icu_resource_search_mode resource_search_mode)
+// {
+//     icu_resource_search_result ignore{};
+//     return ucol_open_cpp(locale, resource_search_mode, ignore);
+// }
 
 unique_UCollationElements ucol_open_elements_cpp(const UCollator* collator, std::u16string_view text)
 {
@@ -880,3 +927,42 @@ inline size_t uset_get_item_string_cpp(const USet* set, size_t index, std::span<
 }
 
 inline unique_USet uset_open_empty_cpp() { return unique_USet{ uset_openEmpty() }; }
+
+inline unique_UEnumeration ucol_getKeywordValuesForLocale_cpp(const char* key, const char* locale, UBool commonlyUsed)
+{
+    UErrorCode status{};
+    unique_UEnumeration result{ ucol_getKeywordValuesForLocale(key, locale, commonlyUsed, &status) };
+
+    if (U_FAILURE(status))
+    {
+        throw icu_error{ status, "ucol_getKeywordValuesForLocale" };
+    }
+
+    return result;
+}
+
+inline int32_t uenum_count_cpp(UEnumeration* en)
+{
+    UErrorCode status{};
+    int32_t result{ uenum_count(en, &status) };
+
+    if (U_FAILURE(status))
+    {
+        throw icu_error{ status, "uenum_count" };
+    }
+
+    return result;
+}
+
+inline const char* uenum_next_cpp(UEnumeration* en, int32_t* resultLength)
+{
+    UErrorCode status{};
+    const char* result{ uenum_next(en, resultLength, &status) };
+
+    if (U_FAILURE(status))
+    {
+        throw icu_error{ status, "uenum_next" };
+    }
+
+    return result;
+}

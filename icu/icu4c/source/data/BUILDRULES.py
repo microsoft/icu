@@ -512,24 +512,15 @@ def generate_colf_txt(config, io, common_vars):
         return []
 
     # Generate colf txt files for locales that have coll data.
-    # gencolf only generates colf txt files for locales that support the "search" collation type.
-    input_files = [InFile(filename) for filename in io.glob("coll/*.txt")]
-    input_locales = [v.filename[5:-4] for v in input_files]
-
     # This step does not produce data file output, only txt files.
-    output_files = [OutFile("") for v in input_files]
-
     return [
-        RepeatedExecutionRequest(
+        SingleExecutionRequest(
             name = "colf_txt",
             category = "colf",
-            input_files = input_files,
-            output_files = output_files,
+            input_files = [],
+            output_files = [],
             tool = IcuTool("gencolf"),
-            args = "-l {LOCALE} -d {SRC_DIR}/colf",
-            repeat_with = {
-                "LOCALE": input_locales
-            }
+            args = "-s {SRC_DIR}/coll -d {SRC_DIR}/colf"
         )
     ]
 

@@ -8,6 +8,9 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <set>
+#include <filesystem>
+#include <algorithm>
 #include <fcntl.h>
 #include <io.h>
 #include "icu_cpp.h"
@@ -22,10 +25,10 @@
 
 static char *progName;
 static UOption options[] = {
-    UOPTION_HELP_H,                                          /* 0 */
-    UOPTION_HELP_QUESTION_MARK,                              /* 1 */
-    {"locale", NULL, NULL, NULL, 'l', UOPT_REQUIRES_ARG, 0}, /* 2 */
-    UOPTION_DESTDIR,                                         /* 3 */
+    UOPTION_HELP_H,              /* 0 */
+    UOPTION_HELP_QUESTION_MARK,  /* 1 */
+    UOPTION_SOURCEDIR,           /* 2 */
+    UOPTION_DESTDIR,             /* 3 */
 };
 
 void usageAndDie(int retCode) {
@@ -33,10 +36,17 @@ void usageAndDie(int retCode) {
     printf("\tCalls ICU Collation APIs to write out collation folding data under icu4c/source/data/colf/*.txt.\n"
            "options:\n"
            "\t-h or -? or --help  this usage text\n"
-           "\t-l or --locale      locale to generate collation folding data for\n"
+           "\t-s or --sourcedir   source directory, followed by the path\n"
            "\t-d or --destdir     destination directory, followed by the path\n");
     exit(retCode);
 }
+
+// Collation folding data only includes primary, secondary, and tertiary strengths.
+static std::vector<UColAttributeValue> colfStrengths = {
+    UCollationStrength::UCOL_PRIMARY,
+    UCollationStrength::UCOL_SECONDARY,
+    UCollationStrength::UCOL_TERTIARY
+};
 
 namespace
 {
@@ -481,26 +491,6 @@ namespace
         return result;
     }
 
-    void print_collation_folding_map(const std::map<std::u16string, std::u16string>& value, FILE* stream)
-    {
-        for (const auto& pair : value)
-        {
-            std::u16string from{ pair.first };
-            std::u16string to{ pair.second };
-            std::u16string fromDisplay{ from };
-
-            // The console apparently treats this character as EOF (or an error that triggers EOF-like
-            // behavior).
-            if (fromDisplay.size() == 1 && fromDisplay[0] == u'\uFFFF')
-            {
-                fromDisplay = u"";
-            }
-
-            fwprintf(stream, L"\t\t%s{\"%s\"}\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()), reinterpret_cast<const wchar_t*>(to.c_str()));
-            fflush(stdout);
-        }
-    }
-
     constexpr const wchar_t* strength_to_string(UCollationStrength value) noexcept
     {
         switch (value)
@@ -520,79 +510,171 @@ namespace
         }
     }
 
-    void run_locale(const char* locale, UCollationStrength strength, const char* outDir)
+    void print_collation_folding_map(const std::map<std::u16string, std::u16string>& value, UCollationStrength strength, FILE* stream)
+    {
+        fwprintf(stream, L"\t%ls{\n", strength_to_string(strength));
+        for (const auto& pair : value)
+        {
+            std::u16string from{ pair.first };
+            std::u16string to{ pair.second };
+            std::u16string fromDisplay{ from };
+
+            // The console apparently treats this character as EOF (or an error that triggers EOF-like
+            // behavior).
+            if (fromDisplay.size() == 1 && fromDisplay[0] == u'\uFFFF')
+            {
+                fromDisplay = u"";
+            }
+
+            fwprintf(stream, L"\t\t%ls{\"%ls\"}\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()), reinterpret_cast<const wchar_t*>(to.c_str()));
+            // fflush(stdout);
+        }
+        fwprintf(stream, L"\t}\n");
+    }
+
+    bool supports_search_collation(const char* locale)
+    {
+        unique_UEnumeration keywords = ucol_getKeywordValuesForLocale_cpp("collation", locale, false);
+        int32_t count = uenum_count_cpp(keywords.get());
+        bool searchCollationFound = false;
+        for (int32_t i = 0; i < count; i++)
+        {
+            int32_t resultLength = 0;
+            const char* collationKeyword = uenum_next_cpp(keywords.get(), &resultLength);
+
+            if (strcmp(collationKeyword, "search") == 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    void run_locale(const char* locale, const char* outDir)
     {
         std::string searchLocale(locale);
         searchLocale.append("-u-co-search");
-        wprintf(L"%s locale\n", locale != nullptr ? from_utf8(locale).c_str() : L"root");
-
-        unique_UCollator collator{ ucol_open_cpp(searchLocale.c_str(), icu_resource_search_mode::exact_match) };
-        ucol_setStrength(collator.get(), strength);
-
+        icu_resource_search_result searchResult{};
+        unique_UCollator collator{ ucol_open_cpp(searchLocale.c_str(), searchResult) };
+        if (searchResult != icu_resource_search_result::exact_match)
         {
-            icu_version version{ ucol_get_version_cpp(collator.get()) };
-            wprintf(L"Collator Version %u.%u.%u.%u\n", version.major, version.minor,
-                     version.milli, version.micro);
-
-            icu_version ucaVersion{ ucol_get_uca_version_cpp(collator.get()) };
-            wprintf(L"Collator UCA Version %u.%u.%u.%u\n", ucaVersion.major, ucaVersion.minor,
-                     ucaVersion.milli,
-                ucaVersion.micro);
-
-            UCollationStrength actualStrength{ ucol_getStrength(collator.get()) };
-            wprintf(L"%s strength\n", strength_to_string(actualStrength));
+            // Locale does not support 'search' collation type, and a fallback locale would be used. Skip.
+            return;
         }
-
-        fflush(stdout);
-
-        wprintf(L"Collation folding map:\n");
-        fflush(stdout);
-
-        std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
-            collator.get(), strength) };
-
 
         UErrorCode status = U_ZERO_ERROR;
         uprv_mkdir(outDir, &status);
-        if (U_FAILURE(status)) {
+        if (U_FAILURE(status))
+        {
             fprintf(stderr, "Error creating colf directory: %s\n", outDir);
             exit(-1);
         }
-        
+
         FILE *stream;
         std::string filename(outDir);
         filename.append("/").append(locale).append(".txt");
         stream = fopen(filename.c_str(), "w");
-        if (stream == nullptr) {
+        if (stream == nullptr)
+        {
             fprintf(stderr, "Cannot open file \"%s\"\n\n", filename.c_str());
             exit(-1);
         }
-        
-        // copyright
-        fwprintf(stream, L"// Generated using icu4c/source/tools/gencolf\n");
-        print_collation_folding_map(to_map(collationFoldingMap), stream);
+
+        // set_mode_or_throw(_fileno(stream), _O_U8TEXT);
+        fwprintf(stream, L"// Generated using gencolf.exe located under icu4c/source/tools/gencolf.\n");
+        fprintf(stream, "%s{\n", locale);
+        for (UCollationStrength strength : colfStrengths)
+        {
+            ucol_setStrength(collator.get(), strength);
+
+            // {
+            //     icu_version version{ ucol_get_version_cpp(collator.get()) };
+            //     wprintf(L"Collator Version %u.%u.%u.%u\n", version.major, version.minor,
+            //              version.milli, version.micro);
+
+            //     icu_version ucaVersion{ ucol_get_uca_version_cpp(collator.get()) };
+            //     wprintf(L"Collator UCA Version %u.%u.%u.%u\n", ucaVersion.major, ucaVersion.minor,
+            //              ucaVersion.milli,
+            //         ucaVersion.micro);
+
+            //     UCollationStrength actualStrength{ ucol_getStrength(collator.get()) };
+            //     wprintf(L"%s strength\n", strength_to_string(actualStrength));
+            // }
+
+            // fflush(stdout);
+
+            // wprintf(L"Collation folding map:\n");
+            // fflush(stdout);
+
+            std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
+                collator.get(), strength) };
+            
+            // copyright
+            print_collation_folding_map(to_map(collationFoldingMap), strength, stream);
+        }
+        fwprintf(stream, L"}\n");
     }
 
-    // void run(FILE* stream)
-    // {
-    //     set_mode_or_throw(_fileno(stdout), _O_U8TEXT);
-    //     set_mode_or_throw(_fileno(stderr), _O_U8TEXT);
+    void run(const char* inDir, const char* outDir)
+    {
+        // set_mode_or_throw(_fileno(stdout), _O_U8TEXT);
+        // set_mode_or_throw(_fileno(stderr), _O_U8TEXT);
 
-    //     icu_version icuVersion{ u_get_version_cpp() };
+        // ICU locales only include ASCII letters and the following symbols: -, _, @, =, and ;
+        std::set<std::string> locales;
+        for (const auto& dirEntry : std::filesystem::recursive_directory_iterator(inDir))
+        {
+            std::string fileName = dirEntry.path().string();
+            std::replace(fileName.begin(), fileName.end(), '\\', '/');
+            fileName = fileName.substr(fileName.find_last_of('/') + 1);
 
-    //     // icu_version cldrVersion{ ulocdata_get_cldr_version_cpp() };
-    //     // fwprintf(
-    //     //     L"CLDR Version %u.%u.%u.%u\n", cldrVersion.major, cldrVersion.minor, cldrVersion.milli, cldrVersion.micro);
-    //     // fflush(stdout);
+            size_t end = fileName.find(".txt");
+            if (end == std::string::npos)
+            {
+                continue;
+            }
+            std::string locale = fileName.substr(0, end);
 
-    //     run_locale("root-u-co-search", UCollationStrength::UCOL_PRIMARY, stream);
-    // }
+            // Collation folding data for 'root' locale is generated separately, prior to other locales.
+            if (locale != "root")
+            {
+                locales.insert(locale);
+            }
+        }
+
+        // Generate 'root' data first.
+        run_locale("root", outDir);
+
+        // // TODO: uncomment
+        // // Only generate collation folding data on locales that support the 'search' collation type.
+        // for (const auto& locale : locales)
+        // {
+        //     if (!supports_search_collation(locale.c_str()))
+        //     {
+        //         fprintf(stderr, "No 'search' collation type for locale: %s.\n", locale.c_str());
+        //         exit(0);
+        //     }
+        //     run_locale(locale.c_str(), UCollationStrength::UCOL_PRIMARY, outDir);
+        // }
+
+
+
+
+        // icu_version icuVersion{ u_get_version_cpp() };
+
+        // icu_version cldrVersion{ ulocdata_get_cldr_version_cpp() };
+        // fwprintf(
+        //     L"CLDR Version %u.%u.%u.%u\n", cldrVersion.major, cldrVersion.minor, cldrVersion.milli, cldrVersion.micro);
+        // fflush(stdout);
+
+        // run_locale("root-u-co-search", UCollationStrength::UCOL_PRIMARY, stream);
+    }
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char **argv)
+{
     UErrorCode status = U_ZERO_ERROR;
-    const char *collDataDir = nullptr;
-    const char *locale = nullptr;
+    const char *inDir = nullptr;
     const char *outDir = nullptr;
     const char *copyright = nullptr;
 
@@ -603,58 +685,27 @@ int main(int argc, char **argv) {
     U_MAIN_INIT_ARGS(argc, argv);
     progName = argv[0];
     argc = u_parseArgs(argc, argv, UPRV_LENGTHOF(options), options);
-    if (argc < 0) {
+    if (argc < 0)
+    {
         // Unrecognized option
         fprintf(stderr, "error in command line argument \"%s\"\n", argv[-argc]);
     }
-    if (options[0].doesOccur || options[1].doesOccur) {
+    if (options[0].doesOccur || options[1].doesOccur)
+    {
         //  -? or -h for help.
         usageAndDie(0);
     }
-    if (!(options[2].doesOccur && options[3].doesOccur)) {
+    if (!(options[2].doesOccur && options[3].doesOccur))
+    {
         fprintf(stderr, "locale and outDir must be specified.\n");
         usageAndDie(U_ILLEGAL_ARGUMENT_ERROR);
     }
-    locale = options[2].value;
+    inDir = options[2].value;
     outDir = options[3].value;
 
     try
     {
-        // Convert to cpp helpers later.
-
-        // UEnumeration* keywords = ucol_getKeywordValuesForLocale_cpp("collation", locale, false);
-        UEnumeration* uenum = ucol_getKeywordValuesForLocale("collation", locale, false, &status);
-        if (U_FAILURE(status))
-        {
-            // todo: cpp helpers
-            exit(-1);
-        }
-
-        int32_t count = uenum_count(uenum, &status);
-        bool searchCollationFound = false;
-        for (int32_t i = 0; i < count; i++)
-        {
-            int32_t resultLength = 0;
-            const char* collationKeyword = uenum_next(uenum, &resultLength, &status);
-            if (U_FAILURE(status))
-            {
-                // todo: cpp helpers
-                exit(-1);
-            }
-
-            if (strcmp(collationKeyword, "search") == 0)
-            {
-                searchCollationFound = true;
-            }
-        }
-
-        if (!searchCollationFound)
-        {
-            fwprintf(stderr, L"No search collation type.\n");
-            exit(0);
-        }
-
-        run_locale(locale, UCollationStrength::UCOL_PRIMARY, outDir);
+        run(inDir, outDir);
     }
     catch (const icu_error& exception)
     {
