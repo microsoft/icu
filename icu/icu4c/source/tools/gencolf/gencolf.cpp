@@ -471,7 +471,8 @@ namespace
     }
 
     std::unordered_map<std::u16string, std::u16string> create_collation_folding_map(
-        const UCollator* collator, UCollationStrength strength)
+        const UCollator* collator, UCollationStrength strength,
+        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap)
     {
         std::unordered_multimap<collation_key_sequence, std::u16string> textByCollationKeySequence{};
         add_code_point_collation_items(collator, strength, textByCollationKeySequence);
@@ -513,6 +514,7 @@ namespace
     void print_collation_folding_map(const std::map<std::u16string, std::u16string>& value, UCollationStrength strength, FILE* stream)
     {
         fwprintf(stream, L"\t%s{\n", strength_to_string(strength));
+        fflush(stream);
         for (const auto& pair : value)
         {
             std::u16string from{ pair.first };
@@ -527,9 +529,10 @@ namespace
             }
 
             fwprintf(stream, L"\t\t%s{\"%s\"}\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()), reinterpret_cast<const wchar_t*>(to.c_str()));
-            // fflush(stdout);
+            fflush(stream);
         }
         fwprintf(stream, L"\t}\n");
+        fflush(stream);
     }
 
     bool supports_search_collation(const char* locale)
@@ -550,7 +553,8 @@ namespace
         return false;
     }
 
-    void run_locale(std::string locale, const char* outDir)
+    void run_locale(std::string locale, const char* outDir, 
+        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap)
     {
         std::string searchLocale(locale);
         searchLocale.append("-u-co-search");
@@ -559,7 +563,7 @@ namespace
         if (searchResult != icu_resource_search_result::exact_match)
         {
             // Specific locale does not support 'search' collation type, and a fallback locale would be used. Skip.
-            printf("Skipping specific locale to due using fallback data: %s.\n", locale.c_str());
+            printf("SKIPPING. Locale uses fallback data: %s.\n", locale.c_str());
             return;
         }
         printf("Generating collation folding data for locale: %s.\n", locale.c_str());
@@ -572,7 +576,7 @@ namespace
             exit(-1);
         }
 
-        FILE *stream;
+        FILE* stream;
         std::string filename(outDir);
         filename.append("/").append(locale).append(".txt");
         stream = fopen(filename.c_str(), "w+,ccs=UTF-8");
@@ -595,12 +599,17 @@ namespace
         for (UCollationStrength strength : colfStrengths)
         {
             ucol_setStrength(collator.get(), strength);
-
             std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
-                collator.get(), strength) };
+                collator.get(), strength, rootCollationFoldingMap) };
             
+            if (locale == "root")
+            {
+                rootCollationFoldingMap.insert( {strength, collationFoldingMap} );
+            }
+
             print_collation_folding_map(to_map(collationFoldingMap), strength, stream);
         }
+
         fwprintf(stream, L"}\n");
         fflush(stream);
         fclose(stream);
@@ -631,7 +640,9 @@ namespace
         }
 
         // Generate 'root' collation folding data first.
-        run_locale("root", outDir);
+        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>
+            rootCollationFoldingMap{};
+        run_locale("root", outDir, rootCollationFoldingMap);
 
         // Only generate collation folding data on locales that support the 'search' collation type.
         for (const auto& locale : locales)
@@ -641,7 +652,7 @@ namespace
                 fprintf(stderr, "No 'search' collation type for locale: %s.\n", locale.c_str());
                 continue;
             }
-            run_locale(locale, outDir);
+            run_locale(locale, outDir, rootCollationFoldingMap);
         }
     }
 }
