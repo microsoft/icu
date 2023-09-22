@@ -50,54 +50,83 @@ static std::vector<UColAttributeValue> colfStrengths = {
 
 namespace
 {
-    struct collation_key_sequence
+    struct collation_element final
     {
-        std::vector<uint16_t> primary;
-        std::vector<uint8_t> secondary;
-        std::vector<uint8_t> tertiary;
+        uint16_t primary;
+        uint8_t secondary;
+        uint8_t tertiary;
+    };
+
+    struct collation_key_sequence final
+    {
+        std::vector<collation_element> items;
 
         constexpr bool operator==(const collation_key_sequence& other) const noexcept
         {
-            if (primary.size() != other.primary.size())
+            if (items.size() != other.items.size())
             {
                 return false;
             }
 
-            if (secondary.size() != other.secondary.size())
+            for (size_t index = 0; index < items.size(); ++index)
             {
-                return false;
-            }
-            
-            if (tertiary.size() != other.tertiary.size())
-            {
-                return false;
-            }
-
-            for (size_t index = 0; index < primary.size(); ++index)
-            {
-                if (primary[index] != other.primary[index])
+                if (items[index].primary != other.items[index].primary)
                 {
                     return false;
                 }
             }
 
-            for (size_t index = 0; index < secondary.size(); ++index)
+            for (size_t index = 0; index < items.size(); ++index)
             {
-                if (secondary[index] != other.secondary[index])
+                if (items[index].secondary != other.items[index].secondary)
                 {
                     return false;
                 }
             }
 
-            for (size_t index = 0; index < tertiary.size(); ++index)
+            for (size_t index = 0; index < items.size(); ++index)
             {
-                if (tertiary[index] != other.tertiary[index])
+                if (items[index].tertiary != other.items[index].tertiary)
                 {
                     return false;
                 }
             }
 
             return true;
+        }
+
+        constexpr bool operator<(const collation_key_sequence& other) const noexcept
+        {
+            if (items.size() != other.items.size())
+            {
+                return items.size() < other.items.size();
+            }
+
+            for (size_t index = 0; index < items.size(); ++index)
+            {
+                if (items[index].primary != other.items[index].primary)
+                {
+                    return items[index].primary < other.items[index].primary;
+                }
+            }
+
+            for (size_t index = 0; index < items.size(); ++index)
+            {
+                if (items[index].secondary != other.items[index].secondary)
+                {
+                    return items[index].secondary < other.items[index].secondary;
+                }
+            }
+
+            for (size_t index = 0; index < items.size(); ++index)
+            {
+                if (items[index].tertiary != other.items[index].tertiary)
+                {
+                    return items[index].tertiary < other.items[index].tertiary;
+                }
+            }
+
+            return false;
         }
     };
 }
@@ -112,7 +141,7 @@ namespace std
             // See MSVC's type_traits (_FNV_offset_basis, _FNV_prime and the related _Fnv1a_append_bytes).
 #if defined(_WIN64)
             constexpr size_t seed = 14695981039346656037ULL;
-            constexpr size_t prime= 1099511628211ULL;
+            constexpr size_t prime = 1099511628211ULL;
 #else
             constexpr size_t seed = 2166136261U;
             constexpr size_t prime = 16777619U;
@@ -120,21 +149,21 @@ namespace std
 
             size_t hash{ seed };
 
-            for (uint16_t item : value.primary)
+            for (collation_element item : value.items)
             {
-                hash ^= item;
+                hash ^= static_cast<size_t>(item.primary);
                 hash *= prime;
             }
 
-            for (uint8_t item : value.secondary)
+            for (collation_element item : value.items)
             {
-                hash ^= item;
+                hash ^= static_cast<size_t>(item.secondary);
                 hash *= prime;
             }
 
-            for (uint8_t item : value.tertiary)
+            for (collation_element item : value.items)
             {
-                hash ^= item;
+                hash ^= static_cast<size_t>(item.tertiary);
                 hash *= prime;
             }
 
@@ -142,7 +171,6 @@ namespace std
         }
     };
 }
-
 
 namespace
 {
@@ -156,34 +184,23 @@ namespace
         }
     }
 
-    constexpr char16_t get_hex_digit(uint8_t value) noexcept
+    constexpr const wchar_t* strength_to_string(UCollationStrength value) noexcept
     {
-        if (value > 0xF)
+        switch (value)
         {
-            assert(value <= 0xF); // assert(false) with a nicer error message
-            value = static_cast<uint8_t>(value & 0x0F);
+        case UCollationStrength::UCOL_PRIMARY:
+            return L"primary";
+        case UCollationStrength::UCOL_SECONDARY:
+            return L"secondary";
+        case UCollationStrength::UCOL_TERTIARY:
+            return L"tertiary";
+        case UCollationStrength::UCOL_QUATERNARY:
+            return L"quaternary";
+        case UCollationStrength::UCOL_IDENTICAL:
+            return L"identical";
+        default:
+            return L"unknown";
         }
-
-        if (value < 0xA)
-        {
-            return u'0' + static_cast<char16_t>(value);
-        }
-        else
-        {
-            return u'A' + static_cast<char16_t>(value - 0xA);
-        }
-    }
-
-    void add_hex_8(uint8_t value, std::u16string& result)
-    {
-        result.push_back(get_hex_digit(static_cast<uint8_t>((value & 0xF0) >> 4)));
-        result.push_back(get_hex_digit(static_cast<uint8_t>(value & 0xF)));
-    }
-
-    void add_hex_16(uint16_t value, std::u16string& result)
-    {
-        add_hex_8(static_cast<uint8_t>((value & 0xFF00) >> 8), result);
-        add_hex_8(static_cast<uint8_t>(value & 0xFF), result);
     }
 
     collation_key_sequence get_collation_key_sequence(
@@ -191,58 +208,30 @@ namespace
     {
         unique_UCollationElements elements{ ucol_open_elements_cpp(collator, text) };
 
-        std::vector<uint16_t> combinedPrimary{};
-        std::vector<uint8_t> combinedSecondary{};
-        std::vector<uint8_t> combinedTertiary{};
+        std::vector<collation_element> items{};
 
         int32_t value{};
 
         while (ucol_try_next_cpp(elements.get(), value))
         {
             uint16_t primary{ ucol_primary_order_cpp(value) };
-
-            if (primary != 0)
-            {
-                combinedPrimary.push_back(primary);
-            }
-
-            if (strength < UCollationStrength::UCOL_SECONDARY)
-            {
-                continue;
-            }
-
-            uint8_t secondary{ ucol_secondary_order_cpp(value) };
-
-            if (secondary != 0)
-            {
-                combinedSecondary.push_back(secondary);
-            }
-
-            if (strength < UCollationStrength::UCOL_TERTIARY)
-            {
-                continue;
-            }
-
-            uint8_t tertiary{ ucol_tertiary_order_cpp(value) };
-
-            if (tertiary != 0)
-            {
-                combinedTertiary.push_back(tertiary);
-            }
+            uint8_t secondary{ strength < UCollationStrength::UCOL_SECONDARY ? 0u : ucol_secondary_order_cpp(value) };
+            uint8_t tertiary{ strength < UCollationStrength::UCOL_TERTIARY ? 0u : ucol_tertiary_order_cpp(value) };
+            items.emplace_back(primary, secondary, tertiary);
         }
 
-        return collation_key_sequence{combinedPrimary, combinedSecondary, combinedTertiary};
+        return collation_key_sequence{ items };
     }
 
-    void add_collation_item(std::u16string_view text, const UCollator* collator, UCollationStrength strength,
-        std::unordered_multimap<collation_key_sequence, std::u16string> &textByCollationKeySequence)
+    void add_collation_key_sequence_item(std::u16string_view text, const UCollator* collator,
+        UCollationStrength strength,
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence)
     {
-        collation_key_sequence collationKeySequence{ get_collation_key_sequence(text, collator, strength) };
-        textByCollationKeySequence.emplace(collationKeySequence, text);
+        textByCollationKeySequence[get_collation_key_sequence(text, collator, strength)].emplace_back(text);
     }
 
-    void add_collation_item(char32_t value, const UCollator* collator, UCollationStrength strength,
-        std::unordered_multimap<collation_key_sequence, std::u16string> &textByCollationKeySequence)
+    void add_collation_key_sequence_item(char32_t value, const UCollator* collator, UCollationStrength strength,
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence)
     {
         icu_utf32_to_utf16_converter valueUtf16{ value };
 
@@ -250,18 +239,18 @@ namespace
         {
             char16_t nonSurrogateValue{ valueUtf16.non_surrogate_value() };
             std::u16string_view buffer{ &nonSurrogateValue, 1 };
-            add_collation_item(buffer, collator, strength, textByCollationKeySequence);
+            add_collation_key_sequence_item(buffer, collator, strength, textByCollationKeySequence);
         }
         else
         {
             std::array<char16_t, 2> buffer{ valueUtf16.lead_surrogate(), valueUtf16.trail_surrogate() };
             std::u16string_view bufferView{ buffer.data(), buffer.size() };
-            add_collation_item(bufferView, collator, strength, textByCollationKeySequence);
+            add_collation_key_sequence_item(bufferView, collator, strength, textByCollationKeySequence);
         }
     }
 
-    void add_code_point_collation_items(const UCollator* collator, UCollationStrength strength,
-        std::unordered_multimap<collation_key_sequence, std::u16string> &textByCollationKeySequence)
+    void add_code_point_collation_key_sequence_items(const UCollator* collator, UCollationStrength strength,
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence)
     {
         for (char32_t item = u'\0'; item <= U'\U0010FFFF'; ++item)
         {
@@ -270,12 +259,12 @@ namespace
                 continue;
             }
 
-            add_collation_item(item, collator, strength, textByCollationKeySequence);
+            add_collation_key_sequence_item(item, collator, strength, textByCollationKeySequence);
         }
     }
 
-    void add_contraction_and_prefix_collation_items(const UCollator* collator, UCollationStrength strength,
-        std::unordered_multimap<collation_key_sequence, std::u16string> &textByCollationKeySequence)
+    void add_contraction_and_prefix_collation_key_sequence_items(const UCollator* collator, UCollationStrength strength,
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence)
     {
         unique_USet contractions{ uset_open_empty_cpp() };
         constexpr bool addPrefixes{ true };
@@ -295,32 +284,666 @@ namespace
             std::u16string contractionString{};
             contractionString.resize(contraction.string_size.value() + 1);
             contractionString.resize(uset_get_item_string_cpp(contractions.get(), contractionIndex, contractionString));
-            fflush(stdout);
-            add_collation_item(contractionString, collator, strength, textByCollationKeySequence);
+            add_collation_key_sequence_item(contractionString, collator, strength, textByCollationKeySequence);
         }
     }
 
-    constexpr wchar_t to_hex_digit(uint32_t value) noexcept
+    std::unordered_map<collation_key_sequence, std::vector<std::u16string>> create_collation_key_sequence_map(
+        const UCollator* collator, UCollationStrength strength)
+    {
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>> result{};
+        add_code_point_collation_key_sequence_items(collator, strength, result);
+        add_contraction_and_prefix_collation_key_sequence_items(collator, strength, result);
+        return result;
+    }
+
+    enum class canonical_case_class
+    {
+        all_lowercase,
+        some_lowercase,
+        mixed_case,
+        some_uppercase,
+        all_uppercase,
+        invalid
+    };
+
+    canonical_case_class get_canonical_case_class(std::u16string_view value)
+    {
+        size_t size{};
+        size_t lowercase{};
+        size_t uppercase{};
+        icu_utf16_to_utf32_view view{ value };
+
+        for (icu_utf16_to_utf32_item item : view)
+        {
+            if (!item.is_code_point())
+            {
+                // An unpaired surrogate is the least preferrable case class.
+                return canonical_case_class::invalid;
+            }
+
+            ++size;
+            int8_t type{ u_charType(item.code_point()) };
+
+            if (type == UCharCategory::U_LOWERCASE_LETTER)
+            {
+                ++lowercase;
+            }
+            else if (type == UCharCategory::U_UPPERCASE_LETTER || type == UCharCategory::U_TITLECASE_LETTER)
+            {
+                ++uppercase;
+            }
+        }
+
+        if (lowercase == size)
+        {
+            // A string is lowercase unless it has at least one non-lowercase character (or invalid code unit sequence).
+            // (i.e., an empty string is considered lowercase)
+            return canonical_case_class::all_lowercase;
+        }
+        else if (uppercase == size)
+        {
+            return canonical_case_class::all_uppercase;
+        }
+        else if (lowercase > 0 && uppercase == 0)
+        {
+            return canonical_case_class::some_lowercase;
+        }
+        else if (lowercase == 0 && uppercase < size)
+        {
+            return canonical_case_class::some_uppercase;
+        }
+        else
+        {
+            return canonical_case_class::mixed_case;
+        }
+    }
+
+    // Technically, returns code point size + count of invalid code units.
+    size_t get_code_point_size(std::u16string_view value)
+    {
+        size_t result{};
+        icu_utf16_to_utf32_view view{ value };
+
+        for (icu_utf16_to_utf32_iterator iterator = view.begin(); iterator != view.end(); ++iterator)
+        {
+            ++result;
+        }
+
+        return result;
+    }
+
+    bool has_cjk_compatibilty_code_point(std::u16string_view value)
+    {
+        icu_utf16_to_utf32_view view{ value };
+
+        for (const auto& item : view)
+        {
+            if (!item.is_code_point())
+            {
+                continue;
+            }
+
+            char32_t codePoint{ item.code_point() };
+            constexpr char32_t block1Start{ u'\uF900' };
+            constexpr char32_t block1End{ u'\uFAFF' };
+            constexpr char32_t block2Start{ U'\U0002F800' };
+            constexpr char32_t block2End{ U'\U0002FA1F' };
+
+            if (codePoint >= block1Start && codePoint <= block1End)
+            {
+                return true;
+            }
+            else if (codePoint >= block2Start && codePoint <= block2End)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    bool is_better_canonical_item(std::u16string_view left, std::u16string_view right)
+    {
+        size_t leftCodePointSize{ get_code_point_size(left) };
+        size_t rightCodePointSize{ get_code_point_size(right) };
+
+        if (leftCodePointSize != rightCodePointSize)
+        {
+            return leftCodePointSize > rightCodePointSize;
+        }
+
+        canonical_case_class leftCaseClass{ get_canonical_case_class(left) };
+        canonical_case_class rightCaseClass{ get_canonical_case_class(right) };
+
+        if (leftCaseClass != rightCaseClass)
+        {
+            return leftCaseClass < rightCaseClass;
+        }
+
+        bool leftCjkCompatibilty{ has_cjk_compatibilty_code_point(left) };
+        bool rightCjkCompatibility{ has_cjk_compatibilty_code_point(right) };
+
+        if (leftCjkCompatibilty != rightCjkCompatibility)
+        {
+            return !leftCjkCompatibilty;
+        }
+
+        icu_utf16_to_utf32_view leftView{ left };
+        icu_utf16_to_utf32_view rightView{ right };
+        auto rightIterator = rightView.begin();
+
+        for (auto leftIterator = leftView.begin(); leftIterator != leftView.end() && rightIterator != rightView.end();
+             ++leftIterator, ++rightIterator)
+        {
+            auto leftItem = *leftIterator;
+            auto rightItem = *rightIterator;
+
+            bool leftIsCodePoint{ leftItem.is_code_point() };
+            bool rightIsCodePoint{ rightItem.is_code_point() };
+
+            if (leftIsCodePoint != rightIsCodePoint)
+            {
+                return leftIsCodePoint;
+            }
+
+            if (!leftIsCodePoint)
+            {
+                continue;
+            }
+
+            char32_t leftCodePoint{ leftItem.code_point() };
+            char32_t rightCodePoint{ rightItem.code_point() };
+
+            if (leftCodePoint != rightCodePoint)
+            {
+                return leftCodePoint < rightCodePoint;
+            }
+        }
+
+        return false;
+    }
+
+    std::u16string get_canonical_item(const std::vector<std::u16string>& equivalenceClass)
+    {
+        if (equivalenceClass.empty())
+        {
+            assert(false);
+            return {};
+        }
+
+        std::u16string result{ equivalenceClass[0] };
+
+        for (size_t index = 1; index < equivalenceClass.size(); ++index)
+        {
+            const std::u16string_view& item{ equivalenceClass[index] };
+
+            if (is_better_canonical_item(item, result))
+            {
+                result = item;
+            }
+        }
+
+        return result;
+    }
+
+    void add_single_collation_element_folding(
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
+        std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        std::unordered_map<std::u16string, std::u16string>& collationFolding)
+    {
+        for (const auto& pair : textByCollationKeySequence)
+        {
+            if (pair.first.items.size() != 1)
+            {
+                continue;
+            }
+
+            const std::vector<std::u16string>& equivalenceClass{ pair.second };
+
+            std::u16string canonicalText{ get_canonical_item(equivalenceClass) };
+            canonicalTextByCollationKeySequence.emplace(pair.first, canonicalText);
+
+            if (equivalenceClass.size() == 1)
+            {
+                continue;
+            }
+
+            for (const auto& text : equivalenceClass)
+            {
+                if (text == canonicalText)
+                {
+                    continue;
+                }
+
+                collationFolding.emplace(text, canonicalText);
+            }
+        }
+    }
+
+    std::u16string combine(const std::u16string first, const std::u16string& second)
+    {
+        std::u16string result{};
+        result.reserve(first.size() + second.size());
+        result.append(first);
+        result.append(second);
+        return result;
+    }
+
+    std::u16string combine(const std::u16string first, const std::u16string& second, const std::u16string& third)
+    {
+        std::u16string result{};
+        result.reserve(first.size() + second.size() + third.size());
+        result.append(first);
+        result.append(second);
+        result.append(third);
+        return result;
+    }
+
+    void add_double_collation_element_folding(
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
+        std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        std::unordered_map<std::u16string, std::u16string>& collationFolding)
+    {
+        for (auto& pair : textByCollationKeySequence)
+        {
+            const collation_key_sequence& collationKeySequence{ pair.first };
+
+            if (collationKeySequence.items.size() != 2)
+            {
+                continue;
+            }
+
+            collation_element first{ collationKeySequence.items[0] };
+            collation_element second{ collationKeySequence.items[1] };
+            collation_key_sequence standaloneFirst{ std::vector<collation_element>{ first } };
+            collation_key_sequence standaloneSecond{ std::vector<collation_element>{ second } };
+            auto findFirst = canonicalTextByCollationKeySequence.find(standaloneFirst);
+            auto findSecond = canonicalTextByCollationKeySequence.find(standaloneSecond);
+
+            if (findFirst != canonicalTextByCollationKeySequence.end() &&
+                findSecond != canonicalTextByCollationKeySequence.end())
+            {
+                pair.second.emplace_back(combine(findFirst->second, findSecond->second));
+            }
+
+            const std::vector<std::u16string>& equivalenceClass{ pair.second };
+
+            std::u16string canonicalText{ get_canonical_item(equivalenceClass) };
+            canonicalTextByCollationKeySequence.emplace(pair.first, canonicalText);
+
+            if (equivalenceClass.size() == 1)
+            {
+                continue;
+            }
+
+            for (const auto& text : equivalenceClass)
+            {
+                if (text == canonicalText)
+                {
+                    continue;
+                }
+
+                collationFolding.emplace(text, canonicalText);
+            }
+        }
+    }
+
+    void add_triple_collation_element_folding(
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
+        std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        std::unordered_map<std::u16string, std::u16string>& collationFolding)
+    {
+        for (auto& pair : textByCollationKeySequence)
+        {
+            const collation_key_sequence& collationKeySequence{ pair.first };
+
+            if (collationKeySequence.items.size() != 3)
+            {
+                continue;
+            }
+
+            collation_element first{ collationKeySequence.items[0] };
+            collation_element second{ collationKeySequence.items[1] };
+            collation_element third{ collationKeySequence.items[2] };
+
+            // element1, element2, element3
+            {
+                collation_key_sequence standaloneFirst{ std::vector<collation_element>{ first } };
+                collation_key_sequence standaloneSecond{ std::vector<collation_element>{ second } };
+                collation_key_sequence standaloneThird{ std::vector<collation_element>{ third } };
+                auto findFirst = canonicalTextByCollationKeySequence.find(standaloneFirst);
+                auto findSecond = canonicalTextByCollationKeySequence.find(standaloneSecond);
+                auto findThird = canonicalTextByCollationKeySequence.find(standaloneThird);
+
+                if (findFirst != canonicalTextByCollationKeySequence.end() &&
+                    findSecond != canonicalTextByCollationKeySequence.end() &&
+                    findThird != canonicalTextByCollationKeySequence.end())
+                {
+                    pair.second.emplace_back(combine(findFirst->second, findSecond->second, findThird->second));
+                }
+            }
+
+            // element1+element2, element3
+            {
+                collation_key_sequence section1{ std::vector<collation_element>{ first, second } };
+                collation_key_sequence section2{ std::vector<collation_element>{ third } };
+                auto find1 = canonicalTextByCollationKeySequence.find(section1);
+                auto find2 = canonicalTextByCollationKeySequence.find(section2);
+
+                if (find1 != canonicalTextByCollationKeySequence.end() &&
+                    find2 != canonicalTextByCollationKeySequence.end())
+                {
+                    pair.second.emplace_back(combine(find1->second, find2->second));
+                }
+            }
+
+            // element1, element2+element3
+            {
+                collation_key_sequence section1{ std::vector<collation_element>{ first } };
+                collation_key_sequence section2{ std::vector<collation_element>{ second, third } };
+                auto find1 = canonicalTextByCollationKeySequence.find(section1);
+                auto find2 = canonicalTextByCollationKeySequence.find(section2);
+
+                if (find1 != canonicalTextByCollationKeySequence.end() &&
+                    find2 != canonicalTextByCollationKeySequence.end())
+                {
+                    pair.second.emplace_back(combine(find1->second, find2->second));
+                }
+            }
+
+            const std::vector<std::u16string>& equivalenceClass{ pair.second };
+
+            std::u16string canonicalText{ get_canonical_item(equivalenceClass) };
+            canonicalTextByCollationKeySequence.emplace(pair.first, canonicalText);
+
+            if (equivalenceClass.size() == 1)
+            {
+                continue;
+            }
+
+            for (const auto& text : equivalenceClass)
+            {
+                if (text == canonicalText)
+                {
+                    continue;
+                }
+
+                collationFolding.emplace(text, canonicalText);
+            }
+        }
+    }
+
+    bool add_if_find_all(
+        const std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        const std::vector<collation_key_sequence>& sections, std::vector<std::u16string>& equivalenceClass)
+    {
+        std::u16string canonicalText{};
+
+        for (const auto& item : sections)
+        {
+            auto findResult = canonicalTextByCollationKeySequence.find(item);
+
+            if (findResult == canonicalTextByCollationKeySequence.end())
+            {
+                return false;
+            }
+
+            canonicalText.append(findResult->second);
+        }
+
+        equivalenceClass.emplace_back(canonicalText);
+        return true;
+    }
+
+    void add_quadruple_collation_element_folding(
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
+        std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        std::unordered_map<std::u16string, std::u16string>& collationFolding)
+    {
+        for (auto& pair : textByCollationKeySequence)
+        {
+            const collation_key_sequence& collationKeySequence{ pair.first };
+            std::vector<std::u16string>& equivalenceClass{ pair.second };
+
+            if (collationKeySequence.items.size() != 4)
+            {
+                continue;
+            }
+
+            collation_element first{ collationKeySequence.items[0] };
+            collation_element second{ collationKeySequence.items[1] };
+            collation_element third{ collationKeySequence.items[2] };
+            collation_element fourth{ collationKeySequence.items[3] };
+
+            // element1, element2, element3, element4
+            {
+                collation_key_sequence section1{ std::vector<collation_element>{ first } };
+                collation_key_sequence section2{ std::vector<collation_element>{ second } };
+                collation_key_sequence section3{ std::vector<collation_element>{ third } };
+                collation_key_sequence section4{ std::vector<collation_element>{ fourth } };
+
+                add_if_find_all(
+                    canonicalTextByCollationKeySequence, { section1, section2, section3, section4 }, equivalenceClass);
+            }
+
+            // element1+element2, element3, element4
+            {
+                collation_key_sequence section1{ std::vector<collation_element>{ first, second } };
+                collation_key_sequence section2{ std::vector<collation_element>{ third } };
+                collation_key_sequence section3{ std::vector<collation_element>{ fourth } };
+
+                add_if_find_all(
+                    canonicalTextByCollationKeySequence, { section1, section2, section3 }, equivalenceClass);
+            }
+
+            // element1, element2+element3, element4
+            {
+                collation_key_sequence section1{ std::vector<collation_element>{ first } };
+                collation_key_sequence section2{ std::vector<collation_element>{ second, third } };
+                collation_key_sequence section3{ std::vector<collation_element>{ fourth } };
+
+                add_if_find_all(
+                    canonicalTextByCollationKeySequence, { section1, section2, section3 }, equivalenceClass);
+            }
+
+            // element1, element2, element3+element4
+            {
+                collation_key_sequence section1{ std::vector<collation_element>{ first } };
+                collation_key_sequence section2{ std::vector<collation_element>{ second } };
+                collation_key_sequence section3{ std::vector<collation_element>{ third, fourth } };
+
+                add_if_find_all(
+                    canonicalTextByCollationKeySequence, { section1, section2, section3 }, equivalenceClass);
+            }
+
+            // element1, element2+element3+element4
+            {
+                collation_key_sequence section1{ std::vector<collation_element>{ first } };
+                collation_key_sequence section2{ std::vector<collation_element>{ second, third, fourth } };
+
+                add_if_find_all(canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
+            }
+
+            // element1+element2+element3, element4
+            {
+                collation_key_sequence section1{ std::vector<collation_element>{ first, second, third } };
+                collation_key_sequence section2{ std::vector<collation_element>{ fourth } };
+
+                add_if_find_all(canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
+            }
+
+            // element1+element2, element3+element4
+            {
+                collation_key_sequence section1{ std::vector<collation_element>{ first, second } };
+                collation_key_sequence section2{ std::vector<collation_element>{ third, fourth } };
+
+                add_if_find_all(canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
+            }
+
+            std::u16string canonicalText{ get_canonical_item(equivalenceClass) };
+            canonicalTextByCollationKeySequence.emplace(pair.first, canonicalText);
+
+            if (equivalenceClass.size() == 1)
+            {
+                continue;
+            }
+
+            for (const auto& text : equivalenceClass)
+            {
+                if (text == canonicalText)
+                {
+                    continue;
+                }
+
+                collationFolding.emplace(text, canonicalText);
+            }
+        }
+    }
+
+    void add_remaining_collation_element_folding(size_t minimumSize,
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
+        std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& incomplete,
+        std::unordered_map<std::u16string, std::u16string>& collationFolding)
+    {
+        for (auto& pair : textByCollationKeySequence)
+        {
+            const collation_key_sequence& collationKeySequence{ pair.first };
+            std::vector<std::u16string>& equivalenceClass{ pair.second };
+
+            if (collationKeySequence.items.size() < minimumSize)
+            {
+                continue;
+            }
+
+            bool itemIncomplete{ true };
+
+            std::vector<collation_element> elements{};
+            elements.reserve(collationKeySequence.items.size());
+
+            for (const auto& item : collationKeySequence.items)
+            {
+                elements.push_back(item);
+            }
+
+            // Only handles the simplest pattern:
+            // element1, element2, element3, ..., elementN
+            // A more general version of the full logic in add_single/double/triple/etc/collation_element_folding is not
+            // yet written.
+            {
+                std::vector<collation_key_sequence> sections{};
+                sections.reserve(collationKeySequence.items.size());
+
+                for (const auto& element : elements)
+                {
+                    sections.emplace_back(collation_key_sequence{ { element } });
+                }
+
+                if (add_if_find_all(canonicalTextByCollationKeySequence, sections, equivalenceClass))
+                {
+                    itemIncomplete = false;
+                }
+            }
+
+            if (equivalenceClass.size() == 1)
+            {
+                continue;
+            }
+
+            if (itemIncomplete)
+            {
+                incomplete.emplace(collationKeySequence, equivalenceClass);
+            }
+
+            std::u16string canonicalText{ get_canonical_item(equivalenceClass) };
+            canonicalTextByCollationKeySequence.emplace(pair.first, canonicalText);
+
+            for (const auto& text : equivalenceClass)
+            {
+                if (text == canonicalText)
+                {
+                    continue;
+                }
+
+                collationFolding.emplace(text, canonicalText);
+            }
+        }
+    }
+
+    std::unordered_map<std::u16string, std::u16string> create_collation_folding_map(
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& incomplete)
+    {
+        std::unordered_map<collation_key_sequence, std::u16string> canonicalTextByCollationKeySequence{};
+        std::unordered_map<std::u16string, std::u16string> result{};
+        add_single_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
+        add_double_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
+        add_triple_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
+        add_quadruple_collation_element_folding(
+            textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
+        add_remaining_collation_element_folding(
+            5, textByCollationKeySequence, canonicalTextByCollationKeySequence, incomplete, result);
+        return result;
+    }
+
+    std::unordered_map<std::u16string, std::u16string> create_collation_folding_map(const UCollator* collator,
+        UCollationStrength strength,
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& incomplete)
+    {
+        std::unordered_map<collation_key_sequence, std::vector<std::u16string>> textByCollationKeySequence{
+            create_collation_key_sequence_map(collator, strength)
+        };
+        return create_collation_folding_map(textByCollationKeySequence, incomplete);
+    }
+
+    std::map<collation_key_sequence, std::vector<std::u16string>> to_map(
+        const std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& value)
+    {
+        std::map<collation_key_sequence, std::vector<std::u16string>> result{};
+
+        for (const auto& pair : value)
+        {
+            result.emplace(pair.first, pair.second);
+        }
+
+        return result;
+    }
+
+    std::map<std::u16string, std::u16string> to_map(const std::unordered_map<std::u16string, std::u16string>& value)
+    {
+        std::map<std::u16string, std::u16string> result{};
+
+        for (const auto& pair : value)
+        {
+            result.emplace(pair.first, pair.second);
+        }
+
+        return result;
+    }
+
+    constexpr char16_t to_hex_digit(uint8_t value) noexcept
     {
         if (value > 0xF)
         {
-            std::terminate();
+            assert(value <= 0xF); // assert(false) with a nicer error message
+            value = static_cast<uint8_t>(value & 0x0F);
         }
 
         if (value < 0xA)
         {
-            return L'0' + static_cast<wchar_t>(value);
+            return u'0' + static_cast<char16_t>(value);
         }
         else
         {
-            return L'A' + static_cast<wchar_t>(value - 0xA);
+            return u'A' + static_cast<char16_t>(value - 0xA);
         }
     }
 
-    std::wstring to_utf32_debug_string(std::u16string_view text)
+    std::u16string to_utf32_debug_string(std::u16string_view text)
     {
         std::u32string textUtf32{ u_str_to_utf32_cpp(text) };
-        std::wstring result{};
+        std::u16string result{};
         result.reserve(textUtf32.size() * 7); // rough lower bound; " U+XXXX" per character
 
         for (size_t index = 0; index < textUtf32.size(); ++index)
@@ -336,27 +959,27 @@ namespace
 
             if (item <= u'\uFFFF')
             {
-                result.push_back(to_hex_digit((item & 0xF000) >> 12));
-                result.push_back(to_hex_digit((item & 0xF00) >> 8));
-                result.push_back(to_hex_digit((item & 0xF0) >> 4));
-                result.push_back(to_hex_digit(item & 0xF));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF000) >> 12)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF00) >> 8)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF0) >> 4)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>(item & 0xF)));
             }
             else if (item <= U'\U000FFFFF')
             {
-                result.push_back(to_hex_digit((item & 0xF0000) >> 16));
-                result.push_back(to_hex_digit((item & 0xF000) >> 12));
-                result.push_back(to_hex_digit((item & 0xF00) >> 8));
-                result.push_back(to_hex_digit((item & 0xF0) >> 4));
-                result.push_back(to_hex_digit(item & 0xF));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF0000) >> 16)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF000) >> 12)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF00) >> 8)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF0) >> 4)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>(item & 0xF)));
             }
             else if (item <= U'\U0010FFFF')
             {
-                result.push_back(to_hex_digit((item & 0xF00000) >> 20));
-                result.push_back(to_hex_digit((item & 0xF0000) >> 16));
-                result.push_back(to_hex_digit((item & 0xF000) >> 12));
-                result.push_back(to_hex_digit((item & 0xF00) >> 8));
-                result.push_back(to_hex_digit((item & 0xF0) >> 4));
-                result.push_back(to_hex_digit(item & 0xF));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF00000) >> 20)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF0000) >> 16)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF000) >> 12)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF00) >> 8)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>((item & 0xF0) >> 4)));
+                result.push_back(to_hex_digit(static_cast<uint8_t>(item & 0xF)));
             }
             else
             {
@@ -367,147 +990,68 @@ namespace
         return result;
     }
 
-    bool is_lowercase(std::u16string_view value)
+    void add_hex_8(uint8_t value, std::u16string& result)
     {
-        icu_utf16_to_utf32_view view{ value };
-
-        for (icu_utf16_to_utf32_item item : view)
-        {
-            if (!item.is_code_point())
-            {
-                // An unpaired surrogate is not lowercase.
-                return false;
-            }
-
-            if (u_charType(item.code_point()) != UCharCategory::U_LOWERCASE_LETTER)
-            {
-                return false;
-            }
-        }
-
-        // A string is lowercase unless it has at least one non-lowercase character (or invalid code unit sequence).
-        // (i.e., an empty string is considered lowercase)
-        return true;
+        result.push_back(to_hex_digit(static_cast<uint8_t>((value & 0xF0) >> 4)));
+        result.push_back(to_hex_digit(static_cast<uint8_t>(value & 0xF)));
     }
 
-    size_t get_canonical_item_index(std::vector<std::u16string_view>& equivalenceClass)
+    void add_hex_16(uint16_t value, std::u16string& result)
     {
-        if (equivalenceClass.empty())
+        add_hex_8(static_cast<uint8_t>((value & 0xFF00) >> 8), result);
+        add_hex_8(static_cast<uint8_t>(value & 0xFF), result);
+    }
+
+    std::u16string to_string(const collation_key_sequence& value)
+    {
+        std::u16string result{};
+        result.reserve(2 + (value.items.size() * 3) * 2);
+
+        for (collation_element collationElement : value.items)
         {
-            assert(false);
-            return std::u16string_view::npos;
+            add_hex_16(collationElement.primary, result);
         }
 
-        // Find the item with the lowest code unit (or sum of code unit values), except always preferring entirely
-        // lowercase strings.
-        size_t result{ 0 };
-        bool resultIsLowercase{ is_lowercase(equivalenceClass[0]) };
+        result.push_back(u' ');
 
-        for (size_t index = 1; index < equivalenceClass.size(); ++index)
+        for (collation_element collationElement : value.items)
         {
-            std::u16string_view item{ equivalenceClass[index] };
+            add_hex_8(collationElement.secondary, result);
+        }
 
-            if (!resultIsLowercase && is_lowercase(item))
-            {
-                result = index;
-                resultIsLowercase = true;
-            }
+        result.push_back(u' ');
+
+        for (collation_element collationElement : value.items)
+        {
+            add_hex_8(collationElement.tertiary, result);
         }
 
         return result;
     }
 
-    void add_collation_folding_map_items(
-        std::vector<std::u16string_view>& equivalenceClass, std::unordered_map<std::u16string, std::u16string>& result)
+    void print_collation_key_sequence_map(
+        FILE* output, const std::map<collation_key_sequence, std::vector<std::u16string>>& value)
     {
-        if (equivalenceClass.empty())
+        for (const auto& sequencePair : value)
         {
-            assert(false);
-            return;
-        }
+            const collation_key_sequence& from{ sequencePair.first };
 
-        if (equivalenceClass.size() == 1)
-        {
-            return;
-        }
-
-        size_t canonicalItemIndex{ get_canonical_item_index(equivalenceClass) };
-        std::u16string_view canonicalItem{ equivalenceClass[canonicalItemIndex] };
-
-        for (size_t index = 0; index < equivalenceClass.size(); ++index)
-        {
-            if (index == canonicalItemIndex)
+            for (const std::u16string& to : sequencePair.second)
             {
-                continue;
+                std::u16string toDisplay{ to };
+
+                // The console apparently treats this character as EOF (or an error that triggers EOF-like
+                // behavior).
+                if (toDisplay.size() == 1 && toDisplay[0] == u'\uFFFF')
+                {
+                    toDisplay = u"";
+                }
+
+                fwprintf(output, L"%s => %s (%s)\n", reinterpret_cast<const wchar_t*>(to_string(from).c_str()),
+                    reinterpret_cast<const wchar_t*>(to.c_str()),
+                    reinterpret_cast<const wchar_t*>(to_utf32_debug_string(to).c_str()));
+                fflush(output);
             }
-
-            result.emplace(equivalenceClass[index], canonicalItem);
-        }
-    }
-
-    std::unordered_map<std::u16string, std::u16string> create_collation_folding_map(
-        const std::unordered_multimap<collation_key_sequence, std::u16string>& textByCollationKeySequence)
-    {
-        std::unordered_map<std::u16string, std::u16string> result{};
-        std::vector<std::u16string_view> equivalenceClass{};
-
-        // Iterating all unique keys: https://stackoverflow.com/a/59689244
-        for (auto iterator = textByCollationKeySequence.cbegin(); iterator != textByCollationKeySequence.cend();)
-        {
-            equivalenceClass.clear();
-            const collation_key_sequence& key{ iterator->first };
-            equivalenceClass.push_back(std::u16string_view{ iterator->second });
-
-            while (++iterator != textByCollationKeySequence.cend() &&
-                   textByCollationKeySequence.key_eq()(iterator->first, key))
-            {
-                equivalenceClass.push_back(std::u16string_view{ iterator->second });
-            }
-
-            add_collation_folding_map_items(equivalenceClass, result);
-        }
-
-        return result;
-    }
-
-    std::unordered_map<std::u16string, std::u16string> create_collation_folding_map(
-        const UCollator* collator, UCollationStrength strength,
-        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap)
-    {
-        std::unordered_multimap<collation_key_sequence, std::u16string> textByCollationKeySequence{};
-        add_code_point_collation_items(collator, strength, textByCollationKeySequence);
-        add_contraction_and_prefix_collation_items(collator, strength, textByCollationKeySequence);
-        return create_collation_folding_map(textByCollationKeySequence);
-    }
-
-    std::map<std::u16string, std::u16string> to_map(const std::unordered_map<std::u16string, std::u16string>& value)
-    {
-        std::map<std::u16string, std::u16string> result{};
-
-        for (const auto& pair : value)
-        {
-            result.emplace(pair.first, pair.second);
-        }
-
-        return result;
-    }
-
-    constexpr const wchar_t* strength_to_string(UCollationStrength value) noexcept
-    {
-        switch (value)
-        {
-        case UCollationStrength::UCOL_PRIMARY:
-            return L"primary";
-        case UCollationStrength::UCOL_SECONDARY:
-            return L"secondary";
-        case UCollationStrength::UCOL_TERTIARY:
-            return L"tertiary";
-        case UCollationStrength::UCOL_QUATERNARY:
-            return L"quaternary";
-        case UCollationStrength::UCOL_IDENTICAL:
-            return L"identical";
-        default:
-            return L"unknown";
         }
     }
 
@@ -553,7 +1097,7 @@ namespace
         return false;
     }
 
-    void run_locale(std::string locale, const char* outDir, 
+    bool run_locale(std::string locale, bool printKeySequenceMap, const char* outDir, 
         std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap)
     {
         std::string searchLocale(locale);
@@ -564,7 +1108,7 @@ namespace
         {
             // Specific locale does not support 'search' collation type, and a fallback locale would be used. Skip.
             printf("SKIPPING. Locale uses fallback data: %s.\n", locale.c_str());
-            return;
+            return true;
         }
         printf("Generating collation folding data for locale: %s.\n", locale.c_str());
 
@@ -596,26 +1140,78 @@ namespace
         fwprintf(stream, L"%s{\n", loc.c_str());
         fflush(stream);
 
+        bool hasIncomplete = false;
         for (UCollationStrength strength : colfStrengths)
         {
             ucol_setStrength(collator.get(), strength);
-            std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
-                collator.get(), strength, rootCollationFoldingMap) };
-            
-            if (locale == "root")
+
+            if (printKeySequenceMap)
             {
-                rootCollationFoldingMap.insert( {strength, collationFoldingMap} );
+                wprintf(L"Collation key sequences:\n");
+                fflush(stdout);
+
+                std::unordered_map<collation_key_sequence, std::vector<std::u16string>> collationKeySequenceMap{
+                    create_collation_key_sequence_map(collator.get(), strength)
+                };
+                print_collation_key_sequence_map(stdout, to_map(collationKeySequenceMap));
+                // return true;
+            }
+            else
+            {
+                wprintf(L"Generating collation folding map... ");
+                fflush(stdout);
+
+                std::unordered_map<collation_key_sequence, std::vector<std::u16string>> incomplete{};
+                std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
+                    collator.get(), strength, incomplete) };
+
+                wprintf(L"[done]\n");
+                fflush(stdout);
+
+                hasIncomplete = !incomplete.empty();
+
+                if (hasIncomplete)
+                {
+                    fwprintf(
+                        stderr, L"WARNING: The following items may have incomplete collation folding data generated:\n");
+                    fflush(stderr);
+                    print_collation_key_sequence_map(stderr, to_map(incomplete));
+                }
+                else
+                {
+                    wprintf(L"Successfully generated collation folding for all items.\n");
+                }
+
+                wprintf(L"Collation folding map:\n");
+                fflush(stdout);
+
+                print_collation_folding_map(to_map(collationFoldingMap), strength, stream);
+                
+                if (hasIncomplete)
+                {
+                    break;
+                }
             }
 
-            print_collation_folding_map(to_map(collationFoldingMap), strength, stream);
+            // std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
+            //     collator.get(), strength, rootCollationFoldingMap) };
+            
+            // if (locale == "root")
+            // {
+            //     rootCollationFoldingMap.insert( {strength, collationFoldingMap} );
+            // }
+
+            // print_collation_folding_map(to_map(collationFoldingMap), strength, stream);
         }
 
         fwprintf(stream, L"}\n");
         fflush(stream);
         fclose(stream);
+
+        return !hasIncomplete;
     }
 
-    void run(const char* inDir, const char* outDir)
+    bool run(const char* inDir, const char* outDir)
     {
         // Get collation locales.
         std::set<std::string> locales;
@@ -640,9 +1236,10 @@ namespace
         }
 
         // Generate 'root' collation folding data first.
+        constexpr bool printKeySequenceMap{ false };
         std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>
             rootCollationFoldingMap{};
-        run_locale("root", outDir, rootCollationFoldingMap);
+        bool completed = run_locale("root", printKeySequenceMap, outDir, rootCollationFoldingMap);
 
         // Only generate collation folding data on locales that support the 'search' collation type.
         for (const auto& locale : locales)
@@ -652,8 +1249,14 @@ namespace
                 fprintf(stderr, "No 'search' collation type for locale: %s.\n", locale.c_str());
                 continue;
             }
-            run_locale(locale, outDir, rootCollationFoldingMap);
+            completed = run_locale(locale, printKeySequenceMap, outDir, rootCollationFoldingMap);
+            if (!completed)
+            {
+                break;
+            }
         }
+
+        return completed;
     }
 }
 
@@ -691,7 +1294,10 @@ int main(int argc, char **argv)
 
     try
     {
-        run(inDir, outDir);
+        if (!run(inDir, outDir))
+        {
+            return 2;
+        }
     }
     catch (const icu_error& exception)
     {
