@@ -41,10 +41,12 @@ endif
 # include the OS specific configs
 include icu.$(TARGET_OS).mk
 
-HOST_OS = $(shell uname -s)
+UNAME_S := $(shell uname -s)
 LINKER_OVERRIDE = 
-ifeq ($(HOST_OS),Linux)
+ifeq ($(UNAME_S),Linux)
+ifeq ($(TARGET_OS),browser)
 	LINKER_OVERRIDE = LDFLAGS=-fuse-ld=lld
+endif
 endif
 
 # Host build
