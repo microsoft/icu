@@ -52,10 +52,10 @@
   -->
   <Target Name="PatchEmscripten" Condition="'$(TargetOS)' == 'Browser' and '$(WasmEnableThreads)' == 'true'">
     <Copy SourceFiles="$(MSBuildThisFileDirectory)patches\emcc.py"
-          DestinationFolder="$(EMSDK_PATH)\upstream\emscripten" />
+          DestinationFolder="$(MonoEmsdkDir)\emscripten" />
   </Target>
   <Target Name="CopyEmscriptenVersion" Condition="'$(TargetOS)' == 'Browser'">
-    <ReadLinesFromFile File="$(EMSDK_PATH)\upstream\emscripten\emscripten-version.txt" >
+    <ReadLinesFromFile File="$(MonoEmsdkDir)\emscripten\emscripten-version.txt" >
       <Output TaskParameter="Lines"
               ItemName="_ItemsFromEmscriptenVersionFile"/>
     </ReadLinesFromFile>
