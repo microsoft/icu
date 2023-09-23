@@ -928,14 +928,29 @@ inline size_t uset_get_item_string_cpp(const USet* set, size_t index, std::span<
 
 inline unique_USet uset_open_empty_cpp() { return unique_USet{ uset_openEmpty() }; }
 
-inline unique_UEnumeration ucol_getKeywordValuesForLocale_cpp(const char* key, const char* locale, UBool commonlyUsed)
+inline unique_UEnumeration ucol_getKeywordValuesForLocale_cpp(const char* key, const char* locale, UBool commonlyUsed, icu_resource_search_result& resource_search_result)
 {
     UErrorCode status{};
     unique_UEnumeration result{ ucol_getKeywordValuesForLocale(key, locale, commonlyUsed, &status) };
 
-    if (U_FAILURE(status))
+    if (status != U_ZERO_ERROR)
     {
-        throw icu_error{ status, "ucol_getKeywordValuesForLocale" };
+        if (status == U_USING_FALLBACK_WARNING)
+        {
+            resource_search_result = icu_resource_search_result::fallback;
+        }
+        else if (status == U_USING_DEFAULT_WARNING)
+        {
+            resource_search_result = icu_resource_search_result::root;
+        }
+        else
+        {
+            throw icu_error{ status, "ucol_getKeywordValuesForLocale" };
+        }
+    }
+    else
+    {
+        resource_search_result = icu_resource_search_result::exact_match;
     }
 
     return result;
