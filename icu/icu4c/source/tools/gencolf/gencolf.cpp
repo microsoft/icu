@@ -1,6 +1,6 @@
 // © Microsoft Corporation. All rights reserved.
 
-#include <iostream>
+#include <algorithm>
 #include <array>
 #include <functional>
 #include <map>
@@ -10,7 +10,6 @@
 #include <vector>
 #include <set>
 #include <filesystem>
-#include <algorithm>
 #include <fcntl.h>
 #include <io.h>
 #include "icu_cpp.h"
@@ -203,6 +202,28 @@ namespace
         }
     }
 
+    constexpr bool is_ignorable_collation_element(const collation_element &value)
+    {
+        return value.primary == 0 && value.secondary == 0 && value.tertiary == 0;
+    }
+
+    void remove_duplicate_ignorable_collation_elements(std::vector<collation_element> &items)
+    {
+        auto iterator = items.begin();
+        ++iterator;
+
+        for (size_t index = 1; index < items.size(); ++index) {
+            if (is_ignorable_collation_element(items[index]) &&
+                is_ignorable_collation_element(items[index - 1])) {
+                --index;
+                items.erase(iterator);
+            } else {
+                ++iterator;
+            }
+        }
+    }
+
+
     collation_key_sequence get_collation_key_sequence(
         std::u16string_view text, const UCollator* collator, UCollationStrength strength)
     {
@@ -219,6 +240,8 @@ namespace
             uint8_t tertiary{ strength < UCollationStrength::UCOL_TERTIARY ? 0u : ucol_tertiary_order_cpp(value) };
             items.emplace_back(primary, secondary, tertiary);
         }
+
+        remove_duplicate_ignorable_collation_elements(items);
 
         return collation_key_sequence{ items };
     }
@@ -548,6 +571,51 @@ namespace
         return result;
     }
 
+    bool add_if_find_all_and_not_exists(
+        const std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        const std::vector<collation_key_sequence>& sections, std::vector<std::u16string>& equivalenceClass)
+    {
+        std::vector<collation_key_sequence> filteredSections{ sections };
+
+        for (collation_key_sequence& sequence : filteredSections)
+        {
+            remove_duplicate_ignorable_collation_elements(sequence.items);
+        }
+
+        for (auto iterator = filteredSections.begin(); iterator != filteredSections.end();)
+        {
+            if (iterator->items.empty())
+            {
+                filteredSections.erase(iterator);
+            }
+            else
+            {
+                ++iterator;
+            }
+        }
+
+        std::u16string canonicalText{};
+
+        for (const auto& item : filteredSections)
+        {
+            auto findResult = canonicalTextByCollationKeySequence.find(item);
+
+            if (findResult == canonicalTextByCollationKeySequence.end())
+            {
+                return false;
+            }
+
+            canonicalText.append(findResult->second);
+        }
+
+        if (std::find(equivalenceClass.begin(), equivalenceClass.end(), canonicalText) == equivalenceClass.end())
+        {
+            equivalenceClass.emplace_back(canonicalText);
+        }
+
+        return true;
+    }
+
     void add_double_collation_element_folding(
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
@@ -558,26 +626,21 @@ namespace
         for (auto& pair : textByCollationKeySequence)
         {
             const collation_key_sequence& collationKeySequence{ pair.first };
+            std::vector<std::u16string>& equivalenceClass{ pair.second };
 
             if (collationKeySequence.items.size() != 2)
             {
                 continue;
             }
 
+            // element1, element2
             collation_element first{ collationKeySequence.items[0] };
             collation_element second{ collationKeySequence.items[1] };
-            collation_key_sequence standaloneFirst{ std::vector<collation_element>{ first } };
-            collation_key_sequence standaloneSecond{ std::vector<collation_element>{ second } };
-            auto findFirst = canonicalTextByCollationKeySequence.find(standaloneFirst);
-            auto findSecond = canonicalTextByCollationKeySequence.find(standaloneSecond);
+            collation_key_sequence section1{ std::vector<collation_element>{ first } };
+            collation_key_sequence section2{ std::vector<collation_element>{ second } };
 
-            if (findFirst != canonicalTextByCollationKeySequence.end() &&
-                findSecond != canonicalTextByCollationKeySequence.end())
-            {
-                pair.second.emplace_back(combine(findFirst->second, findSecond->second));
-            }
-
-            const std::vector<std::u16string>& equivalenceClass{ pair.second };
+            add_if_find_all_and_not_exists(
+                canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
 
             std::u16string canonicalText{ get_canonical_item(equivalenceClass) };
             canonicalTextByCollationKeySequence.emplace(pair.first, canonicalText);
@@ -615,6 +678,7 @@ namespace
         for (auto& pair : textByCollationKeySequence)
         {
             const collation_key_sequence& collationKeySequence{ pair.first };
+            std::vector<std::u16string>& equivalenceClass{ pair.second };
 
             if (collationKeySequence.items.size() != 3)
             {
@@ -627,50 +691,29 @@ namespace
 
             // element1, element2, element3
             {
-                collation_key_sequence standaloneFirst{ std::vector<collation_element>{ first } };
-                collation_key_sequence standaloneSecond{ std::vector<collation_element>{ second } };
-                collation_key_sequence standaloneThird{ std::vector<collation_element>{ third } };
-                auto findFirst = canonicalTextByCollationKeySequence.find(standaloneFirst);
-                auto findSecond = canonicalTextByCollationKeySequence.find(standaloneSecond);
-                auto findThird = canonicalTextByCollationKeySequence.find(standaloneThird);
+                collation_key_sequence section1{ std::vector<collation_element>{ first } };
+                collation_key_sequence section2{ std::vector<collation_element>{ second } };
+                collation_key_sequence section3{ std::vector<collation_element>{ third } };
 
-                if (findFirst != canonicalTextByCollationKeySequence.end() &&
-                    findSecond != canonicalTextByCollationKeySequence.end() &&
-                    findThird != canonicalTextByCollationKeySequence.end())
-                {
-                    pair.second.emplace_back(combine(findFirst->second, findSecond->second, findThird->second));
-                }
+                add_if_find_all_and_not_exists(
+                    canonicalTextByCollationKeySequence, { section1, section2, section3 }, equivalenceClass);
             }
 
             // element1+element2, element3
             {
                 collation_key_sequence section1{ std::vector<collation_element>{ first, second } };
                 collation_key_sequence section2{ std::vector<collation_element>{ third } };
-                auto find1 = canonicalTextByCollationKeySequence.find(section1);
-                auto find2 = canonicalTextByCollationKeySequence.find(section2);
-
-                if (find1 != canonicalTextByCollationKeySequence.end() &&
-                    find2 != canonicalTextByCollationKeySequence.end())
-                {
-                    pair.second.emplace_back(combine(find1->second, find2->second));
-                }
+                add_if_find_all_and_not_exists(
+                    canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
             }
 
             // element1, element2+element3
             {
                 collation_key_sequence section1{ std::vector<collation_element>{ first } };
                 collation_key_sequence section2{ std::vector<collation_element>{ second, third } };
-                auto find1 = canonicalTextByCollationKeySequence.find(section1);
-                auto find2 = canonicalTextByCollationKeySequence.find(section2);
-
-                if (find1 != canonicalTextByCollationKeySequence.end() &&
-                    find2 != canonicalTextByCollationKeySequence.end())
-                {
-                    pair.second.emplace_back(combine(find1->second, find2->second));
-                }
+                add_if_find_all_and_not_exists(
+                    canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
             }
-
-            const std::vector<std::u16string>& equivalenceClass{ pair.second };
 
             std::u16string canonicalText{ get_canonical_item(equivalenceClass) };
             canonicalTextByCollationKeySequence.emplace(pair.first, canonicalText);
@@ -696,28 +739,6 @@ namespace
                 collationFolding.emplace(text, canonicalText);
             }
         }
-    }
-
-    bool add_if_find_all(
-        const std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
-        const std::vector<collation_key_sequence>& sections, std::vector<std::u16string>& equivalenceClass)
-    {
-        std::u16string canonicalText{};
-
-        for (const auto& item : sections)
-        {
-            auto findResult = canonicalTextByCollationKeySequence.find(item);
-
-            if (findResult == canonicalTextByCollationKeySequence.end())
-            {
-                return false;
-            }
-
-            canonicalText.append(findResult->second);
-        }
-
-        equivalenceClass.emplace_back(canonicalText);
-        return true;
     }
 
     void add_quadruple_collation_element_folding(
@@ -749,7 +770,7 @@ namespace
                 collation_key_sequence section3{ std::vector<collation_element>{ third } };
                 collation_key_sequence section4{ std::vector<collation_element>{ fourth } };
 
-                add_if_find_all(
+                add_if_find_all_and_not_exists(
                     canonicalTextByCollationKeySequence, { section1, section2, section3, section4 }, equivalenceClass);
             }
 
@@ -759,7 +780,7 @@ namespace
                 collation_key_sequence section2{ std::vector<collation_element>{ third } };
                 collation_key_sequence section3{ std::vector<collation_element>{ fourth } };
 
-                add_if_find_all(
+                add_if_find_all_and_not_exists(
                     canonicalTextByCollationKeySequence, { section1, section2, section3 }, equivalenceClass);
             }
 
@@ -769,7 +790,7 @@ namespace
                 collation_key_sequence section2{ std::vector<collation_element>{ second, third } };
                 collation_key_sequence section3{ std::vector<collation_element>{ fourth } };
 
-                add_if_find_all(
+                add_if_find_all_and_not_exists(
                     canonicalTextByCollationKeySequence, { section1, section2, section3 }, equivalenceClass);
             }
 
@@ -779,7 +800,7 @@ namespace
                 collation_key_sequence section2{ std::vector<collation_element>{ second } };
                 collation_key_sequence section3{ std::vector<collation_element>{ third, fourth } };
 
-                add_if_find_all(
+                add_if_find_all_and_not_exists(
                     canonicalTextByCollationKeySequence, { section1, section2, section3 }, equivalenceClass);
             }
 
@@ -788,23 +809,26 @@ namespace
                 collation_key_sequence section1{ std::vector<collation_element>{ first } };
                 collation_key_sequence section2{ std::vector<collation_element>{ second, third, fourth } };
 
-                add_if_find_all(canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
+                add_if_find_all_and_not_exists(
+                    canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
             }
 
             // element1+element2+element3, element4
             {
                 collation_key_sequence section1{ std::vector<collation_element>{ first, second, third } };
                 collation_key_sequence section2{ std::vector<collation_element>{ fourth } };
-
-                add_if_find_all(canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
+                
+                add_if_find_all_and_not_exists(
+                    canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
             }
 
             // element1+element2, element3+element4
             {
                 collation_key_sequence section1{ std::vector<collation_element>{ first, second } };
                 collation_key_sequence section2{ std::vector<collation_element>{ third, fourth } };
-
-                add_if_find_all(canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
+                
+                add_if_find_all_and_not_exists(
+                    canonicalTextByCollationKeySequence, { section1, section2 }, equivalenceClass);
             }
 
             std::u16string canonicalText{ get_canonical_item(equivalenceClass) };
@@ -874,7 +898,7 @@ namespace
                     sections.emplace_back(collation_key_sequence{ { element } });
                 }
 
-                if (add_if_find_all(canonicalTextByCollationKeySequence, sections, equivalenceClass))
+                if (add_if_find_all_and_not_exists(canonicalTextByCollationKeySequence, sections, equivalenceClass))
                 {
                     itemIncomplete = false;
                 }
