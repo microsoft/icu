@@ -38,6 +38,7 @@ def generate(config, io, common_vars):
     requests += generate_zone_supplemental(config, io, common_vars)
     requests += generate_translit(config, io, common_vars)
     requests += generate_colf_txt(config, io, common_vars)
+    # requests += generate_colf(config, io, common_vars)
 
     # Res Tree Files
     # (input dirname, output dirname, resfiles.mk path, mk version var, mk source var, use pool file, dep files)
@@ -511,8 +512,7 @@ def generate_colf_txt(config, io, common_vars):
     if not config.gencolf:
         return []
 
-    # Generate colf txt files for locales that have coll data.
-    # This step does not produce data file output, only txt files.
+    # Generate colf text files for locales that have 'search' collation type.
     return [
         SingleExecutionRequest(
             name = "colf_txt",
@@ -524,28 +524,31 @@ def generate_colf_txt(config, io, common_vars):
         )
     ]
 
-# def generate_colf(config, io, common_vars):
-#     # colf Data Res Files
-#     input_files = [InFile(filename) for filename in io.glob("colf/*.txt")]
-#     input_basenames = [v.filename[5:] for v in input_files]
-#     output_files = [OutFile("%s.res" % v[:-4]) for v in input_basenames]
-#     return [
-#         RepeatedExecutionRequest(
-#             name = "colf_res",
-#             category = "colf",
-#             dep_targets = [],
-#             input_files = input_files,
-#             output_files = output_files,
-#             tool = IcuTool("genrb"),
-#             args = "-s {IN_DIR}/colf -d {OUT_DIR} -i {OUT_DIR} "
-#                 "-k "
-#                 "{INPUT_BASENAME}",
-#             format_with = {},
-#             repeat_with = {
-#                 "INPUT_BASENAME": input_basenames
-#             }
-#         )
-#     ]
+def generate_colf(config, io, common_vars):
+    if not config.gencolf:
+        return []
+    
+    # Colf Data Res Files
+    input_files = [InFile(filename) for filename in io.glob("colf/*.txt")]
+    input_basenames = [v.filename[5:] for v in input_files]
+    output_files = [OutFile("%s.res" % v[:-4]) for v in input_basenames]
+    return [
+        RepeatedExecutionRequest(
+            name = "colf_res",
+            category = "colf",
+            dep_targets = [],
+            input_files = input_files,
+            output_files = output_files,
+            tool = IcuTool("genrb"),
+            args = "-s {IN_DIR}/colf -d {OUT_DIR}/colf -i {OUT_DIR} "
+                "-k "
+                "{INPUT_BASENAME}",
+            format_with = {},
+            repeat_with = {
+                "INPUT_BASENAME": input_basenames
+            }
+        )
+    ]
 
 def generate_tree(
         config,

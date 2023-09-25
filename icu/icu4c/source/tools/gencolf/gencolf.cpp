@@ -1300,7 +1300,7 @@ namespace
             }
         }
 
-        // Generate 'root' collation folding data first. 'root' data is stored in rootCollationFoldingMap for later comparison.
+        // Generate 'root' collation folding data first.
         constexpr bool printKeySequenceMap{ false };
         std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>
             rootCollationFoldingMap{};
@@ -1316,8 +1316,6 @@ namespace
             }
 
             // de__PHONEBOOK and es__TRADITIONAL explicitly target non-'search' collation types.
-            // es__TRADITIONAL does not return a resource fallback warning (U_USING_FALLBACK_WARNING or U_USING_DEFAULT_WARNING)
-            // when used in either the ucol_getKeywordValuesForLocale or ucol_open APIs.
             if (locale == "de__PHONEBOOK" || locale == "es__TRADITIONAL")
             {
                 continue;
