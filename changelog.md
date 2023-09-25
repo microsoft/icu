@@ -1,5 +1,10 @@
 # Changelog
 
+## ICU 72.1.0.2
+- Fixed symbols issue with the previous release
+- Fixed Date-time parsing of few locales
+- Restored lienenacy in strict parsing for date time formats for backward compatibility
+
 ## ICU 72.1.0.1
 
 Updated collations for zh locale required for GB18030-2022 certification.
