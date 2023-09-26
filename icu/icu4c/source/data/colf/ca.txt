@@ -1,0 +1,14 @@
+﻿// Generated using gencolf.exe, built from icu4c/source/tools/gencolf.
+ca{
+	primary{
+		L·{"l·"}
+		L·{"l·"}
+		l·{"l·"}
+		Ŀ{"l·"}
+		ŀ{"l·"}
+	}
+	secondary{
+	}
+	tertiary{
+	}
+}
