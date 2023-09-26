@@ -7,8 +7,4 @@ ca{
 		Ŀ{"l·"}
 		ŀ{"l·"}
 	}
-	secondary{
-	}
-	tertiary{
-	}
 }

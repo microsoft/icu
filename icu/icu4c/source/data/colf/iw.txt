@@ -4,8 +4,4 @@ iw{
 		"{""}
 		'{""}
 	}
-	secondary{
-	}
-	tertiary{
-	}
 }

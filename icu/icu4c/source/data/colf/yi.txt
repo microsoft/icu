@@ -4,8 +4,4 @@ yi{
 		"{""}
 		'{""}
 	}
-	secondary{
-	}
-	tertiary{
-	}
 }

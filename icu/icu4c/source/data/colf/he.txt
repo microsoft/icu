@@ -4,8 +4,4 @@ he{
 		"{""}
 		'{""}
 	}
-	secondary{
-	}
-	tertiary{
-	}
 }

@@ -1082,8 +1082,7 @@ namespace
     void print_collation_folding_map(FILE *output, const std::map<std::u16string, std::u16string>& value, UCollationStrength strength,
         const std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>> &rootCollationFoldingMap, bool isRoot)
     {
-        fwprintf(output, L"\t%s{\n", strength_to_string(strength));
-        fflush(output);
+        bool printStrengthOpenBracket = true;
         for (const auto& pair : value)
         {
             std::u16string from{ pair.first };
@@ -1100,17 +1099,32 @@ namespace
             if (!isRoot)
             {
                 // Collation folding already exists in root.
-                if (rootCollationFoldingMap.at(strength).count(fromDisplay) && rootCollationFoldingMap.at(strength).at(fromDisplay) == to)
+                if (rootCollationFoldingMap.count(strength) && rootCollationFoldingMap.at(strength).count(fromDisplay) &&
+                    rootCollationFoldingMap.at(strength).at(fromDisplay) == to)
                 {
                     continue;
                 }
             }
 
+            // At least one mapping exists for the current strength level.
+            // We may not get here for certains locales if it matches root data at the current strength level.
+            if (printStrengthOpenBracket)
+            {
+                fwprintf(output, L"\t%s{\n", strength_to_string(strength));
+                fflush(output);
+                printStrengthOpenBracket = false;
+            }
+
             fwprintf(output, L"\t\t%s{\"%s\"}\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()), reinterpret_cast<const wchar_t*>(to.c_str()));
             fflush(output);
         }
-        fwprintf(output, L"\t}\n");
-        fflush(output);
+
+        // Mapping at current strength level existed.
+        if (!printStrengthOpenBracket)
+        {
+            fwprintf(output, L"\t}\n");
+            fflush(output);
+        }
     }
 
     bool supports_search_collation(const char* locale)
@@ -1205,7 +1219,7 @@ namespace
                 std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
                     collator.get(), strength, incomplete) };
 
-                // Save rootCollationFoldingMap to consolidate data when printing.
+                // Save rootCollationFoldingMap to consolidate data when writing to output file.
                 if (locale == "root")
                 {
                     rootCollationFoldingMap[strength] = collationFoldingMap;
