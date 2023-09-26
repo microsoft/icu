@@ -513,8 +513,6 @@ namespace
     void add_single_collation_element_folding(
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
-        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap,
-        UCollationStrength strength,
         std::unordered_map<std::u16string, std::u16string>& collationFolding)
     {
         for (const auto& pair : textByCollationKeySequence)
@@ -537,12 +535,6 @@ namespace
             for (const auto& text : equivalenceClass)
             {
                 if (text == canonicalText)
-                {
-                    continue;
-                }
-
-                // Collation folding already exists in root.
-                if (rootCollationFoldingMap[strength].count(text) && rootCollationFoldingMap[strength][text] == canonicalText)
                 {
                     continue;
                 }
@@ -619,8 +611,6 @@ namespace
     void add_double_collation_element_folding(
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
-        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap,
-        UCollationStrength strength,
         std::unordered_map<std::u16string, std::u16string>& collationFolding)
     {
         for (auto& pair : textByCollationKeySequence)
@@ -657,12 +647,6 @@ namespace
                     continue;
                 }
 
-                // Collation folding already exists in root.
-                if (rootCollationFoldingMap[strength].count(text) && rootCollationFoldingMap[strength][text] == canonicalText)
-                {
-                    continue;
-                }
-
                 collationFolding.emplace(text, canonicalText);
             }
         }
@@ -671,8 +655,6 @@ namespace
     void add_triple_collation_element_folding(
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
-        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap,
-        UCollationStrength strength,
         std::unordered_map<std::u16string, std::u16string>& collationFolding)
     {
         for (auto& pair : textByCollationKeySequence)
@@ -730,12 +712,6 @@ namespace
                     continue;
                 }
 
-                // Collation folding already exists in root.
-                if (rootCollationFoldingMap[strength].count(text) && rootCollationFoldingMap[strength][text] == canonicalText)
-                {
-                    continue;
-                }
-
                 collationFolding.emplace(text, canonicalText);
             }
         }
@@ -744,8 +720,6 @@ namespace
     void add_quadruple_collation_element_folding(
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
-        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap,
-        UCollationStrength strength,
         std::unordered_map<std::u16string, std::u16string>& collationFolding)
     {
         for (auto& pair : textByCollationKeySequence)
@@ -846,12 +820,6 @@ namespace
                     continue;
                 }
 
-                // Collation folding already exists in root.
-                if (rootCollationFoldingMap[strength].count(text) && rootCollationFoldingMap[strength][text] == canonicalText)
-                {
-                    continue;
-                }
-
                 collationFolding.emplace(text, canonicalText);
             }
         }
@@ -860,8 +828,6 @@ namespace
     void add_remaining_collation_element_folding(size_t minimumSize,
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
-        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap,
-        UCollationStrength strength,
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& incomplete,
         std::unordered_map<std::u16string, std::u16string>& collationFolding)
     {
@@ -924,12 +890,6 @@ namespace
                     continue;
                 }
 
-                // Collation folding already exists in root.
-                if (rootCollationFoldingMap[strength].count(text) && rootCollationFoldingMap[strength][text] == canonicalText)
-                {
-                    continue;
-                }
-
                 collationFolding.emplace(text, canonicalText);
             }
         }
@@ -937,31 +897,28 @@ namespace
 
     std::unordered_map<std::u16string, std::u16string> create_collation_folding_map(
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
-        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap,
-        UCollationStrength strength,
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& incomplete)
     {
         std::unordered_map<collation_key_sequence, std::u16string> canonicalTextByCollationKeySequence{};
         std::unordered_map<std::u16string, std::u16string> result{};
-        add_single_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, rootCollationFoldingMap, strength, result);
-        add_double_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, rootCollationFoldingMap, strength, result);
-        add_triple_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, rootCollationFoldingMap, strength, result);
+        add_single_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
+        add_double_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
+        add_triple_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
         add_quadruple_collation_element_folding(
-            textByCollationKeySequence, canonicalTextByCollationKeySequence, rootCollationFoldingMap, strength, result);
+            textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
         add_remaining_collation_element_folding(
-            5, textByCollationKeySequence, canonicalTextByCollationKeySequence, rootCollationFoldingMap, strength, incomplete, result);
+            5, textByCollationKeySequence, canonicalTextByCollationKeySequence, incomplete, result);
         return result;
     }
 
     std::unordered_map<std::u16string, std::u16string> create_collation_folding_map(const UCollator* collator,
         UCollationStrength strength,
-        std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap,
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& incomplete)
     {
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>> textByCollationKeySequence{
             create_collation_key_sequence_map(collator, strength)
         };
-        return create_collation_folding_map(textByCollationKeySequence, rootCollationFoldingMap, strength, incomplete);
+        return create_collation_folding_map(textByCollationKeySequence, incomplete);
     }
 
     std::map<collation_key_sequence, std::vector<std::u16string>> to_map(
@@ -1122,10 +1079,11 @@ namespace
         }
     }
 
-    void print_collation_folding_map(const std::map<std::u16string, std::u16string>& value, UCollationStrength strength, FILE* stream)
+    void print_collation_folding_map(FILE *output, const std::map<std::u16string, std::u16string>& value, UCollationStrength strength,
+        const std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>> &rootCollationFoldingMap, bool isRoot)
     {
-        fwprintf(stream, L"\t%s{\n", strength_to_string(strength));
-        fflush(stream);
+        fwprintf(output, L"\t%s{\n", strength_to_string(strength));
+        fflush(output);
         for (const auto& pair : value)
         {
             std::u16string from{ pair.first };
@@ -1139,11 +1097,20 @@ namespace
                 fromDisplay = u"";
             }
 
-            fwprintf(stream, L"\t\t%s{\"%s\"}\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()), reinterpret_cast<const wchar_t*>(to.c_str()));
-            fflush(stream);
+            if (!isRoot)
+            {
+                // Collation folding already exists in root.
+                if (rootCollationFoldingMap.at(strength).count(fromDisplay) && rootCollationFoldingMap.at(strength).at(fromDisplay) == to)
+                {
+                    continue;
+                }
+            }
+
+            fwprintf(output, L"\t\t%s{\"%s\"}\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()), reinterpret_cast<const wchar_t*>(to.c_str()));
+            fflush(output);
         }
-        fwprintf(stream, L"\t}\n");
-        fflush(stream);
+        fwprintf(output, L"\t}\n");
+        fflush(output);
     }
 
     bool supports_search_collation(const char* locale)
@@ -1194,25 +1161,25 @@ namespace
             exit(-1);
         }
 
-        FILE* stream;
+        FILE* output;
         std::string filename(outDir);
         filename.append("/").append(locale).append(".txt");
-        stream = fopen(filename.c_str(), "w+,ccs=UTF-8");
-        if (stream == nullptr)
+        output = fopen(filename.c_str(), "w+,ccs=UTF-8");
+        if (output == nullptr)
         {
             fprintf(stderr, "Cannot open file \"%s\"\n\n", filename.c_str());
             exit(-1);
         }
 
         // TODO: Include copyright
-        fwprintf(stream, L"// Generated using gencolf.exe, built from icu4c/source/tools/gencolf.\n");
-        fflush(stream);
+        fwprintf(output, L"// Generated using gencolf.exe, built from icu4c/source/tools/gencolf.\n");
+        fflush(output);
         
         // ICU locales only include ASCII letters and the following symbols: -, _, @, =, and ;
         // Convert to wstring.
         std::wstring loc(locale.begin(), locale.end());
-        fwprintf(stream, L"%s{\n", loc.c_str());
-        fflush(stream);
+        fwprintf(output, L"%s{\n", loc.c_str());
+        fflush(output);
 
         bool hasIncomplete = false;
         for (UCollationStrength strength : colfStrengths)
@@ -1236,8 +1203,9 @@ namespace
 
                 std::unordered_map<collation_key_sequence, std::vector<std::u16string>> incomplete{};
                 std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
-                    collator.get(), strength, rootCollationFoldingMap, incomplete) };
+                    collator.get(), strength, incomplete) };
 
+                // Save rootCollationFoldingMap to consolidate data when printing.
                 if (locale == "root")
                 {
                     rootCollationFoldingMap[strength] = collationFoldingMap;
@@ -1260,7 +1228,8 @@ namespace
                     wprintf(L"Successfully generated collation folding for all items.\n");
                 }
 
-                print_collation_folding_map(to_map(collationFoldingMap), strength, stream);
+                print_collation_folding_map(output, to_map(collationFoldingMap), strength, rootCollationFoldingMap,
+                                            locale == "root" ? true : false);
                 
                 if (hasIncomplete)
                 {
@@ -1269,9 +1238,9 @@ namespace
             }
         }
 
-        fwprintf(stream, L"}\n");
-        fflush(stream);
-        fclose(stream);
+        fwprintf(output, L"}\n");
+        fflush(output);
+        fclose(output);
 
         return !hasIncomplete;
     }
