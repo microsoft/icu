@@ -69,7 +69,6 @@ stages:
             name: $(DncEngInternalBuildPool)
             demands: ImageOverride -equals build.ubuntu.2204.amd64
         container:
-          # when updating, change emscripten version here: ../.devcontainer/emscripten-version.txt
           image: mcr.microsoft.com/dotnet-buildtools/prereqs:cbl-mariner-2.0-cross-amd64
         steps:
         - bash: |
