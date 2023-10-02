@@ -37,8 +37,8 @@ def generate(config, io, common_vars):
     requests += generate_curr_supplemental(config, io, common_vars)
     requests += generate_zone_supplemental(config, io, common_vars)
     requests += generate_translit(config, io, common_vars)
-    requests += generate_colf_txt(config, io, common_vars)
-    # requests += generate_colf(config, io, common_vars)
+    if config.gencolf:
+        requests += generate_colf_txt(config, io, common_vars)
 
     # Res Tree Files
     # (input dirname, output dirname, resfiles.mk path, mk version var, mk source var, use pool file, dep files)
@@ -101,6 +101,13 @@ def generate(config, io, common_vars):
         # Never use pool bundle for coll, brkitr, or rbnf
         False,
         [])
+
+    if config.gencolf:
+        requests += generate_tree(config, io, common_vars,
+            "colf",
+            "colf",
+            False,
+            [])
 
     requests += [
         ListRequest(
@@ -639,7 +646,9 @@ def generate_tree(
         "root",
     ])
     # Put alias locales in a separate structure; see ICU-20627
-    dependency_data = io.read_locale_deps(sub_dir)
+    # Hack: colf data is not generated from cldr-to-icu build tool and hence doesn't have its own LOCALE_DEPS.json file.
+    #       Use coll/LOCALE_DEPS.json file for now (maybe just copy this file over to colf/LOCALE_DEPS.json instead.)
+    dependency_data = io.read_locale_deps("coll") if sub_dir == "colf" else io.read_locale_deps(sub_dir)
     if "aliases" in dependency_data:
         alias_locales = set(dependency_data["aliases"].keys())
     else:

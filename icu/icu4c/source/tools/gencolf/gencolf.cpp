@@ -977,8 +977,8 @@ namespace
                 result.push_back(L' ');
             }
 
-            result.push_back(L'U');
-            result.push_back(L'+');
+            //result.push_back(L'U');
+            //result.push_back(L'+');
             char32_t item{ textUtf32[index] };
 
             if (item <= u'\uFFFF')
@@ -1115,7 +1115,21 @@ namespace
                 printStrengthOpenBracket = false;
             }
 
-            fwprintf(output, L"\t\t%s{\"%s\"}\n", reinterpret_cast<const wchar_t*>(fromDisplay.c_str()), reinterpret_cast<const wchar_t*>(to.c_str()));
+            // Escape the following characters.
+            size_t backslashIndex = to.find(u"\\");
+            size_t quoteIndex = to.find(u"\"");
+            if (backslashIndex != std::u16string::npos)
+            {
+                to.insert(backslashIndex, u"\\");
+            }
+            if (quoteIndex != std::u16string::npos)
+            {
+                to.insert(quoteIndex, u"\\");
+            }
+
+            fwprintf(output, L"\t\t%s{\"%s\"}\n",
+                     reinterpret_cast<const wchar_t*>(to_utf32_debug_string(fromDisplay).c_str()),
+                     reinterpret_cast<const wchar_t*>(to.c_str()));
             fflush(output);
         }
 
@@ -1185,7 +1199,7 @@ namespace
             exit(-1);
         }
 
-        // TODO: Include copyright
+        // TODO: Include copyright?
         fwprintf(output, L"// Generated using gencolf.exe, built from icu4c/source/tools/gencolf.\n");
         fflush(output);
         
@@ -1220,7 +1234,8 @@ namespace
                     collator.get(), strength, incomplete) };
 
                 // Save rootCollationFoldingMap to consolidate data when writing to output file.
-                if (locale == "root")
+                bool isRoot = (locale == "root");
+                if (isRoot)
                 {
                     rootCollationFoldingMap[strength] = collationFoldingMap;
                 }
@@ -1242,8 +1257,7 @@ namespace
                     wprintf(L"Successfully generated collation folding for all items.\n");
                 }
 
-                print_collation_folding_map(output, to_map(collationFoldingMap), strength, rootCollationFoldingMap,
-                                            locale == "root" ? true : false);
+                print_collation_folding_map(output, to_map(collationFoldingMap), strength, rootCollationFoldingMap, isRoot);
                 
                 if (hasIncomplete)
                 {

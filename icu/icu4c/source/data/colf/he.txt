@@ -1,7 +1,7 @@
 ﻿// Generated using gencolf.exe, built from icu4c/source/tools/gencolf.
 he{
 	primary{
-		"{""}
-		'{""}
+		0022{""}
+		0027{""}
 	}
 }
