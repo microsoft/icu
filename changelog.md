@@ -1,4 +1,9 @@
 # Changelog
+## ICU 72.1.0.3
+
+- Disable the dynamic plug-in loading due to security concerns
+- Add changes to emit COdeView debugging information to PDB/object files.
+
 ## ICU 72.1.0.2
 
 - Restore NNBSP with ASCII space for English locales
