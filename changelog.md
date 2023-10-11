@@ -1,4 +1,9 @@
 # Changelog
+## ICU 72.1.0.3
+
+- Disable the dynamic plug-in loading due to security concerns
+- Add changes to emit debugging information to PDB/object files.
+- Add changes to enable COMDAT folding and elimination when linking.
 ## ICU 72.1.0.2
 
 - Restore NNBSP with ASCII space for English locales
