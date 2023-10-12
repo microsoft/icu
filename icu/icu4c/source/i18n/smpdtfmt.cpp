@@ -3876,7 +3876,7 @@ int32_t SimpleDateFormat::subParse(const UnicodeString& text, int32_t& start, UC
         src = &text;
     }
     parseInt(*src, number, pos, allowNegative,currentNumberFormat);
-    if (!isLenient() && pos.getIndex() < start + count) {
+    if (obeyCount && !isLenient() && pos.getIndex() < start + count) {
         return -start;
     }
     if (pos.getIndex() != parseStart) {

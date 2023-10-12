@@ -247,16 +247,17 @@ static const ExpectPosAndFormat exp_en_yyMMddHHmmss[kNumDeltas] = {
     { 13, 15, "11/20/14, 09:00:00\\u2009\\u2013\\u200902/28/15, 09:00:00" }
 };
 
+/*MSFT-Change: Replace NNBSP with ascii sapce*/
 static const ExpectPosAndFormat exp_en_yMMMdhmmssz[kNumDeltas] = {
-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u20099:00:20\\u202FAM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u20099:20:00\\u202FAM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u200911:00:00\\u202FAM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u20099:00:00\\u202FPM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u2009Nov 28, 2014, 9:00:00\\u202FAM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u2009Dec 6, 2014, 9:00:00\\u202FAM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u2009Feb 28, 2015, 9:00:00\\u202FAM GMT" }
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u20099:00:20 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u20099:20:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u200911:00:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u20099:00:00 PM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u2009Nov 28, 2014, 9:00:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u2009Dec 6, 2014, 9:00:00 AM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u2009Feb 28, 2015, 9:00:00 AM GMT" }
 };
 
 static const ExpectPosAndFormat exp_ja_yyMMddHHmm[kNumDeltas] = {
