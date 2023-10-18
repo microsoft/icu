@@ -5,4 +5,27 @@
   <PropertyGroup>
     <PackageRID>$(TargetOS.ToLowerInvariant())-$(TargetArchitecture)</PackageRID>
   </PropertyGroup>
+
+  <PropertyGroup>
+
+    <__ProjectDir Condition="'$(__ProjectDir)'==''">$(MSBuildThisFileDirectory)</__ProjectDir>
+    <ProjectDir>$(__ProjectDir)</ProjectDir>
+    <RootRepoDir>$(ProjectDir)</RootRepoDir>
+    <ProjectDir Condition="'$(__ProjectDir)'==''">$(MSBuildThisFileDirectory)</ProjectDir>
+
+    <BaseIntermediateOutputPath>$(RootRepoDir)artifacts\obj\$(PlatformConfigPathPart)\</BaseIntermediateOutputPath>
+
+    <SourceDir>$(__SourceDir)\</SourceDir>
+    <SourceDir Condition="'$(__SourceDir)'==''">$(ProjectDir)src\</SourceDir>
+
+    <RootBinDir>$(__RootBinDir)\</RootBinDir>
+    <RootBinDir Condition="'$(__RootBinDir)'==''">$(RootRepoDir)artifacts\</RootBinDir>
+
+    <BinDir>$(__BinDir)\</BinDir>
+    <BinDir Condition="'$(__BinDir)'==''">$(RootBinDir)bin\$(PlatformConfigPathPart)\</BinDir>
+
+    <MonoEmsdkDir>$(__MonoEmsdkDir)\</MonoEmsdkDir>
+    <MonoEmsdkDir Condition="'$(__MonoEmsdkDir)'==''">$(RootBinDir)obj\emsdk\</MonoEmsdkDir>
+  </PropertyGroup>
+
 </Project>

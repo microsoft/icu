@@ -41,6 +41,14 @@ endif
 # include the OS specific configs
 include icu.$(TARGET_OS).mk
 
+UNAME_S := $(shell uname -s)
+LINKER_OVERRIDE = 
+ifeq ($(UNAME_S),Linux)
+ifeq ($(TARGET_OS),browser)
+	LINKER_OVERRIDE = LDFLAGS=-fuse-ld=lld
+endif
+endif
+
 # Host build
 $(HOST_OBJDIR) $(TARGET_BINDIR) $(TARGET_OBJDIR):
 	mkdir -p $@
@@ -51,7 +59,8 @@ $(HOST_OBJDIR)/.stamp-host: $(HOST_OBJDIR)/.stamp-configure-host
 
 $(HOST_OBJDIR)/.stamp-configure-host: | $(HOST_OBJDIR)
 	cd $(HOST_OBJDIR) && $(TOP)/icu/icu4c/source/configure \
-	--disable-icu-config --disable-extras --disable-tests --disable-samples
+	--disable-icu-config --disable-extras --disable-tests --disable-samples \
+	$(LINKER_OVERRIDE)
 	touch $@
 
 
