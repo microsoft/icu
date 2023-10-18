@@ -216,21 +216,13 @@
         },
         "misc": {
             "whitelist": [
-                "currencyNumericCodes",
-                "numberingSystems",
                 "icuver",
-                "likelySubtags",
-                "supplementalData",
-                "keyTypeData"
+                "supplementalData"
             ]
         },
-        "curr_tree": {
-            "whitelist": ["root"]
-        },
+        "curr_tree": "exclude",
         "brkitr_dictionaries": "exclude",
-        "brkitr_rules": {
-            "whitelist": ["char"]
-        },
+        "brkitr_rules": "exclude",
         "coll_tree": "exclude",
         "locales_tree": "exclude"
     },
@@ -242,14 +234,8 @@
             },
             "rules": [
                 "-/*",
-                "+/calendarData",
-                "+/calendarPreferenceData",
                 "+/cldrVersion",
-                "+/measurementData",
-                "+/codeMappings",
-                "+/idValidity",
-                "+/timeData",
-                "+/weekData"
+                "+/codeMappings"
             ]
         }
     ]
