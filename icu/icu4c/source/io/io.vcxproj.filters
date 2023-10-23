@@ -77,12 +77,4 @@
       <Filter>Resource Files</Filter>
     </ResourceCompile>
   </ItemGroup>
-  <ItemGroup>
-    <CustomBuild Include="unicode\ustdio.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="unicode\ustream.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
-  </ItemGroup>
 </Project>

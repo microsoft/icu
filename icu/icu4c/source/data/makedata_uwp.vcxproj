@@ -32,6 +32,7 @@
     <DefaultLanguage>en-US</DefaultLanguage>
     <ConfigurationType>Makefile</ConfigurationType>
     <UseOfMfc>false</UseOfMfc>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <!-- The following import will include the 'default' configuration options for VS UWP projects. -->
   <Import Project="..\allinone\Build.Windows.UWP.ProjectConfiguration.props" />
