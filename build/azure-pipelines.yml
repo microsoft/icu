@@ -106,13 +106,16 @@ jobs:
       
     - task: UsePythonVersion@0  # Add this step to select a Python version
       inputs:
-        versionSpec: '3.x'  # Specify the Python version you need (e.g., '3.x')
+        versionSpec: '3.10.8'  # Specify the Python version you need (e.g., '3.x')
         addToPath: true  # Ensure Python is added to the PATH
 
     - script: python -m ensurepip --upgrade  # Ensure pip is available
       displayName: 'Ensure pip is available'
 
-    - script: pip install distutils  # Install the 'distutils' module
+    - script: |
+        python -m ensurepip --default-pip
+        python -m pip install --upgrade pip
+        python -m pip install distutils
       displayName: 'Install distutils module'
       
     - task: VSBuild@1
