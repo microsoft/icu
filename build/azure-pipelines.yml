@@ -116,6 +116,7 @@ jobs:
         pip install setuptools
         python -m ensurepip --default-pip
         python -m pip install --upgrade pip
+        python3.9 -m pip install distutils
       displayName: 'Install distutils module'
       
     - task: VSBuild@1
