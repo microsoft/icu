@@ -106,7 +106,7 @@ jobs:
       
     - task: UsePythonVersion@0  # Add this step to select a Python version
       inputs:
-        versionSpec: '3.10.8'  # Specify the Python version you need (e.g., '3.x')
+        versionSpec: '3.9.x'  # Specify the Python version you need (e.g., '3.x')
         addToPath: true  # Ensure Python is added to the PATH
 
     - script: python -m ensurepip --upgrade  # Ensure pip is available
