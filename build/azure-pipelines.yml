@@ -1,10 +1,10 @@
 jobs:
 #-------------------------------------------------------------------------
 - job: ICU4C_MakeDist_Clang_Ubuntu_1804
-  displayName: 'C: MakeDist Linux Clang (Ubuntu 18.04)'
+  displayName: 'C: MakeDist Linux Clang (ubuntu-22.04)'
   timeoutInMinutes: 30
   pool:
-    vmImage: 'ubuntu-18.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       lfs: true
@@ -75,10 +75,10 @@ jobs:
 #        CXX: clang++
 #-------------------------------------------------------------------------
 - job: ICU4C_Clang_Cpp14_Debug_Ubuntu_1804
-  displayName: 'C: Linux Clang C++14 Debug (Ubuntu 18.04)'
+  displayName: 'C: Linux Clang C++14 Debug (Ubuntu 22.04)'
   timeoutInMinutes: 30
   pool:
-    vmImage: 'ubuntu-18.04'
+    vmImage: 'ubuntu-22.04'
   steps:
     - checkout: self
       lfs: true
@@ -91,10 +91,10 @@ jobs:
         CXX: clang++
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x64_Release_Distrelease
-  displayName: 'C: MSVC 64-bit Release (VS 2017) + Distrelease'
+  displayName: 'C: MSVC 64-bit Release (VS 2022) + Distrelease'
   timeoutInMinutes: 30
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'windows-2022'
     demands: 
       - msbuild
       - visualstudio
@@ -128,10 +128,10 @@ jobs:
         ArtifactName: '$(Build.BuildNumber)_ICU4C_MSVC_x64_Release'
 #-------------------------------------------------------------------------
 - job: ICU4C_MSVC_x86_Release_Distrelease
-  displayName: 'C: MSVC 32-bit Release (VS 2017) + Distrelease'
+  displayName: 'C: MSVC 32-bit Release (VS 2022) + Distrelease'
   timeoutInMinutes: 30
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'windows-2022'
     demands: 
       - msbuild
       - visualstudio
@@ -238,7 +238,7 @@ jobs:
   displayName: 'C: MSVC 32-bit Debug (VS 2017)'
   timeoutInMinutes: 60
   pool:
-    vmImage: 'vs2017-win2016'
+    vmImage: 'windows-2022'
     demands: 
       - msbuild
       - visualstudio
