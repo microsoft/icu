@@ -1,8 +1,8 @@
 # Copyright (C) 2018 and later: Unicode, Inc. and others.
 # License & terms of use: http://www.unicode.org/copyright.html
 
-from distutils.sysconfig import parse_makefile
-
+#from distutils.sysconfig import parse_makefile
+import sysconfig
 from buildtool import *
 from buildtool.request_types import *
 
@@ -28,7 +28,7 @@ def generate(config, glob, common_vars):
 
 
 def generate_rb(config, glob, common_vars):
-    mk_vars = parse_makefile("{GLOB_DIR}/tstfiles.mk".format(**common_vars))
+    mk_vars = sysconfig.parse_makefile("{GLOB_DIR}/tstfiles.mk".format(**common_vars))
     basenames = [v[:-4] for v in mk_vars["TEST_RES_SOURCE"].split()]
     basenames += [
         "casing",
