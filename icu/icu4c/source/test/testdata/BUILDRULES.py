@@ -28,7 +28,7 @@ def generate(config, glob, common_vars):
 
 
 def generate_rb(config, glob, common_vars):
-    mk_vars = sysconfig.parse_makefile("{GLOB_DIR}/tstfiles.mk".format(**common_vars))
+    mk_vars = sysconfig._parse_makefile("{GLOB_DIR}/tstfiles.mk".format(**common_vars))
     basenames = [v[:-4] for v in mk_vars["TEST_RES_SOURCE"].split()]
     basenames += [
         "casing",
