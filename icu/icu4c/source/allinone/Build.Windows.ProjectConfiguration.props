@@ -27,7 +27,7 @@
     <!-- This is the default SDK target. -->
     <!-- Note that the Windows 8.1 SDK is backwards compatible down-level to Windows 7, so
          setting this to 8.1 does not actually imply targeting Windows 8.1. -->
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <PropertyGroup>
     <!-- We need to explicitly set the target version to Windows 7. -->
