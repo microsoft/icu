@@ -1173,7 +1173,9 @@ namespace
         searchLocale.append("-u-co-search");
         icu_resource_search_result searchResult{};
         unique_UCollator collator{ ucol_open_cpp(searchLocale.c_str(), searchResult) };
-        if (searchResult != icu_resource_search_result::exact_match)
+
+        // Special case for sr locale. sr_Latn.res depends on sr.res being present.
+        if (searchResult != icu_resource_search_result::exact_match && locale != "sr")
         {
             // Specific locale does not support 'search' collation type, and a fallback locale would be used. Skip.
             printf("SKIPPING. Locale uses fallback data in ucol_open: %s.\n", locale.c_str());
@@ -1358,8 +1360,8 @@ int main(int argc, char **argv)
         fprintf(stderr, "locale and outDir must be specified.\n");
         usageAndDie(U_ILLEGAL_ARGUMENT_ERROR);
     }
-    inDir = options[2].value;
-    outDir = options[3].value;
+    inDir = options[2].value; // icu4c/source/data/coll directory
+    outDir = options[3].value; // icu4c/source/data/colf directory
 
     try
     {

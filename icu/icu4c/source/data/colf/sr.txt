@@ -1,0 +1,3 @@
+﻿// Generated using gencolf.exe, built from icu4c/source/tools/gencolf.
+sr{
+}

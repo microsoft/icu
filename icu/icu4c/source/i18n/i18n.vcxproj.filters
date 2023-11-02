@@ -675,6 +675,9 @@
     <ClCompile Include="displayoptions.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
+    <ClCompile Include="collationfolding.cpp">
+      <Filter>collation</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="bocsu.cpp">

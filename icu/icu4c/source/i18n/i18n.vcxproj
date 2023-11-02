@@ -92,6 +92,7 @@
   <ItemGroup>
     <ClCompile Include="erarules.cpp" />
     <ClCompile Include="region.cpp" />
+    <ClCompile Include="collationfolding.cpp" />
     <ClCompile Include="uregion.cpp" />
     <ClCompile Include="alphaindex.cpp" />
     <ClCompile Include="bocsu.cpp" />
