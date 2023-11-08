@@ -968,7 +968,7 @@ namespace
     {
         std::u32string textUtf32{ u_str_to_utf32_cpp(text) };
         std::u16string result{};
-        result.reserve(textUtf32.size() * 7); // rough lower bound; " U+XXXX" per character
+        result.reserve(textUtf32.size() * 5); // rough lower bound; " XXXX" per character
 
         for (size_t index = 0; index < textUtf32.size(); ++index)
         {
@@ -977,8 +977,6 @@ namespace
                 result.push_back(L' ');
             }
 
-            //result.push_back(L'U');
-            //result.push_back(L'+');
             char32_t item{ textUtf32[index] };
 
             if (item <= u'\uFFFF')
@@ -1110,7 +1108,7 @@ namespace
             // We may not get here for certains locales if it matches root data at the current strength level.
             if (printStrengthOpenBracket)
             {
-                fwprintf(output, L"\t%s{\n", strength_to_string(strength));
+                fwprintf(output, L"\t\t%s{\n", strength_to_string(strength));
                 fflush(output);
                 printStrengthOpenBracket = false;
             }
@@ -1127,7 +1125,7 @@ namespace
                 to.insert(quoteIndex, u"\\");
             }
 
-            fwprintf(output, L"\t\t%s{\"%s\"}\n",
+            fwprintf(output, L"\t\t\t%s{\"%s\"}\n",
                      reinterpret_cast<const wchar_t*>(to_utf32_debug_string(fromDisplay).c_str()),
                      reinterpret_cast<const wchar_t*>(to.c_str()));
             fflush(output);
@@ -1136,7 +1134,7 @@ namespace
         // Mapping at current strength level existed.
         if (!printStrengthOpenBracket)
         {
-            fwprintf(output, L"\t}\n");
+            fwprintf(output, L"\t\t}\n");
             fflush(output);
         }
     }
@@ -1209,6 +1207,7 @@ namespace
         // Convert to wstring.
         std::wstring loc(locale.begin(), locale.end());
         fwprintf(output, L"%s{\n", loc.c_str());
+        fwprintf(output, L"\tcollationFoldings{\n");
         fflush(output);
 
         bool hasIncomplete = false;
@@ -1267,7 +1266,8 @@ namespace
                 }
             }
         }
-
+        
+        fwprintf(output, L"\t}\n");
         fwprintf(output, L"}\n");
         fflush(output);
         fclose(output);
