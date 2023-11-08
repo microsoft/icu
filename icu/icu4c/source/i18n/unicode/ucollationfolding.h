@@ -4,11 +4,11 @@
 #ifndef UCOLLATIONFOLDING_H
 #define UCOLLATIONFOLDING_H
 
-// #define U_ICUDATA_COLF U_ICUDATA_NAME U_TREE_SEPARATOR_STRING "colf"
-
 #include "unicode/utypes.h"
 #include "unicode/ucol.h"
+#include "unicode/udata.h"
 
+#define U_ICUDATA_COLF U_ICUDATA_NAME U_TREE_SEPARATOR_STRING "colf"
 
 /** A collation folding instance.
 *   For usage in C programs.

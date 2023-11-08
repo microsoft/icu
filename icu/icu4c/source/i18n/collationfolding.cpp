@@ -11,15 +11,15 @@
 #include "unicode/coll.h"
 #include "unicode/resbund.h"
 #include "unicode/unistr.h"
+#include "unicode/ustring.h"
 #include "charstr.h"
 #include "ustr_imp.h"
+#include "cstring.h"
 
 U_NAMESPACE_BEGIN
 
-constexpr const char* strength_to_string(UCollationStrength value) noexcept
-{
-    switch (value)
-    {
+constexpr const char* strength_to_string(UCollationStrength value) noexcept {
+    switch (value) {
     case UCollationStrength::UCOL_PRIMARY:
         return "primary";
     case UCollationStrength::UCOL_SECONDARY:
@@ -33,6 +33,49 @@ constexpr const char* strength_to_string(UCollationStrength value) noexcept
     default:
         return "unknown";
     }
+}
+
+constexpr char16_t to_hex_digit(uint8_t value) noexcept {
+    if (value > 0xF) {
+        value = static_cast<uint8_t>(value & 0x0F);
+    }
+    if (value < 0xA) {
+        return u'0' + static_cast<char16_t>(value);
+    }
+    else {
+        return u'A' + static_cast<char16_t>(value - 0xA);
+    }
+}
+
+UnicodeString& toHexString(UChar32 codepoint, UErrorCode& status) {
+    UnicodeString result;
+
+    if (codepoint <= u'\uFFFF') {
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF000) >> 12));
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF00) >> 8));
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF0) >> 4));
+        result += to_hex_digit(static_cast<uint8_t>(codepoint & 0xF));
+    }
+    else if (codepoint <= U'\U000FFFFF') {
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF0000) >> 16));
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF000) >> 12));
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF00) >> 8));
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF0) >> 4));
+        result += to_hex_digit(static_cast<uint8_t>(codepoint & 0xF));
+    }
+    else if (codepoint <= U'\U0010FFFF') {
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF00000) >> 20));
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF0000) >> 16));
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF000) >> 12));
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF00) >> 8));
+        result += to_hex_digit(static_cast<uint8_t>((codepoint & 0xF0) >> 4));
+        result += to_hex_digit(static_cast<uint8_t>(codepoint & 0xF));
+    }
+    else {
+        status = U_ILLEGAL_ARGUMENT_ERROR;
+    }
+
+    return result;
 }
 
 CollationFolding::CollationFolding(const Locale& locale, UCollationStrength strength, UErrorCode& status)
@@ -68,47 +111,54 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
         return 0;
     }
 
-    LocalUResourceBundlePointer localeBundle(ures_open(nullptr, fLocale.getName(), &status));
+    LocalUResourceBundlePointer localeBundle(ures_open(U_ICUDATA_COLF, fLocale.getName(), &status));
     if (U_FAILURE(status)) {
         return 0;
     }
-    LocalUResourceBundlePointer colfBundle(
-        ures_getByKey(localeBundle.getAlias(), strength_to_string(fStrength), nullptr, &status));
+    LocalUResourceBundlePointer colfBundle(ures_getByKey(localeBundle.getAlias(), "collationFoldings", nullptr, &status));
     if (U_FAILURE(status)) {
         return 0;
     }
+    LocalUResourceBundlePointer dataBundle(ures_getByKey(colfBundle.getAlias(), strength_to_string(fStrength), nullptr, &status));
+    if (U_FAILURE(status)) {
+        return 0;
+    }
+    
+    // Determine the source length.
+    if (sourceLength == -1) {
+        sourceLength = u_strlen(source);
+    }
+    if (sourceLength <= 0) {
+        return u_terminateUChars(destination, destinationCapacity, 0, &status);
+    }
+    
+    UnicodeString result;
 
-    int32_t destIndex = 0;
-
-    //CharString result;
-    for (int32_t i = 0; i < sourceLength; i++) {
-        CharString key;
+    int32_t sourceIndex = 0;
+    while (sourceIndex < sourceLength) {
         UChar32 c;
-        U16_NEXT(source, i, sourceLength, c);
-        key.appendNumber(c, status);
-        if (U_FAILURE(status)) {
+        U16_NEXT(source, sourceIndex, sourceLength, c);
+        UnicodeString hex = toHexString(c, status);
+        
+        char key[100];
+        int32_t len = hex.extract(0, hex.length(), key, 100);
+        
+        UnicodeString value = ures_getUnicodeStringByKey(dataBundle.getAlias(), key, &status);
+        if (status == U_MISSING_RESOURCE_ERROR) {
+            // A missing collation folding mapping implies that the key maps to itself.
+            result.append(c);
+            status = U_ZERO_ERROR;
+            continue;
+        }
+        else if (U_FAILURE(status)) {
             return 0;
         }
 
-        int32_t len = key.length();
-        const UChar* mappedValue = ures_getStringByKey(colfBundle.getAlias(), key.data(), &len, &status);
-        if (U_FAILURE(status)) {
-            return 0;
-        }
-
-        // Simple case for initial test
-        if (destIndex < destinationCapacity) {
-            destination[destIndex++] = *mappedValue;
-        } else if (destIndex == destinationCapacity) {
-            status = U_STRING_NOT_TERMINATED_WARNING;
-        } else {
-            status = U_BUFFER_OVERFLOW_ERROR;
-        }
+        // Mapping found!
+        result.append(value);
     }
 
-    return u_terminateUChars(destination, destinationCapacity, destIndex, &status);
-
-    //result.extract(destination, destinationCapacity, status);
+    return result.extract(destination, destinationCapacity, status);
 }
 
 /*
