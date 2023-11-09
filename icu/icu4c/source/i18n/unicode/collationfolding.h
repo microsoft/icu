@@ -16,10 +16,7 @@ class U_I18N_API CollationFolding : public UMemory {
     CollationFolding(const Locale& locale, UCollationStrength strength, UErrorCode& status);
     ~CollationFolding();
 
-    static CollationFolding* createInstance(const Locale& locale, UCollationStrength strength, UErrorCode& status);
-
     int32_t fold(const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode& status);
-
     
 #ifndef U_HIDE_INTERNAL_API
     /** @internal */
@@ -43,6 +40,7 @@ class U_I18N_API CollationFolding : public UMemory {
   private:
       Locale fLocale;
       UCollationStrength fStrength = UCOL_PRIMARY;
+      UResourceBundle* fMappingBundle;
 };
 
 U_NAMESPACE_END

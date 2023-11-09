@@ -6,6 +6,7 @@
 #include "unicode/ucollationfolding.h"
 #include "unicode/ustring.h"
 #include "icu_error.h"
+#include "utf8.h"
 
 void set_mode_or_throw(int fd, int mode)
 {
@@ -37,17 +38,19 @@ constexpr const char* strength_to_string(UCollationStrength value) noexcept
 
 void print_collation_folding(const char* locale, UCollationStrength strength, const UChar* input)
 {
-    char inputStr[100];
-    std::cout << "Locale: " << locale 
-              << ", Strength: " << strength_to_string(strength)
-              << ", Input: " << u_austrcpy(inputStr, input) << std::endl;
+    wprintf(L"Locale: %s, Strength: %s, Input: %s\n", 
+        from_utf8(locale).c_str(), 
+        from_utf8(strength_to_string(strength)).c_str(), 
+        reinterpret_cast<const wchar_t*>(input));
+    fflush(stdout);
               
     UErrorCode status = U_ZERO_ERROR;
     UCollationFolding* folding = ucolf_open(locale, strength, &status);
     auto error = icu_error(status, "ucolf_open");
     if (U_FAILURE(status))
     {
-        std::cout << "ucolf_open failed with status: " << error.name() << "\n ";
+        wprintf(L"ucolf_open failed with status: %s\n", from_utf8(error.name()).c_str());
+        fflush(stdout);
     }
 
     UChar buffer[100]; 
@@ -55,17 +58,18 @@ void print_collation_folding(const char* locale, UCollationStrength strength, co
     error = icu_error(status, "ucolf_fold");
     if (U_FAILURE(status))
     {
-        std::cout << "ucolf_fold failed with status: " << error.name() << "\n ";
+        wprintf(L"ucolf_fold failed with status: %s\n", from_utf8(error.name()).c_str());
+        fflush(stdout);
     }
 
-    char output[100];
-    u_austrcpy(output, buffer);
-    printf("%s\n", output);
+    wprintf(L"%s\n", reinterpret_cast<const wchar_t*>(buffer));
+    fflush(stdout);
     ucolf_close(folding);
 }
 
 int main()
 {
+    set_mode_or_throw(_fileno(stdout), _O_U8TEXT);
     print_collation_folding("de_DE", UCollationStrength::UCOL_PRIMARY, u"Käse");
     print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"Käse");
     print_collation_folding("en_US", UCollationStrength::UCOL_PRIMARY, u"Résumé");
