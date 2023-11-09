@@ -14,6 +14,7 @@
 #include "unicode/ustring.h"
 #include "charstr.h"
 #include "ustr_imp.h"
+#include "uresimp.h"
 #include "cstring.h"
 
 U_NAMESPACE_BEGIN
@@ -47,7 +48,7 @@ constexpr char16_t to_hex_digit(uint8_t value) noexcept {
     }
 }
 
-UnicodeString& toHexString(UChar32 codepoint, UErrorCode& status) {
+UnicodeString toHexString(UChar32 codepoint, UErrorCode& status) {
     UnicodeString result;
 
     if (codepoint <= u'\uFFFF') {
@@ -101,16 +102,17 @@ CollationFolding::createInstance(const Locale& locale, UCollationStrength streng
 int32_t
 CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode& status)
 {
+    // Check input parameters.
     if (U_FAILURE(status)) {
         return 0;
     }
-
     if ((sourceLength < -1 || (sourceLength != 0 && source == nullptr)) || 
         (destinationCapacity < 0 || (destinationCapacity != 0 && destination == nullptr))) {
         status = U_ILLEGAL_ARGUMENT_ERROR;
         return 0;
     }
 
+    // Lookup resource bundle.
     LocalUResourceBundlePointer localeBundle(ures_open(U_ICUDATA_COLF, fLocale.getName(), &status));
     if (U_FAILURE(status)) {
         return 0;
@@ -119,7 +121,7 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
     if (U_FAILURE(status)) {
         return 0;
     }
-    LocalUResourceBundlePointer dataBundle(ures_getByKey(colfBundle.getAlias(), strength_to_string(fStrength), nullptr, &status));
+    LocalUResourceBundlePointer mappingBundle(ures_getByKey(colfBundle.getAlias(), strength_to_string(fStrength), nullptr, &status));
     if (U_FAILURE(status)) {
         return 0;
     }
@@ -132,8 +134,8 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
         return u_terminateUChars(destination, destinationCapacity, 0, &status);
     }
     
+    // Walk the source string.
     UnicodeString result;
-
     int32_t sourceIndex = 0;
     while (sourceIndex < sourceLength) {
         UChar32 c;
@@ -143,7 +145,7 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
         char key[100];
         int32_t len = hex.extract(0, hex.length(), key, 100);
         
-        UnicodeString value = ures_getUnicodeStringByKey(dataBundle.getAlias(), key, &status);
+        const UChar *value = ures_getStringByKeyWithFallback(mappingBundle.getAlias(), key, &len, &status);
         if (status == U_MISSING_RESOURCE_ERROR) {
             // A missing collation folding mapping implies that the key maps to itself.
             result.append(c);
@@ -155,7 +157,9 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
         }
 
         // Mapping found!
-        result.append(value);
+        for (int32_t i = 0; i < u_strlen(value); i++) {
+            result.append(value[i]);
+        }
     }
 
     return result.extract(destination, destinationCapacity, status);
@@ -164,7 +168,6 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
 /*
 *  C APIs for CollationFolding
 */ 
-
 U_CAPI UCollationFolding* U_EXPORT2
 ucolf_open(const char* locale, UCollationStrength strength, UErrorCode* status)
 {
@@ -173,7 +176,6 @@ ucolf_open(const char* locale, UCollationStrength strength, UErrorCode* status)
     }
 
     UCollationFolding *result = nullptr;
-
     CollationFolding *coll = CollationFolding::createInstance(locale, strength, *status);
     if (U_SUCCESS(*status)) {
         result = coll->toUCollationFolding();
