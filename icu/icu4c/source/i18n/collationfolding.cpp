@@ -98,6 +98,11 @@ CollationFolding::CollationFolding(const Locale& locale, UCollationStrength stre
         ures_close(fMappingBundle);
         return;
     }
+
+    fNFDNormalizer = unorm2_getNFDInstance(&status);
+    if (U_FAILURE(status)) {
+        return;
+    }
 }
 
 CollationFolding::~CollationFolding() {}
@@ -114,7 +119,7 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
         status = U_ILLEGAL_ARGUMENT_ERROR;
         return 0;
     }
-    
+
     // Determine the source length.
     if (sourceLength == -1) {
         sourceLength = u_strlen(source);
@@ -122,26 +127,39 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
     if (sourceLength <= 0) {
         return u_terminateUChars(destination, destinationCapacity, 0, &status);
     }
-    
+
+    // Normalize source string.
+    int32_t nfdLen = unorm2_normalize(fNFDNormalizer, source, sourceLength, nullptr, 0, &status);
+    LocalArray<UChar> nfdSource(new UChar[nfdLen + 1]);
+    if (status == U_BUFFER_OVERFLOW_ERROR) {
+        status = U_ZERO_ERROR;
+        nfdLen = unorm2_normalize(fNFDNormalizer, source, sourceLength, nfdSource.getAlias(), nfdLen + 1, &status);
+        if (U_FAILURE(status)) {
+            return 0;
+        }
+    } else if (U_FAILURE(status)) {
+        return 0;
+    }
+
     // Walk the source string.
     UnicodeString result;
-    int32_t sourceIndex = 0;
-    while (sourceIndex < sourceLength) {
+    int32_t index = 0;
+    while (index < nfdLen) {
         UChar32 c;
-        U16_NEXT(source, sourceIndex, sourceLength, c);
+        U16_NEXT(nfdSource.getAlias(), index, nfdLen, c);
         UnicodeString hex = toHexString(c, status);
         if (U_FAILURE(status)) {
             return 0;
         }
         
-        char key[100];
-        int32_t len = hex.extract(0, hex.length(), key, 100);
+        char key[16];
+        int32_t len = hex.extract(0, hex.length(), key, 16);
         
         const UChar *value = ures_getStringByKeyWithFallback(fMappingBundle, key, &len, &status);
         if (status == U_MISSING_RESOURCE_ERROR) {
             // A missing collation folding mapping implies that the key maps to itself.
-            result.append(c);
             status = U_ZERO_ERROR;
+            result.append(c);
             continue;
         }
         else if (U_FAILURE(status)) {
@@ -168,7 +186,12 @@ ucolf_open(const char* locale, UCollationStrength strength, UErrorCode* status)
     }
 
     CollationFolding *coll = new CollationFolding(locale, strength, *status);
+    if (coll == nullptr) {
+        *status = U_MEMORY_ALLOCATION_ERROR;
+        return nullptr;
+    }
     if (U_FAILURE(*status)) {
+        delete coll;
         return nullptr;
     }
 

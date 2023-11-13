@@ -7,12 +7,13 @@
 #include "unicode/utypes.h"
 #include "unicode/ucol.h"
 #include "unicode/resbund.h"
+#include "unicode/normalizer2.h"
 #include "cmemory.h"
 
 U_NAMESPACE_BEGIN
 
 class U_I18N_API CollationFolding : public UMemory {
-  public:
+public:
     CollationFolding(const Locale& locale, UCollationStrength strength, UErrorCode& status);
     ~CollationFolding();
 
@@ -37,10 +38,11 @@ class U_I18N_API CollationFolding : public UMemory {
     }
 #endif  // U_HIDE_INTERNAL_API
 
-  private:
+private:
       Locale fLocale;
       UCollationStrength fStrength = UCOL_PRIMARY;
       UResourceBundle* fMappingBundle;
+      const UNormalizer2* fNFDNormalizer;
 };
 
 U_NAMESPACE_END
