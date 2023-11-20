@@ -47,6 +47,22 @@ static std::vector<UColAttributeValue> colfStrengths = {
     UCollationStrength::UCOL_TERTIARY
 };
 
+struct firstCharThenLengthComparator
+{
+    bool operator()(const std::u16string& a, const std::u16string& b) const
+    {
+        if (u_str_to_utf32_cpp(a)[0] == u_str_to_utf32_cpp(b)[0])
+        {
+            if (a.length() == b.length())
+            {
+                return a < b;
+            }
+            return a.length() < b.length();
+        }
+        return a < b;
+    }
+};
+
 namespace
 {
     struct collation_element final
@@ -513,6 +529,7 @@ namespace
     void add_single_collation_element_folding(
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        const UNormalizer2* nfd,
         std::unordered_map<std::u16string, std::u16string>& collationFolding)
     {
         for (const auto& pair : textByCollationKeySequence)
@@ -538,8 +555,21 @@ namespace
                 {
                     continue;
                 }
+                
+                // Normalize both strings to NFD.
+                int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
+                std::u16string nfdText{};
+                nfdText.resize(nfdLen);
+                nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
+                    reinterpret_cast<UChar*>(nfdText.data()), static_cast<int32_t>(nfdText.size()));
 
-                collationFolding.emplace(text, canonicalText);
+                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()), nullptr, 0);
+                std::u16string nfdCanonicalText{};
+                nfdCanonicalText.resize(nfdLen);
+                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
+                    reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
+
+                collationFolding.emplace(nfdText, nfdCanonicalText);
             }
         }
     }
@@ -611,6 +641,7 @@ namespace
     void add_double_collation_element_folding(
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        const UNormalizer2* nfd,
         std::unordered_map<std::u16string, std::u16string>& collationFolding)
     {
         for (auto& pair : textByCollationKeySequence)
@@ -646,8 +677,21 @@ namespace
                 {
                     continue;
                 }
+                
+                // Normalize both strings to NFD.
+                int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
+                std::u16string nfdText{};
+                nfdText.resize(nfdLen);
+                nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
+                    reinterpret_cast<UChar*>(nfdText.data()), static_cast<int32_t>(nfdText.size()));
 
-                collationFolding.emplace(text, canonicalText);
+                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()), nullptr, 0);
+                std::u16string nfdCanonicalText{};
+                nfdCanonicalText.resize(nfdLen);
+                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
+                    reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
+
+                collationFolding.emplace(nfdText, nfdCanonicalText);
             }
         }
     }
@@ -655,6 +699,7 @@ namespace
     void add_triple_collation_element_folding(
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        const UNormalizer2* nfd,
         std::unordered_map<std::u16string, std::u16string>& collationFolding)
     {
         for (auto& pair : textByCollationKeySequence)
@@ -711,8 +756,21 @@ namespace
                 {
                     continue;
                 }
+                
+                // Normalize both strings to NFD.
+                int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
+                std::u16string nfdText{};
+                nfdText.resize(nfdLen);
+                nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
+                    reinterpret_cast<UChar*>(nfdText.data()), static_cast<int32_t>(nfdText.size()));
 
-                collationFolding.emplace(text, canonicalText);
+                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()), nullptr, 0);
+                std::u16string nfdCanonicalText{};
+                nfdCanonicalText.resize(nfdLen);
+                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
+                    reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
+
+                collationFolding.emplace(nfdText, nfdCanonicalText);
             }
         }
     }
@@ -720,6 +778,7 @@ namespace
     void add_quadruple_collation_element_folding(
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        const UNormalizer2* nfd,
         std::unordered_map<std::u16string, std::u16string>& collationFolding)
     {
         for (auto& pair : textByCollationKeySequence)
@@ -819,8 +878,21 @@ namespace
                 {
                     continue;
                 }
+                
+                // Normalize both strings to NFD.
+                int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
+                std::u16string nfdText{};
+                nfdText.resize(nfdLen);
+                nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
+                    reinterpret_cast<UChar*>(nfdText.data()), static_cast<int32_t>(nfdText.size()));
 
-                collationFolding.emplace(text, canonicalText);
+                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()), nullptr, 0);
+                std::u16string nfdCanonicalText{};
+                nfdCanonicalText.resize(nfdLen);
+                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
+                    reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
+
+                collationFolding.emplace(nfdText, nfdCanonicalText);
             }
         }
     }
@@ -828,6 +900,7 @@ namespace
     void add_remaining_collation_element_folding(size_t minimumSize,
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& textByCollationKeySequence,
         std::unordered_map<collation_key_sequence, std::u16string>& canonicalTextByCollationKeySequence,
+        const UNormalizer2* nfd,
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& incomplete,
         std::unordered_map<std::u16string, std::u16string>& collationFolding)
     {
@@ -889,8 +962,21 @@ namespace
                 {
                     continue;
                 }
+                
+                // Normalize both strings to NFD.
+                int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
+                std::u16string nfdText{};
+                nfdText.resize(nfdLen);
+                nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
+                    reinterpret_cast<UChar*>(nfdText.data()), static_cast<int32_t>(nfdText.size()));
 
-                collationFolding.emplace(text, canonicalText);
+                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()), nullptr, 0);
+                std::u16string nfdCanonicalText{};
+                nfdCanonicalText.resize(nfdLen);
+                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
+                    reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
+
+                collationFolding.emplace(nfdText, nfdCanonicalText);
             }
         }
     }
@@ -900,14 +986,15 @@ namespace
         std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& incomplete)
     {
         std::unordered_map<collation_key_sequence, std::u16string> canonicalTextByCollationKeySequence{};
+        const UNormalizer2* nfd = unorm2_getNFDInstance_cpp();
         std::unordered_map<std::u16string, std::u16string> result{};
-        add_single_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
-        add_double_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
-        add_triple_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
+        add_single_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, nfd, result);
+        add_double_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, nfd, result);
+        add_triple_collation_element_folding(textByCollationKeySequence, canonicalTextByCollationKeySequence, nfd, result);
         add_quadruple_collation_element_folding(
-            textByCollationKeySequence, canonicalTextByCollationKeySequence, result);
+            textByCollationKeySequence, canonicalTextByCollationKeySequence, nfd, result);
         add_remaining_collation_element_folding(
-            5, textByCollationKeySequence, canonicalTextByCollationKeySequence, incomplete, result);
+            5, textByCollationKeySequence, canonicalTextByCollationKeySequence, nfd, incomplete, result);
         return result;
     }
 
@@ -934,9 +1021,9 @@ namespace
         return result;
     }
 
-    std::map<std::u16string, std::u16string> to_map(const std::unordered_map<std::u16string, std::u16string>& value)
+    std::map<std::u16string, std::u16string, firstCharThenLengthComparator> to_map(const std::unordered_map<std::u16string, std::u16string>& value)
     {
-        std::map<std::u16string, std::u16string> result{};
+        std::map<std::u16string, std::u16string, firstCharThenLengthComparator> result{};
 
         for (const auto& pair : value)
         {
@@ -964,20 +1051,19 @@ namespace
         }
     }
 
-    std::u16string to_utf32_debug_string(std::u16string_view text)
+    std::u16string to_hex_string(std::u32string_view text)
     {
-        std::u32string textUtf32{ u_str_to_utf32_cpp(text) };
         std::u16string result{};
-        result.reserve(textUtf32.size() * 5); // rough lower bound; " XXXX" per character
+        result.reserve(text.size() * 5); // rough lower bound; " XXXX" per character
 
-        for (size_t index = 0; index < textUtf32.size(); ++index)
+        for (size_t index = 0; index < text.size(); ++index)
         {
             if (index > 0)
             {
                 result.push_back(L' ');
             }
 
-            char32_t item{ textUtf32[index] };
+            char32_t item{ text[index] };
 
             if (item <= u'\uFFFF')
             {
@@ -1071,16 +1157,18 @@ namespace
 
                 fwprintf(output, L"%s => %s (%s)\n", reinterpret_cast<const wchar_t*>(to_string(from).c_str()),
                     reinterpret_cast<const wchar_t*>(to.c_str()),
-                    reinterpret_cast<const wchar_t*>(to_utf32_debug_string(to).c_str()));
+                    reinterpret_cast<const wchar_t*>(to_hex_string(u_str_to_utf32_cpp(to)).c_str()));
                 fflush(output);
             }
         }
     }
 
-    void print_collation_folding_map(FILE *output, const std::map<std::u16string, std::u16string>& value, UCollationStrength strength,
+    void print_collation_folding_map(FILE *output, const std::map<std::u16string, std::u16string, firstCharThenLengthComparator>& value, UCollationStrength strength,
         const std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>> &rootCollationFoldingMap, bool isRoot)
     {
         bool printStrengthOpenBracket = true;
+        bool innerBracketOpen = false;
+        std::u32string prevFromDisplayUtf32;
         for (const auto& pair : value)
         {
             std::u16string from{ pair.first };
@@ -1114,8 +1202,8 @@ namespace
             }
 
             // Escape the following characters.
-            size_t backslashIndex = to.find(u"\\");
-            size_t quoteIndex = to.find(u"\"");
+            size_t backslashIndex = to.find(u"\\"); // U+005C
+            size_t quoteIndex = to.find(u"\""); // U+201C
             if (backslashIndex != std::u16string::npos)
             {
                 to.insert(backslashIndex, u"\\");
@@ -1125,15 +1213,83 @@ namespace
                 to.insert(quoteIndex, u"\\");
             }
 
-            fwprintf(output, L"\t\t\t%s{\"%s\"}\n",
-                     reinterpret_cast<const wchar_t*>(to_utf32_debug_string(fromDisplay).c_str()),
-                     reinterpret_cast<const wchar_t*>(to.c_str()));
+            std::u32string fromDisplayUtf32 = u_str_to_utf32_cpp(fromDisplay);
+            
+            /*if (fromDisplayUtf32.size() >= prevFromDisplayUtf32.size() && fromDisplayUtf32.substr(0, 1) == prevFromDisplayUtf32.substr(0, 1))
+            {
+                fwprintf(output, L",\n");
+                fflush(output);
+            }
+            else if (prevFromDisplayUtf32.size() > 0)
+            {
+                fwprintf(output, L"\n");
+                fflush(output);
+            }*/
+
+            if (innerBracketOpen &&
+                (fromDisplayUtf32.substr(0, 1) != prevFromDisplayUtf32.substr(0, 1) || 
+                fromDisplayUtf32.size() > prevFromDisplayUtf32.size()))
+            {
+                // Close previous table(s).
+                fwprintf(output, L"\t\t\t\t}\n");
+                fflush(output);
+                innerBracketOpen = false;
+            }
+
+            // New first codepoint.
+            if (fromDisplayUtf32.substr(0, 1) != prevFromDisplayUtf32.substr(0, 1))
+            {
+                // Close previous table(s).
+                if (prevFromDisplayUtf32.size() != 0)
+                {
+                    fwprintf(output, L"\t\t\t}\n");
+                    fflush(output);
+                }
+
+                // Start new table for this key. Print the first codepoint.
+                fwprintf(output, L"\t\t\t%s{\n",
+                    reinterpret_cast<const wchar_t *>(to_hex_string(fromDisplayUtf32.substr(0, 1)).c_str()));
+                fflush(output);
+            }
+            
+            if (fromDisplayUtf32.size() == 1)
+            {
+                fwprintf(output, L"\t\t\t\t1{\"%s\"}\n", reinterpret_cast<const wchar_t*>(to.c_str()));
+                //fwprintf(output, L"\t\t\t\t\"%s\"", reinterpret_cast<const wchar_t*>(to.c_str()));
+                fflush(output);
+            }
+            else
+            {
+                if (fromDisplayUtf32.substr(0, 1) != prevFromDisplayUtf32.substr(0, 1) || fromDisplayUtf32.size() > prevFromDisplayUtf32.size())
+                {
+                    fwprintf(output, L"\t\t\t\t%llu{\n", fromDisplayUtf32.size());
+                    //fwprintf(output, L"\t\t\t\t{\n");
+                    fflush(output);
+                    innerBracketOpen = true;
+                }
+                
+                //fwprintf(output, L"\t\t\t\t\t%s{\"%s\"}",
+                fwprintf(output, L"\t\t\t\t\t%s{\"%s\"}\n",
+                    reinterpret_cast<const wchar_t*>(to_hex_string(fromDisplayUtf32.substr(1)).c_str()),
+                    reinterpret_cast<const wchar_t*>(to.c_str()));
+                fflush(output);
+            }
+
+            prevFromDisplayUtf32 = fromDisplayUtf32;
+        }
+
+        // Close previous table(s).
+        if (prevFromDisplayUtf32.size() > 1)
+        {
+            fwprintf(output, L"\t\t\t\t}\n");
             fflush(output);
         }
 
         // Mapping at current strength level existed.
         if (!printStrengthOpenBracket)
         {
+            fwprintf(output, L"\t\t\t}\n");
+            fflush(output);
             fwprintf(output, L"\t\t}\n");
             fflush(output);
         }
@@ -1207,6 +1363,7 @@ namespace
         // Convert to wstring.
         std::wstring loc(locale.begin(), locale.end());
         fwprintf(output, L"%s{\n", loc.c_str());
+        fflush(output);
         fwprintf(output, L"\tcollationFoldings{\n");
         fflush(output);
 
