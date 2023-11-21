@@ -42,7 +42,7 @@ private:
       Locale fLocale;
       UCollationStrength fStrength = UCOL_PRIMARY;
       UResourceBundle* fMappingBundle;
-      const UNormalizer2* fNFDNormalizer;
+      const UNormalizer2* fNFDNormalizer = nullptr;
 };
 
 U_NAMESPACE_END

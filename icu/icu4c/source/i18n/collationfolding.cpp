@@ -12,12 +12,15 @@
 #include "unicode/resbund.h"
 #include "unicode/unistr.h"
 #include "unicode/ustring.h"
+#include "unicode/uchriter.h"
 #include "charstr.h"
 #include "ustr_imp.h"
 #include "uresimp.h"
 #include "cstring.h"
 
 U_NAMESPACE_BEGIN
+
+constexpr int32_t c_maxKeyLength = 4;
 
 constexpr const char* strength_to_string(UCollationStrength value) noexcept {
     switch (value) {
@@ -99,13 +102,16 @@ CollationFolding::CollationFolding(const Locale& locale, UCollationStrength stre
         return;
     }
 
+    // Don't call unorm2_close() when using unorm2_getNFDInstance().
     fNFDNormalizer = unorm2_getNFDInstance(&status);
     if (U_FAILURE(status)) {
         return;
     }
 }
 
-CollationFolding::~CollationFolding() {}
+CollationFolding::~CollationFolding() {
+    ures_close(fMappingBundle);
+}
 
 int32_t
 CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode& status)
@@ -141,35 +147,69 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
         return 0;
     }
 
-    // Walk the source string.
     UnicodeString result;
-    int32_t index = 0;
-    while (index < nfdLen) {
-        UChar32 c;
-        U16_NEXT(nfdSource.getAlias(), index, nfdLen, c);
-        UnicodeString hex = toHexString(c, status);
-        if (U_FAILURE(status)) {
-            return 0;
-        }
-        
-        char key[16];
-        int32_t len = hex.extract(0, hex.length(), key, 16);
-        
-        const UChar *value = ures_getStringByKeyWithFallback(fMappingBundle, key, &len, &status);
-        if (status == U_MISSING_RESOURCE_ERROR) {
-            // A missing collation folding mapping implies that the key maps to itself.
-            status = U_ZERO_ERROR;
-            result.append(c);
-            continue;
-        }
-        else if (U_FAILURE(status)) {
-            return 0;
+    UCharCharacterIterator iter(nfdSource.getAlias(), u_strlen(nfdSource.getAlias()));
+    UChar32 c{};
+    while (iter.hasNext()) {
+        // Build up hex key string.
+        UnicodeString hex;
+        UChar32 firstCodepoint;
+        int32_t maxKeyLength;
+        for (maxKeyLength = 0; maxKeyLength < std::min(c_maxKeyLength, iter.getLength()); maxKeyLength++)
+        {
+            c = iter.next32PostInc();
+            if (c == CharacterIterator::DONE) {
+                // The length of the remainder of the string < keyLength.
+                // Attempt to get the longest match of the remaining string.
+                break;
+            }
+
+            if (maxKeyLength == 0) {
+                hex = toHexString(c, status);
+                firstCodepoint = c;
+            } else {
+                hex += UnicodeString(" ") + toHexString(c, status);
+            }
+            if (U_FAILURE(status)) {
+                return 0;
+            }
         }
 
-        // Mapping found!
-        for (int32_t i = 0; i < u_strlen(value); i++) {
-            result.append(value[i]);
+        // Check for longest matching key.
+        int32_t keyLength;
+        for (keyLength = maxKeyLength; keyLength > 0; keyLength--) {
+            char key[24];
+            hex.extract(0, hex.length(), key, sizeof(key));
+            
+            int32_t len{};
+            const UChar* value = ures_getStringByKeyWithFallback(fMappingBundle, key, &len, &status);
+            if (status == U_MISSING_RESOURCE_ERROR) {
+                status = U_ZERO_ERROR;
+
+                if (keyLength > 1) {
+                    // No mapping exists for this key length. Try smaller key length.
+                    int32_t lastIndex = hex.lastIndexOf(UnicodeString(" "));
+                    hex = hex.remove(lastIndex);
+                    continue;
+                }
+
+                // A missing collation folding mapping for a key of length 1 implies that the key maps to itself.
+                result.append(firstCodepoint);
+                break;
+            }
+            else if (U_FAILURE(status)) {
+                return 0;
+            }
+
+            // Mapping found at current key length!
+            for (int32_t i = 0; i < u_strlen(value); i++) {
+                result.append(value[i]);
+            }
+            break;
         }
+
+        // Move iterator back to last non-matching index.
+        iter.move(-1*(maxKeyLength - keyLength), CharacterIterator::EOrigin::kCurrent);
     }
 
     return result.extract(destination, destinationCapacity, status);
