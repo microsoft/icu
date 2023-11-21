@@ -981,3 +981,35 @@ inline const char* uenum_next_cpp(UEnumeration* en, int32_t* resultLength)
 
     return result;
 }
+
+inline const UNormalizer2* unorm2_getNFDInstance_cpp()
+{
+    UErrorCode status{};
+    const UNormalizer2* result{ unorm2_getNFDInstance(&status) };
+
+    if (U_FAILURE(status))
+    {
+        throw icu_error{ status, "unorm2_getNFDInstance" };
+    }
+
+    return result;
+}
+
+inline int32_t unorm2_normalize_cpp(const UNormalizer2 *norm2, const UChar *src, int32_t length, UChar *dest, int32_t capacity)
+{
+    UErrorCode status{};
+    int32_t result{ unorm2_normalize(norm2, src, length, dest, capacity, &status) };
+
+    if (status == U_BUFFER_OVERFLOW_ERROR && capacity == 0)
+    {
+        status = U_ZERO_ERROR;
+        return result;
+    }
+    
+    if (U_FAILURE(status))
+    {
+        throw icu_error{ status, "unorm2_normalize" };
+    }
+
+    return result;
+}

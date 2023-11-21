@@ -531,32 +531,6 @@ def generate_colf_txt(config, io, common_vars):
         )
     ]
 
-def generate_colf(config, io, common_vars):
-    if not config.gencolf:
-        return []
-    
-    # Colf Data Res Files
-    input_files = [InFile(filename) for filename in io.glob("colf/*.txt")]
-    input_basenames = [v.filename[5:] for v in input_files]
-    output_files = [OutFile("%s.res" % v[:-4]) for v in input_basenames]
-    return [
-        RepeatedExecutionRequest(
-            name = "colf_res",
-            category = "colf",
-            dep_targets = [],
-            input_files = input_files,
-            output_files = output_files,
-            tool = IcuTool("genrb"),
-            args = "-s {IN_DIR}/colf -d {OUT_DIR}/colf -i {OUT_DIR} "
-                "-k "
-                "{INPUT_BASENAME}",
-            format_with = {},
-            repeat_with = {
-                "INPUT_BASENAME": input_basenames
-            }
-        )
-    ]
-
 def generate_tree(
         config,
         io,
