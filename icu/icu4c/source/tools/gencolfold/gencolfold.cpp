@@ -535,11 +535,6 @@ namespace
 
             for (const auto& text : equivalenceClass)
             {
-                if (text == canonicalText)
-                {
-                    continue;
-                }
-                
                 // Normalize both strings to NFD.
                 int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
                 std::u16string nfdText{};
@@ -552,6 +547,11 @@ namespace
                 nfdCanonicalText.resize(nfdLen);
                 nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
                     reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
+
+                if (nfdText == nfdCanonicalText)
+                {
+                    continue;
+                }
 
                 collationFolding.emplace(nfdText, nfdCanonicalText);
             }
@@ -657,11 +657,6 @@ namespace
 
             for (const auto& text : equivalenceClass)
             {
-                if (text == canonicalText)
-                {
-                    continue;
-                }
-                
                 // Normalize both strings to NFD.
                 int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
                 std::u16string nfdText{};
@@ -674,6 +669,11 @@ namespace
                 nfdCanonicalText.resize(nfdLen);
                 nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
                     reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
+
+                if (nfdText == nfdCanonicalText)
+                {
+                    continue;
+                }
 
                 collationFolding.emplace(nfdText, nfdCanonicalText);
             }
@@ -736,11 +736,6 @@ namespace
 
             for (const auto& text : equivalenceClass)
             {
-                if (text == canonicalText)
-                {
-                    continue;
-                }
-                
                 // Normalize both strings to NFD.
                 int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
                 std::u16string nfdText{};
@@ -753,6 +748,11 @@ namespace
                 nfdCanonicalText.resize(nfdLen);
                 nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
                     reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
+
+                if (nfdText == nfdCanonicalText)
+                {
+                    continue;
+                }
 
                 collationFolding.emplace(nfdText, nfdCanonicalText);
             }
@@ -858,11 +858,6 @@ namespace
 
             for (const auto& text : equivalenceClass)
             {
-                if (text == canonicalText)
-                {
-                    continue;
-                }
-                
                 // Normalize both strings to NFD.
                 int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
                 std::u16string nfdText{};
@@ -875,6 +870,11 @@ namespace
                 nfdCanonicalText.resize(nfdLen);
                 nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
                     reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
+
+                if (nfdText == nfdCanonicalText)
+                {
+                    continue;
+                }
 
                 collationFolding.emplace(nfdText, nfdCanonicalText);
             }
@@ -942,11 +942,6 @@ namespace
 
             for (const auto& text : equivalenceClass)
             {
-                if (text == canonicalText)
-                {
-                    continue;
-                }
-                
                 // Normalize both strings to NFD.
                 int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
                 std::u16string nfdText{};
@@ -959,6 +954,11 @@ namespace
                 nfdCanonicalText.resize(nfdLen);
                 nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
                     reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
+
+                if (nfdText == nfdCanonicalText)
+                {
+                    continue;
+                }
 
                 collationFolding.emplace(nfdText, nfdCanonicalText);
             }

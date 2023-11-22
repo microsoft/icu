@@ -3,7 +3,6 @@ ca{
 	collationFoldings{
 		primary{
 			004C 00B7{"l·"}
-			006C 00B7{"l·"}
 			013F{"l·"}
 			0140{"l·"}
 		}
