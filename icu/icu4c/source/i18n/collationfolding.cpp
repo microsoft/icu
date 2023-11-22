@@ -236,19 +236,19 @@ ucolfold_open(const char* locale, UCollationStrength strength, UErrorCode* statu
 }
 
 U_CAPI void U_EXPORT2 
-ucolfold_close(UCollationFolding* ucolf) {
-    if (ucolf != nullptr) {
-        delete CollationFolding::fromUCollationFolding(ucolf);
+ucolfold_close(UCollationFolding* ucolfold) {
+    if (ucolfold != nullptr) {
+        delete CollationFolding::fromUCollationFolding(ucolfold);
     }
 }
 
 U_CAPI int32_t U_EXPORT2 
-ucolfold_fold(const UCollationFolding* ucolf, const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode* status) {
+ucolfold_fold(const UCollationFolding* ucolfold, const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode* status) {
     if (U_FAILURE(*status)) {
         return 0;
     }
 
-    const CollationFolding *cf = CollationFolding::fromUCollationFolding(ucolf);
+    const CollationFolding *cf = CollationFolding::fromUCollationFolding(ucolfold);
     return const_cast<CollationFolding*>(cf)->fold(source, sourceLength, destination, destinationCapacity, *status);
 }
 

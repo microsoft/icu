@@ -49,17 +49,17 @@ ucolfold_open(const char* locale, UCollationStrength strength, UErrorCode* statu
  * Close a UCollationFolding instance, releasing the memory used.
  * Once closed, it should not be used. 
  * 
- * @param ucolf The UCollationFolding instance to close. 
+ * @param ucolfold The UCollationFolding instance to close. 
  * @draft ICU 75 
  */ 
 U_CAPI void U_EXPORT2
-ucolfold_close(UCollationFolding* ucolf); 
+ucolfold_close(UCollationFolding* ucolfold); 
 
 /** 
  * Return the equivalence class string that the source string folds to, for the 
  * input UCollationFolding instance. 
  * 
- * @param ucolf The UCollationFolding instance to use. 
+ * @param ucolfold The UCollationFolding instance to use. 
  * @param source The source string. 
  * @param sourceLength The length of the source string, or -1 if NULL-terminated. 
  * @param destination A pointer to a buffer to receive the NULL-terminated output. If
@@ -74,7 +74,7 @@ ucolfold_close(UCollationFolding* ucolf);
  * @draft ICU 75 
  */ 
 U_CAPI int32_t U_EXPORT2
-ucolfold_fold(const UCollationFolding* ucolf, const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode* status); 
+ucolfold_fold(const UCollationFolding* ucolfold, const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode* status); 
 
 #if U_SHOW_CPLUSPLUS_API
 #include "unicode/localpointer.h"
