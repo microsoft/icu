@@ -161,12 +161,6 @@ int main()
 {
     set_mode_or_throw(_fileno(stdout), _O_U8TEXT);
 
-    //print_NFD_hex(u"Käse");
-    //print_NFD_hex(u"Käse");
-    //print_NFD_hex(u"Æ");
-    //print_NFD_hex(u"Ȧ");
-    //print_NFD_hex(u"Ǣ");
-
     print_collation_folding("de_DE", UCollationStrength::UCOL_PRIMARY, u"Käse");
     print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"Käse");
     print_collation_folding("en_US", UCollationStrength::UCOL_PRIMARY, u"Résumé");

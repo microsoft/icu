@@ -150,7 +150,7 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
     UCharCharacterIterator iter(nfdSource.getAlias(), u_strlen(nfdSource.getAlias()));
     UChar32 c{};
     while (iter.hasNext()) {
-        // Build up hex key string.
+        // Build up hex key.
         UnicodeString hex;
         UChar32 firstCodepoint;
         int32_t maxKeyLength;
@@ -161,7 +161,6 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
                 // Attempt to get the longest match of the remaining string.
                 break;
             }
-
             if (maxKeyLength == 0) {
                 hex = toHexString(c, status);
                 firstCodepoint = c;
@@ -178,16 +177,13 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
         for (keyLength = maxKeyLength; keyLength > 0; keyLength--) {
             char key[24];
             hex.extract(0, hex.length(), key, sizeof(key));
-            
             int32_t len{};
             const UChar* value = ures_getStringByKeyWithFallback(fMappingBundle, key, &len, &status);
             if (status == U_MISSING_RESOURCE_ERROR) {
                 status = U_ZERO_ERROR;
-
                 if (keyLength > 1) {
                     // No mapping exists for this key length. Try smaller key length.
-                    int32_t lastIndex = hex.lastIndexOf(UnicodeString(" "));
-                    hex = hex.remove(lastIndex);
+                    hex = hex.remove(hex.lastIndexOf(UnicodeString(" ")));
                     continue;
                 }
 
@@ -207,7 +203,7 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
         }
 
         // Move iterator back to last non-matching index.
-        iter.move(-1*(maxKeyLength - keyLength), CharacterIterator::EOrigin::kCurrent);
+        iter.move(-(maxKeyLength-keyLength), CharacterIterator::EOrigin::kCurrent);
     }
 
     return result.extract(destination, destinationCapacity, status);
