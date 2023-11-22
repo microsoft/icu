@@ -8,7 +8,7 @@
 #include "unicode/ucol.h"
 #include "unicode/udata.h"
 
-#define U_ICUDATA_COLF U_ICUDATA_NAME U_TREE_SEPARATOR_STRING "colf"
+#define U_ICUDATA_COLFOLD U_ICUDATA_NAME U_TREE_SEPARATOR_STRING "colfold"
 
 /** A collation folding instance.
 *   For usage in C programs.
@@ -44,7 +44,7 @@ typedef struct UCollationFolding UCollationFolding;
  * @draft ICU 75 
  */ 
 U_CAPI UCollationFolding* U_EXPORT2
-ucolf_open(const char* locale, UCollationStrength strength, UErrorCode* status);
+ucolfold_open(const char* locale, UCollationStrength strength, UErrorCode* status);
 /** 
  * Close a UCollationFolding instance, releasing the memory used.
  * Once closed, it should not be used. 
@@ -53,7 +53,7 @@ ucolf_open(const char* locale, UCollationStrength strength, UErrorCode* status);
  * @draft ICU 75 
  */ 
 U_CAPI void U_EXPORT2
-ucolf_close(UCollationFolding* ucolf); 
+ucolfold_close(UCollationFolding* ucolf); 
 
 /** 
  * Return the equivalence class string that the source string folds to, for the 
@@ -74,7 +74,7 @@ ucolf_close(UCollationFolding* ucolf);
  * @draft ICU 75 
  */ 
 U_CAPI int32_t U_EXPORT2
-ucolf_fold(const UCollationFolding* ucolf, const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode* status); 
+ucolfold_fold(const UCollationFolding* ucolf, const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode* status); 
 
 #if U_SHOW_CPLUSPLUS_API
 #include "unicode/localpointer.h"
@@ -83,14 +83,14 @@ U_NAMESPACE_BEGIN
  
 /** 
  * \class LocalUCollationFoldingPointer 
- * "Smart pointer" class, closes a UCollationFolding via ucolf_close(). 
+ * "Smart pointer" class, closes a UCollationFolding via ucolfold_close(). 
  * For most methods see the LocalPointerBase base class. 
  * 
  * @see LocalPointerBase 
  * @see LocalPointer 
  * @draft ICU 75 
  */ 
-U_DEFINE_LOCAL_OPEN_POINTER(LocalUCollationFoldingPointer, UCollationFolding, ucolf_close); 
+U_DEFINE_LOCAL_OPEN_POINTER(LocalUCollationFoldingPointer, UCollationFolding, ucolfold_close); 
 
 U_NAMESPACE_END 
  

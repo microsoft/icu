@@ -37,8 +37,8 @@ def generate(config, io, common_vars):
     requests += generate_curr_supplemental(config, io, common_vars)
     requests += generate_zone_supplemental(config, io, common_vars)
     requests += generate_translit(config, io, common_vars)
-    if config.gencolf:
-        requests += generate_colf_txt(config, io, common_vars)
+    if config.gencolfold:
+        requests += generate_colfold_txt(config, io, common_vars)
 
     # Res Tree Files
     # (input dirname, output dirname, resfiles.mk path, mk version var, mk source var, use pool file, dep files)
@@ -102,10 +102,10 @@ def generate(config, io, common_vars):
         False,
         [])
 
-    if config.gencolf:
+    if config.gencolfold:
         requests += generate_tree(config, io, common_vars,
-            "colf",
-            "colf",
+            "colfold",
+            "colfold",
             False,
             [])
 
@@ -515,19 +515,19 @@ def generate_brkitr_lstm(config, io, common_vars):
         )
     ]
 
-def generate_colf_txt(config, io, common_vars):
-    if not config.gencolf:
+def generate_colfold_txt(config, io, common_vars):
+    if not config.gencolfold:
         return []
 
-    # Generate colf text files for locales that have 'search' collation type.
+    # Generate colfold text files for locales that have 'search' collation type.
     return [
         SingleExecutionRequest(
-            name = "colf_txt",
-            category = "colf",
+            name = "colfold_txt",
+            category = "colfold",
             input_files = [],
             output_files = [],
-            tool = IcuTool("gencolf"),
-            args = "-s {SRC_DIR}/coll -d {SRC_DIR}/colf"
+            tool = IcuTool("gencolfold"),
+            args = "-s {SRC_DIR}/coll -d {SRC_DIR}/colfold"
         )
     ]
 
@@ -620,9 +620,9 @@ def generate_tree(
         "root",
     ])
     # Put alias locales in a separate structure; see ICU-20627
-    # Hack: colf data is not generated from cldr-to-icu build tool and hence doesn't have its own LOCALE_DEPS.json file.
-    #       Use coll/LOCALE_DEPS.json file for now (maybe just copy this file over to colf/LOCALE_DEPS.json instead.)
-    dependency_data = io.read_locale_deps("coll") if sub_dir == "colf" else io.read_locale_deps(sub_dir)
+    # Hack: colfold data is not generated from cldr-to-icu build tool and hence doesn't have its own LOCALE_DEPS.json file.
+    #       Use coll/LOCALE_DEPS.json file for now (maybe just copy this file over to colfold/LOCALE_DEPS.json instead.)
+    dependency_data = io.read_locale_deps("coll") if sub_dir == "colfold" else io.read_locale_deps(sub_dir)
     if "aliases" in dependency_data:
         alias_locales = set(dependency_data["aliases"].keys())
     else:

@@ -102,7 +102,7 @@
       <Project>{8b41752b-5a52-41e4-b7e0-07921c0cc6bf}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
-    <ProjectReference Include="..\tools\gencolf\gencolf.vcxproj">
+    <ProjectReference Include="..\tools\gencolfold\gencolfold.vcxproj">
       <Project>{800f101d-4e3f-412b-8015-7096b3298c64}</Project>
     </ProjectReference>
     <ProjectReference Include="..\tools\gendict\gendict.vcxproj">

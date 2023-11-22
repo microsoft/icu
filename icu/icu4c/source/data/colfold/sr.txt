@@ -1,0 +1,5 @@
+﻿// Generated using gencolfold.exe, built from icu4c/source/tools/gencolfold.
+sr{
+	collationFoldings{
+	}
+}

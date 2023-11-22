@@ -1,4 +1,4 @@
-﻿// Generated using gencolf.exe, built from icu4c/source/tools/gencolf.
+﻿// Generated using gencolfold.exe, built from icu4c/source/tools/gencolfold.
 sk{
 	collationFoldings{
 		primary{

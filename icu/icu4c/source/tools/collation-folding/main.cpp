@@ -134,27 +134,27 @@ void print_collation_folding(const char* locale, UCollationStrength strength, co
     fflush(stdout);
               
     UErrorCode status = U_ZERO_ERROR;
-    UCollationFolding* folding = ucolf_open(locale, strength, &status);
-    auto error = icu_error(status, "ucolf_open");
+    UCollationFolding* folding = ucolfold_open(locale, strength, &status);
+    auto error = icu_error(status, "ucolfold_open");
     if (U_FAILURE(status))
     {
-        wprintf(L"ucolf_open failed with status: %s\n", from_utf8(error.name()).c_str());
+        wprintf(L"ucolfold_open failed with status: %s\n", from_utf8(error.name()).c_str());
         fflush(stdout);
     }
 
     UChar result[100]; 
-    int32_t resultSize = ucolf_fold(folding, input, -1, result, 100, &status);
-    error = icu_error(status, "ucolf_fold");
+    int32_t resultSize = ucolfold_fold(folding, input, -1, result, 100, &status);
+    error = icu_error(status, "ucolfold_fold");
     if (U_FAILURE(status))
     {
-        wprintf(L"ucolf_fold failed with status: %s\n", from_utf8(error.name()).c_str());
+        wprintf(L"ucolfold_fold failed with status: %s\n", from_utf8(error.name()).c_str());
         fflush(stdout);
     }
 
     icu::UnicodeString hexResult = toHexString(result, resultSize);
     wprintf(L"Output:   %s\t(%s)\n\n", reinterpret_cast<const wchar_t*>(result), reinterpret_cast<const wchar_t*>(hexResult.getTerminatedBuffer()));
     fflush(stdout);
-    ucolf_close(folding);
+    ucolfold_close(folding);
 }
 
 int main()

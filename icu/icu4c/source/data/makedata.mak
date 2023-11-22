@@ -306,7 +306,7 @@ $(COREDATA_TS):
 	set PYTHONPATH=$(ICUP)\source\python;%PYTHONPATH%
 	py -3 -B -m icutools.databuilder \
 		--mode windows-exec \
-		--gencolf \
+		--gencolfold \
 		--src_dir "$(ICUSRCDATA)" \
 		--tool_dir "$(ICUTOOLS)" \
 		--tool_cfg "$(CFGTOOLS)" \

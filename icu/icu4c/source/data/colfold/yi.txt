@@ -1,0 +1,9 @@
+﻿// Generated using gencolfold.exe, built from icu4c/source/tools/gencolfold.
+yi{
+	collationFoldings{
+		primary{
+			0022{""}
+			0027{""}
+		}
+	}
+}

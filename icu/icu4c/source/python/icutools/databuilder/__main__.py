@@ -97,7 +97,7 @@ flag_parser.add_argument(
     action = "store_true"
 )
 flag_parser.add_argument(
-    "--gencolf",
+    "--gencolfold",
     help = "Generate collation folding data.",
     default = False,
     action = "store_true"
@@ -136,7 +136,7 @@ class Config(object):
         self.include_uni_core_data = args.include_uni_core_data
 
         # Boolean: Whether to generate collation folding data and include it in the .dat file.
-        self.gencolf = args.gencolf
+        self.gencolfold = args.gencolfold
 
         # Default fields before processing filter file
         self.filters_json_data = {}
@@ -287,11 +287,10 @@ def main(argv):
         }
         common["FILTERS_DIR"] = config.filter_dir
         common["CWD_DIR"] = os.getcwd()
-        # add gencolf
     else:
         makefile_vars = None
         common = {
-            "GENCOLF": args.gencolf,
+            "GENCOLFOLD": args.gencolfold,
             "SRC_DIR": args.src_dir,
             "IN_DIR": args.src_dir,
             "OUT_DIR": args.out_dir,

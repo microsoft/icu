@@ -83,10 +83,9 @@ UnicodeString toHexString(UChar32 codepoint, UErrorCode& status) {
 }
 
 CollationFolding::CollationFolding(const Locale& locale, UCollationStrength strength, UErrorCode& status)
-    : fLocale(locale), fStrength(strength)
-{
+    : fLocale(locale), fStrength(strength) {
     // Lookup resource bundle.
-    fMappingBundle = ures_open(U_ICUDATA_COLF, fLocale.getName(), &status);
+    fMappingBundle = ures_open(U_ICUDATA_COLFOLD, fLocale.getName(), &status);
     if (U_FAILURE(status)) {
         ures_close(fMappingBundle);
         return;
@@ -155,11 +154,10 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
         UnicodeString hex;
         UChar32 firstCodepoint;
         int32_t maxKeyLength;
-        for (maxKeyLength = 0; maxKeyLength < std::min(c_maxKeyLength, iter.getLength()); maxKeyLength++)
-        {
+        for (maxKeyLength = 0; maxKeyLength < std::min(c_maxKeyLength, iter.getLength()); maxKeyLength++) {
             c = iter.next32PostInc();
             if (c == CharacterIterator::DONE) {
-                // The length of the remainder of the string < keyLength.
+                // The length of the remainder of the string < maxKeyLength.
                 // Attempt to get the longest match of the remaining string.
                 break;
             }
@@ -219,8 +217,7 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
 *  C APIs for CollationFolding
 */
 U_CAPI UCollationFolding* U_EXPORT2
-ucolf_open(const char* locale, UCollationStrength strength, UErrorCode* status)
-{
+ucolfold_open(const char* locale, UCollationStrength strength, UErrorCode* status) {
     if (U_FAILURE(*status)) {
         return nullptr;
     }
@@ -239,16 +236,14 @@ ucolf_open(const char* locale, UCollationStrength strength, UErrorCode* status)
 }
 
 U_CAPI void U_EXPORT2 
-ucolf_close(UCollationFolding* ucolf)
-{
+ucolfold_close(UCollationFolding* ucolf) {
     if (ucolf != nullptr) {
         delete CollationFolding::fromUCollationFolding(ucolf);
     }
 }
 
 U_CAPI int32_t U_EXPORT2 
-ucolf_fold(const UCollationFolding* ucolf, const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode* status)
-{
+ucolfold_fold(const UCollationFolding* ucolf, const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode* status) {
     if (U_FAILURE(*status)) {
         return 0;
     }

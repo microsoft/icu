@@ -1,5 +1,5 @@
-﻿// Generated using gencolf.exe, built from icu4c/source/tools/gencolf.
-sh{
+﻿// Generated using gencolfold.exe, built from icu4c/source/tools/gencolfold.
+hr{
 	collationFoldings{
 		primary{
 			0043 0301{"ć"}

@@ -32,7 +32,7 @@ static UOption options[] = {
 
 void usageAndDie(int retCode) {
     printf("Usage: %s [-v] [-options] -r coll-data-dir -o output-file\n", progName);
-    printf("\tCalls ICU Collation APIs to write out collation folding data under icu4c/source/data/colf/*.txt.\n"
+    printf("\tCalls ICU Collation APIs to write out collation folding data under icu4c/source/data/colfold/*.txt.\n"
            "options:\n"
            "\t-h or -? or --help  this usage text\n"
            "\t-s or --sourcedir   source directory, followed by the path\n"
@@ -41,7 +41,7 @@ void usageAndDie(int retCode) {
 }
 
 // Collation folding data only includes primary, secondary, and tertiary strengths.
-static std::vector<UColAttributeValue> colfStrengths = {
+static std::vector<UColAttributeValue> colfoldStrengths = {
     UCollationStrength::UCOL_PRIMARY,
     UCollationStrength::UCOL_SECONDARY,
     UCollationStrength::UCOL_TERTIARY
@@ -1256,7 +1256,7 @@ namespace
         uprv_mkdir(outDir, &status);
         if (U_FAILURE(status))
         {
-            fprintf(stderr, "Error creating colf directory: %s\n\n", outDir);
+            fprintf(stderr, "Error creating colfold directory: %s\n\n", outDir);
             exit(-1);
         }
 
@@ -1271,7 +1271,7 @@ namespace
         }
 
         // TODO: Include copyright?
-        fwprintf(output, L"// Generated using gencolf.exe, built from icu4c/source/tools/gencolf.\n");
+        fwprintf(output, L"// Generated using gencolfold.exe, built from icu4c/source/tools/gencolfold.\n");
         fflush(output);
         
         // ICU locales only include ASCII letters and the following symbols: -, _, @, =, and ;
@@ -1283,7 +1283,7 @@ namespace
         fflush(output);
 
         bool hasIncomplete = false;
-        for (UCollationStrength strength : colfStrengths)
+        for (UCollationStrength strength : colfoldStrengths)
         {
             ucol_setStrength(collator.get(), strength);
 
@@ -1433,7 +1433,7 @@ int main(int argc, char **argv)
         usageAndDie(U_ILLEGAL_ARGUMENT_ERROR);
     }
     inDir = options[2].value; // icu4c/source/data/coll directory
-    outDir = options[3].value; // icu4c/source/data/colf directory
+    outDir = options[3].value; // icu4c/source/data/colfold directory
 
     try
     {

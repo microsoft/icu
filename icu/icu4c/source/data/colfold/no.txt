@@ -1,5 +1,5 @@
-﻿// Generated using gencolf.exe, built from icu4c/source/tools/gencolf.
-no_NO{
+﻿// Generated using gencolfold.exe, built from icu4c/source/tools/gencolfold.
+no{
 	collationFoldings{
 		primary{
 			0041 0041{"aa"}
