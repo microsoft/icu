@@ -2,8 +2,8 @@
 yi{
 	collationFoldings{
 		primary{
-			0022{""}
-			0027{""}
+			0022{"͏"}
+			0027{"͏"}
 		}
 	}
 }

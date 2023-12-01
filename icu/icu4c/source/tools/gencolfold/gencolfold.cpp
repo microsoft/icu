@@ -1196,6 +1196,9 @@ namespace
                 to.insert(quoteIndex, u"\\");
             }
 
+            // Convert NUL characters (U+0000) to CGJ (U+034F), to make it available for the resource bundle to read.
+            std::replace(to.begin(), to.end(), u'\0', u'\x034F');
+
             fwprintf(output, L"\t\t\t%s{\"%s\"}\n",
                      reinterpret_cast<const wchar_t*>(to_hex_string(fromDisplay).c_str()),
                      reinterpret_cast<const wchar_t*>(to.c_str()));
