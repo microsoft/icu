@@ -992,6 +992,45 @@ namespace
         return create_collation_folding_map(textByCollationKeySequence, incomplete);
     }
 
+    void remove_redundant_map_entries(std::unordered_map<std::u16string, std::u16string>& collationFoldingMap)
+    {
+        for (auto it = collationFoldingMap.begin(); it != collationFoldingMap.end();)
+        {
+            std::u16string key = it->first;
+            if (key.length() > 1)
+            {
+                std::u16string combinedValue;
+                for (size_t i = 0; i < key.length(); i++)
+                {
+                    std::u16string cp = key.substr(i, 1);
+                    if (collationFoldingMap.contains(cp))
+                    {
+                        combinedValue += collationFoldingMap.at(cp);
+                    }
+                    else
+                    {
+                        combinedValue += cp;
+                    }
+                }
+
+                // Remove current entry if it can be constructed from other map entries.
+                // Currently, this only checks for single codepoint mappings (not checking multi-length keys).
+                if (it->second == combinedValue)
+                {
+                    it = collationFoldingMap.erase(it);
+                }
+                else
+                {
+                    it++;
+                }
+            }
+            else
+            {
+                it++;
+            }
+        }
+    }
+
     std::map<collation_key_sequence, std::vector<std::u16string>> to_map(
         const std::unordered_map<collation_key_sequence, std::vector<std::u16string>>& value)
     {
@@ -1308,6 +1347,8 @@ namespace
                 std::unordered_map<collation_key_sequence, std::vector<std::u16string>> incomplete{};
                 std::unordered_map<std::u16string, std::u16string> collationFoldingMap{ create_collation_folding_map(
                     collator.get(), strength, incomplete) };
+
+                remove_redundant_map_entries(collationFoldingMap);
 
                 // Save rootCollationFoldingMap to consolidate data when writing to output file.
                 bool isRoot = (locale == "root");
