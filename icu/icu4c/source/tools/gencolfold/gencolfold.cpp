@@ -539,13 +539,13 @@ namespace
                 int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
                 std::u16string nfdText{};
                 nfdText.resize(nfdLen);
-                nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
+                unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
                     reinterpret_cast<UChar*>(nfdText.data()), static_cast<int32_t>(nfdText.size()));
 
                 nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()), nullptr, 0);
                 std::u16string nfdCanonicalText{};
                 nfdCanonicalText.resize(nfdLen);
-                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
+                unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
                     reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
 
                 if (nfdText == nfdCanonicalText)
@@ -661,13 +661,13 @@ namespace
                 int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
                 std::u16string nfdText{};
                 nfdText.resize(nfdLen);
-                nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
+                unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
                     reinterpret_cast<UChar*>(nfdText.data()), static_cast<int32_t>(nfdText.size()));
 
                 nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()), nullptr, 0);
                 std::u16string nfdCanonicalText{};
                 nfdCanonicalText.resize(nfdLen);
-                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
+                unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
                     reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
 
                 if (nfdText == nfdCanonicalText)
@@ -740,13 +740,13 @@ namespace
                 int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
                 std::u16string nfdText{};
                 nfdText.resize(nfdLen);
-                nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
+                unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
                     reinterpret_cast<UChar*>(nfdText.data()), static_cast<int32_t>(nfdText.size()));
 
                 nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()), nullptr, 0);
                 std::u16string nfdCanonicalText{};
                 nfdCanonicalText.resize(nfdLen);
-                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
+                unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
                     reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
 
                 if (nfdText == nfdCanonicalText)
@@ -862,13 +862,13 @@ namespace
                 int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
                 std::u16string nfdText{};
                 nfdText.resize(nfdLen);
-                nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
+                unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
                     reinterpret_cast<UChar*>(nfdText.data()), static_cast<int32_t>(nfdText.size()));
 
                 nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()), nullptr, 0);
                 std::u16string nfdCanonicalText{};
                 nfdCanonicalText.resize(nfdLen);
-                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
+                unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
                     reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
 
                 if (nfdText == nfdCanonicalText)
@@ -946,13 +946,13 @@ namespace
                 int32_t nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()), nullptr, 0);
                 std::u16string nfdText{};
                 nfdText.resize(nfdLen);
-                nfdLen = unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
+                unorm2_normalize_cpp(nfd, text.c_str(), static_cast<int32_t>(text.length()),
                     reinterpret_cast<UChar*>(nfdText.data()), static_cast<int32_t>(nfdText.size()));
 
                 nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()), nullptr, 0);
                 std::u16string nfdCanonicalText{};
                 nfdCanonicalText.resize(nfdLen);
-                nfdLen = unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
+                unorm2_normalize_cpp(nfd, canonicalText.c_str(), static_cast<int32_t>(canonicalText.length()),
                     reinterpret_cast<UChar*>(nfdCanonicalText.data()), static_cast<int32_t>(nfdCanonicalText.size()));
 
                 if (nfdText == nfdCanonicalText)

@@ -168,6 +168,10 @@ int main()
     print_collation_folding("de_DE", UCollationStrength::UCOL_SECONDARY, u"é"); // U+00E9
     print_collation_folding("de_DE", UCollationStrength::UCOL_SECONDARY, u"é"); // U+0065 U+0301
     print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"Ǣ"); // U+01E2
+    print_collation_folding("bs", UCollationStrength::UCOL_PRIMARY, u"nǰ"); // U+006E U+01F0
+    print_collation_folding("bs", UCollationStrength::UCOL_PRIMARY, u"Ş̌"); // U+015E U+030C
+    print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"\xD757"); // U+D757
+    print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"\x0958"); // U+0958
     //print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"AȦ\x0304"); // U+0041 U+0226 U+0304
     //print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"Aȧ\x0304"); // U+0041 U+0227 U+0304
     //print_collation_folding("da", UCollationStrength::UCOL_SECONDARY, u"AȦ\x0304"); // U+0041 U+0226 U+0304

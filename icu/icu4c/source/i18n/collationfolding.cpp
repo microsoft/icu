@@ -90,12 +90,12 @@ CollationFolding::CollationFolding(const Locale& locale, UCollationStrength stre
         ures_close(fMappingBundle);
         return;
     }
-    fMappingBundle = ures_getByKey(fMappingBundle, "collationFoldings", fMappingBundle, &status);
+    fMappingBundle = ures_getByKeyWithFallback(fMappingBundle, "collationFoldings", fMappingBundle, &status);
     if (U_FAILURE(status)) {
         ures_close(fMappingBundle);
         return;
     }
-    fMappingBundle = ures_getByKey(fMappingBundle, strength_to_string(fStrength), fMappingBundle, &status);
+    fMappingBundle = ures_getByKeyWithFallback(fMappingBundle, strength_to_string(fStrength), fMappingBundle, &status);
     if (U_FAILURE(status)) {
         ures_close(fMappingBundle);
         return;
@@ -148,14 +148,13 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
 
     UnicodeString result;
     UCharCharacterIterator iter(nfdSource.getAlias(), u_strlen(nfdSource.getAlias()));
-    UChar32 c{};
     while (iter.hasNext()) {
         // Build up hex key.
         UnicodeString hex;
         UChar32 firstCodepoint;
         int32_t maxKeyLength;
         for (maxKeyLength = 0; maxKeyLength < std::min(c_maxKeyLength, iter.getLength()); maxKeyLength++) {
-            c = iter.next32PostInc();
+            UChar32 c = iter.next32PostInc();
             if (c == CharacterIterator::DONE) {
                 // The length of the remainder of the string < maxKeyLength.
                 // Attempt to get the longest match of the remaining string.
@@ -195,14 +194,14 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
                 return 0;
             }
 
-            // Mapping found at current key length!
+            // Mapping found at current key length.
             for (int32_t i = 0; i < u_strlen(value); i++) {
                 result.append(value[i]);
             }
             break;
         }
 
-        // Move iterator back to last non-matching index.
+        // Move iterator back to the last non-matching index.
         iter.move(-(maxKeyLength-keyLength), CharacterIterator::EOrigin::kCurrent);
     }
 

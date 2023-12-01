@@ -645,7 +645,7 @@ inline size_t u_str_to_utf32_cpp(std::u16string_view text, std::span<char32_t> b
     if (status != U_ZERO_ERROR && !((status == U_BUFFER_OVERFLOW_ERROR || status == U_STRING_NOT_TERMINATED_WARNING) &&
                                       buffer.data() == nullptr && buffer.size() == 0))
     {
-        throw icu_error{ status, "u_strFromUTF32" };
+        throw icu_error{ status, "u_strToUTF32" };
     }
 
     if (written < 0)
