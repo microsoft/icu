@@ -1000,12 +1000,20 @@ namespace
             if (key.length() > 1)
             {
                 std::u16string combinedValue;
+                bool isPrevNull = false;
                 for (size_t i = 0; i < key.length(); i++)
                 {
                     std::u16string cp = key.substr(i, 1);
                     if (collationFoldingMap.contains(cp))
                     {
-                        combinedValue += collationFoldingMap.at(cp);
+                        std::u16string cpValue = collationFoldingMap.at(cp);
+
+                        // Consecutive NUL characters are ignored after the first one.
+                        if (!isPrevNull)
+                        {
+                            combinedValue += cpValue;
+                        }
+                        isPrevNull = (cpValue[0] == u'\0');
                     }
                     else
                     {
@@ -1014,7 +1022,7 @@ namespace
                 }
 
                 // Remove current entry if it can be constructed from other map entries.
-                // Currently, this only checks for single codepoint mappings (not checking multi-length keys).
+                // TODO: Currently, this only checks for single codepoint mappings (not checking multi-length keys).
                 if (it->second == combinedValue)
                 {
                     it = collationFoldingMap.erase(it);
