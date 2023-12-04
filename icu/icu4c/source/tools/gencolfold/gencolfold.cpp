@@ -553,6 +553,8 @@ namespace
                     continue;
                 }
 
+                // Convert NUL characters (U+0000) to CGJ (U+034F), to make it available for the resource bundle to read.
+                std::replace(nfdCanonicalText.begin(), nfdCanonicalText.end(), u'\0', u'\x034F');
                 collationFolding.emplace(nfdText, nfdCanonicalText);
             }
         }
@@ -674,7 +676,9 @@ namespace
                 {
                     continue;
                 }
-
+                
+                // Convert NUL characters (U+0000) to CGJ (U+034F), to make it available for the resource bundle to read.
+                std::replace(nfdCanonicalText.begin(), nfdCanonicalText.end(), u'\0', u'\x034F');
                 collationFolding.emplace(nfdText, nfdCanonicalText);
             }
         }
@@ -753,7 +757,9 @@ namespace
                 {
                     continue;
                 }
-
+                
+                // Convert NUL characters (U+0000) to CGJ (U+034F), to make it available for the resource bundle to read.
+                std::replace(nfdCanonicalText.begin(), nfdCanonicalText.end(), u'\0', u'\x034F');
                 collationFolding.emplace(nfdText, nfdCanonicalText);
             }
         }
@@ -875,7 +881,9 @@ namespace
                 {
                     continue;
                 }
-
+                
+                // Convert NUL characters (U+0000) to CGJ (U+034F), to make it available for the resource bundle to read.
+                std::replace(nfdCanonicalText.begin(), nfdCanonicalText.end(), u'\0', u'\x034F');
                 collationFolding.emplace(nfdText, nfdCanonicalText);
             }
         }
@@ -959,7 +967,9 @@ namespace
                 {
                     continue;
                 }
-
+                
+                // Convert NUL characters (U+0000) to CGJ (U+034F), to make it available for the resource bundle to read.
+                std::replace(nfdCanonicalText.begin(), nfdCanonicalText.end(), u'\0', u'\x034F');
                 collationFolding.emplace(nfdText, nfdCanonicalText);
             }
         }
@@ -1008,12 +1018,12 @@ namespace
                     {
                         std::u16string cpValue = collationFoldingMap.at(cp);
 
-                        // Consecutive NUL characters are ignored after the first one.
-                        if (!isPrevNull || cpValue[0] != u'\0')
+                        // Consecutive CGJ characters are ignored after the first one.
+                        if (!isPrevNull || cpValue.back() != u'\x034F')
                         {
                             combinedValue += cpValue;
                         }
-                        isPrevNull = (cpValue[0] == u'\0');
+                        isPrevNull = (cpValue.back() == u'\x034F');
                     }
                     else
                     {
@@ -1242,9 +1252,6 @@ namespace
             {
                 to.insert(quoteIndex, u"\\");
             }
-
-            // Convert NUL characters (U+0000) to CGJ (U+034F), to make it available for the resource bundle to read.
-            std::replace(to.begin(), to.end(), u'\0', u'\x034F');
 
             fwprintf(output, L"\t\t\t%s{\"%s\"}\n",
                      reinterpret_cast<const wchar_t*>(to_hex_string(fromDisplay).c_str()),
