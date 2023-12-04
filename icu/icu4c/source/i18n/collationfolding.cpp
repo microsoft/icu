@@ -148,6 +148,7 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
 
     UnicodeString result;
     UCharCharacterIterator iter(nfdSource.getAlias(), u_strlen(nfdSource.getAlias()));
+    bool isPrevCGJ = false;
     while (iter.hasNext()) {
         // Build up hex key.
         UnicodeString hex;
@@ -195,8 +196,12 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
             }
 
             // Mapping found at current key length.
+            // Consecutive CGJ characters (U+034F) are ignored after the first one.
             for (int32_t i = 0; i < u_strlen(value); i++) {
-                result.append(value[i]);
+                if (!isPrevCGJ || value[i] != u'\x034F') {
+                    result.append(value[i]);
+                }
+                isPrevCGJ = (value[i] == u'\x034F');
             }
             break;
         }

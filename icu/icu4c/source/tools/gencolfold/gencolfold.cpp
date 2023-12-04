@@ -1009,7 +1009,7 @@ namespace
                         std::u16string cpValue = collationFoldingMap.at(cp);
 
                         // Consecutive NUL characters are ignored after the first one.
-                        if (!isPrevNull)
+                        if (!isPrevNull || cpValue[0] != u'\0')
                         {
                             combinedValue += cpValue;
                         }
