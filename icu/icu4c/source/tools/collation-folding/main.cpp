@@ -170,18 +170,53 @@ int main()
     print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"Ǣ"); // U+01E2
     print_collation_folding("bs", UCollationStrength::UCOL_PRIMARY, u"nǰ"); // U+006E U+01F0
     print_collation_folding("bs", UCollationStrength::UCOL_PRIMARY, u"Ş̌"); // U+015E U+030C
-    print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"\xD757"); // U+D757
-    print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"\x0958"); // U+0958
-    //print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"AȦ\x0304"); // U+0041 U+0226 U+0304
-    //print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"Aȧ\x0304"); // U+0041 U+0227 U+0304
-    //print_collation_folding("da", UCollationStrength::UCOL_SECONDARY, u"AȦ\x0304"); // U+0041 U+0226 U+0304
-    //print_collation_folding("da", UCollationStrength::UCOL_SECONDARY, u"Aȧ\x0304"); // U+0041 U+0227 U+0304
-    //print_collation_folding("da", UCollationStrength::UCOL_TERTIARY, u"AȦ\x0304"); // U+0041 U+0226 U+0304
-    //print_collation_folding("da", UCollationStrength::UCOL_TERTIARY, u"Aȧ\x0304"); // U+0041 U+0227 U+0304
-    //print_collation_folding("en", UCollationStrength::UCOL_PRIMARY, u"AȦ\x0304"); // U+0041 U+0226 U+0304
-    //print_collation_folding("en", UCollationStrength::UCOL_PRIMARY, u"Aȧ\x0304"); // U+0041 U+0227 U+0304
-    //print_collation_folding("en", UCollationStrength::UCOL_SECONDARY, u"AȦ\x0304"); // U+0041 U+0226 U+0304
-    //print_collation_folding("en", UCollationStrength::UCOL_SECONDARY, u"Aȧ\x0304"); // U+0041 U+0227 U+0304
-    //print_collation_folding("en", UCollationStrength::UCOL_TERTIARY, u"AȦ\x0304"); // U+0041 U+0226 U+0304
-    //print_collation_folding("en", UCollationStrength::UCOL_TERTIARY, u"Aȧ\x0304"); // U+0041 U+0227 U+0304
+    print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"\uD757"); // U+D757
+    print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"\u0958"); // U+0958
+    
+    print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"AȦ\u0304"); // U+0041 U+0226 U+0304
+    print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"Aȧ\u0304"); // U+0041 U+0227 U+0304
+    print_collation_folding("da", UCollationStrength::UCOL_SECONDARY, u"AȦ\u0304"); // U+0041 U+0226 U+0304
+    print_collation_folding("da", UCollationStrength::UCOL_TERTIARY, u"AȦ\u0304"); // U+0041 U+0226 U+0304
+    print_collation_folding("en", UCollationStrength::UCOL_PRIMARY, u"AȦ\u0304"); // U+0041 U+0226 U+0304
+    print_collation_folding("en", UCollationStrength::UCOL_PRIMARY, u"Aȧ\u0304"); // U+0041 U+0227 U+0304
+    print_collation_folding("en", UCollationStrength::UCOL_SECONDARY, u"AȦ\u0304"); // U+0041 U+0226 U+0304
+    print_collation_folding("en", UCollationStrength::UCOL_TERTIARY, u"AȦ\u0304"); // U+0041 U+0226 U+0304
+
+    // Test discontiguous contractions.
+    // The ucolfold_fold API normalizes input to NFD, and the collation folding data tables also store strings in NFD form.
+
+    // In Danish, the sequence [U+0061 U+030A U+0323] is canonically equivalent to the sequence [U+0061 U+0323 U+030A] at primary strength.
+    // [U+0061 U+030A U+0323] gets normalized to [U+0061 U+0323 U+030A] before performing a lookup to the collation folding data tables.
+    print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"å"); // U+00E5
+    print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"ạ"); // U+1EA1
+    print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"å\u0323"); // U+00E5 U+0323
+    print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"ạ\u030a"); // U+1EA1 U+030A
+    print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"a\u030a\u0323"); // U+0061 U+030A U+0323
+    print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"a\u0323\u030a"); // U+0061 U+0323 U+030A
+    
+    // Test discontiguous contractions.
+    print_collation_folding("sk", UCollationStrength::UCOL_PRIMARY, u"c\u034fh"); // c<CGJ>h
+    print_collation_folding("sk", UCollationStrength::UCOL_PRIMARY, u"ch"); // ch
+    
+    print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"a\u0327\u0327\u0327\u030a");
+    print_collation_folding("root", UCollationStrength::UCOL_SECONDARY, u"a\u0327\u0327\u0327\u030a");
+    
+    print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"\u0FB3\u0F81");
+    print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"\u0FB3\u0F71\u0F71\u0F80");
+
+    // Test aliased locales
+    print_collation_folding("sh", UCollationStrength::UCOL_PRIMARY, u"C\u0301"); // U+0043 U+0301
+    print_collation_folding("sh", UCollationStrength::UCOL_PRIMARY, u"\u0110"); // U+0110
+    print_collation_folding("sr_Latn", UCollationStrength::UCOL_PRIMARY, u"C\u0301"); // U+0043 U+0301
+    print_collation_folding("sr_Latn", UCollationStrength::UCOL_PRIMARY, u"\u0110"); // U+0110
+
+    print_collation_folding("iw", UCollationStrength::UCOL_PRIMARY, u"\""); // U+0022
+    print_collation_folding("iw", UCollationStrength::UCOL_PRIMARY, u"'"); // U+0027
+    print_collation_folding("he", UCollationStrength::UCOL_PRIMARY, u"\""); // U+0022
+    print_collation_folding("he", UCollationStrength::UCOL_PRIMARY, u"'"); // U+0027
+
+    print_collation_folding("no_NO", UCollationStrength::UCOL_PRIMARY, u"A\u0308"); // U+0041 U+0308
+    print_collation_folding("no_NO", UCollationStrength::UCOL_PRIMARY, u"O\u031b\u0323\u0308"); // U+0027 U+031B U+0323 U+0308
+    print_collation_folding("no", UCollationStrength::UCOL_PRIMARY, u"A\u0308"); // U+0041 U+0308
+    print_collation_folding("no", UCollationStrength::UCOL_PRIMARY, u"O\u031b\u0323\u0308"); // U+0027 U+031B U+0323 U+0308
 }
