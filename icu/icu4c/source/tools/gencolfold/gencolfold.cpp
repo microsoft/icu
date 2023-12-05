@@ -1408,7 +1408,7 @@ namespace
 
     bool run(const char* inDir, const char* outDir)
     {
-        // Get collation locales.
+        // Get locales that have collation data under coll/*.txt.
         std::set<std::string> locales;
         for (const auto& dirEntry : std::filesystem::recursive_directory_iterator(inDir))
         {
@@ -1416,12 +1416,12 @@ namespace
             std::replace(fileName.begin(), fileName.end(), '\\', '/');
             fileName = fileName.substr(fileName.find_last_of('/') + 1);
 
-            size_t end = fileName.find(".txt");
-            if (end == std::string::npos)
+            size_t localeLength = fileName.find(".txt");
+            if (localeLength == std::string::npos)
             {
                 continue;
             }
-            std::string locale = fileName.substr(0, end);
+            std::string locale = fileName.substr(0, localeLength);
 
             // Collation folding data for 'root' locale is generated separately, prior to other locales.
             if (locale != "root")
@@ -1449,6 +1449,24 @@ namespace
             if (locale == "de__PHONEBOOK" || locale == "es__TRADITIONAL")
             {
                 continue;
+            }
+
+            // Hack: Copy aliased locales from coll/* to colfold/*.
+            // Need to get the alias mapping from coll/LOCALE_DEPS.json for actual implementation.
+            if (locale == "iw" || locale == "no_NO" || locale == "sh")
+            {
+                try
+                {
+                    std::string pathSuffix = "/" + locale + ".txt";
+                    std::filesystem::copy_file(inDir + pathSuffix, outDir + pathSuffix, std::filesystem::copy_options::overwrite_existing);
+                    printf("Copying aliased locale data from coll/%s.txt to colfold/%s.txt.\n", locale.c_str(), locale.c_str());
+                    continue;
+                }
+                catch (std::filesystem::filesystem_error& e)
+                {
+                    printf("Could not copy file from coll/%s.txt to colfold/%s.txt. Exception: %s\n", inDir, outDir, e.what());
+                    exit(-1);
+                }
             }
 
             completed = run_locale(locale, printKeySequenceMap, outDir, rootCollationFoldingMap);

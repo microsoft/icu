@@ -1,36 +1,6 @@
-﻿// Generated using gencolfold.exe, built from icu4c/source/tools/gencolfold.
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 sh{
-	collationFoldings{
-		primary{
-			0043 0301{"ć"}
-			0043 030C{"č"}
-			0043 0327 0301{"ć͏"}
-			0043 0327 030C{"č͏"}
-			0044 005A 030C{"dž"}
-			0044 007A 030C{"dž"}
-			0053 030C{"š"}
-			0053 030C 0307{"š͏"}
-			0053 0323 030C{"š͏"}
-			0053 0326 030C{"š͏"}
-			0053 0327 030C{"š͏"}
-			005A 030C{"ž"}
-			005A 0323 030C{"ž͏"}
-			005A 0331 030C{"ž͏"}
-			0063 0327 0301{"ć͏"}
-			0063 0327 030C{"č͏"}
-			0073 030C 0307{"š͏"}
-			0073 0323 030C{"š͏"}
-			0073 0326 030C{"š͏"}
-			0073 0327 030C{"š͏"}
-			007A 0323 030C{"ž͏"}
-			007A 0331 030C{"ž͏"}
-			0110{"đ"}
-			01C4{"dž"}
-			01C5{"dž"}
-			01C6{"dž"}
-		}
-		secondary{
-			0110{"đ"}
-		}
-	}
+    "%%ALIAS"{"sr_Latn"}
 }
