@@ -41,7 +41,7 @@ public:
 private:
       Locale fLocale;
       UCollationStrength fStrength = UCOL_PRIMARY;
-      UResourceBundle* fMappingBundle;
+      UResourceBundle* fBundle;
       const UNormalizer2* fNFDNormalizer = nullptr;
 };
 

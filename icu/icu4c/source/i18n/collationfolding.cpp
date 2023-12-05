@@ -21,6 +21,7 @@
 U_NAMESPACE_BEGIN
 
 constexpr int32_t c_maxKeyLength = 4;
+constexpr int32_t c_maxKeyLengthInHex = c_maxKeyLength * 5; // "XXXX " per codepoint, null-terminated.
 
 constexpr const char* strength_to_string(UCollationStrength value) noexcept {
     switch (value) {
@@ -85,19 +86,19 @@ UnicodeString toHexString(UChar32 codepoint, UErrorCode& status) {
 CollationFolding::CollationFolding(const Locale& locale, UCollationStrength strength, UErrorCode& status)
     : fLocale(locale), fStrength(strength) {
     // Lookup resource bundle.
-    fMappingBundle = ures_open(U_ICUDATA_COLFOLD, fLocale.getName(), &status);
+    fBundle = ures_open(U_ICUDATA_COLFOLD, fLocale.getName(), &status);
     if (U_FAILURE(status)) {
-        ures_close(fMappingBundle);
+        ures_close(fBundle);
         return;
     }
-    fMappingBundle = ures_getByKeyWithFallback(fMappingBundle, "collationFoldings", fMappingBundle, &status);
+    fBundle = ures_getByKeyWithFallback(fBundle, "collationFoldings", fBundle, &status);
     if (U_FAILURE(status)) {
-        ures_close(fMappingBundle);
+        ures_close(fBundle);
         return;
     }
-    fMappingBundle = ures_getByKeyWithFallback(fMappingBundle, strength_to_string(fStrength), fMappingBundle, &status);
+    fBundle = ures_getByKeyWithFallback(fBundle, strength_to_string(fStrength), fBundle, &status);
     if (U_FAILURE(status)) {
-        ures_close(fMappingBundle);
+        ures_close(fBundle);
         return;
     }
 
@@ -109,7 +110,7 @@ CollationFolding::CollationFolding(const Locale& locale, UCollationStrength stre
 }
 
 CollationFolding::~CollationFolding() {
-    ures_close(fMappingBundle);
+    ures_close(fBundle);
 }
 
 int32_t
@@ -175,10 +176,10 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
         // Check for longest matching key.
         int32_t keyLength;
         for (keyLength = maxKeyLength; keyLength > 0; keyLength--) {
-            char key[24];
+            char key[c_maxKeyLengthInHex];
             hex.extract(0, hex.length(), key, sizeof(key));
             int32_t len{};
-            const UChar* value = ures_getStringByKeyWithFallback(fMappingBundle, key, &len, &status);
+            const UChar* value = ures_getStringByKeyWithFallback(fBundle, key, &len, &status);
             if (status == U_MISSING_RESOURCE_ERROR) {
                 status = U_ZERO_ERROR;
                 if (keyLength > 1) {
@@ -222,17 +223,17 @@ ucolfold_open(const char* locale, UCollationStrength strength, UErrorCode* statu
         return nullptr;
     }
 
-    CollationFolding *coll = new CollationFolding(locale, strength, *status);
-    if (coll == nullptr) {
+    CollationFolding *collationFolding = new CollationFolding(locale, strength, *status);
+    if (collationFolding == nullptr) {
         *status = U_MEMORY_ALLOCATION_ERROR;
         return nullptr;
     }
     if (U_FAILURE(*status)) {
-        delete coll;
+        delete collationFolding;
         return nullptr;
     }
 
-    return coll->toUCollationFolding();
+    return collationFolding->toUCollationFolding();
 }
 
 U_CAPI void U_EXPORT2 
@@ -248,8 +249,8 @@ ucolfold_fold(const UCollationFolding* ucolfold, const UChar* source, int32_t so
         return 0;
     }
 
-    const CollationFolding *cf = CollationFolding::fromUCollationFolding(ucolfold);
-    return const_cast<CollationFolding*>(cf)->fold(source, sourceLength, destination, destinationCapacity, *status);
+    const CollationFolding *collationFolding = CollationFolding::fromUCollationFolding(ucolfold);
+    return const_cast<CollationFolding*>(collationFolding)->fold(source, sourceLength, destination, destinationCapacity, *status);
 }
 
 U_NAMESPACE_END

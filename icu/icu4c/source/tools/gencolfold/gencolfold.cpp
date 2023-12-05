@@ -1004,6 +1004,7 @@ namespace
 
     void remove_redundant_map_entries(std::unordered_map<std::u16string, std::u16string>& collationFoldingMap)
     {
+        // TODO: Currently this only checks for redundancy in mappings where the key length is 1 (not checking for redundancy in multi-length keys).
         for (auto it = collationFoldingMap.begin(); it != collationFoldingMap.end();)
         {
             std::u16string key = it->first;
@@ -1032,7 +1033,6 @@ namespace
                 }
 
                 // Remove current entry if it can be constructed from other map entries.
-                // TODO: Currently, this only checks for single codepoint mappings (not checking multi-length keys).
                 if (it->second == combinedValue)
                 {
                     it = collationFoldingMap.erase(it);
