@@ -956,6 +956,19 @@ inline unique_UEnumeration ucol_getKeywordValuesForLocale_cpp(const char* key, c
     return result;
 }
 
+inline unique_UEnumeration uloc_openAvailableByType_cpp(ULocAvailableType type)
+{
+    UErrorCode status{};
+    unique_UEnumeration result{ uloc_openAvailableByType(type, &status) };
+
+    if (U_FAILURE(status))
+    {
+        throw icu_error{ status, "uloc_openAvailableByType" };
+    }
+
+    return result;
+}
+
 inline int32_t uenum_count_cpp(UEnumeration* en)
 {
     UErrorCode status{};

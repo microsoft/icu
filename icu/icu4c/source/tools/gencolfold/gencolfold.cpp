@@ -1292,7 +1292,24 @@ namespace
         return false;
     }
 
-    bool run_locale(std::string locale, bool printKeySequenceMap, const char* outDir, 
+    bool is_locale_alias(const char* locale)
+    {
+        unique_UEnumeration aliasedLocales = uloc_openAvailableByType_cpp(ULOC_AVAILABLE_ONLY_LEGACY_ALIASES);
+        int32_t count = uenum_count_cpp(aliasedLocales.get());
+        for (int32_t i = 0; i < count; i++)
+        {
+            int32_t resultLength = 0;
+            const char* aliasedLocale = uenum_next_cpp(aliasedLocales.get(), &resultLength);
+
+            if (strcmp(locale, aliasedLocale) == 0)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    bool run_locale(std::string locale, bool printKeySequenceMap, const char* inDir, const char* outDir, 
         std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>& rootCollationFoldingMap)
     {
         std::string searchLocale(locale);
@@ -1307,6 +1324,24 @@ namespace
             printf("SKIPPING. Locale uses fallback data in ucol_open: %s.\n", locale.c_str());
             return true;
         }
+
+        // Copy aliased locales from coll/* to colfold/*.
+        if (is_locale_alias(locale.c_str()))
+        {
+            try
+            {
+                std::string pathSuffix = "/" + locale + ".txt";
+                std::filesystem::copy_file(inDir + pathSuffix, outDir + pathSuffix, std::filesystem::copy_options::overwrite_existing);
+                printf("Copying aliased locale data from coll/%s.txt to colfold/%s.txt.\n", locale.c_str(), locale.c_str());
+                return true;
+            }
+            catch (std::filesystem::filesystem_error& e)
+            {
+                printf("Could not copy file from coll/%s.txt to colfold/%s.txt. Exception: %s\n", inDir, outDir, e.what());
+                exit(-1);
+            }
+        }
+
         printf("Generating collation folding data for locale: %s.\n", locale.c_str());
 
         UErrorCode status = U_ZERO_ERROR;
@@ -1434,7 +1469,7 @@ namespace
         constexpr bool printKeySequenceMap{ false };
         std::unordered_map<UCollationStrength, std::unordered_map<std::u16string, std::u16string>>
             rootCollationFoldingMap{};
-        bool completed = run_locale("root", printKeySequenceMap, outDir, rootCollationFoldingMap);
+        bool completed = run_locale("root", printKeySequenceMap, inDir, outDir, rootCollationFoldingMap);
 
         for (const auto& locale : locales)
         {
@@ -1451,25 +1486,7 @@ namespace
                 continue;
             }
 
-            // Hack: Copy aliased locales from coll/* to colfold/*.
-            // Need to get the alias mapping from coll/LOCALE_DEPS.json for actual implementation.
-            if (locale == "iw" || locale == "no_NO" || locale == "sh")
-            {
-                try
-                {
-                    std::string pathSuffix = "/" + locale + ".txt";
-                    std::filesystem::copy_file(inDir + pathSuffix, outDir + pathSuffix, std::filesystem::copy_options::overwrite_existing);
-                    printf("Copying aliased locale data from coll/%s.txt to colfold/%s.txt.\n", locale.c_str(), locale.c_str());
-                    continue;
-                }
-                catch (std::filesystem::filesystem_error& e)
-                {
-                    printf("Could not copy file from coll/%s.txt to colfold/%s.txt. Exception: %s\n", inDir, outDir, e.what());
-                    exit(-1);
-                }
-            }
-
-            completed = run_locale(locale, printKeySequenceMap, outDir, rootCollationFoldingMap);
+            completed = run_locale(locale, printKeySequenceMap, inDir, outDir, rootCollationFoldingMap);
             if (!completed)
             {
                 break;
