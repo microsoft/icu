@@ -31,9 +31,9 @@ typedef struct UCollationFolding UCollationFolding;
  *               string ("") or "root" is passed, the root collator will be used.  
  * 
  * @param strength The collation strength; only UCOL_PRIMARY, UCOL_SECONDARY, 
- *                 UCOL_TERTIARY, and UCOL_DEFAULT are supported. UCOL_DEFAULT 
- *                 means UCOL_PRIMARY. Other collation strengths are not supported.  
- * 
+ *                 and UCOL_TERTIARY are supported. UCOL_DEFAULT is disallowed.
+ *                 Other collation strengths are not supported.  
+ *
  * @param status The error code, set if an error occurred while creating the  
  *               UCollationFolding instance. The values U_USING_FALLBACK_WARNING and 
  *               U_USING_DEFAULT_WARNING are reported to indicate whether specialized 

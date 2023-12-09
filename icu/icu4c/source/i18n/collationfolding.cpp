@@ -12,7 +12,6 @@
 #include "unicode/resbund.h"
 #include "unicode/unistr.h"
 #include "unicode/ustring.h"
-#include "unicode/uchriter.h"
 #include "charstr.h"
 #include "ustr_imp.h"
 #include "uresimp.h"
@@ -113,6 +112,78 @@ CollationFolding::~CollationFolding() {
     ures_close(fBundle);
 }
 
+UnicodeString CollationFolding::replace_discontiguous_contraction(UCharCharacterIterator& iter, UnicodeString hex, UnicodeString& result, UErrorCode& status)
+{
+    // Find discontiguous contraction.
+    UnicodeString finalValue;
+    UChar32 curr = iter.current32();
+    uint8_t currCC = u_getCombiningClass(curr);
+    uint8_t maxCC = 0;
+    int32_t startIndex = iter.getIndex();
+    int32_t numMatches = 0;
+    while (iter.hasNext()) {
+        UChar32 next = iter.next32PostInc();
+        if (next == CharacterIterator::DONE) {
+            iter.setIndex32(startIndex + numMatches); // move back to initial index.
+            break;
+        }
+
+        uint8_t nextCC = u_getCombiningClass(next);
+        if (nextCC != 0) {
+            // next is a non-starter codepoint. process it, following S2.1.1.
+            if (nextCC > maxCC) { // ccc(c2) > ccc(b)
+                // next is an unblocked non-starter. Find if there is a collation folding match with next.
+                maxCC = nextCC;
+                UnicodeString nextHexKey = hex + UnicodeString(" ") + toHexString(next, status);
+                if (U_FAILURE(status)) {
+                    break;
+                }
+                
+                char key[c_maxKeyLengthInHex];
+                nextHexKey.extract(0, nextHexKey.length(), key, sizeof(key));
+                int32_t len{};
+                const UChar* value = ures_getStringByKeyWithFallback(fBundle, key, &len, &status);
+                if (status == U_MISSING_RESOURCE_ERROR) {
+                    // No match with next appended.
+                    status = U_ZERO_ERROR;
+                    continue;
+                }
+
+                finalValue = UnicodeString(value);
+
+                //// Consecutive CGJ characters (U+034F) are ignored after the first one.
+                //for (int32_t i = 0; i < u_strlen(value); i++) {
+                //    if (!isPrevCGJ || value[i] != u'\x034F') {
+                //        result.append(value[i]);
+                //    }
+                //    isPrevCGJ = (value[i] == u'\x034F');
+                //}
+                
+                UnicodeString currText;
+                iter.getText(currText);
+                int32_t currIndex = iter.getIndex();
+                // Replace S with S + C. Remove C.
+                UnicodeString newText = UnicodeString(currText, 0, startIndex) + 
+                                        UnicodeString(next) + 
+                                        UnicodeString(currText, startIndex, currIndex - startIndex - 1) +
+                                        UnicodeString(currText, currIndex, currText.length() - currIndex);
+                auto len2 = newText.length();
+                iter.setText(newText.getTerminatedBuffer(), len2);
+                iter.setIndex32(startIndex + 1);
+                hex = nextHexKey;
+                numMatches++;
+
+                //return true;
+            }
+        } else {
+            iter.setIndex32(startIndex + numMatches); // move back to initial index.
+            break;
+        }
+    }
+    return finalValue;
+    //return false;
+}
+
 int32_t
 CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode& status)
 {
@@ -189,7 +260,29 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
                 }
 
                 // A missing collation folding mapping for a key of length 1 implies that the key maps to itself.
-                result.append(firstCodepoint);
+
+                // Move iterator back to the last non-matching index.
+                iter.move32(-(maxKeyLength-keyLength), CharacterIterator::EOrigin::kCurrent);
+                
+                //UnicodeString finalValue = UnicodeString(firstCodepoint);
+                // Need to check for discontiguous contraction here.
+                UnicodeString finalValue = replace_discontiguous_contraction(iter, hex, result, status);
+                if (U_FAILURE(status)) {
+                    return 0;
+                }
+                if (finalValue.length() == 0) {
+                    finalValue = firstCodepoint;
+                }
+
+                //if (!isDiscontiguousContraction) {
+                for (int32_t i = 0; i < finalValue.length(); i++) {
+                    if (!isPrevCGJ || finalValue[i] != u'\x034F') {
+                        result.append(finalValue[i]);
+                    }
+                    isPrevCGJ = (finalValue[i] == u'\x034F');
+                }
+                //}
+
                 break;
             }
             else if (U_FAILURE(status)) {
@@ -197,18 +290,31 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
             }
 
             // Mapping found at current key length.
-            // Consecutive CGJ characters (U+034F) are ignored after the first one.
-            for (int32_t i = 0; i < u_strlen(value); i++) {
-                if (!isPrevCGJ || value[i] != u'\x034F') {
-                    result.append(value[i]);
-                }
-                isPrevCGJ = (value[i] == u'\x034F');
+
+            // Move iterator back to the last non-matching index.
+            iter.move32(-(maxKeyLength-keyLength), CharacterIterator::EOrigin::kCurrent);
+            
+            //UnicodeString finalValue = UnicodeString(value);
+            // Need to check for discontiguous contraction here.
+            UnicodeString finalValue = replace_discontiguous_contraction(iter, hex, result, status);
+            if (U_FAILURE(status)) {
+                return 0;
             }
+            if (finalValue.length() == 0) {
+                finalValue = UnicodeString(value);
+            }
+
+            //if (!isDiscontiguousContraction) {
+            // Consecutive CGJ characters (U+034F) are ignored after the first one.
+            for (int32_t i = 0; i < finalValue.length(); i++) {
+                if (!isPrevCGJ || finalValue[i] != u'\x034F') {
+                    result.append(finalValue[i]);
+                }
+                isPrevCGJ = (finalValue[i] == u'\x034F');
+            }
+            //}
             break;
         }
-
-        // Move iterator back to the last non-matching index.
-        iter.move(-(maxKeyLength-keyLength), CharacterIterator::EOrigin::kCurrent);
     }
 
     return result.extract(destination, destinationCapacity, status);

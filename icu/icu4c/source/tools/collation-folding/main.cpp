@@ -157,10 +157,87 @@ void print_collation_folding(const char* locale, UCollationStrength strength, co
     ucolfold_close(folding);
 }
 
+void print_CCC(std::u16string text)
+{
+    wprintf(L"Text: %s\nCCC:  ", reinterpret_cast<const wchar_t*>(text.c_str()));
+    fflush(stdout);
+    icu::UCharCharacterIterator iter(text.c_str(), u_strlen(text.c_str()));
+    while (iter.hasNext())
+    {
+        UChar32 c = iter.next32PostInc();
+        wprintf(L"%o ", u_getCombiningClass(c));
+        fflush(stdout);
+    }
+    wprintf(L"\n");
+    fflush(stdout);
+}
+
+void test_remove_char(std::u16string text)
+{
+    wprintf(L"Text: %s\n", reinterpret_cast<const wchar_t*>(text.c_str()));
+    wprintf(L"text length: %llu", text.length());
+    fflush(stdout);
+    icu::UCharCharacterIterator iter(text.c_str(), u_strlen(text.c_str()));
+    //int32_t startIndex = iter.getIndex();
+
+    iter.setIndex32(7);
+
+    UChar32 c = iter.next32PostInc();
+    wprintf(L"CCC: %o\n", u_getCombiningClass(c));
+    fflush(stdout);
+                
+    icu::UnicodeString newText;
+    iter.getText(newText);
+    int32_t currIndex = iter.getIndex();
+    wprintf(L"currIndex: %d\n", currIndex);
+    newText.remove(currIndex - 1, 1);
+    
+    const char16_t* input = newText.getTerminatedBuffer();
+    icu::UnicodeString hexInput = toHexString(input, u_strlen(input));
+    //const UChar* nfdInput = toNFDString(input);
+    //icu::UnicodeString hexNfdInput = toHexString(nfdInput, u_strlen(nfdInput));
+    wprintf(L"newText:    %s\t(%s)\n", 
+        reinterpret_cast<const wchar_t*>(input),
+        reinterpret_cast<const wchar_t*>(hexInput.getTerminatedBuffer()));
+    wprintf(L"newText length: %d", newText.length());
+
+    iter.setText(newText.getTerminatedBuffer(), newText.length());
+    
+    iter.getText(newText);
+    input = newText.getTerminatedBuffer();
+    hexInput = toHexString(input, u_strlen(input));
+    wprintf(L"newText:    %s\t(%s)\n", 
+        reinterpret_cast<const wchar_t*>(input),
+        reinterpret_cast<const wchar_t*>(hexInput.getTerminatedBuffer()));
+    wprintf(L"newText length: %d", newText.length());
+    //iter.setIndex32(startIndex);
+}
+
 int main()
 {
     set_mode_or_throw(_fileno(stdout), _O_U8TEXT);
 
+    int32_t startIndex = 3;
+    const char *next = "z";
+    int32_t currIndex = 6;
+    icu::UnicodeString currText = icu::UnicodeString("helloworld");
+    icu::UnicodeString newText = icu::UnicodeString(currText, 0, startIndex) + 
+                            icu::UnicodeString(next) + 
+                            icu::UnicodeString(currText, startIndex, currIndex - startIndex - 1) +
+                            icu::UnicodeString(currText, currIndex, currText.length() - currIndex);
+
+    wprintf(L"newText: %s\n\n", reinterpret_cast<const wchar_t*>(newText.getTerminatedBuffer()));
+
+    print_CCC(u"a\u0327\u0327\u0327\u0327\u0327\u0327\u0308");
+    //test_remove_char(u"a123456\u03088");
+    //print_CCC(u"\u031B\u0323\u0308\u0301\u0302\u0303\u0304\u0305\u0306\u0307\u0309\u030a");
+    
+    //print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"Ŀ");
+    //print_collation_folding("ca", UCollationStrength::UCOL_PRIMARY, u"Ŀ");
+
+    print_collation_folding("de", UCollationStrength::UCOL_PRIMARY, u"a\u0327\u0327\u0308ä");
+
+    /*
     print_collation_folding("de_DE", UCollationStrength::UCOL_PRIMARY, u"Käse");
     print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"Käse");
     print_collation_folding("en_US", UCollationStrength::UCOL_PRIMARY, u"Résumé");
@@ -219,4 +296,5 @@ int main()
     print_collation_folding("no_NO", UCollationStrength::UCOL_PRIMARY, u"O\u031b\u0323\u0308"); // U+0027 U+031B U+0323 U+0308
     print_collation_folding("no", UCollationStrength::UCOL_PRIMARY, u"A\u0308"); // U+0041 U+0308
     print_collation_folding("no", UCollationStrength::UCOL_PRIMARY, u"O\u031b\u0323\u0308"); // U+0027 U+031B U+0323 U+0308
+    */
 }

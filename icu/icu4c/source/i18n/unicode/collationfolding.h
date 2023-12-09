@@ -8,6 +8,7 @@
 #include "unicode/ucol.h"
 #include "unicode/resbund.h"
 #include "unicode/normalizer2.h"
+#include "unicode/uchriter.h"
 #include "cmemory.h"
 
 U_NAMESPACE_BEGIN
@@ -20,6 +21,9 @@ public:
     int32_t fold(const UChar* source, int32_t sourceLength, UChar* destination, int32_t destinationCapacity, UErrorCode& status);
     
 #ifndef U_HIDE_INTERNAL_API
+    /** @internal */
+    UnicodeString replace_discontiguous_contraction(UCharCharacterIterator& iter, UnicodeString hex, UnicodeString& result, UErrorCode& status);
+
     /** @internal */
     static inline CollationFolding *fromUCollationFolding(UCollationFolding *uc) {
         return reinterpret_cast<CollationFolding *>(uc);
