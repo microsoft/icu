@@ -8,7 +8,7 @@
 #include "unicode/ucol.h"
 #include "unicode/resbund.h"
 #include "unicode/normalizer2.h"
-#include "unicode/uchriter.h"
+#include "unicode/schriter.h"
 #include "cmemory.h"
 
 U_NAMESPACE_BEGIN
@@ -22,7 +22,7 @@ public:
     
 #ifndef U_HIDE_INTERNAL_API
     /** @internal */
-    UnicodeString replace_discontiguous_contraction(UCharCharacterIterator& iter, UnicodeString hex, UnicodeString& result, UErrorCode& status);
+    UnicodeString replace_discontiguous_contraction(StringCharacterIterator& iter, UnicodeString hex, UErrorCode& status);
 
     /** @internal */
     static inline CollationFolding *fromUCollationFolding(UCollationFolding *uc) {

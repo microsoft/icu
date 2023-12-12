@@ -112,7 +112,7 @@ CollationFolding::~CollationFolding() {
     ures_close(fBundle);
 }
 
-UnicodeString CollationFolding::replace_discontiguous_contraction(UCharCharacterIterator& iter, UnicodeString hex, UnicodeString& result, UErrorCode& status)
+UnicodeString CollationFolding::replace_discontiguous_contraction(StringCharacterIterator& iter, UnicodeString hex, UErrorCode& status)
 {
     // Find discontiguous contraction.
     UnicodeString finalValue;
@@ -120,19 +120,18 @@ UnicodeString CollationFolding::replace_discontiguous_contraction(UCharCharacter
     uint8_t currCC = u_getCombiningClass(curr);
     uint8_t maxCC = 0;
     int32_t startIndex = iter.getIndex();
-    int32_t numMatches = 0;
     while (iter.hasNext()) {
         UChar32 next = iter.next32PostInc();
         if (next == CharacterIterator::DONE) {
-            iter.setIndex32(startIndex + numMatches); // move back to initial index.
+            iter.setIndex32(startIndex);
             break;
         }
 
         uint8_t nextCC = u_getCombiningClass(next);
         if (nextCC != 0) {
-            // next is a non-starter codepoint. process it, following S2.1.1.
-            if (nextCC > maxCC) { // ccc(c2) > ccc(b)
-                // next is an unblocked non-starter. Find if there is a collation folding match with next.
+            // S2.1.1: next is a non-starter codepoint: process it.
+            if (nextCC > maxCC) {
+                // S2.1.2: next is an unblocked non-starter. Find if there is a collation folding match with next appended.
                 maxCC = nextCC;
                 UnicodeString nextHexKey = hex + UnicodeString(" ") + toHexString(next, status);
                 if (U_FAILURE(status)) {
@@ -150,38 +149,27 @@ UnicodeString CollationFolding::replace_discontiguous_contraction(UCharCharacter
                 }
 
                 finalValue = UnicodeString(value);
-
-                //// Consecutive CGJ characters (U+034F) are ignored after the first one.
-                //for (int32_t i = 0; i < u_strlen(value); i++) {
-                //    if (!isPrevCGJ || value[i] != u'\x034F') {
-                //        result.append(value[i]);
-                //    }
-                //    isPrevCGJ = (value[i] == u'\x034F');
-                //}
                 
                 UnicodeString currText;
                 iter.getText(currText);
                 int32_t currIndex = iter.getIndex();
-                // Replace S with S + C. Remove C.
+                // S2.1.3: Replace S with S + C. Remove C.
                 UnicodeString newText = UnicodeString(currText, 0, startIndex) + 
                                         UnicodeString(next) + 
                                         UnicodeString(currText, startIndex, currIndex - startIndex - 1) +
                                         UnicodeString(currText, currIndex, currText.length() - currIndex);
-                auto len2 = newText.length();
-                iter.setText(newText.getTerminatedBuffer(), len2);
-                iter.setIndex32(startIndex + 1);
+                iter.setText(newText);
+                startIndex++; // Move index past C.
+                iter.setIndex32(startIndex);
                 hex = nextHexKey;
-                numMatches++;
-
-                //return true;
+                break; // TODO: could be contraction with > 1 combining chars.
             }
         } else {
-            iter.setIndex32(startIndex + numMatches); // move back to initial index.
+            iter.setIndex32(startIndex);
             break;
         }
     }
     return finalValue;
-    //return false;
 }
 
 int32_t
@@ -210,7 +198,7 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
     LocalArray<UChar> nfdSource(new UChar[nfdLen + 1]);
     if (status == U_BUFFER_OVERFLOW_ERROR) {
         status = U_ZERO_ERROR;
-        nfdLen = unorm2_normalize(fNFDNormalizer, source, sourceLength, nfdSource.getAlias(), nfdLen + 1, &status);
+        unorm2_normalize(fNFDNormalizer, source, sourceLength, nfdSource.getAlias(), nfdLen + 1, &status);
         if (U_FAILURE(status)) {
             return 0;
         }
@@ -219,7 +207,7 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
     }
 
     UnicodeString result;
-    UCharCharacterIterator iter(nfdSource.getAlias(), u_strlen(nfdSource.getAlias()));
+    StringCharacterIterator iter(UnicodeString(nfdSource.getAlias()));
     bool isPrevCGJ = false;
     while (iter.hasNext()) {
         // Build up hex key.
@@ -264,9 +252,8 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
                 // Move iterator back to the last non-matching index.
                 iter.move32(-(maxKeyLength-keyLength), CharacterIterator::EOrigin::kCurrent);
                 
-                //UnicodeString finalValue = UnicodeString(firstCodepoint);
                 // Need to check for discontiguous contraction here.
-                UnicodeString finalValue = replace_discontiguous_contraction(iter, hex, result, status);
+                UnicodeString finalValue = replace_discontiguous_contraction(iter, hex, status);
                 if (U_FAILURE(status)) {
                     return 0;
                 }
@@ -274,14 +261,12 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
                     finalValue = firstCodepoint;
                 }
 
-                //if (!isDiscontiguousContraction) {
                 for (int32_t i = 0; i < finalValue.length(); i++) {
                     if (!isPrevCGJ || finalValue[i] != u'\x034F') {
                         result.append(finalValue[i]);
                     }
                     isPrevCGJ = (finalValue[i] == u'\x034F');
                 }
-                //}
 
                 break;
             }
@@ -294,9 +279,8 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
             // Move iterator back to the last non-matching index.
             iter.move32(-(maxKeyLength-keyLength), CharacterIterator::EOrigin::kCurrent);
             
-            //UnicodeString finalValue = UnicodeString(value);
             // Need to check for discontiguous contraction here.
-            UnicodeString finalValue = replace_discontiguous_contraction(iter, hex, result, status);
+            UnicodeString finalValue = replace_discontiguous_contraction(iter, hex, status);
             if (U_FAILURE(status)) {
                 return 0;
             }
@@ -304,7 +288,6 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
                 finalValue = UnicodeString(value);
             }
 
-            //if (!isDiscontiguousContraction) {
             // Consecutive CGJ characters (U+034F) are ignored after the first one.
             for (int32_t i = 0; i < finalValue.length(); i++) {
                 if (!isPrevCGJ || finalValue[i] != u'\x034F') {
@@ -312,7 +295,6 @@ CollationFolding::fold(const UChar* source, int32_t sourceLength, UChar* destina
                 }
                 isPrevCGJ = (finalValue[i] == u'\x034F');
             }
-            //}
             break;
         }
     }

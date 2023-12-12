@@ -3,7 +3,7 @@
 #include <iostream>
 #include <fcntl.h>
 #include <io.h>
-#include "unicode/uchriter.h"
+#include "unicode/schriter.h"
 #include "unicode/ucollationfolding.h"
 #include "unicode/ustring.h"
 #include "unicode/unistr.h"
@@ -108,7 +108,7 @@ const UChar* toNFDString(const UChar* source)
     icu::LocalArray<UChar> nfdStr(new UChar[nfdLen + 1]);
     if (status == U_BUFFER_OVERFLOW_ERROR) {
         status = U_ZERO_ERROR;
-        nfdLen = unorm2_normalize(normalizer, source, sourceLength, nfdStr.getAlias(), nfdLen + 1, &status);
+        unorm2_normalize(normalizer, source, sourceLength, nfdStr.getAlias(), nfdLen + 1, &status);
         if (U_FAILURE(status)) {
             return nullptr;
         }
@@ -172,72 +172,16 @@ void print_CCC(std::u16string text)
     fflush(stdout);
 }
 
-void test_remove_char(std::u16string text)
-{
-    wprintf(L"Text: %s\n", reinterpret_cast<const wchar_t*>(text.c_str()));
-    wprintf(L"text length: %llu", text.length());
-    fflush(stdout);
-    icu::UCharCharacterIterator iter(text.c_str(), u_strlen(text.c_str()));
-    //int32_t startIndex = iter.getIndex();
-
-    iter.setIndex32(7);
-
-    UChar32 c = iter.next32PostInc();
-    wprintf(L"CCC: %o\n", u_getCombiningClass(c));
-    fflush(stdout);
-                
-    icu::UnicodeString newText;
-    iter.getText(newText);
-    int32_t currIndex = iter.getIndex();
-    wprintf(L"currIndex: %d\n", currIndex);
-    newText.remove(currIndex - 1, 1);
-    
-    const char16_t* input = newText.getTerminatedBuffer();
-    icu::UnicodeString hexInput = toHexString(input, u_strlen(input));
-    //const UChar* nfdInput = toNFDString(input);
-    //icu::UnicodeString hexNfdInput = toHexString(nfdInput, u_strlen(nfdInput));
-    wprintf(L"newText:    %s\t(%s)\n", 
-        reinterpret_cast<const wchar_t*>(input),
-        reinterpret_cast<const wchar_t*>(hexInput.getTerminatedBuffer()));
-    wprintf(L"newText length: %d", newText.length());
-
-    iter.setText(newText.getTerminatedBuffer(), newText.length());
-    
-    iter.getText(newText);
-    input = newText.getTerminatedBuffer();
-    hexInput = toHexString(input, u_strlen(input));
-    wprintf(L"newText:    %s\t(%s)\n", 
-        reinterpret_cast<const wchar_t*>(input),
-        reinterpret_cast<const wchar_t*>(hexInput.getTerminatedBuffer()));
-    wprintf(L"newText length: %d", newText.length());
-    //iter.setIndex32(startIndex);
-}
-
 int main()
 {
     set_mode_or_throw(_fileno(stdout), _O_U8TEXT);
 
-    int32_t startIndex = 3;
-    const char *next = "z";
-    int32_t currIndex = 6;
-    icu::UnicodeString currText = icu::UnicodeString("helloworld");
-    icu::UnicodeString newText = icu::UnicodeString(currText, 0, startIndex) + 
-                            icu::UnicodeString(next) + 
-                            icu::UnicodeString(currText, startIndex, currIndex - startIndex - 1) +
-                            icu::UnicodeString(currText, currIndex, currText.length() - currIndex);
-
-    wprintf(L"newText: %s\n\n", reinterpret_cast<const wchar_t*>(newText.getTerminatedBuffer()));
-
-    print_CCC(u"a\u0327\u0327\u0327\u0327\u0327\u0327\u0308");
-    //test_remove_char(u"a123456\u03088");
+    //print_CCC(u"a\u0327\u0327\u0327\u0327\u0327\u0327\u0308");
     //print_CCC(u"\u031B\u0323\u0308\u0301\u0302\u0303\u0304\u0305\u0306\u0307\u0309\u030a");
     
-    //print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"Ŀ");
-    //print_collation_folding("ca", UCollationStrength::UCOL_PRIMARY, u"Ŀ");
-
-    print_collation_folding("de", UCollationStrength::UCOL_PRIMARY, u"a\u0327\u0327\u0308ä");
-
-    /*
+    print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"Ŀ");
+    print_collation_folding("ca", UCollationStrength::UCOL_PRIMARY, u"Ŀ");
+    
     print_collation_folding("de_DE", UCollationStrength::UCOL_PRIMARY, u"Käse");
     print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"Käse");
     print_collation_folding("en_US", UCollationStrength::UCOL_PRIMARY, u"Résumé");
@@ -259,9 +203,7 @@ int main()
     print_collation_folding("en", UCollationStrength::UCOL_SECONDARY, u"AȦ\u0304"); // U+0041 U+0226 U+0304
     print_collation_folding("en", UCollationStrength::UCOL_TERTIARY, u"AȦ\u0304"); // U+0041 U+0226 U+0304
 
-    // Test discontiguous contractions.
-    // The ucolfold_fold API normalizes input to NFD, and the collation folding data tables also store strings in NFD form.
-
+    // Test discontiguous match.
     // In Danish, the sequence [U+0061 U+030A U+0323] is canonically equivalent to the sequence [U+0061 U+0323 U+030A] at primary strength.
     // [U+0061 U+030A U+0323] gets normalized to [U+0061 U+0323 U+030A] before performing a lookup to the collation folding data tables.
     print_collation_folding("da", UCollationStrength::UCOL_PRIMARY, u"å"); // U+00E5
@@ -276,10 +218,11 @@ int main()
     print_collation_folding("sk", UCollationStrength::UCOL_PRIMARY, u"ch"); // ch
     
     print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"a\u0327\u0327\u0327\u030a");
-    print_collation_folding("root", UCollationStrength::UCOL_SECONDARY, u"a\u0327\u0327\u0327\u030a");
-    
     print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"\u0FB3\u0F81");
     print_collation_folding("root", UCollationStrength::UCOL_PRIMARY, u"\u0FB3\u0F71\u0F71\u0F80");
+    
+    print_collation_folding("de", UCollationStrength::UCOL_PRIMARY, u"a\u0327\u0327\u0308ä");
+    print_collation_folding("de", UCollationStrength::UCOL_PRIMARY, u"a\u0327\u0327\u0327\u0327\u0327\u0327\u0308ä");
 
     // Test aliased locales
     print_collation_folding("sh", UCollationStrength::UCOL_PRIMARY, u"C\u0301"); // U+0043 U+0301
@@ -296,5 +239,5 @@ int main()
     print_collation_folding("no_NO", UCollationStrength::UCOL_PRIMARY, u"O\u031b\u0323\u0308"); // U+0027 U+031B U+0323 U+0308
     print_collation_folding("no", UCollationStrength::UCOL_PRIMARY, u"A\u0308"); // U+0041 U+0308
     print_collation_folding("no", UCollationStrength::UCOL_PRIMARY, u"O\u031b\u0323\u0308"); // U+0027 U+031B U+0323 U+0308
-    */
+    
 }
