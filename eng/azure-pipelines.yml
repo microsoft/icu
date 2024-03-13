@@ -1,8 +1,14 @@
 variables:
-  - template: /eng/common-variables.yml
-  - template: /eng/common/templates/variables/pool-providers.yml
-  - name: Build.Repository.Clean
+  - template: /eng/common-variables.yml@self
+  - template: /eng/common/templates-official/variables/pool-providers.yml@self
+  - name: Codeql.Enabled  # TODO: split codeql into separate pipeline
     value: true
+  - name: LinuxImage
+    value: 1es-ubuntu-2204-pt
+  - name: WindowsImage
+    value: 1es-windows-2022-pt
+  - name: MacImage
+    value: macOS-12
 
 trigger:
   batch: true
@@ -12,269 +18,259 @@ trigger:
     - dotnet/release/*
     - dotnet/test/*
 
-pr:
-  branches:
-    include:
-    - dotnet/main
-    - dotnet/release/*
-    - dotnet/test/*
+pr: none
 
-stages:
-- stage: build
-  displayName: Build
-  jobs:
-  - template: /eng/common/templates/jobs/jobs.yml
-    parameters:
-      enablePublishBuildArtifacts: true
-      enablePublishBuildAssets: true
-      enablePublishUsingPipelines: true
-      variables:
-        - _BuildConfig: Release
-        - Codeql.Enabled: true
-        - Codeql.BuildIdentifier: $(System.JobDisplayName)
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+
+extends:
+  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  parameters:
+    featureFlags:
+      autoBaseline: true
+    sdl:
+      binskim:
+        enabled: true
+        scanOutputDirectoryOnly: true
+    pool:
+      name: $(DncEngInternalBuildPool)
+      image: $(WindowsImage)
+      os: windows
+    containers:
+      mariner2crossamd64: 
+        image: mcr.microsoft.com/dotnet-buildtools/prereqs:cbl-mariner-2.0-cross-amd64
+      ubuntu2004wasi:
+        image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-20.04-webassembly-net8-20230327150037-4404b5c
+      ubuntu1804android:
+        image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-android-20220131172314-3983b4e
+    stages:
+    - stage: build
+      displayName: Build
       jobs:
+      - template: /eng/common/templates-official/jobs/jobs.yml@self
+        parameters:
+          enablePublishBuildArtifacts: true
+          enablePublishBuildAssets: true
+          enablePublishUsingPipelines: true
+          jobs:
 
-      ############ BROWSER BUILD ############
-      - job: Build_Browser
-        displayName: Browser
-        timeoutInMinutes: 360
-        pool:
-          ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            name: $(DncEngPublicBuildPool)
-            demands: ImageOverride -equals build.ubuntu.2204.amd64.open
-          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: $(DncEngInternalBuildPool)
-            demands: ImageOverride -equals build.ubuntu.2204.amd64
-        container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:cbl-mariner-2.0-cross-amd64
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm $(_InternalBuildArgs)
-          displayName: Build
-        - task: PublishPipelineArtifact@1
-          displayName: Upload artifacts
-          inputs:
-            targetPath: 'artifacts/bin'
-            artifactName: Artifacts_Browser
-            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+          ############ BROWSER BUILD ############
+          - job: Build_Browser
+            displayName: Browser
+            timeoutInMinutes: 360
+            pool:
+              name: $(DncEngInternalBuildPool)
+              image: $(LinuxImage)
+              os: linux
+            container: mariner2crossamd64
+            steps:
+            - bash: |
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm $(_InternalBuildArgs)
+              displayName: Build
+            templateContext:
+              outputs:
+              - output: pipelineArtifact
+                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
+                artifactName: Artifacts_Browser
 
-      - job: Build_Browser_Threading
-        displayName: Browser_Threading
-        timeoutInMinutes: 360
-        pool:
-          ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            name: $(DncEngPublicBuildPool)
-            demands: ImageOverride -equals build.ubuntu.2204.amd64.open
-          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: $(DncEngInternalBuildPool)
-            demands: ImageOverride -equals build.ubuntu.2204.amd64
-        container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:cbl-mariner-2.0-cross-amd64
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm /p:WasmEnableThreads=true $(_InternalBuildArgs)
-          displayName: Build
-        - task: PublishPipelineArtifact@1
-          displayName: Upload artifacts
-          inputs:
-            targetPath: 'artifacts/bin'
-            artifactName: Artifacts_Browser_Threading
-            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+          - job: Build_Browser_Threading
+            displayName: Browser_Threading
+            timeoutInMinutes: 360
+            pool:
+              name: $(DncEngInternalBuildPool)
+              image: $(LinuxImage)
+              os: linux
+            container: mariner2crossamd64
+            steps:
+            - bash: |
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Browser /p:TargetArchitecture=wasm /p:WasmEnableThreads=true $(_InternalBuildArgs)
+              displayName: Build
+            templateContext:
+              outputs:
+              - output: pipelineArtifact
+                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
+                artifactName: Artifacts_Browser_Threading
 
-      ############ WASI BUILD ############
-      - job: Build_Wasi
-        displayName: Wasi
-        timeoutInMinutes: 360
-        pool:
-          ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            name: $(DncEngPublicBuildPool)
-            demands: ImageOverride -equals build.ubuntu.2204.amd64.open
-          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: $(DncEngInternalBuildPool)
-            demands: ImageOverride -equals build.ubuntu.2204.amd64
-        container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-20.04-webassembly-net8-20230327150037-4404b5c
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Wasi /p:TargetArchitecture=wasm $(_InternalBuildArgs)
-          displayName: Build
-        - task: PublishPipelineArtifact@1
-          displayName: Upload artifacts
-          inputs:
-            targetPath: 'artifacts/bin'
-            artifactName: Artifacts_Wasi
-            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+          ############ WASI BUILD ############
+          - job: Build_Wasi
+            displayName: Wasi
+            timeoutInMinutes: 360
+            pool:
+              name: $(DncEngInternalBuildPool)
+              image: $(LinuxImage)
+              os: linux
+            container: ubuntu2004wasi
+            steps:
+            - bash: |
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Wasi /p:TargetArchitecture=wasm $(_InternalBuildArgs)
+              displayName: Build
+            templateContext:
+              outputs:
+              - output: pipelineArtifact
+                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
+                artifactName: Artifacts_Wasi
 
-      - job: Build_Wasi_Threading
-        displayName: Wasi_Threading
-        timeoutInMinutes: 360
-        pool:
-          ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            name: $(DncEngPublicBuildPool)
-            demands: ImageOverride -equals build.ubuntu.2204.amd64.open
-          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: $(DncEngInternalBuildPool)
-            demands: ImageOverride -equals build.ubuntu.2204.amd64
-        container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-20.04-webassembly-net8-20230327150037-4404b5c
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Wasi /p:TargetArchitecture=wasm /p:WasmEnableThreads=true $(_InternalBuildArgs)
-          displayName: Build
-        - task: PublishPipelineArtifact@1
-          displayName: Upload artifacts
-          inputs:
-            targetPath: 'artifacts/bin'
-            artifactName: Artifacts_Wasi_Threading
-            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+          - job: Build_Wasi_Threading
+            displayName: Wasi_Threading
+            timeoutInMinutes: 360
+            pool:
+              name: $(DncEngInternalBuildPool)
+              image: $(LinuxImage)
+              os: linux
+            container: ubuntu2004wasi
+            steps:
+            - bash: |
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Wasi /p:TargetArchitecture=wasm /p:WasmEnableThreads=true $(_InternalBuildArgs)
+              displayName: Build
+            templateContext:
+              outputs:
+              - output: pipelineArtifact
+                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
+                artifactName: Artifacts_Wasi_Threading
 
-      ############ iOS BUILD ############
-      - job: Build_iOS
-        displayName: iOS
-        timeoutInMinutes: 360
-        pool:
-          vmImage: macos-11
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-          displayName: Build
-        - task: PublishPipelineArtifact@1
-          displayName: Upload artifacts
-          inputs:
-            targetPath: 'artifacts/bin'
-            artifactName: Artifacts_iOS
-            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+          ############ iOS BUILD ############
+          - job: Build_iOS
+            displayName: iOS
+            timeoutInMinutes: 360
+            pool:
+              name: Azure Pipelines
+              vmImage: $(MacImage)
+              os: macOS
+            steps:
+            - bash: |
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=x64 $(_InternalBuildArgs)
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
+              displayName: Build
+            templateContext:
+              outputs:
+              - output: pipelineArtifact
+                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
+                artifactName: Artifacts_iOS
 
-      ############ MacCatalyst BUILD ############
-      - job: Build_MacCatalyst
-        displayName: MacCatalyst
-        timeoutInMinutes: 360
-        pool:
-          vmImage: macos-11
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=MacCatalyst /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=MacCatalyst /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-          displayName: Build
-        - task: PublishPipelineArtifact@1
-          displayName: Upload artifacts
-          inputs:
-            targetPath: 'artifacts/bin'
-            artifactName: Artifacts_MacCatalyst
-            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+          ############ MacCatalyst BUILD ############
+          - job: Build_MacCatalyst
+            displayName: MacCatalyst
+            timeoutInMinutes: 360
+            pool:
+              name: Azure Pipelines
+              vmImage: $(MacImage)
+              os: macOS
+            steps:
+            - bash: |
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=MacCatalyst /p:TargetArchitecture=x64 $(_InternalBuildArgs)
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=MacCatalyst /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
+              displayName: Build
+            templateContext:
+              outputs:
+              - output: pipelineArtifact
+                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
+                artifactName: Artifacts_MacCatalyst
 
-      ############ tvOS BUILD ############
-      - job: Build_tvOS
-        displayName: tvOS
-        timeoutInMinutes: 360
-        pool:
-          vmImage: macos-11
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOSSimulator /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOSSimulator /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-          displayName: Build
-        - task: PublishPipelineArtifact@1
-          displayName: Upload artifacts
-          inputs:
-            targetPath: 'artifacts/bin'
-            artifactName: Artifacts_tvOS
-            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+          ############ tvOS BUILD ############
+          - job: Build_tvOS
+            displayName: tvOS
+            timeoutInMinutes: 360
+            pool:
+              name: Azure Pipelines
+              vmImage: $(MacImage)
+              os: macOS
+            steps:
+            - bash: |
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOSSimulator /p:TargetArchitecture=x64 $(_InternalBuildArgs)
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOSSimulator /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
+              displayName: Build
+            templateContext:
+              outputs:
+              - output: pipelineArtifact
+                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
+                artifactName: Artifacts_tvOS
 
-      ############ Android BUILD ############
-      - job: Build_Android
-        displayName: Android
-        timeoutInMinutes: 360
-        pool:
-          ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            name: $(DncEngPublicBuildPool)
-            demands: ImageOverride -equals build.ubuntu.2204.amd64.open
-          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: $(DncEngInternalBuildPool)
-            demands: ImageOverride -equals build.ubuntu.2204.amd64
-        container:
-          image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-18.04-android-20220131172314-3983b4e
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=x86 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=arm $(_InternalBuildArgs)
-          displayName: Build
-        - task: PublishPipelineArtifact@1
-          displayName: Upload artifacts
-          inputs:
-            targetPath: 'artifacts/bin'
-            artifactName: Artifacts_Android
-            condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
+          ############ Android BUILD ############
+          - job: Build_Android
+            displayName: Android
+            timeoutInMinutes: 360
+            pool:
+              name: $(DncEngInternalBuildPool)
+              image: $(LinuxImage)
+              os: linux
+            container: ubuntu1804android
+            steps:
+            - bash: |
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=x64 $(_InternalBuildArgs)
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=x86 $(_InternalBuildArgs)
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
+                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=arm $(_InternalBuildArgs)
+              displayName: Build
+            templateContext:
+              outputs:
+              - output: pipelineArtifact
+                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
+                artifactName: Artifacts_Android
 
-      ############ PACK AND PUBLISH ############
-      - job: Publish_Packages
-        displayName: Publish packages
-        condition: and(succeeded(), ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest'))
-        dependsOn:
-          - Build_Browser
-          - Build_Browser_Threading
-          - Build_Wasi
-          - Build_Wasi_Threading
-          - Build_iOS
-          - Build_MacCatalyst
-          - Build_tvOS
-          - Build_Android
-        timeoutInMinutes: 360
-        pool:
-          ${{ if eq(variables['System.TeamProject'], 'public') }}:
-            name: $(DncEngPublicBuildPool)
-            demands: ImageOverride -equals windows.vs2022.amd64.open
-          ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-            name: $(DncEngInternalBuildPool)
-            demands: ImageOverride -equals windows.vs2022.amd64
-        steps:
-        - task: DownloadPipelineArtifact@2
-          inputs:
-            artifact: Artifacts_Browser
-            path: 'artifacts/bin'
-        - task: DownloadPipelineArtifact@2
-          inputs:
-            artifact: Artifacts_Browser_Threading
-            path: 'artifacts/bin/browser-threading'
-        - task: DownloadPipelineArtifact@2
-          inputs:
-            artifact: Artifacts_Wasi
-            path: 'artifacts/bin'
-        - task: DownloadPipelineArtifact@2
-          inputs:
-            artifact: Artifacts_Wasi_Threading
-            path: 'artifacts/bin/wasi-threading'
-        - task: DownloadPipelineArtifact@2
-          inputs:
-            artifact: Artifacts_iOS
-            path: 'artifacts/bin'
-        - task: DownloadPipelineArtifact@2
-          inputs:
-            artifact: Artifacts_MacCatalyst
-            path: 'artifacts/bin'
-        - task: DownloadPipelineArtifact@2
-          inputs:
-            artifact: Artifacts_tvOS
-            path: 'artifacts/bin'
-        - task: DownloadPipelineArtifact@2
-          inputs:
-            artifact: Artifacts_Android
-            path: 'artifacts/bin'
-        - powershell: |
-            .\eng\common\build.ps1 -ci -restore -pack -publish -configuration $(_BuildConfig) -projects $(Build.SourcesDirectory)\eng\icu.proj /p:PackOnly=true $(_InternalBuildArgs)
-          displayName: Pack and Publish packages
+          ############ PACK AND PUBLISH ############
+          - job: Publish_Packages
+            displayName: Publish packages
+            dependsOn:
+            - Build_Browser
+            - Build_Browser_Threading
+            - Build_Wasi
+            - Build_Wasi_Threading
+            - Build_iOS
+            - Build_MacCatalyst
+            - Build_tvOS
+            - Build_Android
+            timeoutInMinutes: 360
+            pool:
+              name: $(DncEngInternalBuildPool)
+              image: $(WindowsImage)
+              os: windows
+            steps:
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                artifact: Artifacts_Browser
+                path: 'artifacts/bin'
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                artifact: Artifacts_Browser_Threading
+                path: 'artifacts/bin/browser-threading'
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                artifact: Artifacts_Wasi
+                path: 'artifacts/bin'
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                artifact: Artifacts_Wasi_Threading
+                path: 'artifacts/bin/wasi-threading'
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                artifact: Artifacts_iOS
+                path: 'artifacts/bin'
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                artifact: Artifacts_MacCatalyst
+                path: 'artifacts/bin'
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                artifact: Artifacts_tvOS
+                path: 'artifacts/bin'
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                artifact: Artifacts_Android
+                path: 'artifacts/bin'
+            - powershell: |
+                .\eng\common\build.ps1 -ci -restore -pack -publish -configuration $(_BuildConfig) -projects $(Build.SourcesDirectory)\eng\icu.proj /p:PackOnly=true $(_InternalBuildArgs)
+              displayName: Pack and Publish packages
 
-############ POST BUILD ARCADE LOGIC ############
-- ${{ if and(ne(variables['System.TeamProject'], 'public'), ne(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: /eng/common/templates/post-build/post-build.yml
-    parameters:
-      publishingInfraVersion: 3
-      enableSourceLinkValidation: false
-      enableSigningValidation: false
-      enableSymbolValidation: false
-      enableNugetValidation: true
+    ############ POST BUILD ARCADE LOGIC ############
+    - template: /eng/common/templates-official/post-build/post-build.yml@self
+      parameters:
+        enableSourceLinkValidation: false
+        enableSigningValidation: false
+        enableSymbolValidation: false
+        enableNugetValidation: true
