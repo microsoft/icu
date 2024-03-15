@@ -4,9 +4,9 @@ variables:
   - name: Codeql.Enabled  # TODO: split codeql into separate pipeline
     value: true
   - name: LinuxImage
-    value: 1es-ubuntu-2204-pt
+    value: 1es-ubuntu-2204
   - name: WindowsImage
-    value: 1es-windows-2022-pt
+    value: 1es-windows-2022
   - name: MacImage
     value: macOS-12
 
