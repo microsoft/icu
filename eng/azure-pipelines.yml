@@ -16,7 +16,6 @@ trigger:
     include:
     - dotnet/main
     - dotnet/release/*
-    - dotnet/test/*
 
 pr: none
 
