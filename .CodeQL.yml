@@ -1,0 +1,6 @@
+path_classifiers:
+  library:
+    # The icu folder is copied from the upstream project, so we'll skip it
+    # and instead have CodeQL run over all folders which contain our own
+    # custom logic.
+    - "icu"
