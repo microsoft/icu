@@ -134,7 +134,7 @@ extends:
             timeoutInMinutes: 360
             pool:
               name: Azure Pipelines
-              vmImage: $(MacImage)
+              image: $(MacImage)
               os: macOS
             steps:
             - bash: |
@@ -154,7 +154,7 @@ extends:
             timeoutInMinutes: 360
             pool:
               name: Azure Pipelines
-              vmImage: $(MacImage)
+              image: $(MacImage)
               os: macOS
             steps:
             - bash: |
@@ -173,7 +173,7 @@ extends:
             timeoutInMinutes: 360
             pool:
               name: Azure Pipelines
-              vmImage: $(MacImage)
+              image: $(MacImage)
               os: macOS
             steps:
             - bash: |
