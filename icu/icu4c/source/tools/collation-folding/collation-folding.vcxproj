@@ -41,6 +41,7 @@
       <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
       <ObjectFileName>$(OutDir)/</ObjectFileName>
       <ProgramDataBaseFileName>$(OutDir)/collation-folding.pdb</ProgramDataBaseFileName>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -57,7 +58,6 @@
     <ClCompile>
       <BrowseInformation>true</BrowseInformation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>icuucd.lib;icuind.lib;icutud.lib;%(AdditionalDependencies)</AdditionalDependencies>
@@ -68,7 +68,6 @@
     <ClCompile>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
-      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <AdditionalDependencies>icuuc.lib;icuin.lib;icutu.lib;%(AdditionalDependencies)</AdditionalDependencies>
