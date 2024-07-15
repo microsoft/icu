@@ -9,7 +9,7 @@
     <MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>9.0.0-preview.7.24362.3</MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>
     <MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>9.0.0-preview.7.24362.3</MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>
     <MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>9.0.0-preview.7.24362.3</MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>
-    <MicrosoftDotNetBuildTasksPackagingVersion>9.0.0-beta.24272.5</MicrosoftDotNetBuildTasksPackagingVersion>
+    <MicrosoftDotNetBuildTasksPackagingVersion>9.0.0-beta.24360.4</MicrosoftDotNetBuildTasksPackagingVersion>
   </PropertyGroup>
   <PropertyGroup>
     <WasiSdkVersion>16</WasiSdkVersion>
