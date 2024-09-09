@@ -1,8 +1,6 @@
 variables:
   - template: /eng/common-variables.yml@self
   - template: /eng/common/templates-official/variables/pool-providers.yml@self
-  - name: Codeql.Enabled  # TODO: split codeql into separate pipeline
-    value: true
   - name: LinuxImage
     value: 1es-ubuntu-2204
   - name: WindowsImage
@@ -30,6 +28,8 @@ extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
     sdl:
+      codeql:
+        language: cpp
       tsa:
         enabled: true
       policheck:
