@@ -5,8 +5,6 @@ variables:
     value: build.ubuntu.2204.amd64.open
   - name: WindowsImage
     value: 1es-windows-2022-open
-  - name: MacImage
-    value: macOS-12
 
 trigger:
   batch: true
@@ -84,44 +82,6 @@ stages:
         steps:
         - bash: |
             ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Wasi /p:TargetArchitecture=wasm /p:WasmEnableThreads=true $(_InternalBuildArgs)
-          displayName: Build
-
-      ############ iOS BUILD ############
-      - job: Build_iOS
-        displayName: iOS
-        timeoutInMinutes: 360
-        pool:
-          vmImage: $(MacImage)
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-          displayName: Build
-
-      ############ MacCatalyst BUILD ############
-      - job: Build_MacCatalyst
-        displayName: MacCatalyst
-        timeoutInMinutes: 360
-        pool:
-          vmImage: $(MacImage)
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=MacCatalyst /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=MacCatalyst /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-          displayName: Build
-
-      ############ tvOS BUILD ############
-      - job: Build_tvOS
-        displayName: tvOS
-        timeoutInMinutes: 360
-        pool:
-          vmImage: $(MacImage)
-        steps:
-        - bash: |
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOSSimulator /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOSSimulator /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-            ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
           displayName: Build
 
       ############ Android BUILD ############

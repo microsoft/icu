@@ -5,8 +5,6 @@ variables:
     value: 1es-ubuntu-2204
   - name: WindowsImage
     value: 1es-windows-2022
-  - name: MacImage
-    value: macOS-12
 
 trigger:
   batch: true
@@ -133,65 +131,6 @@ extends:
                 targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
                 artifactName: Artifacts_Wasi_Threading
 
-          ############ iOS BUILD ############
-          - job: Build_iOS
-            displayName: iOS
-            timeoutInMinutes: 360
-            pool:
-              name: Azure Pipelines
-              image: $(MacImage)
-              os: macOS
-            steps:
-            - bash: |
-                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOSSimulator /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=iOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-              displayName: Build
-            templateContext:
-              outputs:
-              - output: pipelineArtifact
-                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
-                artifactName: Artifacts_iOS
-
-          ############ MacCatalyst BUILD ############
-          - job: Build_MacCatalyst
-            displayName: MacCatalyst
-            timeoutInMinutes: 360
-            pool:
-              name: Azure Pipelines
-              image: $(MacImage)
-              os: macOS
-            steps:
-            - bash: |
-                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=MacCatalyst /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=MacCatalyst /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-              displayName: Build
-            templateContext:
-              outputs:
-              - output: pipelineArtifact
-                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
-                artifactName: Artifacts_MacCatalyst
-
-          ############ tvOS BUILD ############
-          - job: Build_tvOS
-            displayName: tvOS
-            timeoutInMinutes: 360
-            pool:
-              name: Azure Pipelines
-              image: $(MacImage)
-              os: macOS
-            steps:
-            - bash: |
-                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOSSimulator /p:TargetArchitecture=x64 $(_InternalBuildArgs)
-                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOSSimulator /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-                ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=tvOS /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
-              displayName: Build
-            templateContext:
-              outputs:
-              - output: pipelineArtifact
-                targetPath: $(System.DefaultWorkingDirectory)/artifacts/bin
-                artifactName: Artifacts_tvOS
-
           ############ Android BUILD ############
           - job: Build_Android
             displayName: Android
@@ -222,9 +161,6 @@ extends:
             - Build_Browser_Threading
             - Build_Wasi
             - Build_Wasi_Threading
-            - Build_iOS
-            - Build_MacCatalyst
-            - Build_tvOS
             - Build_Android
             timeoutInMinutes: 360
             pool:
@@ -248,18 +184,6 @@ extends:
               inputs:
                 artifact: Artifacts_Wasi_Threading
                 path: 'artifacts/bin/wasi-threading'
-            - task: DownloadPipelineArtifact@2
-              inputs:
-                artifact: Artifacts_iOS
-                path: 'artifacts/bin'
-            - task: DownloadPipelineArtifact@2
-              inputs:
-                artifact: Artifacts_MacCatalyst
-                path: 'artifacts/bin'
-            - task: DownloadPipelineArtifact@2
-              inputs:
-                artifact: Artifacts_tvOS
-                path: 'artifacts/bin'
             - task: DownloadPipelineArtifact@2
               inputs:
                 artifact: Artifacts_Android
