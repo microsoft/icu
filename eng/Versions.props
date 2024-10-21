@@ -6,9 +6,9 @@
     <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>10.0.0-alpha.1.24508.1</MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>
-    <MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>10.0.0-alpha.1.24508.1</MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>
-    <MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>10.0.0-alpha.1.24508.1</MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>
+    <MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>10.0.0-alpha.1.24515.3</MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>
+    <MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>10.0.0-alpha.1.24515.3</MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>
+    <MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>10.0.0-alpha.1.24515.3</MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>
     <MicrosoftDotNetBuildTasksPackagingVersion>10.0.0-beta.24515.3</MicrosoftDotNetBuildTasksPackagingVersion>
   </PropertyGroup>
   <PropertyGroup>
