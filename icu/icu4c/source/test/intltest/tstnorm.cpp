@@ -1295,7 +1295,7 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
 
         if (U_FAILURE(errorCode)) {
             ++count;
-            dataerrln("U+%04lx: Failed with error %s", u_errorName(errorCode));
+            dataerrln("U+%04lx: Failed with error %s", c, u_errorName(errorCode));
         }
 
         // bad:
