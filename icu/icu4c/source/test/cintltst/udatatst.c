@@ -1685,7 +1685,7 @@ TestSwapData() {
         log_err("udata_openSwapperForInputData should have returned NULL with bad argument\n", name);
     }
     errorCode=U_ZERO_ERROR;
-    memset(buffer, 0, sizeof(2*SWAP_BUFFER_SIZE));
+    memset(buffer, 0, sizeof(buffer));
     ds=udata_openSwapperForInputData(buffer, 2*SWAP_BUFFER_SIZE,
                          !U_IS_BIG_ENDIAN, U_ASCII_FAMILY,
                          &errorCode);
