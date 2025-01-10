@@ -4830,7 +4830,7 @@ void RBBITest::testTrieStateTable(int32_t numChar, bool expectedTrieWidthIn8Bits
     // Generate rule which will caused length+4 character classes and
     // length+3 states
     UnicodeString rules(u"!!quoted_literals_only;");
-    for (UChar c = 0x4e00; c < 0x4e00 + (UChar)numChar; c++) {
+    for (UChar c = 0x4e00; c < 0x4e00 + static_cast<UChar>(numChar); c++) {
         rules.append(u'\'').append(c).append(c).append(u"';");
     }
     rules.append(u".;");
