@@ -360,7 +360,8 @@ storeMapping(uint32_t codepoint, uint32_t* mapping,int32_t length,
 
 
     UChar* map = NULL;
-    int16_t adjustedLen=0, i, j;
+    int16_t adjustedLen=0, j;
+    int32_t i;
     uint16_t trieWord = 0;
     ValueStruct *value = NULL;
     uint32_t savedTrieWord = 0;
@@ -388,8 +389,8 @@ storeMapping(uint32_t codepoint, uint32_t* mapping,int32_t length,
     }
 
     /* figure out the real length */
-    for(int32_t j=0; j<length; j++){
-        adjustedLen += U16_LENGTH(mapping[j]);
+    for(i=0; i<length; i++){
+        adjustedLen += U16_LENGTH(mapping[i]);
     }
 
     if(adjustedLen == 0){
