@@ -6,9 +6,11 @@
     <PreReleaseVersionIteration>1</PreReleaseVersionIteration>
   </PropertyGroup>
   <PropertyGroup>
-    <MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>10.0.0-alpha.1.24628.1</MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>
-    <MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>10.0.0-alpha.1.24628.1</MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>
-    <MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>10.0.0-alpha.1.24628.1</MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>
+    <!-- emsdk -->
+    <MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>10.0.0-alpha.1.25059.1</MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>
+    <MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>10.0.0-alpha.1.25059.1</MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>
+    <MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>10.0.0-alpha.1.25059.1</MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>
+    <!-- arcade -->
     <MicrosoftDotNetBuildTasksPackagingVersion>10.0.0-beta.25061.1</MicrosoftDotNetBuildTasksPackagingVersion>
   </PropertyGroup>
   <PropertyGroup>
