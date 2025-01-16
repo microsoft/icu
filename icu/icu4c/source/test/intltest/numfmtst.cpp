@@ -7305,7 +7305,7 @@ UBool NumberFormatTest::testFormattableAsUFormattable(const char *file, int line
   UFormattable *u = f.toUFormattable();
   logln();
   if (u == NULL) {
-    errln("%s:%d: Error: f.toUFormattable() retuned NULL.");
+    errln("%s:%d: Error: f.toUFormattable() retuned NULL.", file, line);
     return false;
   }
   logln("%s:%d: comparing Formattable with UFormattable", file, line);

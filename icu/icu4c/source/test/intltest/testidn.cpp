@@ -379,7 +379,7 @@ compareMapping(uint32_t codepoint, uint32_t* mapping,int32_t mapLength,
     }
     
     if(isIndex){
-        for(int8_t i =0; i< mapLength; i++){
+        for(int32_t i =0; i< mapLength; i++){
             if(mapping[i] <= 0xFFFF){
                 if(mappingData[index+i] != (uint16_t)mapping[i]){
                     pTestIDNA->errln("Did not get the expected result. Expected: 0x%04X Got: 0x%04X \n", mapping[i], mappingData[index+i]);
