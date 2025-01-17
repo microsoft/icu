@@ -580,7 +580,7 @@ ResourceBundleTest::TestGetSize(void)
         ResourceBundle res = rb.get(test[i].key, status);
         if(U_FAILURE(status))
         {
-            err("Couldn't find the key %s. Error: %s\n", u_errorName(status));
+            err("Couldn't find the key %s. Error: %s\n", test[i].key, u_errorName(status));
             return;
         }
         size = res.getSize();

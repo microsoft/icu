@@ -569,7 +569,7 @@ TestSerialized() {
     uset_getSerializedSet(&sset, buffer, length);
     for(c=0; c<=0x10ffff; ++c) {
         if(uset_contains(set, c)!=uset_serializedContains(&sset, c)) {
-            log_err("uset_contains(U+%04x)!=uset_serializedContains(U+%04x)\n", c);
+            log_err("uset_contains(U+%04x)!=uset_serializedContains(U+%04x)\n", c, c);
             break;
         }
     }

@@ -1496,12 +1496,12 @@ static void TestISO3Fallback()
     /* Conform to C API usage  */
 
     if (!result || (result[0] != 0))
-       log_err("getISO3Language() on xx_YY returned %s instead of \"\"");
+       log_err("getISO3Language() on xx_YY returned %s instead of \"\"", result);
 
     result = uloc_getISO3Country(test);
 
     if (!result || (result[0] != 0))
-        log_err("getISO3Country() on xx_YY returned %s instead of \"\"");
+        log_err("getISO3Country() on xx_YY returned %s instead of \"\"", result);
 }
 
 /**

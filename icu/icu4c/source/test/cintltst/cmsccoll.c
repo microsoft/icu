@@ -2689,7 +2689,7 @@ static void TestHebrewUCA(void) {
   for(i = 0; i < UPRV_LENGTHOF(first); i++) {
     sizeUTF8[i] = u_parseUTF8(first[i], -1, utf8String[i], 256, &status);
     u_strFromUTF8(utf16String[i], 256, &sizeUTF16[i], utf8String[i], sizeUTF8[i], &status);
-    log_verbose("%i: ");
+    log_verbose("%i: ", i);
     for(j = 0; j < sizeUTF16[i]; j++) {
       /*log_verbose("\\u%04X", utf16String[i][j]);*/
       log_verbose("%04X", utf16String[i][j]);
@@ -4224,7 +4224,7 @@ static void doTestOneTestCase(const OneTestCase testcases[],
 
     length = u_unescape(str_rules[rule_no], rule, 500);
     if (length == 0) {
-        log_err("ERROR: The rule cannot be unescaped: %s\n");
+        log_err("ERROR: The rule cannot be unescaped: %s\n", str_rules[rule_no]);
         return;
     }
     myCollation = ucol_openRules(rule, length, UCOL_ON, UCOL_TERTIARY, &parse_error, &status);
@@ -4512,7 +4512,7 @@ static void TestInvalidListsAndRanges(void)
 
     length = u_unescape(invalidRules[rule_no], rule, 500);
     if (length == 0) {
-        log_err("ERROR: The rule cannot be unescaped: %s\n");
+        log_err("ERROR: The rule cannot be unescaped: %s\n", invalidRules[rule_no]);
         return;
     }
     myCollation = ucol_openRules(rule, length, UCOL_ON, UCOL_TERTIARY, &parse_error, &status);

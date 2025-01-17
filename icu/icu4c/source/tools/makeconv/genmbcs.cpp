@@ -1188,7 +1188,7 @@ singleCompactStage2(MBCSData *mbcsData) {
 
     /* begin with the first block after the all-unassigned one */
     start=newStart=MBCS_STAGE_2_FIRST_ASSIGNED;
-    while(start<mbcsData->stage2Top) {
+    while(start<static_cast<uint16_t>(mbcsData->stage2Top)) {
         prevEnd=(uint16_t)(newStart-1);
 
         /* find the size of the overlap */
@@ -1277,7 +1277,7 @@ singleCompactStage3(MBCSData *mbcsData) {
     mbcsData->stage3Top=newStart;
 
     /* now adjust stage 2 */
-    for(i=0; i<mbcsData->stage2Top; ++i) {
+    for(i=0; i<static_cast<uint16_t>(mbcsData->stage2Top); ++i) {
         mbcsData->stage2Single[i]=map[mbcsData->stage2Single[i]>>4];
     }
 }
@@ -1300,7 +1300,7 @@ compactStage2(MBCSData *mbcsData) {
 
     /* begin with the first block after the all-unassigned one */
     start=newStart=MBCS_STAGE_2_FIRST_ASSIGNED;
-    while(start<mbcsData->stage2Top) {
+    while(start<static_cast<uint16_t>(mbcsData->stage2Top)) {
         prevEnd=(uint16_t)(newStart-1);
 
         /* find the size of the overlap */
@@ -1327,7 +1327,7 @@ compactStage2(MBCSData *mbcsData) {
     }
 
     /* adjust stage2Top */
-    if(VERBOSE && newStart<mbcsData->stage2Top) {
+    if(VERBOSE && newStart<static_cast<uint16_t>(mbcsData->stage2Top)) {
         printf("compacting stage 2 from stage2Top=0x%lx to 0x%lx, saving %ld bytes\n",
                 (unsigned long)mbcsData->stage2Top, (unsigned long)newStart,
                 (long)(mbcsData->stage2Top-newStart)*4);

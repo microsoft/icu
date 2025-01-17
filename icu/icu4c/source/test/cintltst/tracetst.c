@@ -80,11 +80,11 @@ static void test_format(const char *format, int32_t bufCap, int32_t indent,
 
     /* check that local buffers are big enough for the test case */
     if ((int32_t)sizeof(buf) <= bufCap) {
-        log_err("At file:line %s:%d, requested bufCap too large.\n");
+        log_err("At file:line %s:%d, requested bufCap too large.\n", __FILE__, line);
         return;
     }
     if (strlen(result) >= sizeof(expectedResult)) {
-        log_err("At file:line %s:%d, expected result too large.\n");
+        log_err("At file:line %s:%d, expected result too large.\n", __FILE__, line);
         return;
     }
 

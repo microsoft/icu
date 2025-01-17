@@ -3661,7 +3661,7 @@ void RegexTest::regex_find(const UnicodeString &pattern,
         UTF8Matcher->setTrace(false);
     }
     if (U_FAILURE(status)) {
-        errln("Error at line %d. ICU ErrorCode is %s", u_errorName(status));
+        errln("Error at line %d. ICU ErrorCode is %s", line, u_errorName(status));
     }
 
     //
