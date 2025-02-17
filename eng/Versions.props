@@ -11,7 +11,7 @@
     <MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>10.0.0-preview.2.25105.3</MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>
     <MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>10.0.0-preview.2.25105.3</MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>
     <!-- arcade -->
-    <MicrosoftDotNetBuildTasksPackagingVersion>10.0.0-beta.25106.4</MicrosoftDotNetBuildTasksPackagingVersion>
+    <MicrosoftDotNetBuildTasksPackagingVersion>10.0.0-beta.25113.2</MicrosoftDotNetBuildTasksPackagingVersion>
   </PropertyGroup>
   <PropertyGroup>
     <WasiSdkVersion>16</WasiSdkVersion>
