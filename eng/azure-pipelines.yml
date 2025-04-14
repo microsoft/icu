@@ -142,6 +142,11 @@ extends:
             container: ubuntu1804android
             steps:
             - bash: |
+                echo 'public class helloworld { public static void main(String[] args) { System.out.println("Hello world"); } }' > helloworld.java
+                javac helloworld.java
+                java helloworld
+              displayName: Run java helloworld
+            - bash: |
                 ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=x64 $(_InternalBuildArgs)
                 ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=x86 $(_InternalBuildArgs)
                 ./build.sh --ci --restore --build --configuration $(_BuildConfig) /p:TargetOS=Android /p:TargetArchitecture=arm64 $(_InternalBuildArgs)
