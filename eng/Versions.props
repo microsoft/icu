@@ -7,9 +7,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <!-- emsdk -->
-    <MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>10.0.0-preview.4.25212.2</MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>
-    <MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>10.0.0-preview.4.25212.2</MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>
-    <MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>10.0.0-preview.4.25212.2</MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>
+    <MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>10.0.0-preview.4.25219.1</MicrosoftNETRuntimeEmscripten3156Nodelinuxx64Version>
+    <MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>10.0.0-preview.4.25219.1</MicrosoftNETRuntimeEmscripten3156Sdklinuxx64Version>
+    <MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>10.0.0-preview.4.25219.1</MicrosoftNETRuntimeEmscripten3156Cachelinuxx64Version>
     <!-- arcade -->
     <MicrosoftDotNetBuildTasksPackagingVersion>10.0.0-beta.25217.1</MicrosoftDotNetBuildTasksPackagingVersion>
   </PropertyGroup>
