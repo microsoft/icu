@@ -298,6 +298,7 @@ ucnv_data_unFlattenClone(UConverterLoadArgs *pArgs, UDataMemory *pData, UErrorCo
         return NULL;
 
     if( (uint16_t)type >= UCNV_NUMBER_OF_SUPPORTED_CONVERTER_TYPES ||
+        type < UCNV_SBCS ||
         converterData[type] == NULL ||
         !converterData[type]->isReferenceCounted ||
         converterData[type]->referenceCounter != 1 ||
