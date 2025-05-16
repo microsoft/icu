@@ -553,7 +553,7 @@ normal_command_mode:
     }
 
     printf("pkgdata: %s\n", cmd);
-    int result = system(cmd);
+    int result = system(cmd); // CodeQL [SM01921] used in controlled environment: no shell injection
     if (result != 0) {
         fprintf(stderr, "-- return status = %d\n", result);
         result = 1; // system() result code is platform specific.

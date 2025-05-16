@@ -1242,7 +1242,7 @@ singleCompactStage3(MBCSData *mbcsData) {
 
     /* begin with the first block after the all-unassigned one */
     start=newStart=16;
-    while(start<mbcsData->stage3Top) {
+    while(static_cast<uint32_t>(start)<mbcsData->stage3Top) {
         prevEnd=(uint16_t)(newStart-1);
 
         /* find the size of the overlap */
