@@ -3,29 +3,29 @@
   <ProductDependencies>
   </ProductDependencies>
   <ToolsetDependencies>
-    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="10.0.0-beta.25268.1">
-      <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>35a34fa5ab9b2f97d3f7bdf48a7c2100727308b3</Sha>
-    </Dependency>
-    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="10.0.0-beta.25268.1">
-      <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>35a34fa5ab9b2f97d3f7bdf48a7c2100727308b3</Sha>
-    </Dependency>
-    <Dependency Name="Microsoft.DotNet.Build.Tasks.Packaging" Version="10.0.0-beta.25268.1">
-      <Uri>https://github.com/dotnet/arcade</Uri>
-      <Sha>35a34fa5ab9b2f97d3f7bdf48a7c2100727308b3</Sha>
-    </Dependency>
-    <Dependency Name="Microsoft.NET.Runtime.Emscripten.3.1.56.Node.linux-x64" Version="10.0.0-preview.5.25251.105">
+    <Dependency Name="Microsoft.DotNet.Arcade.Sdk" Version="10.0.0-beta.25281.103">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>3b83017bbef1dd0918f7c2f894cfd07f56bcd689</Sha>
+      <Sha>7de287dade3fdd9a133f485b8a4954c8fd4a8fdd</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NET.Runtime.Emscripten.3.1.56.Sdk.linux-x64" Version="10.0.0-preview.5.25251.105">
+    <Dependency Name="Microsoft.DotNet.Helix.Sdk" Version="10.0.0-beta.25281.103">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>3b83017bbef1dd0918f7c2f894cfd07f56bcd689</Sha>
+      <Sha>7de287dade3fdd9a133f485b8a4954c8fd4a8fdd</Sha>
     </Dependency>
-    <Dependency Name="Microsoft.NET.Runtime.Emscripten.3.1.56.Cache.linux-x64" Version="10.0.0-preview.5.25251.105">
+    <Dependency Name="Microsoft.DotNet.Build.Tasks.Packaging" Version="10.0.0-beta.25281.103">
       <Uri>https://github.com/dotnet/dotnet</Uri>
-      <Sha>3b83017bbef1dd0918f7c2f894cfd07f56bcd689</Sha>
+      <Sha>7de287dade3fdd9a133f485b8a4954c8fd4a8fdd</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.NET.Runtime.Emscripten.3.1.56.Node.linux-x64" Version="10.0.0-preview.6.25281.103">
+      <Uri>https://github.com/dotnet/dotnet</Uri>
+      <Sha>7de287dade3fdd9a133f485b8a4954c8fd4a8fdd</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.NET.Runtime.Emscripten.3.1.56.Sdk.linux-x64" Version="10.0.0-preview.6.25281.103">
+      <Uri>https://github.com/dotnet/dotnet</Uri>
+      <Sha>7de287dade3fdd9a133f485b8a4954c8fd4a8fdd</Sha>
+    </Dependency>
+    <Dependency Name="Microsoft.NET.Runtime.Emscripten.3.1.56.Cache.linux-x64" Version="10.0.0-preview.6.25281.103">
+      <Uri>https://github.com/dotnet/dotnet</Uri>
+      <Sha>7de287dade3fdd9a133f485b8a4954c8fd4a8fdd</Sha>
     </Dependency>
   </ToolsetDependencies>
 </Dependencies>
