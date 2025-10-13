@@ -299,9 +299,15 @@ stages:
         scanType: 'Register'
         failOnAlert: true
 
-    - task: onebranch.pipeline.signing@1
+    - task: onebranch.pipeline.tools@1
+      displayName: 'Install OneBranch Tools'
+      inputs:
+        toolsDir: '$(Agent.TempDirectory)/tools'
+
+    - task: EsrpCodeSigning@3
       displayName: 'ESRP CodeSigning - CodeSign DLLs'
       inputs:
+        ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
         FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
         Pattern: $(signingPattern)
         UseMinimatch: true
@@ -347,7 +353,7 @@ stages:
                   "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
                 }
               ],
-              "toolName": "signtool.exe",
+              "toolName": "signtool.exe"
             }
           ]
         SessionTimeout: '30'
