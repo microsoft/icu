@@ -334,7 +334,7 @@ stages:
                   "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
                 }
               ],
-              "toolName": "signtool.exe",
+              "toolName": "signtool.exe"
             }
           ]
         SessionTimeout: '30'
