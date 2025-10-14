@@ -60,14 +60,12 @@
   </PropertyGroup>
   <!-- Desktop ARM/ARM64 support requires a different version of the Windows SDK -->
   <!--
-      Note: This version must match the version below in the ARM64 section for AdditionalLibraryDirectories
+      Note: Use latest available SDK version instead of hardcoding specific version
   -->
   <PropertyGroup Condition="'$(Platform)'=='ARM'">
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <WindowsSDKDesktopARMSupport>true</WindowsSDKDesktopARMSupport>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Platform)'=='ARM64'">
-    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
     <WindowsSDKDesktopARM64Support>true</WindowsSDKDesktopARM64Support>
   </PropertyGroup>
   <PropertyGroup>
@@ -179,10 +177,8 @@
     </ClCompile>
     <Link>
       <TargetMachine>MachineARM</TargetMachine>
-      <!-- The ARM64 Desktop SDK doesn't include this by default -->
+      <!-- The ARM Desktop SDK doesn't include this by default -->
       <AdditionalDependencies>kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <!-- Note: This needs to match the same version as WindowsTargetPlatformVersion for ARM -->
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.16299.0\um\arm</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <!-- Options that are common to all ARM 64-bit configurations for *all* projects. -->
@@ -197,8 +193,6 @@
       <TargetMachine>MachineARM64</TargetMachine>
       <!-- The ARM64 Desktop SDK doesn't include this by default -->
       <AdditionalDependencies>kernel32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <!-- Note: This needs to match the same version as WindowsTargetPlatformVersion for ARM64 -->
-      <AdditionalLibraryDirectories>C:\Program Files (x86)\Windows Kits\10\Lib\10.0.16299.0\um\arm64</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
 </Project>
