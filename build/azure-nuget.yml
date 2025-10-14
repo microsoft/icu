@@ -299,11 +299,6 @@ stages:
         scanType: 'Register'
         failOnAlert: true
 
-    - task: onebranch.pipeline.tools@1
-      displayName: 'Install OneBranch Tools'
-      inputs:
-        toolsDir: '$(Agent.TempDirectory)/tools'
-
     - task: EsrpCodeSigning@3
       displayName: 'ESRP CodeSigning - CodeSign DLLs'
       inputs:
