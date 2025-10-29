@@ -25,6 +25,7 @@ static icu::UnifiedCache *gCache = NULL;
 #ifndef __wasi__
 static std::mutex *gCacheMutex = nullptr;
 static std::condition_variable *gInProgressValueAddedCond;
+#endif
 static icu::UInitOnce gCacheInitOnce {};
 
 static const int32_t MAX_EVICT_ITERATIONS = 10;
@@ -42,6 +43,7 @@ static UBool U_CALLCONV unifiedcache_cleanup() {
     gCacheMutex = nullptr;
     gInProgressValueAddedCond->~condition_variable();
     gInProgressValueAddedCond = nullptr;
+#endif
     return true;
 }
 U_CDECL_END
@@ -243,8 +245,9 @@ UnifiedCache::~UnifiedCache() {
         // each other and entries with hard references from outside the cache.
         // Nothing we can do about these so proceed to wipe out the cache.
 #ifndef __wasi__
-        std::lock_guard<std::mutex> lock(*gCacheMutex);
-        _flush(true);
+    std::lock_guard<std::mutex> lock(*gCacheMutex);
+#endif
+    _flush(true);
     }
     uhash_close(fHashtable);
     fHashtable = nullptr;
