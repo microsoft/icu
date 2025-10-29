@@ -263,8 +263,7 @@
                 "-/*/*",
                 "+/collations/default",
                 "+/collations/standard",
-                "+/collations/private-kana",
-                "-/UCARules"
+                "+/collations/private-kana"
             ]
         },
         {

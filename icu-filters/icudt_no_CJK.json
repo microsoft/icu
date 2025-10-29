@@ -266,8 +266,7 @@
             "rules": [
                 "-/*/*",
                 "+/collations/default",
-                "+/collations/standard",
-                "-/UCARules"
+                "+/collations/standard"
             ]
         },
         {
