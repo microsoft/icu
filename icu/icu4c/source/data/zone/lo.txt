@@ -1220,6 +1220,9 @@ lo{
         "Pacific:Johnston"{
             ec{"ຈອນສະໂຕນ"}
         }
+        "Pacific:Kanton"{
+            ec{"ແຄນຕອນ"}
+        }
         "Pacific:Kiritimati"{
             ec{"ຄີຣິທີມາຕີ"}
         }
@@ -1921,6 +1924,9 @@ lo{
             ld{"ເວລາລະດູຮ້ອນເຢກາເຕລິນເບີກ"}
             lg{"ເວລາເຢກາເຕລິນເບີກ"}
             ls{"ເວລາມາດຕະຖານເຢກາເຕລິນເບີກ"}
+        }
+        "meta:Yukon"{
+            ls{"ເວລາຢູຄອນ"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

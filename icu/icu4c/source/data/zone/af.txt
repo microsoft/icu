@@ -1220,6 +1220,9 @@ af{
         "Pacific:Johnston"{
             ec{"Johnston"}
         }
+        "Pacific:Kanton"{
+            ec{"Kanton"}
+        }
         "Pacific:Kiritimati"{
             ec{"Kiritimati"}
         }
@@ -1900,6 +1903,9 @@ af{
             ld{"Jekaterinburg-somertyd"}
             lg{"Jekaterinburg-tyd"}
             ls{"Jekaterinburg-standaardtyd"}
+        }
+        "meta:Yukon"{
+            ls{"Yukontyd"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

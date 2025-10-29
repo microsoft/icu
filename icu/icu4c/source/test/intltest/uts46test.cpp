@@ -37,7 +37,7 @@ public:
     UTS46Test() : trans(NULL), nontrans(NULL) {}
     virtual ~UTS46Test();
 
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL);
+    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL) override;
     void TestAPI();
     void TestNotSTD3();
     void TestInvalidPunycodeDigits();
@@ -106,22 +106,22 @@ static UBool isASCII(const UnicodeString &str) {
     int32_t length=str.length();
     for(int32_t i=0; i<length; ++i) {
         if(s[i]>=0x80) {
-            return FALSE;
+            return false;
         }
     }
-    return TRUE;
+    return true;
 }
 
 class TestCheckedArrayByteSink : public CheckedArrayByteSink {
 public:
     TestCheckedArrayByteSink(char* outbuf, int32_t capacity)
-            : CheckedArrayByteSink(outbuf, capacity), calledFlush(FALSE) {}
-    virtual CheckedArrayByteSink& Reset() {
+            : CheckedArrayByteSink(outbuf, capacity), calledFlush(false) {}
+    virtual CheckedArrayByteSink& Reset() override {
         CheckedArrayByteSink::Reset();
-        calledFlush = FALSE;
+        calledFlush = false;
         return *this;
     }
-    virtual void Flush() { calledFlush = TRUE; }
+    virtual void Flush() override { calledFlush = true; }
     UBool calledFlush;
 };
 
@@ -241,14 +241,6 @@ void UTS46Test::TestNotSTD3() {
     not3->nameToASCII(input, result, info, errorCode);
     if(result!=input || info.getErrors()!=UIDNA_ERROR_BIDI) {
         errln("notSTD3.nameToASCII(ASCII-with-space.alef.edu) failed");
-    }
-    // Characters that are canonically equivalent to sequences with non-LDH ASCII.
-    input=UNICODE_STRING_SIMPLE("a\\u2260b\\u226Ec\\u226Fd").unescape();
-    not3->nameToUnicode(input, result, info, errorCode);
-    if(result!=input || info.hasErrors()) {
-        prettify(result).extract(0, 0x7fffffff, buffer, UPRV_LENGTHOF(buffer));
-        errln("notSTD3.nameToUnicode(equiv to non-LDH ASCII) unexpected errors %04lx string %s",
-              (long)info.getErrors(), buffer);
     }
 }
 
@@ -418,10 +410,6 @@ static const TestCase testCases[]={
     { "\\u65E5\\u672C\\u8A9E\\u3002\\uFF2A\\uFF30", "B",  // Japanese with fullwidth ".jp"
       "\\u65E5\\u672C\\u8A9E.jp", 0 },
     { "\\u2615", "B", "\\u2615", 0 },  // Unicode 4.0 HOT BEVERAGE
-    // some characters are disallowed because they are canonically equivalent
-    // to sequences with non-LDH ASCII
-    { "a\\u2260b\\u226Ec\\u226Fd", "B",
-      "a\\uFFFDb\\uFFFDc\\uFFFDd", UIDNA_ERROR_DISALLOWED },
     // many deviation characters, test the special mapping code
     { "1.a\\u00DF\\u200C\\u200Db\\u200C\\u200Dc\\u00DF\\u00DF\\u00DF\\u00DFd"
       "\\u03C2\\u03C3\\u00DF\\u00DF\\u00DF\\u00DF\\u00DF\\u00DF\\u00DF\\u00DFe"
@@ -1045,13 +1033,13 @@ void UTS46Test::checkIdnaTestResult(const char *line, const char *type,
                                     const char *status, const IDNAInfo &info) {
     // An error in toUnicode or toASCII is indicated by a value in square brackets,
     // such as "[B5 B6]".
-    UBool expectedHasErrors = FALSE;
+    UBool expectedHasErrors = false;
     if (*status != 0) {
         if (*status != u'[') {
             errln("%s  status field does not start with '[': %s\n    %s", type, status, line);
         }
         if (strcmp(status, reinterpret_cast<const char*>(u8"[]")) != 0) {
-            expectedHasErrors = TRUE;
+            expectedHasErrors = true;
         }
     }
     if (expectedHasErrors != info.hasErrors()) {

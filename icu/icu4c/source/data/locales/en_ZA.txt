@@ -28,10 +28,20 @@ en_ZA{
                 "dd MMM y G",
                 "GGGGG y/MM/dd",
                 "{1}, {0}",
-                "{1} 'at' {0}",
-                "{1} 'at' {0}",
                 "{1}, {0}",
                 "{1}, {0}",
+                "{1}, {0}",
+                "{1}, {0}",
+            }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "GyMMMMEEEEdd",
+                "GyMMMMdd",
+                "GyMMMdd",
+                "GGGGGyMMdd",
             }
             availableFormats{
                 MEd{"E, MM/dd"}
@@ -55,10 +65,20 @@ en_ZA{
                 "dd MMM y",
                 "y/MM/dd",
                 "{1}, {0}",
-                "{1} 'at' {0}",
-                "{1} 'at' {0}",
                 "{1}, {0}",
                 "{1}, {0}",
+                "{1}, {0}",
+                "{1}, {0}",
+            }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "yMMMMEEEEdd",
+                "yMMMMdd",
+                "yMMMdd",
+                "yMMdd",
             }
             availableFormats{
                 MEd{"E, MM/dd"}

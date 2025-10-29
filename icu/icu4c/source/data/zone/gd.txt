@@ -1226,6 +1226,9 @@ gd{
         "Pacific:Johnston"{
             ec{"Johnston"}
         }
+        "Pacific:Kanton"{
+            ec{"Kanton"}
+        }
         "Pacific:Kiritimati"{
             ec{"Kiritimati"}
         }
@@ -1973,6 +1976,9 @@ gd{
             ld{"Tìde samhraidh Yekaterinburg"}
             lg{"Àm Yekaterinburg"}
             ls{"Bun-àm Yekaterinburg"}
+        }
+        "meta:Yukon"{
+            ls{"Àm Yukon"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

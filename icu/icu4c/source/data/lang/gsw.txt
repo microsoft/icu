@@ -322,7 +322,6 @@ gsw{
         rn{"Rundi-Schpraach"}
         ro{"Rumänisch"}
         rom{"Zigüünerschpraach"}
-        root{"Root"}
         ru{"Russisch"}
         rup{"Aromunisch"}
         rw{"Ruandisch"}

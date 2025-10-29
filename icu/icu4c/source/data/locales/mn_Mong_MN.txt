@@ -29,6 +29,16 @@ mn_Mong_MN{
                 "{1} {0}",
                 "{1} {0}",
             }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "yMMdd",
+                "yMMdd",
+                "yMMd",
+                "yMMdd",
+            }
             intervalFormats{
                 fallback{"{0} - {1}"}
             }
@@ -52,6 +62,16 @@ mn_Mong_MN{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
+            }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "yMMMMEEEEd",
+                "yMMMMd",
+                "yMMdd",
+                "yMMdd",
             }
             dayNames{
                 format{

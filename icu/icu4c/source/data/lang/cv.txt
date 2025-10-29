@@ -1,0 +1,58 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+cv{
+    Languages{
+        ar{"арап"}
+        bn{"бенгал"}
+        cv{"чӑваш"}
+        de{"нимӗҫ"}
+        en{"акӑлчан"}
+        es{"испани"}
+        fr{"франци"}
+        hi{"хинди"}
+        id{"индонези"}
+        it{"итали"}
+        ja{"япони"}
+        ko{"корей"}
+        nl{"голланди"}
+        pl{"поляк"}
+        pt{"португали"}
+        ru{"вырӑс"}
+        th{"тай"}
+        tr{"турккӑ"}
+        und{"паллӑ мар чӗлхе"}
+        zh{"китай"}
+    }
+    Scripts{
+        Arab{"арап"}
+        Cyrl{"кириллица"}
+        Hans{"ҫӑмӑллатнӑн китай"}
+        Hant{"традициллӗн китай"}
+        Jpan{"япони"}
+        Kore{"корей"}
+        Latn{"латин"}
+        Zxxx{"ҫырусӑр"}
+        Zzzz{"паллӑ мар ҫырулах"}
+    }
+    Scripts%stand-alone{
+        Hans{"ҫӑмӑллатнӑ китай"}
+    }
+    Types{
+        calendar{
+            gregorian{"грегориан календарӗ"}
+            iso8601{"календарӗ ISO-8601"}
+        }
+        collation{
+            standard{"стандартлӑ сортировка"}
+        }
+        numbers{
+            latn{"хальхи араб цифрисем"}
+        }
+    }
+    codePatterns{
+        language{"Чӗлхе: {0}"}
+        script{"Ҫырулӑх: {0}"}
+        territory{"Регион: {0}"}
+    }
+}

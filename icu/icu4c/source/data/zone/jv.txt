@@ -1874,6 +1874,9 @@ jv{
             lg{"Wektu Yekaterinburg"}
             ls{"Wektu Standar Yekaterinburg"}
         }
+        "meta:Yukon"{
+            ls{"Wektu Yukon"}
+        }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}
         gmtZeroFormat{"GMT"}

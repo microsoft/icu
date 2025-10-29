@@ -145,25 +145,25 @@ public:
      *
      * @stable ICU 2.2
      */
-    virtual UClassID getDynamicClassID() const;
+    virtual UClassID getDynamicClassID() const override;
 
 private:
     // ===================== PRIVATES ==============================
     // private default constructor
-    CanonicalIterator();
+    CanonicalIterator() = delete;
 
 
     /**
      * Copy constructor. Private for now.
      * @internal (private)
      */
-    CanonicalIterator(const CanonicalIterator& other);
+    CanonicalIterator(const CanonicalIterator& other) = delete;
 
     /**
      * Assignment operator. Private for now.
      * @internal (private)
      */
-    CanonicalIterator& operator=(const CanonicalIterator& other);
+    CanonicalIterator& operator=(const CanonicalIterator& other) = delete;
 
     // fields
     UnicodeString source;
@@ -194,7 +194,7 @@ private:
 
     /**
      * See if the decomposition of cp2 is at segment starting at segmentPos
-     * (with canonical rearrangment!)
+     * (with canonical rearrangement!)
      * If so, take the remainder, and return the equivalents
      */
     //Set extract(int comp, String segment, int segmentPos, StringBuffer buffer);

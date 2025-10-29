@@ -1937,6 +1937,9 @@ lt{
             lg{"Jekaterinburgo laikas"}
             ls{"Jekaterinburgo žiemos laikas"}
         }
+        "meta:Yukon"{
+            ls{"Jukono laikas"}
+        }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}
         gmtZeroFormat{"GMT"}

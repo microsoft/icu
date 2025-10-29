@@ -792,7 +792,7 @@ lv{
             "Francijas UIC franks",
         }
         XOF{
-            "CFA",
+            "F CFA",
             "Rietumāfrikas CFA franks",
         }
         XPD{
@@ -938,7 +938,6 @@ lv{
         ZMW{"ZK"}
     }
     Currencies%variant{
-        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{

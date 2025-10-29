@@ -381,7 +381,6 @@ fy{
         ro{"Roemeensk"}
         rof{"Rombo"}
         rom{"Romani"}
-        root{"Root"}
         ru{"Russysk"}
         rup{"Aromaniaansk"}
         rw{"Kinyarwanda"}

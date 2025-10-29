@@ -6,7 +6,6 @@ es_419{
         colNormalization{"orden normalizado"}
     }
     Languages{
-        ace{"achenés"}
         ady{"adigeo"}
         alt{"altái del sur"}
         arp{"arapajó"}
@@ -19,12 +18,16 @@ es_419{
         ht{"haitiano"}
         kbd{"cabardiano"}
         krc{"karachái-bálkaro"}
+        ks{"cachemiro"}
         lo{"laosiano"}
+        ml{"malabar"}
+        mni{"manipuri"}
         nr{"ndebele del sur"}
         nso{"sesotho del norte"}
         pa{"panyabí"}
         prg{"prusiano antiguo"}
         rm{"retorrománico"}
+        sd{"sindhi"}
         shu{"árabe (Chad)"}
         sma{"sami del sur"}
         st{"sesotho del sur"}
@@ -38,12 +41,13 @@ es_419{
         zun{"zuni"}
     }
     Scripts{
-        Hanb{"han con bopomofo"}
+        Gujr{"gujarati"}
         Hrkt{"katakana o hiragana"}
         Laoo{"lao"}
         Latn{"latín"}
-        Mlym{"malayalam"}
-        Olck{"ol chiki"}
+        Mlym{"malabar"}
+        Mtei{"manipuri"}
+        Syrc{"siríaco"}
     }
     Types{
         calendar{
@@ -68,7 +72,6 @@ es_419{
             yes{"ordenar distinguiendo entre mayúsculas y minúsculas"}
         }
         collation{
-            compat{"orden anterior, para compatibilidad"}
             eor{"reglas de orden europeas"}
             phonebook{"orden de agenda telefónica"}
         }

@@ -8,8 +8,8 @@ ssy{
     calendar{
         gregorian{
             DateTimePatterns{
-                "h:mm:ss a zzzz",
-                "h:mm:ss a z",
+                "h:mm:ss a zzzz",
+                "h:mm:ss a z",
                 "HH:mm:ss",
                 "HH:mm",
                 "y MMMM d, EEEE",
@@ -21,6 +21,16 @@ ssy{
                 "{1} {0}",
                 "{1} {0}",
                 "{1} {0}",
+            }
+            DateTimeSkeletons{
+                "ahmmsszzzz",
+                "ahmmssz",
+                "HHmmss",
+                "HHmm",
+                "yMMMMEEEEd",
+                "yMMMMd",
+                "yMMMd",
+                "yMMdd",
             }
         }
     }

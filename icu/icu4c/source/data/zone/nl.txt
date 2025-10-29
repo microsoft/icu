@@ -1972,6 +1972,9 @@ nl{
             lg{"Jekaterinenburg-tijd"}
             ls{"Jekaterinenburg-standaardtijd"}
         }
+        "meta:Yukon"{
+            ls{"Yukon-tijd"}
+        }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}
         gmtZeroFormat{"GMT"}

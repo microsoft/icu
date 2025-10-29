@@ -13,7 +13,7 @@
 <!-- TODO: Add things like copying of a template directory and deleting previous files
      (perhaps always generate into a temporary directory and copy back to avoid having
       inconsistent state when the conversion is cancelled). -->
-<project name="Convert" default="all" basedir=".">
+<project name="Convert" default="all" basedir="." xmlns:if="ant:if" xmlns:unless="ant:unless">
 
     <target name="all" depends="init-args, prepare-jar, clean, convert"/>
 
@@ -24,7 +24,7 @@
              with Ant, this is messier than it should be. All we are saying here is:
              "Use the property if explicitly set, otherwise use the environment variable."
              We cannot just set the property to the environment variable, since expansion
-             fails for non existant properties, and you are left with a literal value of
+             fails for non existent properties, and you are left with a literal value of
              "${env.CLDR_DATA_DIR}". -->
         <condition property="cldrDataDir" value="${env.CLDR_DATA_DIR}">
             <isset property="env.CLDR_DATA_DIR"/>
@@ -43,14 +43,28 @@
              so it is recommended that for testing, it be set to another value.  -->
         <property name="outDir" value="${basedir}/../../../icu4c/source/data/"/>
 
+        <!-- The output directory into which to write generated C/C++ code.  By default
+             this will overwrite (without deletion) the generated C/C++ files in this
+             ICU release, so it is recommended that for testing, it be set to another value. -->
+        <property name="genCCodeDir" value="${basedir}/../../../icu4c/source/"/>
+
+        <!-- The output directory into which to write generated Java code.  By default
+             this will overwrite (without deletion) the generated Java files in this
+             ICU release, so it is recommended that for testing, it be set to another value. -->
+        <property name="genJavaCodeDir" value="${basedir}/../../../icu4j/main/classes/core"/>
+        
+        <!-- Set this to true to prevent build-icu-data.xml from generating the generated
+             ICU source files -->
+        <property name="dontGenCode" value="false" />
+
         <!-- The directory in which the additional ICU XML data is stored. -->
         <property name="specialsDir" value="${basedir}/../../../icu4c/source/data/xml"/>
 
         <!-- Default value for ICU version (icuver.txt). Update this for each release. -->
-        <property name="icuVersion" value="68.2.0.0"/>
+        <property name="icuVersion" value="72.1.0.0"/>
 
         <!-- Default value for ICU data version (icuver.txt). Update this for each release. -->
-        <property name="icuDataVersion" value="68.2.0.0"/>
+        <property name="icuDataVersion" value="72.1.0.0"/>
 
         <!-- An override for the CLDR version string (icuver.txt and others). This will be
              extracted from the CLDR library used for building the data if not set here. -->
@@ -97,7 +111,7 @@
          about making Ant know the Maven class-path). -->
     <target name="prepare-jar" depends="init-args">
         <!-- MSFT-Change: Windows only searches for .exe executables by default, so add the .cmd extension
-             See: https://ant.apache.org/manual/Tasks/exec.html -->
+            See: https://ant.apache.org/manual/Tasks/exec.html -->
         <exec executable="mvn.cmd" searchpath="true" failonerror="true">
             <arg value="compile"/>
         </exec>
@@ -128,6 +142,9 @@
             <arg value="&quot;-DcldrDir=${cldrDataDir}&quot;"/>
             <!-- List all properties in the "convert-impl" task (except cldrDir). -->
             <arg value="&quot;-DoutDir=${outDir}&quot;"/>
+            <arg value="&quot;-DgenCCodeDir=${genCCodeDir}&quot;"/>
+            <arg value="&quot;-DgenJavaCodeDir=${genJavaCodeDir}&quot;"/>
+            <arg value="&quot;-DdontGenCode=${dontGenCode}&quot;"/>
             <arg value="&quot;-DspecialsDir=${specialsDir}&quot;"/>
             <arg value="&quot;-DoutputTypes=${outputTypes}&quot;"/>
             <arg value="&quot;-DicuVersion=${icuVersion}&quot;"/>
@@ -148,6 +165,11 @@
                 <pathelement path="target/cldr-to-icu-1.0-SNAPSHOT-jar-with-dependencies.jar"/>
             </classpath>
         </taskdef>
+        <taskdef name="generateCode" classname="org.unicode.icu.tool.cldrtoicu.ant.GenerateCodeTask">
+            <classpath>
+                <pathelement path="target/cldr-to-icu-1.0-SNAPSHOT-jar-with-dependencies.jar"/>
+            </classpath>
+        </taskdef>
         <convert cldrDir="${cldrDir}" outputDir="${outDir}" specialsDir="${specialsDir}"
                  outputTypes="${outputTypes}" cldrVersion="${cldrVersion}"
                  icuVersion="${icuVersion}" icuDataVersion="${icuDataVersion}"
@@ -156,6 +178,10 @@
 
             <!-- MSFT-Change -->
             <!-- The following aliases are MSFT mappings that used to live in the icu-locale-deprecates.xml file, which is no longer being used. -->
+            <!-- CLDR v42: Haryanvi(bgc) doesn't have a suppress script, so we need to include it in the tag for consistency with NLS. -->
+            <forcedAlias source="bgc_Deva_IN" target="bgc_IN"/>
+            <!-- CLDR v42: Bhojpuri(bho) doesn't have a suppress script, so we need to include it in the tag for consistency with NLS. -->
+            <forcedAlias source="bho_Deva_IN" target="bho_IN"/>
             <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
             <forcedAlias source="ccp_Cakm" target="ccp"/>
             <!-- Chakma does not have a suppress script. ccp_Cakm_BD is the locale name in NLS while ccp_BD is the locale name in ICU. -->
@@ -166,6 +192,8 @@
             <forcedAlias source="ceb_Latn" target="ceb"/>
             <!-- Cebuano does not have a suppress script. ceb_Latn_PH is the locale name in NLS while ceb_PH is the locale name in ICU. -->
             <forcedAlias source="ceb_Latn_PH" target="ceb_PH"/>
+            <!-- CLDR v42: Chuvash(cv) doesn't have a suppress script, so we need to include it in the tag for consistency with NLS. -->
+            <forcedAlias source="cv-Cyrl-RU" target="cu-RU"/>
             <!-- Dogri does not have a suppress script. doi_Deva_IN in the locale name in NLS while doi_IN is the locale name in ICU. -->
             <forcedAlias source="doi_Deva_IN" target="doi_IN"/>
             <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
@@ -184,6 +212,9 @@
             <forcedAlias source="jv_Latn" target="jv"/>
             <!-- Javanese does not have a suppress script. jv_Latn_ID is the locale name in NLS while jv_ID is the locale name in ICU. -->
             <forcedAlias source="jv_Latn_ID" target="jv_ID"/>
+            <!-- CLDR v42: Kaingang(kgp) doesn't have a suppress script, so we need to include it in the tag for consistency with NLS. -->
+            <forcedAlias source="kgp-Latn-BR" target="kgp-BR"/>
+            <forcedAlias source="ku" target="ckb"/>
             <!-- HACK: ku/ku_Arab are the locale names in NLS while ckb is the locale name in ICU. These aliases serve as a mapping between them. -->
             <forcedAlias source="ku" target="ckb"/>
             <forcedAlias source="ku_Arab" target="ckb"/>
@@ -208,12 +239,22 @@
             <forcedAlias source="quz_BO" target="qu_BO"/>
             <forcedAlias source="quz_EC" target="qu_EC"/>
             <forcedAlias source="quz_PE" target="qu_PE"/>
+            <!-- CLDR v42: Rajasthani (raj) doesn't have a suppress script, so we need to include it in the tag for consistency with NLS. -->
+            <forcedAlias source="raj-Deva-IN" target="raj-IN"/>
+            <!-- CLDR v42: Sardinian (sc) doesn't have a suppress script, so we need to include it in the tag for consistency with NLS. -->
+            <forcedAlias source="sc-Latn-IT" target="sc-IT"/>
+            <!-- CLDR drops the script for sd-Deva-IN, however the language can be written in more than one script eg:sd-Arab, so we need to include it in the tag for consistency with NLS.  -->
+            <forcedAlias source="sd-Deva-IN" target="sd-IN"/>
             <!-- The scripted version of the locale name needs its own resource file for the fallback chain. -->
             <forcedAlias source="tzm_Latn" target="tzm"/>
             <!-- Tamazight does not have a suppress script. tzm_Latn_MA is the locale name in NLS while tzm_MA is the locale name in ICU. -->
             <forcedAlias source="tzm_Latn_MA" target="tzm_MA"/>
             <!-- Tamazight does not have a suppress script. tzm_Latn_DZ is the locale name in NLS while tzm_DZ is the locale name in ICU. -->
             <forcedAlias source="tzm_Latn_DZ" target="tzm_DZ"/>
+            <!-- CLDR v42: Nheengatu (yrl) doesn't have a suppress script, so we need to include it in the tag for consistency with NLS. -->
+            <forcedAlias source="yrl-Latn-BR" target="yrl-BR"/>
+            <forcedAlias source="yrl-Latn-CO" target="yrl-CO"/>
+            <forcedAlias source="yrl-Latn-VE" target="yrl-VE"/>
 
             <!-- The primary set of locale IDs to be generated by default. The IDs in this list are
                  automatically expanded to include default scripts and all available regions. The
@@ -233,10 +274,10 @@
                 aa, af, agq, ak, am, ar, arn, ars, as, asa, ast, az, az_AZ, az_Cyrl
 
                 // B
-                ba, bas, be, bem, bez, bg, bin, bm, bn, bo, br, brx, bs, bs_BA, bs_Cyrl, byn
+                ba, bas, be, bem, bez, bg, bin, bgc, bho, bm, bn, bo, br, brx, bs, bs_BA, bs_Cyrl, byn
 
                 // C
-                ca, ccp, ccp_Cakm_BD, ccp_Cakm_IN, ce, ceb, ceb_Latn_PH, cgg, chr, ckb, co, cs, cu, cy
+                ca, ccp, ccp_Cakm_BD, ccp_Cakm_IN, ce, ceb, ceb_Latn_PH, cgg, chr, ckb, co, cs, cu, cv, cy
 
                 // D
                 da, dav, de, dje, doi, doi_Deva_IN, dsb, dua, dv, dyo, dz
@@ -251,7 +292,7 @@
                 ga, gd, gl, gn, gsw, gu, guz, gv
 
                 // H
-                ha, ha_Latn, ha_Latn_GH, ha_Latn_NE, ha_Latn_NG, haw, he, hi, hr, hsb, hu, hy
+                ha, ha_Latn, ha_Latn_GH, ha_Latn_NE, ha_Latn_NG, haw, he, hi, hi_Latn, hr, hsb, hu, hy
 
                 // I
                 ia, ibb, id, ig, ii, in, in_ID, is, it, iu, iu_Cans_CA, iu_Latn, iw, iw_IL
@@ -260,8 +301,8 @@
                 ja, jgo, jmc, jv, jv_Latn_ID, jv_Java
 
                 // K
-                ka, kab, kam, kde, kea, khq, ki, kk, kkj, kl, kln, km, kn, ko, kok, kr, ks
-                ks_IN, ks_Deva, ksb, ksf, ksh, ku, ku_Arab_IQ, ku_Arab_IR, kw, ky
+                ka, kab, kam, kde, kea, kgp, khq, ki, kk, kkj, kl, kln, km, kn, ko, kok, kr, ks
+                ks_Deva, ks_IN, ksb, ksf, ksh, ku, ku_Arab_IQ, ku_Arab_IR, kw, ky
 
                 // L
                 la, lag, lb, lg, lkt, ln, lo, lrc, lt, lu, luo, luy, lv
@@ -283,10 +324,10 @@
                 qu, quc, qut, qut_GT, qut_Latn, qut_Latn_GT, quz, quz_BO, quz_EC, quz_PE
 
                 // R
-                rm, rn, ro, rof, ru, rw, rwk
+                raj, rm, rn, ro, rof, ru, rw, rwk
 
                 // S
-                sa, sah, saq, sat, sat_IN, sbp, sd, sd_Deva, sd_PK, se, seh, ses, sg, sh, sh_BA, sh_CS, sh_YU
+                sa, sah, saq, sat, sat_IN, sbp, sc, sd, sd_Deva, sd_IN, sd_PK, se, seh, ses, sg, sh, sh_BA, sh_CS, sh_YU
                 shi, shi_Latn, shi_MA, si, sk, sl, sma, smj, smn, sms, sn, so, sq, sr, sr_BA, sr_CS, sr_Cyrl_CS, sr_Cyrl_YU, sr_Latn
                 sr_Latn_CS, sr_Latn_YU, sr_ME, sr_RS, sr_XK, sr_YU, ss, ssy, st, su, su_ID, sv, sw, syr
 
@@ -306,7 +347,7 @@
                 xh, xog
 
                 // Y
-                yav, yi, yo
+                yav, yi, yo, yrl
 
                 // Z
                 zgh, zh, zh_CN, zh_HK, zh_Hant, zh_MO, zh_SG, zh_TW, zu
@@ -365,7 +406,7 @@
 
                     // C-F
                     ca, ceb, chr, ckb, ckb_IQ, ckb_IR, cs, cu, cy, da, de_AT, de, dsb, dz, ee, el, en,
-                    en_US_POSIX, en_US, eo, es, et, fa_AF, fa, ff_Adlm, ff, fil, fi, fo, fr_CA, fr,
+                    en_US_POSIX, en_US, eo, es, et, fa_AF, fa, ff_Adlm, ff, fil, fi, fo, fr_CA, fr, fy,
 
                     // G-J
                     ga, gl, gu, ha, haw, he, hi, hr, hsb, hu, hy,
@@ -373,7 +414,7 @@
 
                     // K-P
                     ka, kk, kl, km, kn, kok, ko, ku, ku_Arab_IQ, ku_Arab_IR, ky, lb, lkt, ln, lo, lt, lv,
-                    mk, ml, mn, mo, mr, ms, mt, my, nb, ne, nl, nn, no_NO, no, nso,
+                    mk, ml, mn, mo, mr, ms, mt, my, nb, nb_NO, ne, nl, nn, no, no_NO, nso,
                     om, or, pa_IN, pa, pa_Guru, pl, prs, prs_AF, ps, pt,
 
                     // Q-T
@@ -399,8 +440,8 @@
 
                     // F-P
                     fa_AF, fa, ff, fil, fi, fo, fr_BE, fr_CH, fr, ga, he, hi, hr,
-                    hu, hy, id, in, is, it, iw, ja, ka, kl, km, ko, ky, lb,
-                    lo, lrc, lt, lv, mk, ms, mt, my, nb, nl, nn, no, pl, pt_PT, pt,
+                    hu, hy, id, in, is, it, iw, ja, ka, kk, kl, km, ko, ky, lb,
+                    lo, lrc, lt, lv, mk, ms, mt, my, nb, ne, nl, nn, no, pl, pt_PT, pt,
 
                     // Q-Z
                     qu, ro, ru, se, sh, sk, sl, sq, sr_Latn, sr, su, sv, sw, ta, th, tr,
@@ -411,7 +452,7 @@
             <directory dir="brkitr" inheritLanguageSubtag="zh_Hant">
                 <localeIds>
                     root,
-                    de, el, en, en_US_POSIX, en_US, es, fr, it, ja, pt, ru, zh_Hant, zh
+                    de, el, en, en_US_POSIX, en_US, es, fi, fr, it, ja, pt, ru, sv, zh_Hant, zh
                 </localeIds>
             </directory>
 
@@ -431,6 +472,11 @@
             <!-- A legacy global alias (note that "no_NO_NY" is not even structurally valid). -->
             <forcedAlias source="no_NO_NY" target="nn_NO"/>
 
+            <!-- This one is a bit silly, it is just to generate a stub for no_NO, which is
+                 not in CLDR. If we do not do this, then including it in localeIds will generate
+                 empty no_Latn and no_Latn_NO and then no_NO aliasing to no_Latn_NO. -->
+            <forcedAlias source="no_NO" target="no"/>
+
             <!-- ALTERNATE VALUES -->
 
             <!-- The following elements configure alternate values for some special case paths.
@@ -447,10 +493,17 @@
                           source="//path/to/value[@attr='bar']"
                           locales="xx,yy_ZZ"/> -->
         </convert>
+        
+        <generateCode cldrDir="${cldrDir}" cOutDir="${genCCodeDir}" javaOutDir="${genJavaCodeDir}" unless:true="${dontGenCode}" />
     </target>
 
     <target name="clean" depends="init-args, prepare-jar">
         <taskdef name="outputDirectories" classname="org.unicode.icu.tool.cldrtoicu.ant.CleanOutputDirectoryTask">
+            <classpath>
+                <pathelement path="target/cldr-to-icu-1.0-SNAPSHOT-jar-with-dependencies.jar"/>
+            </classpath>
+        </taskdef>
+        <taskdef name="generateCode" classname="org.unicode.icu.tool.cldrtoicu.ant.GenerateCodeTask">
             <classpath>
                 <pathelement path="target/cldr-to-icu-1.0-SNAPSHOT-jar-with-dependencies.jar"/>
             </classpath>
@@ -471,6 +524,7 @@
         <outputDirectories root="${outDir}" forceDelete="${forceDelete}">
             <dir name="brkitr">
                 <retain path="dictionaries"/>
+                <retain path="lstm"/>
                 <retain path="rules"/>
             </dir>
             <dir name="coll">
@@ -507,6 +561,8 @@
                 <retain path="tzdbNames.txt"/>
             </dir>
         </outputDirectories>
+        
+        <generateCode cOutDir="${genCCodeDir}" javaOutDir="${genJavaCodeDir}" action="clean" />
     </target>
 </project>
 

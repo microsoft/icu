@@ -488,13 +488,13 @@ static const UConverterImpl _UTF32BEImpl = {
     NULL
 };
 
-/* The 1232 CCSID refers to any version of Unicode with any endianess of UTF-32 */
+/* The 1232 CCSID refers to any version of Unicode with any endianness of UTF-32 */
 static const UConverterStaticData _UTF32BEStaticData = {
     sizeof(UConverterStaticData),
     "UTF-32BE",
     1232,
     UCNV_IBM, UCNV_UTF32_BigEndian, 4, 4,
-    { 0, 0, 0xff, 0xfd }, 4, FALSE, FALSE,
+    { 0, 0, 0xff, 0xfd }, 4, false, false,
     0,
     0,
     { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 } /* reserved */
@@ -983,13 +983,13 @@ static const UConverterImpl _UTF32LEImpl = {
     NULL
 };
 
-/* The 1232 CCSID refers to any version of Unicode with any endianess of UTF-32 */
+/* The 1232 CCSID refers to any version of Unicode with any endianness of UTF-32 */
 static const UConverterStaticData _UTF32LEStaticData = {
     sizeof(UConverterStaticData),
     "UTF-32LE",
     1234,
     UCNV_IBM, UCNV_UTF32_LittleEndian, 4, 4,
-    { 0xfd, 0xff, 0, 0 }, 4, FALSE, FALSE,
+    { 0xfd, 0xff, 0, 0 }, 4, false, false,
     0,
     0,
     { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 } /* reserved */
@@ -1110,7 +1110,7 @@ _UTF32ToUnicodeWithOffsets(UConverterToUnicodeArgs *pArgs,
                     /* some of the bytes are from a previous buffer, replay those first */
                     pArgs->source=utf32BOM+(state&4); /* select the correct BOM */
                     pArgs->sourceLimit=pArgs->source+((state&3)-count); /* replay previous bytes */
-                    pArgs->flush=FALSE; /* this sourceLimit is not the real source stream limit */
+                    pArgs->flush=false; /* this sourceLimit is not the real source stream limit */
 
                     /* no offsets: bytes from previous buffer, and not enough for output */
                     T_UConverter_toUnicode_UTF32_BE(pArgs, pErrorCode);
@@ -1230,7 +1230,7 @@ static const UConverterImpl _UTF32Impl = {
     NULL
 };
 
-/* The 1236 CCSID refers to any version of Unicode with a BOM sensitive endianess of UTF-32 */
+/* The 1236 CCSID refers to any version of Unicode with a BOM sensitive endianness of UTF-32 */
 static const UConverterStaticData _UTF32StaticData = {
     sizeof(UConverterStaticData),
     "UTF-32",
@@ -1241,7 +1241,7 @@ static const UConverterStaticData _UTF32StaticData = {
 #else
     { 0xfd, 0xff, 0, 0 }, 4,
 #endif
-    FALSE, FALSE,
+    false, false,
     0,
     0,
     { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 } /* reserved */

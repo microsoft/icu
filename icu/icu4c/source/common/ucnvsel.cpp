@@ -142,7 +142,7 @@ static void generateSelectorData(UConverterSelector* result,
   result->trie = upvec_compactToUTrie2WithRowIndexes(upvec, status);
   result->pv = upvec_cloneArray(upvec, &result->pvCount, NULL, status);
   result->pvCount *= columns;  // number of uint32_t = rows * columns
-  result->ownPv = TRUE;
+  result->ownPv = true;
 }
 
 /* open a selector. If converterListSize is 0, build for all converters.
@@ -212,7 +212,7 @@ ucnvsel_open(const char* const*  converterList, int32_t converterListSize,
     --encodingStrPadding;
   }
 
-  newSelector->ownEncodingStrings = TRUE;
+  newSelector->ownEncodingStrings = true;
   newSelector->encodingsCount = converterListSize;
   UPropsVectors *upvec = upvec_open((converterListSize+31)/32, status);
   generateSelectorData(newSelector.getAlias(), upvec, excludedCodePoints, whichSet, status);
@@ -725,7 +725,7 @@ static UEnumeration *selectForMask(const UConverterSelector* sel,
     int16_t k = 0;
     for (j = 0 ; j < columns; j++) {
       uint32_t v = mask[j];
-      for (i = 0 ; i < 32 && k < sel->encodingsCount; i++, k++) {
+      for (i = 0 ; i < 32 && k < static_cast<int16_t>(sel->encodingsCount); i++, k++) {
         if ((v & 1) != 0) {
           result->index[result->length++] = k;
         }

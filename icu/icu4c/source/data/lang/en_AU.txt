@@ -10,9 +10,6 @@ en_AU{
     }
     Languages{
         bn{"Bengali"}
-        frc{"frc"}
-        lou{"lou"}
-        sr_ME{"Montenegrin"}
     }
     Scripts{
         Beng{"Bengali"}
@@ -22,5 +19,8 @@ en_AU{
             dangi{"Korean Calendar"}
             ethiopic{"Ethiopian Calendar"}
         }
+    }
+    Variants{
+        SIMPLE{"SIMPLE"}
     }
 }

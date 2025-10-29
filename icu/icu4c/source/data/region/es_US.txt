@@ -18,7 +18,6 @@ es_US{
         155{"Europa occidental"}
         AC{"Isla de la Ascensión"}
         BA{"Bosnia y Herzegovina"}
-        CI{"Côte d’Ivoire"}
         GG{"Guernsey"}
         QO{"Territorios alejados de Oceanía"}
         TA{"Tristán de Acuña"}

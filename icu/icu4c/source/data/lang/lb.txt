@@ -440,7 +440,6 @@ lb{
         ro{"Rumänesch"}
         rof{"Rombo"}
         rom{"Romani"}
-        root{"Root"}
         rtm{"Rotumanesch"}
         ru{"Russesch"}
         rue{"Russinesch"}

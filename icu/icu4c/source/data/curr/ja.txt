@@ -1116,7 +1116,7 @@ ja{
             "フランス フラン (UIC)",
         }
         XOF{
-            "CFA",
+            "F CFA",
             "西アフリカ CFA フラン",
         }
         XPD{
@@ -1310,7 +1310,6 @@ ja{
         ZMW{"ZK"}
     }
     Currencies%variant{
-        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{

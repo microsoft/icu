@@ -231,7 +231,7 @@ BytesTrieBuilder::buildBytes(UStringTrieBuildOption buildOption, UErrorCode &err
         }
         uprv_sortArray(elements, elementsLength, (int32_t)sizeof(BytesTrieElement),
                       compareElementStrings, strings,
-                      FALSE,  // need not be a stable sort
+                      false,  // need not be a stable sort
                       &errorCode);
         if(U_FAILURE(errorCode)) {
             return;
@@ -343,13 +343,13 @@ BytesTrieBuilder::BTLinearMatchNode::BTLinearMatchNode(const char *bytes, int32_
         static_cast<uint32_t>(hash)*37u + static_cast<uint32_t>(ustr_hashCharsN(bytes, len)));
 }
 
-UBool
+bool
 BytesTrieBuilder::BTLinearMatchNode::operator==(const Node &other) const {
     if(this==&other) {
-        return TRUE;
+        return true;
     }
     if(!LinearMatchNode::operator==(other)) {
-        return FALSE;
+        return false;
     }
     const BTLinearMatchNode &o=(const BTLinearMatchNode &)other;
     return 0==uprv_memcmp(s, o.s, length);
@@ -375,7 +375,7 @@ BytesTrieBuilder::createLinearMatchNode(int32_t i, int32_t byteIndex, int32_t le
 UBool
 BytesTrieBuilder::ensureCapacity(int32_t length) {
     if(bytes==NULL) {
-        return FALSE;  // previous memory allocation had failed
+        return false;  // previous memory allocation had failed
     }
     if(length>bytesCapacity) {
         int32_t newCapacity=bytesCapacity;
@@ -388,7 +388,7 @@ BytesTrieBuilder::ensureCapacity(int32_t length) {
             uprv_free(bytes);
             bytes=NULL;
             bytesCapacity=0;
-            return FALSE;
+            return false;
         }
         uprv_memcpy(newBytes+(newCapacity-bytesLength),
                     bytes+(bytesCapacity-bytesLength), bytesLength);
@@ -396,7 +396,7 @@ BytesTrieBuilder::ensureCapacity(int32_t length) {
         bytes=newBytes;
         bytesCapacity=newCapacity;
     }
-    return TRUE;
+    return true;
 }
 
 int32_t
@@ -463,7 +463,7 @@ int32_t
 BytesTrieBuilder::writeValueAndType(UBool hasValue, int32_t value, int32_t node) {
     int32_t offset=write(node);
     if(hasValue) {
-        offset=writeValueAndFinal(value, FALSE);
+        offset=writeValueAndFinal(value, false);
     }
     return offset;
 }
@@ -474,31 +474,39 @@ BytesTrieBuilder::writeDeltaTo(int32_t jumpTarget) {
     U_ASSERT(i>=0);
     if(i<=BytesTrie::kMaxOneByteDelta) {
         return write(i);
+    } else {
+        char intBytes[5];
+        return write(intBytes, internalEncodeDelta(i, intBytes));
     }
-    char intBytes[5];
-    int32_t length;
+}
+
+int32_t
+BytesTrieBuilder::internalEncodeDelta(int32_t i, char intBytes[]) {
+    U_ASSERT(i>=0);
+    if(i<=BytesTrie::kMaxOneByteDelta) {
+        intBytes[0]=(char)i;
+        return 1;
+    }
+    int32_t length=1;
     if(i<=BytesTrie::kMaxTwoByteDelta) {
         intBytes[0]=(char)(BytesTrie::kMinTwoByteDeltaLead+(i>>8));
-        length=1;
     } else {
         if(i<=BytesTrie::kMaxThreeByteDelta) {
             intBytes[0]=(char)(BytesTrie::kMinThreeByteDeltaLead+(i>>16));
-            length=2;
         } else {
             if(i<=0xffffff) {
                 intBytes[0]=(char)BytesTrie::kFourByteDeltaLead;
-                length=3;
             } else {
                 intBytes[0]=(char)BytesTrie::kFiveByteDeltaLead;
                 intBytes[1]=(char)(i>>24);
-                length=4;
+                length=2;
             }
-            intBytes[1]=(char)(i>>16);
+            intBytes[length++]=(char)(i>>16);
         }
-        intBytes[1]=(char)(i>>8);
+        intBytes[length++]=(char)(i>>8);
     }
     intBytes[length++]=(char)i;
-    return write(intBytes, length);
+    return length;
 }
 
 U_NAMESPACE_END

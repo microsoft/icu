@@ -3,6 +3,63 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 xh{
     Languages{
-        xh{"isiXhosa"}
+        af{"isiBhulu"}
+        ar{"Isi-Arabhu"}
+        bn{"IsiBangla"}
+        de{"IsiJamani"}
+        en{"IsiNgesi"}
+        es{"Isi-Spanish"}
+        fr{"IsiFrentshi"}
+        hi{"IsiHindi"}
+        id{"Isi-Indonesia"}
+        it{"IsiTaliyane"}
+        ja{"IsiJapan"}
+        ko{"Isi-Korean"}
+        nl{"IsiDatshi"}
+        pl{"Isi-Polish"}
+        pt{"IsiPhuthukezi"}
+        ru{"Isi-Russian"}
+        th{"Isi-Thai"}
+        tr{"Isi-Turkish"}
+        und{"Unknown language"}
+        xh{"IsiXhosa"}
+        zh{"IsiMandarin"}
+        zu{"isiZulu"}
+    }
+    Scripts{
+        Arab{"Isi-Arabhu"}
+        Cyrl{"IsiCyrillic"}
+        Hans{"IsiHans"}
+        Hant{"IsiHant"}
+        Jpan{"IsiJapanese"}
+        Kore{"IsiKorean"}
+        Latn{"IsiLatin"}
+        Zxxx{"Engabhalwanga"}
+        Zzzz{"Ulwimi Olungaziwayo"}
+    }
+    Scripts%stand-alone{
+        Hans{"IsiHan"}
+        Hant{"IsiHan"}
+    }
+    Types{
+        calendar{
+            gregorian{"Ngokwekhalenda YeGregorian"}
+            iso8601{"Ikhalenda ye-ISO-8601"}
+        }
+        collation{
+            standard{"Standard Sort Order"}
+        }
+        numbers{
+            latn{"Western Digits"}
+        }
+    }
+    codePatterns{
+        language{"Language: {0}"}
+        script{"Script: {0}"}
+        territory{"Region: {0}"}
+    }
+    localeDisplayPattern{
+        pattern{"{0} ({1})"}
+        separator{"{0}, {1}"}
     }
 }

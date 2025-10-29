@@ -597,7 +597,7 @@ pt{
         }
         LSL{
             "LSL",
-            "Loti do Lesoto",
+            "Loti lesotiano",
         }
         LTL{
             "LTL",
@@ -1112,7 +1112,7 @@ pt{
             "Franco UIC francês",
         }
         XOF{
-            "CFA",
+            "F CFA",
             "Franco CFA de BCEAO",
         }
         XPD{
@@ -1297,7 +1297,6 @@ pt{
         ZMW{"ZK"}
     }
     Currencies%variant{
-        GEL{"₾"}
         TRY{"TL"}
     }
     CurrencyPlurals{
@@ -1894,8 +1893,8 @@ pt{
             other{"Dólares liberianos"}
         }
         LSL{
-            one{"Loti do Lesoto"}
-            other{"Lotis do Lesoto"}
+            one{"Loti lesotiano"}
+            other{"Lotis lesotianos"}
         }
         LTL{
             one{"Litas lituano"}

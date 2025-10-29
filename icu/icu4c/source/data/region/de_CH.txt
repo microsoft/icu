@@ -6,7 +6,6 @@ de_CH{
         BN{"Brunei"}
         BW{"Botswana"}
         CV{"Kapverden"}
-        GB{"Grossbritannien"}
         QO{"Äusseres Ozeanien"}
         SB{"Salomon-Inseln"}
         TL{"Osttimor"}

@@ -1022,7 +1022,7 @@ ja{
             ec{"カリーニングラード"}
         }
         "Europe:Kiev"{
-            ec{"キエフ"}
+            ec{"キーウ"}
         }
         "Europe:Kirov"{
             ec{"キーロフ"}
@@ -1219,6 +1219,9 @@ ja{
         }
         "Pacific:Johnston"{
             ec{"ジョンストン島"}
+        }
+        "Pacific:Kanton"{
+            ec{"カントン島"}
         }
         "Pacific:Kiritimati"{
             ec{"キリスィマスィ島"}
@@ -1939,6 +1942,9 @@ ja{
             ld{"エカテリンブルグ夏時間"}
             lg{"エカテリンブルグ時間"}
             ls{"エカテリンブルグ標準時"}
+        }
+        "meta:Yukon"{
+            ls{"ユーコン時間"}
         }
         fallbackFormat{"{1}（{0}）"}
         gmtFormat{"GMT{0}"}

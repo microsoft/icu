@@ -5,9 +5,9 @@ ceb{
     Languages{
         ar{"Arabic"}
         bn{"Bangla"}
-        ceb{"Binisaya"}
-        de{"Aleman"}
-        en{"Ingles"}
+        ceb{"Cebuano"}
+        de{"German"}
+        en{"English"}
         es{"Espanyol"}
         fr{"Pranses"}
         hi{"Hindi"}
@@ -18,7 +18,7 @@ ceb{
         nl{"Dutch"}
         pl{"Polish"}
         pt{"Portuguese"}
-        ru{"Ruso"}
+        ru{"Russian"}
         th{"Thai"}
         tr{"Turkish"}
         und{"Wala Mailhing Lengguwahe"}
@@ -29,7 +29,7 @@ ceb{
         Cyrl{"Sirilisko"}
         Hans{"Pinasimple"}
         Hant{"Tradisyonal"}
-        Jpan{"Hinapon"}
+        Jpan{"Japanese"}
         Kore{"Korean"}
         Latn{"Latin"}
         Zxxx{"Dili Sinulat"}

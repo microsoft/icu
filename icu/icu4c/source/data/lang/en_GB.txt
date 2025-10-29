@@ -6,6 +6,7 @@ en_GB{
     Languages{
         bin{"Bini"}
         bm{"Bambara"}
+        ff{"Fulah"}
         ii{"Sichuan Yi"}
         nso{"Northern Sotho"}
         ss{"Swati"}

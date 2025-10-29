@@ -1,5 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- Workaround for issue https://github.com/actions/runner-images/issues/11016
+       TODO: Remove when VM runners adopt VS 17.13 or later in their images-->
+  <PropertyGroup>
+    <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-arm64-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
+  </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -67,14 +72,8 @@
     </BuildLog>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="brkitr\brkfiles.mk" />
-    <None Include="coll\colfiles.mk" />
     <None Include="makedata.mak" />
-    <None Include="misc\miscfiles.mk" />
-    <None Include="rbnf\rbnffiles.mk" />
-    <None Include="locales\resfiles.mk" />
     <None Include="..\test\testdata\testdata.mak" />
-    <None Include="translit\trnsfiles.mk" />
     <None Include="mappings\ucmcore.mk" />
     <None Include="mappings\ucmebcdic.mk" />
     <None Include="mappings\ucmfiles.mk" />

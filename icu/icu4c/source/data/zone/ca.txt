@@ -1022,7 +1022,7 @@ ca{
             ec{"Kaliningrad"}
         }
         "Europe:Kiev"{
-            ec{"Kíev"}
+            ec{"Kíiv"}
         }
         "Europe:Kirov"{
             ec{"Kirov"}
@@ -1216,6 +1216,9 @@ ca{
         }
         "Pacific:Johnston"{
             ec{"Johnston"}
+        }
+        "Pacific:Kanton"{
+            ec{"Canton"}
         }
         "Pacific:Kiritimati"{
             ec{"Kiritimati"}
@@ -1906,6 +1909,9 @@ ca{
             ld{"Hora d’estiu d’Ekaterinburg"}
             lg{"Hora d’Ekaterinburg"}
             ls{"Hora estàndard d’Ekaterinburg"}
+        }
+        "meta:Yukon"{
+            ls{"Hora de Yukon"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

@@ -7,8 +7,8 @@ en_001{
         colNormalization{"Normalised Sorting"}
     }
     Languages{
+        bla{"Siksika"}
         mus{"Creek"}
-        sah{"Yakut"}
     }
     Types{
         colNormalization{

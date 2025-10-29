@@ -1220,6 +1220,9 @@ mn{
         "Pacific:Johnston"{
             ec{"Жонстон"}
         }
+        "Pacific:Kanton"{
+            ec{"Кантон"}
+        }
         "Pacific:Kiritimati"{
             ec{"Киритимати"}
         }
@@ -1879,6 +1882,9 @@ mn{
             ld{"Екатеринбургийн зуны цаг"}
             lg{"Екатеринбургийн цаг"}
             ls{"Екатеринбургийн стандарт цаг"}
+        }
+        "meta:Yukon"{
+            ls{"Юкон цагийн бүс"}
         }
         fallbackFormat{"{1} ({0})"}
         gmtFormat{"GMT{0}"}

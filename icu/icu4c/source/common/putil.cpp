@@ -71,6 +71,7 @@
 #include "locmap.h"
 #include "ucln_cmn.h"
 #include "charstr.h"
+#include "uprefs.h"
 
 /* Include standard headers. */
 #include <stdio.h>
@@ -244,7 +245,7 @@ u_signBit(double d) {
  */
 UDate fakeClock_t0 = 0; /** Time to start the clock from **/
 UDate fakeClock_dt = 0; /** Offset (fake time - real time) **/
-UBool fakeClock_set = FALSE; /** True if fake clock has spun up **/
+UBool fakeClock_set = false; /** True if fake clock has spun up **/
 
 static UDate getUTCtime_real() {
     struct timeval posixTime;
@@ -269,7 +270,7 @@ static UDate getUTCtime_fake() {
             fprintf(stderr,"U_DEBUG_FAKETIME was set at compile time, but U_FAKETIME_START was not set.\n"
                     "Set U_FAKETIME_START to the number of milliseconds since 1/1/1970 to set the ICU clock.\n");
         }
-        fakeClock_set = TRUE;
+        fakeClock_set = true;
     }
     umtx_unlock(&fakeClockMutex);
 
@@ -727,12 +728,21 @@ static char *gTimeZoneBufferPtr = NULL;
 
 #if !U_PLATFORM_USES_ONLY_WIN32_API
 #define isNonDigit(ch) (ch < '0' || '9' < ch)
+#define isDigit(ch) ('0' <= ch && ch <= '9')
 static UBool isValidOlsonID(const char *id) {
     int32_t idx = 0;
+    int32_t idxMax = 0;
 
     /* Determine if this is something like Iceland (Olson ID)
     or AST4ADT (non-Olson ID) */
     while (id[idx] && isNonDigit(id[idx]) && id[idx] != ',') {
+        idx++;
+    }
+
+    /* Allow at maximum 2 numbers at the end of the id to support zone id's
+    like GMT+11. */
+    idxMax = idx + 2;
+    while (id[idx] && isDigit(id[idx]) && idx < idxMax) {
         idx++;
     }
 
@@ -896,7 +906,7 @@ static UBool compareBinaryFiles(const char* defaultTZFileName, const char* TZFil
     int32_t sizeFileRead;
     int32_t sizeFileToRead;
     char bufferFile[MAX_READ_SIZE];
-    UBool result = TRUE;
+    UBool result = true;
 
     if (tzInfo->defaultTZFilePtr == NULL) {
         tzInfo->defaultTZFilePtr = fopen(defaultTZFileName, "r");
@@ -916,9 +926,9 @@ static UBool compareBinaryFiles(const char* defaultTZFileName, const char* TZFil
         sizeFileLeft = sizeFile;
 
         if (sizeFile != tzInfo->defaultTZFileSize) {
-            result = FALSE;
+            result = false;
         } else {
-            /* Store the data from the files in seperate buffers and
+            /* Store the data from the files in separate buffers and
              * compare each byte to determine equality.
              */
             if (tzInfo->defaultTZBuffer == NULL) {
@@ -933,7 +943,7 @@ static UBool compareBinaryFiles(const char* defaultTZFileName, const char* TZFil
 
                 sizeFileRead = fread(bufferFile, 1, sizeFileToRead, file);
                 if (memcmp(tzInfo->defaultTZBuffer + tzInfo->defaultTZPosition, bufferFile, sizeFileRead) != 0) {
-                    result = FALSE;
+                    result = false;
                     break;
                 }
                 sizeFileLeft -= sizeFileRead;
@@ -941,7 +951,7 @@ static UBool compareBinaryFiles(const char* defaultTZFileName, const char* TZFil
             }
         }
     } else {
-        result = FALSE;
+        result = false;
     }
 
     if (file != NULL) {
@@ -1139,7 +1149,7 @@ uprv_tzname(int n)
 #endif
     if (tzid != NULL && isValidOlsonID(tzid)
 #if U_PLATFORM == U_PF_SOLARIS
-    /* When TZ equals localtime on Solaris, check the /etc/localtime file. */
+    /* Don't misinterpret TZ "localtime" on Solaris as a time zone name. */
         && uprv_strcmp(tzid, TZ_ENV_CHECK) != 0
 #endif
     ) {
@@ -1180,7 +1190,7 @@ uprv_tzname(int n)
                 tzInfo->defaultTZBuffer = NULL;
                 tzInfo->defaultTZFileSize = 0;
                 tzInfo->defaultTZFilePtr = NULL;
-                tzInfo->defaultTZstatus = FALSE;
+                tzInfo->defaultTZstatus = false;
                 tzInfo->defaultTZPosition = 0;
 
                 gTimeZoneBufferPtr = searchForTZFile(TZZONEINFO, tzInfo);
@@ -1251,10 +1261,10 @@ uprv_tzname(int n)
 
 /* Get and set the ICU data directory --------------------------------------- */
 
-static icu::UInitOnce gDataDirInitOnce = U_INITONCE_INITIALIZER;
+static icu::UInitOnce gDataDirInitOnce {};
 static char *gDataDirectory = NULL;
 
-UInitOnce gTimeZoneFilesInitOnce = U_INITONCE_INITIALIZER;
+UInitOnce gTimeZoneFilesInitOnce {};
 static CharString *gTimeZoneFilesDirectory = NULL;
 
 #if U_POSIX_LOCALE || U_PLATFORM_USES_ONLY_WIN32_API
@@ -1286,7 +1296,7 @@ static UBool U_CALLCONV putil_cleanup(void)
         gCorrectedPOSIXLocaleHeapAllocated = false;
     }
 #endif
-    return TRUE;
+    return true;
 }
 
 /*
@@ -1335,16 +1345,16 @@ U_CAPI UBool U_EXPORT2
 uprv_pathIsAbsolute(const char *path)
 {
   if(!path || !*path) {
-    return FALSE;
+    return false;
   }
 
   if(*path == U_FILE_SEP_CHAR) {
-    return TRUE;
+    return true;
   }
 
 #if (U_FILE_SEP_CHAR != U_FILE_ALT_SEP_CHAR)
   if(*path == U_FILE_ALT_SEP_CHAR) {
-    return TRUE;
+    return true;
   }
 #endif
 
@@ -1352,16 +1362,16 @@ uprv_pathIsAbsolute(const char *path)
   if( (((path[0] >= 'A') && (path[0] <= 'Z')) ||
        ((path[0] >= 'a') && (path[0] <= 'z'))) &&
       path[1] == ':' ) {
-    return TRUE;
+    return true;
   }
 #endif
 
-  return FALSE;
+  return false;
 }
 
 /* Backup setting of ICU_DATA_DIR_PREFIX_ENV_VAR
    (needed for some Darwin ICU build environments) */
-#if U_PLATFORM_IS_DARWIN_BASED && TARGET_OS_SIMULATOR
+#if U_PLATFORM_IS_DARWIN_BASED && defined(TARGET_OS_SIMULATOR) && TARGET_OS_SIMULATOR
 # if !defined(ICU_DATA_DIR_PREFIX_ENV_VAR)
 #  define ICU_DATA_DIR_PREFIX_ENV_VAR "IPHONE_SIMULATOR_ROOT"
 # endif
@@ -1393,12 +1403,12 @@ static BOOL U_CALLCONV getIcuDataDirectoryUnderWindowsDirectory(char* directoryB
             if ((windowsPathUtf8Len + UPRV_LENGTHOF(ICU_DATA_DIR_WINDOWS)) < bufferLength) {
                 uprv_strcpy(directoryBuffer, windowsPathUtf8);
                 uprv_strcat(directoryBuffer, ICU_DATA_DIR_WINDOWS);
-                return TRUE;
+                return true;
             }
         }
     }
 
-    return FALSE;
+    return false;
 }
 #endif
 
@@ -1776,10 +1786,37 @@ The leftmost codepage (.xxx) wins.
     return posixID;
 
 #elif U_PLATFORM_USES_ONLY_WIN32_API
-#define POSIX_LOCALE_CAPACITY 64
     UErrorCode status = U_ZERO_ERROR;
     char *correctedPOSIXLocale = nullptr;
 
+#if UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY 
+
+    int32_t neededBufferSize = uprefs_getBCP47Tag(nullptr, 0, &status);
+    MaybeStackArray<char,ULOC_FULLNAME_CAPACITY> windowsLocale(neededBufferSize, status);
+    int32_t length = uprefs_getBCP47Tag(windowsLocale.getAlias(), neededBufferSize, &status);
+
+    if (length > 0) // If length is 0, then the call to uprefs_getBCP47Tag failed.
+    {
+        // Now normalize the resulting name
+        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(length * 2));
+        /* TODO: Should we just exit on memory allocation failure? */
+        if (correctedPOSIXLocale)
+        {
+            int32_t posixLen = uloc_canonicalize(windowsLocale.getAlias(), correctedPOSIXLocale, length * 2, &status);
+            if (U_SUCCESS(status))
+            {
+                *(correctedPOSIXLocale + posixLen) = 0;
+                gCorrectedPOSIXLocale = correctedPOSIXLocale;
+                gCorrectedPOSIXLocaleHeapAllocated = true;
+                ucln_common_registerCleanup(UCLN_COMMON_PUTIL, putil_cleanup);
+            }
+            else
+            {
+                uprv_free(correctedPOSIXLocale);
+            }
+        }
+    }
+#else
     // If we have already figured this out just use the cached value
     if (gCorrectedPOSIXLocale != nullptr) {
         return gCorrectedPOSIXLocale;
@@ -1821,11 +1858,11 @@ The leftmost codepage (.xxx) wins.
         }
 
         // Now normalize the resulting name
-        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(POSIX_LOCALE_CAPACITY + 1));
+        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(length * 2));
         /* TODO: Should we just exit on memory allocation failure? */
         if (correctedPOSIXLocale)
         {
-            int32_t posixLen = uloc_canonicalize(modifiedWindowsLocale, correctedPOSIXLocale, POSIX_LOCALE_CAPACITY, &status);
+            int32_t posixLen = uloc_canonicalize(modifiedWindowsLocale, correctedPOSIXLocale, length * 2, &status);
             if (U_SUCCESS(status))
             {
                 *(correctedPOSIXLocale + posixLen) = 0;
@@ -1839,6 +1876,7 @@ The leftmost codepage (.xxx) wins.
             }
         }
     }
+#endif
 
     // If unable to find a locale we can agree upon, use en-US by default
     if (gCorrectedPOSIXLocale == nullptr) {
@@ -2115,7 +2153,7 @@ int_getDefaultCodepage()
         }
         /* else use the default */
     }
-    sprintf(codepage,"ibm-%d", ccsid);
+    snprintf(codepage, sizeof(codepage), "ibm-%d", ccsid);
     return codepage;
 
 #elif U_PLATFORM == U_PF_OS390
@@ -2152,7 +2190,7 @@ int_getDefaultCodepage()
     // are between 3 and 19999
     if (codepageNumber > 0 && codepageNumber < 20000)
     {
-        sprintf(codepage, "windows-%ld", codepageNumber);
+        snprintf(codepage, sizeof(codepage), "windows-%ld", codepageNumber);
         return codepage;
     }
     // If the codepage number call failed then return UTF-8
