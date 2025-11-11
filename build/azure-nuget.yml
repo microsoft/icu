@@ -241,9 +241,9 @@ stages:
 - stage: CodeSignBinaries
   condition: and(succeeded(), eq(variables.codeSign, true))
   dependsOn: Build
+  # OneBranch pool for modern signing
   pool:
-    name: Azure Pipelines
-    vmImage: 'windows-2019'
+    type: windows
   jobs:
   - job: CodeSignBits
     timeoutInMinutes: 60
@@ -299,47 +299,16 @@ stages:
         scanType: 'Register'
         failOnAlert: true
 
-    - task: EsrpCodeSigning@1
-      displayName: 'ESRP CodeSigning - CodeSign DLLs'
+    # Modern OneBranch signing approach (replaces legacy EsrpCodeSigning@1)
+    - task: onebranch.pipeline.signing@1
+      displayName: 'OneBranch Code Signing - Sign DLLs'
       inputs:
-        ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
-        FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
-        Pattern: $(signingPattern)
-        UseMinimatch: true
-        signConfigType: 'inlineSignParams'
-        inlineOperation: |
-          [
-            {
-              "keyCode": "CP-230012",
-              "operationSetCode": "SigntoolSign",
-              "parameters": [
-                {
-                  "parameterName": "OpusName",
-                  "parameterValue": "Microsoft"
-                },
-                {
-                  "parameterName": "OpusInfo",
-                  "parameterValue": "http://www.microsoft.com"
-                },
-                {
-                  "parameterName": "PageHash",
-                  "parameterValue": "/NPH"
-                },
-                {
-                  "parameterName": "FileDigest",
-                  "parameterValue": "/fd sha256"
-                },
-                {
-                  "parameterName": "TimeStamp",
-                  "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
-                }
-              ],
-              "toolName": "signtool.exe"
-            }
-          ]
-        SessionTimeout: '30'
-        MaxConcurrency: '20'
-        MaxRetryAttempts: '5'
+        command: 'sign'
+        signing_environment: 'azure-ado'
+        signing_profile: 'external_distribution'
+        files_to_sign: |
+          **/*.dll
+        search_root: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: binaries signed'
@@ -450,9 +419,9 @@ stages:
   - CodeSignBinaries
   - CreateNuget
   condition: and(eq(variables.codeSign, true), and(in(dependencies.CodeSignBinaries.result, 'Succeeded'), in(dependencies.CreateNuget.result, 'Succeeded')))
+  # OneBranch pool for modern signing
   pool:
-    name: Azure Pipelines
-    vmImage: 'windows-2019'
+    type: windows
   variables:
     BuildPlatform: AnyCPU
 
@@ -495,34 +464,14 @@ stages:
         scanType: 'Register'
         failOnAlert: true
 
-    - task: EsrpCodeSigning@1
+    # Modern OneBranch signing for NuGet packages
+    - task: onebranch.pipeline.signing@1
+      displayName: 'OneBranch Code Signing - Sign NuGet Packages'
       inputs:
-        ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
-        FolderPath: '$(BUILD.ArtifactStagingDirectory)\nuget\Nuget_Packages'
-        Pattern: |
-          *.nupkg
-        UseMinimatch: true
-        signConfigType: 'inlineSignParams'
-        inlineOperation: |
-          [
-            {
-              "KeyCode" : "CP-401405",
-              "OperationCode" : "NuGetSign",
-              "Parameters" : {},
-              "ToolName" : "sign",
-              "ToolVersion" : "1.0"
-            },
-            {
-                "KeyCode" : "CP-401405",
-                "OperationCode" : "NuGetVerify",
-                "Parameters" : {},
-                "ToolName" : "sign",
-                "ToolVersion" : "1.0"
-            }
-          ]
-        SessionTimeout: '30'
-        MaxConcurrency: '20'
-        MaxRetryAttempts: '5'
+        command: 'sign'
+        cp_code: 'CP-401405'
+        files_to_sign: '*.nupkg'
+        search_root: '$(BUILD.ArtifactStagingDirectory)\nuget\Nuget_Packages'
     
     - powershell: |
         Write-Host ""
