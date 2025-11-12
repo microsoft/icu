@@ -300,31 +300,47 @@ stages:
         scanType: 'Register'
         failOnAlert: true
 
-    # Modern ESRP v5 signing (recommended by OneBranch documentation)
-    - task: EsrpCodeSigning@5
-      displayName: 'ESRP CodeSigning v5 - Sign DLLs and EXEs'
+    # ESRP v1 signing (compatible with PRSS service connections)
+    - task: EsrpCodeSigning@1
+      displayName: 'ESRP CodeSigning v1 - Sign DLLs and EXEs'
       inputs:
         ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
         FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
-        Pattern: '*.dll,*.exe'
+        Pattern: $(signingPattern)
+        UseMinimatch: true
         signConfigType: 'inlineSignParams'
         inlineOperation: |
           [
             {
-                "KeyCode" : "CP-230012",
-                "OperationCode" : "SigntoolSign",
-                "Parameters" : {
-                    "OpusName" : "Microsoft",
-                    "OpusInfo" : "http://www.microsoft.com",
-                    "FileDigest" : "/fd \"SHA256\"",
-                    "PageHash" : "/NPH",
-                    "TimeStamp" : "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
-                },
-                "ToolName" : "sign",
-                "ToolVersion" : "1.0"
+                "keyCode" : "CP-230012",
+                "operationSetCode" : "SigntoolSign",
+                "parameters" : [
+                    {
+                        "parameterName" : "OpusName",
+                        "parameterValue" : "Microsoft"
+                    },
+                    {
+                        "parameterName" : "OpusInfo",
+                        "parameterValue" : "http://www.microsoft.com"
+                    },
+                    {
+                        "parameterName" : "FileDigest",
+                        "parameterValue" : "/fd \"SHA256\""
+                    },
+                    {
+                        "parameterName" : "PageHash",
+                        "parameterValue" : "/NPH"
+                    },
+                    {
+                        "parameterName" : "TimeStamp",
+                        "parameterValue" : "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+                    }
+                ],
+                "toolName" : "sign",
+                "toolVersion" : "1.0"
             }
           ]
-        SessionTimeout: '60'
+        SessionTimeout: '30'
         MaxConcurrency: '50'
         MaxRetryAttempts: '5'
 
@@ -483,13 +499,15 @@ stages:
         scanType: 'Register'
         failOnAlert: true
 
-    # Modern ESRP v5 signing for NuGet packages
-    - task: EsrpCodeSigning@5
-      displayName: 'ESRP CodeSigning v5 - Sign NuGet Packages'
+    # ESRP v1 signing for NuGet packages (compatible with PRSS service connections)
+    - task: EsrpCodeSigning@1
+      displayName: 'ESRP CodeSigning v1 - Sign NuGet Packages'
       inputs:
         ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
         FolderPath: '$(BUILD.ArtifactStagingDirectory)\nuget\Nuget_Packages'
-        Pattern: '*.nupkg'
+        Pattern: |
+          *.nupkg
+        UseMinimatch: true
         signConfigType: 'inlineSignParams'
         inlineOperation: |
           [
@@ -508,7 +526,9 @@ stages:
                 "ToolVersion" : "1.0"
             }
           ]
-        SessionTimeout: '60'
+        SessionTimeout: '30'
+        MaxConcurrency: '20'
+        MaxRetryAttempts: '5'
         MaxConcurrency: '50'
         MaxRetryAttempts: '5'
     
