@@ -241,9 +241,10 @@ stages:
 - stage: CodeSignBinaries
   condition: and(succeeded(), eq(variables.codeSign, true))
   dependsOn: Build
-  # OneBranch pool for modern signing
+  # Use standard Azure Pipelines pool (OneBranch signing tasks work with standard pools too)
   pool:
-    type: windows
+    name: Azure Pipelines
+    vmImage: 'windows-2019'
   jobs:
   - job: CodeSignBits
     timeoutInMinutes: 60
@@ -419,9 +420,10 @@ stages:
   - CodeSignBinaries
   - CreateNuget
   condition: and(eq(variables.codeSign, true), and(in(dependencies.CodeSignBinaries.result, 'Succeeded'), in(dependencies.CreateNuget.result, 'Succeeded')))
-  # OneBranch pool for modern signing
+  # Use standard Azure Pipelines pool (OneBranch signing tasks work with standard pools too)
   pool:
-    type: windows
+    name: Azure Pipelines
+    vmImage: 'windows-2019'
   variables:
     BuildPlatform: AnyCPU
 
