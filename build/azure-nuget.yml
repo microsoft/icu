@@ -529,8 +529,6 @@ stages:
         SessionTimeout: '30'
         MaxConcurrency: '20'
         MaxRetryAttempts: '5'
-        MaxConcurrency: '50'
-        MaxRetryAttempts: '5'
     
     - powershell: |
         Write-Host ""
