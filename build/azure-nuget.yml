@@ -304,61 +304,61 @@ stages:
       inputs:
         toolsDir: '$(Agent.TempDirectory)/tools'
 
-    - task: EsrpCodeSigning@3
-      displayName: 'ESRP CodeSigning - CodeSign DLLs'
-      inputs:
-        ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
-        FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
-        Pattern: $(signingPattern)
-        UseMinimatch: true
-        signConfigType: 'inlineSignParams'
-        inlineOperation: |
-          [
-            {   
-              "KeyCode" : "CP-233863-SN",
-              "OperationCode" : "StrongNameSign",
-              "Parameters" : {},
-              "ToolName" : "sign",
-              "ToolVersion" : "1.0"
-            },
-            {
-                "KeyCode" : "CP-233863-SN",
-                "OperationCode" : "StrongNameVerify",
-                "Parameters" : {},
-                "ToolName" : "sign",
-                "ToolVersion" : "1.0"
-            },
-            {
-              "keyCode": "CP-230012",
-              "operationSetCode": "SigntoolSign",
-              "parameters": [
-                {
-                  "parameterName": "OpusName",
-                  "parameterValue": "Microsoft"
-                },
-                {
-                  "parameterName": "OpusInfo",
-                  "parameterValue": "http://www.microsoft.com"
-                },
-                {
-                  "parameterName": "PageHash",
-                  "parameterValue": "/NPH"
-                },
-                {
-                  "parameterName": "FileDigest",
-                  "parameterValue": "/fd sha256"
-                },
-                {
-                  "parameterName": "TimeStamp",
-                  "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
-                }
-              ],
-              "toolName": "signtool.exe"
-            }
-          ]
-        SessionTimeout: '30'
-        MaxConcurrency: '20'
-        MaxRetryAttempts: '5'
+    # - task: EsrpCodeSigning@3
+    #   displayName: 'ESRP CodeSigning - CodeSign DLLs'
+    #   inputs:
+    #     ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
+    #     FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
+    #     Pattern: $(signingPattern)
+    #     UseMinimatch: true
+    #     signConfigType: 'inlineSignParams'
+    #     inlineOperation: |
+    #       [
+    #         {   
+    #           "KeyCode" : "CP-233863-SN",
+    #           "OperationCode" : "StrongNameSign",
+    #           "Parameters" : {},
+    #           "ToolName" : "sign",
+    #           "ToolVersion" : "1.0"
+    #         },
+    #         {
+    #             "KeyCode" : "CP-233863-SN",
+    #             "OperationCode" : "StrongNameVerify",
+    #             "Parameters" : {},
+    #             "ToolName" : "sign",
+    #             "ToolVersion" : "1.0"
+    #         },
+    #         {
+    #           "keyCode": "CP-230012",
+    #           "operationSetCode": "SigntoolSign",
+    #           "parameters": [
+    #             {
+    #               "parameterName": "OpusName",
+    #               "parameterValue": "Microsoft"
+    #             },
+    #             {
+    #               "parameterName": "OpusInfo",
+    #               "parameterValue": "http://www.microsoft.com"
+    #             },
+    #             {
+    #               "parameterName": "PageHash",
+    #               "parameterValue": "/NPH"
+    #             },
+    #             {
+    #               "parameterName": "FileDigest",
+    #               "parameterValue": "/fd sha256"
+    #             },
+    #             {
+    #               "parameterName": "TimeStamp",
+    #               "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+    #             }
+    #           ],
+    #           "toolName": "signtool.exe"
+    #         }
+    #       ]
+    #     SessionTimeout: '30'
+    #     MaxConcurrency: '20'
+    #     MaxRetryAttempts: '5'
 
     - task: PublishBuildArtifacts@1
       displayName: 'Publish: binaries signed'
