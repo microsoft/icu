@@ -33,7 +33,7 @@ ICU_LIB_TARGET=$(DLL_OUTPUT)\$(U_ICUDATA_NAME).dll
 !ENDIF
 !MESSAGE ICU data make path is $(ICUMAKE)
 
-!IF [py -3 -c "exit(0)"]!=0
+!IF [python3 -c "exit(0)"]!=0
 !MESSAGE Information: Unable to find Python 3. Data will fail to build from source.
 !ENDIF
 
@@ -302,7 +302,7 @@ $(TOOLS_TS): "$(ICUTOOLS)\genrb\$(CFGTOOLS)\genrb.exe" "$(ICUTOOLS)\gencnval\$(C
 $(COREDATA_TS):
 	@cd "$(ICUSRCDATA)"
 	set PYTHONPATH=$(ICUP)\source\python;%PYTHONPATH%
-	py -3 -B -m icutools.databuilder \
+	python3 -B -m icutools.databuilder \
 		--mode windows-exec \
 		--src_dir "$(ICUSRCDATA)" \
 		--tool_dir "$(ICUTOOLS)" \
