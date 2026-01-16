@@ -332,28 +332,13 @@ stages:
             {
               "keyCode": "CP-230012",
               "operationSetCode": "SigntoolSign",
-              "parameters": [
-                {
-                  "parameterName": "OpusName",
-                  "parameterValue": "Microsoft"
-                },
-                {
-                  "parameterName": "OpusInfo",
-                  "parameterValue": "http://www.microsoft.com"
-                },
-                {
-                  "parameterName": "PageHash",
-                  "parameterValue": "/NPH"
-                },
-                {
-                  "parameterName": "FileDigest",
-                  "parameterValue": "/fd sha256"
-                },
-                {
-                  "parameterName": "TimeStamp",
-                  "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
-                }
-              ],
+              "parameters": {
+                "OpusName": "Microsoft",
+                "OpusInfo": "http://www.microsoft.com",
+                "PageHash": "/NPH",
+                "FileDigest": "/fd sha256",
+                "TimeStamp": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+              },
               "toolName": "signtool.exe"
             }
           ]
