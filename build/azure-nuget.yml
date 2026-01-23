@@ -308,7 +308,7 @@ stages:
         AppRegistrationTenantId: '33e01921-4d64-4f8c-a055-5bdaffd5e33d'
         EsrpClientId: "8bc7108f-a254-4863-8e93-175eedff03cc"
         AuthAKVName: 'icukv'
-        AuthSignCertName: 'msicuesrp' # required for CodeSign
+        AuthSignCertName: 'msicuesrp'
         FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
         Pattern: $(signingPattern)
         ServiceEndpointUrl: 'https://api.esrp.microsoft.com/api/v2'
@@ -323,39 +323,24 @@ stages:
               "ToolVersion" : "1.0"
             },
             {
-                "KeyCode" : "CP-233863-SN",
-                "OperationCode" : "StrongNameVerify",
-                "Parameters" : {},
-                "ToolName" : "sign",
-                "ToolVersion" : "1.0"
+              "KeyCode" : "CP-233863-SN",
+              "OperationCode" : "StrongNameVerify",
+              "Parameters" : {},
+              "ToolName" : "sign",
+              "ToolVersion" : "1.0"
             },
             {
-              "keyCode": "CP-230012",
-              "operationSetCode": "SigntoolSign",
-              "parameters": [
-                {
-                  "parameterName": "OpusName",
-                  "parameterValue": "Microsoft"
-                },
-                {
-                  "parameterName": "OpusInfo",
-                  "parameterValue": "http://www.microsoft.com"
-                },
-                {
-                  "parameterName": "PageHash",
-                  "parameterValue": "/NPH"
-                },
-                {
-                  "parameterName": "FileDigest",
-                  "parameterValue": "/fd sha256"
-                },
-                {
-                  "parameterName": "TimeStamp",
-                  "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
-                }
-              ],
-              "toolName": "signtool.exe",
-              "toolVersion": "6.2.9304.0"
+              "KeyCode": "CP-230012",
+              "OperationCode": "SigntoolSign",
+              "Parameters": {
+                "OpusName": "Microsoft",
+                "OpusInfo": "http://www.microsoft.com",
+                "PageHash": "/NPH",
+                "FileDigest": "/fd sha256",
+                "TimeStamp": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+              },
+              "ToolName": "signtool.exe",
+              "ToolVersion": "6.2.9304.0"
             }
           ]
         SessionTimeout: '30'
