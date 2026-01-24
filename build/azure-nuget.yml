@@ -250,10 +250,7 @@ stages:
     workspace:
       clean: all
     variables:
-      signingPattern: |
-        icudt*.dll
-        icuuc*.dll
-        icuin*.dll
+      signingPattern: 'icudt*.dll;icuuc*.dll;icuin*.dll'
 
     # This matrix strategy lets us code-sign the architectures in parallel.
     strategy:
@@ -298,7 +295,7 @@ stages:
         alertWarningLevel: Medium
         scanType: 'Register'
         failOnAlert: true
-
+    
     - task: EsrpCodeSigning@5
       displayName: 'ESRP CodeSigning - CodeSign DLLs'
       inputs:
