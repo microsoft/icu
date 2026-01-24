@@ -307,7 +307,7 @@ stages:
         AuthAKVName: 'icukv'
         AuthSignCertName: 'msicuesrp'
         FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
-        Pattern: $(signingPattern)
+        Pattern: '*.dll'
         ServiceEndpointUrl: 'https://api.esrp.microsoft.com/api/v2'
         signConfigType: 'inlineSignParams'
         inlineOperation: |
@@ -497,6 +497,9 @@ stages:
         alertWarningLevel: Medium
         scanType: 'Register'
         failOnAlert: true
+    - powershell: |
+        Write-Host "SigningPattern is: '$(signingPattern)'" 
+      displayName: 'DIAG: show signing pattern'
 
     - task: EsrpCodeSigning@5
       displayName: 'ESRP CodeSigning - CodeSign DLLs'
