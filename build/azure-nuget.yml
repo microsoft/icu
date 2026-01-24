@@ -312,20 +312,7 @@ stages:
         signConfigType: 'inlineSignParams'
         inlineOperation: |
           [
-            { 
-              "KeyCode" : "CP-233863-SN",
-              "OperationCode" : "StrongNameSign",
-              "Parameters" : {},
-              "ToolName" : "sign",
-              "ToolVersion" : "1.0"
-            },
-            {
-              "KeyCode" : "CP-233863-SN",
-              "OperationCode" : "StrongNameVerify",
-              "Parameters" : {},
-              "ToolName" : "sign",
-              "ToolVersion" : "1.0"
-            },
+          
             {
               "KeyCode": "CP-230012",
               "OperationCode": "SigntoolSign",
