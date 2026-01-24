@@ -501,14 +501,22 @@ stages:
         scanType: 'Register'
         failOnAlert: true
 
-    - task: EsrpCodeSigning@1
+    - task: EsrpCodeSigning@5
+      displayName: 'ESRP CodeSigning - CodeSign DLLs'
       inputs:
-        ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
+        ConnectedServiceName: 'ESRP Code Signing for MS-ICU (2026)'
+        UseMSIAuthentication: true
+        AppRegistrationClientId: '8773af57-7743-45cb-8556-92b3a41c39e0'
+        AppRegistrationTenantId: '33e01921-4d64-4f8c-a055-5bdaffd5e33d'
+        EsrpClientId: "8bc7108f-a254-4863-8e93-175eedff03cc"
+        AuthAKVName: 'icukv'
+        AuthSignCertName: 'msicuesrp'
         FolderPath: '$(BUILD.ArtifactStagingDirectory)\nuget\Nuget_Packages'
         Pattern: |
           *.nupkg
         UseMinimatch: true
         signConfigType: 'inlineSignParams'
+        ServiceEndpointUrl: 'https://api.esrp.microsoft.com/api/v2'
         inlineOperation: |
           [
             {
@@ -529,7 +537,7 @@ stages:
         SessionTimeout: '30'
         MaxConcurrency: '20'
         MaxRetryAttempts: '5'
-    
+
     - powershell: |
         Write-Host ""
         Write-Host "$(BUILD.ArtifactStagingDirectory)"
