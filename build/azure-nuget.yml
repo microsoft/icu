@@ -88,7 +88,7 @@ stages:
     timeoutInMinutes: 60
     pool:
       name: Azure Pipelines
-      vmImage: 'windows-2019'
+      vmImage: 'windows-2022'
       demands:
       - msbuild
       - visualstudio
@@ -243,17 +243,14 @@ stages:
   dependsOn: Build
   pool:
     name: Azure Pipelines
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
   jobs:
   - job: CodeSignBits
     timeoutInMinutes: 60
     workspace:
       clean: all
     variables:
-      signingPattern: |
-        icudt*.dll
-        icuuc*.dll
-        icuin*.dll
+      signingPattern: 'icudt*.dll;icuuc*.dll;icuin*.dll'
 
     # This matrix strategy lets us code-sign the architectures in parallel.
     strategy:
@@ -298,43 +295,36 @@ stages:
         alertWarningLevel: Medium
         scanType: 'Register'
         failOnAlert: true
-
-    - task: EsrpCodeSigning@1
+    
+    - task: EsrpCodeSigning@5
       displayName: 'ESRP CodeSigning - CodeSign DLLs'
       inputs:
-        ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
+        ConnectedServiceName: 'ESRP Code Signing for MS-ICU (2026)'
+        UseMSIAuthentication: true
+        AppRegistrationClientId: '8773af57-7743-45cb-8556-92b3a41c39e0'
+        AppRegistrationTenantId: '33e01921-4d64-4f8c-a055-5bdaffd5e33d'
+        EsrpClientId: "8bc7108f-a254-4863-8e93-175eedff03cc"
+        AuthAKVName: 'icukv'
+        AuthSignCertName: 'msicuesrp'
         FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
-        Pattern: $(signingPattern)
-        UseMinimatch: true
+        Pattern: '*.dll'
+        ServiceEndpointUrl: 'https://api.esrp.microsoft.com/api/v2'
         signConfigType: 'inlineSignParams'
         inlineOperation: |
           [
+          
             {
-              "keyCode": "CP-230012",
-              "operationSetCode": "SigntoolSign",
-              "parameters": [
-                {
-                  "parameterName": "OpusName",
-                  "parameterValue": "Microsoft"
-                },
-                {
-                  "parameterName": "OpusInfo",
-                  "parameterValue": "http://www.microsoft.com"
-                },
-                {
-                  "parameterName": "PageHash",
-                  "parameterValue": "/NPH"
-                },
-                {
-                  "parameterName": "FileDigest",
-                  "parameterValue": "/fd sha256"
-                },
-                {
-                  "parameterName": "TimeStamp",
-                  "parameterValue": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
-                }
-              ],
-              "toolName": "signtool.exe",
+              "KeyCode": "CP-230012",
+              "OperationCode": "SigntoolSign",
+              "Parameters": {
+                "OpusName": "Microsoft",
+                "OpusInfo": "http://www.microsoft.com",
+                "PageHash": "/NPH",
+                "FileDigest": "/fd sha256",
+                "TimeStamp": "/tr \"http://rfc3161.gtm.corp.microsoft.com/TSS/HttpTspServer\" /td sha256"
+              },
+              "ToolName": "signtool.exe",
+              "ToolVersion": "6.2.9304.0"
             }
           ]
         SessionTimeout: '30'
@@ -355,7 +345,7 @@ stages:
   condition: and(in(dependencies.Build.result, 'Succeeded'), in(dependencies.CodeSignBinaries.result, 'Succeeded', 'Skipped'))
   pool:
     name: Azure Pipelines
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
   variables:
     BuildPlatform: AnyCPU
 
@@ -452,7 +442,7 @@ stages:
   condition: and(eq(variables.codeSign, true), and(in(dependencies.CodeSignBinaries.result, 'Succeeded'), in(dependencies.CreateNuget.result, 'Succeeded')))
   pool:
     name: Azure Pipelines
-    vmImage: 'windows-2019'
+    vmImage: 'windows-2022'
   variables:
     BuildPlatform: AnyCPU
 
@@ -494,15 +484,26 @@ stages:
         alertWarningLevel: Medium
         scanType: 'Register'
         failOnAlert: true
+    - powershell: |
+        Write-Host "SigningPattern is: '$(signingPattern)'" 
+      displayName: 'DIAG: show signing pattern'
 
-    - task: EsrpCodeSigning@1
+    - task: EsrpCodeSigning@5
+      displayName: 'ESRP CodeSigning - CodeSign DLLs'
       inputs:
-        ConnectedServiceName: 'ESRP Code Signing for MS-ICU'
+        ConnectedServiceName: 'ESRP Code Signing for MS-ICU (2026)'
+        UseMSIAuthentication: true
+        AppRegistrationClientId: '8773af57-7743-45cb-8556-92b3a41c39e0'
+        AppRegistrationTenantId: '33e01921-4d64-4f8c-a055-5bdaffd5e33d'
+        EsrpClientId: "8bc7108f-a254-4863-8e93-175eedff03cc"
+        AuthAKVName: 'icukv'
+        AuthSignCertName: 'msicuesrp'
         FolderPath: '$(BUILD.ArtifactStagingDirectory)\nuget\Nuget_Packages'
         Pattern: |
           *.nupkg
         UseMinimatch: true
         signConfigType: 'inlineSignParams'
+        ServiceEndpointUrl: 'https://api.esrp.microsoft.com/api/v2'
         inlineOperation: |
           [
             {
@@ -523,7 +524,7 @@ stages:
         SessionTimeout: '30'
         MaxConcurrency: '20'
         MaxRetryAttempts: '5'
-    
+
     - powershell: |
         Write-Host ""
         Write-Host "$(BUILD.ArtifactStagingDirectory)"
