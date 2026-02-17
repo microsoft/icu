@@ -258,6 +258,9 @@ syr{
         "America:Chihuahua"{
             ec{"ܟܝܘܐܘܐ"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"ܣܝܘܕܐܕ ܐܘܪܝܙ"}
+        }
         "America:Coral_Harbour"{
             ec{"ܐܬܝܟܘܟܐܢ"}
         }
@@ -462,9 +465,6 @@ syr{
         "America:New_York"{
             ec{"ܢܝܘ ܝܘܪܟ"}
         }
-        "America:Nipigon"{
-            ec{"ܢܝܦܝܓܘܢ"}
-        }
         "America:Nome"{
             ec{"ܢܘܡ"}
         }
@@ -486,9 +486,6 @@ syr{
         "America:Panama"{
             ec{"ܦܢܡܐ"}
         }
-        "America:Pangnirtung"{
-            ec{"ܦܐܢܓܢܝܪܬܘܢܓ"}
-        }
         "America:Paramaribo"{
             ec{"ܦܐܪܐܡܐܪܝܒܘ"}
         }
@@ -509,9 +506,6 @@ syr{
         }
         "America:Punta_Arenas"{
             ec{"ܦܘܢܬܐ ܥܪܝܢܣ"}
-        }
-        "America:Rainy_River"{
-            ec{"ܢܗܪܐ ܕܪܥܢܝ"}
         }
         "America:Rankin_Inlet"{
             ec{"ܪܐܢܟܢ ܐܢܠܝܬ"}
@@ -573,9 +567,6 @@ syr{
         "America:Thule"{
             ec{"ܬܘܠ"}
         }
-        "America:Thunder_Bay"{
-            ec{"ܬܐܢܕܐܪ ܒܐܝ"}
-        }
         "America:Tijuana"{
             ec{"ܬܝܐܘܐܢܐ"}
         }
@@ -596,9 +587,6 @@ syr{
         }
         "America:Yakutat"{
             ec{"ܝܩܘܬܐܬ"}
-        }
-        "America:Yellowknife"{
-            ec{"ܝܠܘܢܝܦ"}
         }
         "Antarctica:Casey"{
             ec{"ܟܐܝܣܝ"}
@@ -689,9 +677,6 @@ syr{
         }
         "Asia:Chita"{
             ec{"ܬܫܝܬܐ"}
-        }
-        "Asia:Choibalsan"{
-            ec{"ܟܘܝܒܠܣܢ"}
         }
         "Asia:Colombo"{
             ec{"ܟܘܠܘܡܒܘ"}
@@ -864,6 +849,9 @@ syr{
         "Asia:Ulaanbaatar"{
             ec{"ܐܘܠܐܢܒܐܬܘܪ"}
         }
+        "Asia:Urumqi"{
+            ec{"ܐܘܪܘܡܟܝ"}
+        }
         "Asia:Ust-Nera"{
             ec{"ܐܘܣܬ-ܢܝܪܐ"}
         }
@@ -921,6 +909,9 @@ syr{
         "Australia:Broken_Hill"{
             ec{"ܒܪܘܟܝܢ ܗܝܠ"}
         }
+        "Australia:Darwin"{
+            ec{"ܕܪܘܝܢ"}
+        }
         "Australia:Eucla"{
             ec{"ܐܘܟܠܐ"}
         }
@@ -941,6 +932,9 @@ syr{
         }
         "Australia:Sydney"{
             ec{"ܣܝܕܢܝ"}
+        }
+        "Etc:UTC"{
+            ls{"ܥܕܢܘܬܐ ܬܒܠܝܬܐ ܡܛܟܘܣܬܐ"}
         }
         "Etc:Unknown"{
             ec{"ܡܕܝܢܬܐ ܠܐ ܝܕܥܝܬܐ"}
@@ -1097,9 +1091,6 @@ syr{
         "Europe:Ulyanovsk"{
             ec{"ܐܘܠܝܢܘܒܣܟ"}
         }
-        "Europe:Uzhgorod"{
-            ec{"ܐܘܙܓܘܪܘܕ"}
-        }
         "Europe:Vaduz"{
             ec{"ܒܕܘܙ"}
         }
@@ -1120,9 +1111,6 @@ syr{
         }
         "Europe:Zagreb"{
             ec{"ܙܐܓܪܒ"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"ܙܐܦܘܪܝܓܝ"}
         }
         "Europe:Zurich"{
             ec{"ܙܝܘܪܚ"}
@@ -1198,9 +1186,6 @@ syr{
         }
         "Pacific:Guam"{
             ec{"ܓܘܐܡ"}
-        }
-        "Pacific:Johnston"{
-            ec{"ܓܘܢܣܬܘܢ"}
         }
         "Pacific:Kanton"{
             ec{"ܟܐܢܬܘܢ"}
@@ -1446,11 +1431,6 @@ syr{
             lg{"ܥܕܢܐ ܕܨܝܢ"}
             ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܨܝܢ"}
         }
-        "meta:Choibalsan"{
-            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܟܘܝܒܠܣܢ"}
-            lg{"ܥܕܢܐ ܕܟܘܝܒܠܣܢ"}
-            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܟܘܝܒܠܣܢ"}
-        }
         "meta:Christmas"{
             ls{"ܥܕܢܐ ܕܓܙܪܬܐ ܕܟܪܝܣܬܡܣ"}
         }
@@ -1541,9 +1521,9 @@ syr{
             ls{"ܥܕܢܐ ܕܓܙܝܪ̈ܐ ܕܓܝܠܒܪܬ"}
         }
         "meta:Greenland_Eastern"{
-            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܡܕܢܚ ܓܪܝܢܠܢܕ"}
-            lg{"ܥܕܢܐ ܕܡܕܢܚ ܓܪܝܢܠܢܕ"}
-            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܡܕܢܚ ܓܪܝܢܠܢܕ"}
+            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܓܪܝܢܠܢܕ ܡܕܢܚܝܬܐ"}
+            lg{"ܥܕܢܐ ܓܪܝܢܠܢܕ ܡܕܢܚܝܬܐ"}
+            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܓܪܝܢܠܢܕ ܡܕܢܚܝܬܐ"}
         }
         "meta:Greenland_Western"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܓܪܝܢܠܢܕ ܕܡܥܪܒܝܬܐ"}
@@ -1652,9 +1632,6 @@ syr{
             lg{"ܥܕܢܐ ܕܡܐܟܐܘ"}
             ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܡܐܟܐܘ"}
         }
-        "meta:Macquarie"{
-            ls{"ܥܕܢܐ ܕܓܙܪܬܐ ܡܐܟܐܘܪܝ"}
-        }
         "meta:Magadan"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܡܐܓܕܐܢ"}
             lg{"ܥܕܢܐ ܕܡܐܓܐܕܐܢ"}
@@ -1679,11 +1656,6 @@ syr{
         }
         "meta:Mawson"{
             ls{"ܥܕܢܐ ܕܡܐܘܣܘܢ"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܓܪܒܝ ܡܥܪܒܝܬܐ ܡܟܣܝܩܘ"}
-            lg{"ܥܕܢܐ ܕܓܪܒܝ ܡܥܪܒܝܬܐ ܡܟܣܝܩܘ"}
-            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܓܪܒܝ ܡܥܪܒܝܬܐ ܡܟܣܝܩܘ"}
         }
         "meta:Mexico_Pacific"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܡܟܣܝܩܘ ܫܝܢܝܬܐ"}
@@ -1917,8 +1889,6 @@ syr{
         "meta:Yukon"{
             ls{"ܥܕܢܐ ܕܝܘܩܘܢ"}
         }
-        gmtFormat{"ܥܕܢܐ ܓܪܝܢܟ {0}"}
-        gmtZeroFormat{"ܥܕܢܐ ܕܓܪܝܢܟ"}
         regionFormat{"ܥܕܢܐ {0}"}
         regionFormatDaylight{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ {0}"}
         regionFormatStandard{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ {0}"}

@@ -13,8 +13,8 @@
 #include "number_utils.h"
 #include "number_modifiers.h"
 
-U_NAMESPACE_BEGIN namespace number {
-namespace impl {
+U_NAMESPACE_BEGIN
+namespace number::impl {
 
 // LongNameHandler takes care of formatting currency and measurement unit names,
 // as well as populating the gender of measure units.
@@ -71,9 +71,9 @@ class LongNameHandler : public MicroPropsGenerator, public ModifierStore, public
      * on the plural form.
      */
     void
-    processQuantity(DecimalQuantity &quantity, MicroProps &micros, UErrorCode &status) const U_OVERRIDE;
+    processQuantity(DecimalQuantity &quantity, MicroProps &micros, UErrorCode &status) const override;
 
-    const Modifier* getModifier(Signum signum, StandardPlural::Form plural) const U_OVERRIDE;
+    const Modifier* getModifier(Signum signum, StandardPlural::Form plural) const override;
 
   private:
     // A set of pre-computed modifiers, one for each plural form.
@@ -168,12 +168,12 @@ class MixedUnitLongNameHandler : public MicroPropsGenerator, public ModifierStor
      * provided via `micros.mixedMeasures`.
      */
     void processQuantity(DecimalQuantity &quantity, MicroProps &micros,
-                         UErrorCode &status) const U_OVERRIDE;
+                         UErrorCode &status) const override;
 
     // Required for ModifierStore. And ModifierStore is required by
     // SimpleModifier constructor's last parameter. We assert his will never get
     // called though.
-    const Modifier *getModifier(Signum signum, StandardPlural::Form plural) const U_OVERRIDE;
+    const Modifier *getModifier(Signum signum, StandardPlural::Form plural) const override;
 
   private:
     // Not owned
@@ -241,7 +241,7 @@ class LongNameMultiplexer : public MicroPropsGenerator, public UMemory {
     // The output unit must be provided via `micros.outputUnit`, it must match
     // one of the units provided to the factory function.
     void processQuantity(DecimalQuantity &quantity, MicroProps &micros,
-                         UErrorCode &status) const U_OVERRIDE;
+                         UErrorCode &status) const override;
 
   private:
     /**
@@ -263,8 +263,7 @@ class LongNameMultiplexer : public MicroPropsGenerator, public UMemory {
     }
 };
 
-}  // namespace impl
-}  // namespace number
+} // namespace number::impl
 U_NAMESPACE_END
 
 #endif //__NUMBER_LONGNAMES_H__

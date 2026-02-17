@@ -93,14 +93,17 @@ ceb{
         CY{"Cyprus"}
         CZ{"Czechia"}
         DE{"Germany"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denmark"}
         DM{"Dominica"}
         DO{"Dominican Republic"}
         DZ{"Algeria"}
+        EA{"Ceuta & Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egypt"}
+        EH{"Western Sahara"}
         ER{"Eritrea"}
         ES{"Espanya"}
         ET{"Ethiopia"}
@@ -137,12 +140,13 @@ ceb{
         HR{"Croatia"}
         HT{"Haiti"}
         HU{"Hungary"}
+        IC{"Canary Islands"}
         ID{"Indonesia"}
         IE{"Ireland"}
         IL{"Israel"}
         IM{"Isle of Man"}
         IN{"India"}
-        IO{"British Indian Ocean Territory"}
+        IO{"Teritoryo sa British Indian Ocean"}
         IQ{"Iraq"}
         IR{"Iran"}
         IS{"Iceland"}
@@ -263,7 +267,7 @@ ceb{
         TM{"Turkmenistan"}
         TN{"Tunisia"}
         TO{"Tonga"}
-        TR{"Turkey"}
+        TR{"Turkiye"}
         TT{"Trinidad & Tobago"}
         TV{"Tuvalu"}
         TW{"Taiwan"}
@@ -284,6 +288,8 @@ ceb{
         VU{"Vanuatu"}
         WF{"Wallis & Futuna"}
         WS{"Samoa"}
+        XA{"Pseudo-Accents"}
+        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +297,25 @@ ceb{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Wala Mailhing Rehiyon"}
+    }
+    Countries%chagos{
+        IO{"Chagos Archipelago"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"Macao"}
+        PS{"Palestine"}
+        US{"US"}
+    }
+    Countries%variant{
+        CD{"Congo (DRC)"}
+        CG{"Congo (Republika)"}
+        CI{"Ivory Coast"}
+        CZ{"Czech Republic"}
+        FK{"Falkland Islands (Islas Malvinas)"}
+        NZ{"Aotearoa New Zealand"}
+        SZ{"Swaziland"}
+        TL{"East Timor"}
     }
 }

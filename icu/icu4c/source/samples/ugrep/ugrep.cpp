@@ -40,7 +40,7 @@ using namespace icu;
 //
 //  The following variables contain parameters that may be set from the command line.
 //
-const char *pattern = NULL;     // The regular expression
+const char *pattern = nullptr;     // The regular expression
 int        firstFileNum;        //  argv index of the first file name
 UBool      displayFileName = false;
 UBool      displayLineNum  = false;
@@ -52,11 +52,10 @@ UBool      displayLineNum  = false;
 const char *fileName;      
 int         fileLen;              // Length, in UTF-16 Code Units.  
 
-UChar      *ucharBuf = 0;         // Buffer, holds converted file.  (Simple minded program, always reads
-                                  //   the whole file at once.
+char16_t *ucharBuf = nullptr; // Buffer, holds converted file.  (Simple minded program, always reads
+                              //   the whole file at once.
 
-char       *charBuf = 0;          // Buffer, for original, unconverted file data.
-
+char *charBuf = nullptr; // Buffer, for original, unconverted file data.
 
 //
 //  Info regarding the line currently being processed
@@ -69,7 +68,7 @@ int      lineNum;
 //  Converter, used on output to convert Unicode data back to char *
 //             so that it will display in non-Unicode terminal windows.
 //
-UConverter  *outConverter = 0;
+UConverter *outConverter = nullptr;
 
 //
 //  Function forward declarations
@@ -278,7 +277,7 @@ void readFile(const char *name) {
     //  Open the file and determine its size.
     //
     FILE *file = fopen(name, "rb");
-    if (file == 0 ) {
+    if (file == nullptr) {
         fprintf(stderr, "ugrep: Could not open file \"%s\"\n", fileName);
         return;
     }
@@ -290,7 +289,7 @@ void readFile(const char *name) {
     //
     //   Read in the file
     //
-    charBuf    = (char *)realloc(charBuf, rawFileLen+1);   // Need error checking...
+    charBuf = static_cast<char*>(realloc(charBuf, rawFileLen + 1)); // Need error checking...
     int t = static_cast<int>(fread(charBuf, 1, rawFileLen, file));
     if (t != rawFileLen)  {
         fprintf(stderr, "Error reading file \"%s\"\n", fileName);
@@ -313,7 +312,7 @@ void readFile(const char *name) {
             u_errorName(status));
         return;
     }
-    if(encoding!=NULL ){
+    if(encoding!=nullptr ){
         charDataStart  += signatureLength;
         rawFileLen     -= signatureLength;
     }
@@ -329,11 +328,11 @@ void readFile(const char *name) {
     }
 
     //
-    // Convert the file data to UChar.
+    // Convert the file data to char16_t.
     //  Preflight first to determine required buffer size.
     //
     uint32_t destCap = ucnv_toUChars(conv,
-                       NULL,           //  dest,
+                       nullptr,           //  dest,
                        0,              //  destCapacity,
                        charDataStart,
                        rawFileLen,
@@ -344,7 +343,7 @@ void readFile(const char *name) {
     };
     
     status = U_ZERO_ERROR;
-    ucharBuf = (UChar *)realloc(ucharBuf, (destCap+1) * sizeof(UChar));
+    ucharBuf = static_cast<char16_t*>(realloc(ucharBuf, (destCap + 1) * sizeof(char16_t)));
     ucnv_toUChars(conv,
         ucharBuf,           //  dest,
         destCap+1,
@@ -390,7 +389,7 @@ void nextLine(int  startPos) {
         if (lineEnd >= fileLen) {
             return;
         }
-        UChar c = ucharBuf[lineEnd];
+        char16_t c = ucharBuf[lineEnd];
         lineEnd++;
         if (c == 0x0a   ||       // Line Feed
             c == 0x0c   ||       // Form Feed
@@ -425,8 +424,8 @@ void printMatch() {
     UErrorCode         status       = U_ZERO_ERROR;
 
     // If we haven't already created a converter for output, do it now.
-    if (outConverter == 0) {
-        outConverter = ucnv_open(NULL, &status);
+    if (outConverter == nullptr) {
+        outConverter = ucnv_open(nullptr, &status);
         if (U_FAILURE(status)) {
             fprintf(stderr, "ugrep:  Error opening default converter: \"%s\"\n",
                 u_errorName(status));

@@ -149,7 +149,7 @@ NumberingSystem::createInstance(const Locale & inLocale, UErrorCode& status) {
         while (!nsResolved) {
             localStatus = U_ZERO_ERROR;
             count = 0;
-            const UChar *nsName = ures_getStringByKeyWithFallback(numberElementsRes.getAlias(), buffer, &count, &localStatus);
+            const char16_t *nsName = ures_getStringByKeyWithFallback(numberElementsRes.getAlias(), buffer, &count, &localStatus);
             // Don't stomp on the catastrophic failure of OOM.
             if (localStatus == U_MEMORY_ALLOCATION_ERROR) {
                 status = U_MEMORY_ALLOCATION_ERROR;
@@ -258,7 +258,7 @@ void NumberingSystem::setDesc(const UnicodeString &d) {
 }
 void NumberingSystem::setName(const char *n) {
     if ( n == nullptr ) {
-        name[0] = (char) 0;
+        name[0] = static_cast<char>(0);
     } else {
         uprv_strncpy(name,n,kInternalNumSysNameCapacity);
         name[kInternalNumSysNameCapacity] = '\0'; // Make sure it is null terminated.
@@ -320,7 +320,6 @@ U_CFUNC void initNumsysNames(UErrorCode &status) {
     if (U_SUCCESS(status)) {
         gNumsysNames = numsysNames.orphan();
     }
-    return;
 }
 
 }   // end anonymous namespace
@@ -338,7 +337,7 @@ NumsysNameEnumeration::NumsysNameEnumeration(UErrorCode& status) : pos(0) {
 const UnicodeString*
 NumsysNameEnumeration::snext(UErrorCode& status) {
     if (U_SUCCESS(status) && (gNumsysNames != nullptr) && (pos < gNumsysNames->size())) {
-        return (const UnicodeString*)gNumsysNames->elementAt(pos++);
+        return static_cast<const UnicodeString*>(gNumsysNames->elementAt(pos++));
     }
     return nullptr;
 }

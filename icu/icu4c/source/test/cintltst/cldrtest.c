@@ -963,32 +963,6 @@ static void VerifyTranslation(void) {
         //else if (uprv_strncmp(currLoc,"bem",3) == 0 || uprv_strncmp(currLoc,"mgo",3) == 0 || uprv_strncmp(currLoc,"nl",2) == 0) {
         //    log_verbose("skipping test for %s, some month and country names known to use aux exemplars\n", currLoc);
         //}
-        
-        /* MSFT Change: Begin */
-        else if (
-            uprv_strncmp(currLoc, "ba", 2) == 0 || uprv_strncmp(currLoc, "ba_RU", 5) == 0     ||
-            uprv_strncmp(currLoc, "byn", 3) == 0 || uprv_strncmp(currLoc, "byn_ER", 6) == 0   ||
-            uprv_strncmp(currLoc, "cu", 2) == 0 || uprv_strncmp(currLoc, "cu_RU", 5) == 0     ||
-            uprv_strncmp(currLoc, "dv", 2) == 0 || uprv_strncmp(currLoc, "dv_MV", 5) == 0     ||
-            uprv_strncmp(currLoc, "iu", 2) == 0 || uprv_strncmp(currLoc, "iu_CA", 5) == 0     ||
-            uprv_strncmp(currLoc, "mn_Mong", 7) == 0 || uprv_strncmp(currLoc, "mn_Mong_CN", 10) == 0   ||
-            uprv_strncmp(currLoc, "nqo", 3) == 0 || uprv_strncmp(currLoc, "nqo_GN", 6) == 0   ||
-            uprv_strncmp(currLoc, "oc", 2) == 0 || uprv_strncmp(currLoc, "oc_FR", 5) == 0     ||
-            uprv_strncmp(currLoc, "syr", 3) == 0 || uprv_strncmp(currLoc, "syr_SY", 6) == 0   ||
-            uprv_strncmp(currLoc, "tig", 3) == 0 || uprv_strncmp(currLoc, "tig_ER", 6) == 0   ||
-            uprv_strncmp(currLoc, "wal", 3) == 0 || uprv_strncmp(currLoc, "wal_ET", 6) == 0   ||
-            uprv_strncmp(currLoc, "bin", 3) == 0 || uprv_strncmp(currLoc, "bin_NG", 6) == 0   ||
-            uprv_strncmp(currLoc, "la", 2) == 0 || uprv_strncmp(currLoc, "la_VA", 6) == 0    ||
-            uprv_strncmp(currLoc, "jv_Java", 7) == 0 || uprv_strncmp(currLoc, "jv_Java_ID", 10) == 0   ||
-            uprv_strncmp(currLoc, "ks_Deva", 7) == 0 || uprv_strncmp(currLoc, "ks_Deva_IN", 10) == 0   ||
-            uprv_strncmp(currLoc, "pap", 3) == 0 || uprv_strncmp(currLoc, "pap_029", 7) == 0           ||
-            uprv_strncmp(currLoc, "tzm_Arab", 8) == 0 || uprv_strncmp(currLoc, "tzm_Arab_MA", 11) == 0 ||
-            uprv_strncmp(currLoc, "tzm_Tfng", 8) == 0 || uprv_strncmp(currLoc, "tzm_Tfng_MA", 11) == 0
-        ) {
-            log_knownIssue("0", "MSFT Change: skipping test for %s which has issues due to CLDR Seed data.", currLoc);
-        }
-        /* MSFT Change: End */
-
         else {
             UChar langBuffer[128];
             int32_t langSize;
@@ -1038,6 +1012,14 @@ static void VerifyTranslation(void) {
                         log_knownIssue("cldrbug:15355", "ks_Deva day names use chars not in exemplars")) {
                     end = 0;
                 }
+                if (uprv_strncmp(currLoc,"kxv",3) == 0 &&  // Unnecessarily also skips kxv_Orya/kxv_Telu, that is ok for now
+                        log_knownIssue("CLDR-17203", "Some day names in kxv(_Deva)? use chars not in exemplars")) {
+                    end = 0;
+                }
+                if (uprv_strncmp(currLoc,"ak",2) == 0 &&  
+                        log_knownIssue("CLDR-17852", "Some month names in ax(_GH) use chars not in exemplars")) {
+                    end = 0;
+                }                
 
                 for (idx = 0; idx < end; idx++) {
                     const UChar *fromBundleStr = ures_getStringByIndex(resArray, idx, &langSize, &errorCode);
@@ -1075,6 +1057,14 @@ static void VerifyTranslation(void) {
                         log_knownIssue("cldrbug:15355", "ks_Deva month names use chars not in exemplars")) {
                     end = 0;
                 }
+                if (uprv_strncmp(currLoc,"kxv",3) == 0 &&  // Unnecessarily also skips kxv_Orya/kxv_Telu, that is ok for now
+                        log_knownIssue("CLDR-17203", "Some month names in kxv(_Deva)? use chars not in exemplars")) {
+                    end = 0;
+                }
+                if (uprv_strncmp(currLoc,"ak",2) == 0 &&  
+                        log_knownIssue("CLDR-17852", "Some month names in ax(_GH) use chars not in exemplars")) {
+                    end = 0;
+                }  
 
                 for (idx = 0; idx < end; idx++) {
                     const UChar *fromBundleStr = ures_getStringByIndex(resArray, idx, &langSize, &errorCode);
@@ -1139,8 +1129,7 @@ static void VerifyTranslation(void) {
                if (U_FAILURE(errorCode)) {
                    log_err("ulocdata_getMeasurementSystem failed for locale %s with error: %s \n", currLoc, u_errorName(errorCode));
                } else {
-                   /* MSFT Change: CLDR-MS adds 029 region with US measurement */
-                   if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_LR")!=NULL || strstr(fullLoc, "_029")!=NULL ) {
+                   if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_LR")!=NULL ) {
                        if(measurementSystem != UMS_US){
                             log_err("ulocdata_getMeasurementSystem did not return expected data for locale %s \n", currLoc);
                        }
@@ -1158,11 +1147,10 @@ static void VerifyTranslation(void) {
                if (U_FAILURE(errorCode)) {
                    log_err("ulocdata_getPaperSize failed for locale %s with error: %s \n", currLoc, u_errorName(errorCode));
                } else {
-                   /* MSFT Change: CLDR-MS adds 029 region with US paper size */
                    if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_BZ")!=NULL || strstr(fullLoc, "_CA")!=NULL || strstr(fullLoc, "_CL")!=NULL ||
                         strstr(fullLoc, "_CO")!=NULL || strstr(fullLoc, "_CR")!=NULL || strstr(fullLoc, "_GT")!=NULL || strstr(fullLoc, "_MX")!=NULL ||
                         strstr(fullLoc, "_NI")!=NULL || strstr(fullLoc, "_PA")!=NULL || strstr(fullLoc, "_PH")!=NULL || strstr(fullLoc, "_PR")!=NULL ||
-                        strstr(fullLoc, "_SV")!=NULL || strstr(fullLoc, "_VE")!=NULL || strstr(fullLoc, "_029")!=NULL ) {
+                        strstr(fullLoc, "_SV")!=NULL || strstr(fullLoc, "_VE")!=NULL ) {
                        if (height != 279 || width != 216) {
                             log_err("ulocdata_getPaperSize did not return expected data for locale %s \n", currLoc);
                        }
@@ -1281,20 +1269,7 @@ static void TestExemplarSet(void){
             }
 
             if (existsInScript == false){
-                /* MSFT Change */
-                if (uprv_strncmp(locale, "oc", 2) == 0 || uprv_strncmp(locale, "oc_FR", 5) == 0 ||
-                    uprv_strncmp(locale, "jv_Java", 7) == 0 || uprv_strncmp(locale, "jv_Java_ID", 10) == 0 ||
-                    uprv_strncmp(locale, "la", 2) == 0 || uprv_strncmp(locale, "la_VA", 6) == 0 ||
-                    uprv_strncmp(locale, "pap", 3) == 0 || uprv_strncmp(locale, "pap_029", 7) == 0 ||
-                    uprv_strncmp(locale, "tzm_Arab", 8) == 0 || uprv_strncmp(locale, "tzm_Arab_MA", 11) == 0 ||
-                    uprv_strncmp(locale, "tzm_Tfng", 8) == 0 || uprv_strncmp(locale, "tzm_Tfng_MA", 11) == 0
-                ) {
-                    log_knownIssue("0", "MSFT Change: skipping test for %s which has issue due to CLDR seed data.", locale);
-                    continue;
-                } else {
-                    log_err("ExemplarSet containment failed for locale : %s\n", locale);
-                }
-                /* MSFT Change: End */
+                log_err("ExemplarSet containment failed for locale : %s\n", locale);
             }
         }
         assertTrue("case-folded is a superset",
@@ -1398,6 +1373,14 @@ static void TestCoverage(void){
         if (U_FAILURE(status)){
             log_err("ulocdata_getDelimiter error with type %d", types[i]);
         }
+    }
+
+    // ICU-22149: Cover this code path even if the lang bundle is not present
+    UErrorCode localStatus = U_ZERO_ERROR;
+    UChar pattern[20];
+    ulocdata_getLocaleDisplayPattern(uld, pattern, 20, &localStatus);
+    if (U_FAILURE(localStatus) && localStatus != U_MISSING_RESOURCE_ERROR) {
+        log_err("ulocdata_getLocaleDisplayPattern coverage error %s", u_errorName(localStatus));
     }
 
     sub = ulocdata_getNoSubstitute(uld);

@@ -3,15 +3,6 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 supplementalData:table(nofallback){
     CurrencyMap{
-        029{
-            {
-                from:intvector{
-                    -507,
-                    95619072,
-                }
-                id{"XCD"}
-            }
-        }
         AC{
             {
                 from:intvector{
@@ -1168,6 +1159,10 @@ supplementalData:table(nofallback){
                     1468155904,
                 }
                 id{"CUC"}
+                to:intvector{
+                    374,
+                    -1067136001,
+                }
             }
             {
                 from:intvector{
@@ -1204,10 +1199,21 @@ supplementalData:table(nofallback){
         CW{
             {
                 from:intvector{
+                    405,
+                    -363122176,
+                }
+                id{"XCG"}
+            }
+            {
+                from:intvector{
                     299,
                     -1821388800,
                 }
                 id{"ANG"}
+                to:intvector{
+                    407,
+                    -1004256769,
+                }
             }
         }
         CX{
@@ -1951,7 +1957,7 @@ supplementalData:table(nofallback){
             {
                 from:intvector{
                     389,
-                    1788921856,
+                    1785321856,
                 }
                 id{"EUR"}
             }
@@ -1963,7 +1969,7 @@ supplementalData:table(nofallback){
                 id{"HRK"}
                 to:intvector{
                     389,
-                    -1210045441,
+                    -1300045441,
                 }
             }
             {
@@ -3793,8 +3799,8 @@ supplementalData:table(nofallback){
                 }
                 id{"SLL"}
                 to:intvector{
-                    391,
-                    974987263,
+                    396,
+                    -1034816513,
                 }
             }
             {
@@ -3954,10 +3960,21 @@ supplementalData:table(nofallback){
         SX{
             {
                 from:intvector{
+                    405,
+                    -363122176,
+                }
+                id{"XCG"}
+            }
+            {
+                from:intvector{
                     299,
                     -1821388800,
                 }
                 id{"ANG"}
+                to:intvector{
+                    407,
+                    -1004256769,
+                }
             }
         }
         SY{
@@ -4710,6 +4727,13 @@ supplementalData:table(nofallback){
         ZW{
             {
                 from:intvector{
+                    400,
+                    1286681600,
+                }
+                id{"ZWG"}
+            }
+            {
+                from:intvector{
                     288,
                     -1751148544,
                 }
@@ -4722,8 +4746,8 @@ supplementalData:table(nofallback){
                 }
                 id{"ZWL"}
                 to:intvector{
-                    288,
-                    -1664748545,
+                    401,
+                    -1428052993,
                 }
             }
             {

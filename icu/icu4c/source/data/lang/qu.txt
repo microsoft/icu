@@ -22,12 +22,13 @@ qu{
         ain{"Ainu"}
         ak{"Akan Simi"}
         ale{"Aleut"}
-        alt{"ltai Meridional"}
+        alt{"Altai Meridional"}
         am{"Amarico Simi"}
         an{"Aragonesa"}
         ann{"Obolo Simi"}
         anp{"Angika"}
         ar{"Arabe Simi"}
+        ar_001{"Musuq Estandar Arabe Simi"}
         arn{"Mapuche Simi"}
         arp{"Arapaho"}
         ars{"Árabe Najdi Simi"}
@@ -46,6 +47,7 @@ qu{
         bem{"Bemba Simi"}
         bez{"Bena Simi"}
         bg{"Bulgaro Simi"}
+        bgc{"Haryanvi"}
         bho{"Bhojpuri"}
         bi{"Bislama"}
         bin{"Bini"}
@@ -107,10 +109,12 @@ qu{
         en{"Ingles Simi"}
         eo{"Esperanto Simi"}
         es{"Español Simi"}
+        es_419{"Español Simi (Latino América)"}
         et{"Estonio Simi"}
         eu{"Euskera Simi"}
         ewo{"Ewondo Simi"}
         fa{"Persa Simi"}
+        fa_AF{"Dari Simi"}
         ff{"Fulah Simi"}
         fi{"Fines Simi"}
         fil{"Filipino Simi"}
@@ -276,6 +280,7 @@ qu{
         nia{"Nias Simi"}
         niu{"Niuean Simi"}
         nl{"Neerlandes Simi"}
+        nl_BE{"Flamenco Simi"}
         nmg{"Kwasio Ngumba Simi"}
         nn{"Noruego Nynorsk Simi"}
         nnh{"Ngiemboon Simi"}
@@ -311,6 +316,7 @@ qu{
         pt{"Portugues Simi"}
         qu{"Runasimi"}
         quc{"Kʼicheʼ Simi"}
+        raj{"Rajasthani"}
         rap{"Rapanui Simi"}
         rar{"Rarotongan Simi"}
         rhg{"Rohingya Simi"}
@@ -361,6 +367,7 @@ qu{
         suk{"Sukuma Simi"}
         sv{"Sueco Simi"}
         sw{"Suajili Simi"}
+        sw_CD{"Suajili Simi (Congo (RDC))"}
         swb{"Comorian Simi"}
         syr{"Siriaco Simi"}
         ta{"Tamil Simi"}
@@ -422,10 +429,30 @@ qu{
         yue{"Cantonés Simi"}
         zgh{"Bereber Marroquí Estándar Simi"}
         zh{"Chino Simi"}
+        zh_Hans{"Chino Simplificado Simi"}
+        zh_Hant{"Chino Tradicional Simi"}
         zu{"Isizulu Simi"}
         zun{"Zuni Simi"}
         zxx{"Manaraq simi yachana"}
         zza{"Zaza Simi"}
+    }
+    Languages%long{
+        zh_Hans{"Chino Mandarín Simplificado Simi"}
+        zh_Hant{"Chino Mandarín Tradicional Simi"}
+    }
+    Languages%menu{
+        ckb{"Kurdo Simi, Chawpi"}
+        yue{"Chino Cantonés Simi"}
+        zh{"Chino Mandarín Simi"}
+    }
+    Languages%short{
+        az{"Azerí Simi"}
+        en_GB{"Ingles Simi (GB)"}
+        en_US{"Ingles Simi (US)"}
+    }
+    Languages%variant{
+        ckb{"Kurdo Simi, Sorani"}
+        hi_Latn{"Hinglish Simi"}
     }
     Scripts{
         Adlm{"Adlam Simi"}
@@ -453,7 +480,6 @@ qu{
         Hebr{"Hebreo Simi"}
         Hira{"Hiragana"}
         Hrkt{"Japones silabico sananpakuna"}
-        Jamo{"Jamo"}
         Jpan{"Japones Simi"}
         Kana{"Katakana"}
         Khmr{"Khmer"}
@@ -501,12 +527,13 @@ qu{
             ethiopic-amete-alem{"Etíope Amete Alem Intiwatana"}
             gregorian{"Gregoriano Intiwatana"}
             hebrew{"Hebreo Intiwatana"}
-            islamic{"Islamico Intiwatana"}
-            islamic-civil{"Islamico Intiwatana (tabular, época civil)"}
-            islamic-umalqura{"Islamico Intiwatana (Umm al-Qura)"}
+            islamic{"Hijri Intiwatana"}
+            islamic-civil{"Hijri Intiwatana (tabular, epoca civil)"}
+            islamic-umalqura{"Hijri Intiwatana (Umm al-Qura)"}
             iso8601{"ISO-8601 Intiwatana"}
             japanese{"Japones Intiwatana"}
             persian{"Persa Intiwatana"}
+            roc{"Minguo Intiwatana"}
         }
         cf{
             account{"Yupana Qullqi imayna kaynin"}

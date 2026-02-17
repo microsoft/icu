@@ -81,7 +81,7 @@ void CompoundTransliteratorTest::TestConstruction(){
        delete cpdtrans;
 
        CompoundTransliterator *cpdtrans2=new CompoundTransliterator(transarray[i], i+1);
-       if(cpdtrans2 == 0){
+       if (cpdtrans2 == nullptr) {
            errln("Construction using CompoundTransliterator(Transliterator* const transliterators[], "
                            "int32_t count, UnicodeFilter* adoptedFilter = 0)  failed");
            continue;
@@ -100,10 +100,10 @@ void CompoundTransliteratorTest::TestConstruction(){
    {
     /*Test Jitterbug 914 */
     UErrorCode err = U_ZERO_ERROR;
-    CompoundTransliterator  cpdTrans(UnicodeString("Latin-Hangul"),UTRANS_REVERSE,NULL,parseError,err);
+    CompoundTransliterator  cpdTrans(UnicodeString("Latin-Hangul"),UTRANS_REVERSE,nullptr,parseError,err);
     UnicodeString newID =cpdTrans.getID();
     if(newID!=UnicodeString("Hangul-Latin")){
-        errln(UnicodeString("Test for Jitterbug 914 for cpdTrans(UnicodeString(\"Latin-Hangul\"),UTRANS_REVERSE,NULL,err) failed"));
+        errln(UnicodeString("Test for Jitterbug 914 for cpdTrans(UnicodeString(\"Latin-Hangul\"),UTRANS_REVERSE,nullptr,err) failed"));
     }
    }
    delete t1;
@@ -131,12 +131,12 @@ void CompoundTransliteratorTest::TestCloneEqual(){
         return;
     }
     CompoundTransliterator *copyct1=new CompoundTransliterator(*ct1);
-    if(copyct1 == 0){
+    if (copyct1 == nullptr) {
         errln("copy construction failed");
         return;
     }
     CompoundTransliterator *copyct2=new CompoundTransliterator(*ct2);
-    if(copyct2 == 0){
+    if (copyct2 == nullptr) {
         errln("copy construction failed");
         return;
     }
@@ -194,7 +194,7 @@ void CompoundTransliteratorTest::TestGetCount(){
     UParseError parseError;
     CompoundTransliterator *ct1=new CompoundTransliterator("Halfwidth-Fullwidth;Fullwidth-Halfwidth", parseError, status);
     CompoundTransliterator *ct2=new CompoundTransliterator("Any-Hex;Hex-Any;Cyrillic-Latin;Latin-Cyrillic", parseError, status);
-    CompoundTransliterator *ct3=(CompoundTransliterator*)ct1;
+    CompoundTransliterator *ct3=ct1;
     if (U_FAILURE(status)) {
         dataerrln("FAILED: CompoundTransliterator constructor failed - %s", u_errorName(status));
         return;
@@ -216,7 +216,7 @@ void CompoundTransliteratorTest::TestGetCount(){
 
     /* Quick test getTargetSet(), only test that it doesn't die.  TODO:  a better test. */
     UnicodeSet ts;
-    UnicodeSet *retUS = NULL;
+    UnicodeSet *retUS = nullptr;
     retUS = &ct1->getTargetSet(ts);
     if (retUS != &ts || ts.size() == 0) {
         errln("CompoundTransliterator::getTargetSet() failed.\n");
@@ -224,7 +224,7 @@ void CompoundTransliteratorTest::TestGetCount(){
 
     /* Quick test getSourceSet(), only test that it doesn't die.  TODO:  a better test. */
     UnicodeSet ss;
-    retUS = NULL;
+    retUS = nullptr;
     retUS = &ct1->getSourceSet(ss);
     if (retUS != &ss || ss.size() == 0) {
         errln("CompoundTransliterator::getSourceSet() failed.\n");
@@ -277,8 +277,8 @@ void CompoundTransliteratorTest::TestGetSetAdoptTransliterator(){
 
     ct1->setTransliterators(transarray, count);
     if(ct1->getCount() != count || ct1->getID() != ID2){
-        errln((UnicodeString)"Error: setTransliterators() failed.\n\t Count:- expected->" + count + (UnicodeString)".  got->" + ct1->getCount() +
-                                                   (UnicodeString)"\n\tID   :- expected->" + ID2 + (UnicodeString)".  got->" + ct1->getID());
+        errln(UnicodeString("Error: setTransliterators() failed.\n\t Count:- expected->") + count + UnicodeString(".  got->") + ct1->getCount() +
+                                                   UnicodeString("\n\tID   :- expected->") + ID2 + UnicodeString(".  got->") + ct1->getID());
     }
     else{
         logln("OK: setTransliterators() passed"); 
@@ -297,14 +297,14 @@ void CompoundTransliteratorTest::TestGetSetAdoptTransliterator(){
     }*/
     logln("Testing adoptTransliterator() API of CompoundTransliterator");
     UnicodeString ID3("Latin-Katakana");
-    Transliterator **transarray2=(Transliterator **)uprv_malloc(sizeof(Transliterator*)*1);
+    Transliterator **transarray2=static_cast<Transliterator **>(uprv_malloc(sizeof(Transliterator*)*1));
     transarray2[0] = Transliterator::createInstance(ID3,UTRANS_FORWARD,parseError,status);
-    if (transarray2[0] != 0) {
+    if (transarray2[0] != nullptr) {
         ct1->adoptTransliterators(transarray2, 1);
     }
     if(ct1->getCount() != 1 || ct1->getID() != ID3){
-        errln((UnicodeString)"Error: adoptTransliterators() failed.\n\t Count:- expected->1" + (UnicodeString)".  got->" + ct1->getCount() +
-                                                   (UnicodeString)"\n\tID   :- expected->" + ID3 + (UnicodeString)".  got->" + ct1->getID());
+        errln(UnicodeString("Error: adoptTransliterators() failed.\n\t Count:- expected->1") + UnicodeString(".  got->") + ct1->getCount() +
+                                                   UnicodeString("\n\tID   :- expected->") + ID3 + UnicodeString(".  got->") + ct1->getID());
     }
     else{
         logln("OK: adoptTranslterator() passed");
@@ -320,7 +320,7 @@ void CompoundTransliteratorTest::TestGetSetAdoptTransliterator(){
 /**
  * Splits a UnicodeString
  */
-UnicodeString* CompoundTransliteratorTest::split(const UnicodeString& str, UChar seperator, int32_t& count) {
+UnicodeString* CompoundTransliteratorTest::split(const UnicodeString& str, char16_t seperator, int32_t& count) {
 
     //get the count
     int32_t i;

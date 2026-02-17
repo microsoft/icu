@@ -37,6 +37,7 @@ to{
         ann{"lea fakaʻopolo"}
         anp{"lea fakaʻangika"}
         ar{"lea fakaʻalepea"}
+        ar_001{"lea fakaʻalepea (māmani)"}
         arc{"lea fakaʻalāmiti"}
         arn{"lea fakamapuse"}
         aro{"lea fakaʻalaona"}
@@ -55,7 +56,7 @@ to{
         avk{"lea fakakotava"}
         awa{"lea fakaʻauati"}
         ay{"lea fakaʻaimala"}
-        az{"lea fakaʻasapaisani"}
+        az{"lea fakaʻasepaisani"}
         ba{"lea fakapasikili"}
         bal{"lea fakapalusi"}
         ban{"lea fakapali"}
@@ -72,6 +73,7 @@ to{
         bfd{"lea fakapafuti"}
         bfq{"lea fakapataka"}
         bg{"lea fakapulukalia"}
+        bgc{"lea fakahalaiānivi"}
         bgn{"lea fakapalusi-hihifo"}
         bho{"lea fakaposipuli"}
         bi{"lea fakapisilama"}
@@ -122,7 +124,7 @@ to{
         cps{"lea fakakapiseno"}
         cr{"lea fakakelī"}
         crg{"lea fakametisifi"}
-        crh{"lea fakatoake-kilimea"}
+        crh{"lea fakatatali-kilimea"}
         crj{"lea fakakilī-tongahahake"}
         crk{"lea fakakilī-toafa"}
         crl{"lea fakakilī-tokelauhahake"}
@@ -140,6 +142,8 @@ to{
         dar{"lea fakatalakuā"}
         dav{"lea fakataita"}
         de{"lea fakasiamane"}
+        de_AT{"lea fakasiamane-ʻaositulia"}
+        de_CH{"lea fakasiamane-hake-suisilani"}
         del{"lea fakatelauale"}
         den{"lea fakasilave"}
         dgr{"lea fakatōkelipi"}
@@ -164,15 +168,23 @@ to{
         el{"lea fakakalisi"}
         elx{"lea fakaʻelamite"}
         en{"lea fakapālangi"}
+        en_AU{"lea fakapālangi-ʻaositelēlia"}
+        en_CA{"lea fakapālangi-kānata"}
+        en_GB{"lea fakapilitānia"}
+        en_US{"lea fakapālangi-ʻamelika"}
         enm{"lea fakapālangi-lotoloto"}
         eo{"lea fakaʻesipulanito"}
         es{"lea fakasipēnisi"}
+        es_419{"lea fakasipeini-lātini-ʻamelika"}
+        es_ES{"lea fakasipeini-ʻeulope"}
+        es_MX{"lea fakasipeini-mekisikou"}
         esu{"lea fakaiūpiki-loloto"}
         et{"lea fakaʻesitōnia"}
         eu{"lea fakapāsiki"}
         ewo{"lea fakaʻeuōnito"}
         ext{"lea fakaʻekisitematula"}
         fa{"lea fakapēsia"}
+        fa_AF{"lea fakapēsia (ʻtalī)"}
         fan{"lea fakafangi"}
         fat{"lea fakafanitē"}
         ff{"lea fakafulā"}
@@ -183,6 +195,8 @@ to{
         fo{"lea fakafaloe"}
         fon{"lea fakafōngi"}
         fr{"lea fakafalanisē"}
+        fr_CA{"lea fakafalanisē-kānata"}
+        fr_CH{"lea fakafalanisē-suisilani"}
         frc{"lea fakafalanisē-kasuni"}
         frm{"lea fakafalanisē-lotoloto"}
         fro{"lea fakafalanisē-motuʻa"}
@@ -206,7 +220,6 @@ to{
         gmh{"lea fakasiamane-hake-lotoloto"}
         gn{"lea fakakualani"}
         goh{"lea fakasiamane-hake-motuʻa"}
-        gom{"lea fakakonikanī-koani"}
         gon{"lea fakakonitī"}
         gor{"lea fakakolonitalo"}
         got{"lea fakakotika"}
@@ -226,6 +239,7 @@ to{
         hax{"lea fakahaita-tonga"}
         he{"lea fakahepelū"}
         hi{"lea fakahinitī"}
+        hi_Latn{"lea fakahinitī (fakalatina)"}
         hif{"lea fakahinitī-fisi"}
         hil{"lea fakahilikainoni"}
         hit{"lea fakahitite"}
@@ -320,7 +334,7 @@ to{
         la{"lea fakalatina"}
         lad{"lea fakalatino"}
         lag{"lea fakalangi"}
-        lah{"lea fakalānita"}
+        lah{"lea fakapunisapi-hihifoi"}
         lam{"lea fakalamipā"}
         lb{"lea fakalakisimipeki"}
         lez{"lea fakalesikia"}
@@ -369,7 +383,7 @@ to{
         mgh{"lea fakamakūa-meʻeto"}
         mgo{"lea fakametā"}
         mh{"lea fakamāsolo"}
-        mi{"lea fakamauli"}
+        mi{"lea fakamāuli"}
         mic{"lea fakamikemaki"}
         min{"lea fakaminangikapau"}
         mk{"lea fakamasitōnia"}
@@ -401,6 +415,7 @@ to{
         nb{"lea fakanouaē-pokimali"}
         nd{"lea fakanetepele-tokelau"}
         nds{"lea fakasiamane-hifo"}
+        nds_NL{"lea fakasakisoni-hifo"}
         ne{"lea fakanepali"}
         new{"lea fakaneuali"}
         ng{"lea fakanetongikā"}
@@ -408,6 +423,7 @@ to{
         niu{"lea fakaniuē"}
         njo{"lea fakaʻaonasa"}
         nl{"lea fakahōlani"}
+        nl_BE{"lea fakahōlani-pelesiume"}
         nmg{"lea fakakuasio"}
         nn{"lea fakanoauē-ninosiki"}
         nnh{"lea fakangiemipōni"}
@@ -474,6 +490,7 @@ to{
         rm{"lea fakalaito-lomēnia"}
         rn{"lea fakaluaniti"}
         ro{"lea fakalōmenia"}
+        ro_MD{"lea fakamolitāvia"}
         rof{"lea fakalomipō"}
         rom{"lea fakalomani"}
         rtm{"lea fakalotuma"}
@@ -485,7 +502,7 @@ to{
         rwk{"lea fakaluā"}
         sa{"lea fakasanisukuliti"}
         sad{"lea fakasanitaue"}
-        sah{"lea fakasaka"}
+        sah{"lea fakaiakuti"}
         sam{"lea fakasamalitani-ʻalāmiti"}
         saq{"lea fakasamipulu"}
         sas{"lea fakasasaki"}
@@ -508,6 +525,7 @@ to{
         sg{"lea fakasangikō"}
         sga{"lea fakaʻaelani-motuʻa"}
         sgs{"lea fakasamositia"}
+        sh{"lea fakakuloisia-sēpia"}
         shi{"lea fakataselihiti"}
         shn{"lea fakasiani"}
         shu{"lea fakaʻalepea-sāti"}
@@ -542,6 +560,7 @@ to{
         sux{"lea fakasumelia"}
         sv{"lea fakasuēteni"}
         sw{"lea fakasuahili"}
+        sw_CD{"lea fakasuahili-kongikō"}
         swb{"lea fakakomolo"}
         syc{"lea fakasuliāiā-muʻa"}
         syr{"lea fakasuliāiā"}
@@ -636,10 +655,28 @@ to{
         zen{"lea fakasenaka"}
         zgh{"lea fakatamasaiti-moloko"}
         zh{"lea fakasiaina"}
+        zh_Hans{"lea fakasiaina-fakafaingofua"}
+        zh_Hant{"lea fakasiaina-tukufakaholo"}
         zu{"lea fakasulu"}
         zun{"lea fakasuni"}
         zxx{"ʻikai ha lea"}
         zza{"lea fakasāsā"}
+    }
+    Languages%long{
+        zh_Hans{"lea fakasiaina-mānitali-fakafaingofua"}
+        zh_Hant{"lea fakasiaina-mānitali-tukufakaholo"}
+    }
+    Languages%menu{
+        yue{"lea fakakuangitongi (Siaina)"}
+        zh{"lea fakasiaina-mānitali"}
+    }
+    Languages%short{
+        az{"lea fakaʻaseli"}
+        en_US{"lea fakapālangi-ʻAmelika"}
+    }
+    Languages%variant{
+        ckb{"lea fakakūtisi-solani"}
+        hi_Latn{"lea fakahinitī (fakapilitānia)"}
     }
     Scripts{
         Adlm{"tohinima fakaʻatilami"}
@@ -691,8 +728,8 @@ to{
         Hang{"tohinima fakakōlea-hāngūlu"}
         Hani{"tohinima fakasiaina"}
         Hano{"tohinima fakahanunōʻo"}
-        Hans{"tohinima fakasiaina-fakafaingofua"}
-        Hant{"tohinima fakasiaina-tukufakaholo"}
+        Hans{"fakafaingofua"}
+        Hant{"tukufakaholo"}
         Hebr{"tohinima fakahepelū"}
         Hira{"tohinima fakasiapani-hilakana"}
         Hluw{"tohinima tongitapu-fakaʻanatolia"}
@@ -813,6 +850,10 @@ to{
         Zyyy{"tohinima fakatatau"}
         Zzzz{"tohinima taʻeʻiloa"}
     }
+    Scripts%stand-alone{
+        Hans{"tohinima fakasiaina-fakafaingofua"}
+        Hant{"tohinima fakasiaina-tukufakaholo"}
+    }
     Types{
         calendar{
             buddhist{"fakaputa"}
@@ -830,6 +871,7 @@ to{
             iso8601{"faka-iso8601"}
             japanese{"fakasiapani"}
             persian{"fakapēsia"}
+            roc{"fakalepupelika siaina"}
         }
         cf{
             account{"anga paʻanga-kalake"}
@@ -904,7 +946,6 @@ to{
     }
     characterLabelPattern{
         all{"{0} — kotoa"}
-        category-list{"{0}: {1}"}
         compatibility{"{0} — hoa"}
         enclosed{"{0} — kāpui"}
         extended{"{0} — toloi"}
@@ -922,10 +963,5 @@ to{
         language{"Lea: {0}"}
         script{"Tohinima: {0}"}
         territory{"Feituʻu: {0}"}
-    }
-    localeDisplayPattern{
-        keyTypePattern{"{0}: {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }

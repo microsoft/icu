@@ -9,19 +9,21 @@
 
 #include <stdio.h>
 
-#include "LETypes.h"
+#include "layout/LETypes.h"
 #include "FontObject.h"
-#include "LESwaps.h"
+#include "layout/LESwaps.h"
+
+using icu::LESwaps;
 
 FontObject::FontObject(char *fileName)
-  : directory(NULL), numTables(0), searchRange(0),entrySelector(0),
-    cmapTable(NULL), cmSegCount(0), cmSearchRange(0), cmEntrySelector(0),
-    cmEndCodes(NULL), cmStartCodes(NULL), cmIdDelta(0), cmIdRangeOffset(0),
-    headTable(NULL), hmtxTable(NULL), numGlyphs(0), numOfLongHorMetrics(0), file(NULL)
+  : directory(nullptr), numTables(0), searchRange(0),entrySelector(0),
+    cmapTable(nullptr), cmSegCount(0), cmSearchRange(0), cmEntrySelector(0),
+    cmEndCodes(nullptr), cmStartCodes(nullptr), cmIdDelta(nullptr), cmIdRangeOffset(nullptr),
+    headTable(nullptr), hmtxTable(nullptr), numGlyphs(0), numOfLongHorMetrics(0), file(nullptr)
 {
     file = fopen(fileName, "rb");
 
-    if (file == NULL) {
+    if (file == nullptr) {
         printf("?? Couldn't open %s", fileName);
         return;
     }
@@ -37,7 +39,7 @@ FontObject::FontObject(char *fileName)
 
     int dirSize = sizeof tempDir + ((numTables - ANY_NUMBER) * sizeof(DirectoryEntry));
 
-    directory = (SFNTDirectory *) new char[dirSize];
+    directory = reinterpret_cast<SFNTDirectory*>(new char[dirSize]);
 
     fseek(file, 0L, SEEK_SET);
     fread(directory, sizeof(char), dirSize, file);
@@ -54,9 +56,9 @@ FontObject::~FontObject()
     delete[] hmtxTable;
 }
 
-void FontObject::deleteTable(void *table)
+void FontObject::deleteTable(void* table)
 {
-    delete[] (char *) table;
+    delete[] static_cast<char*>(table);
 }
 
 DirectoryEntry *FontObject::findTable(LETag tag)
@@ -80,16 +82,16 @@ DirectoryEntry *FontObject::findTable(LETag tag)
         return &directory->tableDirectory[table];
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void *FontObject::readTable(LETag tag, le_uint32 *length)
 {
     DirectoryEntry *entry = findTable(tag);
 
-    if (entry == NULL) {
+    if (entry == nullptr) {
         *length = 0;
-        return NULL;
+        return nullptr;
     }
 
     *length = SWAPL(entry->length);
@@ -106,13 +108,13 @@ CMAPEncodingSubtable *FontObject::findCMAP(le_uint16 platformID, le_uint16 platf
 {
     LETag cmapTag = 0x636D6170; // 'cmap'
 
-    if (cmapTable == NULL) {
+    if (cmapTable == nullptr) {
         le_uint32 length;
 
-        cmapTable = (CMAPTable *) readTable(cmapTag, &length);
+        cmapTable = static_cast<CMAPTable*>(readTable(cmapTag, &length));
     }
 
-    if (cmapTable != NULL) {
+    if (cmapTable != nullptr) {
         le_uint16 i;
         le_uint16 nSubtables = SWAPW(cmapTable->numberSubtables);
 
@@ -122,19 +124,19 @@ CMAPEncodingSubtable *FontObject::findCMAP(le_uint16 platformID, le_uint16 platf
 
             if (SWAPW(esh->platformID) == platformID &&
                 SWAPW(esh->platformSpecificID) == platformSpecificID) {
-                return (CMAPEncodingSubtable *) ((char *) cmapTable + SWAPL(esh->encodingOffset));
+                return reinterpret_cast<CMAPEncodingSubtable*>(reinterpret_cast<char*>(cmapTable) + SWAPL(esh->encodingOffset));
             }
         }
     }
 
-    return NULL;
+    return nullptr;
 }
 
 void FontObject::initUnicodeCMAP()
 {
     CMAPEncodingSubtable *encodingSubtable = findCMAP(3, 1);
 
-    if (encodingSubtable == 0 ||
+    if (encodingSubtable == nullptr ||
         SWAPW(encodingSubtable->format) != 4) {
         printf("Can't find unicode 'cmap'");
         return;
@@ -158,7 +160,7 @@ LEGlyphID FontObject::unicodeToGlyph(LEUnicode32 unicode32)
         return 0;
     }
 
-    LEUnicode16 unicode = (LEUnicode16) unicode32;
+    LEUnicode16 unicode = static_cast<LEUnicode16>(unicode32);
     le_uint16 index = 0;
     le_uint16 probe = 1 << cmEntrySelector;
     LEGlyphID result = 0;
@@ -177,11 +179,11 @@ LEGlyphID FontObject::unicodeToGlyph(LEUnicode32 unicode32)
 
     if (unicode >= SWAPW(cmStartCodes[index]) && unicode <= SWAPW(cmEndCodes[index])) {
         if (cmIdRangeOffset[index] == 0) {
-            result = (LEGlyphID) unicode;
+            result = static_cast<LEGlyphID>(unicode);
         } else {
             le_uint16 offset = unicode - SWAPW(cmStartCodes[index]);
             le_uint16 rangeOffset = SWAPW(cmIdRangeOffset[index]);
-            le_uint16 *glyphIndexTable = (le_uint16 *) ((char *) &cmIdRangeOffset[index] + rangeOffset);
+            le_uint16* glyphIndexTable = reinterpret_cast<le_uint16*>(reinterpret_cast<char*>(&cmIdRangeOffset[index]) + rangeOffset);
 
             result = SWAPW(glyphIndexTable[offset]);
         }
@@ -196,11 +198,11 @@ LEGlyphID FontObject::unicodeToGlyph(LEUnicode32 unicode32)
 
 le_uint16 FontObject::getUnitsPerEM()
 {
-    if (headTable == NULL) {
+    if (headTable == nullptr) {
         LETag headTag = 0x68656164; // 'head'
         le_uint32 length;
 
-        headTable = (HEADTable *) readTable(headTag, &length);
+        headTable = static_cast<HEADTable*>(readTable(headTag, &length));
     }
 
     return SWAPW(headTable->unitsPerEm);
@@ -208,22 +210,22 @@ le_uint16 FontObject::getUnitsPerEM()
 
 le_uint16 FontObject::getGlyphAdvance(LEGlyphID glyph)
 {
-    if (hmtxTable == NULL) {
+    if (hmtxTable == nullptr) {
         LETag maxpTag = 0x6D617870; // 'maxp'
         LETag hheaTag = 0x68686561; // 'hhea'
         LETag hmtxTag = 0x686D7478; // 'hmtx'
         le_uint32 length;
         HHEATable *hheaTable;
-        MAXPTable *maxpTable = (MAXPTable *) readTable(maxpTag, &length);
+        MAXPTable* maxpTable = static_cast<MAXPTable*>(readTable(maxpTag, &length));
 
         numGlyphs = SWAPW(maxpTable->numGlyphs);
         deleteTable(maxpTable);
 
-        hheaTable = (HHEATable *) readTable(hheaTag, &length);
+        hheaTable = static_cast<HHEATable*>(readTable(hheaTag, &length));
         numOfLongHorMetrics = SWAPW(hheaTable->numOfLongHorMetrics);
         deleteTable(hheaTable);
 
-        hmtxTable = (HMTXTable *) readTable(hmtxTag, &length);
+        hmtxTable = static_cast<HMTXTable*>(readTable(hmtxTag, &length));
     }
 
     le_uint16 index = glyph;

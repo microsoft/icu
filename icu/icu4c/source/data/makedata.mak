@@ -12,14 +12,14 @@
 
 ##############################################################################
 # Keep the following in sync with the version - see common/unicode/uvernum.h
-U_ICUDATA_NAME=icudt72
+U_ICUDATA_NAME=icudt76
 ##############################################################################
 !IF "$(UWP)" == "UWP"
 # Optionally change the name of the data file for the UWP version.
-U_ICUDATA_NAME=icudt72
+U_ICUDATA_NAME=icudt76
 !ENDIF
 U_ICUDATA_ENDIAN_SUFFIX=l
-UNICODE_VERSION=15.1
+UNICODE_VERSION=16.0
 ICU_LIB_TARGET=$(DLL_OUTPUT)\$(U_ICUDATA_NAME).dll
 
 #  ICUMAKE
@@ -33,7 +33,7 @@ ICU_LIB_TARGET=$(DLL_OUTPUT)\$(U_ICUDATA_NAME).dll
 !ENDIF
 !MESSAGE ICU data make path is $(ICUMAKE)
 
-!IF [python3 -c "exit(0)"]!=0
+!IF [py -3 -c "exit(0)"]!=0
 !MESSAGE Information: Unable to find Python 3. Data will fail to build from source.
 !ENDIF
 
@@ -302,7 +302,7 @@ $(TOOLS_TS): "$(ICUTOOLS)\genrb\$(CFGTOOLS)\genrb.exe" "$(ICUTOOLS)\gencnval\$(C
 $(COREDATA_TS):
 	@cd "$(ICUSRCDATA)"
 	set PYTHONPATH=$(ICUP)\source\python;%PYTHONPATH%
-	python3 -B -m icutools.databuilder \
+	py -3 -B -m icutools.databuilder \
 		--mode windows-exec \
 		--src_dir "$(ICUSRCDATA)" \
 		--tool_dir "$(ICUTOOLS)" \
@@ -330,7 +330,7 @@ uni-core-data: GODATA "$(ICUBLD_PKG)\pnames.icu" "$(ICUBLD_PKG)\uprops.icu" "$(I
 # see icu4j-readme.txt
 
 ICU4J_TZDATA="$(ICUOUT)\icu4j\icutzdata.jar"
-ICU4J_DATA_DIRNAME=com\ibm\icu\impl\data\$(U_ICUDATA_NAME)b
+ICU4J_DATA_DIRNAME=com\ibm\icu\impl\data\icudata
 ICU4J_TZDATA_PATHS=$(ICU4J_DATA_DIRNAME)\zoneinfo64.res $(ICU4J_DATA_DIRNAME)\metaZones.res $(ICU4J_DATA_DIRNAME)\timezoneTypes.res $(ICU4J_DATA_DIRNAME)\windowsZones.res
 
 generate-data: GODATA "$(ICUOUT)\$(ICUPKG).dat" uni-core-data
@@ -362,7 +362,7 @@ generate-data: GODATA "$(ICUOUT)\$(ICUPKG).dat" uni-core-data
 
 ## Compare to:  source\data\Makefile.in and source\test\testdata\Makefile.in
 
-DEBUGUTILITIESDATA_DIR=main\tests\core\src\com\ibm\icu\dev\test\util
+DEBUGUTILITIESDATA_DIR=main\core\src\test\java\com\ibm\icu\dev\test\util
 DEBUGUTILITIESDATA_SRC=DebugUtilitiesData.java
 
 # Build DebugUtilitiesData.java
@@ -513,6 +513,9 @@ CLEAN : GODATA
 	"$(ICUPBIN)\icupkg" -tl $? $@
 
 "$(ICUBLD_PKG)\nfkc_cf.nrm": $(ICUSRCDATA_RELATIVE_PATH)\in\nfkc_cf.nrm
+	"$(ICUPBIN)\icupkg" -tl $? $@
+
+"$(ICUBLD_PKG)\nfkc_scf.nrm": $(ICUSRCDATA_RELATIVE_PATH)\in\nfkc_scf.nrm
 	"$(ICUPBIN)\icupkg" -tl $? $@
 
 "$(ICUBLD_PKG)\uts46.nrm": $(ICUSRCDATA_RELATIVE_PATH)\in\uts46.nrm

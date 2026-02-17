@@ -47,6 +47,7 @@ fr{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabe"}
+        ar_001{"arabe standard moderne"}
         arc{"araméen"}
         arn{"mapuche"}
         aro{"araona"}
@@ -82,6 +83,7 @@ fr{
         bfd{"bafut"}
         bfq{"badaga"}
         bg{"bulgare"}
+        bgc{"haryanvi"}
         bgn{"baloutchi occidental"}
         bho{"bhodjpouri"}
         bi{"bichelamar"}
@@ -90,6 +92,7 @@ fr{
         bjn{"banjar"}
         bkm{"kom"}
         bla{"siksika"}
+        blo{"anii"}
         bm{"bambara"}
         bn{"bengali"}
         bo{"tibétain"}
@@ -150,6 +153,8 @@ fr{
         dar{"dargwa"}
         dav{"taita"}
         de{"allemand"}
+        de_AT{"allemand autrichien"}
+        de_CH{"allemand suisse"}
         del{"delaware"}
         den{"esclave"}
         dgr{"dogrib"}
@@ -174,15 +179,23 @@ fr{
         el{"grec"}
         elx{"élamite"}
         en{"anglais"}
+        en_AU{"anglais australien"}
+        en_CA{"anglais canadien"}
+        en_GB{"anglais britannique"}
+        en_US{"anglais américain"}
         enm{"moyen anglais"}
         eo{"espéranto"}
         es{"espagnol"}
+        es_419{"espagnol d’Amérique latine"}
+        es_ES{"espagnol d’Espagne"}
+        es_MX{"espagnol du Mexique"}
         esu{"youpik central"}
         et{"estonien"}
         eu{"basque"}
         ewo{"éwondo"}
         ext{"estrémègne"}
         fa{"persan"}
+        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"peul"}
@@ -193,6 +206,8 @@ fr{
         fo{"féroïen"}
         fon{"fon"}
         fr{"français"}
+        fr_CA{"français canadien"}
+        fr_CH{"français suisse"}
         frc{"français cadien"}
         frm{"moyen français"}
         fro{"ancien français"}
@@ -216,7 +231,6 @@ fr{
         gmh{"moyen haut-allemand"}
         gn{"guarani"}
         goh{"ancien haut allemand"}
-        gom{"konkani de Goa"}
         gon{"gondi"}
         gor{"gorontalo"}
         got{"gotique"}
@@ -326,6 +340,7 @@ fr{
         kv{"komi"}
         kw{"cornique"}
         kwk{"kwak’wala"}
+        kxv{"kuvi"}
         ky{"kirghize"}
         la{"latin"}
         lad{"ladino"}
@@ -355,7 +370,6 @@ fr{
         lua{"luba-kasaï (ciluba)"}
         lui{"luiseño"}
         lun{"lunda"}
-        luo{"luo"}
         lus{"lushaï"}
         luy{"luyia"}
         lv{"letton"}
@@ -411,13 +425,15 @@ fr{
         nb{"norvégien bokmål"}
         nd{"ndébélé du Nord"}
         nds{"bas-allemand"}
+        nds_NL{"bas-saxon néerlandais"}
         ne{"népalais"}
         new{"newari"}
         ng{"ndonga"}
         nia{"niha"}
         niu{"niuéen"}
-        njo{"Ao"}
+        njo{"ao"}
         nl{"néerlandais"}
+        nl_BE{"flamand"}
         nmg{"ngoumba"}
         nn{"norvégien nynorsk"}
         nnh{"ngiemboon"}
@@ -472,6 +488,8 @@ fr{
         pro{"provençal ancien"}
         ps{"pachto"}
         pt{"portugais"}
+        pt_BR{"portugais brésilien"}
+        pt_PT{"portugais européen"}
         qu{"quechua"}
         quc{"quiché"}
         qug{"quichua du Haut-Chimborazo"}
@@ -484,6 +502,7 @@ fr{
         rm{"romanche"}
         rn{"roundi"}
         ro{"roumain"}
+        ro_MD{"moldave"}
         rof{"rombo"}
         rom{"romani"}
         rtm{"rotuman"}
@@ -518,6 +537,7 @@ fr{
         sg{"sango"}
         sga{"ancien irlandais"}
         sgs{"samogitien"}
+        sh{"serbo-croate"}
         shi{"chleuh"}
         shn{"shan"}
         shu{"arabe tchadien"}
@@ -552,6 +572,7 @@ fr{
         sux{"sumérien"}
         sv{"suédois"}
         sw{"swahili"}
+        sw_CD{"swahili du Congo"}
         swb{"comorien"}
         syc{"syriaque classique"}
         syr{"syriaque"}
@@ -615,6 +636,7 @@ fr{
         vi{"vietnamien"}
         vls{"flamand occidental"}
         vmf{"franconien du Main"}
+        vmw{"macua"}
         vo{"volapük"}
         vot{"vote"}
         vro{"võro"}
@@ -630,6 +652,7 @@ fr{
         xal{"kalmouk"}
         xh{"xhosa"}
         xmf{"mingrélien"}
+        xnr{"kangri"}
         xog{"soga"}
         yao{"yao"}
         yap{"yapois"}
@@ -646,10 +669,29 @@ fr{
         zen{"zenaga"}
         zgh{"amazighe standard marocain"}
         zh{"chinois"}
+        zh_Hans{"chinois simplifié"}
+        zh_Hant{"chinois traditionnel"}
         zu{"zoulou"}
         zun{"zuñi"}
         zxx{"sans contenu linguistique"}
         zza{"zazaki"}
+    }
+    Languages%long{
+        zh_Hans{"mandarin simplifié"}
+        zh_Hant{"mandarin traditionnel"}
+    }
+    Languages%menu{
+        ckb{"kurde sorani"}
+        yue{"chinois cantonais"}
+        zh{"chinois mandarin"}
+    }
+    Languages%short{
+        az{"azéri"}
+    }
+    Languages%variant{
+        hi_Latn{"hinglish"}
+        ps{"pashto"}
+        ug{"ouïgour"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -812,13 +854,14 @@ fr{
             gregorian{"calendrier grégorien"}
             hebrew{"calendrier hébraïque"}
             indian{"calendrier indien"}
-            islamic{"calendrier musulman"}
-            islamic-civil{"calendrier musulman (tabulaire, époque civile)"}
-            islamic-tbla{"calendrier musulman (tabulaire, époque astronomique)"}
-            islamic-umalqura{"calendrier musulman (Umm al Qura)"}
+            islamic{"calendrier hégirien"}
+            islamic-civil{"calendrier hégirien (tabulaire, époque civile)"}
+            islamic-tbla{"calendrier hégirien (tabulaire, époque astronomique)"}
+            islamic-umalqura{"calendrier hégirien (Umm al-Qura)"}
             iso8601{"calendrier ISO 8601"}
             japanese{"calendrier japonais"}
             persian{"calendrier persan"}
+            roc{"calendrier républicain chinois"}
         }
         cf{
             account{"format de devise comptable"}
@@ -872,7 +915,6 @@ fr{
             phonebook{"ordre de l’annuaire"}
             phonetic{"ordre de tri phonétique"}
             pinyin{"ordre pinyin"}
-            reformed{"ordre réformé"}
             search{"recherche générique"}
             searchjl{"rechercher par consonne initiale en hangeul"}
             standard{"ordre de tri standard"}
@@ -992,6 +1034,8 @@ fr{
         compatibility{"{0} — compatibilité"}
         enclosed{"{0} — entouré"}
         extended{"{0} — étendu"}
+        facing-left{"{0} vers la gauche"}
+        facing-right{"{0} vers la droite"}
         historic{"{0} — historique"}
         miscellaneous{"{0} — divers"}
         other{"{0} — autre"}
@@ -1010,7 +1054,5 @@ fr{
     }
     localeDisplayPattern{
         keyTypePattern{"{0} : {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }

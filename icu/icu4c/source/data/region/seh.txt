@@ -93,7 +93,6 @@ seh{
         IE{"Irlanda"}
         IL{"Israel"}
         IN{"Índia"}
-        IO{"Território Britânico do Oceano Índico"}
         IQ{"Iraque"}
         IR{"Irã"}
         IS{"Islândia"}
@@ -165,7 +164,7 @@ seh{
         PM{"Saint Pierre e Miquelon"}
         PN{"Pitcairn"}
         PR{"Porto Rico"}
-        PS{"Autoridade Palestiniana"}
+        PS{"Território da Palestina"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguai"}

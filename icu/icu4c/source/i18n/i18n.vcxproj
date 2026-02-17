@@ -35,7 +35,6 @@
     </Midl>
     <ClCompile>
       <PreprocessorDefinitions>U_ATTRIBUTE_DEPRECATED=;U_I18N_IMPLEMENTATION;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <WarningLevel>Level3</WarningLevel>
       <AdditionalIncludeDirectories>..\..\include;..\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <CompileAs>Default</CompileAs>
@@ -43,8 +42,7 @@
       <PrecompiledHeaderOutputFile>$(OutDir)/icuin.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
       <ObjectFileName>$(OutDir)/</ObjectFileName>
-      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDataBaseFileName>$(OutDir)/icuin$(IcuMajorVersion).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)/icuin.pdb</ProgramDataBaseFileName>
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
@@ -57,36 +55,26 @@
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
       <BrowseInformation>true</BrowseInformation>
-      <!-- MSFT-Change: Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <AdditionalDependencies>icuucd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\$(IcuBinOutputDir)\icuin$(IcuMajorVersion)d.dll</OutputFile>
-      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin$(IcuMajorVersion)d.pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuind.pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuind.lib</ImportLibrary>
-      <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
-      <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalOptions>/DEFAULTLIB:ucrtd.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <!-- Options that are common to all 'Release' project configurations -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Release'">
     <ClCompile>
-      <!-- MSFT-Change: Static link the VCRUNTIME, VCSTARTUP and STL, but dynamic link to the UCRT. -->
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
     </ClCompile>
     <Link>
       <AdditionalDependencies>icuuc.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <OutputFile>..\..\$(IcuBinOutputDir)\icuin$(IcuMajorVersion).dll</OutputFile>
-      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin$(IcuMajorVersion).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin.pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icuin.lib</ImportLibrary>
-      <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
-      <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
-      <AdditionalOptions>/DEFAULTLIB:ucrt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -177,6 +165,7 @@
     <ClCompile Include="hebrwcal.cpp" />
     <ClCompile Include="indiancal.cpp" />
     <ClCompile Include="islamcal.cpp" />
+    <ClCompile Include="iso8601cal.cpp" />
     <ClCompile Include="japancal.cpp" />
     <ClCompile Include="listformatter.cpp" />
     <ClCompile Include="ulistformatter.cpp" />
@@ -184,6 +173,17 @@
     <ClCompile Include="measunit.cpp" />
     <ClCompile Include="measunit_extra.cpp" />
     <ClCompile Include="measure.cpp" />
+    <ClCompile Include="messageformat2.cpp" />
+    <ClCompile Include="messageformat2_arguments.cpp" />
+    <ClCompile Include="messageformat2_checker.cpp" />
+    <ClCompile Include="messageformat2_data_model.cpp" />
+    <ClCompile Include="messageformat2_errors.cpp" />
+    <ClCompile Include="messageformat2_evaluation.cpp" />
+    <ClCompile Include="messageformat2_formattable.cpp" />
+    <ClCompile Include="messageformat2_formatter.cpp" />
+    <ClCompile Include="messageformat2_function_registry.cpp" />
+    <ClCompile Include="messageformat2_parser.cpp" />
+    <ClCompile Include="messageformat2_serializer.cpp" />
     <ClCompile Include="msgfmt.cpp" />
     <ClCompile Include="nfrs.cpp" />
     <ClCompile Include="nfrule.cpp" />
@@ -212,6 +212,7 @@
     <ClCompile Include="number_mapper.cpp" />
     <ClCompile Include="number_multiplier.cpp" />
     <ClCompile Include="number_currencysymbols.cpp" />
+    <ClCompile Include="number_simple.cpp" />
     <ClCompile Include="number_skeletons.cpp" />
     <ClCompile Include="number_symbolswrapper.cpp" />
     <ClCompile Include="number_capi.cpp" />
@@ -395,6 +396,7 @@
     <ClInclude Include="hebrwcal.h" />
     <ClInclude Include="indiancal.h" />
     <ClInclude Include="islamcal.h" />
+    <ClInclude Include="iso8601cal.h" />
     <ClInclude Include="japancal.h" />
     <ClInclude Include="measunit_impl.h" />
     <ClInclude Include="msgfmt_impl.h" />

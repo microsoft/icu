@@ -74,11 +74,14 @@ rw{
         pl{"Igipolone"}
         ps{"Impashito"}
         pt{"Igiporutugali"}
+        pt_BR{"Inyeporutigali (Brezili)"}
+        pt_PT{"Inyeporutigali (Igiporutigali)"}
         ro{"Ikinyarumaniya"}
         ru{"Ikirusiya"}
-        rw{"Kinyarwanda"}
+        rw{"Ikinyarwanda"}
         sa{"Igisansikiri"}
         sd{"Igisindi"}
+        sh{"Inyeseribiya na Korowasiya"}
         si{"Inyesimpaleze"}
         sk{"Igisilovaki"}
         sl{"Ikinyasiloveniya"}
@@ -105,5 +108,8 @@ rw{
         xh{"Inyehawusa"}
         yi{"Inyeyidishi"}
         zu{"Inyezulu"}
+    }
+    Scripts{
+        Latn{"Latin"}
     }
 }

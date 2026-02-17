@@ -3,6 +3,7 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 de_AT{
     Languages{
+        ar_001{"modernes Hocharabisch"}
         car{"karibische Sprache"}
         chb{"Chibcha-Sprache"}
         del{"Delawarisch"}
@@ -13,6 +14,7 @@ de_AT{
         mus{"Muskogee-Sprache"}
         niu{"Niueanisch"}
         pag{"Pangasinensisch"}
+        sh{"Serbokroatisch"}
         szl{"Schlesisch"}
     }
 }

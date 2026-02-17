@@ -258,6 +258,9 @@ ja{
         "America:Chihuahua"{
             ec{"チワワ"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"シウダー・フアレス"}
+        }
         "America:Coral_Harbour"{
             ec{"アティコカン"}
         }
@@ -462,9 +465,6 @@ ja{
         "America:New_York"{
             ec{"ニューヨーク"}
         }
-        "America:Nipigon"{
-            ec{"ニピゴン"}
-        }
         "America:Nome"{
             ec{"ノーム"}
         }
@@ -485,9 +485,6 @@ ja{
         }
         "America:Panama"{
             ec{"パナマ"}
-        }
-        "America:Pangnirtung"{
-            ec{"パンナータング"}
         }
         "America:Paramaribo"{
             ec{"パラマリボ"}
@@ -510,9 +507,6 @@ ja{
         "America:Punta_Arenas"{
             ec{"プンタアレナス"}
         }
-        "America:Rainy_River"{
-            ec{"レイニーリバー"}
-        }
         "America:Rankin_Inlet"{
             ec{"ランキンインレット"}
         }
@@ -527,9 +521,6 @@ ja{
         }
         "America:Rio_Branco"{
             ec{"リオブランコ"}
-        }
-        "America:Santa_Isabel"{
-            ec{"サンタイサベル"}
         }
         "America:Santarem"{
             ec{"サンタレム"}
@@ -576,9 +567,6 @@ ja{
         "America:Thule"{
             ec{"チューレ"}
         }
-        "America:Thunder_Bay"{
-            ec{"サンダーベイ"}
-        }
         "America:Tijuana"{
             ec{"ティフアナ"}
         }
@@ -599,9 +587,6 @@ ja{
         }
         "America:Yakutat"{
             ec{"ヤクタット"}
-        }
-        "America:Yellowknife"{
-            ec{"イエローナイフ"}
         }
         "Antarctica:Casey"{
             ec{"ケーシー基地"}
@@ -692,9 +677,6 @@ ja{
         }
         "Asia:Chita"{
             ec{"チタ"}
-        }
-        "Asia:Choibalsan"{
-            ec{"チョイバルサン"}
         }
         "Asia:Colombo"{
             ec{"コロンボ"}
@@ -867,6 +849,9 @@ ja{
         "Asia:Ulaanbaatar"{
             ec{"ウランバートル"}
         }
+        "Asia:Urumqi"{
+            ec{"ウルムチ"}
+        }
         "Asia:Ust-Nera"{
             ec{"ウスチネラ"}
         }
@@ -923,9 +908,6 @@ ja{
         }
         "Australia:Broken_Hill"{
             ec{"ブロークンヒル"}
-        }
-        "Australia:Currie"{
-            ec{"カリー"}
         }
         "Australia:Darwin"{
             ec{"ダーウィン"}
@@ -1109,9 +1091,6 @@ ja{
         "Europe:Ulyanovsk"{
             ec{"ウリヤノフスク"}
         }
-        "Europe:Uzhgorod"{
-            ec{"ウージュホロド"}
-        }
         "Europe:Vaduz"{
             ec{"ファドゥーツ"}
         }
@@ -1132,9 +1111,6 @@ ja{
         }
         "Europe:Zagreb"{
             ec{"ザグレブ"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"ザポリージャ"}
         }
         "Europe:Zurich"{
             ec{"チューリッヒ"}
@@ -1216,9 +1192,6 @@ ja{
         }
         "Pacific:Honolulu"{
             ec{"ホノルル"}
-        }
-        "Pacific:Johnston"{
-            ec{"ジョンストン島"}
         }
         "Pacific:Kanton"{
             ec{"カントン島"}
@@ -1469,11 +1442,6 @@ ja{
             lg{"中国時間"}
             ls{"中国標準時"}
         }
-        "meta:Choibalsan"{
-            ld{"チョイバルサン夏時間"}
-            lg{"チョイバルサン時間"}
-            ls{"チョイバルサン標準時"}
-        }
         "meta:Christmas"{
             ls{"クリスマス島時間"}
         }
@@ -1643,6 +1611,9 @@ ja{
             lg{"ペトロパブロフスク・カムチャツキー時間"}
             ls{"ペトロパブロフスク・カムチャツキー標準時"}
         }
+        "meta:Kazakhstan"{
+            ls{"カザフスタン時間"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"東カザフスタン時間"}
         }
@@ -1681,9 +1652,6 @@ ja{
             lg{"マカオ時間"}
             ls{"マカオ標準時"}
         }
-        "meta:Macquarie"{
-            ls{"マッコーリー島時間"}
-        }
         "meta:Magadan"{
             ld{"マガダン夏時間"}
             lg{"マガダン時間"}
@@ -1708,11 +1676,6 @@ ja{
         }
         "meta:Mawson"{
             ls{"モーソン基地時間"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"メキシコ北西部夏時間"}
-            lg{"メキシコ北西部時間"}
-            ls{"メキシコ北西部標準時"}
         }
         "meta:Mexico_Pacific"{
             ld{"メキシコ太平洋夏時間"}
@@ -1947,9 +1910,6 @@ ja{
             ls{"ユーコン時間"}
         }
         fallbackFormat{"{1}（{0}）"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
         regionFormat{"{0}時間"}
         regionFormatDaylight{"{0}夏時間"}
         regionFormatStandard{"{0}標準時"}

@@ -94,7 +94,6 @@ shi_Latn{
         IE{"irlanda"}
         IL{"israyil"}
         IN{"lhind"}
-        IO{"tamnaḍt tanglizit n ugaru ahindi"}
         IQ{"lɛiraq"}
         IR{"iran"}
         IS{"island"}
@@ -166,7 +165,7 @@ shi_Latn{
         PM{"sanbyir d miklun"}
         PN{"bitkayrn"}
         PR{"burtu riku"}
-        PS{"السلطة الفلسطينية"}
+        PS{"agmmaḍ n tagut d ɣzza"}
         PT{"bṛṭqiz"}
         PW{"balaw"}
         PY{"baragway"}

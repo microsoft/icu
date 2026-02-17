@@ -3,7 +3,7 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 so{
     Countries{
-        001{"Dunida"}
+        001{"dunida"}
         002{"Afrika"}
         003{"Waqooyi Ameerika"}
         005{"Koonfur Ameerika"}
@@ -93,14 +93,17 @@ so{
         CY{"Qubrus"}
         CZ{"Jekiya"}
         DE{"Jarmal"}
+        DG{"Diyeego Karsiya"}
         DJ{"Jabuuti"}
         DK{"Denmark"}
         DM{"Dominika"}
         DO{"Jamhuuriyaddda Dominika"}
         DZ{"Aljeeriya"}
+        EA{"Seyuta & Meliila"}
         EC{"Ikuwadoor"}
         EE{"Estooniya"}
         EG{"Masar"}
+        EH{"Saxaraha Galbeed"}
         ER{"Eritreeya"}
         ES{"Isbeyn"}
         ET{"Itoobiya"}
@@ -137,12 +140,13 @@ so{
         HR{"Korweeshiya"}
         HT{"Haiti"}
         HU{"Hangari"}
+        IC{"Jasiiradda Kanari"}
         ID{"Indoneesiya"}
         IE{"Ayrlaand"}
         IL{"Israaʼiil"}
         IM{"Jasiiradda Isle of Man"}
         IN{"Hindiya"}
-        IO{"Dhul xadeedka Badweynta Hindiya ee Biritishka"}
+        IO{"Dhul xadeedka Badweynta Hindiya ee Ingiriiska"}
         IQ{"Ciraaq"}
         IR{"Iiraan"}
         IS{"Ayslaand"}
@@ -259,7 +263,7 @@ so{
         TH{"Taylaand"}
         TJ{"Tajikistan"}
         TK{"Tokelaaw"}
-        TL{"Timoor"}
+        TL{"Timor-Leste"}
         TM{"Turkmenistan"}
         TN{"Tuniisiya"}
         TO{"Tonga"}
@@ -275,7 +279,7 @@ so{
         US{"Maraykanka"}
         UY{"Uruguwaay"}
         UZ{"Usbakistan"}
-        VA{"Faatikaan"}
+        VA{"Magaalada Faatikaan"}
         VC{"St. Finsent & Girenadiins"}
         VE{"Fenisuweela"}
         VG{"Biritish Farjin Island"}
@@ -284,6 +288,8 @@ so{
         VU{"Fanuaatu"}
         WF{"Walis & Futuna"}
         WS{"Samoowa"}
+        XA{"Lahjadaha Pseudo"}
+        XB{"Pseudo-Bidi"}
         XK{"Koosofo"}
         YE{"Yaman"}
         YT{"Mayotte"}
@@ -291,5 +297,21 @@ so{
         ZM{"Saambiya"}
         ZW{"Simbaabwe"}
         ZZ{"Gobol aan la aqoonin"}
+    }
+    Countries%chagos{
+        IO{"Chagos Archipelago"}
+    }
+    Countries%short{
+        GB{"UK"}
+        PS{"Falastiin"}
+    }
+    Countries%variant{
+        CD{"Jamhuuriyadda Dimuqaadiga Kongo"}
+        CG{"Jamhuuriyadda Kongo"}
+        CZ{"Jamhuuriyadda Jek"}
+        FK{"Jasiiradaha Fookland"}
+        NZ{"Aotearoa New Zealand"}
+        SZ{"Iswaasilaan"}
+        TL{"Bariga Timor"}
     }
 }

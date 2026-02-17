@@ -10,6 +10,14 @@ en_AU{
     }
     Languages{
         bn{"Bengali"}
+        en_US{"United States English"}
+        ro_MD{"Moldovan"}
+    }
+    Languages%menu{
+        ckb{"Kurdish (Central)"}
+    }
+    Languages%variant{
+        ckb{"Kurdish (Sorani)"}
     }
     Scripts{
         Beng{"Bengali"}
@@ -19,8 +27,5 @@ en_AU{
             dangi{"Korean Calendar"}
             ethiopic{"Ethiopian Calendar"}
         }
-    }
-    Variants{
-        SIMPLE{"SIMPLE"}
     }
 }

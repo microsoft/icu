@@ -93,7 +93,6 @@ lag{
         IE{"Ayaláandi"}
         IL{"Isiraéeli"}
         IN{"Índia"}
-        IO{"Ɨsɨ yʉ Ʉɨngeréesa irivii ra Híindi"}
         IQ{"Iráaki"}
         IR{"Ʉajéemi"}
         IS{"Aisiláandi"}
@@ -165,7 +164,7 @@ lag{
         PM{"Mʉtakatíifu Peéteri na Mɨkaéeli"}
         PN{"Patikaírini"}
         PR{"Pwetorɨ́ɨko"}
-        PS{"Mamlaka ya Palestina"}
+        PS{"Mweemberera wa kʉmweeri wa Gáaza"}
         PT{"Ʉréeno"}
         PW{"Paláau"}
         PY{"Paraguáai"}

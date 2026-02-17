@@ -93,7 +93,6 @@ kln{
         IE{"Emetab Ireland"}
         IL{"Emetab Israel"}
         IN{"Emetab India"}
-        IO{"Kebebertab araraitab indian Ocean nebo Uingeresa"}
         IQ{"Emetab Iraq"}
         IR{"Emetab Iran"}
         IS{"Emetab Iceland"}
@@ -165,7 +164,7 @@ kln{
         PM{"Emetab Peter Ne titil ak Miquelon"}
         PN{"Emetab Pitcairn"}
         PR{"Emetab Puerto Rico"}
-        PS{"Palestinian Authority"}
+        PS{"Emetab Palestine"}
         PT{"Emetab Portugal"}
         PW{"Emetab Palau"}
         PY{"Emetab Paraguay"}

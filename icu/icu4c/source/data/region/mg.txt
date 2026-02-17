@@ -93,7 +93,6 @@ mg{
         IE{"Irlandy"}
         IL{"Israely"}
         IN{"Indy"}
-        IO{"Faridranomasina indiana britanika"}
         IQ{"Irak"}
         IR{"Iran"}
         IS{"Islandy"}
@@ -165,7 +164,7 @@ mg{
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Pitkairn"}
         PR{"Pôrtô Rikô"}
-        PS{"Autorité palestinienne"}
+        PS{"Palestina"}
         PT{"Pôrtiogala"}
         PW{"Palao"}
         PY{"Paragoay"}

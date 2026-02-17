@@ -61,14 +61,14 @@ private:
         return result;
     }
 
-    static const UChar *const latin1;
-    static const UChar *const lowercaseLatin1;
-    static const UChar *const ascii;
-    static const UChar *const japanese;
-    static const UChar *const arabic;
+    static const char16_t *const latin1;
+    static const char16_t *const lowercaseLatin1;
+    static const char16_t *const ascii;
+    static const char16_t *const japanese;
+    static const char16_t *const arabic;
 };
 
-const UChar *const CommonChars::latin1 =
+const char16_t *const CommonChars::latin1 =
       // Goethe’s Bergschloß in normal sentence case.
       u"Da droben auf jenem Berge, da steht ein altes Schloß, "
       u"wo hinter Toren und Türen sonst lauerten Ritter und Roß.\n"
@@ -97,7 +97,7 @@ const UChar *const CommonChars::latin1 =
       u"Und Knapp und Kellnerin glänzen als Herren weit und breit; "
       u"sie nimmt sich zum Kredenzen und er zum Danke sich Zeit.\n";
 
-const UChar *const CommonChars::lowercaseLatin1 =
+const char16_t *const CommonChars::lowercaseLatin1 =
       // Goethe’s Bergschloß in all lowercase
       u"da droben auf jenem berge, da steht ein altes schloß, "
       u"wo hinter toren und türen sonst lauerten ritter und roß.\n"
@@ -126,7 +126,7 @@ const UChar *const CommonChars::lowercaseLatin1 =
       u"und knapp und kellnerin glänzen als herren weit und breit; "
       u"sie nimmt sich zum kredenzen und er zum danke sich zeit.\n";
 
-const UChar *const CommonChars::ascii =
+const char16_t *const CommonChars::ascii =
       // Goethe’s Bergschloß in normal sentence case but ASCII-fied
       u"Da droben auf jenem Berge, da steht ein altes Schloss, "
       u"wo hinter Toren und Tueren sonst lauerten Ritter und Ross.\n"
@@ -155,7 +155,7 @@ const UChar *const CommonChars::ascii =
       u"Und Knapp und Kellnerin glaenzen als Herren weit und breit; "
       u"sie nimmt sich zum Kredenzen und er zum Danke sich Zeit.\n";
 
-const UChar *const CommonChars::japanese =
+const char16_t *const CommonChars::japanese =
       // Ame ni mo makezu = Be not Defeated by the Rain, by Kenji Miyazawa.
       u"雨にもまけず風にもまけず雪にも夏の暑さにもまけぬ"
       u"丈夫なからだをもち慾はなく決して瞋らず"
@@ -172,7 +172,7 @@ const UChar *const CommonChars::japanese =
       u"さむさのなつはおろおろあるきみんなにでくのぼうとよばれ"
       u"ほめられもせずくにもされずそういうものにわたしはなりたい";
 
-const UChar *const CommonChars::arabic =
+const char16_t *const CommonChars::arabic =
       // Some Arabic for variety. "What is Unicode?"
       // http://www.unicode.org/standard/translations/arabic.html
       u"تتعامل الحواسيب بالأسام مع الأرقام فقط، "
@@ -226,7 +226,7 @@ void benchmark(const char *name, Operation &op) {
     for (int32_t i = 0; i < UPRV_LENGTHOF(kLengths); ++i) {
         int32_t pieceLength = kLengths[i];
         double secPerCp = measure(op, pieceLength);
-        printf("%s  %6d  %12f ns/cp\n", name, (int)pieceLength, secPerCp * 1000000000);
+        printf("%s  %6d  %12f ns/cp\n", name, static_cast<int>(pieceLength), secPerCp * 1000000000);
     }
     puts("");
 }
@@ -236,12 +236,12 @@ public:
     NormalizeUTF16(const Normalizer2 &n2, const UnicodeString &text) :
             norm2(n2), src(text), s(src.getBuffer()) {}
     virtual ~NormalizeUTF16();
-    virtual double call(int32_t iterations, int32_t pieceLength);
+    double call(int32_t iterations, int32_t pieceLength) override;
 
 private:
     const Normalizer2 &norm2;
     UnicodeString src;
-    const UChar *s;
+    const char16_t *s;
     UnicodeString dest;
 };
 
@@ -269,7 +269,7 @@ public:
         s = src.data();
     }
     virtual ~NormalizeUTF8();
-    virtual double call(int32_t iterations, int32_t pieceLength);
+    double call(int32_t iterations, int32_t pieceLength) override;
 
 private:
     const Normalizer2 &norm2;

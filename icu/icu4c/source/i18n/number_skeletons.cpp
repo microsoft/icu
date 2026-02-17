@@ -184,7 +184,7 @@ Notation stem_to_object::notation(skeleton::StemEnum stem) {
 MeasureUnit stem_to_object::unit(skeleton::StemEnum stem) {
     switch (stem) {
         case STEM_BASE_UNIT:
-            return MeasureUnit();
+            return {};
         case STEM_PERCENT:
             return MeasureUnit::getPercent();
         case STEM_PERMILLE:
@@ -1022,7 +1022,7 @@ void blueprint_helpers::parseCurrencyOption(const StringSegment& segment, MacroP
         status = U_NUMBER_SKELETON_SYNTAX_ERROR;
         return;
     }
-    const UChar* currencyCode = segment.toTempUnicodeString().getBuffer();
+    const char16_t* currencyCode = segment.toTempUnicodeString().getBuffer();
     UErrorCode localStatus = U_ZERO_ERROR;
     CurrencyUnit currency(currencyCode, localStatus);
     if (U_FAILURE(localStatus)) {
@@ -1057,7 +1057,7 @@ void blueprint_helpers::parseMeasureUnitOption(const StringSegment& segment, Mac
         return;
     }
 
-    // Need to do char <-> UChar conversion...
+    // Need to do char <-> char16_t conversion...
     CharString type;
     SKELETON_UCHAR_TO_CHAR(type, stemString, 0, firstHyphen, status);
     CharString subType;
@@ -1098,7 +1098,7 @@ void blueprint_helpers::parseMeasurePerUnitOption(const StringSegment& segment, 
 
 void blueprint_helpers::parseIdentifierUnitOption(const StringSegment& segment, MacroProps& macros,
                                                   UErrorCode& status) {
-    // Need to do char <-> UChar conversion...
+    // Need to do char <-> char16_t conversion...
     U_ASSERT(U_SUCCESS(status));
     CharString buffer;
     SKELETON_UCHAR_TO_CHAR(buffer, segment.toTempUnicodeString(), 0, segment.length(), status);
@@ -1114,7 +1114,7 @@ void blueprint_helpers::parseIdentifierUnitOption(const StringSegment& segment, 
 
 void blueprint_helpers::parseUnitUsageOption(const StringSegment &segment, MacroProps &macros,
                                              UErrorCode &status) {
-    // Need to do char <-> UChar conversion...
+    // Need to do char <-> char16_t conversion...
     U_ASSERT(U_SUCCESS(status));
     CharString buffer;
     SKELETON_UCHAR_TO_CHAR(buffer, segment.toTempUnicodeString(), 0, segment.length(), status);
@@ -1287,7 +1287,6 @@ void blueprint_helpers::parseScientificStem(const StringSegment& segment, MacroP
     fail: void();
     // throw new SkeletonSyntaxException("Invalid scientific stem", segment);
     status = U_NUMBER_SKELETON_SYNTAX_ERROR;
-    return;
 }
 
 void blueprint_helpers::parseIntegerStem(const StringSegment& segment, MacroProps& macros, UErrorCode& status) {
@@ -1305,7 +1304,6 @@ void blueprint_helpers::parseIntegerStem(const StringSegment& segment, MacroProp
         return;
     }
     macros.integerWidth = IntegerWidth::zeroFillTo(offset);
-    return;
 }
 
 bool blueprint_helpers::parseFracSigOption(const StringSegment& segment, MacroProps& macros,
@@ -1344,7 +1342,7 @@ bool blueprint_helpers::parseFracSigOption(const StringSegment& segment, MacroPr
         // @, @@, @@@
         maxSig = minSig;
     }
-    auto& oldPrecision = static_cast<const FractionPrecision&>(macros.precision);
+    const auto& oldPrecision = static_cast<const FractionPrecision&>(macros.precision);
     if (offset < segment.length()) {
         UNumberRoundingPriority priority;
         if (maxSig == -1) {
@@ -1466,7 +1464,7 @@ void blueprint_helpers::generateIntegerWidthOption(int32_t minInt, int32_t maxIn
 
 void blueprint_helpers::parseNumberingSystemOption(const StringSegment& segment, MacroProps& macros,
                                                    UErrorCode& status) {
-    // Need to do char <-> UChar conversion...
+    // Need to do char <-> char16_t conversion...
     U_ASSERT(U_SUCCESS(status));
     CharString buffer;
     SKELETON_UCHAR_TO_CHAR(buffer, segment.toTempUnicodeString(), 0, segment.length(), status);
@@ -1483,13 +1481,13 @@ void blueprint_helpers::parseNumberingSystemOption(const StringSegment& segment,
 
 void blueprint_helpers::generateNumberingSystemOption(const NumberingSystem& ns, UnicodeString& sb,
                                                       UErrorCode&) {
-    // Need to do char <-> UChar conversion...
+    // Need to do char <-> char16_t conversion...
     sb.append(UnicodeString(ns.getName(), -1, US_INV));
 }
 
 void blueprint_helpers::parseScaleOption(const StringSegment& segment, MacroProps& macros,
                                               UErrorCode& status) {
-    // Need to do char <-> UChar conversion...
+    // Need to do char <-> char16_t conversion...
     U_ASSERT(U_SUCCESS(status));
     CharString buffer;
     SKELETON_UCHAR_TO_CHAR(buffer, segment.toTempUnicodeString(), 0, segment.length(), status);

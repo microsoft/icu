@@ -86,6 +86,7 @@ hebrwcal.cpp
 indiancal.cpp
 inputext.cpp
 islamcal.cpp
+iso8601cal.cpp
 japancal.cpp
 listformatter.cpp
 measfmt.cpp
@@ -93,6 +94,17 @@ measunit.cpp
 measunit_extra.cpp
 measure.cpp
 msgfmt.cpp
+messageformat2.cpp
+messageformat2_arguments.cpp
+messageformat2_checker.cpp
+messageformat2_data_model.cpp
+messageformat2_errors.cpp
+messageformat2_evaluation.cpp
+messageformat2_formatter.cpp
+messageformat2_formattable.cpp
+messageformat2_function_registry.cpp
+messageformat2_parser.cpp
+messageformat2_serializer.cpp
 name2uni.cpp
 nfrs.cpp
 nfrule.cpp
@@ -121,6 +133,7 @@ number_patternmodifier.cpp
 number_patternstring.cpp
 number_rounding.cpp
 number_scientific.cpp
+number_simple.cpp
 number_skeletons.cpp
 number_symbolswrapper.cpp
 number_usageprefs.cpp

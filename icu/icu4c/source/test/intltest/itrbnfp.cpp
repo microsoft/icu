@@ -98,7 +98,7 @@ IntlTestRBNFParse::TestParse() {
     "===",
     "=foo=",
 
-    NULL,
+    nullptr,
   };
 
   // these rules would throw exceptions when formatting, if we could throw exceptions
@@ -107,14 +107,14 @@ IntlTestRBNFParse::TestParse() {
     "11: << x", // formatting a multiple of 10 causes rollback rule to fail
     "%%foo: 0 foo; 10: =%%bar=; %%bar: 0: bar; 10: =%%foo=;",
 
-    NULL,
+    nullptr,
   };
 
   // none of these rules should crash the formatter
   const char** allrules[] = {
     okrules,
     exceptrules,
-    NULL,
+    nullptr,
   };
 
   for (int j = 0; allrules[j]; ++j) {
@@ -147,10 +147,10 @@ IntlTestRBNFParse::TestParse() {
 void
 IntlTestRBNFParse::testfmt(RuleBasedNumberFormat* formatter, double val, UErrorCode& status) {
     UnicodeString us;
-    formatter->format((const Formattable)val, us, status);
+    formatter->format(static_cast<const Formattable>(val), us, status);
     if (U_SUCCESS(status)) {
-        us.insert(0, (UChar)'"');
-        us.append((UChar)'"');
+        us.insert(0, static_cast<char16_t>('"'));
+        us.append(static_cast<char16_t>('"'));
         logln(us);
     } else {
         logln("error: could not format %g, returned status: %d", val, status);
@@ -160,10 +160,10 @@ IntlTestRBNFParse::testfmt(RuleBasedNumberFormat* formatter, double val, UErrorC
 void
 IntlTestRBNFParse::testfmt(RuleBasedNumberFormat* formatter, int val, UErrorCode& status) {
     UnicodeString us;
-    formatter->format((const Formattable)(int32_t)val, us, status);
+    formatter->format(static_cast<const Formattable>(static_cast<int32_t>(val)), us, status);
     if (U_SUCCESS(status)) {
-        us.insert(0, (UChar)'"');
-        us.append((UChar)'"');
+        us.insert(0, static_cast<char16_t>('"'));
+        us.append(static_cast<char16_t>('"'));
         logln(us);
     } else {
         logln("error: could not format %d, returned status: %d", val, status);

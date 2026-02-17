@@ -258,6 +258,9 @@ si{
         "America:Chihuahua"{
             ec{"චිහුආහුආ"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"සියුඩාඩ් ජුවාරෙස්"}
+        }
         "America:Coral_Harbour"{
             ec{"ඇටිකොකන්"}
         }
@@ -462,9 +465,6 @@ si{
         "America:New_York"{
             ec{"නිව්යෝක්"}
         }
-        "America:Nipigon"{
-            ec{"නිපිගන්"}
-        }
         "America:Nome"{
             ec{"නෝම්"}
         }
@@ -485,9 +485,6 @@ si{
         }
         "America:Panama"{
             ec{"පැනමා"}
-        }
-        "America:Pangnirtung"{
-            ec{"පැන්නීටන්"}
         }
         "America:Paramaribo"{
             ec{"පැරාමරිබෝ"}
@@ -510,9 +507,6 @@ si{
         "America:Punta_Arenas"{
             ec{"පුන්ටා ඇරිනාස්"}
         }
-        "America:Rainy_River"{
-            ec{"රෙයිනි ගඟ"}
-        }
         "America:Rankin_Inlet"{
             ec{"රැන්කින් පිවිසුම"}
         }
@@ -527,9 +521,6 @@ si{
         }
         "America:Rio_Branco"{
             ec{"රියෝ බ්‍රන්කෝ"}
-        }
-        "America:Santa_Isabel"{
-            ec{"සැන්ටා ඉසබෙල්"}
         }
         "America:Santarem"{
             ec{"සන්ටරේම්"}
@@ -576,9 +567,6 @@ si{
         "America:Thule"{
             ec{"තුලේ"}
         }
-        "America:Thunder_Bay"{
-            ec{"තන්ඩර් බොක්ක"}
-        }
         "America:Tijuana"{
             ec{"ටිජුආනා"}
         }
@@ -599,9 +587,6 @@ si{
         }
         "America:Yakutat"{
             ec{"යකුටට්"}
-        }
-        "America:Yellowknife"{
-            ec{"යෙලෝනයිෆ්"}
         }
         "Antarctica:Casey"{
             ec{"කැසේ"}
@@ -692,9 +677,6 @@ si{
         }
         "Asia:Chita"{
             ec{"චිටා"}
-        }
-        "Asia:Choibalsan"{
-            ec{"චොයිබල්සාන්"}
         }
         "Asia:Colombo"{
             ec{"කොළඹ"}
@@ -867,6 +849,9 @@ si{
         "Asia:Ulaanbaatar"{
             ec{"උලාන්බාටර්"}
         }
+        "Asia:Urumqi"{
+            ec{"උරුම්කි"}
+        }
         "Asia:Ust-Nera"{
             ec{"උස්ට්-නෙරා"}
         }
@@ -923,9 +908,6 @@ si{
         }
         "Australia:Broken_Hill"{
             ec{"බ්‍රෝකන් හිල්"}
-        }
-        "Australia:Currie"{
-            ec{"කුරී"}
         }
         "Australia:Darwin"{
             ec{"ඩාවින්"}
@@ -1109,9 +1091,6 @@ si{
         "Europe:Ulyanovsk"{
             ec{"උල්යනොව්ස්ක්"}
         }
-        "Europe:Uzhgorod"{
-            ec{"උස්ගොරෝඩ්"}
-        }
         "Europe:Vaduz"{
             ec{"වඩුස්"}
         }
@@ -1132,9 +1111,6 @@ si{
         }
         "Europe:Zagreb"{
             ec{"සග්රෙබ්"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"සපොරෝසියේ"}
         }
         "Europe:Zurich"{
             ec{"සූරිච්"}
@@ -1216,9 +1192,6 @@ si{
         }
         "Pacific:Honolulu"{
             ec{"හොනොලුලු"}
-        }
-        "Pacific:Johnston"{
-            ec{"ජොන්ස්ටන්"}
         }
         "Pacific:Kanton"{
             ec{"කැන්ටන්"}
@@ -1441,11 +1414,6 @@ si{
             lg{"චීන වේලාව"}
             ls{"චීන සම්මත වේලාව"}
         }
-        "meta:Choibalsan"{
-            ld{"චොයිබල්සාන් ග්‍රීෂ්ම වේලාව"}
-            lg{"චොයිබල්සාන් වේලාව"}
-            ls{"චොයිබල්සාන් සම්මත වේලාව"}
-        }
         "meta:Christmas"{
             ls{"ක්‍රිස්මස් දුපත් වේලාව"}
         }
@@ -1604,6 +1572,9 @@ si{
             lg{"ජපාන වේලාව"}
             ls{"ජපාන සම්මත වේලාව"}
         }
+        "meta:Kazakhstan"{
+            ls{"කසකස්තාන වේලාව"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"නැගෙනහිර කසකස්තාන වේලාව"}
         }
@@ -1637,9 +1608,6 @@ si{
             lg{"ලෝර්ඩ් හෝව් වේලාව"}
             ls{"ලෝර්ඩ් හෝව් සම්මත වේලාව"}
         }
-        "meta:Macquarie"{
-            ls{"මැක්කුඅරි දුපත් වේලාව"}
-        }
         "meta:Magadan"{
             ld{"මෙගඩන් ග්‍රීෂ්ම වේලාව"}
             lg{"මෙගඩන් වේලාව"}
@@ -1664,11 +1632,6 @@ si{
         }
         "meta:Mawson"{
             ls{"මොව්සන් වේලාව"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"වයඹ මෙක්සිකෝ දිවාආලෝක වේලාව"}
-            lg{"වයඹ මෙක්සිකෝ වේලාව"}
-            ls{"වයඹ මෙක්සිකෝ සම්මත වේලාව"}
         }
         "meta:Mexico_Pacific"{
             ld{"මෙක්සිකෝ පැසිෆික් දිවාආලෝක වේලාව"}
@@ -1889,7 +1852,6 @@ si{
         "meta:Yukon"{
             ls{"යුකොන් වේලාව"}
         }
-        fallbackFormat{"{1} ({0})"}
         gmtFormat{"ග්‍රිමවේ{0}"}
         gmtZeroFormat{"ග්‍රිමවේ"}
         hourFormat{"+HH.mm;-HH.mm"}

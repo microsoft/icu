@@ -57,7 +57,7 @@ struct U_TOOLUTIL_API UniProps {
     const char *name;
     const char *nameAlias;
     UnicodeString cf, lc, tc, uc;
-    UnicodeSet scx;
+    UnicodeSet scx, idType;
 };
 
 class U_TOOLUTIL_API PreparsedUCD {
@@ -114,7 +114,7 @@ public:
     /** Returns the number of the line read by readLine(). */
     int32_t getLineNumber() const { return lineNumber; }
 
-    /** Returns the line's next field, or NULL. */
+    /** Returns the line's next field, or nullptr. */
     const char *nextField();
 
     /** Returns the Unicode version when or after the UNICODE_VERSION_LINE has been read. */
@@ -129,7 +129,7 @@ public:
      * Parses properties from the current line.
      * Clears newValues and sets UProperty codes for property values mentioned
      * on the current line (as opposed to being inherited).
-     * Returns a pointer to the filled-in UniProps, or NULL if something went wrong.
+     * Returns a pointer to the filled-in UniProps, or nullptr if something went wrong.
      * The returned UniProps are usable until the next line of the same type is read.
      */
     const UniProps *getProps(UnicodeSet &newValues, UErrorCode &errorCode);
@@ -156,6 +156,7 @@ private:
     UBool parseCodePointRange(const char *s, UChar32 &start, UChar32 &end, UErrorCode &errorCode);
     void parseString(const char *s, UnicodeString &uni, UErrorCode &errorCode);
     void parseScriptExtensions(const char *s, UnicodeSet &scx, UErrorCode &errorCode);
+    void parseIdentifierType(const char *s, UnicodeSet &idType, UErrorCode &errorCode);
 
     static const int32_t kNumLineBuffers=3;
 

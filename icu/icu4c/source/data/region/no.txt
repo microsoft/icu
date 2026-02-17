@@ -70,7 +70,7 @@ no{
         BT{"Bhutan"}
         BV{"Bouvetøya"}
         BW{"Botswana"}
-        BY{"Hviterussland"}
+        BY{"Belarus"}
         BZ{"Belize"}
         CA{"Canada"}
         CC{"Kokosøyene"}
@@ -85,6 +85,7 @@ no{
         CN{"Kina"}
         CO{"Colombia"}
         CP{"Clippertonøya"}
+        CQ{"Sark"}
         CR{"Costa Rica"}
         CU{"Cuba"}
         CV{"Kapp Verde"}
@@ -93,14 +94,17 @@ no{
         CY{"Kypros"}
         CZ{"Tsjekkia"}
         DE{"Tyskland"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Danmark"}
         DM{"Dominica"}
         DO{"Den dominikanske republikk"}
         DZ{"Algerie"}
+        EA{"Ceuta og Melilla"}
         EC{"Ecuador"}
         EE{"Estland"}
         EG{"Egypt"}
+        EH{"Vest-Sahara"}
         ER{"Eritrea"}
         ES{"Spania"}
         ET{"Etiopia"}
@@ -137,6 +141,7 @@ no{
         HR{"Kroatia"}
         HT{"Haiti"}
         HU{"Ungarn"}
+        IC{"Kanariøyene"}
         ID{"Indonesia"}
         IE{"Irland"}
         IL{"Israel"}
@@ -284,6 +289,8 @@ no{
         VU{"Vanuatu"}
         WF{"Wallis og Futuna"}
         WS{"Samoa"}
+        XA{"pseudospråk – aksenter"}
+        XB{"pseudospråk – tekst begge veier"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +298,22 @@ no{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"ukjent område"}
+    }
+    Countries%chagos{
+        IO{"Chagosøyene"}
+    }
+    Countries%short{
+        HK{"Hongkong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+    }
+    Countries%variant{
+        CD{"Den demokratiske republikken Kongo"}
+        CG{"Republikken Kongo"}
+        CZ{"Den tsjekkiske republikk"}
+        FK{"Falklandsøyene (Islas Malvinas)"}
+        NZ{"Aotearoa New Zealand"}
+        SZ{"Swaziland"}
+        TL{"Timor-Leste"}
     }
 }

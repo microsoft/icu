@@ -93,14 +93,17 @@ xh{
         CY{"ECyprus"}
         CZ{"ECzechia"}
         DE{"EJamani"}
+        DG{"EDiego Garcia"}
         DJ{"EDjibouti"}
         DK{"EDenmark"}
         DM{"EDominica"}
         DO{"EDominican Republic"}
         DZ{"E-Algeria"}
+        EA{"ECeuta & Melilla"}
         EC{"EEcuador"}
         EE{"E-Estonia"}
         EG{"IYiputa"}
+        EH{"EWestern Sahara"}
         ER{"E-Eritrea"}
         ES{"ESpain"}
         ET{"E-Ethiopia"}
@@ -137,6 +140,7 @@ xh{
         HR{"ECroatia"}
         HT{"EHaiti"}
         HU{"EHungary"}
+        IC{"ECanary Islands"}
         ID{"E-Indonesia"}
         IE{"E-Ireland"}
         IL{"E-Israel"}
@@ -284,6 +288,8 @@ xh{
         VU{"EVanuatu"}
         WF{"EWallis & Futuna"}
         WS{"ESamoa"}
+        XA{"I-Pseudo-Accents"}
+        XB{"I-Pseudo-Bidi"}
         XK{"EKosovo"}
         YE{"EYemen"}
         YT{"EMayotte"}
@@ -291,5 +297,26 @@ xh{
         ZM{"EZambia"}
         ZW{"EZimbabwe"}
         ZZ{"Ingingqi Engaziwayo"}
+    }
+    Countries%chagos{
+        IO{"EChagos Archipelago"}
+    }
+    Countries%short{
+        GB{"E-UK"}
+        HK{"EHong Kong"}
+        MO{"EMacao"}
+        PS{"EPalestina"}
+        US{"I-US"}
+    }
+    Countries%variant{
+        CD{"ECongo (DRC)"}
+        CG{"ECongo (Republic)"}
+        CI{"E-Ivory Coast"}
+        CZ{"ECzech Republic"}
+        FK{"EFalkland Islands (Islas Malvinas)"}
+        NZ{"E-Aotearoa New Zealand"}
+        SZ{"ESwaziland"}
+        TL{"E-East Timor"}
+        TR{"ETürkiye"}
     }
 }

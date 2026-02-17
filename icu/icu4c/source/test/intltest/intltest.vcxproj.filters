@@ -298,6 +298,9 @@
     <ClCompile Include="numbertest_range.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
+    <ClCompile Include="numbertest_simple.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
     <ClCompile Include="numbertest_permutation.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
@@ -565,6 +568,12 @@
     <ClCompile Include="units_test.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
+    <ClCompile Include="uchar_type_build_test.cpp">
+      <Filter>configuration</Filter>
+    </ClCompile>
+    <ClCompile Include="messageformat2test.cpp" />
+    <ClCompile Include="messageformat2test_custom.cpp" />
+    <ClCompile Include="messageformat2test_read_json.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="itrbbi.h">

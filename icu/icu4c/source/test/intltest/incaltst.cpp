@@ -36,7 +36,7 @@ static UnicodeString escape( const UnicodeString&src)
   UnicodeString dst;
     dst.remove();
     for (int32_t i = 0; i < src.length(); ++i) {
-        UChar c = src[i];
+        char16_t c = src[i];
         if(c < 0x0080) 
             dst += c;
         else {
@@ -105,6 +105,8 @@ void IntlCalendarTest::runIndexedTest( int32_t index, UBool exec, const char* &n
     TESTCASE_AUTO(TestConsistencyIslamicUmalqura);
     TESTCASE_AUTO(TestConsistencyPersian);
     TESTCASE_AUTO(TestConsistencyJapanese);
+    TESTCASE_AUTO(TestIslamicUmalquraCalendarSlow);
+    TESTCASE_AUTO(TestJapaneseLargeEra);
     TESTCASE_AUTO_END;
 }
 
@@ -119,7 +121,7 @@ void IntlCalendarTest::runIndexedTest( int32_t index, UBool exec, const char* &n
 void
 IntlCalendarTest::TestTypes()
 {
-  Calendar *c = NULL;
+  Calendar *c = nullptr;
   UErrorCode status = U_ZERO_ERROR;
   int j;
   const char *locs [40] = { "en_US_VALLEYGIRL",     
@@ -134,7 +136,7 @@ IntlCalendarTest::TestTypes()
                             "th",       // th's default region is TH and buddhist is used as default for TH
                             "en_TH",    // Default calendar for any locales with region TH is buddhist
                             "en-TH-u-ca-gregory",
-                            NULL };
+                            nullptr };
   const char *types[40] = { "gregorian", 
                             "japanese",
                             "gregorian",
@@ -147,7 +149,7 @@ IntlCalendarTest::TestTypes()
                             "buddhist",           
                             "buddhist",           
                             "gregorian",
-                            NULL };
+                            nullptr };
 
   for(j=0;locs[j];j++) {
     logln(UnicodeString("Creating calendar of locale ")  + locs[j]);
@@ -188,7 +190,7 @@ void IntlCalendarTest::quasiGregorianTest(Calendar& cal, const Locale& gcl, cons
   int32_t tz1 = cal.get(UCAL_ZONE_OFFSET,status);
   int32_t tz2 = grego -> get (UCAL_ZONE_OFFSET, status);
   if(tz1 != tz2) { 
-    errln((UnicodeString)"cal's tz " + tz1 + " != grego's tz " + tz2);
+    errln(UnicodeString("cal's tz ") + tz1 + " != grego's tz " + tz2);
   }
 
   for (int32_t i=0; data[i]!=-1; ) {
@@ -207,8 +209,8 @@ void IntlCalendarTest::quasiGregorianTest(Calendar& cal, const Locale& gcl, cons
     cal.set(year, month, dayOfMonth);
     UDate d = cal.getTime(status);
 #ifdef U_DEBUG_DUMPCALS
-    logln((UnicodeString)"cal  : " + CalendarTest::calToStr(cal));
-    logln((UnicodeString)"grego: " + CalendarTest::calToStr(*grego));
+    logln(UnicodeString("cal  : ") + CalendarTest::calToStr(cal));
+    logln(UnicodeString("grego: ") + CalendarTest::calToStr(*grego));
 #endif
     if (d == D) {
       logln(UnicodeString("OK: ") + era + ":" + year + "/" + (month+1) + "/" + dayOfMonth +
@@ -224,15 +226,15 @@ void IntlCalendarTest::quasiGregorianTest(Calendar& cal, const Locale& gcl, cons
     int e = cal.get(UCAL_ERA, status);
     int y = cal.get(UCAL_YEAR, status);
 #ifdef U_DEBUG_DUMPCALS
-    logln((UnicodeString)"cal  : " + CalendarTest::calToStr(cal));
-    logln((UnicodeString)"grego: " + CalendarTest::calToStr(*grego));
+    logln(UnicodeString("cal  : ") + CalendarTest::calToStr(cal));
+    logln(UnicodeString("grego: ") + CalendarTest::calToStr(*grego));
 #endif
     if (y == year && e == era) {
-      logln((UnicodeString)"OK: " + D + " => " + cal.get(UCAL_ERA, status) + ":" +
+      logln(UnicodeString("OK: ") + D + " => " + cal.get(UCAL_ERA, status) + ":" +
             cal.get(UCAL_YEAR, status) + "/" +
-            (cal.get(UCAL_MONTH, status)+1) + "/" + cal.get(UCAL_DATE, status) +  " (" + UnicodeString(cal.getType()) + ")");
+            (cal.get(UCAL_MONTH, status) + 1) + "/" + cal.get(UCAL_DATE, status) + " (" + UnicodeString(cal.getType()) + ")");
     } else {
-      errln((UnicodeString)"Fail: (millis to fields)" + D + " => " + cal.get(UCAL_ERA, status) + ":" +
+      errln(UnicodeString("Fail: (millis to fields)") + D + " => " + cal.get(UCAL_ERA, status) + ":" +
             cal.get(UCAL_YEAR, status) + "/" +
             (cal.get(UCAL_MONTH, status)+1) + "/" + cal.get(UCAL_DATE, status) +
             ", expected " + era + ":" + year + "/" + (month+1) + "/" +
@@ -265,7 +267,7 @@ void IntlCalendarTest::TestGregorian() {
     UDate timeCal = cal->getTime(status);
 
     if(!(timeA <= timeCal) || !(timeCal <= timeB)) {
-      errln((UnicodeString)"Error: Calendar time " + timeCal +
+      errln(UnicodeString("Error: Calendar time ") + timeCal +
             " is not within sampled times [" + timeA + " to " + timeB + "]!");
     }
     // end sanity check
@@ -318,7 +320,7 @@ void IntlCalendarTest::TestBuddhist() {
     UDate timeCal = cal->getTime(status);
 
     if(!(timeA <= timeCal) || !(timeCal <= timeB)) {
-      errln((UnicodeString)"Error: Calendar time " + timeCal +
+      errln(UnicodeString("Error: Calendar time ") + timeCal +
             " is not within sampled times [" + timeA + " to " + timeB + "]!");
     }
     // end sanity check
@@ -369,7 +371,7 @@ void IntlCalendarTest::TestTaiwan() {
     UDate timeCal = cal->getTime(status);
 
     if(!(timeA <= timeCal) || !(timeCal <= timeB)) {
-      errln((UnicodeString)"Error: Calendar time " + timeCal +
+      errln(UnicodeString("Error: Calendar time ") + timeCal +
             " is not within sampled times [" + timeA + " to " + timeB + "]!");
     }
     // end sanity check
@@ -422,7 +424,7 @@ void IntlCalendarTest::TestJapanese() {
     UDate timeCal = cal->getTime(status);
 
     if(!(timeA <= timeCal) || !(timeCal <= timeB)) {
-      errln((UnicodeString)"Error: Calendar time " + timeCal +
+      errln(UnicodeString("Error: Calendar time ") + timeCal +
             " is not within sampled times [" + timeA + " to " + timeB + "]!");
     }
     // end sanity check
@@ -788,7 +790,7 @@ void IntlCalendarTest::TestPersian() {
     UDate timeCal = cal->getTime(status);
 
     if(!(timeA <= timeCal) || !(timeCal <= timeB)) {
-      errln((UnicodeString)"Error: Calendar time " + timeCal +
+      errln(UnicodeString("Error: Calendar time ") + timeCal +
             " is not within sampled times [" + timeA + " to " + timeB + "]!");
     }
     // end sanity check
@@ -987,8 +989,8 @@ void IntlCalendarTest::TestConsistencyEthiopicAmeteAlem() {
     checkConsistency("en@calendar=ethiopic-amete-alem");
 }
 void IntlCalendarTest::checkConsistency(const char* locale) {
-    // Check 2.5 years in quick mode and 8000 years in exhaustive mode.
-    int32_t numOfDaysToTest = static_cast<int32_t>((quick ? 2.5 : 8000) * 365);
+    // Check 2.5 years in quick mode and 6000 years in exhaustive mode.
+    int32_t numOfDaysToTest = static_cast<int32_t>((quick ? 2.5 : 6000) * 365);
     constexpr int32_t msInADay = 1000*60*60*24;
     std::string msg("TestConsistency");
     IcuTestErrorCode status(*this, (msg + locale).c_str());
@@ -999,6 +1001,9 @@ void IntlCalendarTest::checkConsistency(const char* locale) {
     if (status.errIfFailureAndReset("Cannot create calendar %s", locale)) {
         return;
     }
+    const char* type = base->getType();
+    // Do not ignore in quick mode
+    bool ignoreOrdinaryMonth12Bug = (!quick) && (strcmp("chinese", type) == 0 || strcmp("dangi", type) == 0);
     UDate test = Calendar::getNow();
     base->setTimeZone(*(TimeZone::getGMT()));
     int32_t j;
@@ -1042,9 +1047,9 @@ void IntlCalendarTest::checkConsistency(const char* locale) {
                     g->get(UCAL_DATE, status) == 4) {
                     lastDay = 5;
                 } else {
-                    errln((UnicodeString)
+                    errln(UnicodeString(
                         "Day is not one less from previous date for "
-                        "Gregorian(e=" + g->get(UCAL_ERA, status) + " " +
+                        "Gregorian(e=") + g->get(UCAL_ERA, status) + " " +
                         g->get(UCAL_YEAR, status) + "/" +
                         (g->get(UCAL_MONTH, status) + 1) + "/" +
                         g->get(UCAL_DATE, status) + ") " + locale + "(" +
@@ -1061,8 +1066,8 @@ void IntlCalendarTest::checkConsistency(const char* locale) {
         // Second, we verify the month is in reasonale range.
         int32_t cmonth = base->get(UCAL_MONTH, status);
         if (cmonth < 0 || cmonth > 13) {
-            errln((UnicodeString)
-                "Month is out of range Gregorian(e=" +
+            errln(UnicodeString(
+                "Month is out of range Gregorian(e=") +
                 g->get(UCAL_ERA, status) + " " +
                 g->get(UCAL_YEAR, status) + "/" +
                 (g->get(UCAL_MONTH, status) + 1) + "/" +
@@ -1077,7 +1082,7 @@ void IntlCalendarTest::checkConsistency(const char* locale) {
         // Third, we verify the set function can round trip the time back.
         r->clear();
         for (int32_t f = 0; f < UCAL_FIELD_COUNT; f++) {
-            UCalendarDateFields ut = (UCalendarDateFields)f;
+            UCalendarDateFields ut = static_cast<UCalendarDateFields>(f);
             r->set(ut, base->get(ut, status));
         }
         UDate result = r->getTime(status);
@@ -1085,18 +1090,54 @@ void IntlCalendarTest::checkConsistency(const char* locale) {
             return;
         }
         if (test != result) {
-            errln((UnicodeString)"Round trip conversion produces different "
-                  "time from " + test + " to  " + result + " delta: " +
+            if (ignoreOrdinaryMonth12Bug &&
+                base->get(UCAL_ORDINAL_MONTH, status) == 12) {
+                logKnownIssue("ICU-22230", "Problem December in Leap Year");
+                status.reset();
+                continue;
+            }
+            int32_t year = base->get(UCAL_YEAR, status);
+            int32_t month = base->get(UCAL_MONTH, status) + 1;
+            int32_t date = base->get(UCAL_DATE, status);
+
+            errln(UnicodeString("Round trip conversion produces different "
+                  "time from ") + test + " to  " + result + " delta: " +
                   (result - test) +
                   " Gregorian(e=" + g->get(UCAL_ERA, status) + " " +
                   g->get(UCAL_YEAR, status) + "/" +
                   (g->get(UCAL_MONTH, status) + 1) + "/" +
-                  g->get(UCAL_DATE, status) + ") ");
+                  g->get(UCAL_DATE, status) + ") \n" +
+                  " Calendar[" + base->getType() +
+                  "](e=" + base->get(UCAL_ERA, status) + " " +
+                  year + "/" + month + "/" + date +
+                  ") ordinalMonth=" +
+                  base->get(UCAL_ORDINAL_MONTH, status));
             status.errIfFailureAndReset();
-            return;
         }
     }
-    status.errIfFailureAndReset();
+}
+
+void IntlCalendarTest::TestIslamicUmalquraCalendarSlow() {
+    IcuTestErrorCode status(*this, "TestIslamicUmalquraCalendarSlow");
+    Locale l("th@calendar=islamic-umalqura");
+    std::unique_ptr<Calendar> cal(
+        Calendar::createInstance(l, status));
+    cal->add(UCAL_YEAR, 1229080905, status);
+    cal->roll(UCAL_WEEK_OF_MONTH, 1499050699, status);
+    cal->fieldDifference(0.000000, UCAL_YEAR_WOY, status);
+    // Ignore the error
+    status.reset();
+}
+
+void IntlCalendarTest::TestJapaneseLargeEra() {
+    IcuTestErrorCode status(*this, "TestJapaneseLargeEra");
+    Locale l("ja@calendar=japanese");
+    std::unique_ptr<Calendar> cal(
+        Calendar::createInstance(l, status));
+    cal->clear();
+    cal->set(UCAL_ERA, 2139062143);
+    cal->add(UCAL_YEAR, 1229539657, status);
+    status.expectErrorAndReset(U_ILLEGAL_ARGUMENT_ERROR);
 }
 
 void IntlCalendarTest::simpleTest(const Locale& loc, const UnicodeString& expect, UDate expectDate, UErrorCode& status)
@@ -1105,7 +1146,7 @@ void IntlCalendarTest::simpleTest(const Locale& loc, const UnicodeString& expect
     UDate         d;
     DateFormat *fmt0 = DateFormat::createDateTimeInstance(DateFormat::kFull, DateFormat::kFull);
 
-    logln("Try format/parse of " + (UnicodeString)loc.getName());
+    logln("Try format/parse of " + UnicodeString(loc.getName()));
     DateFormat *fmt2 = DateFormat::createDateInstance(DateFormat::kFull, loc);
     if(fmt2) { 
         fmt2->format(expectDate, tmp);
@@ -1118,12 +1159,12 @@ void IntlCalendarTest::simpleTest(const Locale& loc, const UnicodeString& expect
         CHECK(status, "Error occurred parsing " + UnicodeString(loc.getName()));
         if(d != expectDate) {
             fmt2->format(d,tmp);
-            errln(UnicodeString("Failed to parse " ) + escape(expect) + ", " + loc.getName() + " expect " + (double)expectDate + " got " + (double)d  + " " + escape(tmp));
+            errln(UnicodeString("Failed to parse ") + escape(expect) + ", " + loc.getName() + " expect " + static_cast<double>(expectDate) + " got " + static_cast<double>(d) + " " + escape(tmp));
             logln( "wanted " + escape(fmt0->format(expectDate,tmp.remove())) + " but got " + escape(fmt0->format(d,tmp.remove())));
         }
         delete fmt2;
     } else {
-        errln((UnicodeString)"Can't create " + loc.getName() + " date instance");
+        errln(UnicodeString("Can't create ") + loc.getName() + " date instance");
     }
     delete fmt0;
 }
@@ -1172,7 +1213,7 @@ void IntlCalendarTest::TestBug21044Hebrew() {
         return;
    }
     if (y > 0 || m < 0 || m > 12 || d < 0 || d > 32) {
-        errln((UnicodeString)"Out of rage!\nYear " +  y + " should be " +
+        errln(UnicodeString("Out of rage!\nYear ") + y + " should be " +
               "negative number before 1AD.\nMonth " + m + " should " +
               "be between 0 and 12 in Hebrew calendar.\nDate " + d +
               " should be between 0 and 32 in Islamic calendar.");
@@ -1213,7 +1254,7 @@ void IntlCalendarTest::TestBug21046IslamicUmalqura() {
     int32_t m = cal->get(UCAL_MONTH, status);
     int32_t d = cal->get(UCAL_DATE, status);
     if (y > 0 || m < 0 || m > 11 || d < 0 || d > 32) {
-        errln((UnicodeString)"Out of rage!\nYear " +  y + " should be " +
+        errln(UnicodeString("Out of rage!\nYear ") + y + " should be " +
               "negative number before 1AD.\nMonth " + m + " should " +
               "be between 0 and 11 in Islamic calendar.\nDate " + d +
               " should be between 0 and 32 in Islamic calendar.");

@@ -70,14 +70,14 @@ public:
      * Check environment variable. 
      * @internal
      */
-    U_I18N_API static UBool U_EXPORT2 enableTentativeEra(void);
+    U_I18N_API static UBool U_EXPORT2 enableTentativeEra();
 
     /**
      * Useful constants for JapaneseCalendar.
      * Exported for use by test code.
      * @internal
      */
-    U_I18N_API static uint32_t U_EXPORT2 getCurrentEra(void); // the current era
+    U_I18N_API static uint32_t U_EXPORT2 getCurrentEra(); // the current era
 
     /**
      * Constructs a JapaneseCalendar based on the current time in the default time zone
@@ -123,7 +123,7 @@ public:
      * Japanese calendar case, this is equal to the equivalent extended Gregorian year.
      * @internal
      */
-    virtual int32_t handleGetExtendedYear() override;
+    virtual int32_t handleGetExtendedYear(UErrorCode& status) override;
 
     /**
      * Return the maximum value that this field could have, given the current date.
@@ -143,7 +143,7 @@ public:
      *           same class ID. Objects of other classes have different class IDs.
      * @internal
      */
-    virtual UClassID getDynamicClassID(void) const override;
+    virtual UClassID getDynamicClassID() const override;
 
     /**
      * Return the class ID for this class. This is useful only for comparing to a return
@@ -156,7 +156,7 @@ public:
      * @return   The class ID for all objects of this class.
      * @internal
      */
-    U_I18N_API static UClassID U_EXPORT2 getStaticClassID(void);
+    U_I18N_API static UClassID U_EXPORT2 getStaticClassID();
 
     /**
      * return the calendar type, "japanese".
@@ -166,22 +166,7 @@ public:
      */
     virtual const char * getType() const override;
 
-    /**
-     * @return false - no default century in Japanese
-     * @internal 
-     */
-    virtual UBool haveDefaultCentury() const override;
-
-    /**
-     * Not used - no default century.
-     * @internal
-     */
-    virtual UDate defaultCenturyStart() const override;
-    /**
-     * Not used - no default century.
-     * @internal
-     */
-    virtual int32_t defaultCenturyStartYear() const override;
+    DECLARE_OVERRIDE_SYSTEM_DEFAULT_CENTURY
 
 private:
     JapaneseCalendar(); // default constructor not implemented
@@ -210,9 +195,10 @@ protected:
      * taking year and era into account.  Will return the first month of the given era, if 
      * the current year is an ascension year.
      * @param eyear the extended year
+     * @param status Indicates the status.
      * @internal
      */
-    virtual int32_t getDefaultMonthInYear(int32_t eyear) override;
+    virtual int32_t getDefaultMonthInYear(int32_t eyear, UErrorCode& status) override;
 
     /***
      * Called by computeJulianDay.  Returns the default day (1-based) for the month,
@@ -220,9 +206,12 @@ protected:
      * era, if the current month is an ascension year and month.
      * @param eyear the extended year
      * @param mon the month in the year
+     * @param status Indicates the status.
      * @internal
      */
-    virtual int32_t getDefaultDayInMonth(int32_t eyear, int32_t month) override;
+    virtual int32_t getDefaultDayInMonth(int32_t eyear, int32_t month, UErrorCode& status) override;
+
+    virtual bool isEra0CountingBackward() const override { return false; }
 };
 
 U_NAMESPACE_END

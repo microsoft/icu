@@ -37,6 +37,7 @@ br{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabeg"}
+        ar_001{"arabeg modern"}
         arc{"arameeg"}
         arn{"araoukaneg"}
         aro{"araona"}
@@ -124,6 +125,8 @@ br{
         dar{"dargwa"}
         dav{"taita"}
         de{"alamaneg"}
+        de_AT{"alamaneg Aostria"}
+        de_CH{"alamaneg uhel Suis"}
         del{"delaware"}
         dgr{"dogrib"}
         din{"dinka"}
@@ -145,13 +148,21 @@ br{
         el{"gresianeg"}
         elx{"elameg"}
         en{"saozneg"}
+        en_AU{"saozneg Aostralia"}
+        en_CA{"saozneg Kanada"}
+        en_GB{"saozneg Breizh-Veur"}
+        en_US{"saozneg Amerika"}
         enm{"krennsaozneg"}
         eo{"esperanteg"}
         es{"spagnoleg"}
+        es_419{"spagnoleg Amerika latin"}
+        es_ES{"spagnoleg Europa"}
+        es_MX{"spagnoleg Mecʼhiko"}
         et{"estoneg"}
         eu{"euskareg"}
         ewo{"ewondo"}
         fa{"perseg"}
+        fa_AF{"dareg"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fula"}
@@ -162,6 +173,8 @@ br{
         fo{"faeroeg"}
         fon{"fon"}
         fr{"galleg"}
+        fr_CA{"galleg Kanada"}
+        fr_CH{"galleg Suis"}
         frc{"galleg cajun"}
         frm{"krenncʼhalleg"}
         fro{"hencʼhalleg"}
@@ -352,6 +365,7 @@ br{
         nb{"norvegeg bokmål"}
         nd{"ndebele an Norzh"}
         nds{"alamaneg izel"}
+        nds_NL{"saksoneg izel"}
         ne{"nepaleg"}
         new{"newari"}
         ng{"ndonga"}
@@ -359,6 +373,7 @@ br{
         niu{"niue"}
         njo{"aoeg"}
         nl{"nederlandeg"}
+        nl_BE{"flandrezeg"}
         nmg{"ngoumbeg"}
         nn{"norvegeg nynorsk"}
         nnh{"ngiemboon"}
@@ -410,6 +425,8 @@ br{
         pro{"henbrovañseg"}
         ps{"pachto"}
         pt{"portugaleg"}
+        pt_BR{"portugaleg Brazil"}
+        pt_PT{"portugaleg Europa"}
         qu{"kechuaeg"}
         quc{"kʼicheʼ"}
         qug{"kichuaeg Chimborazo"}
@@ -421,6 +438,7 @@ br{
         rm{"romañcheg"}
         rn{"rundi"}
         ro{"roumaneg"}
+        ro_MD{"moldoveg"}
         rof{"rombo"}
         rom{"romanieg"}
         ru{"rusianeg"}
@@ -446,6 +464,7 @@ br{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"heniwerzhoneg"}
+        sh{"serb-kroateg"}
         shi{"tacheliteg"}
         shn{"shan"}
         shu{"arabeg Tchad"}
@@ -475,6 +494,7 @@ br{
         sux{"sumereg"}
         sv{"svedeg"}
         sw{"swahili"}
+        sw_CD{"swahili Kongo"}
         swb{"komoreg"}
         syc{"sirieg klasel"}
         syr{"sirieg"}
@@ -561,10 +581,26 @@ br{
         zen{"zenaga"}
         zgh{"tamacheg Maroko standart"}
         zh{"sinaeg"}
+        zh_Hans{"sinaeg eeunaet"}
+        zh_Hant{"sinaeg hengounel"}
         zu{"zouloueg"}
         zun{"zuni"}
         zxx{"diyezh"}
         zza{"zazakeg"}
+    }
+    Languages%long{
+        zh_Hans{"sinaeg mandarinek eeunaet"}
+        zh_Hant{"sinaeg mandarinek hengounel"}
+    }
+    Languages%menu{
+        ckb{"kurdeg kreiz"}
+        yue{"sinaeg, kantoneg"}
+        zh{"sinaeg, mandarineg"}
+    }
+    Languages%short{
+        az{"azeri"}
+        en_GB{"saozneg RU"}
+        en_US{"saozneg SU"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -671,14 +707,10 @@ br{
             gregorian{"deiziadur gregorian"}
             hebrew{"deiziadur hebraek"}
             indian{"deiziadur indian"}
-            islamic{"deiziadur islamek"}
-            islamic-civil{"deiziadur islamek keodedel"}
-            islamic-rgsa{"deiziadur islamek (Arabia Saoudat)"}
-            islamic-tbla{"deiziadur islamek steredoniel"}
-            islamic-umalqura{"deiziadur islamek (Umm al-Qura)"}
             iso8601{"deiziadur ISO-8601"}
             japanese{"deiziadur japanat"}
             persian{"deiziadur persek"}
+            roc{"deiziadur Republik Sina"}
         }
         cf{
             account{"furmad unanenn jediñ"}
@@ -693,7 +725,6 @@ br{
             gb2312han{"urzh rummañ sinaek eeunaet - GB2312"}
             phonebook{"urzh rummañ al levr-pellgomz"}
             pinyin{"urzh rummañ pinyin"}
-            reformed{"urzh rummañ adreizhet"}
             search{"enklask hollek"}
             standard{"urzh rummañ standart"}
             stroke{"urzh rummañ an tresoù"}
@@ -932,7 +963,5 @@ br{
     }
     localeDisplayPattern{
         keyTypePattern{"{0} : {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }

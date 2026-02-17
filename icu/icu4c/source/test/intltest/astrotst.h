@@ -26,24 +26,21 @@ public:
 public:
     AstroTest();
 
-    void TestSolarLongitude(void);
+    void TestSolarLongitude();
 
-    void TestLunarPosition(void);
+    void TestLunarPosition();
 
-    void TestCoordinates(void);
+    void TestCoordinates();
 
-    void TestCoverage(void);
+    void TestCoverage();
 
-    void TestSunriseTimes(void);
-
-    void TestBasics(void);
+    void TestBasics();
     
-    void TestMoonAge(void);
+    void TestMoonAge();
  private:
-    void initAstro(UErrorCode&);
-    void closeAstro(UErrorCode&);
+    void init(UErrorCode&);
+    void close(UErrorCode&);
     
-    CalendarAstronomer *astro;
     Calendar *gc;
     
 };

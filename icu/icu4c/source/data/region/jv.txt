@@ -66,7 +66,7 @@ jv{
         BO{"Bolivia"}
         BQ{"Karibia Walanda"}
         BR{"Brasil"}
-        BS{"Bahamas"}
+        BS{"Bahama"}
         BT{"Bhutan"}
         BV{"Pulo Bovèt"}
         BW{"Botswana"}
@@ -93,14 +93,17 @@ jv{
         CY{"Siprus"}
         CZ{"Céko"}
         DE{"Jérman"}
+        DG{"Diego Garcia"}
         DJ{"Jibuti"}
         DK{"Dhènemarken"}
         DM{"Dominika"}
         DO{"Républik Dominika"}
         DZ{"Aljasair"}
+        EA{"Séuta lan Melila"}
         EC{"Ékuadhor"}
         EE{"Éstonia"}
         EG{"Mesir"}
+        EH{"Sahara Kulon"}
         ER{"Éritréa"}
         ES{"Sepanyol"}
         ET{"Étiopia"}
@@ -137,12 +140,13 @@ jv{
         HR{"Kroasia"}
         HT{"Haiti"}
         HU{"Honggari"}
+        IC{"Kapuloan Kanari"}
         ID{"Indonésia"}
         IE{"Républik Irlan"}
         IL{"Israèl"}
         IM{"Pulo Man"}
         IN{"Indhia"}
-        IO{"Wilayah Inggris nang Segoro Hindia"}
+        IO{"Wilayah Inggris ing Segara Hindia"}
         IQ{"Irak"}
         IR{"Iran"}
         IS{"Èslan"}
@@ -284,6 +288,8 @@ jv{
         VU{"Vanuatu"}
         WF{"Wallis lan Futuna"}
         WS{"Samoa"}
+        XA{"Logat Semu"}
+        XB{"Rong Arah Semu"}
         XK{"Kosovo"}
         YE{"Yaman"}
         YT{"Mayotte"}
@@ -291,5 +297,23 @@ jv{
         ZM{"Sambia"}
         ZW{"Simbabwe"}
         ZZ{"Daerah Ora Dikenali"}
+    }
+    Countries%chagos{
+        IO{"Kapuloan Chagos"}
+    }
+    Countries%short{
+        GB{"KM"}
+        HK{"Hong Kong"}
+        MO{"Macau"}
+        PS{"Palèstina"}
+        US{"AS"}
+    }
+    Countries%variant{
+        CD{"Républik Dhémokratik Kongo"}
+        CG{"Républik Kongo"}
+        CZ{"Républik Céko"}
+        FK{"Kapuloan Falkland (Islas Malvinas)"}
+        SZ{"(Swasiland)"}
+        TL{"Timor Wétan"}
     }
 }

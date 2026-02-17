@@ -93,7 +93,6 @@ sbp{
         IE{"Ayalandi"}
         IL{"Isilaeli"}
         IN{"Indiya"}
-        IO{"Uluvala lwa Uwingelesa ku Bahali ya Hindi"}
         IQ{"Ilaki"}
         IR{"Uwajemi"}
         IS{"Ayisilendi"}
@@ -165,7 +164,7 @@ sbp{
         PM{"Santapieli ni Mikeloni"}
         PN{"Pitikailini"}
         PR{"Pwetoliko"}
-        PS{"Mamlaka ya Palestina"}
+        PS{"Munjema gwa Kusikha nu Luvala lwa Gasa lwa Palesit"}
         PT{"Wuleno"}
         PW{"Palawu"}
         PY{"Palagwayi"}

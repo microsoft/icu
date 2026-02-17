@@ -31,10 +31,12 @@
 #include "cintltst.h"
 #include "cdattst.h"
 #include "cformtst.h"
+#include "cstring.h"
 #include "cmemory.h"
 
 #include <math.h>
 #include <stdbool.h>
+#include <stdio.h> // for sprintf()
 
 static void TestExtremeDates(void);
 static void TestAllLocales(void);
@@ -48,6 +50,8 @@ static void TestMapDateToCalFields(void);
 static void TestNarrowQuarters(void);
 static void TestExtraneousCharacters(void);
 static void TestParseTooStrict(void);
+static void TestHourCycle(void);
+static void TestLocaleNameCrash(void);
 
 void addDateForTest(TestNode** root);
 
@@ -72,9 +76,11 @@ void addDateForTest(TestNode** root)
     TESTCASE(TestNarrowQuarters);
     TESTCASE(TestExtraneousCharacters);
     TESTCASE(TestParseTooStrict);
+    TESTCASE(TestHourCycle);
+    TESTCASE(TestLocaleNameCrash);
 }
 /* Testing the DateFormat API */
-static void TestDateFormat()
+static void TestDateFormat(void)
 {
     UDateFormat *def, *fr, *it, *de, *def1, *fr_pat;
     UDateFormat *any;
@@ -170,7 +176,7 @@ static void TestDateFormat()
 
     /*Testing udat_format()*/
     log_verbose("\nTesting the udat_format() function of date format\n");
-    u_strcpy(temp, u"7/10/96, 4:05 PM");
+    u_strcpy(temp, u"7/10/96, 4:05\u202FPM");
     /*format using def */
     resultlength=0;
     resultlengthneeded=udat_format(def, d, NULL, resultlength, NULL, &status);
@@ -239,7 +245,7 @@ static void TestDateFormat()
 
     /*Testing parsing using udat_parse()*/
     log_verbose("\nTesting parsing using udat_parse()\n");
-    u_strcpy(temp, u"2/3/76, 2:50 AM");
+    u_strcpy(temp, u"2/3/76, 2:50\u202FAM");
     parsepos=0;
     status=U_ZERO_ERROR;
 
@@ -434,7 +440,7 @@ enum { kDateOrTimeOutMax = 96, kDateAndTimeOutMax = 192 };
 static const UDate minutesTolerance = 2 * 60.0 * 1000.0;
 static const UDate daysTolerance = 2 * 24.0 * 60.0 * 60.0 * 1000.0;
 
-static void TestRelativeDateFormat()
+static void TestRelativeDateFormat(void)
 {
     UDate today = 0.0;
     const UDateFormatStyle * stylePtr;
@@ -584,7 +590,7 @@ static void TestRelativeDateFormat()
 }
 
 /*Testing udat_getSymbols() and udat_setSymbols() and udat_countSymbols()*/
-static void TestSymbols()
+static void TestSymbols(void)
 {
     UDateFormat *def, *fr, *zhChiCal, *esMX;
     UErrorCode status = U_ZERO_ERROR;
@@ -698,7 +704,7 @@ static void TestSymbols()
     VerifygetSymbols(def, UDAT_QUARTERS, 3, "4th quarter");
     VerifygetSymbols(fr, UDAT_SHORT_QUARTERS, 1, "T2");
     VerifygetSymbols(def, UDAT_SHORT_QUARTERS, 2, "Q3");
-    VerifygetSymbols(esMX, UDAT_STANDALONE_NARROW_QUARTERS, 1, "2T");
+    VerifygetSymbols(esMX, UDAT_STANDALONE_NARROW_QUARTERS, 1, "2");
     VerifygetSymbols(def, UDAT_NARROW_QUARTERS, 2, "3");
     VerifygetSymbols(zhChiCal, UDAT_CYCLIC_YEARS_ABBREVIATED, 0, "\\u7532\\u5B50");
     VerifygetSymbols(zhChiCal, UDAT_CYCLIC_YEARS_NARROW, 59, "\\u7678\\u4EA5");
@@ -858,7 +864,7 @@ free(pattern);
 /**
  * Test DateFormat(Calendar) API
  */
-static void TestDateFormatCalendar() {
+static void TestDateFormatCalendar(void) {
     UDateFormat *date=0, *time=0, *full=0;
     UCalendar *cal=0;
     UChar buf[256];
@@ -946,7 +952,7 @@ static void TestDateFormatCalendar() {
                 u_errorName(ec));
         goto FAIL;
     }
-    u_strcpy(uExpected, u"5:45 PM");
+    u_strcpy(uExpected, u"5:45\u202FPM");
     u_austrcpy(cbuf, uExpected);
     if (u_strlen(uExpected) != len1 || u_strncmp(uExpected, buf1, len1) != 0) {
         log_err("FAIL: udat_formatCalendar(17:45), expected: %s", cbuf);
@@ -985,7 +991,7 @@ static void TestDateFormatCalendar() {
 /**
  * Test parsing two digit year against "YY" vs. "YYYY" patterns
  */
-static void TestCalendarDateParse() {
+static void TestCalendarDateParse(void) {
 
     int32_t result;
     UErrorCode ec = U_ZERO_ERROR;
@@ -1059,13 +1065,13 @@ static void TestCalendarDateParse() {
 
  FAIL:
     udat_close(simpleDateFormat);
-    udat_close(tempCal);
-    udat_close(calendar);
+    ucal_close(tempCal);
+    ucal_close(calendar);
 }
 
 
 /*INTERNAL FUNCTIONS USED*/
-static int getCurrentYear() {
+static int getCurrentYear(void) {
     static int currentYear = 0;
     if (currentYear == 0) {
         UErrorCode status = U_ZERO_ERROR;
@@ -1298,7 +1304,7 @@ static UBool _aux2ExtremeDates(UDateFormat* fmt, UDate small, UDate large,
  *  0.75*10^30, etc.  A logarithmic search will find 10^15, then 10^7.5
  *  and 10^22.5, etc.
  */
-static void TestExtremeDates() {
+static void TestExtremeDates(void) {
     UDateFormat *fmt;
     UErrorCode ec;
     UChar buf[256];
@@ -1969,15 +1975,15 @@ static void TestNarrowQuarters(void) {
         u"en_US", u"QQQQ y",  u"1st quarter 1970",
         u"en_US", u"QQQ y",   u"Q1 1970",
         u"en_US", u"QQQQQ y", u"1 1970",
-        u"es_MX", u"QQQQ y",  u"1.er trimestre 1970",
+        u"es_MX", u"QQQQ y",  u"1.º trimestre 1970",
         u"es_MX", u"QQQ y",   u"T1 1970",
         u"es_MX", u"QQQQQ y", u"1 1970",
         u"en_US", u"qqqq",    u"1st quarter",
         u"en_US", u"qqq",     u"Q1",
         u"en_US", u"qqqqq",   u"1",
-        u"es_MX", u"qqqq",    u"1.er trimestre",
+        u"es_MX", u"qqqq",    u"1.º trimestre",
         u"es_MX", u"qqq",     u"T1",
-        u"es_MX", u"qqqqq",   u"1T",
+        u"es_MX", u"qqqqq",   u"1",
     };
     
     UErrorCode err = U_ZERO_ERROR;
@@ -2075,6 +2081,67 @@ static void TestParseTooStrict(void) {
 
     ucal_close(cal);
     udat_close(df);
+}
+
+static void TestHourCycle(void) {
+    static const UDate date = -845601267742; // March 16, 1943 at 3:45 PM
+    const UChar* testCases[] = {
+        // test some locales for which we have data
+        u"en_US", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+        u"en_CA", u"Tuesday, March 16, 1943 at 3:45:32 p.m.",
+        u"en_GB", u"Tuesday, 16 March 1943 at 15:45:32",
+        u"en_AU", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+        // test a couple locales for which we don't have specific locale files (we should still get the correct hour cycle)
+        u"en_CO", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+        u"en_MX", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+        // test that the rg subtag does the right thing
+        u"en_US@rg=GBzzzz", u"Tuesday, March 16, 1943 at 15:45:32",
+        u"en_US@rg=CAzzzz", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+        u"en_CA@rg=USzzzz", u"Tuesday, March 16, 1943 at 3:45:32 p.m.",
+        u"en_GB@rg=USzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+        u"en_GB@rg=CAzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+        u"en_GB@rg=AUzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+        // test that the hc ("hours") subtag does the right thing
+        u"en_US@hours=h23", u"Tuesday, March 16, 1943 at 15:45:32",
+        u"en_GB@hours=h12", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+        // test that the rg and hc subtags do the right thing when used together
+        u"en_US@rg=GBzzzz;hours=h12", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+        u"en_GB@rg=USzzzz;hours=h23", u"Tuesday, 16 March 1943 at 15:45:32",
+    };
+    
+    for (int32_t i = 0; i < UPRV_LENGTHOF(testCases); i += 2) {
+        char errorMessage[200];
+        char* locale = austrdup(testCases[i]);
+        
+        UErrorCode err = U_ZERO_ERROR;
+        sprintf(errorMessage, "Error creating formatter for %s", locale);
+        if (assertSuccess(errorMessage, &err)) {
+            UDateFormat* df = udat_open(UDAT_MEDIUM, UDAT_FULL, austrdup(testCases[i]), u"America/Los_Angeles", -1, NULL, 0, &err);
+            sprintf(errorMessage, "Error formatting value for %s", locale);
+            if (assertSuccess(errorMessage, &err)) {
+                UChar result[100];
+                udat_format(df, date, result, 100, NULL, &err);
+                
+                sprintf(errorMessage, "Wrong result for %s", locale);
+                assertUEquals(errorMessage, testCases[i + 1], result);
+                
+                udat_close(df);
+            }
+        }
+    }
+}
+
+static void TestLocaleNameCrash(void) {
+    UErrorCode status = U_ZERO_ERROR;
+    UDateFormat icudf;
+
+    icudf = udat_open(UDAT_MEDIUM, UDAT_NONE, "notalanguage", NULL, 0, NULL, 0, &status);
+    if ( U_SUCCESS(status) ) {
+        log_verbose("Success: did not crash on udat_open(locale=\"notalanguage\")\n");
+    } else {
+        log_err("FAIL: didn't crash on udat_open(locale=\"notalanguage\"), but got %s.\n", u_errorName(status));
+    }
+    udat_close(icudf);
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

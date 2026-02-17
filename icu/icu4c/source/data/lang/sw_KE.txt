@@ -28,9 +28,21 @@ sw_KE{
         csw{"Kikrii cha Kinamasi"}
         cu{"Kislovakia cha Kanisa la Jadi"}
         cy{"Kiwels"}
+        de_AT{"Kijerumani cha Austria"}
+        de_CH{"Kijerumani cha Kawaida cha Uswisi"}
         dje{"Kizama"}
+        en_AU{"Kiingereza cha Australia"}
+        en_CA{"Kiingereza cha Kanada"}
+        en_GB{"Kiingereza cha Uingereza"}
+        en_US{"Kiingereza cha Marekani"}
+        es_419{"Kihispania cha Amerika Kusini"}
+        es_ES{"Kihispania cha Ulaya"}
+        es_MX{"Kihispania cha Meksiko"}
+        fa_AF{"Kidari"}
         ff{"Kifula"}
         fo{"Kifaro"}
+        fr_CA{"Kifaransa cha Kanada"}
+        fr_CH{"Kifaransa cha Uswisi"}
         frr{"Kifrisi cha Kaskazini"}
         fur{"Kifriuli"}
         fy{"Kifrisi cha Magharibi"}
@@ -99,6 +111,8 @@ sw_KE{
         or{"Kiodia"}
         pag{"Kipangasini"}
         pcm{"Kipijini cha Naijeria"}
+        pt_BR{"Kireno cha Brazili"}
+        pt_PT{"Kireno cha Ulaya"}
         rm{"Kirumi"}
         rwk{"Kirwa"}
         sba{"Kingambei"}
@@ -112,6 +126,7 @@ sw_KE{
         st{"Kisotho cha Kusini"}
         str{"Kisali cha Straits"}
         su{"Kisundani"}
+        sw_CD{"Kiswahili cha Kongo"}
         swb{"Kikomoro"}
         syr{"Kisiria"}
         tce{"Kituchone cha Kusini"}
@@ -137,6 +152,24 @@ sw_KE{
         yav{"Kiyangbeni"}
         yi{"Kiyidi"}
         zgh{"Kitamazight cha Kawaida cha Moroko"}
+        zh_Hans{"Kichina Kilichorahisishwa"}
+        zh_Hant{"Kichina cha Kawaida"}
+    }
+    Languages%long{
+        zh_Hans{"Kichina cha Kimandarini Kilichorahisishwa"}
+        zh_Hant{"Kichina cha Kimandarini cha Kawaida"}
+    }
+    Languages%menu{
+        ckb{"Kikurdi, Kati"}
+        zh{"Kichina, Kimandarini"}
+    }
+    Languages%short{
+        en_GB{"Kiingereza cha Uingereza"}
+        en_US{"Kiingereza cha Marekani)"}
+    }
+    Languages%variant{
+        ckb{"Kikurdi, Sorani"}
+        hi_Latn{"Kihindi na Kiingereza"}
     }
     Scripts{
         Beng{"Kibangla"}

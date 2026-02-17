@@ -93,7 +93,6 @@ luy{
         IE{"Ayalandi"}
         IL{"Israeli"}
         IN{"India"}
-        IO{"Eneo la Uingereza katika Bahari Hindi"}
         IQ{"Iraki"}
         IR{"Uajemi"}
         IS{"Aislandi"}
@@ -165,7 +164,7 @@ luy{
         PM{"Santapieri na Mikeloni"}
         PN{"Pitkairni"}
         PR{"Pwetoriko"}
-        PS{"Palestinian Authority"}
+        PS{"Ukingo wa Magharibi na Ukanda wa Gaza wa Palestina"}
         PT{"Ureno"}
         PW{"Palau"}
         PY{"Paragwai"}

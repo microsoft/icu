@@ -85,6 +85,7 @@ fi{
         CN{"Kiina"}
         CO{"Kolumbia"}
         CP{"Clippertoninsaari"}
+        CQ{"Sark"}
         CR{"Costa Rica"}
         CU{"Kuuba"}
         CV{"Kap Verde"}
@@ -93,14 +94,17 @@ fi{
         CY{"Kypros"}
         CZ{"Tšekki"}
         DE{"Saksa"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Tanska"}
         DM{"Dominica"}
         DO{"Dominikaaninen tasavalta"}
         DZ{"Algeria"}
+        EA{"Ceuta ja Melilla"}
         EC{"Ecuador"}
         EE{"Viro"}
         EG{"Egypti"}
+        EH{"Länsi-Sahara"}
         ER{"Eritrea"}
         ES{"Espanja"}
         ET{"Etiopia"}
@@ -113,7 +117,7 @@ fi{
         FO{"Färsaaret"}
         FR{"Ranska"}
         GA{"Gabon"}
-        GB{"Yhdistynyt kuningaskunta"}
+        GB{"Iso-Britannia"}
         GD{"Grenada"}
         GE{"Georgia"}
         GF{"Ranskan Guayana"}
@@ -137,6 +141,7 @@ fi{
         HR{"Kroatia"}
         HT{"Haiti"}
         HU{"Unkari"}
+        IC{"Kanariansaaret"}
         ID{"Indonesia"}
         IE{"Irlanti"}
         IL{"Israel"}
@@ -219,7 +224,7 @@ fi{
         PM{"Saint-Pierre ja Miquelon"}
         PN{"Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Palestiinalaishallinto"}
+        PS{"Palestiinalaisalue"}
         PT{"Portugali"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -238,7 +243,7 @@ fi{
         SG{"Singapore"}
         SH{"Saint Helena"}
         SI{"Slovenia"}
-        SJ{"Svalbard ja Jan Mayen"}
+        SJ{"Huippuvuoret ja Jan Mayen"}
         SK{"Slovakia"}
         SL{"Sierra Leone"}
         SM{"San Marino"}
@@ -284,6 +289,8 @@ fi{
         VU{"Vanuatu"}
         WF{"Wallis ja Futuna"}
         WS{"Samoa"}
+        XA{"pseudoaksentit"}
+        XB{"kaksisuuntainen pseudo"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +298,26 @@ fi{
         ZM{"Sambia"}
         ZW{"Zimbabwe"}
         ZZ{"tuntematon alue"}
+    }
+    Countries%chagos{
+        IO{"Chagossaaret"}
+    }
+    Countries%short{
+        GB{"Britannia"}
+        HK{"Hongkong"}
+        MO{"Macao"}
+        PS{"Palestiina"}
+        UN{"YK"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Kongo-Kinshasa"}
+        CG{"Kongo-Brazzaville"}
+        CI{"Côte d’Ivoire"}
+        CZ{"Tšekin tasavalta"}
+        FK{"Falklandinsaaret (Malvinassaaret)"}
+        NZ{"Aotearoa"}
+        SZ{"Swazimaa"}
+        TL{"Timor-Leste"}
     }
 }

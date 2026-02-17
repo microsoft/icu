@@ -93,14 +93,17 @@ kgp{
         CY{"Sipre"}
         CZ{"Sékija"}
         DE{"Aremỹija"}
+        DG{"Niego Garsija"}
         DJ{"Nhimuti"}
         DK{"Ninỹmỹrka"}
         DM{"Nomĩnĩka"}
         DO{"Repumrika Nomĩnĩkỹnỹ"}
         DZ{"Arjérija"}
+        EA{"Sevuta kar Mẽrira"}
         EC{"Ekuvanor"}
         EE{"Enhtonĩja"}
         EG{"Ejito"}
+        EH{"Sahara Rãpur"}
         ER{"Erytiréja"}
         ES{"Enhpỹnija"}
         ET{"Etiópija"}
@@ -137,12 +140,12 @@ kgp{
         HR{"Kroasa"}
         HT{"Ajti"}
         HU{"Ũgrija"}
+        IC{"Kanỹrija Goj-vẽso"}
         ID{"Ĩnonẽja"}
         IE{"Irỹna"}
         IL{"Isihaé"}
         IM{"Mỹn Goj-vẽso"}
         IN{"Ĩnija"}
-        IO{"Osiỹno Ĩniko tỹ Tehitórijo Mritỹnĩku"}
         IQ{"Iraki"}
         IR{"Irỹ"}
         IS{"Inhrỹnija"}
@@ -284,6 +287,8 @@ kgp{
         VU{"Vanũvatu"}
         WF{"Varinh kar Futunỹ"}
         WS{"Samãva"}
+        XA{"Ón vĩ ag"}
+        XB{"Ón régre mĩ."}
         XK{"Kosovo"}
         YE{"Jemẽn"}
         YT{"Mỹjóte"}
@@ -291,5 +296,21 @@ kgp{
         ZM{"Jỹmija"}
         ZW{"Jĩmamuje"}
         ZZ{"Reji’ỹv Veja tũ"}
+    }
+    Countries%short{
+        HK{"Hãg Kãg"}
+        MO{"Mỹkav"}
+        PS{"Parenhtinỹ"}
+        UN{"ONU"}
+        US{"EUA"}
+    }
+    Countries%variant{
+        CD{"Kãgo Repumrika Nemokratika"}
+        CG{"Kãgo"}
+        CI{"Kote Nhivuva"}
+        CZ{"Repumrika Séka"}
+        FK{"Mỹrvĩnỹ Goj-vẽso (Farkrỹn)"}
+        SZ{"Suvasi-Ga"}
+        TL{"Timãr-Rãjur Repumrika Nemãkratika"}
     }
 }

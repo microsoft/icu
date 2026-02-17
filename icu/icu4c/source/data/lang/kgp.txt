@@ -43,6 +43,7 @@ kgp{
         ang{"ĩnhgrej arkajiku"}
         anp{"ỹgika"}
         ar{"arame"}
+        ar_001{"arame ta’ũn"}
         arc{"aramajiko"}
         arn{"mỹpunugũn"}
         arp{"arapaho"}
@@ -55,6 +56,7 @@ kgp{
         awa{"avanhi"}
         ay{"ajimỹra"}
         az{"ajermajỹnũ"}
+        az_Arab{"aseri sur"}
         ba{"majkir"}
         bal{"marusi"}
         ban{"marinẽj"}
@@ -122,6 +124,7 @@ kgp{
         dar{"narguva"}
         dav{"tajta"}
         de{"arimỹv"}
+        de_CH{"suvisa arimỹv-téj"}
         del{"neravare"}
         den{"sirave"}
         dgr{"nogrim"}
@@ -347,12 +350,14 @@ kgp{
         nb{"mógmỹr nãrovegej"}
         nd{"nemere nãrti"}
         nds{"arimỹv rur"}
+        nds_NL{"sagsỹv rur"}
         ne{"nẽparej"}
         new{"nẽvari"}
         ng{"nogã"}
         nia{"nĩja"}
         niu{"nivuvejỹnũ"}
         nl{"orỹnej"}
+        nl_BE{"framẽgo"}
         nmg{"kivasijo"}
         nn{"nĩnãrsig nãrovegej"}
         nnh{"gijẽmun"}
@@ -401,6 +406,7 @@ kgp{
         rm{"homỹse"}
         rn{"hũni"}
         ro{"homẽnũ"}
+        ro_MD{"mãrnavijo"}
         rof{"hãmo"}
         rom{"homỹnĩ"}
         root{"haji"}
@@ -429,6 +435,7 @@ kgp{
         ses{"kojyramoro senĩ"}
         sg{"sỹgo"}
         sga{"irỹnej arkajku"}
+        sh{"servo-krovata"}
         shi{"tasehiti"}
         shn{"sỹn"}
         shu{"arame sanijỹnũ"}
@@ -458,6 +465,7 @@ kgp{
         sux{"sumẽrijo"}
         sv{"suvéko"}
         sw{"suvahiri"}
+        sw_CD{"suvahiri Kãgo tá"}
         swb{"komorijỹnũ"}
         syc{"sirijako há tỹvĩ"}
         syr{"sirijako"}
@@ -533,10 +541,23 @@ kgp{
         zen{"senỹga"}
         zgh{"tamỹjirte mỹhókinũ pã"}
         zh{"sĩnẽj"}
+        zh_Hans{"sĩnẽj mẽ"}
+        zh_Hant{"sĩnẽj pẽ"}
         zu{"suru"}
         zun{"sunhi"}
         zxx{"nén ũ vẽnhvĩ ki tũ"}
         zza{"sasaki"}
+    }
+    Languages%long{
+        zh_Hans{"sĩnẽj mỹnarĩj (mẽ)"}
+        zh_Hant{"sĩnẽj mỹnarĩj (pẽ)"}
+    }
+    Languages%menu{
+        yue{"kỹtonẽj (pẽ)"}
+        zh{"sĩnẽj mỹnarĩj"}
+    }
+    Languages%variant{
+        ps{"pusito"}
     }
     Scripts{
         Arab{"arame"}
@@ -694,12 +715,10 @@ kgp{
             gregorian{"Papa Gregorju Prỹg-kurã-kar"}
             hebrew{"Emrajko Prỹg-kurã-kar"}
             indian{"Ĩnija Prỹg-kurã-kar pẽ"}
-            islamic{"Isirỹ Prỹg-kurã-kar"}
-            islamic-civil{"Isirỹ Prỹg-kurã-kar Siviv"}
-            islamic-umalqura{"Isirỹ Prỹg-kurã-kar (Umm al-Qura)"}
             iso8601{"Prỹg-kurã-kar ISO-8601"}
             japanese{"Japonẽj Prỹg-kurã-kar"}
             persian{"Pérsa Prỹg-kurã-kar"}
+            roc{"Sĩnỹ Kar-mỹ Prỹg-kurã-kar"}
         }
         cf{
             account{"Kajẽm jé nĩkri hár"}
@@ -747,7 +766,6 @@ kgp{
             phonebook{"Terefonĩ Risita to ke"}
             phonetic{"Fonẽtika to ke kuprãg"}
             pinyin{"Pin-yin to nỹtĩ"}
-            reformed{"Hár tãg nỹtĩ"}
             search{"Jẽnfĩn to ke Kar"}
             searchjl{"Hangul kãsonỹte ve jãnfĩn"}
             standard{"to ke pẽ"}
@@ -868,7 +886,6 @@ kgp{
     }
     characterLabelPattern{
         all{"{0} — kar"}
-        category-list{"{0}: {1}"}
         compatibility{"{0} — jagnẽ ki há"}
         enclosed{"{0} — nĩfe"}
         extended{"{0} — kãvir"}
@@ -885,10 +902,5 @@ kgp{
         language{"Vĩpẽ: {0}"}
         script{"Arfaméto: {0}"}
         territory{"Kãtá: {0}"}
-    }
-    localeDisplayPattern{
-        keyTypePattern{"{0}: {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }

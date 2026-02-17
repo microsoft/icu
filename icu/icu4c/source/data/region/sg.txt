@@ -93,7 +93,6 @@ sg{
         IE{"Irlânde"}
         IL{"Israëli"}
         IN{"Ênnde"}
-        IO{"Sêse tî Anglëe na Ngûyämä tî Ênnde"}
         IQ{"Irâki"}
         IR{"Iräan"}
         IS{"Islânde"}
@@ -165,7 +164,7 @@ sg{
         PM{"Sên-Pyêre na Mikelöon"}
         PN{"Pitikêrni"}
         PR{"Porto Rîko"}
-        PS{"Autorité palestinienne"}
+        PS{"Sêse tî Palestîni"}
         PT{"Pörtugäle, Ködörö Pûra"}
         PW{"Palau"}
         PY{"Paraguëe"}

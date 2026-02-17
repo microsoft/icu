@@ -34,6 +34,7 @@ az{
         ann{"obolo"}
         anp{"angika"}
         ar{"ərəb"}
+        ar_001{"müasir standart ərəb"}
         arc{"aramik"}
         arn{"mapuçe"}
         arp{"arapaho"}
@@ -47,6 +48,7 @@ az{
         awa{"avadhi"}
         ay{"aymara"}
         az{"azərbaycan"}
+        az_Arab{"cənubi azərbaycan"}
         ba{"başqırd"}
         bal{"baluc"}
         ban{"bali"}
@@ -56,12 +58,14 @@ az{
         bem{"bemba"}
         bez{"bena"}
         bg{"bolqar"}
+        bgc{"Haryanvi"}
         bgn{"qərbi bəluc"}
         bho{"bxoçpuri"}
         bi{"bislama"}
         bik{"bikol"}
         bin{"bini"}
         bla{"siksikə"}
+        blo{"anii"}
         bm{"bambara"}
         bn{"benqal"}
         bo{"tibet"}
@@ -115,6 +119,8 @@ az{
         dar{"darqva"}
         dav{"taita"}
         de{"alman"}
+        de_AT{"Avstriya almancası"}
+        de_CH{"İsveçrə yüksək almancası"}
         del{"delaver"}
         den{"slavey"}
         dgr{"doqrib"}
@@ -137,13 +143,21 @@ az{
         el{"yunan"}
         elx{"elamit"}
         en{"ingilis"}
+        en_AU{"Avstraliya ingiliscəsi"}
+        en_CA{"Kanada ingiliscəsi"}
+        en_GB{"Britaniya ingiliscəsi"}
+        en_US{"Amerika ingiliscəsi"}
         enm{"orta ingilis"}
         eo{"esperanto"}
         es{"ispan"}
+        es_419{"Latın Amerikası ispancası"}
+        es_ES{"Kastiliya ispancası"}
+        es_MX{"Meksika ispancası"}
         et{"eston"}
         eu{"bask"}
         ewo{"evondo"}
         fa{"fars"}
+        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fula"}
@@ -153,6 +167,8 @@ az{
         fo{"farer"}
         fon{"fon"}
         fr{"fransız"}
+        fr_CA{"Kanada fransızcası"}
+        fr_CH{"İsveçrə fransızcası"}
         frc{"Kacun fransızcası"}
         frm{"orta fransız"}
         fro{"qədim fransız"}
@@ -189,6 +205,7 @@ az{
         hax{"cənubi haida"}
         he{"ivrit"}
         hi{"hind"}
+        hi_Latn{"Hindi (latın)"}
         hil{"hiliqaynon"}
         hit{"hittit"}
         hmn{"monq"}
@@ -269,6 +286,7 @@ az{
         kv{"komi"}
         kw{"korn"}
         kwk{"Kvakvala"}
+        kxv{"kuvi"}
         ky{"qırğız"}
         la{"latın"}
         lad{"sefard"}
@@ -279,8 +297,10 @@ az{
         lez{"ləzgi"}
         lg{"qanda"}
         li{"limburq"}
+        lij{"liquriya dili"}
         lil{"Liluet"}
         lkt{"lakota"}
+        lmo{"lombard dili"}
         ln{"linqala"}
         lo{"laos"}
         lol{"monqo"}
@@ -293,7 +313,6 @@ az{
         lua{"luba-lulua"}
         lui{"luyseno"}
         lun{"lunda"}
-        luo{"luo"}
         lus{"mizo"}
         luy{"luyia"}
         lv{"latış"}
@@ -342,12 +361,14 @@ az{
         nb{"bokmal norveç"}
         nd{"şimali ndebele"}
         nds{"aşağı alman"}
+        nds_NL{"aşağı sakson"}
         ne{"nepal"}
         new{"nevari"}
         ng{"ndonqa"}
         nia{"nias"}
         niu{"niyuan"}
         nl{"holland"}
+        nl_BE{"flamand"}
         nmg{"kvasio"}
         nn{"nünorsk norveç"}
         nnh{"ngiemboon"}
@@ -394,6 +415,8 @@ az{
         pro{"qədim provansal"}
         ps{"puştu"}
         pt{"portuqal"}
+        pt_BR{"Braziliya portuqalcası"}
+        pt_PT{"Portuqaliya portuqalcası"}
         qu{"keçua"}
         quc{"kiçe"}
         raj{"racastani"}
@@ -403,6 +426,7 @@ az{
         rm{"romanş"}
         rn{"rundi"}
         ro{"rumın"}
+        ro_MD{"moldav"}
         rof{"rombo"}
         rom{"roman"}
         ru{"rus"}
@@ -429,6 +453,7 @@ az{
         ses{"koyraboro senni"}
         sg{"sanqo"}
         sga{"qədim irland"}
+        sh{"serb-xorvat"}
         shi{"taçelit"}
         shn{"şan"}
         si{"sinhala"}
@@ -459,8 +484,10 @@ az{
         sux{"sumeryan"}
         sv{"isveç"}
         sw{"suahili"}
+        sw_CD{"Konqo suahilicəsi"}
         swb{"komor"}
         syr{"suriya"}
+        szl{"silez dili"}
         ta{"tamil"}
         tce{"cənubi tuçon"}
         te{"teluqu"}
@@ -507,9 +534,10 @@ az{
         und{"naməlum dil"}
         ur{"urdu"}
         uz{"özbək"}
-        vai{"vai"}
         ve{"venda"}
+        vec{"venet dili"}
         vi{"vyetnam"}
+        vmw{"makua dili"}
         vo{"volapük"}
         vot{"votik"}
         vun{"vunyo"}
@@ -523,6 +551,7 @@ az{
         wuu{"vu"}
         xal{"kalmık"}
         xh{"xosa"}
+        xnr{"kanqri"}
         xog{"soqa"}
         yao{"yao"}
         yap{"yapiz"}
@@ -538,10 +567,29 @@ az{
         zen{"zenaqa"}
         zgh{"tamazi"}
         zh{"çin"}
+        zh_Hans{"sadələşmiş çin"}
+        zh_Hant{"ənənəvi çin"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"dil məzmunu yoxdur"}
         zza{"zaza"}
+    }
+    Languages%long{
+        zh_Hans{"sadələşmiş mandarin çincəsi"}
+        zh_Hant{"ənənəvi mandarin çincəsi"}
+    }
+    Languages%menu{
+        ckb{"Kürdcə, mərkəzi"}
+        yue{"Çin, kanton"}
+        zh{"Çin, mandarin"}
+    }
+    Languages%short{
+        az{"azəri"}
+        en_GB{"ingilis (BK)"}
+        en_US{"ingilis (ABŞ)"}
+    }
+    Languages%variant{
+        ckb{"Kürdcə, sorani"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -691,13 +739,14 @@ az{
             gregorian{"Qreqorian təqvimi"}
             hebrew{"Yəhudi Təqvimi"}
             indian{"Hindi təqvimi"}
-            islamic{"İslam təqvimi"}
-            islamic-civil{"Ivrit təqvimi"}
-            islamic-tbla{"İslam təqvimi (astronomik)"}
-            islamic-umalqura{"İslam təqvimi (Umm Al-Qura)"}
+            islamic{"Hicri təqvimi"}
+            islamic-civil{"Hicri təqvimi (tabulyar, vətəndaşlıq dövrü)"}
+            islamic-tbla{"Hicri təqvim (tabulyar, astromonik dövr)"}
+            islamic-umalqura{"Hicri təqvim (Umm əl-Qura)"}
             iso8601{"ISO-8601 Təqvimi"}
             japanese{"Yapon Təqvimi"}
             persian{"İran Təqvimi"}
+            roc{"Minquo Təqvimi"}
         }
         cf{
             account{"Uçot Valyuta Formatı"}
@@ -770,10 +819,11 @@ az{
     }
     characterLabelPattern{
         all{"{0} — Bütün"}
-        category-list{"{0}: {1}"}
         compatibility{"{0} — Uyğunluq"}
         enclosed{"{0} — Qapalı"}
         extended{"{0} — Artırılmış"}
+        facing-left{"{0} sola baxan"}
+        facing-right{"{0} sağa baxan"}
         historic{"{0} — Tarixi"}
         miscellaneous{"{0} — Qarışıq"}
         other{"{0} — Digər"}
@@ -789,10 +839,5 @@ az{
         language{"Dil: {0}"}
         script{"Skript: {0}"}
         territory{"Region: {0}"}
-    }
-    localeDisplayPattern{
-        keyTypePattern{"{0}: {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }

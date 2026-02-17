@@ -19,7 +19,7 @@ es_419{
         kbd{"cabardiano"}
         krc{"karachái-bálkaro"}
         ks{"cachemiro"}
-        lo{"laosiano"}
+        lij{"genovés"}
         ml{"malabar"}
         mni{"manipuri"}
         nr{"ndebele del sur"}
@@ -32,13 +32,19 @@ es_419{
         sma{"sami del sur"}
         st{"sesotho del sur"}
         sw{"swahili"}
+        sw_CD{"swahili (Congo)"}
         syr{"siríaco"}
         tet{"tetun"}
         tyv{"tuvano"}
+        vec{"véneto"}
         wal{"walamo"}
         wuu{"wu"}
         xal{"calmuco"}
         zun{"zuni"}
+    }
+    Languages%variant{
+        ps{"pashtún"}
+        ug{"uighur"}
     }
     Scripts{
         Gujr{"gujarati"}

@@ -152,14 +152,17 @@ static KnownRegion knownRegions[] = {
     { "CZ" , 203, "151", URGN_TERRITORY, "150" },
     { "DD" , 276, "155", URGN_TERRITORY, "150" },
     { "DE" , 276, "155", URGN_TERRITORY, "150" },
+    { "DG" , -1 , "QO" , URGN_TERRITORY, "009" },
     { "DJ" , 262, "014", URGN_TERRITORY, "002" },
     { "DK" , 208, "154", URGN_TERRITORY, "150" },
     { "DM" , 212, "029", URGN_TERRITORY, "019" },
     { "DO" , 214, "029", URGN_TERRITORY, "019" },
     { "DZ" ,  12, "015", URGN_TERRITORY, "002" },
+    { "EA" ,  -1, "015", URGN_TERRITORY, "002" },
     { "EC" , 218, "005", URGN_TERRITORY, "019" },
     { "EE" , 233, "154", URGN_TERRITORY, "150" },
     { "EG" , 818, "015", URGN_TERRITORY, "002" },
+    { "EH" , 732, "015", URGN_TERRITORY, "002" },
     { "ER" , 232, "014", URGN_TERRITORY, "002" },
     { "ES" , 724, "039", URGN_TERRITORY, "150" },
     { "ET" , 231, "014", URGN_TERRITORY, "002" },
@@ -196,6 +199,7 @@ static KnownRegion knownRegions[] = {
     { "HR" , 191, "039", URGN_TERRITORY, "150" },
     { "HT" , 332, "029", URGN_TERRITORY, "019" },
     { "HU" , 348, "151", URGN_TERRITORY, "150" },
+    { "IC" ,  -1, "015", URGN_TERRITORY, "002" },
     { "ID" , 360, "035", URGN_TERRITORY, "142" },
     { "IE" , 372, "154", URGN_TERRITORY, "150" },
     { "IL" , 376, "145", URGN_TERRITORY, "142" },
@@ -358,7 +362,7 @@ static KnownRegion knownRegions[] = {
     };
 
 
-static void TestKnownRegions() {
+static void TestKnownRegions(void) {
     const KnownRegion * rd;
     for (rd = knownRegions; rd->code != NULL ; rd++ ) {
         UErrorCode status = U_ZERO_ERROR;
@@ -385,7 +389,7 @@ static void TestKnownRegions() {
     }
 }
 
-static void TestGetContainedRegions() {
+static void TestGetContainedRegions(void) {
     const KnownRegion * rd;
     for (rd = knownRegions; rd->code != NULL ; rd++ ) {
         UErrorCode status = U_ZERO_ERROR;
@@ -414,7 +418,7 @@ static void TestGetContainedRegions() {
     }
 }
 
-static void TestGroupingChildren() {
+static void TestGroupingChildren(void) {
     const char* testGroupings[] = {
         "003", "021,013,029",
         "419", "013,029,005",
@@ -466,7 +470,7 @@ static void TestGroupingChildren() {
     }
 }
 
-static void TestGetContainedRegionsWithType() {
+static void TestGetContainedRegionsWithType(void) {
     const KnownRegion * rd;
     for (rd = knownRegions; rd->code != NULL ; rd++ ) {
         UErrorCode status = U_ZERO_ERROR;
@@ -495,7 +499,7 @@ static void TestGetContainedRegionsWithType() {
     }
 }
 
-static void TestGetContainingRegion() {        
+static void TestGetContainingRegion(void) {
     const KnownRegion * rd;
     for (rd = knownRegions; rd->code != NULL ; rd++ ) {
         UErrorCode status = U_ZERO_ERROR;
@@ -519,7 +523,7 @@ static void TestGetContainingRegion() {
     }
 }
 
-static void TestGetContainingRegionWithType() {        
+static void TestGetContainingRegionWithType(void) {
     const KnownRegion * rd;
     for (rd = knownRegions; rd->code != NULL ; rd++ ) {
         UErrorCode status = U_ZERO_ERROR;
@@ -559,7 +563,7 @@ static const char ** expectPrefRegionsTestData[] = {
     NULL
 };
 
-static void TestGetPreferredValues() {
+static void TestGetPreferredValues(void) {
     const char *** testDataPtr = expectPrefRegionsTestData;
     const char ** regionListPtr;
     while ( (regionListPtr = *testDataPtr++) != NULL ) {
@@ -596,7 +600,7 @@ static void TestGetPreferredValues() {
     }
 }
 
-static void TestContains() {
+static void TestContains(void) {
     const KnownRegion * rd;
     for (rd = knownRegions; rd->code != NULL ; rd++ ) {
         UErrorCode status = U_ZERO_ERROR;

@@ -93,7 +93,6 @@ kde{
         IE{"Ayalandi"}
         IL{"Islaeli"}
         IN{"India"}
-        IO{"Lieneo lyaki Nngalesa Nbahali ya Hindi"}
         IQ{"Ilaki"}
         IR{"Uadyemi"}
         IS{"Aislandi"}
@@ -165,7 +164,7 @@ kde{
         PM{"Santapieli na Mikeloni"}
         PN{"Pitikeluni"}
         PR{"Pwetoliko"}
-        PS{"Mamlaka ya Palestina"}
+        PS{"Nchingu wa Magalibi wa Mpanda wa kuGaza wa kuPales"}
         PT{"Uleno"}
         PW{"Palau"}
         PY{"Palagwai"}

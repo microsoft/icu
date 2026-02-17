@@ -137,16 +137,11 @@ es_US{
                 yMMMEd{"EEE, d 'de' MMM 'de' y"}
                 yQQQ{"QQQ y"}
             }
-            dayNames{
-                format{
-                    narrow{
-                        "D",
-                        "L",
-                        "M",
-                        "M",
-                        "J",
-                        "V",
-                        "S",
+            dayPeriod{
+                stand-alone{
+                    abbreviated{
+                        am{"a. m."}
+                        pm{"p. m."}
                     }
                 }
             }
@@ -172,7 +167,6 @@ es_US{
                 MMMd{
                     d{"d–d 'de' MMM"}
                 }
-                fallback{"{0} – {1}"}
                 h{
                     a{"h a – h a"}
                 }
@@ -204,14 +198,6 @@ es_US{
             }
             quarters{
                 format{
-                    wide{
-                        "1er trimestre",
-                        "2.º trimestre",
-                        "3.º trimestre",
-                        "4.º trimestre",
-                    }
-                }
-                stand-alone{
                     wide{
                         "1er trimestre",
                         "2.º trimestre",
@@ -258,50 +244,17 @@ es_US{
         quotationStart{"«"}
     }
     fields{
-        dayOfYear-narrow{
-            dn{"día del a"}
-        }
         dayOfYear-short{
             dn{"día del a"}
         }
         dayperiod{
             dn{"a. m./p. m."}
         }
-        dayperiod-narrow{
-            dn{"a. m./p. m."}
-        }
-        dayperiod-short{
-            dn{"a. m./p. m."}
-        }
-        fri-narrow{
-            relativeTime{
-                past{
-                    one{"hace {0} VI"}
-                    other{"hace {0} VI"}
-                }
-            }
-        }
-        sat-narrow{
-            relativeTime{
-                past{
-                    one{"hace {0} SA"}
-                    other{"hace {0} SA"}
-                }
-            }
-        }
         sun{
             relativeTime{
                 future{
                     one{"dentro de {0} domingo"}
                     other{"dentro de {0} domingos"}
-                }
-            }
-        }
-        tue{
-            relativeTime{
-                future{
-                    one{"dentro de {0} martes"}
-                    other{"dentro de {0} martes"}
                 }
             }
         }
@@ -312,13 +265,6 @@ es_US{
                 "1"{"el próximo mié."}
             }
         }
-        week-narrow{
-            relative{
-                "-1"{"sem. pasada"}
-                "0"{"esta sem."}
-                "1"{"próxima sem."}
-            }
-        }
         week-short{
             relative{
                 "-1"{"sem. pasada"}
@@ -326,17 +272,11 @@ es_US{
                 "1"{"próxima sem."}
             }
         }
-        weekOfMonth-narrow{
-            dn{"sem. de m"}
-        }
         weekOfMonth-short{
             dn{"sem. de m"}
         }
         weekdayOfMonth{
             dn{"día de la semana del mes"}
-        }
-        weekdayOfMonth-narrow{
-            dn{"día sem. de m"}
         }
         weekdayOfMonth-short{
             dn{"día sem. de m"}
@@ -353,7 +293,7 @@ es_US{
     personNames{
         namePattern{
             sorting-long-referring-formal{
-                "{surname}, {prefix} {given} {given2}",
+                "{surname}, {title} {given} {given2}",
                 "{surname} {surname2}, {given} {given2}",
             }
             sorting-long-referring-informal{
@@ -361,7 +301,7 @@ es_US{
                 "{surname} {surname2}, {given} {given2}",
             }
             sorting-medium-referring-formal{
-                "{surname}, {prefix} {given} {given2-initial}",
+                "{surname}, {title} {given} {given2-initial}",
                 "{surname} {surname2}, {given} {given2}",
             }
             sorting-medium-referring-informal{
@@ -369,7 +309,7 @@ es_US{
                 "{surname} {surname2}, {given} {given2}",
             }
             sorting-short-referring-formal{
-                "{surname}, {prefix} {given-initial} {given2-initial} {suffix}",
+                "{surname}, {title} {given} {given2}",
                 "{surname} {surname2}, {given} {given2}",
             }
             sorting-short-referring-informal{

@@ -47,6 +47,7 @@ tr{
         ann{"Obolo dili"}
         anp{"Angika"}
         ar{"Arapça"}
+        ar_001{"Modern Standart Arapça"}
         arc{"Aramice"}
         arn{"Mapuçe dili"}
         aro{"Araona"}
@@ -66,6 +67,7 @@ tr{
         awa{"Awadhi"}
         ay{"Aymara"}
         az{"Azerbaycan dili"}
+        az_Arab{"Güney Azerice"}
         ba{"Başkırtça"}
         bal{"Beluçça"}
         ban{"Bali dili"}
@@ -82,6 +84,7 @@ tr{
         bfd{"Bafut"}
         bfq{"Badaga"}
         bg{"Bulgarca"}
+        bgc{"Haryanvi dili"}
         bgn{"Batı Balochi"}
         bho{"Arayanice"}
         bi{"Bislama"}
@@ -90,6 +93,7 @@ tr{
         bjn{"Banjar Dili"}
         bkm{"Kom"}
         bla{"Karaayak dili"}
+        blo{"Aniice"}
         bm{"Bambara"}
         bn{"Bengalce"}
         bo{"Tibetçe"}
@@ -150,6 +154,8 @@ tr{
         dar{"Dargince"}
         dav{"Taita"}
         de{"Almanca"}
+        de_AT{"Avusturya Almancası"}
+        de_CH{"İsviçre Yüksek Almancası"}
         del{"Delaware"}
         den{"Slavey dili"}
         dgr{"Dogrib"}
@@ -174,15 +180,23 @@ tr{
         el{"Yunanca"}
         elx{"Elam"}
         en{"İngilizce"}
+        en_AU{"Avustralya İngilizcesi"}
+        en_CA{"Kanada İngilizcesi"}
+        en_GB{"İngiliz İngilizcesi"}
+        en_US{"Amerikan İngilizcesi"}
         enm{"Ortaçağ İngilizcesi"}
         eo{"Esperanto"}
         es{"İspanyolca"}
+        es_419{"Latin Amerika İspanyolcası"}
+        es_ES{"Avrupa İspanyolcası"}
+        es_MX{"Meksika İspanyolcası"}
         esu{"Merkezi Yupikçe"}
         et{"Estonca"}
         eu{"Baskça"}
         ewo{"Ewondo"}
         ext{"Ekstremadura Dili"}
         fa{"Farsça"}
+        fa_AF{"Darice"}
         fan{"Fang"}
         fat{"Fanti"}
         ff{"Fula dili"}
@@ -193,6 +207,8 @@ tr{
         fo{"Faroe dili"}
         fon{"Fon"}
         fr{"Fransızca"}
+        fr_CA{"Kanada Fransızcası"}
+        fr_CH{"İsviçre Fransızcası"}
         frc{"Cajun Fransızcası"}
         frm{"Ortaçağ Fransızcası"}
         fro{"Eski Fransızca"}
@@ -216,7 +232,6 @@ tr{
         gmh{"Ortaçağ Yüksek Almancası"}
         gn{"Guarani dili"}
         goh{"Eski Yüksek Almanca"}
-        gom{"Goa Konkanicesi"}
         gon{"Gondi dili"}
         gor{"Gorontalo dili"}
         got{"Gotça"}
@@ -326,6 +341,7 @@ tr{
         kv{"Komi"}
         kw{"Kernevekçe"}
         kwk{"Kwakʼwala dili"}
+        kxv{"Kuvi"}
         ky{"Kırgızca"}
         la{"Latince"}
         lad{"Ladino"}
@@ -411,6 +427,7 @@ tr{
         nb{"Norveççe Bokmål"}
         nd{"Kuzey Ndebele"}
         nds{"Aşağı Almanca"}
+        nds_NL{"Aşağı Saksonca"}
         ne{"Nepalce"}
         new{"Nevari"}
         ng{"Ndonga"}
@@ -418,6 +435,7 @@ tr{
         niu{"Niue dili"}
         njo{"Ao Naga"}
         nl{"Felemenkçe"}
+        nl_BE{"Flamanca"}
         nmg{"Kwasio"}
         nn{"Norveççe Nynorsk"}
         nnh{"Ngiemboon"}
@@ -472,6 +490,8 @@ tr{
         pro{"Eski Provensal"}
         ps{"Peştuca"}
         pt{"Portekizce"}
+        pt_BR{"Brezilya Portekizcesi"}
+        pt_PT{"Avrupa Portekizcesi"}
         qu{"Keçuva dili"}
         quc{"Kiçece"}
         qug{"Chimborazo Highland Quichua"}
@@ -484,6 +504,7 @@ tr{
         rm{"Romanşça"}
         rn{"Kirundi"}
         ro{"Rumence"}
+        ro_MD{"Moldovaca"}
         rof{"Rombo"}
         rom{"Romanca"}
         rtm{"Rotuman"}
@@ -518,6 +539,7 @@ tr{
         sg{"Sango"}
         sga{"Eski İrlandaca"}
         sgs{"Samogitçe"}
+        sh{"Sırp-Hırvat Dili"}
         shi{"Taşelit"}
         shn{"Shan dili"}
         shu{"Çad Arapçası"}
@@ -552,6 +574,7 @@ tr{
         sux{"Sümerce"}
         sv{"İsveççe"}
         sw{"Svahili dili"}
+        sw_CD{"Kongo Svahili"}
         swb{"Komorca"}
         syc{"Klasik Süryanice"}
         syr{"Süryanice"}
@@ -615,6 +638,7 @@ tr{
         vi{"Vietnamca"}
         vls{"Batı Flamanca"}
         vmf{"Main Frankonya Dili"}
+        vmw{"Makuaca"}
         vo{"Volapük"}
         vot{"Votça"}
         vro{"Võro"}
@@ -630,6 +654,7 @@ tr{
         xal{"Kalmıkça"}
         xh{"Zosa dili"}
         xmf{"Megrelce"}
+        xnr{"Kangrice"}
         xog{"Soga"}
         yao{"Yao"}
         yap{"Yapça"}
@@ -646,10 +671,30 @@ tr{
         zen{"Zenaga dili"}
         zgh{"Standart Fas Tamazigti"}
         zh{"Çince"}
+        zh_Hans{"Basitleştirilmiş Çince"}
+        zh_Hant{"Geleneksel Çince"}
         zu{"Zuluca"}
         zun{"Zunice"}
         zxx{"Dilbilim içeriği yok"}
         zza{"Zazaca"}
+    }
+    Languages%long{
+        zh_Hans{"Basitleştirilmiş Çince (Mandarin)"}
+        zh_Hant{"Geleneksel Çince (Mandarin)"}
+    }
+    Languages%menu{
+        ars{"Arapça, Necd"}
+        ckb{"Kürtçe, Orta"}
+        yue{"Çince, Kantonca"}
+        zh{"Çince, Mandarin"}
+    }
+    Languages%short{
+        en_GB{"Birleşik Krallık İngilizcesi"}
+        en_US{"ABD İngilizcesi"}
+    }
+    Languages%variant{
+        ckb{"Kürtçe, Sorani"}
+        hi_Latn{"Hindilizce"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -674,7 +719,6 @@ tr{
         Cakm{"Chakma"}
         Cans{"UCAS"}
         Cari{"Karya"}
-        Cham{"Cham"}
         Cher{"Çeroki"}
         Cirt{"Cirth"}
         Copt{"Kıpti"}
@@ -711,7 +755,6 @@ tr{
         Hung{"Eski Macar"}
         Inds{"Indus"}
         Ital{"Eski İtalyan"}
-        Jamo{"Jamo"}
         Java{"Cava Dili"}
         Jpan{"Japon"}
         Jurc{"Jurchen"}
@@ -739,12 +782,12 @@ tr{
         Lydi{"Lidya"}
         Mahj{"Mahajani"}
         Mand{"Manden"}
+        Mani{"Maniheist"}
         Maya{"Maya Hiyeroglifleri"}
         Mend{"Mende"}
         Merc{"Meroitik El Yazısı"}
         Mero{"Meroitik"}
         Mlym{"Malayalam"}
-        Modi{"Modi"}
         Mong{"Moğol"}
         Moon{"Moon"}
         Mroo{"Mro"}
@@ -842,13 +885,14 @@ tr{
             hebrew{"İbrani Takvimi"}
             indian{"Ulusal Hint Takvimi"}
             islamic{"Hicri Takvim"}
-            islamic-civil{"Arap Takvimi"}
+            islamic-civil{"Hicri Takvim (16 Temmuz 622)"}
             islamic-rgsa{"Hicri Takvim (Suudi)"}
-            islamic-tbla{"Hicri Takvim (Astronomik Evreler)"}
+            islamic-tbla{"Hicri Takvim (15 Temmuz 622)"}
             islamic-umalqura{"Hicri Takvim (Ümmü-l Kurra Takvimi)"}
             iso8601{"ISO-8601 Takvimi"}
             japanese{"Japon Takvimi"}
             persian{"İran Takvimi"}
+            roc{"Çin Cumhuriyeti Takvimi"}
         }
         cf{
             account{"Muhasebe Para Biçimi"}
@@ -897,7 +941,6 @@ tr{
             phonebook{"Telefon Defteri Sıralama Düzeni"}
             phonetic{"Fonetik Sıralama Düzeni"}
             pinyin{"Pinyin Sıralama Düzeni"}
-            reformed{"Yeni Sıralama Düzeni"}
             search{"Genel Amaçlı Arama"}
             searchjl{"Hangul İlk Sessiz Harfe Göre Arama"}
             standard{"Standart Sıralama Düzeni"}
@@ -1048,10 +1091,11 @@ tr{
     }
     characterLabelPattern{
         all{"{0} — tümü"}
-        category-list{"{0}: {1}"}
         compatibility{"{0} — uyumluluk"}
         enclosed{"{0} — etrafı çevrilmiş"}
         extended{"{0} — genişletilmiş"}
+        facing-left{"sola dönük {0}"}
+        facing-right{"sağa dönük {0}"}
         historic{"{0} — tarihi"}
         miscellaneous{"{0} — çeşitli"}
         other{"{0} — diğer"}
@@ -1067,10 +1111,5 @@ tr{
         language{"Dil: {0}"}
         script{"Alfabe: {0}"}
         territory{"Bölge: {0}"}
-    }
-    localeDisplayPattern{
-        keyTypePattern{"{0}: {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }

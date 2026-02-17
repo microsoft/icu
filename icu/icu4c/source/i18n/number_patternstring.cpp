@@ -66,7 +66,7 @@ int32_t ParsedPatternInfo::getLengthFromEndpoints(const Endpoints& endpoints) {
 UnicodeString ParsedPatternInfo::getString(int32_t flags) const {
     const Endpoints& endpoints = getEndpoints(flags);
     if (endpoints.start == endpoints.end) {
-        return UnicodeString();
+        return {};
     }
     // Create a new UnicodeString
     return UnicodeString(pattern, endpoints.start, endpoints.end - endpoints.start);
@@ -768,7 +768,7 @@ UnicodeString PatternStringUtils::propertiesToPatternString(const DecimalFormatP
         incrementQuantity.roundToInfinity();
         digitsStringScale = incrementQuantity.getLowerDisplayMagnitude();
         incrementQuantity.adjustMagnitude(-digitsStringScale);
-        incrementQuantity.setMinInteger(minInt - digitsStringScale);
+        incrementQuantity.increaseMinIntegerTo(minInt - digitsStringScale);
         UnicodeString str = incrementQuantity.toPlainString();
         if (str.charAt(0) == u'-') {
             // TODO: Unsupported operation exception or fail silently?
@@ -968,7 +968,7 @@ PatternStringUtils::convertLocalized(const UnicodeString& input, const DecimalFo
     UnicodeString result;
     int state = 0;
     for (int offset = 0; offset < input.length(); offset++) {
-        UChar ch = input.charAt(offset);
+        char16_t ch = input.charAt(offset);
 
         // Handle a quote character (state shift)
         if (ch == u'\'') {

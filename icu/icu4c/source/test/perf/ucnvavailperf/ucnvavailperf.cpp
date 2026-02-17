@@ -57,18 +57,18 @@ U_CDECL_BEGIN
 void *U_CALLCONV
 my_alloc(const void *context, size_t size) {
     size_t *p = (size_t *)malloc(size + sizeof(size_t));
-    if (p != NULL) {
+    if (p != nullptr) {
         icuMemUsage += size;
         *p = size;
         return p + 1;
     } else {
-        return NULL;
+        return nullptr;
     }
 }
 
 void U_CALLCONV
 my_free(const void *context, void *mem) {
-    if (mem != NULL) {
+    if (mem != nullptr) {
         const size_t *p = (const size_t *)mem - 1;
         icuMemUsage -= *p;
         free((void *)p);
@@ -79,7 +79,7 @@ my_free(const void *context, void *mem) {
 void *U_CALLCONV
 my_realloc(const void *context, void *mem, size_t size) {
     my_free(context, mem);
-    return NULL;
+    return nullptr;
 }
 
 U_CDECL_END
@@ -89,7 +89,7 @@ int main(int argc, const char *argv[]) {
 
     // Hook in our own memory allocation functions so that we can measure
     // the memory usage.
-    u_setMemoryFunctions(NULL, my_alloc, my_realloc, my_free, &errorCode);
+    u_setMemoryFunctions(nullptr, my_alloc, my_realloc, my_free, &errorCode);
     if(U_FAILURE(errorCode)) {
         fprintf(stderr,
                 "u_setMemoryFunctions() failed - %s\n",
@@ -114,7 +114,7 @@ int main(int argc, const char *argv[]) {
         return errorCode;
     }
 
-    printf("memory usage after ucnv_open(ibm-1208): %lu\n", (long)icuMemUsage);
+    printf("memory usage after ucnv_open(ibm-1208): %lu\n", static_cast<long>(icuMemUsage));
 
     UTimer start_time;
     utimer_getTime(&start_time);
@@ -123,13 +123,13 @@ int main(int argc, const char *argv[]) {
     double elapsed = utimer_getElapsedSeconds(&start_time);
     printf("ucnv_countAvailable() reports that %d converters are available.\n", count);
     printf("ucnv_countAvailable() took %g seconds to figure this out.\n", elapsed);
-    printf("memory usage after ucnv_countAvailable(): %lu\n", (long)icuMemUsage);
+    printf("memory usage after ucnv_countAvailable(): %lu\n", static_cast<long>(icuMemUsage));
 
     ucnv_flushCache();
-    printf("memory usage after ucnv_flushCache(): %lu\n", (long)icuMemUsage);
+    printf("memory usage after ucnv_flushCache(): %lu\n", static_cast<long>(icuMemUsage));
 
     u_cleanup();
-    printf("memory usage after u_cleanup(): %lu\n", (long)icuMemUsage);
+    printf("memory usage after u_cleanup(): %lu\n", static_cast<long>(icuMemUsage));
 
     return 0;
 }

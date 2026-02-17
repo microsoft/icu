@@ -29,6 +29,7 @@ uz{
         ann{"obolo"}
         anp{"angika"}
         ar{"arab"}
+        ar_001{"standart arab"}
         arn{"mapuche"}
         arp{"arapaxo"}
         ars{"najd arab"}
@@ -47,11 +48,13 @@ uz{
         bem{"bemba"}
         bez{"bena"}
         bg{"bolgar"}
+        bgc{"harianvi"}
         bgn{"g‘arbiy baluj"}
         bho{"bxojpuri"}
         bi{"bislama"}
         bin{"bini"}
         bla{"siksika"}
+        blo{"Anii"}
         bm{"bambara"}
         bn{"bengal"}
         bo{"tibet"}
@@ -93,6 +96,8 @@ uz{
         dar{"dargva"}
         dav{"taita"}
         de{"nemischa"}
+        de_AT{"nemis (Avstriya)"}
+        de_CH{"yuqori nemis (Shveytsariya)"}
         dgr{"dogrib"}
         dje{"zarma"}
         doi{"dogri"}
@@ -108,12 +113,20 @@ uz{
         eka{"ekajuk"}
         el{"grek"}
         en{"inglizcha"}
+        en_AU{"ingliz (Avstraliya)"}
+        en_CA{"ingliz (Kanada)"}
+        en_GB{"ingliz (Britaniya)"}
+        en_US{"ingliz (Amerika)"}
         eo{"esperanto"}
         es{"ispancha"}
+        es_419{"ispan (Lotin Amerikasi)"}
+        es_ES{"ispan (Yevropa)"}
+        es_MX{"ispan (Meksika)"}
         et{"estoncha"}
         eu{"bask"}
         ewo{"evondo"}
         fa{"fors"}
+        fa_AF{"dari"}
         ff{"fula"}
         fi{"fincha"}
         fil{"filipincha"}
@@ -121,6 +134,8 @@ uz{
         fo{"farercha"}
         fon{"fon"}
         fr{"fransuzcha"}
+        fr_CA{"fransuz (Kanada)"}
+        fr_CH{"fransuz (Shveytsariya)"}
         frc{"kajun fransuz"}
         frr{"shimoliy friz"}
         fur{"friul"}
@@ -160,6 +175,7 @@ uz{
         iba{"iban"}
         ibb{"ibibio"}
         id{"indonez"}
+        ie{"interlingve"}
         ig{"igbo"}
         ii{"sichuan"}
         ikt{"sharqiy-kanada inuktitut"}
@@ -213,6 +229,7 @@ uz{
         kv{"komi"}
         kw{"korn"}
         kwk{"kvakvala"}
+        kxv{"kuvi"}
         ky{"qirgʻizcha"}
         la{"lotincha"}
         lad{"ladino"}
@@ -221,8 +238,10 @@ uz{
         lez{"lezgin"}
         lg{"ganda"}
         li{"limburg"}
+        lij{"liguryan"}
         lil{"lilluet"}
         lkt{"lakota"}
+        lmo{"lombard"}
         ln{"lingala"}
         lo{"laos"}
         lou{"luiziana kreol"}
@@ -233,7 +252,6 @@ uz{
         lu{"luba-katanga"}
         lua{"luba-lulua"}
         lun{"lunda"}
-        luo{"luo"}
         lus{"lushay"}
         luy{"luhya"}
         lv{"latishcha"}
@@ -276,12 +294,14 @@ uz{
         nb{"norveg-bokmal"}
         nd{"shimoliy ndebele"}
         nds{"quyi nemis"}
+        nds_NL{"quyi sakson"}
         ne{"nepal"}
         new{"nevar"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niue"}
         nl{"niderland"}
+        nl_BE{"flamand"}
         nmg{"kvasio"}
         nn{"norveg-nyunorsk"}
         nnh{"ngiyembun"}
@@ -315,14 +335,18 @@ uz{
         prg{"pruss"}
         ps{"pushtu"}
         pt{"portugalcha"}
+        pt_BR{"portugal (Braziliya)"}
+        pt_PT{"portugal (Yevropa)"}
         qu{"kechua"}
         quc{"kiche"}
+        raj{"rajastani"}
         rap{"rapanui"}
         rar{"rarotongan"}
         rhg{"rohinja"}
         rm{"romansh"}
         rn{"rundi"}
         ro{"rumincha"}
+        ro_MD{"moldovan"}
         rof{"rombo"}
         ru{"ruscha"}
         rup{"arumin"}
@@ -369,8 +393,10 @@ uz{
         suk{"sukuma"}
         sv{"shved"}
         sw{"suaxili"}
+        sw_CD{"suaxili (Kongo)"}
         swb{"qamar"}
-        syr{"suriyacha"}
+        syr{"suryoniy"}
+        szl{"silez"}
         ta{"tamil"}
         tce{"janubiy tutchone"}
         te{"telugu"}
@@ -408,9 +434,10 @@ uz{
         und{"noma’lum til"}
         ur{"urdu"}
         uz{"o‘zbek"}
-        vai{"vai"}
         ve{"venda"}
+        vec{"venet"}
         vi{"vyetnam"}
+        vmw{"makua"}
         vo{"volapyuk"}
         vun{"vunjo"}
         wa{"vallon"}
@@ -422,6 +449,7 @@ uz{
         wuu{"vu xitoy"}
         xal{"qalmoq"}
         xh{"kxosa"}
+        xnr{"kangri"}
         xog{"soga"}
         yav{"yangben"}
         ybb{"yemba"}
@@ -429,12 +457,31 @@ uz{
         yo{"yoruba"}
         yrl{"nyengatu"}
         yue{"kanton"}
+        za{"Chjuan"}
         zgh{"tamazigxt"}
         zh{"xitoy"}
+        zh_Hans{"xitoy (soddalashgan)"}
+        zh_Hant{"xitoy (an’anaviy)"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"til tarkibi yo‘q"}
         zza{"zaza"}
+    }
+    Languages%long{
+        zh_Hans{"xitoy (soddalashtirilgan mandarin)"}
+        zh_Hant{"xitoy (an’anaviy mandarin)"}
+    }
+    Languages%menu{
+        yue{"xitoy, kanton"}
+        zh{"xitoy, mandarin"}
+    }
+    Languages%short{
+        az{"ozar"}
+        en_GB{"ingliz (Buyuk Britaniya)"}
+        en_US{"ingliz (AQSH)"}
+    }
+    Languages%variant{
+        hi_Latn{"hinglish"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -510,13 +557,14 @@ uz{
             ethiopic-amete-alem{"Amete Alem habash taqvimi"}
             gregorian{"grigorian taqvimi"}
             hebrew{"yahudiy taqvimi"}
-            islamic{"islomiy taqvim"}
-            islamic-civil{"jadvalli islomiy taqvim"}
-            islamic-tbla{"jadvalli islomiy taqvim (astronomik davr)"}
-            islamic-umalqura{"islomiy taqvim (Ummul Quro)"}
+            islamic{"hijriy taqvim"}
+            islamic-civil{"jadvalli hijriy taqvim"}
+            islamic-tbla{"jadvalli hijriy taqvim (astronomik davr)"}
+            islamic-umalqura{"hijriy taqvim (Ummul Quro)"}
             iso8601{"ISO-8601 taqvimi"}
             japanese{"yapon taqvimi"}
             persian{"fors taqvimi"}
+            roc{"mingo taqvimi"}
         }
         cf{
             account{"moliyaviy valyuta formati"}
@@ -588,10 +636,11 @@ uz{
     }
     characterLabelPattern{
         all{"{0} — hammasi"}
-        category-list{"{0}: {1}"}
         compatibility{"{0} — mos"}
         enclosed{"{0} — biriktirilgan"}
         extended{"{0} — kengaytirilgan"}
+        facing-left{"chapga qaragan {0}"}
+        facing-right{"o‘ngga qaragan {0}"}
         historic{"{0} — tarixiy"}
         miscellaneous{"{0} — har xil"}
         other{"{0} — boshqa"}
@@ -607,10 +656,5 @@ uz{
         language{"Til: {0}"}
         script{"Yozuv: {0}"}
         territory{"Mintaqa: {0}"}
-    }
-    localeDisplayPattern{
-        keyTypePattern{"{0}: {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }

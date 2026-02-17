@@ -147,6 +147,9 @@ ksh{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
+        "Asia:Urumqi"{
+            ec{"Urrumptschi"}
+        }
         "Asia:Vladivostok"{
             ec{"Wladiwostok"}
         }
@@ -237,9 +240,6 @@ ksh{
         "Europe:Tirane"{
             ec{"Tiraana"}
         }
-        "Europe:Uzhgorod"{
-            ec{"Uschjorod"}
-        }
         "Europe:Vatican"{
             ec{"der Vatikahn"}
         }
@@ -254,9 +254,6 @@ ksh{
         }
         "Europe:Zagreb"{
             ec{"Sagreb"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"Saporischschja"}
         }
         "Europe:Zurich"{
             ec{"Züresch"}
@@ -341,9 +338,6 @@ ksh{
         "meta:Seychelles"{
             ls{"Zigg vun de Seischälle"}
         }
-        fallbackFormat{"{1} ({0})"}
-        gmtFormat{"GMT{0}"}
-        hourFormat{"+HH:mm;-HH:mm"}
         regionFormat{"Zick vun {0}"}
         regionFormatDaylight{"Summerzick vun {0}"}
         regionFormatStandard{"Schtandattzick vun {0}"}

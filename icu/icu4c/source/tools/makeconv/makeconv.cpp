@@ -56,17 +56,17 @@ initConvData(ConvData *data) {
 
 static void
 cleanupConvData(ConvData *data) {
-    if(data!=NULL) {
-        if(data->cnvData!=NULL) {
+    if(data!=nullptr) {
+        if(data->cnvData!=nullptr) {
             data->cnvData->close(data->cnvData);
-            data->cnvData=NULL;
+            data->cnvData=nullptr;
         }
-        if(data->extData!=NULL) {
+        if(data->extData!=nullptr) {
             data->extData->close(data->extData);
-            data->extData=NULL;
+            data->extData=nullptr;
         }
         ucm_close(data->ucm);
-        data->ucm=NULL;
+        data->ucm=nullptr;
     }
 }
 
@@ -100,7 +100,7 @@ static UDataInfo dataInfo={
 
     U_IS_BIG_ENDIAN,
     U_CHARSET_FAMILY,
-    sizeof(UChar),
+    sizeof(char16_t),
     0,
 
     {0x63, 0x6e, 0x76, 0x74},     /* dataFormat="cnvt" */
@@ -111,7 +111,7 @@ static UDataInfo dataInfo={
 static void
 writeConverterData(ConvData *data, const char *cnvName, const char *cnvDir, UErrorCode *status)
 {
-    UNewDataMemory *mem = NULL;
+    UNewDataMemory *mem = nullptr;
     uint32_t sz2;
     uint32_t size = 0;
     int32_t tableType;
@@ -122,14 +122,14 @@ writeConverterData(ConvData *data, const char *cnvName, const char *cnvDir, UErr
       }
 
     tableType=TABLE_NONE;
-    if(data->cnvData!=NULL) {
+    if(data->cnvData!=nullptr) {
         tableType|=TABLE_BASE;
     }
-    if(data->extData!=NULL) {
+    if(data->extData!=nullptr) {
         tableType|=TABLE_EXT;
     }
 
-    mem = udata_create(cnvDir, "cnv", cnvName, &dataInfo, haveCopyright ? U_COPYRIGHT_STRING : NULL, status);
+    mem = udata_create(cnvDir, "cnv", cnvName, &dataInfo, haveCopyright ? U_COPYRIGHT_STRING : nullptr, status);
 
     if(U_FAILURE(*status))
       {
@@ -160,12 +160,12 @@ writeConverterData(ConvData *data, const char *cnvName, const char *cnvDir, UErr
     sz2 = udata_finish(mem, status);
     if(size != sz2)
     {
-        fprintf(stderr, "error: wrote %u bytes to the .cnv file but counted %u bytes\n", (int)sz2, (int)size);
+        fprintf(stderr, "error: wrote %u bytes to the .cnv file but counted %u bytes\n", static_cast<int>(sz2), static_cast<int>(size));
         *status=U_INTERNAL_PROGRAM_ERROR;
     }
     if(VERBOSE)
     {
-      printf("- Wrote %u bytes to the udata.\n", (int)sz2);
+      printf("- Wrote %u bytes to the udata.\n", static_cast<int>(sz2));
     }
 }
 
@@ -191,8 +191,8 @@ static UOption options[]={
     UOPTION_VERSION,
     UOPTION_DESTDIR,
     UOPTION_VERBOSE,
-    { "small", NULL, NULL, NULL, '\1', UOPT_NO_ARG, 0 },
-    { "ignore-siso-check", NULL, NULL, NULL, '\1', UOPT_NO_ARG, 0 },
+    { "small", nullptr, nullptr, nullptr, '\1', UOPT_NO_ARG, 0 },
+    { "ignore-siso-check", nullptr, nullptr, nullptr, '\1', UOPT_NO_ARG, 0 },
     UOPTION_QUIET,
     UOPTION_SOURCEDIR,
 };
@@ -264,7 +264,7 @@ int main(int argc, char* argv[])
 
     icu::CharString outFileName;
     UErrorCode err = U_ZERO_ERROR;
-    if (destdir != NULL && *destdir != 0) {
+    if (destdir != nullptr && *destdir != 0) {
         outFileName.append(destdir, err).ensureEndsWithFileSeparator(err);
         if (U_FAILURE(err)) {
             return err;
@@ -284,7 +284,7 @@ int main(int argc, char* argv[])
     }
 #endif
 
-    UBool printFilename = (UBool) (argc > 2 || VERBOSE);
+    UBool printFilename = static_cast<UBool>(argc > 2 || VERBOSE);
     icu::CharString pathBuf;
     for (++argv; --argc; ++argv)
     {
@@ -292,7 +292,7 @@ int main(int argc, char* argv[])
         const char *arg = getLongPathname(*argv);
 
         const char* sourcedir = options[OPT_SOURCEDIR].value;
-        if (sourcedir != NULL && *sourcedir != 0 && uprv_strcmp(sourcedir, ".") != 0) {
+        if (sourcedir != nullptr && *sourcedir != 0 && uprv_strcmp(sourcedir, ".") != 0) {
             pathBuf.clear();
             pathBuf.appendPathPart(sourcedir, localError);
             pathBuf.appendPathPart(arg, localError);
@@ -358,10 +358,10 @@ int main(int argc, char* argv[])
             char *p;
             p = strrchr(cnvName, U_FILE_SEP_CHAR); /* Find last file separator */
 
-            if(p == NULL)            /* OK, try alternate */
+            if(p == nullptr)            /* OK, try alternate */
             {
                 p = strrchr(cnvName, U_FILE_ALT_SEP_CHAR);
-                if(p == NULL)
+                if(p == nullptr)
                 {
                     p=cnvName; /* If no separators, no problem */
                 }
@@ -377,6 +377,10 @@ int main(int argc, char* argv[])
                     data.staticData.name);
             }
 
+            if (strlen(cnvName) + 1 > UPRV_LENGTHOF(data.staticData.name)) {
+                fprintf(stderr, "converter name %s too long\n", cnvName);
+                return U_BUFFER_OVERFLOW_ERROR;
+            }
             uprv_strcpy((char*)data.staticData.name, cnvName);
 
             if(!uprv_isInvariantString((char*)data.staticData.name, -1)) {
@@ -426,7 +430,7 @@ getPlatformAndCCSIDFromName(const char *name, int8_t *pPlatform, int32_t *pCCSID
             ++name;
         }
         *pPlatform=UCNV_IBM;
-        *pCCSID=(int32_t)uprv_strtoul(name, NULL, 10);
+        *pCCSID = static_cast<int32_t>(uprv_strtoul(name, nullptr, 10));
     } else {
         *pPlatform=UCNV_UNKNOWN;
         *pCCSID=0;
@@ -496,8 +500,8 @@ readHeader(ConvData *data,
     }
 
     /* copy values from the UCMFile to the static data */
-    staticData->maxBytesPerChar=(int8_t)data->ucm->states.maxCharLength;
-    staticData->minBytesPerChar=(int8_t)data->ucm->states.minCharLength;
+    staticData->maxBytesPerChar = static_cast<int8_t>(data->ucm->states.maxCharLength);
+    staticData->minBytesPerChar = static_cast<int8_t>(data->ucm->states.minCharLength);
     staticData->conversionType=data->ucm->states.conversionType;
 
     if(staticData->conversionType==UCNV_UNSUPPORTED_CONVERTER) {
@@ -516,7 +520,7 @@ readHeader(ConvData *data,
      */
     if(data->ucm->baseName[0]==0) {
         prototype=ucnv_converterStaticData[staticData->conversionType];
-        if(prototype!=NULL) {
+        if(prototype!=nullptr) {
             if(staticData->name[0]==0) {
                 uprv_strcpy((char *)staticData->name, prototype->name);
             }
@@ -547,7 +551,7 @@ readHeader(ConvData *data,
     }
 
     if(data->ucm->states.outputType<0) {
-        data->ucm->states.outputType=(int8_t)data->ucm->states.maxCharLength-1;
+        data->ucm->states.outputType = static_cast<int8_t>(data->ucm->states.maxCharLength) - 1;
     }
 
     if( staticData->subChar1!=0 &&
@@ -578,7 +582,7 @@ readFile(ConvData *data, const char* converterName,
     data->ucm=ucm_open();
 
     convFile=T_FileStream_open(converterName, "r");
-    if(convFile==NULL) {
+    if(convFile==nullptr) {
         *pErrorCode=U_FILE_ACCESS_ERROR;
         return false;
     }
@@ -594,7 +598,7 @@ readFile(ConvData *data, const char* converterName,
         ucm_processStates(baseStates, IGNORE_SISO_CHECK);
     } else {
         dataIsBase=false;
-        baseStates=NULL;
+        baseStates=nullptr;
     }
 
     /* read the base table */
@@ -663,7 +667,7 @@ createConverter(ConvData *data, const char *converterName, UErrorCode *pErrorCod
          * and an optional extension table.
          */
         data->cnvData=MBCSOpen(data->ucm);
-        if(data->cnvData==NULL) {
+        if(data->cnvData==nullptr) {
             *pErrorCode=U_MEMORY_ALLOCATION_ERROR;
 
         } else if(!data->cnvData->isValid(data->cnvData,
@@ -710,7 +714,7 @@ createConverter(ConvData *data, const char *converterName, UErrorCode *pErrorCod
                 if(data->ucm->ext->mappingsLength>0) {
                     /* prepare the extension table, if there is one */
                     data->extData=CnvExtOpen(data->ucm);
-                    if(data->extData==NULL) {
+                    if(data->extData==nullptr) {
                         *pErrorCode=U_MEMORY_ALLOCATION_ERROR;
                     } else if(
                         !data->extData->addTable(data->extData, data->ucm->ext, &data->staticData)
@@ -729,7 +733,7 @@ createConverter(ConvData *data, const char *converterName, UErrorCode *pErrorCod
 
         /* assemble a path/filename for data->ucm->baseName */
         uprv_strcpy(baseFilename, converterName);
-        basename=(char *)findBasename(baseFilename);
+        basename = const_cast<char*>(findBasename(baseFilename));
         uprv_strcpy(basename, data->ucm->baseName);
         uprv_strcat(basename, ".ucm");
 
@@ -743,7 +747,7 @@ createConverter(ConvData *data, const char *converterName, UErrorCode *pErrorCod
         } else {
             /* prepare the extension table */
             data->extData=CnvExtOpen(data->ucm);
-            if(data->extData==NULL) {
+            if(data->extData==nullptr) {
                 *pErrorCode=U_MEMORY_ALLOCATION_ERROR;
             } else {
                 /* fill in gaps in extension file header fields */
@@ -752,12 +756,12 @@ createConverter(ConvData *data, const char *converterName, UErrorCode *pErrorCod
 
                 baseStates=&baseData.ucm->states;
                 if(states->conversionType==UCNV_DBCS) {
-                    staticData->minBytesPerChar=(int8_t)(states->minCharLength=2);
+                    staticData->minBytesPerChar = static_cast<int8_t>(states->minCharLength = 2);
                 } else if(states->minCharLength==0) {
-                    staticData->minBytesPerChar=(int8_t)(states->minCharLength=baseStates->minCharLength);
+                    staticData->minBytesPerChar = static_cast<int8_t>(states->minCharLength = baseStates->minCharLength);
                 }
                 if(states->maxCharLength<states->minCharLength) {
-                    staticData->maxBytesPerChar=(int8_t)(states->maxCharLength=baseStates->maxCharLength);
+                    staticData->maxBytesPerChar = static_cast<int8_t>(states->maxCharLength = baseStates->maxCharLength);
                 }
 
                 if(staticData->subCharLen==0) {

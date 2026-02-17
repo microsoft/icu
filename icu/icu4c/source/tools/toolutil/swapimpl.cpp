@@ -80,7 +80,7 @@ upname_swap(const UDataSwapper *ds,
             UErrorCode *pErrorCode) {
     /* udata_swapDataHeader checks the arguments */
     int32_t headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
@@ -111,7 +111,7 @@ upname_swap(const UDataSwapper *ds,
         // formatVersion 2 initially has indexes[8], 32 bytes.
         if(length<32) {
             udata_printError(ds, "upname_swap(): too few bytes (%d after header) for pnames.icu\n",
-                             (int)length);
+                             static_cast<int>(length));
             *pErrorCode=U_INDEX_OUTOFBOUNDS_ERROR;
             return 0;
         }
@@ -123,7 +123,7 @@ upname_swap(const UDataSwapper *ds,
         if(length<totalSize) {
             udata_printError(ds, "upname_swap(): too few bytes (%d after header, should be %d) "
                              "for pnames.icu\n",
-                             (int)length, (int)totalSize);
+                             static_cast<int>(length), static_cast<int>(totalSize));
             *pErrorCode=U_INDEX_OUTOFBOUNDS_ERROR;
             return 0;
         }
@@ -171,18 +171,18 @@ uprops_swap(const UDataSwapper *ds,
 
     /* udata_swapDataHeader checks the arguments */
     headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
     /* check data format and format version */
-    pInfo=(const UDataInfo *)((const char *)inData+4);
+    pInfo = reinterpret_cast<const UDataInfo*>(static_cast<const char*>(inData) + 4);
     if(!(
         pInfo->dataFormat[0]==0x55 &&   /* dataFormat="UPro" */
         pInfo->dataFormat[1]==0x50 &&
         pInfo->dataFormat[2]==0x72 &&
         pInfo->dataFormat[3]==0x6f &&
-        (3<=pInfo->formatVersion[0] && pInfo->formatVersion[0]<=7) &&
+        (3<=pInfo->formatVersion[0] && pInfo->formatVersion[0]<=9) &&
         (pInfo->formatVersion[0]>=7 ||
             (pInfo->formatVersion[2]==UTRIE_SHIFT &&
              pInfo->formatVersion[3]==UTRIE_INDEX_SHIFT))
@@ -196,7 +196,7 @@ uprops_swap(const UDataSwapper *ds,
     }
 
     /* the properties file must contain at least the indexes array */
-    if(length>=0 && (length-headerSize)<(int32_t)sizeof(dataIndexes)) {
+    if (length >= 0 && (length - headerSize) < static_cast<int32_t>(sizeof(dataIndexes))) {
         udata_printError(ds, "uprops_swap(): too few bytes (%d after header) for a Unicode properties file\n",
                          length-headerSize);
         *pErrorCode=U_INDEX_OUTOFBOUNDS_ERROR;
@@ -204,7 +204,7 @@ uprops_swap(const UDataSwapper *ds,
     }
 
     /* read the indexes */
-    inData32=(const int32_t *)((const char *)inData+headerSize);
+    inData32 = reinterpret_cast<const int32_t*>(static_cast<const char*>(inData) + headerSize);
     for(i=0; i<UPROPS_INDEX_COUNT; ++i) {
         dataIndexes[i]=udata_readInt32(ds, inData32[i]);
     }
@@ -231,7 +231,7 @@ uprops_swap(const UDataSwapper *ds,
             return 0;
         }
 
-        outData32=(int32_t *)((char *)outData+headerSize);
+        outData32 = reinterpret_cast<int32_t*>(static_cast<char*>(outData) + headerSize);
 
         /* copy everything for inaccessible data (padding) */
         if(inData32!=outData32) {
@@ -264,7 +264,7 @@ uprops_swap(const UDataSwapper *ds,
 
         /*
          * swap the UChars
-         * U  const UChar uchars[2*(i3-i2)];
+         * U  const char16_t uchars[2*(i3-i2)];
          */
         ds->swapArray16(ds,
             inData32+dataIndexes[UPROPS_EXCEPTIONS_TOP_INDEX],
@@ -296,13 +296,21 @@ uprops_swap(const UDataSwapper *ds,
         // SCX const uint16_t scriptExtensions[2*(i7-i6)];
         ds->swapArray16(ds,
             inData32+dataIndexes[UPROPS_SCRIPT_EXTENSIONS_INDEX],
-            4*(dataIndexes[UPROPS_RESERVED_INDEX_7]-dataIndexes[UPROPS_SCRIPT_EXTENSIONS_INDEX]),
+            4*(dataIndexes[UPROPS_BLOCK_TRIE_INDEX]-dataIndexes[UPROPS_SCRIPT_EXTENSIONS_INDEX]),
             outData32+dataIndexes[UPROPS_SCRIPT_EXTENSIONS_INDEX],
             pErrorCode);
+
+        // Swap the Block UCPTrie=CodePointTrie.
+        int32_t partOffset = dataIndexes[UPROPS_BLOCK_TRIE_INDEX];
+        int32_t nextOffset = dataIndexes[UPROPS_RESERVED_INDEX_8];
+        int32_t partLength = 4 * (nextOffset - partOffset);
+        if (partLength >= 0) {
+            utrie_swapAnyVersion(ds, inData32 + partOffset, partLength,
+                                 outData32 + partOffset, pErrorCode);
+        }
     }
 
-    /* i7 reservedIndex7; -- 32-bit unit index to the top of the Script_Extensions data */
-    return headerSize+4*dataIndexes[UPROPS_RESERVED_INDEX_7];
+    return headerSize+4*dataIndexes[UPROPS_RESERVED_INDEX_8];
 }
 
 /* Unicode case mapping data swapping --------------------------------------- */
@@ -324,12 +332,12 @@ ucase_swap(const UDataSwapper *ds,
 
     /* udata_swapDataHeader checks the arguments */
     headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
     /* check data format and format version */
-    pInfo=(const UDataInfo *)((const char *)inData+4);
+    pInfo = reinterpret_cast<const UDataInfo*>(static_cast<const char*>(inData) + 4);
     if(!(
         pInfo->dataFormat[0]==UCASE_FMT_0 &&    /* dataFormat="cAsE" */
         pInfo->dataFormat[1]==UCASE_FMT_1 &&
@@ -348,10 +356,10 @@ ucase_swap(const UDataSwapper *ds,
         return 0;
     }
 
-    inBytes=(const uint8_t *)inData+headerSize;
-    outBytes=(uint8_t *)outData+headerSize;
+    inBytes = static_cast<const uint8_t*>(inData) + headerSize;
+    outBytes = static_cast<uint8_t*>(outData) + headerSize;
 
-    inIndexes=(const int32_t *)inBytes;
+    inIndexes = reinterpret_cast<const int32_t*>(inBytes);
 
     if(length>=0) {
         length-=headerSize;
@@ -426,12 +434,12 @@ ubidi_swap(const UDataSwapper *ds,
 
     /* udata_swapDataHeader checks the arguments */
     headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
     /* check data format and format version */
-    pInfo=(const UDataInfo *)((const char *)inData+4);
+    pInfo = reinterpret_cast<const UDataInfo*>(static_cast<const char*>(inData) + 4);
     if(!(
         pInfo->dataFormat[0]==UBIDI_FMT_0 &&    /* dataFormat="BiDi" */
         pInfo->dataFormat[1]==UBIDI_FMT_1 &&
@@ -450,10 +458,10 @@ ubidi_swap(const UDataSwapper *ds,
         return 0;
     }
 
-    inBytes=(const uint8_t *)inData+headerSize;
-    outBytes=(uint8_t *)outData+headerSize;
+    inBytes = static_cast<const uint8_t*>(inData) + headerSize;
+    outBytes = static_cast<uint8_t*>(outData) + headerSize;
 
-    inIndexes=(const int32_t *)inBytes;
+    inIndexes = reinterpret_cast<const int32_t*>(inBytes);
 
     if(length>=0) {
         length-=headerSize;
@@ -536,12 +544,12 @@ unorm_swap(const UDataSwapper *ds,
 
     /* udata_swapDataHeader checks the arguments */
     headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
     /* check data format and format version */
-    pInfo=(const UDataInfo *)((const char *)inData+4);
+    pInfo = reinterpret_cast<const UDataInfo*>(static_cast<const char*>(inData) + 4);
     if(!(
         pInfo->dataFormat[0]==0x4e &&   /* dataFormat="Norm" */
         pInfo->dataFormat[1]==0x6f &&
@@ -557,10 +565,10 @@ unorm_swap(const UDataSwapper *ds,
         return 0;
     }
 
-    inBytes=(const uint8_t *)inData+headerSize;
-    outBytes=(uint8_t *)outData+headerSize;
+    inBytes = static_cast<const uint8_t*>(inData) + headerSize;
+    outBytes = static_cast<uint8_t*>(outData) + headerSize;
 
-    inIndexes=(const int32_t *)inBytes;
+    inIndexes = reinterpret_cast<const int32_t*>(inBytes);
 
     if(length>=0) {
         length-=headerSize;
@@ -655,7 +663,7 @@ ulayout_swap(const UDataSwapper *ds,
     }
 
     // Check data format and format version.
-    const UDataInfo *pInfo = (const UDataInfo *)((const char *)inData + 4);
+    const UDataInfo* pInfo = reinterpret_cast<const UDataInfo*>(static_cast<const char*>(inData) + 4);
     if (!(
             pInfo->dataFormat[0] == ULAYOUT_FMT_0 &&    // dataFormat="Layo"
             pInfo->dataFormat[1] == ULAYOUT_FMT_1 &&
@@ -672,10 +680,10 @@ ulayout_swap(const UDataSwapper *ds,
         return 0;
     }
 
-    const uint8_t *inBytes = (const uint8_t *)inData + headerSize;
-    uint8_t *outBytes = (uint8_t *)outData + headerSize;
+    const uint8_t* inBytes = static_cast<const uint8_t*>(inData) + headerSize;
+    uint8_t* outBytes = static_cast<uint8_t*>(outData) + headerSize;
 
-    const int32_t *inIndexes = (const int32_t *)inBytes;
+    const int32_t* inIndexes = reinterpret_cast<const int32_t*>(inBytes);
 
     if (length >= 0) {
         length -= headerSize;
@@ -755,7 +763,7 @@ uemoji_swap(const UDataSwapper *ds,
     }
 
     // Check data format and format version.
-    const UDataInfo *pInfo = (const UDataInfo *)((const char *)inData + 4);
+    const UDataInfo* pInfo = reinterpret_cast<const UDataInfo*>(static_cast<const char*>(inData) + 4);
     if (!(
             pInfo->dataFormat[0] == u'E' &&
             pInfo->dataFormat[1] == u'm' &&
@@ -772,10 +780,10 @@ uemoji_swap(const UDataSwapper *ds,
         return 0;
     }
 
-    const uint8_t *inBytes = (const uint8_t *)inData + headerSize;
-    uint8_t *outBytes = (uint8_t *)outData + headerSize;
+    const uint8_t* inBytes = static_cast<const uint8_t*>(inData) + headerSize;
+    uint8_t* outBytes = static_cast<uint8_t*>(outData) + headerSize;
 
-    const int32_t *inIndexes = (const int32_t *)inBytes;
+    const int32_t* inIndexes = reinterpret_cast<const int32_t*>(inBytes);
 
     if (length >= 0) {
         length -= headerSize;
@@ -866,13 +874,13 @@ test_swap(const UDataSwapper *ds,
 
     /* udata_swapDataHeader checks the arguments */
     headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
-        udata_printError(ds, "test_swap(): data header swap failed %s\n", pErrorCode != NULL ? u_errorName(*pErrorCode) : "pErrorCode is NULL");
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
+        udata_printError(ds, "test_swap(): data header swap failed %s\n", pErrorCode != nullptr ? u_errorName(*pErrorCode) : "pErrorCode is nullptr");
         return 0;
     }
 
     /* check data format and format version */
-    pInfo=(const UDataInfo *)((const char *)inData+4);
+    pInfo = reinterpret_cast<const UDataInfo*>(static_cast<const char*>(inData) + 4);
     if(!(
         pInfo->dataFormat[0]==0x54 &&   /* dataFormat="Norm" */
         pInfo->dataFormat[1]==0x65 &&
@@ -888,8 +896,8 @@ test_swap(const UDataSwapper *ds,
         return 0;
     }
 
-    inBytes=(const uint8_t *)inData+headerSize;
-    outBytes=(uint8_t *)outData+headerSize;
+    inBytes = static_cast<const uint8_t*>(inData) + headerSize;
+    outBytes = static_cast<uint8_t*>(outData) + headerSize;
 
     int32_t size16 = 2; // 16bit plus padding
     int32_t sizeStr = 5; // 4 char inv-str plus null
@@ -972,7 +980,7 @@ udata_swap(const UDataSwapper *ds,
     const UDataInfo *pInfo;
     int32_t i, swappedLength;
 
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
@@ -983,7 +991,7 @@ udata_swap(const UDataSwapper *ds,
      * information. Otherwise we would have to pass some of the information
      * and not be able to use the UDataSwapFn signature.
      */
-    udata_swapDataHeader(ds, inData, -1, NULL, pErrorCode);
+    udata_swapDataHeader(ds, inData, -1, nullptr, pErrorCode);
 
     /*
      * If we wanted udata_swap() to also handle non-loadable data like a UTrie,
@@ -997,7 +1005,7 @@ udata_swap(const UDataSwapper *ds,
 
     {
         /* convert the data format from ASCII to Unicode to the system charset */
-        UChar u[4]={
+        char16_t u[4]={
              pInfo->dataFormat[0], pInfo->dataFormat[1],
              pInfo->dataFormat[2], pInfo->dataFormat[3]
         };

@@ -32,16 +32,16 @@ class UnaccentTransliterator : public Transliterator {
     /**
      * Implement Transliterator API
      */
-    virtual void handleTransliterate(Replaceable& text,
-                                     UTransPosition& index,
-                                     UBool incremental) const;
+    void handleTransliterate(Replaceable& text,
+                             UTransPosition& index,
+                             UBool incremental) const override;
 
  private:
 
     /**
      * Unaccent a single character using normalizer.
      */
-    UChar unaccent(UChar c) const;
+    char16_t unaccent(char16_t c) const;
 
     Normalizer normalizer;
 
@@ -58,7 +58,7 @@ public:
      * @return          The class ID for all objects of this class.
      * @stable ICU 2.0
      */
-    static inline UClassID getStaticClassID(void) { return (UClassID)&fgClassID; };
+    static inline UClassID getStaticClassID() { return (UClassID)&fgClassID; };
 
     /**
      * Returns a unique class ID <b>polymorphically</b>.  This method
@@ -83,7 +83,7 @@ public:
      * different class IDs.
      * @stable ICU 2.0
      */
-    virtual UClassID getDynamicClassID(void) const { return getStaticClassID(); };
+    UClassID getDynamicClassID() const override { return getStaticClassID(); };
 
 private:
 

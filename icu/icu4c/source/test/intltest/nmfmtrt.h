@@ -35,7 +35,7 @@ public:
     static double min_numeric_error;
 
 
-    void start(void);
+    void start();
 
     void test(NumberFormat *fmt);
     void test(NumberFormat *fmt, double value);
@@ -65,7 +65,7 @@ public:
      **/
     static double randFraction()
     {
-        return (double)randLong() / (double)0xFFFFFFFF;
+        return static_cast<double>(randLong()) / static_cast<double>(0xFFFFFFFF);
     }
 
 protected:

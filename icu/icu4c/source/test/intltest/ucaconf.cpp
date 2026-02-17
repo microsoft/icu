@@ -25,11 +25,11 @@
 #include "uparse.h"
 
 UCAConformanceTest::UCAConformanceTest() :
-rbUCA(NULL),
-testFile(NULL),
+rbUCA(nullptr),
+testFile(nullptr),
 status(U_ZERO_ERROR)
 {
-    UCA = (RuleBasedCollator *)Collator::createInstance(Locale::getRoot(), status);
+    UCA = dynamic_cast<RuleBasedCollator*>(Collator::createInstance(Locale::getRoot(), status));
     if(U_FAILURE(status)) {
         dataerrln("Error - UCAConformanceTest: Unable to open UCA collator! - %s", u_errorName(status));
     }
@@ -115,7 +115,7 @@ void UCAConformanceTest::openTestFile(const char *type)
     char buffer[1024];
     uprv_strcpy(buffer, testDataPath);
     uprv_strcat(buffer, type);
-    int32_t bufLen = (int32_t)uprv_strlen(buffer);
+    int32_t bufLen = static_cast<int32_t>(uprv_strlen(buffer));
 
     // we try to open 3 files:
     // path/CollationTest_type.txt
@@ -127,17 +127,17 @@ void UCAConformanceTest::openTestFile(const char *type)
 
     testFile = fopen(buffer, "rb");
 
-    if(testFile == 0) {
+    if (testFile == nullptr) {
         uprv_strcpy(buffer+bufLen, "_SHORT");
         uprv_strcat(buffer, ext);
         testFile = fopen(buffer, "rb");
 
-        if(testFile == 0) {
+        if (testFile == nullptr) {
             uprv_strcpy(buffer+bufLen, "_STUB");
             uprv_strcat(buffer, ext);
             testFile = fopen(buffer, "rb");
 
-            if (testFile == 0) {
+            if (testFile == nullptr) {
                 *(buffer+bufLen) = 0;
                 dataerrln("Could not open any of the conformance test files, tried opening base %s\n", buffer);
                 return;        
@@ -156,7 +156,7 @@ static const uint32_t IS_SHIFTED = 1;
 static const uint32_t FROM_RULES = 2;
 
 static UBool
-skipLineBecauseOfBug(const UChar *s, int32_t length, uint32_t flags) {
+skipLineBecauseOfBug(const char16_t *s, int32_t length, uint32_t flags) {
     // Add temporary exceptions here if there are ICU bugs, until we can fix them.
     // For examples see the ICU 52 version of this file.
     (void)s;
@@ -172,7 +172,7 @@ normalizeResult(int32_t result) {
 
 void UCAConformanceTest::testConformance(const Collator *coll) 
 {
-    if(testFile == 0) {
+    if (testFile == nullptr) {
         return;
     }
     uint32_t skipFlags = 0;
@@ -184,24 +184,24 @@ void UCAConformanceTest::testConformance(const Collator *coll)
     }
 
     logln("-prop:ucaconfnosortkeys=1 turns off getSortKey() in UCAConformanceTest");
-    UBool withSortKeys = getProperty("ucaconfnosortkeys") == NULL;
+    UBool withSortKeys = getProperty("ucaconfnosortkeys") == nullptr;
 
     int32_t line = 0;
 
-    UChar b1[1024], b2[1024];
-    UChar *buffer = b1, *oldB = NULL;
+    char16_t b1[1024], b2[1024];
+    char16_t *buffer = b1, *oldB = nullptr;
 
     char lineB1[1024], lineB2[1024];
     char *lineB = lineB1, *oldLineB = lineB2;
 
     uint8_t sk1[1024], sk2[1024];
-    uint8_t *oldSk = NULL, *newSk = sk1;
+    uint8_t *oldSk = nullptr, *newSk = sk1;
 
     int32_t oldLen = 0;
     int32_t oldBlen = 0;
     uint32_t first = 0;
 
-    while (fgets(lineB, 1024, testFile) != NULL) {
+    while (fgets(lineB, 1024, testFile) != nullptr) {
         // remove trailing whitespace
         u_rtrim(lineB);
 
@@ -212,7 +212,7 @@ void UCAConformanceTest::testConformance(const Collator *coll)
         int32_t buflen = u_parseString(lineB, buffer, 1024, &first, &status);
         if(U_FAILURE(status)) {
             errln("Error parsing line %ld (%s): %s\n",
-                  (long)line, u_errorName(status), lineB);
+                  static_cast<long>(line), u_errorName(status), lineB);
             status = U_ZERO_ERROR;
         }
         buffer[buflen] = 0;
@@ -224,9 +224,9 @@ void UCAConformanceTest::testConformance(const Collator *coll)
 
         int32_t resLen = withSortKeys ? coll->getSortKey(buffer, buflen, newSk, 1024) : 0;
 
-        if(oldSk != NULL) {
+        if(oldSk != nullptr) {
             UBool ok=true;
-            int32_t skres = withSortKeys ? strcmp((char *)oldSk, (char *)newSk) : 0;
+            int32_t skres = withSortKeys ? strcmp(reinterpret_cast<char*>(oldSk), reinterpret_cast<char*>(newSk)) : 0;
             int32_t cmpres = coll->compare(oldB, oldBlen, buffer, buflen, status);
             int32_t cmpres2 = coll->compare(buffer, buflen, oldB, oldBlen, status);
 

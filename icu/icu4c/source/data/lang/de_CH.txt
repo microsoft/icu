@@ -18,6 +18,10 @@ de_CH{
         rhg{"Rohingya"}
         tgx{"Tagisch"}
     }
+    Languages%long{
+        zh_Hans{"Hochchinesisch (vereinfacht)"}
+        zh_Hant{"Hochchinesisch (traditionell)"}
+    }
     Types{
         colCaseFirst{
             upper{"Grossbuchstaben zuerst aufführen"}

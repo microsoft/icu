@@ -305,7 +305,7 @@ public:
      *
      * @internal
      */
-    void setCurrency(const UChar* currency, UErrorCode& status);
+    void setCurrency(const char16_t* currency, UErrorCode& status);
 #endif  // U_HIDE_INTERNAL_API
 
     /**
@@ -455,7 +455,13 @@ public:
      * Returns that pattern stored in currency info. Internal API for use by NumberFormat API.
      * @internal
      */
-    inline const char16_t* getCurrencyPattern(void) const;
+    inline const char16_t* getCurrencyPattern() const;
+
+    /**
+     * Returns the numbering system with which this DecimalFormatSymbols was initialized.
+     * @internal
+     */
+    inline const char* getNumberingSystemName() const;
 #endif  /* U_HIDE_INTERNAL_API */
 
 private:
@@ -500,12 +506,13 @@ private:
 
     char actualLocale[ULOC_FULLNAME_CAPACITY];
     char validLocale[ULOC_FULLNAME_CAPACITY];
-    const char16_t* currPattern;
+    const char16_t* currPattern = nullptr;
 
     UnicodeString currencySpcBeforeSym[UNUM_CURRENCY_SPACING_COUNT];
     UnicodeString currencySpcAfterSym[UNUM_CURRENCY_SPACING_COUNT];
     UBool fIsCustomCurrencySymbol;
     UBool fIsCustomIntlCurrencySymbol;
+    char nsName[kInternalNumSysNameCapacity+1] = {};
 };
 
 // -------------------------------------
@@ -513,7 +520,7 @@ private:
 inline UnicodeString
 DecimalFormatSymbols::getSymbol(ENumberFormatSymbol symbol) const {
     const UnicodeString *strPtr;
-    if(kDecimalSeparatorSymbol <= symbol && symbol < kFormatSymbolCount) {
+    if(symbol < kFormatSymbolCount) {
         strPtr = &fSymbols[symbol];
     } else {
         strPtr = &fNoSymbol;
@@ -525,7 +532,7 @@ DecimalFormatSymbols::getSymbol(ENumberFormatSymbol symbol) const {
 inline const UnicodeString &
 DecimalFormatSymbols::getConstSymbol(ENumberFormatSymbol symbol) const {
     const UnicodeString *strPtr;
-    if(kDecimalSeparatorSymbol <= symbol && symbol < kFormatSymbolCount) {
+    if(symbol < kFormatSymbolCount) {
         strPtr = &fSymbols[symbol];
     } else {
         strPtr = &fNoSymbol;
@@ -556,7 +563,7 @@ DecimalFormatSymbols::setSymbol(ENumberFormatSymbol symbol, const UnicodeString 
     else if (symbol == kIntlCurrencySymbol) {
         fIsCustomIntlCurrencySymbol = true;
     }
-    if(kDecimalSeparatorSymbol <= symbol && symbol < kFormatSymbolCount) {
+    if(symbol<kFormatSymbolCount) {
         fSymbols[symbol]=value;
     }
 
@@ -569,7 +576,7 @@ DecimalFormatSymbols::setSymbol(ENumberFormatSymbol symbol, const UnicodeString 
             fCodePointZero = sym;
             for ( int8_t i = 1 ; i<= 9 ; i++ ) {
                 sym++;
-                fSymbols[(int)kOneDigitSymbol+i-1] = UnicodeString(sym);
+                fSymbols[static_cast<int>(kOneDigitSymbol) + i - 1] = UnicodeString(sym);
             }
         } else {
             fCodePointZero = -1;
@@ -590,6 +597,10 @@ DecimalFormatSymbols::getLocale() const {
 inline const char16_t*
 DecimalFormatSymbols::getCurrencyPattern() const {
     return currPattern;
+}
+inline const char*
+DecimalFormatSymbols::getNumberingSystemName() const {
+    return nsName;
 }
 #endif /* U_HIDE_INTERNAL_API */
 

@@ -41,7 +41,7 @@ class UnitsTest : public IntlTest {
   public:
     UnitsTest() {}
 
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par = NULL) override;
+    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par = nullptr) override;
 
     void testUnitConstantFreshness();
     void testExtractConvertibility();
@@ -75,13 +75,13 @@ void UnitsTest::runIndexedTest(int32_t index, UBool exec, const char *&name, cha
 // units.txt.
 void UnitsTest::testUnitConstantFreshness() {
     IcuTestErrorCode status(*this, "testUnitConstantFreshness");
-    LocalUResourceBundlePointer unitsBundle(ures_openDirect(NULL, "units", status));
+    LocalUResourceBundlePointer unitsBundle(ures_openDirect(nullptr, "units", status));
     LocalUResourceBundlePointer unitConstants(
-        ures_getByKey(unitsBundle.getAlias(), "unitConstants", NULL, status));
+        ures_getByKey(unitsBundle.getAlias(), "unitConstants", nullptr, status));
 
     while (ures_hasNext(unitConstants.getAlias())) {
         int32_t len;
-        const char *constant = NULL;
+        const char *constant = nullptr;
         ures_getNextString(unitConstants.getAlias(), &len, &constant, status);
 
         Factor factor;
@@ -145,6 +145,9 @@ void UnitsTest::testExtractConvertibility() {
         {"percent", "portion", CONVERTIBLE},                                         //
         {"ofhg", "kilogram-per-square-meter-square-second", CONVERTIBLE},            //
         {"second-per-meter", "meter-per-second", RECIPROCAL},                        //
+        {"mile-per-hour", "meter-per-second", CONVERTIBLE},                        //
+        {"knot", "meter-per-second", CONVERTIBLE},                        //
+        {"beaufort", "meter-per-second", CONVERTIBLE},                        //
     };
 
     for (const auto &testCase : testCases) {
@@ -299,6 +302,19 @@ void UnitsTest::testConverter() {
         {"ton", "pound", 1.0, 2000},
         {"stone", "pound", 1.0, 14},
         {"stone", "kilogram", 1.0, 6.35029},
+        // Speed
+        {"mile-per-hour", "meter-per-second", 1.0, 0.44704},
+        {"knot", "meter-per-second", 1.0, 0.514444},
+        {"beaufort", "meter-per-second", 1.0, 0.95},
+        {"beaufort", "meter-per-second", 4.0, 6.75},
+        {"beaufort", "meter-per-second", 7.0, 15.55},
+        {"beaufort", "meter-per-second", 10.0, 26.5},
+        {"beaufort", "meter-per-second", 13.0, 39.15},
+        {"beaufort", "mile-per-hour", 1.0, 2.12509},
+        {"beaufort", "mile-per-hour", 4.0, 15.099319971367215},
+        {"beaufort", "mile-per-hour", 7.0, 34.784359341445956},
+        {"beaufort", "mile-per-hour", 10.0, 59.2788},
+        {"beaufort", "mile-per-hour", 13.0, 87.5761},
         // Temperature
         {"celsius", "fahrenheit", 0.0, 32.0},
         {"celsius", "fahrenheit", 10.0, 50.0},
@@ -408,7 +424,7 @@ StringPiece trimField(char *(&field)[2]) {
     while ((start < end) && U_IS_INV_WHITESPACE(*(end - 1))) {
         end--;
     }
-    int32_t length = (int32_t)(end - start);
+    int32_t length = static_cast<int32_t>(end - start);
     return StringPiece(start, length);
 }
 
@@ -439,7 +455,7 @@ void unitsTestDataLineFn(void *context, char *fields[][2], int32_t fieldCount, U
     if (U_FAILURE(*pErrorCode)) {
         return;
     }
-    UnitsTestContext *ctx = (UnitsTestContext *)context;
+    UnitsTestContext *ctx = static_cast<UnitsTestContext *>(context);
     UnitsTest *unitsTest = ctx->unitsTest;
     (void)fieldCount; // unused UParseLineFn variable
     IcuTestErrorCode status(*unitsTest, "unitsTestDatalineFn");
@@ -450,12 +466,12 @@ void unitsTestDataLineFn(void *context, char *fields[][2], int32_t fieldCount, U
     StringPiece commentConversionFormula = trimField(fields[3]);
     StringPiece utf8Expected = trimField(fields[4]);
 
-    UNumberFormat *nf = unum_open(UNUM_DEFAULT, NULL, -1, "en_US", NULL, status);
+    UNumberFormat *nf = unum_open(UNUM_DEFAULT, nullptr, -1, "en_US", nullptr, status);
     if (status.errIfFailureAndReset("unum_open failed")) {
         return;
     }
     UnicodeString uExpected = UnicodeString::fromUTF8(utf8Expected);
-    double expected = unum_parseDouble(nf, uExpected.getBuffer(), uExpected.length(), 0, status);
+    double expected = unum_parseDouble(nf, uExpected.getBuffer(), uExpected.length(), nullptr, status);
     unum_close(nf);
     if (status.errIfFailureAndReset("unum_parseDouble(\"%s\") failed", utf8Expected)) {
         return;
@@ -508,7 +524,10 @@ void unitsTestDataLineFn(void *context, char *fields[][2], int32_t fieldCount, U
     double inverted = converter.convertInverse(got);
     msg.clear();
     msg.append("Converting back to ", status).append(x, status).append(" from ", status).append(y, status);
-    unitsTest->assertEqualsNear(msg.data(), 1000, inverted, 0.0001);
+    if (strncmp(x.data(), "beaufort", 8)
+    		&& log_knownIssue("CLDR-17454", "unitTest.txt for beaufort doesn't scale correctly") ) {
+		unitsTest->assertEqualsNear(msg.data(), 1000, inverted, 0.0001);
+    }
 }
 
 /**
@@ -902,7 +921,7 @@ void checkOutput(UnitsTest *unitsTest, const char *msg, ExpectedOutput expected,
 void unitPreferencesTestDataLineFn(void *context, char *fields[][2], int32_t fieldCount,
                                    UErrorCode *pErrorCode) {
     if (U_FAILURE(*pErrorCode)) return;
-    UnitsTest *unitsTest = (UnitsTest *)context;
+    UnitsTest *unitsTest = static_cast<UnitsTest *>(context);
     IcuTestErrorCode status(*unitsTest, "unitPreferencesTestDatalineFn");
 
     if (!unitsTest->assertTrue(u"unitPreferencesTestDataLineFn expects 9 fields for simple and 11 "
@@ -1028,23 +1047,23 @@ void parsePreferencesTests(const char *filename, char delimiter, char *fields[][
         return;
     }
 
-    if (fields == NULL || lineFn == NULL || maxFieldCount <= 0) {
+    if (fields == nullptr || lineFn == nullptr || maxFieldCount <= 0) {
         *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
         return;
     }
 
-    if (filename == NULL || *filename == 0 || (*filename == '-' && filename[1] == 0)) {
-        filename = NULL;
+    if (filename == nullptr || *filename == 0 || (*filename == '-' && filename[1] == 0)) {
+        filename = nullptr;
         file = T_FileStream_stdin();
     } else {
         file = T_FileStream_open(filename, "r");
     }
-    if (file == NULL) {
+    if (file == nullptr) {
         *pErrorCode = U_FILE_ACCESS_ERROR;
         return;
     }
 
-    while (T_FileStream_readLine(file, line, sizeof(line)) != NULL) {
+    while (T_FileStream_readLine(file, line, sizeof(line)) != nullptr) {
         /* remove trailing newline characters */
         u_rtrim(line);
 
@@ -1058,7 +1077,7 @@ void parsePreferencesTests(const char *filename, char delimiter, char *fields[][
 
         /* remove in-line comments */
         limit = uprv_strchr(start, '#');
-        if (limit != NULL) {
+        if (limit != nullptr) {
             /* get white space before the pound sign */
             while (limit > start && U_IS_INV_WHITESPACE(*(limit - 1))) {
                 --limit;
@@ -1105,7 +1124,7 @@ void parsePreferencesTests(const char *filename, char delimiter, char *fields[][
         }
     }
 
-    if (filename != NULL) {
+    if (filename != nullptr) {
         T_FileStream_close(file);
     }
 }

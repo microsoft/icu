@@ -47,13 +47,13 @@ operator<<(STD_OSTREAM& stream, const UnicodeString& str)
         // use the default converter to convert chunks of text
         converter = u_getDefaultConverter(&errorCode);
         if(U_SUCCESS(errorCode)) {
-            const UChar *us = str.getBuffer();
-            const UChar *uLimit = us + str.length();
+            const char16_t *us = str.getBuffer();
+            const char16_t *uLimit = us + str.length();
             char *s, *sLimit = buffer + (sizeof(buffer) - 1);
             do {
                 errorCode = U_ZERO_ERROR;
                 s = buffer;
-                ucnv_fromUnicode(converter, &s, sLimit, &us, uLimit, 0, false, &errorCode);
+                ucnv_fromUnicode(converter, &s, sLimit, &us, uLimit, nullptr, false, &errorCode);
                 *s = 0;
 
                 // write this chunk
@@ -78,7 +78,7 @@ operator>>(STD_ISTREAM& stream, UnicodeString& str)
     }
 
     /* ipfx should eat whitespace when ios::skipws is set */
-    UChar uBuffer[16];
+    char16_t uBuffer[16];
     char buffer[16];
     int32_t idx = 0;
     UConverter *converter;
@@ -87,11 +87,11 @@ operator>>(STD_ISTREAM& stream, UnicodeString& str)
     // use the default converter to convert chunks of text
     converter = u_getDefaultConverter(&errorCode);
     if(U_SUCCESS(errorCode)) {
-        UChar *us = uBuffer;
-        const UChar *uLimit = uBuffer + UPRV_LENGTHOF(uBuffer);
+        char16_t *us = uBuffer;
+        const char16_t *uLimit = uBuffer + UPRV_LENGTHOF(uBuffer);
         const char *s, *sLimit;
         char ch;
-        UChar ch32;
+        char16_t ch32;
         UBool initialWhitespace = true;
         UBool continueReading = true;
 
@@ -105,7 +105,7 @@ operator>>(STD_ISTREAM& stream, UnicodeString& str)
                 }
                 continueReading = false;
             }
-            sLimit = &ch + (int)continueReading;
+            sLimit = &ch + static_cast<int>(continueReading);
             us = uBuffer;
             s = &ch;
             errorCode = U_ZERO_ERROR;
@@ -114,7 +114,7 @@ operator>>(STD_ISTREAM& stream, UnicodeString& str)
             this code won't work on stateful encodings like ISO-2022 or an EBCDIC stateful encoding.
             We flush on the last byte to ensure that we output truncated multibyte characters.
             */
-            ucnv_toUnicode(converter, &us, uLimit, &s, sLimit, 0, !continueReading, &errorCode);
+            ucnv_toUnicode(converter, &us, uLimit, &s, sLimit, nullptr, !continueReading, &errorCode);
             if(U_FAILURE(errorCode)) {
                 /* Something really bad happened. setstate() isn't always an available API */
                 stream.clear(stream.failbit);

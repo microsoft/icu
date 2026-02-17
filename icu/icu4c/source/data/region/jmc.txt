@@ -93,7 +93,6 @@ jmc{
         IE{"Ayalandi"}
         IL{"Israeli"}
         IN{"India"}
-        IO{"Eneo la Uingereza katika Bahari Hindi"}
         IQ{"Iraki"}
         IR{"Uajemi"}
         IS{"Aislandi"}
@@ -165,7 +164,7 @@ jmc{
         PM{"Santapieri na Mikeloni"}
         PN{"Pitkairni"}
         PR{"Pwetoriko"}
-        PS{"Mamlaka ya Palestina"}
+        PS{"Ukingo wa Magharibi na Ukanda wa Gaza wa Palestina"}
         PT{"Ureno"}
         PW{"Palau"}
         PY{"Paragwai"}

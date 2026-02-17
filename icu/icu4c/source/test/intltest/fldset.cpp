@@ -19,7 +19,7 @@ FieldsSet::FieldsSet() {
 }
 
 FieldsSet::FieldsSet(int32_t fieldCount) {
-    construct((UDebugEnumType)-1, fieldCount);
+    construct(static_cast<UDebugEnumType>(-1), fieldCount);
 }
 
 FieldsSet::FieldsSet(UDebugEnumType field) {
@@ -47,10 +47,10 @@ UnicodeString FieldsSet::diffFrom(const FieldsSet& other, UErrorCode& status) co
     UnicodeString str;
     if(!isSameType(other)) {
         status = U_ILLEGAL_ARGUMENT_ERROR;
-        return UnicodeString("U_ILLEGAL_ARGUMENT_ERROR: FieldsSet of a different type!");
+        return {"U_ILLEGAL_ARGUMENT_ERROR: FieldsSet of a different type!"};
     }
     for (int i=0; i<fieldCount(); i++) {
-        if (isSet((UCalendarDateFields)i)) {
+        if (isSet(static_cast<UCalendarDateFields>(i))) {
             int32_t myVal = get(i);
             int32_t theirVal = other.get(i);
             
@@ -67,7 +67,7 @@ UnicodeString FieldsSet::diffFrom(const FieldsSet& other, UErrorCode& status) co
     return str;
 }
 
-static UnicodeString *split(const UnicodeString &src, UChar ch, int32_t &splits)
+static UnicodeString *split(const UnicodeString &src, char16_t ch, int32_t &splits)
 {
     int32_t offset = -1;
 
@@ -116,7 +116,7 @@ int32_t FieldsSet::parseFrom(const UnicodeString& str, const
 
         if(U_FAILURE(status)) {
             char ch[256];
-            const UChar *u = kv[0].getBuffer();
+            const char16_t *u = kv[0].getBuffer();
             int32_t len = kv[0].length();
             u_UCharsToChars(u, ch, len);
             ch[len] = 0; /* include terminating \0 */
@@ -131,7 +131,7 @@ int32_t FieldsSet::parseFrom(const UnicodeString& str, const
 
             if(U_FAILURE(status)) {
                 char ch[256];
-                const UChar *u = kv[1].getBuffer();
+                const char16_t *u = kv[1].getBuffer();
                 int32_t len = kv[1].length();
                 u_UCharsToChars(u, ch, len);
                 ch[len] = 0; /* include terminating \0 */
@@ -210,13 +210,13 @@ void FieldsSet::parseValueDefault(const FieldsSet* inheritFrom, int32_t field, c
     int32_t value = -1;
     if(substr.length()==0) { // inherit requested
         // inherit
-        if((inheritFrom == NULL) || !inheritFrom->isSet((UCalendarDateFields)field)) {
+        if ((inheritFrom == nullptr) || !inheritFrom->isSet(static_cast<UCalendarDateFields>(field))) {
             // couldn't inherit from field 
             it_errln(UnicodeString("Parse Failed: Couldn't inherit field ") + field + UnicodeString(" [") + UnicodeString(udbg_enumName(fEnum, field)) + UnicodeString("]"));
             status = U_ILLEGAL_ARGUMENT_ERROR;
             return;
         }
-        value = inheritFrom->get((UCalendarDateFields)field);
+        value = inheritFrom->get(static_cast<UCalendarDateFields>(field));
     } else {        
         value = udbg_stoi(substr);
     }
@@ -262,9 +262,9 @@ void CalendarFieldsSet::handleParseValue(const FieldsSet* inheritFrom, int32_t f
  */
 void CalendarFieldsSet::setOnCalendar(Calendar *cal, UErrorCode& /*status*/) const {
     for (int i=0; i<UDAT_FIELD_COUNT; i++) {
-        if (isSet((UCalendarDateFields)i)) {
-            int32_t value = get((UCalendarDateFields)i);
-            cal->set((UCalendarDateFields)i, value);
+        if (isSet(static_cast<UCalendarDateFields>(i))) {
+            int32_t value = get(static_cast<UCalendarDateFields>(i));
+            cal->set(static_cast<UCalendarDateFields>(i), value);
         }
     }
 }
@@ -279,13 +279,13 @@ UBool CalendarFieldsSet::matches(Calendar *cal, CalendarFieldsSet &diffSet,
         return false;
     }
     for (int i=0; i<UDAT_FIELD_COUNT; i++) {
-        if (isSet((UCalendarDateFields)i)) {
-            int32_t calVal = cal->get((UCalendarDateFields)i, status);
+        if (isSet(static_cast<UCalendarDateFields>(i))) {
+            int32_t calVal = cal->get(static_cast<UCalendarDateFields>(i), status);
             if (U_FAILURE(status))
                 return false;
-            if (calVal != get((UCalendarDateFields)i)) {
+            if (calVal != get(static_cast<UCalendarDateFields>(i))) {
                 match = false;
-                diffSet.set((UCalendarDateFields)i, calVal);
+                diffSet.set(static_cast<UCalendarDateFields>(i), calVal);
                 //fprintf(stderr, "match failed: %s#%d=%d != %d\n",udbg_enumName(UDBG_UCalendarDateFields,i),i,cal->get((UCalendarDateFields)i,status), get((UCalendarDateFields)i));;
             }
         }
@@ -318,7 +318,7 @@ UDateFormatStyle DateTimeStyleSet::getDateStyle() const {
     if(!isSet(DTS_DATE)) {
         return UDAT_NONE;
     } else {
-        return (UDateFormatStyle)get(DTS_DATE);
+        return static_cast<UDateFormatStyle>(get(DTS_DATE));
     }
 }
 
@@ -327,7 +327,7 @@ UDateFormatStyle DateTimeStyleSet::getTimeStyle() const {
     if(!isSet(DTS_TIME)) {
         return UDAT_NONE;
     } else {
-        return (UDateFormatStyle)get(DTS_TIME);
+        return static_cast<UDateFormatStyle>(get(DTS_TIME));
     }
 }
 

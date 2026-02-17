@@ -62,7 +62,7 @@ sr_Latn{
         BI{"Burundi"}
         BJ{"Benin"}
         BL{"Sveti Bartolomej"}
-        BM{"Bermuda"}
+        BM{"Bermudi"}
         BN{"Brunej"}
         BO{"Bolivija"}
         BQ{"Karipska Holandija"}
@@ -94,14 +94,17 @@ sr_Latn{
         CY{"Kipar"}
         CZ{"Češka"}
         DE{"Nemačka"}
+        DG{"Dijego Garsija"}
         DJ{"Džibuti"}
         DK{"Danska"}
         DM{"Dominika"}
         DO{"Dominikanska Republika"}
         DZ{"Alžir"}
+        EA{"Seuta i Melilja"}
         EC{"Ekvador"}
         EE{"Estonija"}
         EG{"Egipat"}
+        EH{"Zapadna Sahara"}
         ER{"Eritreja"}
         ES{"Španija"}
         ET{"Etiopija"}
@@ -138,6 +141,7 @@ sr_Latn{
         HR{"Hrvatska"}
         HT{"Haiti"}
         HU{"Mađarska"}
+        IC{"Kanarska Ostrva"}
         ID{"Indonezija"}
         IE{"Irska"}
         IL{"Izrael"}
@@ -220,12 +224,12 @@ sr_Latn{
         PM{"Sen Pjer i Mikelon"}
         PN{"Pitkern"}
         PR{"Portoriko"}
-        PS{"Palestinska uprava"}
+        PS{"Palestinske teritorije"}
         PT{"Portugalija"}
         PW{"Palau"}
         PY{"Paragvaj"}
         QA{"Katar"}
-        QO{"Okeanija (udaljena ostrva)"}
+        QO{"udaljena ostrva Okeanije"}
         RE{"Reinion"}
         RO{"Rumunija"}
         RS{"Srbija"}
@@ -285,12 +289,33 @@ sr_Latn{
         VU{"Vanuatu"}
         WF{"Valis i Futuna"}
         WS{"Samoa"}
+        XA{"simulirane dijakritike"}
+        XB{"Pseudobidi"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Majot"}
         ZA{"Južnoafrička Republika"}
         ZM{"Zambija"}
         ZW{"Zimbabve"}
-        ZZ{"Nepoznat region"}
+        ZZ{"nepoznat region"}
+    }
+    Countries%chagos{
+        IO{"arhipelag Čagos"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hongkong"}
+        MO{"Makao"}
+        PS{"Palestina"}
+        UN{"UN"}
+        US{"SAD"}
+    }
+    Countries%variant{
+        CD{"Kongo (DRK)"}
+        CG{"Kongo (Republika)"}
+        CI{"Obala Slonovače"}
+        CZ{"Češka Republika"}
+        FK{"Foklandska (Malvinska) ostrva"}
+        TL{"Istočni Timor"}
     }
 }

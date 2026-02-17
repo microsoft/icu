@@ -93,7 +93,6 @@ nyn{
         IE{"Irerandi"}
         IL{"Isirairi"}
         IN{"Indiya"}
-        IO{"Ebizinga bya Indian ebya Bungyereza"}
         IQ{"Iraaka"}
         IR{"Iraani"}
         IS{"Aisilandi"}
@@ -165,7 +164,7 @@ nyn{
         PM{"Senti Piyerre na Mikweron"}
         PN{"Pitkaini"}
         PR{"Pwetoriko"}
-        PS{"Palestinian Authority"}
+        PS{"Parestiina na Gaza"}
         PT{"Pocugo"}
         PW{"Palaawu"}
         PY{"Paragwai"}

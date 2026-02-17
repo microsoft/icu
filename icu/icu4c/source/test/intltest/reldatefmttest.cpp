@@ -831,7 +831,8 @@ public:
     RelativeDateTimeFormatterTest() {
     }
 
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=0) override;
+    void runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
+
 private:
     void TestEnglish();
     void TestEnglishCaps();
@@ -917,7 +918,7 @@ private:
             const RelativeDateTimeFormatter& fmt,
             UDateDirection direction,
             UDateAbsoluteUnit unit);
-    void TestSidewaysDataLoading(void);
+    void TestSidewaysDataLoading();
 };
 
 void RelativeDateTimeFormatterTest::runIndexedTest(
@@ -961,12 +962,12 @@ void RelativeDateTimeFormatterTest::TestEnglishCaps() {
     UErrorCode status = U_ZERO_ERROR;
     RelativeDateTimeFormatter fmt(
             "en",
-            NULL,
+            nullptr,
             UDAT_STYLE_LONG,
             UDISPCTX_CAPITALIZATION_FOR_BEGINNING_OF_SENTENCE,
             status);
     if (U_FAILURE(status)) {
-        dataerrln("Failed call to RelativeDateTimeFormatter(\"en\", NULL, UDAT_STYLE_LONG, UDISPCTX_CAPITALIZATION_FOR_BEGINNING_OF_SENTENCE, status); : %s", u_errorName(status));
+        dataerrln("Failed call to RelativeDateTimeFormatter(\"en\", nullptr, UDAT_STYLE_LONG, UDISPCTX_CAPITALIZATION_FOR_BEGINNING_OF_SENTENCE, status); : %s", u_errorName(status));
         return;
     }
     RelativeDateTimeFormatter fmt3(status);
@@ -1002,7 +1003,7 @@ void RelativeDateTimeFormatterTest::TestEnglishNoQuantityCaps() {
     UErrorCode status = U_ZERO_ERROR;
     RelativeDateTimeFormatter fmt(
             "en",
-            NULL,
+            nullptr,
             UDAT_STYLE_LONG,
             UDISPCTX_CAPITALIZATION_FOR_BEGINNING_OF_SENTENCE,
             status);
@@ -1095,12 +1096,12 @@ void RelativeDateTimeFormatterTest::TestGetters() {
     UErrorCode status = U_ZERO_ERROR;
     RelativeDateTimeFormatter fmt(
             "en",
-            NULL,
+            nullptr,
             UDAT_STYLE_NARROW,
             UDISPCTX_CAPITALIZATION_FOR_MIDDLE_OF_SENTENCE,
             status);
     if (U_FAILURE(status)) {
-        dataerrln("Failed call to RelativeDateTimeFormatter(\"en\", NULL, UDAT_STYLE_NARROW, UDISPCTX_CAPITALIZATION_FOR_MIDDLE_OF_SENTENCE, status);) : %s", u_errorName(status));
+        dataerrln("Failed call to RelativeDateTimeFormatter(\"en\", nullptr, UDAT_STYLE_NARROW, UDISPCTX_CAPITALIZATION_FOR_MIDDLE_OF_SENTENCE, status);) : %s", u_errorName(status));
         return;
     }
     RelativeDateTimeFormatter fmt3(status);
@@ -1108,10 +1109,10 @@ void RelativeDateTimeFormatterTest::TestGetters() {
     // copy and assignment.
     RelativeDateTimeFormatter fmt2(fmt);
     fmt3 = fmt2;
-    assertEquals("style", (int32_t)UDAT_STYLE_NARROW, fmt3.getFormatStyle());
+    assertEquals("style", static_cast<int32_t>(UDAT_STYLE_NARROW), fmt3.getFormatStyle());
     assertEquals(
             "context",
-            (int32_t)UDISPCTX_CAPITALIZATION_FOR_MIDDLE_OF_SENTENCE,
+            static_cast<int32_t>(UDISPCTX_CAPITALIZATION_FOR_MIDDLE_OF_SENTENCE),
             fmt3.getCapitalizationContext());
     assertSuccess("", status);
 }
@@ -1138,7 +1139,7 @@ void RelativeDateTimeFormatterTest::TestCombineDateAndTime() {
 void RelativeDateTimeFormatterTest::TestBadDisplayContext() {
     UErrorCode status = U_ZERO_ERROR;
     RelativeDateTimeFormatter fmt(
-            "en", NULL, UDAT_STYLE_LONG, UDISPCTX_STANDARD_NAMES, status);
+            "en", nullptr, UDAT_STYLE_LONG, UDISPCTX_STANDARD_NAMES, status);
     if (status != U_ILLEGAL_ARGUMENT_ERROR) {
         errln("Expected U_ILLEGAL_ARGUMENT_ERROR, got %s", u_errorName(status));
     }
@@ -1181,7 +1182,7 @@ void RelativeDateTimeFormatterTest::RunTest(
         int32_t expectedResultLength) {
     UErrorCode status = U_ZERO_ERROR;
     RelativeDateTimeFormatter fmt(
-            locale, NULL, style, UDISPCTX_CAPITALIZATION_NONE, status);
+            locale, nullptr, style, UDISPCTX_CAPITALIZATION_NONE, status);
     if (U_FAILURE(status)) {
         dataerrln("Unable to create format object - %s", u_errorName(status));
         return;
@@ -1209,7 +1210,7 @@ void RelativeDateTimeFormatterTest::RunTest(
         int32_t expectedResultLength) {
     UErrorCode status = U_ZERO_ERROR;
     RelativeDateTimeFormatter fmt(
-            locale, NULL, style, UDISPCTX_CAPITALIZATION_NONE, status);
+            locale, nullptr, style, UDISPCTX_CAPITALIZATION_NONE, status);
     if (U_FAILURE(status)) {
         dataerrln("Unable to create format object - %s", u_errorName(status));
         return;
@@ -1348,13 +1349,13 @@ void RelativeDateTimeFormatterTest::VerifyIllegalArgument(
 }
 
 /* Add tests to check "sideways" data loading. */
-void RelativeDateTimeFormatterTest::TestSidewaysDataLoading(void) {
+void RelativeDateTimeFormatterTest::TestSidewaysDataLoading() {
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString actual;
     UnicodeString expected;
     Locale enGbLocale("en_GB");
 
-    RelativeDateTimeFormatter fmt(enGbLocale, NULL, UDAT_STYLE_NARROW,
+    RelativeDateTimeFormatter fmt(enGbLocale, nullptr, UDAT_STYLE_NARROW,
                                   UDISPCTX_CAPITALIZATION_NONE, status);
     if (U_FAILURE(status)) {
         dataerrln("Unable to create RelativeDateTimeFormatter - %s", u_errorName(status));
@@ -1380,7 +1381,7 @@ void RelativeDateTimeFormatterTest::TestSidewaysDataLoading(void) {
     assertEquals("next year: ", expected, actual);
 
     // Testing the SHORT style
-    RelativeDateTimeFormatter fmtshort(enGbLocale, NULL, UDAT_STYLE_SHORT,
+    RelativeDateTimeFormatter fmtshort(enGbLocale, nullptr, UDAT_STYLE_SHORT,
                                   UDISPCTX_CAPITALIZATION_NONE, status);
     expected = "now";
     fmtshort.format(0.0, UDAT_DIRECTION_NEXT, UDAT_RELATIVE_SECONDS, actual.remove(), status);

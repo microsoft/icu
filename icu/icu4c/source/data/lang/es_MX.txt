@@ -34,7 +34,6 @@ es_MX{
         kgp{"kaingang"}
         krc{"karachái bálkaro"}
         kum{"cumuco"}
-        lo{"lao"}
         mga{"irlandés medieval"}
         nan{"min nan (Chino)"}
         nr{"ndebele meridional"}
@@ -46,12 +45,25 @@ es_MX{
         slh{"lushootseed del sur"}
         ss{"siswati"}
         sw{"suajili"}
+        sw_CD{"suajili del Congo"}
         syr{"siriaco"}
         tce{"tutchone del sur"}
         wuu{"chino wu"}
         zgh{"tamazight marroquí estándar"}
     }
+    Languages%menu{
+        ckb{"kurdo del centro"}
+    }
+    Languages%short{
+        en_GB{"inglés (R. U.)"}
+    }
+    Languages%variant{
+        ug{"uyghur"}
+    }
     Types{
+        calendar{
+            roc{"calendario minguo"}
+        }
         collation{
             ducet{"orden de clasificación de Unicode predeterminado"}
         }

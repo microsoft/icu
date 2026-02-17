@@ -40,7 +40,7 @@ UnicodeString escape(const UnicodeString &source) {
     UnicodeString target;
     target += "\"";
     for (i=0; i<source.length(); ++i) {
-        UChar ch = source[i];
+        char16_t ch = source[i];
         if (ch < 0x09 || (ch > 0x0A && ch < 0x20) || ch > 0x7E) {
             target += "\\u";
             appendHex(ch, 4, target);
@@ -54,7 +54,7 @@ UnicodeString escape(const UnicodeString &source) {
 
 // Print the given string to stdout
 void uprintf(const UnicodeString &str) {
-    char *buf = 0;
+    char* buf = nullptr;
     int32_t len = str.length();
     // int32_t bufLen = str.extract(0, len, buf); // Preflight
     /* Preflighting seems to be broken now, so assume 1-1 conversion,

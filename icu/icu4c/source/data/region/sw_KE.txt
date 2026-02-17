@@ -32,6 +32,7 @@ sw_KE{
         CD{"Kongo - Kinshasa"}
         CV{"Kepuvede"}
         CW{"Kurakao"}
+        EA{"Keuta na Melilla"}
         EC{"Ekwado"}
         GA{"Gaboni"}
         GP{"Gwadelupe"}
@@ -39,7 +40,6 @@ sw_KE{
         GT{"Gwatemala"}
         GU{"Guami"}
         HR{"Kroashia"}
-        IO{"Himaya ya Uingereza katika Bahari Hindi"}
         JO{"Yordani"}
         LA{"Laosi"}
         LB{"Lebanoni"}
@@ -79,7 +79,12 @@ sw_KE{
         VA{"Mji wa Vatikani"}
         VG{"Visiwa vya Virgin vya Uingereza"}
         VI{"Visiwa vya Virgin vya Marekani"}
+        XA{"Lafudhi za Kigeni"}
+        XB{"Lugha Bandia"}
         YT{"Mayote"}
         ZZ{"Eneo Lisilojulikana"}
+    }
+    Countries%short{
+        US{"Marekani"}
     }
 }

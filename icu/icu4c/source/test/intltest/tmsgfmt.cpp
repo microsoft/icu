@@ -81,7 +81,7 @@ TestMessageFormat::runIndexedTest(int32_t index, UBool exec,
 void TestMessageFormat::testBug3()
 {
     double myNumber = -123456;
-    DecimalFormat *form = 0;
+    DecimalFormat* form = nullptr;
     Locale locale[] = {
         Locale("ar", "", ""),
         Locale("be", "", ""),
@@ -139,7 +139,7 @@ void TestMessageFormat::testBug3()
         logln(locale[i].getDisplayName(buffer));
         UErrorCode success = U_ZERO_ERROR;
 //        form = (DecimalFormat*)NumberFormat::createCurrencyInstance(locale[i], success);
-        form = (DecimalFormat*)NumberFormat::createInstance(locale[i], success);
+        form = dynamic_cast<DecimalFormat*>(NumberFormat::createInstance(locale[i], success));
         if (U_FAILURE(success)) {
             errln("Err: Number Format ");
             logln("Number format creation failed.");
@@ -170,7 +170,7 @@ void TestMessageFormat::testBug1()
     ChoiceFormat *cf = new ChoiceFormat(limit, formats, 3);
     FieldPosition status(FieldPosition::DONT_CARE);
     UnicodeString toAppendTo;
-    cf->format((int32_t)1, toAppendTo, status);
+    cf->format(static_cast<int32_t>(1), toAppendTo, status);
     if (toAppendTo != "1.0<=Arg<2.0") {
         errln("ChoiceFormat cmp in testBug1");
     }
@@ -254,8 +254,8 @@ operator<<( IntlTest&           stream,
 void TestMessageFormat::PatternTest() 
 {
     Formattable testArgs[] = {
-        Formattable(double(1)), Formattable(double(3456)),
-            Formattable("Disk"), Formattable(UDate((int32_t)1000000000L), Formattable::kIsDate)
+        Formattable(static_cast<double>(1)), Formattable(static_cast<double>(3456)),
+            Formattable("Disk"), Formattable(static_cast<UDate>(static_cast<int32_t>(1000000000L)), Formattable::kIsDate)
     };
     UnicodeString testCases[] = {
        "Quotes '', '{', 'a' {0} '{0}'",
@@ -287,8 +287,7 @@ void TestMessageFormat::PatternTest()
         u"Quotes ', {, 'a' 1 {0}",
         u"Quotes ', {, 'a' 1 {0}",
         u"{1,number,'#',##} #34,56",
-        /*MSFT-Change: Replace NNBSP with ascii space*/
-        u"There are 3,456 files on Disk at 1/12/70, 5:46 AM.",
+        u"There are 3,456 files on Disk at 1/12/70, 5:46\u202FAM.",
         u"On Disk, there are 3,456 files, with $1.00.",
         u"{1,number,percent}, 345,600%,",
         u"{1,date,full}, Wednesday, December 31, 1969,",
@@ -306,7 +305,7 @@ void TestMessageFormat::PatternTest()
         form.adoptInstead(new MessageFormat(testCases[i], Locale::getUS(), success));
         if (U_FAILURE(success)) {
             dataerrln("MessageFormat creation failed.#1 - %s", u_errorName(success));
-            logln(((UnicodeString)"MessageFormat for ") + testCases[i] + " creation failed.\n");
+            logln(UnicodeString("MessageFormat for ") + testCases[i] + " creation failed.\n");
             continue;
         }
         // ICU 4.8 returns the original pattern (testCases),
@@ -318,9 +317,9 @@ void TestMessageFormat::PatternTest()
             // (Too much trouble...)
             errln(UnicodeString("TestMessageFormat::PatternTest failed test #2, i = ") + i);
             //form->toPattern(buffer);
-            errln(((UnicodeString)" Orig: ") + testCases[i]);
-            errln(((UnicodeString)" Exp:  ") + testCases[i]);
-            errln(((UnicodeString)" Got:  ") + buffer);
+            errln(UnicodeString(" Orig: ") + testCases[i]);
+            errln(UnicodeString(" Exp:  ") + testCases[i]);
+            errln(UnicodeString(" Got:  ") + buffer);
         }
 
         //it_out << "Pat out: " << form->toPattern(buffer));
@@ -375,7 +374,7 @@ void TestMessageFormat::PatternTest()
 
 void TestMessageFormat::sample() 
 {
-    MessageFormat *form = 0;
+    MessageFormat* form = nullptr;
     UnicodeString buffer1, buffer2;
     UErrorCode success = U_ZERO_ERROR;
     form = new MessageFormat("There are {0} files on {1}", success);
@@ -399,8 +398,8 @@ void TestMessageFormat::testStaticFormat()
 {
     UErrorCode err = U_ZERO_ERROR;
     Formattable arguments[] = {
-        (int32_t)7,
-        Formattable(UDate(8.71068e+011), Formattable::kIsDate),
+        static_cast<int32_t>(7),
+        Formattable(static_cast<UDate>(8.71068e+011), Formattable::kIsDate),
         "a disturbance in the Force"
         };
 
@@ -414,13 +413,12 @@ void TestMessageFormat::testStaticFormat()
 
     if (U_FAILURE(err)) {
         dataerrln("TestMessageFormat::testStaticFormat #1 - %s", u_errorName(err));
-        logln(UnicodeString("TestMessageFormat::testStaticFormat failed test #1 with error code ")+(int32_t)err);
+        logln(UnicodeString("TestMessageFormat::testStaticFormat failed test #1 with error code ") + static_cast<int32_t>(err));
         return;
     }
 
     const UnicodeString expected(
-        /*MSFT-Change: Replace NNBSP with ascii space*/
-            u"At 12:20:00 PM on Aug 8, 1997, there was a disturbance in the Force on planet 7.");
+            u"At 12:20:00\u202FPM on Aug 8, 1997, there was a disturbance in the Force on planet 7.");
     if (result != expected) {
         errln(UnicodeString("TestMessageFormat::testStaticFormat failed on test") +
             UnicodeString("\n     Result: ") + result +
@@ -436,8 +434,8 @@ void TestMessageFormat::TestTurkishCasing()
     Locale::setDefault( Locale("tr"), err );
 
     Formattable arguments[] = {
-        (int32_t)7,
-        Formattable(UDate(8.71068e+011), Formattable::kIsDate),
+        static_cast<int32_t>(7),
+        Formattable(static_cast<UDate>(8.71068e+011), Formattable::kIsDate),
         "a disturbance in the Force"
         };
 
@@ -470,9 +468,9 @@ void TestMessageFormat::testSimpleFormat(/* char* par */)
 
     UErrorCode err = U_ZERO_ERROR;
 
-    Formattable testArgs1[] = {(int32_t)0, "MyDisk"};
-    Formattable testArgs2[] = {(int32_t)1, "MyDisk"};
-    Formattable testArgs3[] = {(int32_t)12, "MyDisk"};
+    Formattable testArgs1[] = {static_cast<int32_t>(0), "MyDisk"};
+    Formattable testArgs2[] = {static_cast<int32_t>(1), "MyDisk"};
+    Formattable testArgs3[] = {static_cast<int32_t>(12), "MyDisk"};
    
     MessageFormat* form = new MessageFormat(
         "The disk \"{1}\" contains {0} file(s).", err);
@@ -517,7 +515,7 @@ void TestMessageFormat::testMsgFormatChoice(/* char* par */)
 
     FieldPosition ignore(FieldPosition::DONT_CARE);
     UnicodeString string;
-    Formattable testArgs1[] = {(int32_t)0, "MyDisk"};    
+    Formattable testArgs1[] = {static_cast<int32_t>(0), "MyDisk"};
     form->format(testArgs1, 2, string, ignore, err);
     if (string != "The disk \"MyDisk\" contains no files.") {
         errln("TestMessageFormat::testMsgFormatChoice failed on test #1");
@@ -525,7 +523,7 @@ void TestMessageFormat::testMsgFormatChoice(/* char* par */)
  
     ignore.setField(FieldPosition::DONT_CARE);
     string.remove();
-    Formattable testArgs2[] = {(int32_t)1, "MyDisk"};    
+    Formattable testArgs2[] = {static_cast<int32_t>(1), "MyDisk"};
     form->format(testArgs2, 2, string, ignore, err);
     if (string != "The disk \"MyDisk\" contains one file.") {
         errln("TestMessageFormat::testMsgFormatChoice failed on test #2");
@@ -533,7 +531,7 @@ void TestMessageFormat::testMsgFormatChoice(/* char* par */)
 
     ignore.setField(FieldPosition::DONT_CARE);
     string.remove();
-    Formattable testArgs3[] = {(int32_t)1273, "MyDisk"};    
+    Formattable testArgs3[] = {static_cast<int32_t>(1273), "MyDisk"};
     form->format(testArgs3, 2, string, ignore, err);
     if (string != "The disk \"MyDisk\" contains 1,273 files.") {
         dataerrln("TestMessageFormat::testMsgFormatChoice failed on test #3 - %s", u_errorName(err));
@@ -557,10 +555,10 @@ void TestMessageFormat::testMsgFormatPlural(/* char* par */)
     MessageFormat* mfNum = new MessageFormat(t1, Locale("fr"), err);
     if (U_FAILURE(err)) {
         dataerrln("TestMessageFormat::testMsgFormatPlural #1 - argumentIndex - %s", u_errorName(err));
-        logln(UnicodeString("TestMessageFormat::testMsgFormatPlural #1 with error code ")+(int32_t)err);
+        logln(UnicodeString("TestMessageFormat::testMsgFormatPlural #1 with error code ") + static_cast<int32_t>(err));
         return;
     }
-    Formattable testArgs1((int32_t)0);
+    Formattable testArgs1(static_cast<int32_t>(0));
     FieldPosition ignore(FieldPosition::DONT_CARE);
     UnicodeString numResult1;
     mfNum->format(&testArgs1, 1, numResult1, ignore, err);
@@ -571,7 +569,7 @@ void TestMessageFormat::testMsgFormatPlural(/* char* par */)
     mfAlpha->format(argName, &testArgs1, 1, argNameResult, err);
     if (U_FAILURE(err)) {
         dataerrln("TestMessageFormat::testMsgFormatPlural #1 - argumentName - %s", u_errorName(err));
-        logln(UnicodeString("TestMessageFormat::testMsgFormatPlural #1 with error code ")+(int32_t)err);
+        logln(UnicodeString("TestMessageFormat::testMsgFormatPlural #1 with error code ") + static_cast<int32_t>(err));
         delete mfNum;
         return;
     }
@@ -590,7 +588,7 @@ void TestMessageFormat::testMsgFormatPlural(/* char* par */)
 
     MessageFormat* mfNum2 = new MessageFormat(t3, Locale("uk"), err);
     numResult1.remove();
-    Formattable testArgs2((int32_t)4);
+    Formattable testArgs2(static_cast<int32_t>(4));
     mfNum2->format(&testArgs2, 1, numResult1, ignore, err);
     MessageFormat* mfAlpha2 = new MessageFormat(t4, Locale("uk"), err);
     argNameResult.remove();
@@ -598,7 +596,7 @@ void TestMessageFormat::testMsgFormatPlural(/* char* par */)
 
     if (U_FAILURE(err)) {
         errln("TestMessageFormat::testMsgFormatPlural #2 - argumentName");
-        logln(UnicodeString("TestMessageFormat::testMsgFormatPlural #2 with error code ")+(int32_t)err);
+        logln(UnicodeString("TestMessageFormat::testMsgFormatPlural #2 with error code ") + static_cast<int32_t>(err));
         delete mfNum2;
         return;
     }
@@ -619,11 +617,11 @@ void TestMessageFormat::testMsgFormatPlural(/* char* par */)
     MessageFormat* msgFmt = new MessageFormat(t5, Locale("fr"), err);
     if (U_FAILURE(err)) {
         errln("TestMessageFormat::test nested PluralFormat with argumentName");
-        logln(UnicodeString("TestMessageFormat::test nested PluralFormat with error code ")+(int32_t)err);
+        logln(UnicodeString("TestMessageFormat::test nested PluralFormat with error code ") + static_cast<int32_t>(err));
         delete msgFmt;
         return;
     }
-    Formattable testArgs3((int32_t)0);
+    Formattable testArgs3(static_cast<int32_t>(0));
     argNameResult.remove();
     msgFmt->format(&testArgs3, 1, argNameResult, ignore, err);
     if (U_FAILURE(err)) {
@@ -647,7 +645,7 @@ void TestMessageFormat::testApostropheInPluralAndSelect() {
         return;
     }
     UnicodeString expected = UNICODE_STRING_SIMPLE("abc_3#3{3'_def_sel}ect'_xyz");
-    Formattable args[] = { (int32_t)3, UNICODE_STRING_SIMPLE("x") };
+    Formattable args[] = { static_cast<int32_t>(3), UNICODE_STRING_SIMPLE("x") };
     internalFormat(
         &msgFmt, args, 2, expected,
         "MessageFormat with apostrophes in plural/select arguments failed:\n");
@@ -681,7 +679,7 @@ MessageFormat* TestMessageFormat::internalCreate(
     LocalPointer<MessageFormat> msgFmt(new MessageFormat(pattern, locale, status));
     if (U_FAILURE(status)) {
         dataerrln( "%s error while constructing with ErrorCode as %s" ,errMsg, u_errorName(status) );
-        logln(UnicodeString("TestMessageFormat::testMsgFormatSelect #1 with error code ")+(int32_t)status);
+        logln(UnicodeString("TestMessageFormat::testMsgFormatSelect #1 with error code ") + static_cast<int32_t>(status));
         return nullptr;
     }
     return msgFmt.orphan();
@@ -767,9 +765,9 @@ void TestMessageFormat::testMsgFormatSelect(/* char* par */)
     MessageFormat* msgFmt4 = internalCreate(t4.unescape(), Locale("fr"),err,(char*)"From TestMessageFormat::TestSelectFormat create t4");
     if (!U_FAILURE(err)) {
         //Arguments 
-        Formattable testArgs10[] = {"Kirti","female",(int32_t)6};    
+        Formattable testArgs10[] = {"Kirti", "female", static_cast<int32_t>(6)};
         Formattable testArgs11[] = {"Kirti","female",100.100};    
-        Formattable testArgs12[] = {"Kirti","other",(int32_t)6};    
+        Formattable testArgs12[] = {"Kirti", "other", static_cast<int32_t>(6)};
         Formattable* testArgs[] = {testArgs10,testArgs11,testArgs12};
         UnicodeString exp[] = {
             "Kirti est 6 all\\u00E9e \\u00E0 Paris." ,
@@ -790,10 +788,10 @@ void TestMessageFormat::testMsgFormatSelect(/* char* par */)
     // with no data the above should fail but it seems to construct an invalid MessageFormat with no reported error. See #13079
     if (!U_FAILURE(err)) {
         //Arguments 
-        Formattable testArgs10[] = {"Kirti",(int32_t)6,"female"};  
-        Formattable testArgs11[] = {"Kirti",(int32_t)1,"female"};  
-        Formattable testArgs12[] = {"Ash",(int32_t)1,"other"};
-        Formattable testArgs13[] = {"Ash",(int32_t)5,"other"};  
+        Formattable testArgs10[] = {"Kirti", static_cast<int32_t>(6), "female"};
+        Formattable testArgs11[] = {"Kirti", static_cast<int32_t>(1), "female"};
+        Formattable testArgs12[] = {"Ash", static_cast<int32_t>(1), "other"};
+        Formattable testArgs13[] = {"Ash", static_cast<int32_t>(5), "other"};
         Formattable* testArgs[] = {testArgs10,testArgs11,testArgs12,testArgs13};
         UnicodeString exp[] = {
             "Kirti sont all\\u00E9es \\u00E0 Paris." ,
@@ -814,21 +812,21 @@ void TestMessageFormat::testMsgFormatSelect(/* char* par */)
     LocalPointer<MessageFormat> msgFmt6(
             internalCreate(t6, Locale("de"),err,(char*)"From TestMessageFormat::TestSelectFormat create t6"));
     if (!U_FAILURE(err)) {
-        //Arguments 
-        Formattable testArgs10[] = {"Kirti","other",(int32_t)1,"other"}; 
-        Formattable testArgs11[] = {"Kirti","other",(int32_t)6,"other"};
-        Formattable testArgs12[] = {"Kirti","other",(int32_t)1,"female"};
-        Formattable testArgs13[] = {"Kirti","other",(int32_t)3,"female"};
-        Formattable testArgs14[] = {"Kirti","female",(int32_t)1,"female"};
-        Formattable testArgs15[] = {"Kirti","female",(int32_t)5,"female"};
-        Formattable testArgs16[] = {"Kirti","female",(int32_t)1,"other"};
-        Formattable testArgs17[] = {"Kirti","female",(int32_t)5,"other"};
-        Formattable testArgs18[] = {"Kirti","mixed",(int32_t)1,"mixed"};
-        Formattable testArgs19[] = {"Kirti","mixed",(int32_t)1,"other"};
-        Formattable testArgs20[] = {"Kirti","female",(int32_t)1,"mixed"};
-        Formattable testArgs21[] = {"Kirti","mixed",(int32_t)5,"mixed"};
-        Formattable testArgs22[] = {"Kirti","mixed",(int32_t)5,"other"};
-        Formattable testArgs23[] = {"Kirti","female",(int32_t)5,"mixed"};
+        //Arguments
+        Formattable testArgs10[] = {"Kirti", "other", static_cast<int32_t>(1), "other"};
+        Formattable testArgs11[] = {"Kirti", "other", static_cast<int32_t>(6), "other"};
+        Formattable testArgs12[] = {"Kirti", "other", static_cast<int32_t>(1), "female"};
+        Formattable testArgs13[] = {"Kirti", "other", static_cast<int32_t>(3), "female"};
+        Formattable testArgs14[] = {"Kirti", "female", static_cast<int32_t>(1), "female"};
+        Formattable testArgs15[] = {"Kirti", "female", static_cast<int32_t>(5), "female"};
+        Formattable testArgs16[] = {"Kirti", "female", static_cast<int32_t>(1), "other"};
+        Formattable testArgs17[] = {"Kirti", "female", static_cast<int32_t>(5), "other"};
+        Formattable testArgs18[] = {"Kirti", "mixed", static_cast<int32_t>(1), "mixed"};
+        Formattable testArgs19[] = {"Kirti", "mixed", static_cast<int32_t>(1), "other"};
+        Formattable testArgs20[] = {"Kirti", "female", static_cast<int32_t>(1), "mixed"};
+        Formattable testArgs21[] = {"Kirti", "mixed", static_cast<int32_t>(5), "mixed"};
+        Formattable testArgs22[] = {"Kirti", "mixed", static_cast<int32_t>(5), "other"};
+        Formattable testArgs23[] = {"Kirti", "female", static_cast<int32_t>(5), "mixed"};
         Formattable* testArgs[] = {testArgs10,testArgs11,testArgs12,testArgs13,
                                    testArgs14,testArgs15,testArgs16,testArgs17,
                                    testArgs18,testArgs19,testArgs20,testArgs21,
@@ -865,7 +863,7 @@ void TestMessageFormat::testCopyConstructor()
     UErrorCode success = U_ZERO_ERROR;
     MessageFormat *x = new MessageFormat("There are {0} files on {1}", success);
     MessageFormat *z = new MessageFormat("There are {0} files on {1} created", success);
-    MessageFormat *y = 0;
+    MessageFormat* y = nullptr;
     y = new MessageFormat(*x);
     if ( (*x == *y) && 
          (*x != *z) && 
@@ -924,7 +922,7 @@ void TestMessageFormat::testClone()
     UErrorCode success = U_ZERO_ERROR;
     MessageFormat *x = new MessageFormat("There are {0} files on {1}", success);
     MessageFormat *z = new MessageFormat("There are {0} files on {1} created", success);
-    MessageFormat *y = 0;
+    MessageFormat* y = nullptr;
     y = x->clone();
     if ( (*x == *y) && 
          (*x != *z) && 
@@ -985,7 +983,7 @@ void TestMessageFormat::testSetLocale()
     GregorianCalendar cal(err);   
     Formattable arguments[] = {
         456.83,
-        Formattable(UDate(8.71068e+011), Formattable::kIsDate),
+        Formattable(static_cast<UDate>(8.71068e+011), Formattable::kIsDate),
         "deposit"
         };
    
@@ -997,14 +995,14 @@ void TestMessageFormat::testSetLocale()
     // Just use unlocalized currency symbol.
     //UnicodeString compareStrEng = "At <time> on Aug 8, 1997, you made a deposit of $456.83.";
     UnicodeString compareStrEng = "At <time> on Aug 8, 1997, you made a deposit of ";
-    compareStrEng += (UChar) 0x00a4;
+    compareStrEng += static_cast<char16_t>(0x00a4);
     compareStrEng += "456.83.";
     // {sfb} to get DM, would need Locale::GERMANY, not Locale::GERMAN
     // Just use unlocalized currency symbol.
     //UnicodeString compareStrGer = "At <time> on 08.08.1997, you made a deposit of 456,83 DM.";
     UnicodeString compareStrGer = "At <time> on 08.08.1997, you made a deposit of ";
     compareStrGer += "456,83";
-    compareStrGer += (UChar) 0x00a0;
+    compareStrGer += static_cast<char16_t>(0x00a0);
     compareStrGer += "XXX.";
 
     MessageFormat msg( formatStr, err);
@@ -1066,14 +1064,14 @@ void TestMessageFormat::testFormat()
     UErrorCode err = U_ZERO_ERROR;
     GregorianCalendar cal(err);   
 
-    const Formattable ftarray[] = 
+    const Formattable ftarray[] =
     {
-        Formattable( UDate(8.71068e+011), Formattable::kIsDate )
+        Formattable(static_cast<UDate>(8.71068e+011), Formattable::kIsDate)
     };
     const int32_t ft_cnt = UPRV_LENGTHOF(ftarray);
     Formattable ft_arr( ftarray, ft_cnt );
 
-    Formattable* fmt = new Formattable(UDate(8.71068e+011), Formattable::kIsDate);
+    Formattable* fmt = new Formattable(static_cast<UDate>(8.71068e+011), Formattable::kIsDate);
    
     UnicodeString result;
 
@@ -1212,8 +1210,8 @@ void TestMessageFormat::testAdopt()
     int32_t count, countCmp;
     const Format** formats = msg.getFormats(count);
     const Format** formatsCmp = msgCmp.getFormats(countCmp);
-    const Format** formatsChg = 0;
-    const Format** formatsAct = 0;
+    const Format** formatsChg = nullptr;
+    const Format** formatsAct = nullptr;
     int32_t countAct;
     const Format* a;
     const Format* b;
@@ -1231,13 +1229,13 @@ void TestMessageFormat::testAdopt()
     for (i = 0; i < count; i++) {
         a = formats[i];
         b = formatsCmp[i];
-        if ((a != NULL) && (b != NULL)) {
+        if ((a != nullptr) && (b != nullptr)) {
             if (*a != *b) {
                 errln("a != b");
                 return;
             }
-        }else if ((a != NULL) || (b != NULL)) {
-            errln("(a != NULL) || (b != NULL)");
+        }else if ((a != nullptr) || (b != nullptr)) {
+            errln("(a != nullptr) || (b != nullptr)");
             return;
         }
     }
@@ -1255,7 +1253,7 @@ void TestMessageFormat::testAdopt()
     for (i = 0; i < count; i++) {
         a = formatsChg[i];
         b = formatsCmp[i];
-        if ((a != NULL) && (b != NULL)) {
+        if ((a != nullptr) && (b != nullptr)) {
             if (*a == *b) {
                 logln("formatsChg == formatsCmp at index %d", i);
                 diff = false;
@@ -1288,14 +1286,14 @@ void TestMessageFormat::testAdopt()
     for (i = 0; i < countAct; i++) {
         a = formatsAct[i];
         b = formatsCmp[i];
-        if ((a != NULL) && (b != NULL)) {
+        if ((a != nullptr) && (b != nullptr)) {
             if (*a != *b) {
                 logln("formatsAct != formatsCmp at index %d", i);
                 errln("a != b");
                 return;
             }
-        }else if ((a != NULL) || (b != NULL)) {
-            errln("(a != NULL) || (b != NULL)");
+        }else if ((a != nullptr) || (b != nullptr)) {
+            errln("(a != nullptr) || (b != nullptr)");
             return;
         }
     }
@@ -1312,8 +1310,8 @@ void TestMessageFormat::testAdopt()
     }
 
     for (i = 0; i < countCmp; i++) {
-        if (formatsCmp[i] == NULL) {
-            formatsToAdopt[i] = NULL;
+        if (formatsCmp[i] == nullptr) {
+            formatsToAdopt[i] = nullptr;
         }else{
             formatsToAdopt[i] = formatsCmp[i]->clone();
             if (!formatsToAdopt[i]) {
@@ -1338,13 +1336,13 @@ void TestMessageFormat::testAdopt()
     for (i = 0; i < countAct; i++) {
         a = formatsAct[i];
         b = formatsCmp[i];
-        if ((a != NULL) && (b != NULL)) {
+        if ((a != nullptr) && (b != nullptr)) {
             if (*a != *b) {
                 errln("a != b");
                 return;
             }
-        }else if ((a != NULL) || (b != NULL)) {
-            errln("(a != NULL) || (b != NULL)");
+        }else if ((a != nullptr) || (b != nullptr)) {
+            errln("(a != nullptr) || (b != nullptr)");
             return;
         }
     }
@@ -1361,8 +1359,8 @@ void TestMessageFormat::testAdopt()
     }
 
     for (i = 0; i < countCmp; i++) {
-        if (formatsCmp[i] == NULL) {
-            formatsToAdopt[i] = NULL;
+        if (formatsCmp[i] == nullptr) {
+            formatsToAdopt[i] = nullptr;
         }else{
             formatsToAdopt[i] = formatsCmp[i]->clone();
             if (!formatsToAdopt[i]) {
@@ -1390,13 +1388,13 @@ void TestMessageFormat::testAdopt()
     for (i = 0; i < countAct; i++) {
         a = formatsAct[i];
         b = formatsCmp[i];
-        if ((a != NULL) && (b != NULL)) {
+        if ((a != nullptr) && (b != nullptr)) {
             if (*a != *b) {
                 errln("a != b");
                 return;
             }
-        }else if ((a != NULL) || (b != NULL)) {
-            errln("(a != NULL) || (b != NULL)");
+        }else if ((a != nullptr) || (b != nullptr)) {
+            errln("(a != nullptr) || (b != nullptr)");
             return;
         }
     }
@@ -1420,32 +1418,32 @@ static void _testCopyConstructor2()
     const Formattable fargs( d, Formattable::kIsDate );
 
     MessageFormat* fmt1 = new MessageFormat( formatStr, status );
-    MessageFormat* fmt2 = NULL;
-    MessageFormat* fmt3 = NULL;
-    MessageFormat* fmt4 = NULL;
+    MessageFormat* fmt2 = nullptr;
+    MessageFormat* fmt3 = nullptr;
+    MessageFormat* fmt4 = nullptr;
 
-    if (fmt1 == NULL) {
-        it_err("testCopyConstructor2: (fmt1 != NULL)");
+    if (fmt1 == nullptr) {
+        it_err("testCopyConstructor2: (fmt1 != nullptr)");
         goto cleanup;
     }
 
     fmt2 = new MessageFormat( *fmt1 );
     result = fmt1->format( &fargs, 1, resultStr, fp, status );
 
-    if (fmt2 == NULL) {
-        it_err("testCopyConstructor2: (fmt2 != NULL)");
+    if (fmt2 == nullptr) {
+        it_err("testCopyConstructor2: (fmt2 != nullptr)");
         goto cleanup;
     }
 
     fmt3 = fmt1->clone();
     fmt4 = fmt2->clone();
 
-    if (fmt3 == NULL) {
-        it_err("testCopyConstructor2: (fmt3 != NULL)");
+    if (fmt3 == nullptr) {
+        it_err("testCopyConstructor2: (fmt3 != nullptr)");
         goto cleanup;
     }
-    if (fmt4 == NULL) {
-        it_err("testCopyConstructor2: (fmt4 != NULL)");
+    if (fmt4 == nullptr) {
+        it_err("testCopyConstructor2: (fmt4 != nullptr)");
         goto cleanup;
     }
 
@@ -1485,9 +1483,9 @@ void TestMessageFormat::TestUnlimitedArgsAndSubformats() {
     }
 
     const Formattable ARGS[] = {
-        Formattable(UDate(1e13), Formattable::kIsDate),
-        Formattable((int32_t)1303),
-        Formattable((int32_t)1202),
+        Formattable(static_cast<UDate>(1e13), Formattable::kIsDate),
+        Formattable(static_cast<int32_t>(1303)),
+        Formattable(static_cast<int32_t>(1202)),
         Formattable(1303.0/1202 - 1),
         Formattable("Glimmung"),
         Formattable("the printers"),
@@ -1503,8 +1501,7 @@ void TestMessageFormat::TestUnlimitedArgsAndSubformats() {
 
     UnicodeString expected =
         u"On Nov 20, 2286 (aka 11/20/86, aka November 20, 2286) "
-        /*MSFT-Change: Replace NNBSP with ascii space*/
-        u"at 9:46:40 AM (aka 9:46 AM, aka 9:46:40 AM PST) "
+        u"at 9:46:40\u202FAM (aka 9:46\u202FAM, aka 9:46:40\u202FAM PST) "
         u"there were 1,303 werjes "
         u"(a 8% increase over 1,202) "
         u"despite the Glimmung's efforts "
@@ -1515,13 +1512,13 @@ void TestMessageFormat::TestUnlimitedArgsAndSubformats() {
     if (result == expected) {
         logln(result);
     } else {
-        errln((UnicodeString)"FAIL: Got " + result +
+        errln(UnicodeString("FAIL: Got ") + result +
               ", expected " + expected);
     }
 }
 
 // test RBNF extensions to message format
-void TestMessageFormat::TestRBNF(void) {
+void TestMessageFormat::TestRBNF() {
     // WARNING: this depends on the RBNF formats for en_US
     Locale locale("en", "US", "");
 
@@ -1554,25 +1551,25 @@ void TestMessageFormat::TestRBNF(void) {
 
     for (int i = 0; i < formats_count; ++i) {
         MessageFormat* fmt = new MessageFormat(formats[i], locale, ec);
-        logln((UnicodeString)"Testing format pattern: '" + formats[i] + "'");
+        logln(UnicodeString("Testing format pattern: '") + formats[i] + "'");
 
         for (int j = 0; j < values_count; ++j) {
             ec = U_ZERO_ERROR;
             numFmt->parse(values[j], args[0], ec);
             if (U_FAILURE(ec)) {
-                errln((UnicodeString)"Failed to parse test argument " + values[j]);
+                errln(UnicodeString("Failed to parse test argument ") + values[j]);
             } else {
                 FieldPosition fp(FieldPosition::DONT_CARE);
                 UnicodeString result;
                 fmt->format(args, 1, result, fp, ec);
-                logln((UnicodeString)"value: " + toString(args[0]) + " --> " + result + UnicodeString(" ec: ") + u_errorName(ec));
+                logln(UnicodeString("value: ") + toString(args[0]) + " --> " + result + UnicodeString(" ec: ") + u_errorName(ec));
                
                 int32_t count = 0;
                 Formattable* parseResult = fmt->parse(result, count, ec);
                 if (count != 1) {
-                    errln((UnicodeString)"parse returned " + count + " args");
+                    errln(UnicodeString("parse returned ") + count + " args");
                 } else if (parseResult[0] != args[0]) {
-                    errln((UnicodeString)"parsed argument " + toString(parseResult[0]) + " != " + toString(args[0]));
+                    errln(UnicodeString("parsed argument ") + toString(parseResult[0]) + " != " + toString(args[0]));
                 }
                 delete []parseResult;
             }
@@ -1624,10 +1621,10 @@ void TestMessageFormat::TestApostropheMode() {
       UErrorCode status = U_ZERO_ERROR;
       assertEquals("DOUBLE_OPTIONAL failure",
                    desired,
-                   GetPatternAndSkipSyntax(ado_mp->parse(ado_pattern, NULL, status)));
+                   GetPatternAndSkipSyntax(ado_mp->parse(ado_pattern, nullptr, status)));
       UnicodeString& adr_pattern = tuples[i + 2].isEmpty() ? ado_pattern : tuples[i + 2];
       assertEquals("DOUBLE_REQUIRED failure", desired,
-          GetPatternAndSkipSyntax(adr_mp->parse(adr_pattern, NULL, status)));
+          GetPatternAndSkipSyntax(adr_mp->parse(adr_pattern, nullptr, status)));
     }
     delete adr_mp;
     delete ado_mp;
@@ -1642,18 +1639,18 @@ void TestMessageFormat::TestCompatibleApostrophe() {
 
     UErrorCode ec = U_ZERO_ERROR;
     MessageFormat compMsg("", Locale::getUS(), ec);
-    compMsg.applyPattern(pattern, UMSGPAT_APOS_DOUBLE_REQUIRED, NULL, ec);
+    compMsg.applyPattern(pattern, UMSGPAT_APOS_DOUBLE_REQUIRED, nullptr, ec);
     if (compMsg.getApostropheMode() != UMSGPAT_APOS_DOUBLE_REQUIRED) {
         errln("wrong value from  compMsg.getApostropheMode().");
     }
 
     MessageFormat icuMsg("", Locale::getUS(), ec);
-    icuMsg.applyPattern(pattern, UMSGPAT_APOS_DOUBLE_OPTIONAL, NULL, ec);
+    icuMsg.applyPattern(pattern, UMSGPAT_APOS_DOUBLE_OPTIONAL, nullptr, ec);
     if (icuMsg.getApostropheMode() != UMSGPAT_APOS_DOUBLE_OPTIONAL) {
         errln("wrong value from  icuMsg.getApostropheMode().");
     }
 
-    Formattable zero0[] = { (int32_t)0 };
+    Formattable zero0[] = {static_cast<int32_t>(0)};
     FieldPosition fieldpos(FieldPosition::DONT_CARE);
     UnicodeString buffer1, buffer2;
     assertEquals("incompatible ICU MessageFormat compatibility-apostrophe behavior",
@@ -1696,7 +1693,7 @@ void TestMessageFormat::TestCompatibleApostrophe() {
     */
 }
 
-void TestMessageFormat::testAutoQuoteApostrophe(void) {
+void TestMessageFormat::testAutoQuoteApostrophe() {
     const char* patterns[] = { // pattern, expected pattern
         "'", "''",
         "''", "''",
@@ -1733,11 +1730,11 @@ void TestMessageFormat::testAutoQuoteApostrophe(void) {
     }
 }
 
-void TestMessageFormat::testCoverage(void) {
+void TestMessageFormat::testCoverage() {
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString testformat("{argument, plural, one{C''est # fichier} other {Ce sont # fichiers}} dans la liste.");
     MessageFormat *msgfmt = new MessageFormat(testformat, Locale("fr"), status);
-    if (msgfmt == NULL || U_FAILURE(status)) {
+    if (msgfmt == nullptr || U_FAILURE(status)) {
         dataerrln("FAIL: Unable to create MessageFormat.: %s", u_errorName(status));
         return;
     }
@@ -1753,7 +1750,7 @@ void TestMessageFormat::testCoverage(void) {
     msgfmt->setFormat("set", cf, status);
 
     StringEnumeration *en = msgfmt->getFormatNames(status);
-    if (en == NULL || U_FAILURE(status)) {
+    if (en == nullptr || U_FAILURE(status)) {
         errln("FAIL: Unable to get format names enumeration.");
     } else {
         int32_t count = 0;
@@ -1781,7 +1778,7 @@ void TestMessageFormat::testCoverage(void) {
     delete msgfmt;
 
     msgfmt = new MessageFormat("'", status);
-    if (msgfmt == NULL || U_FAILURE(status)) {
+    if (msgfmt == nullptr || U_FAILURE(status)) {
         errln("FAIL: Unable to create MessageFormat.");
         return;
     }
@@ -1817,7 +1814,7 @@ void TestMessageFormat::testGetFormatNames() {
     }
     const UnicodeString *name;
     name = names->snext(errorCode);
-    if (name == NULL || errorCode.isFailure()) {
+    if (name == nullptr || errorCode.isFailure()) {
         errln("msgfmt.getFormatNames()[0] failed: %s", errorCode.errorName());
         errorCode.reset();
         return;
@@ -1826,7 +1823,7 @@ void TestMessageFormat::testGetFormatNames() {
         return;
     }
     name = names->snext(errorCode);
-    if (name == NULL || errorCode.isFailure()) {
+    if (name == nullptr || errorCode.isFailure()) {
         errln("msgfmt.getFormatNames()[1] failed: %s", errorCode.errorName());
         errorCode.reset();
         return;
@@ -1835,7 +1832,7 @@ void TestMessageFormat::testGetFormatNames() {
         return;
     }
     name = names->snext(errorCode);
-    if (name == NULL || errorCode.isFailure()) {
+    if (name == nullptr || errorCode.isFailure()) {
         errln("msgfmt.getFormatNames()[2] failed: %s", errorCode.errorName());
         errorCode.reset();
         return;
@@ -1844,8 +1841,8 @@ void TestMessageFormat::testGetFormatNames() {
         return;
     }
     name = names->snext(errorCode);
-    if (name != NULL) {
-        errln(UnicodeString("msgfmt.getFormatNames()[3] should be NULL but is: ") + *name);
+    if (name != nullptr) {
+        errln(UnicodeString("msgfmt.getFormatNames()[3] should be nullptr but is: ") + *name);
         return;
     }
 }
@@ -1857,7 +1854,7 @@ void TestMessageFormat::TestTrimArgumentName() {
     if (errorCode.errDataIfFailureAndReset("Unable to instantiate MessageFormat")) {
         return;
     }
-    Formattable args[1] = { (int32_t)2 };
+    Formattable args[1] = {static_cast<int32_t>(2)};
     FieldPosition ignore(FieldPosition::DONT_CARE);
     UnicodeString result;
     assertEquals("trim-numbered-arg format() failed", "a  #,#2.0  z",
@@ -1882,7 +1879,7 @@ void TestMessageFormat::TestSelectOrdinal() {
     if (errorCode.errDataIfFailureAndReset("Unable to instantiate MessageFormat")) {
         return;
     }
-    Formattable args[1] = { (int32_t)21 };
+    Formattable args[1] = {static_cast<int32_t>(21)};
     FieldPosition ignore(FieldPosition::DONT_CARE);
     UnicodeString result;
     assertEquals("plural-and-ordinal format(21) failed", "21 files, 21st file",
@@ -1909,13 +1906,13 @@ void TestMessageFormat::TestDecimals() {
     MessageFormat m(
             "{0,plural,one{one meter}other{# meters}}",
             Locale::getEnglish(), errorCode);
-    Formattable args[1] = { (int32_t)1 };
+    Formattable args[1] = {static_cast<int32_t>(1)};
     FieldPosition ignore;
     UnicodeString result;
     assertEquals("simple format(1)", "one meter",
             m.format(args, 1, result, ignore, errorCode), true);
 
-    args[0] = (double)1.5;
+    args[0] = 1.5;
     result.remove();
     assertEquals("simple format(1.5)", "1.5 meters",
             m.format(args, 1, result, ignore, errorCode), true);
@@ -1924,12 +1921,12 @@ void TestMessageFormat::TestDecimals() {
     MessageFormat m0(
             "{0,plural,one{one meter}other{{0} meters}}",
             Locale::getEnglish(), errorCode);
-    args[0] = (int32_t)1;
+    args[0] = static_cast<int32_t>(1);
     result.remove();
     assertEquals("explicit format(1)", "one meter",
             m0.format(args, 1, result, ignore, errorCode), true);
 
-    args[0] = (double)1.5;
+    args[0] = 1.5;
     result.remove();
     assertEquals("explicit format(1.5)", "1.5 meters",
             m0.format(args, 1, result, ignore, errorCode), true);
@@ -1938,17 +1935,17 @@ void TestMessageFormat::TestDecimals() {
     MessageFormat m1(
             "{0,plural,offset:1 one{another meter}other{{0,number,00.#} meters}}",
             Locale::getEnglish(), errorCode);
-    args[0] = (int32_t)1;
+    args[0] = static_cast<int32_t>(1);
     result.remove();
     assertEquals("offset format(1)", "01 meters",
             m1.format(args, 1, result, ignore, errorCode), true);
 
-    args[0] = (int32_t)2;
+    args[0] = static_cast<int32_t>(2);
     result.remove();
     assertEquals("offset format(1)", "another meter",
             m1.format(args, 1, result, ignore, errorCode), true);
 
-    args[0] = (double)2.5;
+    args[0] = 2.5;
     result.remove();
     assertEquals("offset format(1)", "02.5 meters",
             m1.format(args, 1, result, ignore, errorCode), true);
@@ -1957,17 +1954,17 @@ void TestMessageFormat::TestDecimals() {
     MessageFormat m2(
             "{0,plural,offset:1 one{another meter}other{{0,number,0.0} meters}}",
             Locale::getEnglish(), errorCode);
-    args[0] = (int32_t)1;
+    args[0] = static_cast<int32_t>(1);
     result.remove();
     assertEquals("offset-decimals format(1)", "1.0 meters",
             m2.format(args, 1, result, ignore, errorCode), true);
 
-    args[0] = (int32_t)2;
+    args[0] = static_cast<int32_t>(2);
     result.remove();
     assertEquals("offset-decimals format(1)", "2.0 meters",
             m2.format(args, 1, result, ignore, errorCode), true);
 
-    args[0] = (double)2.5;
+    args[0] = 2.5;
     result.remove();
     assertEquals("offset-decimals format(1)", "2.5 meters",
             m2.format(args, 1, result, ignore, errorCode), true);
@@ -2022,7 +2019,7 @@ void TestMessageFormat::TestMessageFormatNumberSkeleton() {
             { u"{0,number,'::'0.00}", "en", 50, u"::50.00" }, // pattern literal
     };
 
-    for (auto& cas : cases) {
+    for (const auto& cas : cases) {
         status.setScope(cas.messagePattern);
         MessageFormat msgf(cas.messagePattern, cas.localeName, status);
         UnicodeString sb;
@@ -2056,7 +2053,7 @@ void TestMessageFormat::TestMessageFormatDateSkeleton() {
     UDate date = LocaleTest::date(2021-1900, UCAL_NOVEMBER, 23, 16, 42, 55);
 
     doTheRealDateTimeSkeletonTesting(date, u"{0,date,::MMMMd}", "en", u"November 23", status);
-    doTheRealDateTimeSkeletonTesting(date, u"{0,date,::yMMMMdjm}", "en", u"November 23, 2021 at 4:42\u202fPM", status);
+    doTheRealDateTimeSkeletonTesting(date, u"{0,date,::yMMMMdjm}", "en", u"November 23, 2021 at 4:42\u202FPM", status);
     doTheRealDateTimeSkeletonTesting(date, u"{0,date,   ::   yMMMMd   }", "en", u"November 23, 2021", status);
     doTheRealDateTimeSkeletonTesting(date, u"{0,date,::yMMMMd}", "fr", u"23 novembre 2021", status);
     doTheRealDateTimeSkeletonTesting(date, u"Expiration: {0,date,::yMMM}!", "en", u"Expiration: Nov 2021!", status);
@@ -2070,7 +2067,7 @@ void TestMessageFormat::TestMessageFormatTimeSkeleton() {
     UDate date = LocaleTest::date(2021-1900, UCAL_NOVEMBER, 23, 16, 42, 55);
 
     doTheRealDateTimeSkeletonTesting(date, u"{0,time,::MMMMd}", "en", u"November 23", status);
-    doTheRealDateTimeSkeletonTesting(date, u"{0,time,::yMMMMdjm}", "en", u"November 23, 2021 at 4:42\u202fPM", status);
+    doTheRealDateTimeSkeletonTesting(date, u"{0,time,::yMMMMdjm}", "en", u"November 23, 2021 at 4:42\u202FPM", status);
     doTheRealDateTimeSkeletonTesting(date, u"{0,time,   ::   yMMMMd   }", "en", u"November 23, 2021", status);
     doTheRealDateTimeSkeletonTesting(date, u"{0,time,::yMMMMd}", "fr", u"23 novembre 2021", status);
     doTheRealDateTimeSkeletonTesting(date, u"Expiration: {0,time,::yMMM}!", "en", u"Expiration: Nov 2021!", status);

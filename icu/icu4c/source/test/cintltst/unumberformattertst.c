@@ -12,6 +12,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include "unicode/unumberformatter.h"
+#include "unicode/usimplenumberformatter.h"
 #include "unicode/umisc.h"
 #include "unicode/unum.h"
 #include "unicode/ustring.h"
@@ -24,6 +25,10 @@ static void TestSkeletonFormatToString(void);
 static void TestSkeletonFormatToFields(void);
 
 static void TestExampleCode(void);
+
+static void TestSimpleNumberFormatterExample(void);
+
+static void TestSimpleNumberFormatterFull(void);
 
 static void TestFormattedValue(void);
 
@@ -45,6 +50,8 @@ void addUNumberFormatterTest(TestNode** root) {
     TESTCASE(TestSkeletonFormatToString);
     TESTCASE(TestSkeletonFormatToFields);
     TESTCASE(TestExampleCode);
+    TESTCASE(TestSimpleNumberFormatterExample);
+    TESTCASE(TestSimpleNumberFormatterFull);
     TESTCASE(TestFormattedValue);
     TESTCASE(TestSkeletonParseError);
     TESTCASE(TestToDecimalNumber);
@@ -56,7 +63,7 @@ void addUNumberFormatterTest(TestNode** root) {
 
 #define CAPACITY 30
 
-static void TestSkeletonFormatToString() {
+static void TestSkeletonFormatToString(void) {
     UErrorCode ec = U_ZERO_ERROR;
     UChar buffer[CAPACITY];
     UFormattedNumber* result = NULL;
@@ -97,7 +104,7 @@ static void TestSkeletonFormatToString() {
 }
 
 
-static void TestSkeletonFormatToFields() {
+static void TestSkeletonFormatToFields(void) {
     UErrorCode ec = U_ZERO_ERROR;
     UFieldPositionIterator* ufpositer = NULL;
 
@@ -181,7 +188,7 @@ static void TestSkeletonFormatToFields() {
 }
 
 
-static void TestExampleCode() {
+static void TestExampleCode(void) {
     // This is the example code given in unumberformatter.h.
 
     // Setup:
@@ -212,7 +219,61 @@ static void TestExampleCode() {
 }
 
 
-static void TestFormattedValue() {
+static void TestSimpleNumberFormatterExample(void) {
+    // This is the example in usimplenumberformatter.h
+    UErrorCode ec = U_ZERO_ERROR;
+    USimpleNumberFormatter* uformatter = usnumf_openForLocale("bn", &ec);
+    USimpleNumber* unumber = usnum_openForInt64(1000007, &ec);
+    UFormattedNumber* uresult = unumf_openResult(&ec);
+    usnumf_format(uformatter, unumber, uresult, &ec);
+    int32_t len;
+    const UChar* str = ufmtval_getString(unumf_resultAsValue(uresult, &ec), &len, &ec);
+    if (assertSuccess("Formatting end-to-end 1", &ec)) {
+        assertUEquals("Should produce a result in Bangla digits", u"১০,০০,০০৭", str);
+    }
+
+    // Cleanup:
+    unumf_closeResult(uresult);
+    usnum_close(unumber);
+    usnumf_close(uformatter);
+}
+
+
+static void TestSimpleNumberFormatterFull(void) {
+    UErrorCode ec = U_ZERO_ERROR;
+    USimpleNumberFormatter* uformatter = usnumf_openForLocaleAndGroupingStrategy("de-CH", UNUM_GROUPING_ON_ALIGNED, &ec);
+    UFormattedNumber* uresult = unumf_openResult(&ec);
+
+    usnumf_formatInt64(uformatter, 4321, uresult, &ec);
+    int32_t len;
+    const UChar* str = str = ufmtval_getString(unumf_resultAsValue(uresult, &ec), &len, &ec);
+    if (assertSuccess("Formatting end-to-end 2", &ec)) {
+        assertUEquals("Should produce a result with Swiss symbols", u"4’321", str);
+    }
+
+    USimpleNumber* unumber = usnum_openForInt64(1000007, &ec);
+    usnum_setToInt64(unumber, 98765, &ec);
+    usnum_multiplyByPowerOfTen(unumber, -2, &ec);
+    usnum_roundTo(unumber, -1, UNUM_ROUND_HALFDOWN, &ec);
+    usnum_setMaximumIntegerDigits(unumber, 1, &ec);
+    usnum_setMinimumIntegerDigits(unumber, 4, &ec);
+    usnum_setMinimumFractionDigits(unumber, 3, &ec);
+    usnum_setSign(unumber, UNUM_SIMPLE_NUMBER_PLUS_SIGN, &ec);
+
+    usnumf_format(uformatter, unumber, uresult, &ec);
+    str = ufmtval_getString(unumf_resultAsValue(uresult, &ec), &len, &ec);
+    if (assertSuccess("Formatting end-to-end 3", &ec)) {
+        assertUEquals("Should produce a result with mutated number", u"+0’007.600", str);
+    }
+
+    // Cleanup:
+    unumf_closeResult(uresult);
+    usnum_close(unumber);
+    usnumf_close(uformatter);
+}
+
+
+static void TestFormattedValue(void) {
     UErrorCode ec = U_ZERO_ERROR;
     UNumberFormatter* uformatter = unumf_openForSkeletonAndLocale(
             u".00 compact-short", -1, "en", &ec);
@@ -245,7 +306,7 @@ static void TestFormattedValue() {
 }
 
 
-static void TestSkeletonParseError() {
+static void TestSkeletonParseError(void) {
     UErrorCode ec = U_ZERO_ERROR;
     UNumberFormatter* uformatter;
     UParseError perror;
@@ -270,7 +331,7 @@ static void TestSkeletonParseError() {
 }
 
 
-static void TestToDecimalNumber() {
+static void TestToDecimalNumber(void) {
     UErrorCode ec = U_ZERO_ERROR;
     UNumberFormatter* uformatter = unumf_openForSkeletonAndLocale(
         u"currency/USD",
@@ -298,7 +359,7 @@ static void TestToDecimalNumber() {
 }
 
 
-static void TestPerUnitInArabic() {
+static void TestPerUnitInArabic(void) {
     const char* simpleMeasureUnits[] = {
         "area-acre",
         "digital-bit",
@@ -384,7 +445,7 @@ static void TestPerUnitInArabic() {
 }
 
 
-static void Test21674_State() {
+static void Test21674_State(void) {
     UErrorCode status = U_ZERO_ERROR;
     UNumberFormatter* nf = NULL;
     UFormattedNumber* result = NULL;

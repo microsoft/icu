@@ -4,6 +4,7 @@
 sw_CD{
     Languages{
         ak{"Kiakan"}
+        ar_001{"Kiarabu cha Dunia Kilichosanifishwa"}
         arq{"Kiarabu cha Aljeria"}
         az{"Kiazabajani"}
         gv{"Kimanksi"}

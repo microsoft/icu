@@ -25,7 +25,7 @@ yo_BJ{
         419{"Látín Amɛ́ríkà"}
         AE{"Ɛmirate ti Awɔn Arabu"}
         AS{"Sámóánì ti Orílɛ́ède Àméríkà"}
-        AX{"Àwɔn Erékùsù ti Åland"}
+        AX{"Àwɔn Erékùsù ti Aland"}
         AZ{"Asɛ́bájánì"}
         BA{"Bɔ̀síníà àti Ɛtisɛgófínà"}
         BE{"Bégíɔ́mù"}
@@ -33,15 +33,17 @@ yo_BJ{
         BL{"Ìlú Bátílɛ́mì"}
         BN{"Búrúnɛ́lì"}
         BO{"Bɔ̀lífíyà"}
-        BQ{"Káríbíánì ti Nɛ́dálándì"}
+        BQ{"Kàríbíánì ti Nɛ́dálándì"}
         BW{"Bɔ̀tìsúwánà"}
         BZ{"Bèlísɛ̀"}
         CH{"switishilandi"}
         CL{"Shílè"}
         CN{"Sháínà"}
         CZ{"Shɛ́ɛ́kì"}
+        DG{"Diego Gashia"}
         DJ{"Díbɔ́ótì"}
         DK{"Dɛ́mákì"}
+        EH{"Ìwɔ̀òòrùn Sàhárà"}
         EU{"Àpapɔ̀ Yúróòpù"}
         FO{"Àwɔn Erékùsù ti Faroe"}
         GB{"Gɛ̀ɛ́sì"}
@@ -49,8 +51,12 @@ yo_BJ{
         GF{"Firenshi Guana"}
         GS{"Gúúsù Georgia àti Gúúsù Àwɔn Erékùsù Sandwich"}
         HK{"Agbègbè Ìshàkóso Ìshúná Hong Kong Tí Shánà Ń Darí"}
+        IC{"Ɛrékùsù Kánárì"}
+        ID{"Indonéshíà"}
         IL{"Iserɛli"}
+        IM{"Erékùshù ilɛ̀ Man"}
         IS{"Ashilandi"}
+        JE{"Jɛsì"}
         JO{"Jɔdani"}
         KG{"Kurishisitani"}
         KP{"Guusu Kɔria"}
@@ -61,7 +67,7 @@ yo_BJ{
         MH{"Etikun Máshali"}
         MO{"Agbègbè Ìshàkóso Pàtàkì Macao"}
         MZ{"Moshamibiku"}
-        NF{"Etikun Nɔ́úfókì"}
+        NF{"Erékùsù Nɔ́úfókì"}
         NO{"Nɔɔwii"}
         NZ{"Shilandi Titun"}
         OM{"Ɔɔma"}
@@ -84,8 +90,8 @@ yo_BJ{
         TC{"Tɔɔki ati Etikun Kakɔsi"}
         TD{"Shààdì"}
         TF{"Agbègbè Gúúsù Faranshé"}
-        TL{"ÌlàOòrùn Tímɔ̀"}
-        TM{"Tɔɔkimenisita"}
+        TL{"Tímɔ̀ Lɛsiti"}
+        TM{"Tɔ́kìmɛ́nísítànì"}
         TN{"Tunishia"}
         TR{"Tɔɔki"}
         UM{"Àwɔn Erékùsù Kékèké Agbègbè US"}
@@ -97,9 +103,25 @@ yo_BJ{
         VI{"Etikun Fagini ti Amɛrika"}
         VN{"Fɛtinami"}
         WS{"Samɔ"}
+        XA{"ìsɔ̀rɔ̀sí irɔ́"}
+        XB{"Agbègbè irɔ́"}
         ZA{"Gúúshù Áfíríkà"}
         ZM{"Shamibia"}
         ZW{"Shimibabe"}
         ZZ{"Àgbègbè àìmɔ̀"}
+    }
+    Countries%biot{
+        IO{"Àlà-ilɛ̀ Bírítéènì ní Etíkun Índíà"}
+    }
+    Countries%chagos{
+        IO{"Àkójɔpɔ̀ Àwɔn Erékùshù Shágòsì"}
+    }
+    Countries%short{
+        PS{"Palɛsítínì"}
+    }
+    Countries%variant{
+        CZ{"Shɛ́ɛ́kì Olómìnira"}
+        TL{"Ìlà Òòrùn Tímɔ̀"}
+        TR{"Tɔ́kì"}
     }
 }

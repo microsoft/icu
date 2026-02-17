@@ -93,7 +93,6 @@ bez{
         IE{"Huayalandi"}
         IL{"Huislaheli"}
         IN{"Huindia"}
-        IO{"Ulubali lwa Hubahari ya Hindi lwa Huingereza"}
         IQ{"Huilaki"}
         IR{"Huuajemi"}
         IS{"Huaislandi"}
@@ -165,7 +164,7 @@ bez{
         PM{"Husantapieri na Humikeloni"}
         PN{"Hupitkaini"}
         PR{"Hupwetoriko"}
-        PS{"Mamlaka ya Palestina"}
+        PS{"Ulubali lwa Magharibi nu Gaza wa Hupalestina"}
         PT{"Huuleno"}
         PW{"Hupalau"}
         PY{"Hupalagwai"}

@@ -78,7 +78,9 @@ static void TestSciNotationMaxFracCap(void);
 static void TestMinIntMinFracZero(void);
 static void Test21479_ExactCurrency(void);
 static void Test22088_Ethiopic(void);
+static void TestChangingRuleset(void);
 static void TestParseWithEmptyCurr(void);
+static void TestDuration(void);
 
 #define TESTCASE(x) addTest(root, &x, "tsformat/cnumtst/" #x)
 
@@ -122,12 +124,14 @@ void addNumForTest(TestNode** root)
     TESTCASE(TestMinIntMinFracZero);
     TESTCASE(Test21479_ExactCurrency);
     TESTCASE(Test22088_Ethiopic);
+    TESTCASE(TestChangingRuleset);
     TESTCASE(TestParseWithEmptyCurr);
+    TESTCASE(TestDuration);
 }
 
 /* test Parse int 64 */
 
-static void TestInt64Parse()
+static void TestInt64Parse(void)
 {
 
     UErrorCode st = U_ZERO_ERROR;
@@ -167,11 +171,10 @@ static void TestInt64Parse()
     }
 
     unum_close(nf);
-    return;
 }
 
 /* test Number Format API */
-static void TestNumberFormat()
+static void TestNumberFormat(void)
 {
     UChar *result=NULL;
     UChar temp1[512];
@@ -1093,7 +1096,7 @@ static const ParseCurrencyItem parseCurrencyItems[] = {
     { NULL,    NULL,       NULL,        NULL,           0,             0, 0.0, 0,             0, 0.0, NULL  }
 };
 
-static void TestParseCurrency()
+static void TestParseCurrency(void)
 {
     const ParseCurrencyItem * itemPtr;
     for (itemPtr = parseCurrencyItems; itemPtr->locale != NULL; ++itemPtr) {
@@ -1204,7 +1207,7 @@ static const SpelloutParseTest spelloutParseTests[] = {
     { NULL,    NULL, NULL,        0,   0,  0, 0 } /* terminator */
 };
 
-static void TestSpelloutNumberParse()
+static void TestSpelloutNumberParse(void)
 {
     const SpelloutParseTest * testPtr;
     for (testPtr = spelloutParseTests; testPtr->testname != NULL; ++testPtr) {
@@ -1227,7 +1230,7 @@ static void TestSpelloutNumberParse()
     }
 }
 
-static void TestSignificantDigits()
+static void TestSignificantDigits(void)
 {
     UChar temp[128];
     int32_t resultlengthneeded;
@@ -1269,7 +1272,7 @@ static void TestSignificantDigits()
     unum_close(fmt);
 }
 
-static void TestSigDigRounding()
+static void TestSigDigRounding(void)
 {
     UErrorCode status = U_ZERO_ERROR;
     UChar expected[128];
@@ -1306,7 +1309,7 @@ static void TestSigDigRounding()
     unum_close(fmt);
 }
 
-static void TestNumberFormatPadding()
+static void TestNumberFormatPadding(void)
 {
     UChar *result=NULL;
     UChar temp1[512];
@@ -1429,7 +1432,7 @@ withinErr(double a, double b, double err) {
     return uprv_fabs(a - b) < uprv_fabs(a * err);
 }
 
-static void TestInt64Format() {
+static void TestInt64Format(void) {
     UChar temp1[512];
     UChar result[512];
     UNumberFormat *fmt;
@@ -1702,7 +1705,7 @@ static void test_fmt(UNumberFormat* fmt, UBool isDecimal) {
     }
 }
 
-static void TestNonExistentCurrency() {
+static void TestNonExistentCurrency(void) {
     UNumberFormat *format;
     UErrorCode status = U_ZERO_ERROR;
     UChar currencySymbol[8];
@@ -1726,12 +1729,12 @@ static void TestNonExistentCurrency() {
     unum_close(format);
 }
 
-static void TestRBNFFormat() {
+static void TestRBNFFormat(void) {
     UErrorCode status;
     UParseError perr;
     UChar pat[1024];
     UChar tempUChars[512];
-    UNumberFormat *formats[5];
+    UNumberFormat *formats[4];
     int COUNT = UPRV_LENGTHOF(formats);
     int i;
 
@@ -1759,13 +1762,6 @@ static void TestRBNFFormat() {
     formats[2] = unum_open(UNUM_ORDINAL, NULL, 0, "en_US", &perr, &status);
     if (U_FAILURE(status)) {
         log_err_status(status, "unable to open ordinal -> %s\n", u_errorName(status));
-        return;
-    }
-
-    status = U_ZERO_ERROR;
-    formats[3] = unum_open(UNUM_DURATION, NULL, 0, "en_US", &perr, &status);
-    if (U_FAILURE(status)) {
-        log_err_status(status, "unable to open duration %s\n", u_errorName(status));
         return;
     }
 
@@ -1807,7 +1803,7 @@ static void TestRBNFFormat() {
         "100,000,000: some huge number;\n");
     /* This is to get around some compiler warnings about char * string length. */
     u_strcat(pat, tempUChars);
-    formats[4] = unum_open(UNUM_PATTERN_RULEBASED, pat, -1, "en_US", &perr, &status);
+    formats[3] = unum_open(UNUM_PATTERN_RULEBASED, pat, -1, "en_US", &perr, &status);
     if (U_FAILURE(status)) {
         log_err_status(status, "unable to open rulebased pattern -> %s\n", u_errorName(status));
     }
@@ -1843,7 +1839,7 @@ static void TestRBNFFormat() {
     }
 }
 
-static void TestRBNFRounding() {
+static void TestRBNFRounding(void) {
     UChar fmtbuf[FORMAT_BUF_CAPACITY];
     UChar expectedBuf[FORMAT_BUF_CAPACITY];
     int32_t len;
@@ -3038,7 +3034,7 @@ static void TestVariousStylesAndAttributes(void) {
 static const UChar currpat[]  = { 0xA4,0x23,0x2C,0x23,0x23,0x30,0x2E,0x30,0x30,0};
 static const UChar parsetxt[] = { 0x78,0x30,0x79,0x24,0 }; /* x0y$ */
 
-static void TestParseCurrPatternWithDecStyle() {
+static void TestParseCurrPatternWithDecStyle(void) {
     UErrorCode status = U_ZERO_ERROR;
     UNumberFormat *unumfmt = unum_open(UNUM_DECIMAL, NULL, 0, "en_US", NULL, &status);
     if (U_FAILURE(status)) {
@@ -3165,7 +3161,7 @@ static void TestFormatForFields(void) {
     }
 }
 
-static void Test12052_NullPointer() {
+static void Test12052_NullPointer(void) {
     UErrorCode status = U_ZERO_ERROR;
     static const UChar input[] = u"199a";
     UChar currency[200] = {0};
@@ -3611,29 +3607,83 @@ static void Test21479_ExactCurrency(void) {
 }
 
 static void Test22088_Ethiopic(void) {
-    UErrorCode err = U_ZERO_ERROR;
-    UNumberFormat* nf1 = unum_open(UNUM_DEFAULT, NULL, 0, "am_ET@numbers=ethi", NULL, &err);
-    UNumberFormat* nf2 = unum_open(UNUM_NUMBERING_SYSTEM, NULL, 0, "am_ET@numbers=ethi", NULL, &err);
-    UNumberFormat* nf3 = unum_open(UNUM_NUMBERING_SYSTEM, NULL, 0, "en_US", NULL, &err);
+    const struct TestCase {
+        const char* localeID;
+        UNumberFormatStyle style;
+        const UChar* expectedResult;
+    } testCases[] = {
+        { "am_ET@numbers=ethi",        UNUM_DEFAULT,          u"፻፳፫" },
+        { "am_ET@numbers=ethi",        UNUM_NUMBERING_SYSTEM, u"፻፳፫" },
+        { "am_ET@numbers=traditional", UNUM_DEFAULT,          u"፻፳፫" },
+        { "am_ET@numbers=traditional", UNUM_NUMBERING_SYSTEM, u"፻፳፫" },
+        { "am_ET",                     UNUM_NUMBERING_SYSTEM, u"123" },    // make sure default for Ethiopic still works
+        { "en_US",                     UNUM_NUMBERING_SYSTEM, u"123" },    // make sure non-algorithmic default still works
+        { "ar_SA",                     UNUM_NUMBERING_SYSTEM, u"١٢٣" },    // make sure non-algorithmic default still works
+        // NOTE: There are NO locales in ICU 72 whose default numbering system is algorithmic!
+    };
+    for (int32_t i = 0; i < UPRV_LENGTHOF(testCases); i++) {
+        char errorMessage[200];
+        UErrorCode err = U_ZERO_ERROR;
+        UNumberFormat* nf = unum_open(testCases[i].style, NULL, 0, testCases[i].localeID, NULL, &err);
+
+        snprintf(errorMessage, 200, "Creation of number formatter for %s failed", testCases[i].localeID);
+        if (assertSuccess(errorMessage, &err)) {
+            UChar result[200];
+            
+            unum_formatDouble(nf, 123, result, 200, NULL, &err);
+            snprintf(errorMessage, 200, "Formatting of number for %s failed", testCases[i].localeID);
+            if (assertSuccess(errorMessage, &err)) {
+                snprintf(errorMessage, 200, "Wrong result for %s", testCases[i].localeID);
+                assertUEquals(errorMessage, testCases[i].expectedResult, result);
+            }
+        }
+        unum_close(nf);
+   }
+}
+
+static void TestChangingRuleset(void) {
+    const struct TestCase {
+        const char* localeID;
+        const UChar* rulesetName;
+        const UChar* expectedResult;
+    } testCases[] = {
+        { "en_US",               NULL,            u"123" },
+        { "en_US",               u"%roman-upper", u"CXXIII" },
+        { "en_US",               u"%ethiopic",    u"፻፳፫" },
+        { "en_US@numbers=roman", NULL,            u"CXXIII" },
+        { "en_US@numbers=ethi",  NULL,            u"፻፳፫" },
+        { "am_ET",               NULL,            u"123" },
+        { "am_ET",               u"%ethiopic",    u"፻፳፫" },
+        { "am_ET@numbers=ethi",  NULL,            u"፻፳፫" },
+    };
     
-    if (assertSuccess("Creation of number formatters failed", &err)) {
-        UChar result[200];
+    for (int32_t i = 0; i < UPRV_LENGTHOF(testCases); i++) {
+        char errorMessage[200];
+        const char* rulesetNameString = (testCases[i].rulesetName != NULL) ? austrdup(testCases[i].rulesetName) : "NULL";
+        UErrorCode err = U_ZERO_ERROR;
+        UNumberFormat* nf = unum_open(UNUM_NUMBERING_SYSTEM, NULL, 0, testCases[i].localeID, NULL, &err);
         
-        unum_formatDouble(nf1, 123, result, 200, NULL, &err);
-        assertSuccess("Formatting of number failed", &err);
-        assertUEquals("Wrong result with UNUM_DEFAULT", u"፻፳፫", result);
-        
-        unum_formatDouble(nf2, 123, result, 200, NULL, &err);
-        assertSuccess("Formatting of number failed", &err);
-        assertUEquals("Wrong result with UNUM_NUMBERING_SYSTEM", u"፻፳፫", result);
-        
-        unum_formatDouble(nf3, 123, result, 200, NULL, &err);
-        assertSuccess("Formatting of number failed", &err);
-        assertUEquals("Wrong result with UNUM_NUMBERING_SYSTEM and English", u"123", result);
+        snprintf(errorMessage, 200, "Creating of number formatter for %s failed", testCases[i].localeID);
+        if (assertSuccess(errorMessage, &err)) {
+            if (testCases[i].rulesetName != NULL) {
+                unum_setTextAttribute(nf, UNUM_DEFAULT_RULESET, testCases[i].rulesetName, -1, &err);
+                snprintf(errorMessage, 200, "Changing formatter for %s's default ruleset to %s failed", testCases[i].localeID, rulesetNameString);
+                assertSuccess(errorMessage, &err);
+            }
+            
+            if (U_SUCCESS(err)) {
+                UChar result[200];
+                
+                unum_formatDouble(nf, 123, result, 200, NULL, &err);
+                snprintf(errorMessage, 200, "Formatting of number with %s/%s failed", testCases[i].localeID, rulesetNameString);
+                if (assertSuccess(errorMessage, &err)) {
+                    snprintf(errorMessage, 200, "Wrong result for %s/%s", testCases[i].localeID, rulesetNameString);
+                    assertUEquals(errorMessage, testCases[i].expectedResult, result);
+                }
+            }
+        }
+        unum_close(nf);
     }
-    unum_close(nf1);
-    unum_close(nf2);
-    unum_close(nf3);
 }
 
 static void TestParseWithEmptyCurr(void) {
@@ -3776,6 +3826,29 @@ static void TestParseWithEmptyCurr(void) {
 
             unum_close(unum);
         }
+    }
+}
+
+static void TestDuration(void) {
+    // NOTE: at the moment, UNUM_DURATION is still backed by a set of RBNF rules, which don't handle
+    // showing fractional seconds.  This test should be updated or replaced
+    // when https://unicode-org.atlassian.net/browse/ICU-22487 is fixed.
+    double values[] = { 34, 34.5, 1234, 1234.2, 1234.7, 1235, 8434, 8434.5 };
+    const UChar* expectedResults[] = { u"34 sec.", u"34 sec.", u"20:34", u"20:34", u"20:35", u"20:35", u"2:20:34", u"2:20:34" };
+    
+    UErrorCode err = U_ZERO_ERROR;
+    UNumberFormat* nf = unum_open(UNUM_DURATION, NULL, 0, "en_US", NULL, &err);
+    
+    if (assertSuccess("Failed to create duration formatter", &err)) {
+        UChar actualResult[200];
+        
+        for (int32_t i = 0; i < UPRV_LENGTHOF(values); i++) {
+            unum_formatDouble(nf, values[i], actualResult, 200, NULL, &err);
+            if (assertSuccess("Error formatting duration", &err)) {
+                assertUEquals("Wrong formatting result", expectedResults[i], actualResult);
+            }
+        }
+        unum_close(nf);
     }
 }
 

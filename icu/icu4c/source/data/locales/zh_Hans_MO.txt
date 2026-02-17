@@ -3,6 +3,14 @@
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 zh_Hans_MO{
     calendar{
+        buddhist{
+            intervalFormats{
+                Hv{
+                    H{"vHH–HH"}
+                }
+                fallback{"{0}–{1}"}
+            }
+        }
         chinese{
             DateTimePatterns{
                 "zzzz ah:mm:ss",
@@ -220,6 +228,36 @@ zh_Hans_MO{
                 "GyMd",
                 "GyMd",
                 "GyyMd",
+            }
+        }
+        roc{
+            DateTimePatterns{
+                "zzzz ah:mm:ss",
+                "z ah:mm:ss",
+                "ah:mm:ss",
+                "ah:mm",
+                "Gy年M月d日EEEE",
+                "Gy年M月d日",
+                "Gy年M月d日",
+                "Gd/M/yy",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+            }
+            DateTimeSkeletons{
+                "ahmmsszzzz",
+                "ahmmssz",
+                "ahmmss",
+                "ahmm",
+                "GyMEEEEd",
+                "GyMd",
+                "GyMd",
+                "GyyMd",
+            }
+            availableFormats{
+                MMM{"M月"}
             }
         }
     }

@@ -199,7 +199,7 @@ static UNewTrie *sprepTrie;
 
 
 extern void
-init() {
+init(void) {
 
     sprepTrie = (UNewTrie *)uprv_calloc(1, sizeof(UNewTrie));
 
@@ -233,7 +233,7 @@ static int32_t U_CALLCONV hashEntry(const UHashTok parm) {
 
 /* Callback for comparing two entries */
 static UBool U_CALLCONV compareEntries(const UHashTok p1, const UHashTok p2) {
-    return (UBool)(p1.integer != p2.integer);
+    return p1.integer != p2.integer;
 }
 
 
@@ -360,8 +360,7 @@ storeMapping(uint32_t codepoint, uint32_t* mapping,int32_t length,
 
 
     UChar* map = NULL;
-    int16_t adjustedLen=0, j;
-    int32_t i;
+    int16_t adjustedLen=0, i, j;
     uint16_t trieWord = 0;
     ValueStruct *value = NULL;
     uint32_t savedTrieWord = 0;

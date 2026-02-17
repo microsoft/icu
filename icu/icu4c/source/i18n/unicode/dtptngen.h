@@ -211,11 +211,6 @@ public:
      * @return conflicting status.  The value could be UDATPG_NO_CONFLICT,
      *                             UDATPG_BASE_CONFLICT or UDATPG_CONFLICT.
      * @stable ICU 3.8
-     * <p>
-     * <h4>Sample code</h4>
-     * \snippet samples/dtptngsample/dtptngsample.cpp getBestPatternExample1
-     * \snippet samples/dtptngsample/dtptngsample.cpp addPatternExample
-     * <p>
      */
     UDateTimePatternConflict addPattern(const UnicodeString& pattern,
                                         UBool override,
@@ -330,7 +325,6 @@ public:
     const UnicodeString& getDateTimeFormat() const;
 
 #if !UCONFIG_NO_FORMATTING
-#ifndef U_HIDE_DRAFT_API
     /**
      * dateTimeFormats are message patterns used to compose combinations of date
      * and time patterns. There are four length styles, corresponding to the
@@ -351,7 +345,7 @@ public:
      *              in/out parameter; if no failure status is already set,
      *              it will be set according to result of the function (e.g.
      *              U_ILLEGAL_ARGUMENT_ERROR for style out of range).
-     * @draft ICU 71
+     * @stable ICU 71
      */
     void setDateTimeFormat(UDateFormatStyle style, const UnicodeString& dateTimeFormat,
                             UErrorCode& status);
@@ -371,11 +365,10 @@ public:
      *              or the contents of the string, may no longer be valid if
      *              setDateTimeFormat is called, or the DateTimePatternGenerator
      *              object is deleted.
-     * @draft ICU 71
+     * @stable ICU 71
      */
     const UnicodeString& getDateTimeFormat(UDateFormatStyle style,
                             UErrorCode& status) const;
-#endif /* U_HIDE_DRAFT_API */
 #endif /* #if !UCONFIG_NO_FORMATTING */
 
     /**
@@ -390,11 +383,6 @@ public:
      * @return bestPattern
      *            The best pattern found from the given skeleton.
      * @stable ICU 3.8
-     * <p>
-     * <h4>Sample code</h4>
-     * \snippet samples/dtptngsample/dtptngsample.cpp getBestPatternExample1
-     * \snippet samples/dtptngsample/dtptngsample.cpp getBestPatternExample
-     * <p>
      */
      UnicodeString getBestPattern(const UnicodeString& skeleton, UErrorCode& status);
 
@@ -438,11 +426,6 @@ public:
      *               which must not indicate a failure before the function call.
      * @return pattern adjusted to match the skeleton fields widths and subtypes.
      * @stable ICU 3.8
-     * <p>
-     * <h4>Sample code</h4>
-     * \snippet samples/dtptngsample/dtptngsample.cpp getBestPatternExample1
-     * \snippet samples/dtptngsample/dtptngsample.cpp replaceFieldTypesExample
-     * <p>
      */
      UnicodeString replaceFieldTypes(const UnicodeString& pattern,
                                      const UnicodeString& skeleton,
@@ -573,7 +556,7 @@ public:
      *
      * @stable ICU 3.8
      */
-    static UClassID U_EXPORT2 getStaticClassID(void);
+    static UClassID U_EXPORT2 getStaticClassID();
 
 private:
     /**
@@ -647,7 +630,7 @@ private:
     UnicodeString& getMutableFieldDisplayName(UDateTimePatternField field, UDateTimePGDisplayWidth width);
     void getAppendName(UDateTimePatternField field, UnicodeString& value);
     UnicodeString mapSkeletonMetacharacters(const UnicodeString& patternForm, int32_t* flags, UErrorCode& status);
-    const UnicodeString* getBestRaw(DateTimeMatcher& source, int32_t includeMask, DistanceInfo* missingFields, UErrorCode& status, const PtnSkeleton** specifiedSkeletonPtr = 0);
+    const UnicodeString* getBestRaw(DateTimeMatcher& source, int32_t includeMask, DistanceInfo* missingFields, UErrorCode& status, const PtnSkeleton** specifiedSkeletonPtr = nullptr);
     UnicodeString adjustFieldTypes(const UnicodeString& pattern, const PtnSkeleton* specifiedSkeleton, int32_t flags, UDateTimePatternMatchOptions options = UDATPG_MATCH_NO_OPTIONS);
     UnicodeString getBestAppending(int32_t missingFields, int32_t flags, UErrorCode& status, UDateTimePatternMatchOptions options = UDATPG_MATCH_NO_OPTIONS);
     int32_t getTopBitNumber(int32_t foundMask) const;

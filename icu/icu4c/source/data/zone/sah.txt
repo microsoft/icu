@@ -24,9 +24,6 @@ sah{
         "Asia:Chita"{
             ec{"Читаа"}
         }
-        "Asia:Choibalsan"{
-            ec{"Чойбалсан"}
-        }
         "Asia:Colombo"{
             ec{"Коломбо"}
         }
@@ -71,6 +68,9 @@ sah{
         }
         "Asia:Ulaanbaatar"{
             ec{"Улан Баатар"}
+        }
+        "Asia:Urumqi"{
+            ec{"Урумчу"}
         }
         "Asia:Ust-Nera"{
             ec{"Уус Ньара"}
@@ -135,10 +135,8 @@ sah{
             lg{"Кытай кэмэ"}
             ls{"Кытай сүрүн кэмэ"}
         }
-        "meta:Choibalsan"{
-            ld{"Чойбалсан сайыҥҥы кэмэ"}
-            lg{"Чойбалсан кэмэ"}
-            ls{"Чойбалсан сүрүн кэмэ"}
+        "meta:GMT"{
+            ls{"GMT"}
         }
         "meta:Georgia"{
             ld{"Курусуун сайыҥҥы кэмэ"}

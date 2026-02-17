@@ -2,10 +2,14 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
 en_ID{
+    %%Parent{"en_001"}
     Currencies{
         IDR{
-            "IDR",
-            "Rupiah",
+            "Rp",
+            "Indonesian Rupiah",
         }
+    }
+    Currencies%narrow{
+        IDR{"Rp"}
     }
 }

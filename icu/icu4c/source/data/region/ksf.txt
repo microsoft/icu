@@ -93,7 +93,6 @@ ksf{
         IE{"ilán"}
         IL{"israɛ́l"}
         IN{"indí"}
-        IO{"zǝ ingɛrís ncɔ́m wa indi"}
         IQ{"irák"}
         IR{"iráŋ"}
         IS{"zǝ i glás"}
@@ -165,7 +164,7 @@ ksf{
         PM{"sɛnpyɛr ri mikɛlɔŋ"}
         PN{"pitkɛ́n"}
         PR{"pɔtoríko"}
-        PS{"Autorité palestinienne"}
+        PS{"zǝ palɛstínǝ"}
         PT{"portugál"}
         PW{"palwa"}
         PY{"paragwɛ́"}
