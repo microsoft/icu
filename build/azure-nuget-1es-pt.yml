@@ -14,20 +14,20 @@ resources:
   repositories:
     - repository: 1ESPipelineTemplates
       type: git
-      name: 1ESPipelineTemplates/1ESPipelineTemplate
+      name: 1ESPipelineTemplates/1ESPipelineTemplates
       ref: refs/tags/release
 
 extends:
   template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
   parameters:
     pool:
-      name: Azure Pipelines
+      name: Azure-Pipelines-1ESPT-ExDShared
       os: windows
       image: windows-2022
     
     sdl:
       sourceAnalysisPool:
-        name: Azure Pipelines
+        name: Azure-Pipelines-1ESPT-ExDShared
         os: windows
         image: windows-2022
       enableContinuousCompliance: true
@@ -37,7 +37,7 @@ extends:
       jobs:
       - job: BuildLinux
         pool:
-          name: Azure Pipelines
+          name: Azure-Pipelines-1ESPT-ExDShared
           os: linux
           image: ubuntu-latest
         workspace:
