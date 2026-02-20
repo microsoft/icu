@@ -63,13 +63,12 @@ extends:
               targetType: filePath
               filePath: './build/scripts/Set-ICUVersion.ps1'
               arguments: '-icuVersionFile "$(BUILD.SOURCESDIRECTORY)\version.txt"'
-
-          - task: Docker@2
-            displayName: 'Setup Docker Container: $(distro)'
-            inputs:
-              command: build
-              Dockerfile: 'build/dockerfiles/$(distro)/Dockerfile'
-              arguments: -t ms-icu-container-$(BuildPlatform)
+          
+          - script: |
+              docker build \
+                -t ms-icu-container-$(BuildPlatform) \
+                -f build/dockerfiles/$(distro)/Dockerfile .
+            displayName: 'Build Docker image (script)'
 
           - script: |
               pwd && mkdir -p /tmp/build-output && docker run --rm -v $(pwd):/src -v /tmp/build-output:/dist ms-icu-container-$(BuildPlatform) /src/build/scripts/build-icu-$(BuildPlatform).sh
