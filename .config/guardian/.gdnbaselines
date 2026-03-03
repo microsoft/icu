@@ -1,0 +1,143 @@
+{
+  "properties": {
+    "helpUri": "https://eng.ms/docs/microsoft-security/security/azure-security/cloudai-security-fundamentals-engineering/security-integration/guardian-wiki/microsoft-guardian/general/baselines"
+  },
+  "version": "1.0.0",
+  "baselines": {
+    "default": {
+      "name": "default",
+      "createdDate": "2026-03-03 07:51:30Z",
+      "lastUpdatedDate": "2026-03-03 07:53:24Z"
+    }
+  },
+  "results": {
+    "941661d3da28368b4d4e761122663a42b014931506501e823b0bf4deb14325b2": {
+      "signature": "941661d3da28368b4d4e761122663a42b014931506501e823b0bf4deb14325b2",
+      "alternativeSignatures": [
+        "4f29a3665ba2078ceae51734acf7bb79a5ce9b229ec5064104b77b6a328b33de"
+      ],
+      "target": "x86/icuin72.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-03-03 07:51:30Z",
+      "expirationDate": "2026-08-20 08:26:48Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+    },
+    "1572924866f7a2cf8a3415eb94e4d6a2f6f191827224016608d668c50310dc56": {
+      "signature": "1572924866f7a2cf8a3415eb94e4d6a2f6f191827224016608d668c50310dc56",
+      "alternativeSignatures": [
+        "9c706376a3a8affe69c2e037be0b50c8f9c472220738e76bd1e1f1b4ae201a79"
+      ],
+      "target": "x86/icuin72.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-03-03 07:51:30Z",
+      "expirationDate": "2026-08-20 08:26:48Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+    },
+    "fe6c547bfb2d6b7c87d1bf712881dc299d3f95e029086dc2b3284c070630c0b7": {
+      "signature": "fe6c547bfb2d6b7c87d1bf712881dc299d3f95e029086dc2b3284c070630c0b7",
+      "alternativeSignatures": [
+        "d2403a3ff88373f028f0af67ca2ac3ff42e7beecefd4aa6f9df38c2709e818cb"
+      ],
+      "target": "x86/icuuc72.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2007",
+      "createdDate": "2026-03-03 07:51:30Z",
+      "expirationDate": "2026-08-20 08:26:48Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+    },
+    "c4ab46bb8b8aeb0db1fd1d275532dccfb2fdf3efb3e2e374a84c506d6d584b1e": {
+      "signature": "c4ab46bb8b8aeb0db1fd1d275532dccfb2fdf3efb3e2e374a84c506d6d584b1e",
+      "alternativeSignatures": [
+        "5bb205f55cab5644dfc1d54b3e0e47d6b018ffd70cd347dd6d91138fee2b2425"
+      ],
+      "target": "x86/icuuc72.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-03-03 07:51:30Z",
+      "expirationDate": "2026-08-20 08:26:48Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+    },
+    "92664f65fd1eb0bf87eea9fba45587407c3bddbb86758c69ea11a38cb58b0e31": {
+      "signature": "92664f65fd1eb0bf87eea9fba45587407c3bddbb86758c69ea11a38cb58b0e31",
+      "alternativeSignatures": [
+        "d69bafb20e95e35246982f3d6f986564db56ce5f4a50791ff9ae374a23b567c4"
+      ],
+      "target": "x64/icuin72.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-03-03 07:52:30Z",
+      "expirationDate": "2026-08-20 08:26:48Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+    },
+    "2ee7537b500f106f57aa0d3bba79be3e92439cf907f55c8bd222fb8c1913a1de": {
+      "signature": "2ee7537b500f106f57aa0d3bba79be3e92439cf907f55c8bd222fb8c1913a1de",
+      "alternativeSignatures": [
+        "8f191268155b131b5fde186dd7800c79c933d890afbc561f7db4ad9605d44267"
+      ],
+      "target": "x64/icuuc72.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-03-03 07:52:30Z",
+      "expirationDate": "2026-08-20 08:26:48Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+    },
+    "23948d7513d6531dc69b4068d921f20d52d783e6ef403ec9e61e789b5156c37c": {
+      "signature": "23948d7513d6531dc69b4068d921f20d52d783e6ef403ec9e61e789b5156c37c",
+      "alternativeSignatures": [
+        "9f636a16caf86b51330a1e728c797c689151a4f95be9825213591b8f668d0d02"
+      ],
+      "target": "ARM64/icuin72.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-03-03 08:08:23Z",
+      "expirationDate": "2026-08-20 08:26:48Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+    },
+    "176a2feeb7bfd529267227a141274bdf56bb775abf41b92e2d848c188b08fba9": {
+      "signature": "176a2feeb7bfd529267227a141274bdf56bb775abf41b92e2d848c188b08fba9",
+      "alternativeSignatures": [
+        "3cb997d252d8eeddd45612c0664fb0d28dd389b598cb15cd07d2927876ec24fd"
+      ],
+      "target": "ARM64/icuuc72.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-03-03 08:08:23Z",
+      "expirationDate": "2026-08-20 08:26:48Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+    }
+  }
+}
