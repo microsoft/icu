@@ -108,7 +108,7 @@ extends:
               artifactName: 'Symbols-$(nugetPackageName).linux-$(BuildPlatform)'
 
       - job: BuildWindows
-        timeoutInMinutes: 60
+        timeoutInMinutes: 180
         pool:
           name: Azure-Pipelines-1ESPT-ExDShared
           os: windows
