@@ -6,7 +6,7 @@ pr: none
 trigger: none
 
 variables:
-  codeSign: ${{ eq(variables['System.definitionId'], '1386') }}
+  codeSign: ${{ eq(variables['System.definitionId'], '4152') }}
   BuildConfiguration: 'Release'
   nugetPackageName: 'Microsoft.ICU.ICU4C.Runtime'
 
@@ -108,7 +108,7 @@ extends:
               artifactName: 'Symbols-$(nugetPackageName).linux-$(BuildPlatform)'
 
       - job: BuildWindows
-        timeoutInMinutes: 60
+        timeoutInMinutes: 180
         pool:
           name: Azure-Pipelines-1ESPT-ExDShared
           os: windows
