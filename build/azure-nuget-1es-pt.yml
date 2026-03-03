@@ -110,7 +110,7 @@ extends:
       - job: BuildWindows
         timeoutInMinutes: 60
         pool:
-          name: Azure Pipelines
+          name: Azure-Pipelines-1ESPT-ExDShared
           os: windows
           image: windows-2022
         workspace:
@@ -266,7 +266,7 @@ extends:
       - job: CodeSignBits
         timeoutInMinutes: 60
         pool:
-          name: Azure Pipelines
+          name: Azure-Pipelines-1ESPT-ExDShared
           os: windows
           image: windows-2022
         workspace:
@@ -362,7 +362,7 @@ extends:
       - job: CreateNugetJob
         timeoutInMinutes: 30
         pool:
-          name: Azure Pipelines
+          name: Azure-Pipelines-1ESPT-ExDShared
           os: windows
           image: windows-2022
         workspace:
@@ -460,7 +460,7 @@ extends:
       - job: CodeSignNugetJob
         timeoutInMinutes: 60
         pool:
-          name: Azure Pipelines
+          name: Azure-Pipelines-1ESPT-ExDShared
           os: windows
           image: windows-2022
         workspace:
