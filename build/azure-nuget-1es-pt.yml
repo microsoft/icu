@@ -494,13 +494,9 @@ extends:
             Write-Host "$(BUILD.ArtifactStagingDirectory)"
             Tree /F /A $(BUILD.ArtifactStagingDirectory)
           displayName: 'DIAG: dir'
-        
-        - powershell: |
-            Write-Host "SigningPattern is: '$(signingPattern)'" 
-          displayName: 'DIAG: show signing pattern'
 
         - task: EsrpCodeSigning@5
-          displayName: 'ESRP CodeSigning - CodeSign DLLs'
+          displayName: 'ESRP CodeSigning - CodeSign NuGet'
           inputs:
             ConnectedServiceName: 'ESRP Code Signing for MS-ICU (2026)'
             UseMSIAuthentication: true
