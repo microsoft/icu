@@ -408,6 +408,7 @@
     <ClCompile Include="utf_impl.cpp" />
     <ClCompile Include="static_unicode_sets.cpp" />
     <ClCompile Include="restrace.cpp" />
+    <ClCompile Include="uprefs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="localsvc.h" />
@@ -527,11 +528,12 @@
     <ClInclude Include="static_unicode_sets.h" />
     <ClInclude Include="capi_helper.h" />
     <ClInclude Include="restrace.h" />
+    <ClInclude Include="uprefs.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="common.rc" />
   </ItemGroup>
-  <Target Name="Build" Condition="'$(SkipUWP)'=='true'">
+  <Target Name="Build"Condition="'$(SkipUWP)'=='true'">
     <Message Text="Skipping building the UWP project: $(MSBuildThisFile)" Importance="high" />
   </Target>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" Condition="'$(SkipUWP)'!='true'" />

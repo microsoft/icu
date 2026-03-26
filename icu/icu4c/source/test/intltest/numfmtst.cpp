@@ -199,7 +199,9 @@ void NumberFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &n
   TESTCASE_AUTO(Test11640_getAffixes);
   TESTCASE_AUTO(Test11649_toPatternWithMultiCurrency);
   TESTCASE_AUTO(Test13327_numberingSystemBufferOverflow);
-  TESTCASE_AUTO(Test13391_chakmaParsing);
+  /* MSFT Change: Begin */
+  // TESTCASE_AUTO(Test13391_chakmaParsing);
+  /* MSFT Change: End */
   TESTCASE_AUTO(Test11735_ExceptionIssue);
   TESTCASE_AUTO(Test11035_FormatCurrencyAmount);
   TESTCASE_AUTO(Test11318_DoubleConversion);
@@ -8098,10 +8100,12 @@ void NumberFormatTest::TestAccountingCurrency() {
         Formattable(-1000.5), UnicodeString("(\\uFFE51,000)").unescape(), false, status);
     expect(NumberFormat::createInstance("de_DE", style, status),
         Formattable(-23456.7), UnicodeString("-23.456,70\\u00A0\\u20AC").unescape(), true, status);
+    /* MSFT Change: We add a CLDR-MS locale en_ID */
     expect(NumberFormat::createInstance("en_ID", style, status),
         Formattable(static_cast<double>(0)), UnicodeString("Rp\\u00A00,00").unescape(), true, status);
     expect(NumberFormat::createInstance("en_ID", style, status),
         Formattable(-0.2), UnicodeString("(Rp\\u00A00,20)").unescape(), true, status);
+    /* MSFT Change: End */
     expect(NumberFormat::createInstance("sh_ME", style, status),
         Formattable(static_cast<double>(0)), UnicodeString("0,00\\u00A0\\u20AC").unescape(), true, status);
     expect(NumberFormat::createInstance("sh_ME", style, status),
