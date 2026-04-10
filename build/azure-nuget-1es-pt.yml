@@ -591,5 +591,3 @@ extends:
           # To work around this issue, we just force LIB to be any dir that we know exists.
           env:
             LIB: $(Build.SourcesDirectory)
-            ArtifactServices_Symbol_AccountName: microsoftpublicsymbols
-            ArtifactServices_Symbol_PAT: $(MSICU_microsoftpublicsymbols_PAT)
