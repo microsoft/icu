@@ -320,6 +320,7 @@ extends:
             AppRegistrationTenantId: '33e01921-4d64-4f8c-a055-5bdaffd5e33d'
             EsrpClientId: "8bc7108f-a254-4863-8e93-175eedff03cc"
             AuthAKVName: 'icukv'
+            AuthCertName: 'msicuesrp'
             AuthSignCertName: 'msicuesrp'
             FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
             Pattern: '*.dll'
@@ -504,6 +505,7 @@ extends:
             AppRegistrationTenantId: '33e01921-4d64-4f8c-a055-5bdaffd5e33d'
             EsrpClientId: "8bc7108f-a254-4863-8e93-175eedff03cc"
             AuthAKVName: 'icukv'
+            AuthCertName: 'msicuesrp'
             AuthSignCertName: 'msicuesrp'
             FolderPath: '$(BUILD.ArtifactStagingDirectory)\nuget\Nuget_Packages'
             Pattern: |
