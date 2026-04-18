@@ -266,7 +266,7 @@ extends:
       - job: CodeSignBits
         timeoutInMinutes: 60
         pool:
-          name: Azure-Pipelines-1ESPT-ExDShared
+          name: Azure-Pipelines-1ESPT-ExDShared-StaticIP
           os: windows
           image: windows-2022
         workspace:
@@ -461,7 +461,7 @@ extends:
       - job: CodeSignNugetJob
         timeoutInMinutes: 60
         pool:
-          name: Azure-Pipelines-1ESPT-ExDShared
+          name: Azure-Pipelines-1ESPT-ExDShared-StaticIP
           os: windows
           image: windows-2022
         workspace:
