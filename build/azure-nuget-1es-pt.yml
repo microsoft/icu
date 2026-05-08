@@ -266,7 +266,7 @@ extends:
       - job: CodeSignBits
         timeoutInMinutes: 60
         pool:
-          name: Azure-Pipelines-1ESPT-ExDShared
+          name: Azure-Pipelines-1ESPT-ExDShared-StaticIP
           os: windows
           image: windows-2022
         workspace:
@@ -320,6 +320,7 @@ extends:
             AppRegistrationTenantId: '33e01921-4d64-4f8c-a055-5bdaffd5e33d'
             EsrpClientId: "8bc7108f-a254-4863-8e93-175eedff03cc"
             AuthAKVName: 'icukv'
+            AuthCertName: 'msicuesrp'
             AuthSignCertName: 'msicuesrp'
             FolderPath: '$(BUILD.ArtifactStagingDirectory)\bits\binaries-$(BuildPlatform)'
             Pattern: '*.dll'
@@ -460,7 +461,7 @@ extends:
       - job: CodeSignNugetJob
         timeoutInMinutes: 60
         pool:
-          name: Azure-Pipelines-1ESPT-ExDShared
+          name: Azure-Pipelines-1ESPT-ExDShared-StaticIP
           os: windows
           image: windows-2022
         workspace:
@@ -494,13 +495,9 @@ extends:
             Write-Host "$(BUILD.ArtifactStagingDirectory)"
             Tree /F /A $(BUILD.ArtifactStagingDirectory)
           displayName: 'DIAG: dir'
-        
-        - powershell: |
-            Write-Host "SigningPattern is: '$(signingPattern)'" 
-          displayName: 'DIAG: show signing pattern'
 
         - task: EsrpCodeSigning@5
-          displayName: 'ESRP CodeSigning - CodeSign DLLs'
+          displayName: 'ESRP CodeSigning - CodeSign NuGet'
           inputs:
             ConnectedServiceName: 'ESRP Code Signing for MS-ICU (2026)'
             UseMSIAuthentication: true
@@ -508,6 +505,7 @@ extends:
             AppRegistrationTenantId: '33e01921-4d64-4f8c-a055-5bdaffd5e33d'
             EsrpClientId: "8bc7108f-a254-4863-8e93-175eedff03cc"
             AuthAKVName: 'icukv'
+            AuthCertName: 'msicuesrp'
             AuthSignCertName: 'msicuesrp'
             FolderPath: '$(BUILD.ArtifactStagingDirectory)\nuget\Nuget_Packages'
             Pattern: |
@@ -591,5 +589,3 @@ extends:
           # To work around this issue, we just force LIB to be any dir that we know exists.
           env:
             LIB: $(Build.SourcesDirectory)
-            ArtifactServices_Symbol_AccountName: microsoftpublicsymbols
-            ArtifactServices_Symbol_PAT: $(MSICU_microsoftpublicsymbols_PAT)
