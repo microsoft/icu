@@ -35,7 +35,7 @@ CREATE_DIRS :
 "$(TESTDATAOUT)\testdata.dat" :
 	@echo Building test data
 	set PYTHONPATH=$(ICUP)\source\python;%PYTHONPATH%
-	python3 -B -m icutools.databuilder \
+	py -3 -B -m icutools.databuilder \
 		--mode windows-exec \
 		--tool_dir "$(ICUTOOLS)" \
 		--tool_cfg "$(CFG)" \

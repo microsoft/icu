@@ -83,10 +83,10 @@ public:
 
     // Implementation of FormattedValue (const):
 
-    UnicodeString toString(UErrorCode& status) const U_OVERRIDE;
-    UnicodeString toTempString(UErrorCode& status) const U_OVERRIDE;
-    Appendable& appendTo(Appendable& appendable, UErrorCode& status) const U_OVERRIDE;
-    UBool nextPosition(ConstrainedFieldPosition& cfpos, UErrorCode& status) const U_OVERRIDE;
+    UnicodeString toString(UErrorCode& status) const override;
+    UnicodeString toTempString(UErrorCode& status) const override;
+    Appendable& appendTo(Appendable& appendable, UErrorCode& status) const override;
+    UBool nextPosition(ConstrainedFieldPosition& cfpos, UErrorCode& status) const override;
 
     // Additional methods used during construction phase only (non-const):
 
@@ -125,18 +125,6 @@ struct U_I18N_API SpanInfo {
     int32_t length;
 };
 
-// Export an explicit template instantiation of the MaybeStackArray that
-//    is used as a data member of CEBuffer.
-//
-//    When building DLLs for Windows this is required even though
-//    no direct access to the MaybeStackArray leaks out of the i18n library.
-//
-// See digitlst.h, pluralaffix.h, datefmt.h, and others for similar examples.
-//
-#if U_PF_WINDOWS <= U_PLATFORM && U_PLATFORM <= U_PF_CYGWIN
-template class U_I18N_API MaybeStackArray<SpanInfo, 8>;
-#endif
-
 /**
  * Implementation of FormattedValue based on FormattedStringBuilder.
  *
@@ -145,24 +133,26 @@ template class U_I18N_API MaybeStackArray<SpanInfo, 8>;
  *
  * @author sffc (Shane Carr)
  */
-// Exported as U_I18N_API for tests
-class U_I18N_API FormattedValueStringBuilderImpl : public UMemory, public FormattedValue {
+// Exported as U_I18N_API_CLASS for tests
+class U_I18N_API_CLASS FormattedValueStringBuilderImpl : public UMemory, public FormattedValue {
 public:
+    U_I18N_API FormattedValueStringBuilderImpl(FormattedStringBuilder::Field numericField);
 
-    FormattedValueStringBuilderImpl(FormattedStringBuilder::Field numericField);
+    U_I18N_API virtual ~FormattedValueStringBuilderImpl();
 
-    virtual ~FormattedValueStringBuilderImpl();
+    FormattedValueStringBuilderImpl(FormattedValueStringBuilderImpl&&) = default;
+    FormattedValueStringBuilderImpl& operator=(FormattedValueStringBuilderImpl&&) = default;
 
     // Implementation of FormattedValue (const):
 
-    UnicodeString toString(UErrorCode& status) const U_OVERRIDE;
-    UnicodeString toTempString(UErrorCode& status) const U_OVERRIDE;
-    Appendable& appendTo(Appendable& appendable, UErrorCode& status) const U_OVERRIDE;
-    UBool nextPosition(ConstrainedFieldPosition& cfpos, UErrorCode& status) const U_OVERRIDE;
+    UnicodeString toString(UErrorCode& status) const override;
+    UnicodeString toTempString(UErrorCode& status) const override;
+    Appendable& appendTo(Appendable& appendable, UErrorCode& status) const override;
+    UBool nextPosition(ConstrainedFieldPosition& cfpos, UErrorCode& status) const override;
 
     // Additional helper functions:
-    UBool nextFieldPosition(FieldPosition& fp, UErrorCode& status) const;
-    void getAllFieldPositions(FieldPositionIteratorHandler& fpih, UErrorCode& status) const;
+    U_I18N_API UBool nextFieldPosition(FieldPosition& fp, UErrorCode& status) const;
+    U_I18N_API void getAllFieldPositions(FieldPositionIteratorHandler& fpih, UErrorCode& status) const;
     inline FormattedStringBuilder& getStringRef() {
         return fString;
     }
@@ -219,7 +209,7 @@ struct UFormattedValueImpl : public UMemory, public UFormattedValueApiHelper {
 
 /** Implementation of the methods from U_FORMATTED_VALUE_SUBCLASS_AUTO. */
 #define UPRV_FORMATTED_VALUE_SUBCLASS_AUTO_IMPL(Name) \
-    Name::Name(Name&& src) U_NOEXCEPT \
+    Name::Name(Name&& src) noexcept \
             : fData(src.fData), fErrorCode(src.fErrorCode) { \
         src.fData = nullptr; \
         src.fErrorCode = U_INVALID_STATE_ERROR; \
@@ -228,7 +218,7 @@ struct UFormattedValueImpl : public UMemory, public UFormattedValueApiHelper {
         delete fData; \
         fData = nullptr; \
     } \
-    Name& Name::operator=(Name&& src) U_NOEXCEPT { \
+    Name& Name::operator=(Name&& src) noexcept { \
         delete fData; \
         fData = src.fData; \
         src.fData = nullptr; \

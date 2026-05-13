@@ -40,11 +40,11 @@ DataDrivenCalendarTest::~DataDrivenCalendarTest() {
 
 void DataDrivenCalendarTest::runIndexedTest(int32_t index, UBool exec,
         const char* &name, char* /*par */) {
-    if (driver != NULL) {
+    if (driver != nullptr) {
         if (exec) {
             //  logln("Begin ");
         }
-        const DataMap *info= NULL;
+        const DataMap *info= nullptr;
         UErrorCode status= U_ZERO_ERROR;
         TestData *testData = driver->createTestData(index, status);
         if (U_SUCCESS(status)) {
@@ -78,7 +78,7 @@ void DataDrivenCalendarTest::testOps(TestData *testData,
     UDate fromDate = 0; // TODO
     UDate toDate = 0;
     
-    const DataMap *currentCase= NULL;
+    const DataMap *currentCase= nullptr;
     char toCalLoc[256] = "";
 
     // TODO: static strings?
@@ -98,8 +98,8 @@ void DataDrivenCalendarTest::testOps(TestData *testData,
     int n = 0;
     while (testData->nextCase(currentCase, status)) {
         ++n;
-        Calendar *toCalendar= NULL;
-        Calendar *fromCalendar= NULL;
+        Calendar *toCalendar= nullptr;
+        Calendar *fromCalendar= nullptr;
 
         // load parameters
         char theCase[200];
@@ -116,7 +116,7 @@ void DataDrivenCalendarTest::testOps(TestData *testData,
                     + UnicodeString(" - "));
             continue;
         }
-        testSetting.extract(0, testSetting.length(), toCalLoc, (const char*)0);
+        testSetting.extract(0, testSetting.length(), toCalLoc, (const char*)nullptr);
         fromCalendar = Calendar::createInstance(toCalLoc, status);
         if (U_FAILURE(status)) {
             errln(caseString+": Unable to instantiate calendar for "
@@ -223,7 +223,7 @@ void DataDrivenCalendarTest::testOps(TestData *testData,
         // Is the calendar sane after being set?
         if (!fromSet.matches(fromCalendar, diffSet, status)) {
             UnicodeString diffs = diffSet.diffFrom(fromSet, status);
-            errln((UnicodeString)"FAIL: "+caseString
+            errln(UnicodeString("FAIL: ") + caseString
                     +", SET SOURCE calendar was not set: Differences: "+ diffs
                     +"', status: "+ u_errorName(status));
         } else if (U_FAILURE(status)) {
@@ -238,17 +238,17 @@ void DataDrivenCalendarTest::testOps(TestData *testData,
 
         /// perform op
         for (int q=0; q<UCAL_FIELD_COUNT; q++) {
-            if (paramsSet.isSet((UCalendarDateFields)q)) {
+            if (paramsSet.isSet(static_cast<UCalendarDateFields>(q))) {
                 if (operation == kROLL) {
-                    toCalendar->roll((UCalendarDateFields)q,
-                            paramsSet.get((UCalendarDateFields)q), status);
+                    toCalendar->roll(static_cast<UCalendarDateFields>(q),
+                            paramsSet.get(static_cast<UCalendarDateFields>(q)), status);
                 } else if (operation == kADD) {
-                    toCalendar->add((UCalendarDateFields)q,
-                            paramsSet.get((UCalendarDateFields)q), status);
+                    toCalendar->add(static_cast<UCalendarDateFields>(q),
+                            paramsSet.get(static_cast<UCalendarDateFields>(q)), status);
                 } else {
                     errln(caseString+ " FAIL: unknown operation "+ operation);
                 }
-                logln(operation + " of "+ paramsSet.get((UCalendarDateFields)q)
+                logln(operation + " of " + paramsSet.get(static_cast<UCalendarDateFields>(q))
                         +" -> "+u_errorName(status));
             }
         }
@@ -271,7 +271,7 @@ void DataDrivenCalendarTest::testOps(TestData *testData,
         	}
         } else if (!toSet.matches(toCalendar, diffSet, status)) {
             UnicodeString diffs = diffSet.diffFrom(toSet, status);
-            errln((UnicodeString)"FAIL: "+caseString+" - , "+caseContentsString
+            errln(UnicodeString("FAIL: ") + caseString + " - , " + caseContentsString
                     +" Differences: "+ diffs +"', status: "
                     + u_errorName(status));
         }else if (U_FAILURE(status)) {
@@ -290,7 +290,7 @@ void DataDrivenCalendarTest::testConvert(int32_t n,
         const CalendarFieldsSet &fromSet, Calendar *fromCalendar,
         const CalendarFieldsSet &toSet, Calendar *toCalendar, UBool forward) {
     UErrorCode status = U_ZERO_ERROR;
-    UnicodeString thisString = (UnicodeString)"#"+n+" "+(forward ? "forward"
+    UnicodeString thisString = UnicodeString("#") + n + " " + (forward ? "forward"
             : "reverse")+" "+fromCalendar->getType()+"->"+toCalendar->getType();
 
     fromCalendar->clear();
@@ -307,7 +307,7 @@ void DataDrivenCalendarTest::testConvert(int32_t n,
     // Is the calendar sane at the first?
     if (!fromSet.matches(fromCalendar, diffSet, status)) {
         UnicodeString diffs = diffSet.diffFrom(fromSet, status);
-        errln((UnicodeString)"FAIL: "+thisString
+        errln(UnicodeString("FAIL: ") + thisString
                 +", SOURCE calendar was not set: Differences: "+ diffs
                 +"', status: "+ u_errorName(status));
     } else if (U_FAILURE(status)) {
@@ -329,7 +329,7 @@ void DataDrivenCalendarTest::testConvert(int32_t n,
     // Is the calendar sane after being set?
     if (!fromSet.matches(fromCalendar, diffSet, status)) {
         UnicodeString diffs = diffSet.diffFrom(fromSet, status);
-        errln((UnicodeString)"FAIL: "+thisString
+        errln(UnicodeString("FAIL: ") + thisString
                 +", SET SOURCE calendar was not set: Differences: "+ diffs
                 +"', status: "+ u_errorName(status));
     } else if (U_FAILURE(status)) {
@@ -349,7 +349,7 @@ void DataDrivenCalendarTest::testConvert(int32_t n,
     diffSet.clear();
     if (!toSet.matches(toCalendar, diffSet, status)) {
         UnicodeString diffs = diffSet.diffFrom(toSet, status);
-        errln((UnicodeString)"FAIL: "+thisString+", Differences: "+ diffs
+        errln(UnicodeString("FAIL: ") + thisString + ", Differences: " + diffs
                 +"', status: "+ u_errorName(status));
         SimpleDateFormat fmt(UnicodeString("EEE MMM dd yyyy G"), status);
         UnicodeString fromString;
@@ -367,13 +367,13 @@ void DataDrivenCalendarTest::testConvert(TestData *testData,
         const DataMap *settings, UBool forward) {
     UErrorCode status = U_ZERO_ERROR;
     LocalPointer<Calendar> toCalendar;
-    const DataMap *currentCase= NULL;
+    const DataMap *currentCase= nullptr;
     char toCalLoc[256] = "";
     char fromCalLoc[256] = "";
     // build to calendar
     UnicodeString testSetting = settings->getString("ToCalendar", status);
     if (U_SUCCESS(status)) {
-        testSetting.extract(0, testSetting.length(), toCalLoc, (const char*)0);
+        testSetting.extract(0, testSetting.length(), toCalLoc, (const char*)nullptr);
         toCalendar.adoptInstead(Calendar::createInstance(toCalLoc, status));
         if (U_FAILURE(status)) {
             dataerrln(UnicodeString("Unable to instantiate ToCalendar for ")+testSetting);
@@ -396,7 +396,7 @@ void DataDrivenCalendarTest::testConvert(TestData *testData,
         LocalPointer<Calendar> fromCalendar;
         UnicodeString locale = currentCase->getString("locale", status);
         if (U_SUCCESS(status)) {
-            locale.extract(0, locale.length(), fromCalLoc, (const char*)0); // default codepage.  Invariant codepage doesn't have '@'!
+            locale.extract(0, locale.length(), fromCalLoc, (const char*)nullptr); // default codepage.  Invariant codepage doesn't have '@'!
             fromCalendar.adoptInstead(Calendar::createInstance(fromCalLoc, status));
             if (U_FAILURE(status)) {
                 errln("Unable to instantiate fromCalendar for "+locale);
@@ -433,24 +433,22 @@ void DataDrivenCalendarTest::testConvert(TestData *testData,
 
         // now, do it.
         if (forward) {
-            logln((UnicodeString)"#"+n+" "+locale+"/"+from+" >>> "+toCalLoc+"/"
-                    +to);
+            logln(UnicodeString("#") + n + " " + locale + "/" + from + " >>> " + toCalLoc + "/" + to);
             testConvert(n, fromSet, fromCalendar.getAlias(), toSet, toCalendar.getAlias(), forward);
         } else {
-            logln((UnicodeString)"#"+n+" "+locale+"/"+from+" <<< "+toCalLoc+"/"
-                    +to);
+            logln(UnicodeString("#") + n + " " + locale + "/" + from + " <<< " + toCalLoc + "/" + to);
             testConvert(n, toSet, toCalendar.getAlias(), fromSet, fromCalendar.getAlias(), forward);
         }
     }
 }
 
 void DataDrivenCalendarTest::processTest(TestData *testData) {
-    //Calendar *cal= NULL;
-    //const UChar *arguments= NULL;
+    //Calendar *cal= nullptr;
+    //const char16_t *arguments= nullptr;
     //int32_t argLen = 0;
     char testType[256] = "";
-    const DataMap *settings= NULL;
-    //const UChar *type= NULL;
+    const DataMap *settings= nullptr;
+    //const char16_t *type= nullptr;
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString testSetting;
     int n = 0;

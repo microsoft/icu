@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 sr_Latn_BA{
     Countries{
         001{"svijet"}
@@ -40,5 +40,8 @@ sr_Latn_BA{
         VC{"Sveti Vinsent i Grenadini"}
         VG{"Britanska Djevičanska ostrva"}
         VI{"Američka Djevičanska ostrva"}
+    }
+    Countries%variant{
+        FK{"Folklandska (Malvinska) ostrva"}
     }
 }

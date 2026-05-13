@@ -39,7 +39,10 @@ static Numberformattesttuple_EnumConversion gRoundingEnum[] = {
     {"halfEven", DecimalFormat::kRoundHalfEven},
     {"halfDown", DecimalFormat::kRoundHalfDown},
     {"halfUp", DecimalFormat::kRoundHalfUp},
-    {"unnecessary", DecimalFormat::kRoundUnnecessary}};
+    {"unnecessary", DecimalFormat::kRoundUnnecessary},
+    {"halfOdd", DecimalFormat::kRoundHalfOdd},
+    {"halfCeiling", DecimalFormat::kRoundHalfCeiling},
+    {"halfFloor", DecimalFormat::kRoundHalfFloor}};
 
 static Numberformattesttuple_EnumConversion gCurrencyUsageEnum[] = {
     {"standard", UCURR_USAGE_STANDARD},
@@ -148,12 +151,12 @@ static void strToInt(
     }
     int64_t value = 0;
     for (int32_t i = start; i < len; ++i) {
-        UChar ch = str[i];
+        char16_t ch = str[i];
         if (ch < 0x30 || ch > 0x39) {
             status = U_ILLEGAL_ARGUMENT_ERROR;
             return;
         }
-        value = value * 10 - 0x30 + (int32_t) ch;
+        value = value * 10 - 0x30 + static_cast<int32_t>(ch);
     }
     int32_t signedValue = neg ? static_cast<int32_t>(-value) : static_cast<int32_t>(value);
     *static_cast<int32_t *>(intPtr) = signedValue;
@@ -161,12 +164,12 @@ static void strToInt(
 
 static void intToStr(
         const void *intPtr, UnicodeString &appendTo) {
-    UChar buffer[20];
+    char16_t buffer[20];
     // int64_t such that all int32_t values can be negated
     int64_t xSigned = *static_cast<const int32_t *>(intPtr);
     uint32_t x;
     if (xSigned < 0) {
-        appendTo.append((UChar)0x2D);
+        appendTo.append(static_cast<char16_t>(0x2D));
         x = static_cast<uint32_t>(-xSigned);
     } else {
         x = static_cast<uint32_t>(xSigned);
@@ -200,7 +203,7 @@ static void strToERounding(
         const UnicodeString &str, void *roundPtr, UErrorCode &status) {
     int32_t val = toEnum(
             gRoundingEnum, UPRV_LENGTHOF(gRoundingEnum), str, status);
-    *static_cast<DecimalFormat::ERoundingMode *>(roundPtr) = (DecimalFormat::ERoundingMode) val;
+    *static_cast<DecimalFormat::ERoundingMode*>(roundPtr) = static_cast<DecimalFormat::ERoundingMode>(val);
 }
 
 static void eRoundingToStr(
@@ -218,7 +221,7 @@ static void strToCurrencyUsage(
         const UnicodeString &str, void *currencyUsagePtr, UErrorCode &status) {
     int32_t val = toEnum(
             gCurrencyUsageEnum, UPRV_LENGTHOF(gCurrencyUsageEnum), str, status);
-    *static_cast<UCurrencyUsage *>(currencyUsagePtr) = (UCurrencyUsage) val;
+    *static_cast<UCurrencyUsage*>(currencyUsagePtr) = static_cast<UCurrencyUsage>(val);
 }
 
 static void currencyUsageToStr(
@@ -237,7 +240,7 @@ static void strToEPadPosition(
     int32_t val = toEnum(
             gPadPositionEnum, UPRV_LENGTHOF(gPadPositionEnum), str, status);
     *static_cast<DecimalFormat::EPadPosition *>(padPositionPtr) =
-            (DecimalFormat::EPadPosition) val;
+            static_cast<DecimalFormat::EPadPosition>(val);
 }
 
 static void ePadPositionToStr(
@@ -255,7 +258,7 @@ static void strToFormatStyle(
         const UnicodeString &str, void *formatStylePtr, UErrorCode &status) {
     int32_t val = toEnum(
             gFormatStyleEnum, UPRV_LENGTHOF(gFormatStyleEnum), str, status);
-    *static_cast<UNumberFormatStyle *>(formatStylePtr) = (UNumberFormatStyle) val;
+    *static_cast<UNumberFormatStyle*>(formatStylePtr) = static_cast<UNumberFormatStyle>(val);
 }
 
 static void formatStyleToStr(
@@ -423,7 +426,7 @@ NumberFormatTestTuple::getFieldByName(
     if (result == -1) {
         return kNumberFormatTestTupleFieldCount;
     }
-    return (ENumberFormatTestTupleField) result;
+    return static_cast<ENumberFormatTestTupleField>(result);
 }
 
 const void *

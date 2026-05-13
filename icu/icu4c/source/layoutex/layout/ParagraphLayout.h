@@ -156,7 +156,7 @@ public:
          *
          * @stable ICU 3.2
          */
-        virtual inline UClassID getDynamicClassID() const { return getStaticClassID(); }
+        inline UClassID getDynamicClassID() const override { return getStaticClassID(); }
 
     private:
 
@@ -179,7 +179,7 @@ public:
 
         inline Line();
         inline Line(const Line &other);
-        inline Line &operator=(const Line & /*other*/) { return *this; };
+        inline Line &operator=(const Line & /*other*/) { return *this; }
 
         void computeMetrics();
 
@@ -319,7 +319,7 @@ public:
          *
          * @stable ICU 3.2
          */
-        virtual inline UClassID getDynamicClassID() const { return getStaticClassID(); }
+        inline UClassID getDynamicClassID() const override { return getStaticClassID(); }
 
     private:
 
@@ -342,7 +342,7 @@ public:
 
         inline VisualRun();
         inline VisualRun(const VisualRun &other);
-        inline VisualRun &operator=(const VisualRun &/*other*/) { return *this; };
+        inline VisualRun &operator=(const VisualRun &/*other*/) { return *this; }
 
         inline VisualRun(const LEFontInstance *font, UBiDiDirection direction, le_int32 glyphCount,
                   const LEGlyphID glyphs[], const float positions[], const le_int32 glyphToCharMap[]);
@@ -369,16 +369,16 @@ public:
      * @param fontRuns a pointer to a <code>FontRuns</code> object representing the font runs.
      *
      * @param levelRuns is a pointer to a <code>ValueRuns</code> object representing the directional levels.
-     *        If this pointer in <code>NULL</code> the levels will be determined by running the Unicode
+     *        If this pointer in <code>nullptr</code> the levels will be determined by running the Unicode
      *        Bidi algorithm.
      *
      * @param scriptRuns is a pointer to a <code>ValueRuns</code> object representing script runs.
-     *        If this pointer in <code>NULL</code> the script runs will be determined using the
+     *        If this pointer in <code>nullptr</code> the script runs will be determined using the
      *        Unicode code points.
      *
      * @param localeRuns is a pointer to a <code>LocaleRuns</code> object representing locale runs.
      *        The <code>Locale</code> objects are used to determine the language of the text. If this
-     *        pointer is <code>NULL</code> the default locale will be used for all of the text. 
+     *        pointer is <code>nullptr</code> the default locale will be used for all of the text.
      *
      * @param paragraphLevel is the directionality of the paragraph, as in the UBiDi object.
      *
@@ -529,7 +529,7 @@ public:
      *              rest of the paragraph will be returned.
      *
      * @return a <code>ParagraphLayout::Line</code> object which represents the line. The caller
-     *         is responsible for deleting the object. Returns <code>NULL</code> if there are no
+     *         is responsible for deleting the object. Returns <code>nullptr</code> if there are no
      *         more lines in the paragraph.
      *
      * @see ParagraphLayout::Line
@@ -550,7 +550,7 @@ public:
      *
      * @stable ICU 3.2
      */
-    virtual inline UClassID getDynamicClassID() const { return getStaticClassID(); }
+    inline UClassID getDynamicClassID() const override { return getStaticClassID(); }
 
 private:
 
@@ -576,9 +576,9 @@ private:
           le_int32        glyphCount;
     };
 
-    ParagraphLayout() {};
-    ParagraphLayout(const ParagraphLayout & /*other*/) : UObject( ){};
-    inline ParagraphLayout &operator=(const ParagraphLayout & /*other*/) { return *this; };
+    ParagraphLayout() {}
+    ParagraphLayout(const ParagraphLayout & /*other*/) : UObject( ){}
+    inline ParagraphLayout &operator=(const ParagraphLayout & /*other*/) { return *this; }
 
     void computeLevels(UBiDiLevel paragraphLevel);
 
@@ -661,13 +661,13 @@ inline void ParagraphLayout::reflow()
 }
 
 inline ParagraphLayout::Line::Line()
-    : UObject(), fAscent(0), fDescent(0), fLeading(0), fRunCount(0), fRunCapacity(0), fRuns(NULL)
+    : UObject(), fAscent(0), fDescent(0), fLeading(0), fRunCount(0), fRunCapacity(0), fRuns(nullptr)
 {
     // nothing else to do
 }
 
 inline ParagraphLayout::Line::Line(const Line & /*other*/)
-    : UObject(), fAscent(0), fDescent(0), fLeading(0), fRunCount(0), fRunCapacity(0), fRuns(NULL)
+    : UObject(), fAscent(0), fDescent(0), fLeading(0), fRunCount(0), fRunCapacity(0), fRuns(nullptr)
 {
     // nothing else to do
 }
@@ -723,13 +723,13 @@ inline le_int32 ParagraphLayout::VisualRun::getLeading() const
 }
 
 inline ParagraphLayout::VisualRun::VisualRun()
-    : UObject(), fFont(NULL), fDirection(UBIDI_LTR), fGlyphCount(0), fGlyphs(NULL), fPositions(NULL), fGlyphToCharMap(NULL)
+    : UObject(), fFont(nullptr), fDirection(UBIDI_LTR), fGlyphCount(0), fGlyphs(nullptr), fPositions(nullptr), fGlyphToCharMap(nullptr)
 {
     // nothing
 }
 
 inline ParagraphLayout::VisualRun::VisualRun(const VisualRun &/*other*/)
-    : UObject(), fFont(NULL), fDirection(UBIDI_LTR), fGlyphCount(0), fGlyphs(NULL), fPositions(NULL), fGlyphToCharMap(NULL)
+    : UObject(), fFont(nullptr), fDirection(UBIDI_LTR), fGlyphCount(0), fGlyphs(nullptr), fPositions(nullptr), fGlyphToCharMap(nullptr)
 {
     // nothing
 }

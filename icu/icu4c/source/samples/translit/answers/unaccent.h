@@ -11,6 +11,10 @@
 #include "unicode/translit.h"
 #include "unicode/normlzr.h"
 
+using icu::Normalizer;
+using icu::Replaceable;
+using icu::Transliterator;
+
 class UnaccentTransliterator : public Transliterator {
     
  public:
@@ -25,21 +29,24 @@ class UnaccentTransliterator : public Transliterator {
      */
     virtual ~UnaccentTransliterator();
 
+    UClassID getDynamicClassID() const override;
+    U_I18N_API static UClassID U_EXPORT2 getStaticClassID();
+
  protected:
 
     /**
      * Implement Transliterator API
      */
-    virtual void handleTransliterate(Replaceable& text,
-                                     UTransPosition& index,
-                                     UBool incremental) const;
+    void handleTransliterate(Replaceable& text,
+                             UTransPosition& index,
+                             UBool incremental) const override;
 
  private:
 
     /**
      * Unaccent a single character using normalizer.
      */
-    UChar unaccent(UChar c) const;
+    char16_t unaccent(char16_t c) const;
 
     Normalizer normalizer;
 };

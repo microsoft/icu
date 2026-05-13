@@ -42,7 +42,7 @@ void LSTMBETest::runIndexedTest( int32_t index, UBool exec, const char* &name, c
 //--------------------------------------------------------------------------------------
 
 LSTMBETest::LSTMBETest() {
-    fTestParams = NULL;
+    fTestParams = nullptr;
 }
 
 
@@ -73,7 +73,7 @@ UScriptCode getScriptFromModelName(const std::string& modelName) {
 // the model. Since by default the LSTM models are not included, all the tested
 // models need to be included under source/test/testdata.
 
-void LSTMBETest::runTestFromFile(const char* filename) {
+void LSTMBETest::runTestFromFile(const char* filename, const char* locale) {
     UErrorCode   status = U_ZERO_ERROR;
     LocalPointer<const LanguageBreakEngine> engine;
     //  Open and read the test data file.
@@ -82,7 +82,7 @@ void LSTMBETest::runTestFromFile(const char* filename) {
     testFileName.append(filename, -1, status);
 
     int len;
-    UChar *testFile = ReadAndConvertFile(testFileName.data(), len, "UTF-8", status);
+    char16_t *testFile = ReadAndConvertFile(testFileName.data(), len, "UTF-8", status);
     if (U_FAILURE(status)) {
         errln("%s:%d Error %s opening test file %s", __FILE__, __LINE__, u_errorName(status), filename);
         return;
@@ -123,7 +123,7 @@ void LSTMBETest::runTestFromFile(const char* filename) {
                 caseNum++;
                 bool canHandleAllChars = true;
                 for (int32_t i = 0; i < value.length(); i++) {
-                    if (!engine->handles(value.charAt(i))) {
+                    if (!engine->handles(value.charAt(i), locale)) {
                         errln(UnicodeString("Test Case#") + caseNum + " contains char '" +
                                   UnicodeString(value.charAt(i)) +
                                   "' cannot be handled by the engine in offset " + i + "\n" + line);
@@ -139,7 +139,7 @@ void LSTMBETest::runTestFromFile(const char* filename) {
                 // then find the break points by calling the engine.
                 std::stringstream ss;
 
-                // Construct the UText which is expected by the the engine as
+                // Construct the UText which is expected by the engine as
                 // input from the UnicodeString.
                 UText ut = UTEXT_INITIALIZER;
                 utext_openConstUnicodeString(&ut, &value, &status);
@@ -200,15 +200,15 @@ void LSTMBETest::runTestFromFile(const char* filename) {
 }
 
 void LSTMBETest::TestThaiGraphclust() {
-    runTestFromFile("Thai_graphclust_model4_heavy_Test.txt");
+    runTestFromFile("Thai_graphclust_model4_heavy_Test.txt", "th");
 }
 
 void LSTMBETest::TestThaiCodepoints() {
-    runTestFromFile("Thai_codepoints_exclusive_model5_heavy_Test.txt");
+    runTestFromFile("Thai_codepoints_exclusive_model5_heavy_Test.txt", "th");
 }
 
 void LSTMBETest::TestBurmeseGraphclust() {
-    runTestFromFile("Burmese_graphclust_model5_heavy_Test.txt");
+    runTestFromFile("Burmese_graphclust_model5_heavy_Test.txt", "my");
 }
 
 const LanguageBreakEngine* LSTMBETest::createEngineFromTestData(
@@ -279,7 +279,7 @@ void LSTMBETest::runTestWithLargeMemory( const char* model, UScriptCode script) 
         return;
     }
     while (U_SUCCESS(status) && text.length() <= test_threshold) {
-        // Construct the UText which is expected by the the engine as
+        // Construct the UText which is expected by the engine as
         // input from the UnicodeString.
         UText ut = UTEXT_INITIALIZER;
         utext_openConstUnicodeString(&ut, &text, &status);

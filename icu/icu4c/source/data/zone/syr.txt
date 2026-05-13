@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 syr{
     zoneStrings{
         "Africa:Abidjan"{
@@ -40,7 +40,7 @@ syr{
             ec{"ܒܘܓܘܡܒܘܪܐ"}
         }
         "Africa:Cairo"{
-            ec{"ܩܐܗܖ̈ܗ"}
+            ec{"ܩܐܗܪܗ"}
         }
         "Africa:Casablanca"{
             ec{"ܟܐܣܐܒܠܢܟܐ"}
@@ -258,6 +258,9 @@ syr{
         "America:Chihuahua"{
             ec{"ܟܝܘܐܘܐ"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"ܣܝܘܕܐܕ ܐܘܪܝܙ"}
+        }
         "America:Coral_Harbour"{
             ec{"ܐܬܝܟܘܟܐܢ"}
         }
@@ -266,6 +269,9 @@ syr{
         }
         "America:Costa_Rica"{
             ec{"ܟܘܣܬܐ ܪܝܟܐ"}
+        }
+        "America:Coyhaique"{
+            ec{"ܟܘܝܐܝܟܐ"}
         }
         "America:Creston"{
             ec{"ܟܪܝܣܬܘܢ"}
@@ -462,9 +468,6 @@ syr{
         "America:New_York"{
             ec{"ܢܝܘ ܝܘܪܟ"}
         }
-        "America:Nipigon"{
-            ec{"ܢܝܦܝܓܘܢ"}
-        }
         "America:Nome"{
             ec{"ܢܘܡ"}
         }
@@ -486,9 +489,6 @@ syr{
         "America:Panama"{
             ec{"ܦܢܡܐ"}
         }
-        "America:Pangnirtung"{
-            ec{"ܦܐܢܓܢܝܪܬܘܢܓ"}
-        }
         "America:Paramaribo"{
             ec{"ܦܐܪܐܡܐܪܝܒܘ"}
         }
@@ -509,9 +509,6 @@ syr{
         }
         "America:Punta_Arenas"{
             ec{"ܦܘܢܬܐ ܥܪܝܢܣ"}
-        }
-        "America:Rainy_River"{
-            ec{"ܢܗܪܐ ܕܪܥܢܝ"}
         }
         "America:Rankin_Inlet"{
             ec{"ܪܐܢܟܢ ܐܢܠܝܬ"}
@@ -547,10 +544,10 @@ syr{
             ec{"ܣܝܛܟܐ"}
         }
         "America:St_Barthelemy"{
-            ec{"ܡܪ ܒܪ ܬܘܠܡܝ"}
+            ec{"ܡܪܝ ܒܪ ܬܘܠܡܝ"}
         }
         "America:St_Johns"{
-            ec{"ܡܪ ܝܘܚܢܢ"}
+            ec{"ܡܪܝ ܝܘܚܢܢ"}
         }
         "America:St_Kitts"{
             ec{"ܣܐܢܬ ܟܬܣ"}
@@ -559,10 +556,10 @@ syr{
             ec{"ܡܪܬܝ ܠܘܫܐ"}
         }
         "America:St_Thomas"{
-            ec{"ܡܪ ܬܐܘܡܐ"}
+            ec{"ܡܪܝ ܬܐܘܡܐ"}
         }
         "America:St_Vincent"{
-            ec{"ܡܪ ܒܢܣܢܬ"}
+            ec{"ܡܪܝ ܒܢܣܢܬ"}
         }
         "America:Swift_Current"{
             ec{"ܢܕܘܪܬܐ"}
@@ -572,9 +569,6 @@ syr{
         }
         "America:Thule"{
             ec{"ܬܘܠ"}
-        }
-        "America:Thunder_Bay"{
-            ec{"ܬܐܢܕܐܪ ܒܐܝ"}
         }
         "America:Tijuana"{
             ec{"ܬܝܐܘܐܢܐ"}
@@ -596,9 +590,6 @@ syr{
         }
         "America:Yakutat"{
             ec{"ܝܩܘܬܐܬ"}
-        }
-        "America:Yellowknife"{
-            ec{"ܝܠܘܢܝܦ"}
         }
         "Antarctica:Casey"{
             ec{"ܟܐܝܣܝ"}
@@ -690,9 +681,6 @@ syr{
         "Asia:Chita"{
             ec{"ܬܫܝܬܐ"}
         }
-        "Asia:Choibalsan"{
-            ec{"ܟܘܝܒܠܣܢ"}
-        }
         "Asia:Colombo"{
             ec{"ܟܘܠܘܡܒܘ"}
         }
@@ -706,7 +694,7 @@ syr{
             ec{"ܕܝܠܝ"}
         }
         "Asia:Dubai"{
-            ec{"ܕܘܒܐܝ"}
+            ec{"ܕܘܒܝ"}
         }
         "Asia:Dushanbe"{
             ec{"ܕܘܫܐܢܒܝ"}
@@ -817,7 +805,7 @@ syr{
             ec{"ܝܢܓܘܢ"}
         }
         "Asia:Riyadh"{
-            ec{"ܪܝܐܕ"}
+            ec{"ܪܝܐܨ"}
         }
         "Asia:Saigon"{
             ec{"ܡܕܝܢܬܐ ܕܗܘ ܟܝ ܡܝܢ"}
@@ -864,6 +852,9 @@ syr{
         "Asia:Ulaanbaatar"{
             ec{"ܐܘܠܐܢܒܐܬܘܪ"}
         }
+        "Asia:Urumqi"{
+            ec{"ܐܘܪܘܡܟܝ"}
+        }
         "Asia:Ust-Nera"{
             ec{"ܐܘܣܬ-ܢܝܪܐ"}
         }
@@ -886,7 +877,7 @@ syr{
             ec{"ܓܙܪܬܐ ܕܐܙܘܪ"}
         }
         "Atlantic:Bermuda"{
-            ec{"ܒܝܪܡܝܘܕܐ"}
+            ec{"ܒܝܪܡܘܕܐ"}
         }
         "Atlantic:Canary"{
             ec{"ܟܐܢܪܝ"}
@@ -921,6 +912,9 @@ syr{
         "Australia:Broken_Hill"{
             ec{"ܒܪܘܟܝܢ ܗܝܠ"}
         }
+        "Australia:Darwin"{
+            ec{"ܕܪܘܝܢ"}
+        }
         "Australia:Eucla"{
             ec{"ܐܘܟܠܐ"}
         }
@@ -942,8 +936,11 @@ syr{
         "Australia:Sydney"{
             ec{"ܣܝܕܢܝ"}
         }
+        "Etc:UTC"{
+            ls{"ܥܕܢܐ ܬܒܠܝܬܐ ܡܛܘܟܣܬܐ"}
+        }
         "Etc:Unknown"{
-            ec{"ܡܕܝܢܬܐ ܠܐ ܝܕܥܝܬܐ"}
+            ec{"ܐܬܪܐ ܠܐ ܝܕܝܥܐ"}
         }
         "Europe:Amsterdam"{
             ec{"ܐܡܣܬܪܕܡ"}
@@ -1023,7 +1020,7 @@ syr{
         }
         "Europe:London"{
             ec{"ܠܘܢܕܘܢ"}
-            ld{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܒܪܝܛܢܝܐ"}
+            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܒܪܝܛܢܝܐ"}
         }
         "Europe:Luxembourg"{
             ec{"ܠܘܟܣܡܒܘܪܓ"}
@@ -1062,7 +1059,7 @@ syr{
             ec{"ܪܝܓܐ"}
         }
         "Europe:Rome"{
-            ec{"ܪܘܡܝ"}
+            ec{"ܪܗܘܡܐ"}
         }
         "Europe:Samara"{
             ec{"ܣܡܐܪܐ"}
@@ -1097,9 +1094,6 @@ syr{
         "Europe:Ulyanovsk"{
             ec{"ܐܘܠܝܢܘܒܣܟ"}
         }
-        "Europe:Uzhgorod"{
-            ec{"ܐܘܙܓܘܪܘܕ"}
-        }
         "Europe:Vaduz"{
             ec{"ܒܕܘܙ"}
         }
@@ -1121,11 +1115,8 @@ syr{
         "Europe:Zagreb"{
             ec{"ܙܐܓܪܒ"}
         }
-        "Europe:Zaporozhye"{
-            ec{"ܙܐܦܘܪܝܓܝ"}
-        }
         "Europe:Zurich"{
-            ec{"ܙܝܘܪܚ"}
+            ec{"ܙܝܘܪܟ"}
         }
         "Indian:Antananarivo"{
             ec{"ܐܢܬܐܢܐܢܪܝܒܘ"}
@@ -1178,6 +1169,9 @@ syr{
         "Pacific:Efate"{
             ec{"ܝܦܐܬ"}
         }
+        "Pacific:Enderbury"{
+            ec{"ܟܐܢܬܘܢ"}
+        }
         "Pacific:Fakaofo"{
             ec{"ܦܐܟܐܘܦܘ"}
         }
@@ -1198,12 +1192,6 @@ syr{
         }
         "Pacific:Guam"{
             ec{"ܓܘܐܡ"}
-        }
-        "Pacific:Johnston"{
-            ec{"ܓܘܢܣܬܘܢ"}
-        }
-        "Pacific:Kanton"{
-            ec{"ܟܐܢܬܘܢ"}
         }
         "Pacific:Kiritimati"{
             ec{"ܟܝܪܝܡܐܬܝ"}
@@ -1292,9 +1280,7 @@ syr{
             ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܬܝܡܢ ܐܦܪܝܩܐ"}
         }
         "meta:Africa_Western"{
-            ld{"ܥܕܢܐ ܩܝܬܝܬܐ ܕܡܥܪܒ ܐܦܪܝܩܐ"}
-            lg{"ܥܕܢܐ ܕܡܥܪܒ ܐܦܪܝܩܐ"}
-            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܡܥܪܒ ܐܦܪܝܩܐ"}
+            ls{"ܥܕܢܐ ܕܡܥܪܒ ܐܦܪܝܩܐ"}
         }
         "meta:Alaska"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܐܠܐܣܟܐ"}
@@ -1350,6 +1336,11 @@ syr{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܐܟܬܘܒ"}
             lg{"ܥܕܢܐ ܕܐܟܬܘܒ"}
             ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܐܟܬܘܒ"}
+        }
+        "meta:Arabian"{
+            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܐܪܒܝܐ"}
+            lg{"ܥܕܢܐ ܕܐܪܒܝܐ"}
+            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܐܪܒܝܐ"}
         }
         "meta:Argentina"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܐܪܓܢܬܝܢܐ"}
@@ -1446,16 +1437,11 @@ syr{
             lg{"ܥܕܢܐ ܕܨܝܢ"}
             ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܨܝܢ"}
         }
-        "meta:Choibalsan"{
-            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܟܘܝܒܠܣܢ"}
-            lg{"ܥܕܢܐ ܕܟܘܝܒܠܣܢ"}
-            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܟܘܝܒܠܣܢ"}
-        }
         "meta:Christmas"{
             ls{"ܥܕܢܐ ܕܓܙܪܬܐ ܕܟܪܝܣܬܡܣ"}
         }
         "meta:Cocos"{
-            ls{"ܥܕܢܐ ܕܓܙܝܖ̈ܐ ܕܟܘܟܘܣ"}
+            ls{"ܥܕܢܐ ܕܓܙܝܪ̈ܐ ܕܟܘܟܘܣ"}
         }
         "meta:Colombia"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܟܘܠܘܡܒܝܐ"}
@@ -1468,9 +1454,9 @@ syr{
             ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܓܙܝܪ̈ܐ ܕܟܘܟ"}
         }
         "meta:Cuba"{
-            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܟܘܒܐ"}
-            lg{"ܥܕܢܐ ܕܟܘܒܐ"}
-            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܟܘܒܐ"}
+            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܩܘܒܐ"}
+            lg{"ܥܕܢܐ ܕܩܘܒܐ"}
+            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܩܘܒܐ"}
         }
         "meta:Davis"{
             ls{"ܥܕܢܐ ܕܕܒܝܣ"}
@@ -1541,9 +1527,9 @@ syr{
             ls{"ܥܕܢܐ ܕܓܙܝܪ̈ܐ ܕܓܝܠܒܪܬ"}
         }
         "meta:Greenland_Eastern"{
-            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܡܕܢܚ ܓܪܝܢܠܢܕ"}
-            lg{"ܥܕܢܐ ܕܡܕܢܚ ܓܪܝܢܠܢܕ"}
-            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܡܕܢܚ ܓܪܝܢܠܢܕ"}
+            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܓܪܝܢܠܢܕ ܡܕܢܚܝܬܐ"}
+            lg{"ܥܕܢܐ ܓܪܝܢܠܢܕ ܡܕܢܚܝܬܐ"}
+            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܓܪܝܢܠܢܕ ܡܕܢܚܝܬܐ"}
         }
         "meta:Greenland_Western"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܓܪܝܢܠܢܕ ܕܡܥܪܒܝܬܐ"}
@@ -1558,6 +1544,9 @@ syr{
         }
         "meta:Guyana"{
             ls{"ܥܕܢܐ ܕܓܘܝܐܢܐ"}
+        }
+        "meta:Hawaii"{
+            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܗܐܘܐܝܝ ܐܠܘܫܝܢ"}
         }
         "meta:Hawaii_Aleutian"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܗܐܘܐܝܝ ܐܠܘܫܝܢ"}
@@ -1617,6 +1606,9 @@ syr{
             lg{"ܥܕܢܐ ܕܦܝܬܪܘܦܒܠܒܣܟܝ-ܟܐܡܟܬܣܟܝ"}
             ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܦܝܬܪܘܦܒܠܒܣܟܝ-ܟܐܡܟܬܣܟܝ"}
         }
+        "meta:Kazakhstan"{
+            ls{"ܥܕܢܐ ܕܟܙܩܣܬܐܢ"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"ܥܕܢܐ ܕܡܕܢܚ ܟܙܩܣܬܐܢ"}
         }
@@ -1627,6 +1619,9 @@ syr{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܟܘܪܝܝܐ"}
             lg{"ܥܕܢܐ ܕܟܘܪܝܝܐ"}
             ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܟܘܪܝܝܐ"}
+        }
+        "meta:Kosrae"{
+            ls{"ܥܕܢܐ ܟܘܣܪܐܝ"}
         }
         "meta:Krasnoyarsk"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܟܪܐܣܢܘܝܪܣܟ"}
@@ -1652,9 +1647,6 @@ syr{
             lg{"ܥܕܢܐ ܕܡܐܟܐܘ"}
             ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܡܐܟܐܘ"}
         }
-        "meta:Macquarie"{
-            ls{"ܥܕܢܐ ܕܓܙܪܬܐ ܡܐܟܐܘܪܝ"}
-        }
         "meta:Magadan"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܡܐܓܕܐܢ"}
             lg{"ܥܕܢܐ ܕܡܐܓܐܕܐܢ"}
@@ -1679,11 +1671,6 @@ syr{
         }
         "meta:Mawson"{
             ls{"ܥܕܢܐ ܕܡܐܘܣܘܢ"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܓܪܒܝ ܡܥܪܒܝܬܐ ܡܟܣܝܩܘ"}
-            lg{"ܥܕܢܐ ܕܓܪܒܝ ܡܥܪܒܝܬܐ ܡܟܣܝܩܘ"}
-            ls{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ ܕܓܪܒܝ ܡܥܪܒܝܬܐ ܡܟܣܝܩܘ"}
         }
         "meta:Mexico_Pacific"{
             ld{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕܡܟܣܝܩܘ ܫܝܢܝܬܐ"}
@@ -1917,10 +1904,8 @@ syr{
         "meta:Yukon"{
             ls{"ܥܕܢܐ ܕܝܘܩܘܢ"}
         }
-        gmtFormat{"ܥܕܢܐ ܓܪܝܢܟ {0}"}
-        gmtZeroFormat{"ܥܕܢܐ ܕܓܪܝܢܟ"}
-        regionFormat{"ܥܕܢܐ {0}"}
-        regionFormatDaylight{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ {0}"}
-        regionFormatStandard{"ܥܕܢܐ ܡܫܘܚܬܢܝܬܐ {0}"}
+        regionFormat{"ܥܕܢܐ ܕ{0}"}
+        regionFormatDaylight{"ܥܕܢܐ ܕܒܗܪ ܝܘܡܐ ܕ{0}"}
+        regionFormatStandard{"ܥܕܢ {0} ܡܫܘܚܬܢܝܬܐ"}
     }
 }

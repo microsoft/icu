@@ -28,7 +28,7 @@ public:
     virtual ~StringSearchTest();
 
     void runIndexedTest(int32_t index, UBool exec, const char* &name, 
-                        char* par = NULL) override;
+                        char* par = nullptr) override;
 #if !UCONFIG_NO_BREAK_ITERATION
 private:
     RuleBasedCollator *m_en_us_; 
@@ -91,6 +91,7 @@ private:
     void TestSubclass();
     void TestCoverage();
     void TestDiacriticMatch();
+    void TestBug22775();
 #endif
 };
 

@@ -62,6 +62,7 @@ void BasicNormalizerTest::runIndexedTest(int32_t index, UBool exec,
     TESTCASE_AUTO(TestNormalizeIllFormedText);
     TESTCASE_AUTO(TestComposeJamoTBase);
     TESTCASE_AUTO(TestComposeBoundaryAfter);
+    TESTCASE_AUTO(TestNFKC_SCF);
     TESTCASE_AUTO_END;
 }
 
@@ -271,7 +272,7 @@ void BasicNormalizerTest::TestHangulDecomp()
 /**
  * The Tibetan vowel sign AA, 0f71, was messed up prior to Unicode version 2.1.9.
  */
-void BasicNormalizerTest::TestTibetan(void) {
+void BasicNormalizerTest::TestTibetan() {
     UnicodeString decomp[1][3];
     decomp[0][0] = str("\\u0f77");
     decomp[0][1] = str("\\u0f77");
@@ -292,7 +293,7 @@ void BasicNormalizerTest::TestTibetan(void) {
  * Make sure characters in the CompositionExclusion.txt list do not get
  * composed to.
  */
-void BasicNormalizerTest::TestCompositionExclusion(void) {
+void BasicNormalizerTest::TestCompositionExclusion() {
     // This list is generated from CompositionExclusion.txt.
     // Update whenever the normalizer tables are updated.  Note
     // that we test all characters listed, even those that can be
@@ -344,7 +345,7 @@ void BasicNormalizerTest::TestCompositionExclusion(void) {
  * map to the same canonical class, which is not the case, in
  * reality.
  */
-void BasicNormalizerTest::TestZeroIndex(void) {
+void BasicNormalizerTest::TestZeroIndex() {
     const char* DATA[] = {
         // Expect col1 x COMPOSE_COMPAT => col2
         // Expect col2 x DECOMP => col3
@@ -368,9 +369,9 @@ void BasicNormalizerTest::TestZeroIndex(void) {
             UnicodeString exp(DATA[i+1], "");
             exp = exp.unescape();
             if (b == exp) {
-                logln((UnicodeString)"Ok: " + hex(a) + " x COMPOSE_COMPAT => " + hex(b));
+                logln(UnicodeString("Ok: ") + hex(a) + " x COMPOSE_COMPAT => " + hex(b));
             } else {
-                errln((UnicodeString)"FAIL: " + hex(a) + " x COMPOSE_COMPAT => " + hex(b) +
+                errln(UnicodeString("FAIL: ") + hex(a) + " x COMPOSE_COMPAT => " + hex(b) +
                       ", expect " + hex(exp));
             }
         }
@@ -380,9 +381,9 @@ void BasicNormalizerTest::TestZeroIndex(void) {
         } else {
             UnicodeString exp = UnicodeString(DATA[i+2], "").unescape();
             if (a == exp) {
-                logln((UnicodeString)"Ok: " + hex(b) + " x DECOMP => " + hex(a));
+                logln(UnicodeString("Ok: ") + hex(b) + " x DECOMP => " + hex(a));
             } else {
-                errln((UnicodeString)"FAIL: " + hex(b) + " x DECOMP => " + hex(a) +
+                errln(UnicodeString("FAIL: ") + hex(b) + " x DECOMP => " + hex(a) +
                       ", expect " + hex(exp));
             }
         }
@@ -392,7 +393,7 @@ void BasicNormalizerTest::TestZeroIndex(void) {
 /**
  * Run a few specific cases that are failing for Verisign.
  */
-void BasicNormalizerTest::TestVerisign(void) {
+void BasicNormalizerTest::TestVerisign() {
     /*
       > Their input:
       > 05B8 05B9 05B1 0591 05C3 05B0 05AC 059F
@@ -487,7 +488,7 @@ void BasicNormalizerTest::TestVerisign(void) {
 // Internal utilities
 //
 
-UnicodeString BasicNormalizerTest::hex(UChar ch) {
+UnicodeString BasicNormalizerTest::hex(char16_t ch) {
     UnicodeString result;
     return appendHex(ch, 4, result);
 }
@@ -495,7 +496,7 @@ UnicodeString BasicNormalizerTest::hex(UChar ch) {
 UnicodeString BasicNormalizerTest::hex(const UnicodeString& s) {
     UnicodeString result;
     for (int i = 0; i < s.length(); ++i) {
-        if (i != 0) result += (UChar)0x2c/*,*/;
+        if (i != 0) result += static_cast<char16_t>(0x2c)/*,*/;
         appendHex(s[i], 4, result);
     }
     return result;
@@ -628,7 +629,7 @@ private:
 };
 
 void
-BasicNormalizerTest::TestPreviousNext(const UChar *src, int32_t srcLength,
+BasicNormalizerTest::TestPreviousNext(const char16_t *src, int32_t srcLength,
                                       const UChar32 *expect, int32_t expectLength,
                                       const int32_t *expectIndex, // its length=expectLength+1
                                       int32_t srcMiddle, int32_t expectMiddle,
@@ -718,7 +719,7 @@ BasicNormalizerTest::TestPreviousNext(const UChar *src, int32_t srcLength,
 void
 BasicNormalizerTest::TestPreviousNext() {
     // src and expect strings
-    static const UChar src[]={
+    static const char16_t src[]={
         U16_LEAD(0x2f999), U16_TRAIL(0x2f999),
         U16_LEAD(0x1d15f), U16_TRAIL(0x1d15f),
         0xc4,
@@ -741,7 +742,7 @@ BasicNormalizerTest::TestPreviousNext() {
     };
 
     // src and expect strings for regression test for j2911
-    static const UChar src_j2911[]={
+    static const char16_t src_j2911[]={
         U16_LEAD(0x2f999), U16_TRAIL(0x2f999),
         0xdd00, 0xd900, // unpaired surrogates - regression test for j2911
         0xc4,
@@ -880,7 +881,7 @@ void BasicNormalizerTest::TestConcatenate() {
 static int32_t
 ref_norm_compare(const UnicodeString &s1, const UnicodeString &s2, uint32_t options, UErrorCode &errorCode) {
     UnicodeString r1, r2, t1, t2;
-    int32_t normOptions=(int32_t)(options>>UNORM_COMPARE_NORM_OPTIONS_SHIFT);
+    int32_t normOptions = static_cast<int32_t>(options >> UNORM_COMPARE_NORM_OPTIONS_SHIFT);
 
     if(options&U_COMPARE_IGNORE_CASE) {
         Normalizer::decompose(s1, false, normOptions, r1, errorCode);
@@ -906,7 +907,7 @@ ref_norm_compare(const UnicodeString &s1, const UnicodeString &s2, uint32_t opti
 // test wrapper for Normalizer::compare, sets UNORM_INPUT_IS_FCD appropriately
 static int32_t
 _norm_compare(const UnicodeString &s1, const UnicodeString &s2, uint32_t options, UErrorCode &errorCode) {
-    int32_t normOptions=(int32_t)(options>>UNORM_COMPARE_NORM_OPTIONS_SHIFT);
+    int32_t normOptions = static_cast<int32_t>(options >> UNORM_COMPARE_NORM_OPTIONS_SHIFT);
 
     if( UNORM_YES==Normalizer::quickCheck(s1, UNORM_FCD, normOptions, errorCode) &&
         UNORM_YES==Normalizer::quickCheck(s2, UNORM_FCD, normOptions, errorCode)) {
@@ -1134,7 +1135,7 @@ BasicNormalizerTest::TestCompare() {
     }
 
     // test cases with i and I to make sure Turkic works
-    static const UChar iI[]={ 0x49, 0x69, 0x130, 0x131 };
+    static const char16_t iI[]={ 0x49, 0x69, 0x130, 0x131 };
     UnicodeSet iSet, set;
 
     UnicodeString s1, s2;
@@ -1159,7 +1160,7 @@ BasicNormalizerTest::TestCompare() {
     while(it.next() && !it.isString()) {
         UChar32 c=it.getCodepoint();
         if(!nfcNorm2->getDecomposition(c, s2)) {
-            dataerrln("NFC.getDecomposition(i-composite U+%04lx) failed", (long)c);
+            dataerrln("NFC.getDecomposition(i-composite U+%04lx) failed", static_cast<long>(c));
             return;
         }
 
@@ -1209,7 +1210,9 @@ BasicNormalizerTest::TestCompare() {
     if( nfcNorm2->composePair(0x20, 0x301)>=0 ||
         nfcNorm2->composePair(0x61, 0x305)>=0 ||
         nfcNorm2->composePair(0x1100, 0x1160)>=0 ||
-        nfcNorm2->composePair(0xac00, 0x11a7)>=0
+        nfcNorm2->composePair(0xac00, 0x11a7)>=0 ||
+        nfcNorm2->composePair(0x1100, 0x80000020)>= 0 ||  // ICU-22635
+        nfcNorm2->composePair(0xac00, 0x80000020)>= 0     // ICU-22635
     ) {
         errln("NFC.composePair() incorrectly composes some pairs of characters");
     }
@@ -1295,7 +1298,7 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
 
         if (U_FAILURE(errorCode)) {
             ++count;
-            dataerrln("U+%04lx: Failed with error %s", c, u_errorName(errorCode));
+            dataerrln("U+%04lx: Failed with error %s", u_errorName(errorCode));
         }
 
         // bad:
@@ -1798,15 +1801,15 @@ BasicNormalizerTest::TestNormalizeIllFormedText() {
     // ICU currently treats ill-formed sequences as normalization-inert
     // and copies them unchanged.
     UnicodeString src(u"  A");
-    src.append((char16_t)0xD800).append(u"ÄA\u0308").append((char16_t)0xD900).
-        append(u"A\u0308\u00ad\u0323").append((char16_t)0xDBFF).
-        append(u"Ä\u0323,\u00ad").append((char16_t)0xDC00).
-        append(u"\u1100\u1161가\u11A8가\u3133  ").append((char16_t)0xDFFF);
+    src.append(static_cast<char16_t>(0xD800)).append(u"ÄA\u0308").append(static_cast<char16_t>(0xD900)).
+        append(u"A\u0308\u00ad\u0323").append(static_cast<char16_t>(0xDBFF)).
+        append(u"Ä\u0323,\u00ad").append(static_cast<char16_t>(0xDC00)).
+        append(u"\u1100\u1161가\u11A8가\u3133  ").append(static_cast<char16_t>(0xDFFF));
     UnicodeString expected(u"  a");
-    expected.append((char16_t)0xD800).append(u"ää").append((char16_t)0xD900).
-        append(u"ạ\u0308").append((char16_t)0xDBFF).
-        append(u"ạ\u0308,").append((char16_t)0xDC00).
-        append(u"가각갃  ").append((char16_t)0xDFFF);
+    expected.append(static_cast<char16_t>(0xD800)).append(u"ää").append(static_cast<char16_t>(0xD900)).
+        append(u"ạ\u0308").append(static_cast<char16_t>(0xDBFF)).
+        append(u"ạ\u0308,").append(static_cast<char16_t>(0xDC00)).
+        append(u"가각갃  ").append(static_cast<char16_t>(0xDFFF));
     UnicodeString result = nfkc_cf->normalize(src, errorCode);
     assertSuccess("normalize", errorCode.get());
     assertEquals("normalize", expected, result);
@@ -1871,6 +1874,22 @@ BasicNormalizerTest::TestComposeBoundaryAfter() {
     assertEquals("nfkc", expected, result);
     assertFalse("U+02DA boundary-after", nfkc->hasBoundaryAfter(0x2DA));
     assertFalse("U+FB2C boundary-after", nfkc->hasBoundaryAfter(0xFB2C));
+}
+
+void
+BasicNormalizerTest::TestNFKC_SCF() {
+    IcuTestErrorCode errorCode(*this, "TestNFKC_SCF");
+    const Normalizer2 *nfkc_scf = Normalizer2::getNFKCSimpleCasefoldInstance(errorCode);
+    if(errorCode.errDataIfFailureAndReset(
+            "Normalizer2::getNFKCSimpleCasefoldInstance() call failed")) {
+        return;
+    }
+    // Uses only Simple_Casefolding mappings.
+    UnicodeString s(u"aA\u0308 ßẞ \u1F80\u1F88");
+    UnicodeString expected(u"aä ßß \u1F80\u1F80");
+    UnicodeString result = nfkc_scf->normalize(s, errorCode);
+    assertSuccess("nfkc_scf", errorCode.get());
+    assertEquals("nfkc_scf", expected, result);
 }
 
 #endif /* #if !UCONFIG_NO_NORMALIZATION */

@@ -1,6 +1,6 @@
 ﻿# © 2016 and later: Unicode, Inc. and others.
 # License & terms of use: http://www.unicode.org/copyright.html
-# Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+# Generated using tools/cldr/cldr-to-icu/
 #
 # File: my_my_Latn.txt
 # Generated from CLDR
@@ -336,6 +336,7 @@ $consonants = [\u1000-\u1021];
 \u101D > w;
 # သ > s;
 \u101E > s;
+ဿ > s; #https://www.eki.ee/wgrs/rom2_my.htm
 # ဟ > h;
 \u101F > h;
 # ဠ > l;

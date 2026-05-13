@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 ps{
     zoneStrings{
         "Africa:Abidjan"{
@@ -258,6 +258,9 @@ ps{
         "America:Chihuahua"{
             ec{"چھواھوا"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"سیوداد جیوریز"}
+        }
         "America:Coral_Harbour"{
             ec{"اتیکوکن"}
         }
@@ -266,6 +269,9 @@ ps{
         }
         "America:Costa_Rica"{
             ec{"کوستاریکا"}
+        }
+        "America:Coyhaique"{
+            ec{"کوهيک"}
         }
         "America:Creston"{
             ec{"کرسټون"}
@@ -462,9 +468,6 @@ ps{
         "America:New_York"{
             ec{"نیویارک"}
         }
-        "America:Nipigon"{
-            ec{"نیپګون"}
-        }
         "America:Nome"{
             ec{"نوم"}
         }
@@ -486,9 +489,6 @@ ps{
         "America:Panama"{
             ec{"پاناما"}
         }
-        "America:Pangnirtung"{
-            ec{"پينګنرچونګ"}
-        }
         "America:Paramaribo"{
             ec{"پاراماربو"}
         }
@@ -509,9 +509,6 @@ ps{
         }
         "America:Punta_Arenas"{
             ec{"پنټا آریناس"}
-        }
-        "America:Rainy_River"{
-            ec{"د باران باران"}
         }
         "America:Rankin_Inlet"{
             ec{"رينکن انلټ"}
@@ -573,9 +570,6 @@ ps{
         "America:Thule"{
             ec{"تول"}
         }
-        "America:Thunder_Bay"{
-            ec{"تنډر بی"}
-        }
         "America:Tijuana"{
             ec{"تجوانا"}
         }
@@ -596,9 +590,6 @@ ps{
         }
         "America:Yakutat"{
             ec{"ياکوټټ"}
-        }
-        "America:Yellowknife"{
-            ec{"يلونايف"}
         }
         "Antarctica:Casey"{
             ec{"کیسي"}
@@ -689,9 +680,6 @@ ps{
         }
         "Asia:Chita"{
             ec{"چيتا"}
-        }
-        "Asia:Choibalsan"{
-            ec{"چويبلسان"}
         }
         "Asia:Colombo"{
             ec{"کولمبو"}
@@ -864,6 +852,9 @@ ps{
         "Asia:Ulaanbaatar"{
             ec{"اولان باټر"}
         }
+        "Asia:Urumqi"{
+            ec{"اورومقي"}
+        }
         "Asia:Ust-Nera"{
             ec{"اوستنيرا"}
         }
@@ -920,9 +911,6 @@ ps{
         }
         "Australia:Broken_Hill"{
             ec{"بروکن هل"}
-        }
-        "Australia:Currie"{
-            ec{"کرري"}
         }
         "Australia:Darwin"{
             ec{"ډارون"}
@@ -1106,9 +1094,6 @@ ps{
         "Europe:Ulyanovsk"{
             ec{"اليانوسک"}
         }
-        "Europe:Uzhgorod"{
-            ec{"یوژورډ"}
-        }
         "Europe:Vaduz"{
             ec{"واډوز"}
         }
@@ -1129,9 +1114,6 @@ ps{
         }
         "Europe:Zagreb"{
             ec{"زګرب"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"زاپوروژی"}
         }
         "Europe:Zurich"{
             ec{"زریچ"}
@@ -1188,7 +1170,7 @@ ps{
             ec{"عفات"}
         }
         "Pacific:Enderbury"{
-            ec{"انډربري"}
+            ec{"کانټون"}
         }
         "Pacific:Fakaofo"{
             ec{"فوکافو"}
@@ -1213,9 +1195,6 @@ ps{
         }
         "Pacific:Honolulu"{
             ec{"هینولولو"}
-        }
-        "Pacific:Johnston"{
-            ec{"جانسټن"}
         }
         "Pacific:Kiritimati"{
             ec{"کيريټماټي"}
@@ -1299,9 +1278,7 @@ ps{
             ls{"جنوبي افريقا معياري وخت"}
         }
         "meta:Africa_Western"{
-            ld{"د افریقا افریقا لویدیځ وخت"}
-            lg{"لوېديځ افريقا وخت"}
-            ls{"لویدیځ افریقایي معیاري وخت"}
+            ls{"لوېديځ افريقا وخت"}
         }
         "meta:Alaska"{
             ld{"الاسکا د ورځې روښانه وخت"}
@@ -1435,11 +1412,6 @@ ps{
             lg{"چين وخت"}
             ls{"چین معیاري وخت"}
         }
-        "meta:Choibalsan"{
-            ld{"چوئیبیلسن اوړي وخت"}
-            lg{"چوئیبیلسن وخت"}
-            ls{"چوئیبیلسن معیاری وخت"}
-        }
         "meta:Christmas"{
             ls{"کريسمس ټاپو وخت"}
         }
@@ -1545,6 +1517,9 @@ ps{
         "meta:Guyana"{
             ls{"د ګوانانا وخت"}
         }
+        "meta:Hawaii"{
+            ls{"هوایی الیوتین معیاری وخت"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"هوایی الیوتین رڼا ورځې وخت"}
             lg{"هوایی الیوتین وخت"}
@@ -1598,6 +1573,9 @@ ps{
             lg{"جاپان وخت"}
             ls{"جاپان معياري وخت"}
         }
+        "meta:Kazakhstan"{
+            ls{"قزاقستان وخت"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"ختيځ قازقستان وخت"}
         }
@@ -1628,9 +1606,6 @@ ps{
             lg{"لارډ هوي وخت"}
             ls{"لارډ هوي معياري وخت"}
         }
-        "meta:Macquarie"{
-            ls{"مکواري ټاپو وخت"}
-        }
         "meta:Magadan"{
             ld{"ميګډان اوړي وخت"}
             lg{"ميګډان وخت"}
@@ -1655,11 +1630,6 @@ ps{
         }
         "meta:Mawson"{
             ls{"ماوسن وخت"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"د شمال لویدیځ مکسیکو رڼا ورځې وخت"}
-            lg{"د شمال لویدیځ مکسیکو وخت"}
-            ls{"د شمال لویدیځ مکسیکو معیاري وخت"}
         }
         "meta:Mexico_Pacific"{
             ld{"مکسیکن پیسفک رڼا ورځې وخت"}
@@ -1880,11 +1850,7 @@ ps{
         "meta:Yukon"{
             ls{"د یوکون وخت"}
         }
-        fallbackFormat{"{1} ({0})"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
-        regionFormat{"د {0} په وخت"}
+        regionFormat{"{0} وخت"}
         regionFormatDaylight{"{0} رڼا ورځ وخت"}
         regionFormatStandard{"{0} معیاری وخت"}
     }

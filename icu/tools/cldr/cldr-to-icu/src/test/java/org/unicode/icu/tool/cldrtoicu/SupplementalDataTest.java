@@ -4,7 +4,6 @@ package org.unicode.icu.tool.cldrtoicu;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
-import static com.google.common.truth.Truth8.assertThat;
 import static org.unicode.cldr.api.CldrValue.parseValue;
 
 import java.nio.file.Path;
@@ -22,7 +21,6 @@ import org.unicode.cldr.api.CldrValue;
 import org.unicode.cldr.tool.LikelySubtags;
 import org.unicode.cldr.util.LanguageTagCanonicalizer;
 import org.unicode.cldr.util.LocaleIDParser;
-import org.unicode.cldr.util.SupplementalDataInfo;
 import org.unicode.icu.tool.cldrtoicu.testing.FakeDataSupplier;
 
 import com.google.common.base.Joiner;
@@ -39,7 +37,11 @@ public class SupplementalDataTest {
 
     @BeforeClass
     public static void loadRegressionData() {
-        Path cldrRoot = Paths.get(System.getProperty("CLDR_DIR"));
+        String cldrDir = System.getProperty("CLDR_DIR");
+        if (cldrDir == null) {
+            cldrDir = System.getenv("CLDR_DIR");
+        }
+        Path cldrRoot = Paths.get(cldrDir);
         regressionData = SupplementalData.create(CldrDataSupplier.forCldrFilesIn(cldrRoot));
         likelySubtags = new LikelySubtags();
     }

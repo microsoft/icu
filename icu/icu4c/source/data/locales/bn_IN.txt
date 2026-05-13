@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 bn_IN{
     Ellipsis{
         final{"{0}…"}
@@ -11,7 +11,6 @@ bn_IN{
     NumberElements{
         beng{
             patterns{
-                currencyFormat{"¤#,##,##0.00"}
                 currencyFormat%alphaNextToNumber{"¤ #,##,##0.00"}
             }
         }
@@ -20,6 +19,7 @@ bn_IN{
                 accountingFormat{"¤#,##,##0.00;(¤#,##,##0.00)"}
                 accountingFormat%alphaNextToNumber{"¤ #,##,##0.00;(¤ #,##,##0.00)"}
                 currencyFormat{"¤#,##,##0.00"}
+                currencyFormat%alphaNextToNumber{"¤ #,##,##0.00"}
             }
         }
         minimalPairs{
@@ -64,12 +64,11 @@ bn_IN{
             }
             eras{
                 abbreviated{
-                    "খ্রিঃপূঃ",
-                    "খ্রিঃ",
+                    0{"খ্রিঃপূঃ"}
+                    1{"খ্রিঃ"}
                 }
                 wide{
-                    "খ্রিস্টপূর্ব",
-                    "খ্রিষ্টাব্দ",
+                    1{"খ্রিষ্টাব্দ"}
                 }
             }
             monthNames{
@@ -87,20 +86,6 @@ bn_IN{
                         "অক্টোঃ",
                         "নভেঃ",
                         "ডিসেঃ",
-                    }
-                    narrow{
-                        "জা",
-                        "ফে",
-                        "মা",
-                        "এ",
-                        "মে",
-                        "জুন",
-                        "জুল",
-                        "আ",
-                        "সে",
-                        "অ",
-                        "ন",
-                        "ডি",
                     }
                 }
                 stand-alone{

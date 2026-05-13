@@ -53,11 +53,14 @@ void NumberRangeFormatterTest::runIndexedTest(int32_t index, UBool exec, const c
         TESTCASE_AUTO(testFieldPositions);
         TESTCASE_AUTO(testCopyMove);
         TESTCASE_AUTO(toObject);
+        TESTCASE_AUTO(locale);
         TESTCASE_AUTO(testGetDecimalNumbers);
         TESTCASE_AUTO(test21684_Performance);
         TESTCASE_AUTO(test21358_SignPosition);
         TESTCASE_AUTO(test21683_StateLeak);
         TESTCASE_AUTO(testCreateLNRFFromNumberingSystemInSkeleton);
+        TESTCASE_AUTO(test22288_DifferentStartEndSettings);
+        TESTCASE_AUTO(test23110_PercentApproximately);
     TESTCASE_AUTO_END;
 }
 
@@ -766,6 +769,7 @@ void NumberRangeFormatterTest::testFieldPositions() {
                     .unit(METER)
                     .notation(Notation::compactShort()))
                 .locale("en-us"),
+            UnicodeString("en-us"),
             3000,
             5000,
             expectedString);
@@ -792,6 +796,7 @@ void NumberRangeFormatterTest::testFieldPositions() {
         FormattedNumberRange result = assertFormattedRangeEquals(
             message,
             NumberRangeFormatter::withLocale("en-us"),
+            UnicodeString("en-us"),
             87654321,
             98765432,
             expectedString);
@@ -819,6 +824,7 @@ void NumberRangeFormatterTest::testFieldPositions() {
         FormattedNumberRange result = assertFormattedRangeEquals(
             message,
             NumberRangeFormatter::withLocale("en-us"),
+            UnicodeString("en-us"),
             -100,
             -100,
             expectedString);
@@ -917,6 +923,23 @@ void NumberRangeFormatterTest::toObject() {
     }
 }
 
+void NumberRangeFormatterTest::locale() {
+    IcuTestErrorCode status(*this, "locale");
+
+    LocalizedNumberRangeFormatter lnf = NumberRangeFormatter::withLocale("en")
+        .identityFallback(UNUM_IDENTITY_FALLBACK_RANGE);
+    UnlocalizedNumberRangeFormatter unf1 = lnf.withoutLocale();
+    UnlocalizedNumberRangeFormatter unf2 = NumberRangeFormatter::with()
+        .identityFallback(UNUM_IDENTITY_FALLBACK_RANGE)
+        .locale("ar-EG")
+        .withoutLocale();
+
+    FormattedNumberRange res1 = unf1.locale("bn").formatFormattableRange(5, 5, status);
+    assertEquals(u"res1", u"\u09EB\u2013\u09EB", res1.toTempString(status));
+    FormattedNumberRange res2 = unf2.locale("ja-JP").formatFormattableRange(5, 5, status);
+    assertEquals(u"res2", u"5\uFF5E5", res2.toTempString(status));
+}
+
 void NumberRangeFormatterTest::testGetDecimalNumbers() {
     IcuTestErrorCode status(*this, "testGetDecimalNumbers");
 
@@ -981,11 +1004,11 @@ void NumberRangeFormatterTest::test21358_SignPosition() {
         u"CHF≈5.00",
         u"CHF 0.00–3.00",
         u"CHF≈0.00",
-        u"CHF 3.00–3’000.00",
-        u"CHF 3’000.00–5’000.00",
-        u"CHF 4’999.00–5’001.00",
-        u"CHF≈5’000.00",
-        u"CHF 5’000.00–5’000’000.00");
+        u"CHF 3.00–3'000.00",
+        u"CHF 3'000.00–5'000.00",
+        u"CHF 4'999.00–5'001.00",
+        u"CHF≈5'000.00",
+        u"CHF 5'000.00–5'000'000.00");
 
     // TODO(ICU-21420): Move the sign to the inside of the number
     assertFormatRange(
@@ -1018,7 +1041,6 @@ void NumberRangeFormatterTest::test21358_SignPosition() {
     }
 
     {
-        // TODO(CLDR-14111): Add spacing between range separator and sign
         LocalizedNumberRangeFormatter lnrf = NumberRangeFormatter::withLocale("de-CH");
         UnicodeString actual = lnrf.formatFormattableRange(2, -3, status).toString(status);
         assertEquals("Positive to negative range", u"2–-3", actual);
@@ -1110,7 +1132,7 @@ void NumberRangeFormatterTest::test21683_StateLeak() {
         unumrf_formatDoubleRange(nrf, range.start, range.end, result, status);
         if (status.errIfFailureAndReset("unumrf_formatDoubleRange")) { goto cleanup; }
 
-        auto* formattedValue = unumrf_resultAsValue(result, status);
+        const auto* formattedValue = unumrf_resultAsValue(result, status);
         if (status.errIfFailureAndReset("unumrf_resultAsValue")) { goto cleanup; }
 
         int32_t utf16Length;
@@ -1141,6 +1163,47 @@ cleanup:
     ucfpos_close(fpos);
 }
 
+void NumberRangeFormatterTest::test22288_DifferentStartEndSettings() {
+    IcuTestErrorCode status(*this, "test22288_DifferentStartEndSettings");
+    LocalizedNumberRangeFormatter lnrf(NumberRangeFormatter
+            ::withLocale("en")
+            .collapse(UNUM_RANGE_COLLAPSE_UNIT)
+            .numberFormatterFirst(
+                NumberFormatter::with()
+                    .unit(CurrencyUnit("USD", status))
+                    .unitWidth(UNUM_UNIT_WIDTH_FULL_NAME)
+                    .precision(Precision::integer())
+                    .roundingMode(UNUM_ROUND_FLOOR))
+            .numberFormatterSecond(
+                NumberFormatter::with()
+                    .unit(CurrencyUnit("USD", status))
+                    .unitWidth(UNUM_UNIT_WIDTH_FULL_NAME)
+                    .precision(Precision::integer())
+                    .roundingMode(UNUM_ROUND_CEILING)));
+        FormattedNumberRange result = lnrf.formatFormattableRange(2.5, 2.5, status);
+        assertEquals("Should format successfully", u"2–3 US dollars", result.toString(status));
+}
+
+void NumberRangeFormatterTest::test23110_PercentApproximately() {
+    IcuTestErrorCode status(*this, "test23110_PercentApproximately");
+
+    assertFormatRange(
+        u"Approximately percentage formatting",
+        NumberRangeFormatter::with()
+            .numberFormatterBoth(NumberFormatter::forSkeleton(u"%x100", status)),
+        Locale("en-US"),
+        u"100% – 500%",
+        u"499.99999% – 500.00001%",
+        u"~500%", // was returning "~50,000%"
+        u"0% – 300%",
+        u"~0%",
+        u"300% – 300,000%",
+        u"300,000% – 500,000%",
+        u"499,900% – 500,100%",
+        u"~500,000%",
+        u"500,000% – 500,000,000%");
+}
+
 void  NumberRangeFormatterTest::assertFormatRange(
       const char16_t* message,
       const UnlocalizedNumberRangeFormatter& f,
@@ -1156,26 +1219,28 @@ void  NumberRangeFormatterTest::assertFormatRange(
       const char16_t* expected_50K_50K,
       const char16_t* expected_50K_50M) {
     LocalizedNumberRangeFormatter l = f.locale(locale);
-    assertFormattedRangeEquals(message, l, 1, 5, expected_10_50);
-    assertFormattedRangeEquals(message, l, 4.9999999, 5.0000001, expected_49_51);
-    assertFormattedRangeEquals(message, l, 5, 5, expected_50_50);
-    assertFormattedRangeEquals(message, l, 0, 3, expected_00_30);
-    assertFormattedRangeEquals(message, l, 0, 0, expected_00_00);
-    assertFormattedRangeEquals(message, l, 3, 3000, expected_30_3K);
-    assertFormattedRangeEquals(message, l, 3000, 5000, expected_30K_50K);
-    assertFormattedRangeEquals(message, l, 4999, 5001, expected_49K_51K);
-    assertFormattedRangeEquals(message, l, 5000, 5000, expected_50K_50K);
-    assertFormattedRangeEquals(message, l, 5e3, 5e6, expected_50K_50M);
+    assertFormattedRangeEquals(message, l, locale.getName(), 1, 5, expected_10_50);
+    assertFormattedRangeEquals(message, l, locale.getName(), 4.9999999, 5.0000001, expected_49_51);
+    assertFormattedRangeEquals(message, l, locale.getName(), 5, 5, expected_50_50);
+    assertFormattedRangeEquals(message, l, locale.getName(), 0, 3, expected_00_30);
+    assertFormattedRangeEquals(message, l, locale.getName(), 0, 0, expected_00_00);
+    assertFormattedRangeEquals(message, l, locale.getName(), 3, 3000, expected_30_3K);
+    assertFormattedRangeEquals(message, l, locale.getName(), 3000, 5000, expected_30K_50K);
+    assertFormattedRangeEquals(message, l, locale.getName(), 4999, 5001, expected_49K_51K);
+    assertFormattedRangeEquals(message, l, locale.getName(), 5000, 5000, expected_50K_50K);
+    assertFormattedRangeEquals(message, l, locale.getName(), 5e3, 5e6, expected_50K_50M);
 }
 
 FormattedNumberRange NumberRangeFormatterTest::assertFormattedRangeEquals(
       const char16_t* message,
       const LocalizedNumberRangeFormatter& l,
+      UnicodeString locale,
       double first,
       double second,
       const char16_t* expected) {
     IcuTestErrorCode status(*this, "assertFormattedRangeEquals");
-    UnicodeString fullMessage = UnicodeString(message) + u": " + DoubleToUnicodeString(first) + u", " + DoubleToUnicodeString(second);
+    UnicodeString fullMessage = locale + ":" + UnicodeString(message) + u": " +
+                                DoubleToUnicodeString(first) + u", " + DoubleToUnicodeString(second);
     status.setScope(fullMessage);
     FormattedNumberRange fnr = l.formatFormattableRange(first, second, status);
     UnicodeString actual = fnr.toString(status);

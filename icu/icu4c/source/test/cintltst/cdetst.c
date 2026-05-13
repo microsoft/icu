@@ -36,7 +36,7 @@
 #include "string.h"
 
 static UCollator *myCollation;
-const static UChar testSourceCases[][MAX_TOKEN_LEN] =
+static const UChar testSourceCases[][MAX_TOKEN_LEN] =
 {
     {0x0047/*'G'*/, 0x0072/*'r'*/, 0x00F6, 0x00DF, 0x0065/*'e'*/, 0x0000},     
     {0x0061/*'a'*/, 0x0062/*'b'*/, 0x0063/*'c'*/, 0x0000},
@@ -52,7 +52,7 @@ const static UChar testSourceCases[][MAX_TOKEN_LEN] =
     {0x0053/*'S'*/, 0x0074/*'t'*/, 0x0072/*'r'*/, 0x0061/*'a'*/, 0x00DF, 0x0065/*'e'*/, 0x0000}
 };
 
-const static UChar testTargetCases[][MAX_TOKEN_LEN] =
+static const UChar testTargetCases[][MAX_TOKEN_LEN] =
 {
     {0x0047/*'G'*/, 0x0072/*'r'*/, 0x006f/*'o'*/, 0x0073/*'s'*/, 0x0073/*'s'*/, 0x0069/*'i'*/, 0x0073/*'s'*/, 0x0074/*'t'*/, 0x0000},    
     {0x0061/*'a'*/, 0x0308, 0x0062/*'b'*/, 0x0063/*'c'*/, 0x0000},
@@ -68,7 +68,7 @@ const static UChar testTargetCases[][MAX_TOKEN_LEN] =
     {0x0053/*'S'*/, 0x0074/*'t'*/, 0x0072/*'r'*/, 0x0061/*'a'*/, 0x0073/*'s'*/, 0x0073/*'s'*/, 0x0065/*'e'*/, 0x0000}
 };
 
-const static UCollationResult results[][2] =
+static const UCollationResult results[][2] =
 {
       /*  Primary*/            /*    Tertiary*/
         { UCOL_LESS,        UCOL_LESS },        /*should be UCOL_GREATER for primary*/
@@ -99,7 +99,7 @@ void addGermanCollTest(TestNode** root)
 
 }
 
-static void TestTertiary( )
+static void TestTertiary(void)
 {
     
     int32_t i;
@@ -119,7 +119,7 @@ static void TestTertiary( )
     ucol_close(myCollation);
 }
 
-static void TestPrimary()
+static void TestPrimary(void)
 {
     
     int32_t i;

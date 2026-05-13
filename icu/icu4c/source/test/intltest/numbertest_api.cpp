@@ -133,6 +133,9 @@ void NumberFormatterApiTest::runIndexedTest(int32_t index, UBool exec, const cha
         TESTCASE_AUTO(toDecimalNumber);
         TESTCASE_AUTO(microPropsInternals);
         TESTCASE_AUTO(formatUnitsAliases);
+        TESTCASE_AUTO(formatArbitraryConstant);
+        TESTCASE_AUTO(TestPortionFormat);
+        TESTCASE_AUTO(testIssue22378);
     TESTCASE_AUTO_END;
 }
 
@@ -1345,7 +1348,7 @@ void NumberFormatterApiTest::unitSkeletons() {
          u"unit/kibijoule-per-furlong",          //
          u"unit/kibijoule-per-furlong"},
     };
-    for (auto &cas : cases) {
+    for (const auto& cas : cases) {
         IcuTestErrorCode status(*this, cas.msg);
         auto nf = NumberFormatter::forSkeleton(cas.inputSkeleton, status);
         if (status.errIfFailureAndReset("NumberFormatter::forSkeleton failed")) {
@@ -1389,7 +1392,7 @@ void NumberFormatterApiTest::unitSkeletons() {
          U_NUMBER_SKELETON_SYNTAX_ERROR,                //
          U_ZERO_ERROR},
     };
-    for (auto &cas : failCases) {
+    for (const auto& cas : failCases) {
         IcuTestErrorCode status(*this, cas.msg);
         auto nf = NumberFormatter::forSkeleton(cas.inputSkeleton, status);
         if (status.expectErrorAndReset(cas.expectedForSkelStatus, cas.msg)) {
@@ -1679,7 +1682,7 @@ void NumberFormatterApiTest::unitUsage() {
             NumberFormatter::with().unit(MeasureUnit::getAcre()).usage("default"),
             Locale::getEnglish(),
             -uprv_getInfinity(),
-            u"-∞ km²");
+            u"-∞ sq mi");
 
 //     // TODO(icu-units#131): do we care about NaN?
 //     // TODO: on some platforms with MSVC, "-NaN sec" is returned.
@@ -2154,7 +2157,7 @@ void NumberFormatterApiTest::unitCurrency() {
             NumberFormatter::with().unit(USD).unitWidth(UNUM_UNIT_WIDTH_NARROW),
             Locale("en-CA"),
             5.43,
-            u"US$5.43");
+            u"$5.43");
 
     assertFormatSingle(
             u"Currency Difference between Narrow and Short (Short Version)",
@@ -2310,7 +2313,7 @@ void NumberFormatterApiTest::runUnitInflectionsTestCases(UnlocalizedNumberFormat
             continue;
         };
         UnicodeString skelString = UnicodeString("unit/") + t.unitIdentifier + u" " + skeleton;
-        const UChar *skel;
+        const char16_t *skel;
         if (t.unitDisplayCase == nullptr || t.unitDisplayCase[0] == 0) {
             unf = unf.unit(mu).unitDisplayCase("");
             skel = skelString.getTerminatedBuffer();
@@ -2337,7 +2340,7 @@ void NumberFormatterApiTest::runUnitInflectionsTestCases(UnlocalizedNumberFormat
         };
 
         UnicodeString skelString = UnicodeString("unit/") + t.unitIdentifier + u" " + skeleton;
-        const UChar *skel;
+        const char16_t *skel;
         auto displayOptionsBuilder = DisplayOptions::builder();
         if (t.unitDisplayCase == nullptr || t.unitDisplayCase[0] == 0) {
             auto displayoptions = displayOptionsBuilder.build();
@@ -2365,7 +2368,7 @@ void NumberFormatterApiTest::unitInflections() {
     IcuTestErrorCode status(*this, "unitInflections");
 
     UnlocalizedNumberFormatter unf;
-    const UChar *skeleton;
+    const char16_t *skeleton;
     {
         // Simple inflected form test - test case based on the example in CLDR's
         // grammaticalFeatures.xml
@@ -2987,15 +2990,15 @@ void NumberFormatterApiTest::unitLocaleTags() {
          "fahrenheit", 0, "default", "fahrenheit", 0.0, u"0 degrees Fahrenheit"},
 
         // Test the behaviour of the `rg` tag
-        {u"Test the locale with rg = UK and without usage", "en-US-u-rg-ukzzzz", "fahrenheit", 0,
+        {u"Test the locale with rg = GB and without usage", "en-US-u-rg-gbzzzz", "fahrenheit", 0,
          nullptr, "fahrenheit", 0.0, u"0 degrees Fahrenheit"},
-        {u"Test the locale with rg = UK and with usage", "en-US-u-rg-ukzzzz", "fahrenheit", 0, "default",
+        {u"Test the locale with rg = GB and with usage", "en-US-u-rg-gbzzzz", "fahrenheit", 0, "default",
          "celsius", -18, u"-18 degrees Celsius"},
         {"Test the locale with mu = fahrenheit and without usage", "en-US-u-mu-fahrenheit", "celsius", 0,
          nullptr, "celsius", 0.0, "0 degrees Celsius"},
         {"Test the locale with mu = fahrenheit and with usage", "en-US-u-mu-fahrenheit", "celsius", 0,
          "default", "fahrenheit", 32.0, "32 degrees Fahrenheit"},
-        {u"Test the locale with rg = UKOI and with usage", "en-US-u-rg-ukoizzzz", "fahrenheit", 0,
+        {u"Test the locale with rg = GBOXF and with usage", "en-US-u-rg-gboxf", "fahrenheit", 0,
          "default", "celsius", -18.0, u"-18 degrees Celsius"},
 
         // Test the priorities
@@ -3003,6 +3006,14 @@ void NumberFormatterApiTest::unitLocaleTags() {
          "celsius", 0, "default", "celsius", 0.0, u"0 degrees Celsius"},
         {u"Test the locale with ms,rg --> ms tag wins", "en-US-u-ms-metric-rg-uszzzz", "foot", 1,
          "default", "centimeter", 30.0, u"30 centimeters"},
+
+        // Test the liklihood of the languages
+        {"Test the region of `en` --> region should be US", "en", "celsius", 1, "default", "fahrenheit",
+         34.0, u"34 degrees Fahrenheit"},
+        {"Test the region of `de` --> region should be DE", "de", "celsius", 1, "default", "celsius",
+         1.0, u"1 Grad Celsius"},
+        {"Test the region of `ar` --> region should be EG", "ar", "celsius", 1, "default", "celsius",
+         1.0, u"1 درجة مئوية"},
     };
 
     for (const auto &testCase : cases) {
@@ -3010,7 +3021,7 @@ void NumberFormatterApiTest::unitLocaleTags() {
         Locale locale(testCase.locale);
         auto inputUnit = MeasureUnit::forIdentifier(testCase.inputUnit, status);
         auto inputValue = testCase.inputValue;
-        auto usage = testCase.usage;
+        const auto* usage = testCase.usage;
         auto expectedOutputUnit = MeasureUnit::forIdentifier(testCase.expectedOutputUnit, status);
         UnicodeString expectedFormattedNumber = testCase.expectedFormattedNumber;
 
@@ -3041,9 +3052,9 @@ void NumberFormatterApiTest::percentParity() {
     UnlocalizedNumberFormatter uMeasurePermille = NumberFormatter::with().unit(MeasureUnit::getPermille());
 
     int32_t localeCount;
-    auto locales = Locale::getAvailableLocales(localeCount);
+    const auto* locales = Locale::getAvailableLocales(localeCount);
     for (int32_t i=0; i<localeCount; i++) {
-        auto& locale = locales[i];
+        const auto& locale = locales[i];
         UnicodeString sNoUnitPercent = uNoUnitPercent.locale(locale)
             .formatDouble(50, status).toString(status);
         UnicodeString sNoUnitPermille = uNoUnitPermille.locale(locale)
@@ -4511,7 +4522,7 @@ void NumberFormatterApiTest::symbols() {
             NumberFormatter::with().symbols(SWISS_SYMBOLS),
             Locale::getEnglish(),
             12345.67,
-            u"12’345.67");
+            u"12'345.67");
 
     assertFormatSingle(
             u"Myanmar Symbols (used in documentation)",
@@ -4588,7 +4599,7 @@ void NumberFormatterApiTest::symbols() {
             f,
             Locale::getEnglish(),
             12345.67,
-            u"12’345.67");
+            u"12'345.67");
 
     assertFormatSingle(
             u"The last symbols setter wins",
@@ -4847,7 +4858,7 @@ void NumberFormatterApiTest::sign() {
             Locale::getEnglish(),
             444444,
             u"$444,444.00");
-        
+
     assertFormatSingle(
             u"Sign Accounting-Negative Negative",
             u"currency/USD sign-accounting-negative",
@@ -4888,7 +4899,7 @@ void NumberFormatterApiTest::sign() {
                 .unitWidth(UNUM_UNIT_WIDTH_NARROW),
             Locale::getCanada(),
             -444444,
-            u"(US$444,444.00)");
+            u"($444,444.00)");
 
     assertFormatSingle(
             u"Sign Accounting Negative Short",
@@ -4962,10 +4973,10 @@ void NumberFormatterApiTest::signNearZero() {
         { UNUM_SIGN_NEGATIVE, -0.9, u"-1" },
         { UNUM_SIGN_NEGATIVE, -1.1, u"-1" },
     };
-    for (auto& cas : cases) {
+    for (const auto& cas : cases) {
         auto sign = cas.sign;
         auto input = cas.input;
-        auto expected = cas.expected;
+        const auto* expected = cas.expected;
         auto actual = NumberFormatter::with()
             .sign(sign)
             .precision(Precision::integer())
@@ -4994,11 +5005,11 @@ void NumberFormatterApiTest::signCoverage() {
     const double inputs[] = {
         -uprv_getInfinity(), -1, -0.0, 0, 1, uprv_getInfinity(), uprv_getNaN(), negNaN
     };
-    for (auto& cas : cases) {
+    for (const auto& cas : cases) {
         auto sign = cas.sign;
         for (int32_t i = 0; i < UPRV_LENGTHOF(inputs); i++) {
             auto input = inputs[i];
-            auto expected = cas.expectedStrings[i];
+            const auto* expected = cas.expectedStrings[i];
             auto actual = NumberFormatter::with()
                 .sign(sign)
                 .locale(Locale::getUS())
@@ -5185,6 +5196,31 @@ void NumberFormatterApiTest::locale() {
     UnicodeString actual = NumberFormatter::withLocale(Locale::getFrench()).formatInt(1234, status)
             .toString(status);
     assertEquals("Locale withLocale()", u"1\u202f234", actual);
+
+    LocalizedNumberFormatter lnf1 = NumberFormatter::withLocale("en").unitWidth(UNUM_UNIT_WIDTH_FULL_NAME)
+            .scale(Scale::powerOfTen(2));
+    LocalizedNumberFormatter lnf2 = NumberFormatter::with()
+            .notation(Notation::compactLong()).locale("fr").unitWidth(UNUM_UNIT_WIDTH_FULL_NAME);
+    UnlocalizedNumberFormatter unf1 = lnf1.withoutLocale();
+    UnlocalizedNumberFormatter unf2 = std::move(lnf2).withoutLocale();
+
+    assertFormatSingle(
+            u"Formatter after withoutLocale A",
+            u"unit/meter unit-width-full-name scale/100",
+            u"unit/meter unit-width-full-name scale/100",
+            unf1.unit(METER),
+            "it-IT",
+            2,
+            u"200 metri");
+
+    assertFormatSingle(
+            u"Formatter after withoutLocale B",
+            u"compact-long unit/meter unit-width-full-name",
+            u"compact-long unit/meter unit-width-full-name",
+            unf2.unit(METER),
+            "ja-JP",
+            2,
+            u"2 メートル");
 }
 
 void NumberFormatterApiTest::skeletonUserGuideExamples() {
@@ -6003,7 +6039,7 @@ void NumberFormatterApiTest::microPropsInternals() {
     MicroProps copyConstructed(mp);
     MicroProps copyAssigned;
     int64_t *resizeResult = mp.mixedMeasures.resize(4, 4);
-    assertTrue("Resize success", resizeResult != NULL);
+    assertTrue("Resize success", resizeResult != nullptr);
     copyAssigned = mp;
 
     assertTrue("MicroProps success status", U_SUCCESS(mp.mixedMeasures.status));
@@ -6024,31 +6060,244 @@ void NumberFormatterApiTest::formatUnitsAliases() {
     IcuTestErrorCode status(*this, "formatUnitsAliases");
 
     struct TestCase {
-        const MeasureUnit measureUnit;
+        std::unique_ptr<MeasureUnit> measureUnit;
+        const char * measureUnitString; // Only used if measureUnit is nullptr
         const UnicodeString expectedFormat;
-    } testCases[]{
-        // Aliases
-        {MeasureUnit::getMilligramPerDeciliter(), u"2 milligrams per deciliter"},
-        {MeasureUnit::getLiterPer100Kilometers(), u"2 liters per 100 kilometers"},
-        {MeasureUnit::getPartPerMillion(), u"2 parts per million"},
-        {MeasureUnit::getMillimeterOfMercury(), u"2 millimeters of mercury"},
 
-        // Replacements
-        {MeasureUnit::getMilligramOfglucosePerDeciliter(), u"2 milligrams per deciliter"},
-        {MeasureUnit::forIdentifier("millimeter-ofhg", status), u"2 millimeters of mercury"},
-        {MeasureUnit::forIdentifier("liter-per-100-kilometer", status), u"2 liters per 100 kilometers"},
-        {MeasureUnit::forIdentifier("permillion", status), u"2 parts per million"},
+        TestCase(std::unique_ptr<MeasureUnit> mu, const UnicodeString &expected)
+            : measureUnit(std::move(mu)), measureUnitString(nullptr), expectedFormat(expected) {}
+        TestCase(const char *muStr, const UnicodeString &expected)
+            : measureUnit(nullptr), measureUnitString(muStr), expectedFormat(expected) {}
+    } testCases[]{
+        // permillion
+        TestCase("permillion", u"2 parts per million"),
+        TestCase("part-per-million", u"2 parts per million"),
+        TestCase("portion-per-million", u"2 parts per million"),
+        TestCase("portion-per-1e6", u"2 parts per million"),
+        TestCase("part-per-1e6", u"2 parts per million"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getPartPer1E6()), u"2 parts per million"),
+
+        // part-per-billion
+        TestCase("portion-per-1e9", u"2 parts per billion"),
+        TestCase("part-per-1e9", u"2 parts per billion"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getPartPer1E9()), u"2 parts per billion"),
+
+        // pound-foot
+        TestCase("pound-foot", u"2 pound-force-feet"),
+        TestCase("pound-force-foot", u"2 pound-force-feet"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getPoundFoot()), u"2 pound-force-feet"),
+
+        // pound-force
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getPoundForce()), u"2 pounds of force"),
+        TestCase("pound-force", u"2 pounds of force"),
+
+        // pound-per-square-inch
+        TestCase("pound-per-square-inch", u"2 pounds-force per square inch"),
+        TestCase("pound-force-per-square-inch", u"2 pounds-force per square inch"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getPoundPerSquareInch()), u"2 pounds-force per square inch"),
+
+        // millimeter-of-mercury
+        TestCase("millimeter-of-mercury", u"2 millimeters of mercury"),
+        TestCase("millimeter-ofhg", u"2 millimeters of mercury"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getMillimeterOfMercury()), u"2 millimeters of mercury"),
+
+        // inch-hg
+        TestCase("inch-hg", u"2 inches of mercury"),
+        TestCase("inch-ofhg", u"2 inches of mercury"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getInchHg()), u"2 inches of mercury"),
+
+        // liter-per-100kilometers
+        TestCase("liter-per-100kilometers", u"2 liters per 100 kilometers"),
+        TestCase("liter-per-100-kilometer", u"2 liters per 100 kilometers"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getLiterPer100Kilometers()), u"2 liters per 100 kilometers"),
+        // meter-per-second-squared
+        TestCase("meter-per-second-squared", u"2 meters per second squared"),
+        TestCase("meter-per-square-second", u"2 meters per second squared"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getMeterPerSecondSquared()), u"2 meters per second squared"),
+
+        // metric-ton
+        TestCase("metric-ton", u"2 metric tons"),
+        TestCase("tonne", u"2 metric tons"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getMetricTon()), u"2 metric tons"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getTonne()), u"2 metric tons"),
+
+        // milligram-per-deciliter
+        TestCase("milligram-per-deciliter", u"2 milligrams per deciliter"),
+        TestCase("milligram-ofglucose-per-deciliter", u"2 milligrams per deciliter"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getMilligramPerDeciliter()), u"2 milligrams per deciliter"),
+        TestCase(std::make_unique<MeasureUnit>(MeasureUnit::getMilligramOfglucosePerDeciliter()), u"2 milligrams per deciliter"),
+
+        // Arbitrary
+        TestCase("meter-permillion", u"2 meter-parts per 1000000"),
+        TestCase("permillion-meter", u"2 parts per 1000000-meter"),
+        TestCase("tonne-per-second", u"2 metric tons per second"),
+        TestCase("part-per-1e6-per-100", u"expect exception"),
+        TestCase("permillion-per-100", u"expect exception"),
     };
 
     for (const auto &testCase : testCases) {
+        if (testCase.expectedFormat == UnicodeString("expect exception")) {
+            UErrorCode exStatus = U_ZERO_ERROR;
+            MeasureUnit::forIdentifier(testCase.measureUnitString, exStatus);
+            if (U_SUCCESS(exStatus)) {
+                errln("exception expected");
+            }
+            continue;
+        }
+
+        MeasureUnit unit = testCase.measureUnit ? *testCase.measureUnit : MeasureUnit::forIdentifier(testCase.measureUnitString, status);
+        if (status.errIfFailureAndReset()) {
+                continue;
+        }
         UnicodeString actualFormat = NumberFormatter::withLocale(icu::Locale::getEnglish())
-                                         .unit(testCase.measureUnit)
+                                         .unit(unit)
                                          .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME)
                                          .formatDouble(2.0, status)
                                          .toString(status);
 
         assertEquals("test unit aliases", testCase.expectedFormat, actualFormat);
     }
+}
+
+void NumberFormatterApiTest::formatArbitraryConstant() {
+    IcuTestErrorCode status(*this, "formatArbitraryConstant");
+
+    struct TestCase {
+        const char *unitIdentifier;
+        int32_t inputValue;
+        UNumberUnitWidth width;
+        Locale locale;
+        const UnicodeString expectedOutput;
+    } testCases[]{
+        {"meter-per-kelvin-second", 2, UNUM_UNIT_WIDTH_FULL_NAME, Locale::getEnglish(),
+         "2 meters per second-kelvin"},
+        {"meter-per-100-kelvin-second", 3, UNUM_UNIT_WIDTH_FULL_NAME, Locale::getEnglish(),
+         u"3 meters per 100-second-kelvin"},
+        {"meter-per-1000", 1, UNUM_UNIT_WIDTH_FULL_NAME, Locale::getEnglish(), u"1 meter per 1000"},
+        {"meter-per-1000-second", 1, UNUM_UNIT_WIDTH_FULL_NAME, Locale::getEnglish(),
+         u"1 meter per 1000-second"},
+        {"meter-per-1000-second-kelvin", 1, UNUM_UNIT_WIDTH_FULL_NAME, Locale::getEnglish(),
+         u"1 meter per 1000-second-kelvin"},
+        {"meter-per-1-second-kelvin-per-kilogram", 1, UNUM_UNIT_WIDTH_FULL_NAME, Locale::getEnglish(),
+         u"1 meter per 1-kilogram-second-kelvin"},
+        {"meter-second-per-kilogram-kelvin", 1, UNUM_UNIT_WIDTH_FULL_NAME, Locale::getEnglish(),
+         u"1 meter-second per kilogram-kelvin"},
+        {"meter-second-per-1000-kilogram-kelvin", 1, UNUM_UNIT_WIDTH_FULL_NAME, Locale::getEnglish(),
+         u"1 meter-second per 1000-kilogram-kelvin"},
+        {"meter-second-per-1000-kilogram-kelvin", 1, UNUM_UNIT_WIDTH_SHORT, Locale::getEnglish(),
+         u"1 m⋅sec/1000⋅kg⋅K"},
+        {"meter-second-per-1000-kilogram-kelvin", 1, UNUM_UNIT_WIDTH_FULL_NAME, Locale::getGerman(),
+         u"1 Meter⋅Sekunde pro 1000⋅Kilogramm⋅Kelvin"},
+        {"meter-second-per-1000-kilogram-kelvin", 1, UNUM_UNIT_WIDTH_SHORT, Locale::getGerman(),
+         u"1 m⋅Sek./1000⋅kg⋅K"},
+    };
+
+    for (auto testCase : testCases) {
+        auto unit = MeasureUnit::forIdentifier(testCase.unitIdentifier, status);
+        UnicodeString actualFormat = NumberFormatter::withLocale(testCase.locale)
+                                         .unit(unit)
+                                         .unitWidth(testCase.width)
+                                         .formatDouble(testCase.inputValue, status)
+                                         .toString(status);
+
+        if (status.errIfFailureAndReset()) {
+            continue;
+        }
+
+        assertEquals(UnicodeString("test arbitrary constant \"") + testCase.unitIdentifier + "\"",
+                     testCase.expectedOutput, actualFormat);
+    }
+}
+
+void NumberFormatterApiTest::TestPortionFormat() {
+    IcuTestErrorCode status(*this, "TestPortionFormat");
+
+    struct TestCase {
+        const char *unitIdentifier;
+        const char *locale;
+        double inputValue;
+        UnicodeString expectedOutput;
+    } testCases[]{
+        {"part-per-1e9", "en-US", 1, "1 part per billion"},
+        {"part-per-1e9", "en-US", 2, "2 parts per billion"},
+        {"part-per-1e9", "en-US", 1000000, "1,000,000 parts per billion"},
+        {"part-per-1e9", "de-DE", 1000000, "1.000.000 Milliardstel"},
+        {"part-per-1e1", "en-US", 1, "1 part per 10"},
+        {"part-per-1e2", "en-US", 1, "1 part per 100"},
+        {"part-per-1e3", "en-US", 1, "1 part per 1000"},
+        {"part-per-1e4", "en-US", 1, "1 part per 10000"},
+        {"part-per-1e5", "en-US", 1, "1 part per 100000"},
+        {"part-per-1e6", "en-US", 1, "1 part per million"},
+        {"part-per-1e7", "en-US", 1, "1 part per 10000000"},
+        {"part-per-1e8", "en-US", 1, "1 part per 100000000"},
+    };
+
+    for (auto testCase : testCases) {
+        MeasureUnit unit = MeasureUnit::forIdentifier(testCase.unitIdentifier, status);
+        LocalizedNumberFormatter lnf =
+            NumberFormatter::withLocale(Locale::forLanguageTag(testCase.locale, status))
+                .unit(unit)
+                .unitWidth(UNumberUnitWidth::UNUM_UNIT_WIDTH_FULL_NAME);
+        UnicodeString actualOutput = lnf.formatDouble(testCase.inputValue, status).toString(status);
+        assertEquals("test part format", testCase.expectedOutput, actualOutput);
+    }
+}
+
+void NumberFormatterApiTest::testIssue22378() {
+    IcuTestErrorCode status(*this, "testIssue22378");
+
+    // I checked the results before the fix and everything works the same except
+    // "fr-FR-u-mu-fahrenhe" and "fr_FR@mu=fahrenhe"
+    struct TestCase {
+        const std::string localeId;
+        const UnicodeString expectedFormat;
+    } testCases[]{
+        {"en-US", u"73\u00B0F"},
+        {"en-US-u-mu-fahrenhe", u"73\u00B0F"},
+        // Unlike ULocale, forLanguageTag fails wih U_ILLEGAL_ARGUMENT_ERROR
+        // because fahrenheit is not valid value for -u-mu-
+        // {"en-US-u-mu-fahrenheit", u"73\u00B0F"},
+        {"en-US-u-mu-celsius", u"23\u00B0C"},
+        {"en-US-u-mu-badvalue", u"73\u00B0F"},
+        {"en_US@mu=fahrenhe", u"73\u00B0F"},
+        {"en_US@mu=fahrenheit", u"73\u00B0F"},
+        {"en_US@mu=celsius", u"23\u00B0C"},
+        {"en_US@mu=badvalue", u"73\u00B0F"},
+
+        {"fr-FR", u"23\u202F\u00B0C"},
+        {"fr-FR-u-mu-fahrenhe", u"73\u202F\u00B0F"},
+        // Unlike ULocale, forLanguageTag fails wih U_ILLEGAL_ARGUMENT_ERROR
+        // because fahrenheit is not valid value for -u-mu-
+        // {"fr-FR-u-mu-fahrenheit", u"23\u202F\u00B0C"},
+        {"fr-FR-u-mu-celsius", u"23\u202F\u00B0C"},
+        {"fr-FR-u-mu-badvalue", u"23\u202F\u00B0C"},
+        {"fr_FR@mu=fahrenhe", u"73\u202F\u00B0F"},
+        {"fr_FR@mu=fahrenheit", u"73\u202F\u00B0F"},
+        {"fr_FR@mu=celsius", u"23\u202F\u00B0C"},
+        {"fr_FR@mu=badvalue", u"23\u202F\u00B0C"},
+    };
+
+    UnlocalizedNumberFormatter formatter = NumberFormatter::with()
+            .usage("weather")
+            .unit(MeasureUnit::getCelsius());
+    double value = 23.0;
+
+    for (const auto &testCase : testCases) {
+        std::string localeId = testCase.localeId;
+        const Locale locale = (localeId.find("@") != std::string::npos)
+                ? Locale(localeId.c_str())
+                : Locale::forLanguageTag(localeId, status);
+        UnicodeString actualFormat = formatter.locale(locale)
+                .formatDouble(value, status)
+                .toString(status);
+        assertEquals(u"-u-mu- honored (" + UnicodeString(localeId.c_str()) + u")",
+                testCase.expectedFormat, actualFormat);
+    }
+
+    UnicodeString result = formatter.locale("en-US").formatDouble(value, status).getOutputUnit(status).getIdentifier();
+    assertEquals("Testing default -u-mu- for en-US", MeasureUnit::getFahrenheit().getIdentifier(), result);
+    result = formatter.locale("fr-FR").formatDouble(value, status).getOutputUnit(status).getIdentifier();
+    assertEquals("Testing default -u-mu- for fr-FR", MeasureUnit::getCelsius().getIdentifier(), result);
 }
 
 /* For skeleton comparisons: this checks the toSkeleton output for `f` and for
@@ -6216,11 +6465,11 @@ NumberFormatterApiTest::assertFormatSingle(
     status.setScope(message);
     FormattedNumber result1 = l1.formatDouble(input, status);
     UnicodeString actual1 = result1.toString(status);
-    assertSuccess(message + u": Unsafe Path", status);
-    assertEquals(message + u": Unsafe Path", expected, actual1);
+    assertSuccess(message + u": Unsafe Path " + locale.getName(), status);
+    assertEquals(message + u": Unsafe Path " + locale.getName(), expected, actual1);
     UnicodeString actual2 = l2.formatDouble(input, status).toString(status);
-    assertSuccess(message + u": Safe Path", status);
-    assertEquals(message + u": Safe Path", expected, actual2);
+    assertSuccess(message + u": Safe Path " + locale.getName(), status);
+    assertEquals(message + u": Safe Path " + locale.getName(), expected, actual2);
     if (uskeleton != nullptr) { // if null, skeleton is declared as undefined.
         UnicodeString skeleton(true, uskeleton, -1);
         // Only compare normalized skeletons: the tests need not provide the normalized forms.

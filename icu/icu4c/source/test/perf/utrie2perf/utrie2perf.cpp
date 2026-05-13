@@ -47,8 +47,8 @@ U_NAMESPACE_END
 class UTrie2PerfTest : public UPerfTest {
 public:
     UTrie2PerfTest(int32_t argc, const char *argv[], UErrorCode &status)
-            : UPerfTest(argc, argv, NULL, 0, "", status),
-              utf8(NULL), utf8Length(0), countInputCodePoints(0) {
+            : UPerfTest(argc, argv, nullptr, 0, "", status),
+              utf8(nullptr), utf8Length(0), countInputCodePoints(0) {
         if (U_SUCCESS(status)) {
 #if 0       // See comment at unorm_initUTrie2() forward declaration.
             unorm_initUTrie2(&status);
@@ -60,12 +60,12 @@ public:
                 countInputCodePoints = u_countChar32(buffer, bufferLen);
 
                 // Preflight the UTF-8 length and allocate utf8.
-                u_strToUTF8(NULL, 0, &utf8Length, buffer, bufferLen, &status);
+                u_strToUTF8(nullptr, 0, &utf8Length, buffer, bufferLen, &status);
                 if(status==U_BUFFER_OVERFLOW_ERROR) {
-                    utf8=(char *)malloc(utf8Length);
-                    if(utf8!=NULL) {
+                    utf8 = static_cast<char*>(malloc(utf8Length));
+                    if(utf8!=nullptr) {
                         status=U_ZERO_ERROR;
-                        u_strToUTF8(utf8, utf8Length, NULL, buffer, bufferLen, &status);
+                        u_strToUTF8(utf8, utf8Length, nullptr, buffer, bufferLen, &status);
                     } else {
                         status=U_MEMORY_ALLOCATION_ERROR;
                     }
@@ -74,16 +74,16 @@ public:
                 if(verbose) {
                     printf("code points:%ld  len16:%ld  len8:%ld  "
                            "B/cp:%.3g\n",
-                           (long)countInputCodePoints, (long)bufferLen, (long)utf8Length,
-                           (double)utf8Length/countInputCodePoints);
+                           static_cast<long>(countInputCodePoints), static_cast<long>(bufferLen), static_cast<long>(utf8Length),
+                           static_cast<double>(utf8Length) / countInputCodePoints);
                 }
             }
         }
     }
 
-    virtual UPerfFunction* runIndexedTest(int32_t index, UBool exec, const char* &name, char* par = NULL);
+    UPerfFunction* runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
 
-    const UChar *getBuffer() const { return buffer; }
+    const char16_t *getBuffer() const { return buffer; }
     int32_t getBufferLen() const { return bufferLen; }
 
     char *utf8;
@@ -103,7 +103,7 @@ public:
 
     // virtual void call(UErrorCode* pErrorCode) { ... }
 
-    virtual long getOperationsPerIteration() {
+    long getOperationsPerIteration() override {
         // Number of code points tested.
         return testcase.countInputCodePoints;
     }
@@ -121,7 +121,7 @@ public:
     static UPerfFunction* get(const UTrie2PerfTest &testcase) {
         return new CheckFCD(testcase);
     }
-    virtual void call(UErrorCode* pErrorCode) {
+    void call(UErrorCode* pErrorCode) override {
         UErrorCode errorCode=U_ZERO_ERROR;
         qcResult=unorm_quickCheck(testcase.getBuffer(), testcase.getBufferLen(),
                                   UNORM_FCD, &errorCode);
@@ -163,7 +163,7 @@ public:
         return new CheckFCDUTF8(testcase);
     }
     virtual void call(UErrorCode* pErrorCode) {
-        UBool isFCD=unorm_checkFCDUTF8((const uint8_t *)testcase.utf8, testcase.utf8Length, NULL);
+        UBool isFCD=unorm_checkFCDUTF8((const uint8_t *)testcase.utf8, testcase.utf8Length, nullptr);
         if(isFCD>1) {
             fprintf(stderr, "error: bogus result from unorm_checkFCDUTF8()\n");
         }
@@ -178,9 +178,9 @@ protected:
         UErrorCode errorCode=U_ZERO_ERROR;
         destCapacity=unorm_normalize(testcase.getBuffer(), testcase.getBufferLen(),
                                      UNORM_NFC, 0,
-                                     NULL, 0,
+                                     nullptr, 0,
                                      &errorCode);
-        dest=new UChar[destCapacity];
+        dest=new char16_t[destCapacity];
     }
     ~ToNFC() {
         delete [] dest;
@@ -189,7 +189,7 @@ public:
     static UPerfFunction* get(const UTrie2PerfTest &testcase) {
         return new ToNFC(testcase);
     }
-    virtual void call(UErrorCode* pErrorCode) {
+    void call(UErrorCode* pErrorCode) override {
         UErrorCode errorCode=U_ZERO_ERROR;
         int32_t destLength=unorm_normalize(testcase.getBuffer(), testcase.getBufferLen(),
                                            UNORM_NFC, 0,
@@ -202,7 +202,7 @@ public:
     }
 
 private:
-    UChar *dest;
+    char16_t *dest;
     int32_t destCapacity;
 };
 
@@ -213,15 +213,15 @@ public:
     static UPerfFunction* get(const UTrie2PerfTest &testcase) {
         return new GetBiDiClass(testcase);
     }
-    virtual void call(UErrorCode* pErrorCode) {
-        const UChar *buffer=testcase.getBuffer();
+    void call(UErrorCode* pErrorCode) override {
+        const char16_t *buffer=testcase.getBuffer();
         int32_t length=testcase.getBufferLen();
         UChar32 c;
         int32_t i;
         uint32_t bitSet=0;
         for(i=0; i<length;) {
             U16_NEXT(buffer, i, length, c);
-            bitSet|=(uint32_t)1<<u_charDirection(c);
+            bitSet |= static_cast<uint32_t>(1) << u_charDirection(c);
         }
         if(length>0 && bitSet==0) {
             fprintf(stderr, "error: GetBiDiClass() did not collect bits\n");
@@ -240,7 +240,7 @@ UPerfFunction* UTrie2PerfTest::runIndexedTest(int32_t index, UBool exec, const c
 #endif
         default: name = ""; break;
     }
-    return NULL;
+    return nullptr;
 }
 
 int main(int argc, const char *argv[]) {

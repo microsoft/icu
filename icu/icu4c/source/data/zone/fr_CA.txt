@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 fr_CA{
     zoneStrings{
         "Africa:Ndjamena"{
@@ -22,7 +22,7 @@ fr_CA{
             ec{"Center [Dakota du Nord]"}
         }
         "America:North_Dakota:New_Salem"{
-            ec{"New Salem, Dakota du Nord"}
+            ec{"New Salem [Dakota du Nord]"}
         }
         "America:St_Johns"{
             ec{"St. John’s"}
@@ -33,9 +33,6 @@ fr_CA{
         "America:St_Thomas"{
             ec{"Saint Thomas"}
         }
-        "America:Tegucigalpa"{
-            ec{"Tégucigalpa"}
-        }
         "Antarctica:DumontDUrville"{
             ec{"Dumont d’Urville"}
         }
@@ -44,6 +41,9 @@ fr_CA{
         }
         "Asia:Thimphu"{
             ec{"Thimphou"}
+        }
+        "Atlantic:Canary"{
+            ec{"îles Canaries"}
         }
         "Atlantic:Faeroe"{
             ec{"îles Féroé"}
@@ -79,11 +79,6 @@ fr_CA{
         }
         "meta:Africa_Southern"{
             ls{"heure normale d’Afrique du Sud"}
-        }
-        "meta:Africa_Western"{
-            ld{"heure avancée d’Afrique de l’Ouest"}
-            lg{"heure d’Afrique de l’Ouest"}
-            ls{"heure normale d’Afrique de l’Ouest"}
         }
         "meta:Alaska"{
             ld{"heure avancée de l’Alaska"}
@@ -176,6 +171,9 @@ fr_CA{
             ld{"heure avancée de l’Atlantique"}
             lg{"heure de l’Atlantique"}
             ls{"heure normale de l’Atlantique"}
+            sd{"HAA"}
+            sg{"HA"}
+            ss{"HNA"}
         }
         "meta:Australia_Central"{
             ld{"heure avancée du centre de l’Australie"}
@@ -234,11 +232,6 @@ fr_CA{
             ld{"heure avancée de Chine"}
             lg{"heure de Chine"}
             ls{"heure normale de Chine"}
-        }
-        "meta:Choibalsan"{
-            ld{"heure avancée de Choibalsan"}
-            lg{"heure de Choibalsan"}
-            ls{"heure normale de Choibalsan"}
         }
         "meta:Colombia"{
             ld{"heure avancée de Colombie"}
@@ -303,6 +296,9 @@ fr_CA{
             lg{"heure de l’Ouest du Groenland"}
             ls{"heure normale de l’Ouest du Groenland"}
         }
+        "meta:Hawaii"{
+            ls{"heure normale d’Hawaï-Aléoutiennes"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"heure avancée d’Hawaï-Aléoutiennes"}
             lg{"heure d’Hawaï-Aléoutiennes"}
@@ -317,6 +313,9 @@ fr_CA{
             ld{"heure avancée de Hovd"}
             lg{"heure de Hovd"}
             ls{"heure normale de Hovd"}
+        }
+        "meta:Indian_Ocean"{
+            ls{"heure de l’océan Indien"}
         }
         "meta:Iran"{
             ld{"heure avancée d’Iran"}
@@ -367,11 +366,6 @@ fr_CA{
             ld{"heure avancée de Maurice"}
             lg{"heure de Maurice"}
             ls{"heure normale de Maurice"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"heure avancée du Nord-Ouest du Mexique"}
-            lg{"heure du Nord-Ouest du Mexique"}
-            ls{"heure normale du Nord-Ouest du Mexique"}
         }
         "meta:Mexico_Pacific"{
             ld{"heure avancée du Pacifique mexicain"}
@@ -453,6 +447,9 @@ fr_CA{
             ld{"heure avancée de Saint-Pierre-et-Miquelon"}
             lg{"heure de Saint-Pierre-et-Miquelon"}
             ls{"heure normale de Saint-Pierre-et-Miquelon"}
+            sd{"HAPM"}
+            sg{"HPM"}
+            ss{"HNPM"}
         }
         "meta:Reunion"{
             ls{"heure de la Réunion"}

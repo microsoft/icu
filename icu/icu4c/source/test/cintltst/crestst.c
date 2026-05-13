@@ -150,7 +150,7 @@ void TestAliasConflict(void) {
 }
 
 
-void TestResourceBundles()
+void TestResourceBundles(void)
 {
     // The test expectation only works if the default locale is not one of the
     // locale bundle in the testdata which have those info. Therefore, we skip
@@ -180,7 +180,7 @@ void TestResourceBundles()
     log_verbose("Passed:=  %d   Failed=   %d \n", pass, fail);
 }
 
-void TestConstruction1()
+void TestConstruction1(void)
 {
     UResourceBundle *test1 = 0, *test2 = 0;
     const UChar *result1, *result2;
@@ -428,15 +428,15 @@ UBool testTag(const char* frag,
         ures_close(theBundle);
     }
     free(base);
-    return (UBool)(passNum == pass);
+    return passNum == pass;
 }
 
-void record_pass()
+void record_pass(void)
 {
   ++pass;
 }
 
-void record_fail()
+void record_fail(void)
 {
   ++fail;
 }
@@ -446,7 +446,7 @@ void record_fail()
  * are set correctly
  */
 
-static void TestFallback()
+static void TestFallback(void)
 {
     UErrorCode status = U_ZERO_ERROR;
     UResourceBundle *fr_FR = NULL;
@@ -1093,13 +1093,13 @@ static void TestAlgorithmicParentFallback(void) {
         UResourceBundle* regularRB = ures_open(NULL, testLocale, &err);
         char errorMessage[200];
         
-        sprintf(errorMessage, "Error %s opening resource bundle for locale %s and URES_OPEN_LOCALE_DEFAULT_ROOT", u_errorName(err), testLocale);
+        snprintf(errorMessage, sizeof(errorMessage), "Error %s opening resource bundle for locale %s and URES_OPEN_LOCALE_DEFAULT_ROOT", u_errorName(err), testLocale);
         if (assertSuccess(errorMessage, &err)) {
             const char* resourceLocale = ures_getLocaleByType(regularRB, ULOC_ACTUAL_LOCALE, &err);
             
-            sprintf(errorMessage, "Error %s getting resource locale for locale %s and URES_OPEN_LOCALE_DEFAULT_ROOT", u_errorName(err), testLocale);
+            snprintf(errorMessage, sizeof(errorMessage), "Error %s getting resource locale for locale %s and URES_OPEN_LOCALE_DEFAULT_ROOT", u_errorName(err), testLocale);
             if (assertSuccess(errorMessage, &err)) {
-                sprintf(errorMessage, "Mismatch for locale %s and URES_OPEN_LOCALE_DEFAULT_ROOT", testLocale);
+                snprintf(errorMessage, sizeof(errorMessage), "Mismatch for locale %s and URES_OPEN_LOCALE_DEFAULT_ROOT", testLocale);
                 if (uprv_strcmp(regularExpected, "root") == 0) {
                     assertEquals(errorMessage, defaultLocaleID, resourceLocale);
                 } else {
@@ -1112,13 +1112,13 @@ static void TestAlgorithmicParentFallback(void) {
         err = U_ZERO_ERROR;
         UResourceBundle* noDefaultRB = ures_openNoDefault(NULL, testLocale, &err);
         
-        sprintf(errorMessage, "Error %s opening resource bundle for locale %s and URES_OPEN_LOCALE_ROOT", u_errorName(err), testLocale);
+        snprintf(errorMessage, sizeof(errorMessage), "Error %s opening resource bundle for locale %s and URES_OPEN_LOCALE_ROOT", u_errorName(err), testLocale);
         if (assertSuccess(errorMessage, &err)) {
             const char* resourceLocale = ures_getLocaleByType(noDefaultRB, ULOC_ACTUAL_LOCALE, &err);
             
-            sprintf(errorMessage, "Error %s getting resource locale for locale %s and URES_OPEN_LOCALE_ROOT", u_errorName(err), testLocale);
+            snprintf(errorMessage, sizeof(errorMessage), "Error %s getting resource locale for locale %s and URES_OPEN_LOCALE_ROOT", u_errorName(err), testLocale);
             if (assertSuccess(errorMessage, &err)) {
-                sprintf(errorMessage, "Mismatch for locale %s and URES_OPEN_LOCALE_ROOT", testLocale);
+                snprintf(errorMessage, sizeof(errorMessage), "Mismatch for locale %s and URES_OPEN_LOCALE_ROOT", testLocale);
                 assertEquals(errorMessage, noDefaultExpected, resourceLocale);
             }
         }

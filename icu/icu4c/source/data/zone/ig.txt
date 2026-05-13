@@ -1,11 +1,8 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 ig{
     zoneStrings{
-        "America:Araguaina"{
-            ec{"Araguaina"}
-        }
         "Etc:UTC"{
             ls{"Nhazi Oge Ụwa Niile"}
         }
@@ -31,9 +28,7 @@ ig{
             ls{"Oge Izugbe Mpaghara Mgbada Ugwu Afrịka"}
         }
         "meta:Africa_Western"{
-            ld{"Oge Okpomọkụ Mpaghara Ọdịda Anyanwụ Afrịka"}
-            lg{"Oge Mpaghara Ọdịda Anyanwụ Afrịka"}
-            ls{"Oge Izugbe Mpaghara Ọdịda Anyanwụ Afrịka"}
+            ls{"Oge Mpaghara Ọdịda Anyanwụ Afrịka"}
         }
         "meta:Alaska"{
             ld{"Oge Ihe Alaska"}
@@ -167,11 +162,6 @@ ig{
             lg{"Oge China"}
             ls{"Oge Izugbe China"}
         }
-        "meta:Choibalsan"{
-            ld{"Oge Okpomọkụ Choibals"}
-            lg{"Oge Choibals"}
-            ls{"Oge Izugbe Choibals"}
-        }
         "meta:Christmas"{
             ls{"Oge Ekeresimesi Island"}
         }
@@ -277,6 +267,9 @@ ig{
         "meta:Guyana"{
             ls{"Oge Guyana"}
         }
+        "meta:Hawaii"{
+            ls{"Oge Izugbe Hawaii-Aleutian"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"Oge Ihe Hawaii-Aleutian"}
             lg{"Oge Hawaii-Aleutian"}
@@ -330,6 +323,9 @@ ig{
             lg{"Oge Japan"}
             ls{"Oge Izugbe Japan"}
         }
+        "meta:Kazakhstan"{
+            ls{"Oge Kazakhstan"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"Oge Mpaghara Ọwụwa Anyanwụ Kazakhstan"}
         }
@@ -360,9 +356,6 @@ ig{
             lg{"Oge Lord Howe"}
             ls{"Oge Izugbe Lord Howe"}
         }
-        "meta:Macquarie"{
-            ls{"Oge Macquarie Island"}
-        }
         "meta:Magadan"{
             ld{"Oge Okpomọkụ Magadan"}
             lg{"Oge Magadan"}
@@ -387,11 +380,6 @@ ig{
         }
         "meta:Mawson"{
             ls{"Oge Mawson"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"Oge Ihe Northwest Mexico"}
-            lg{"Oge Northwest Mexico"}
-            ls{"Oge Izugbe Northwest Mexico"}
         }
         "meta:Mexico_Pacific"{
             ld{"Oge Ihe Mexican Pacific"}
@@ -612,10 +600,6 @@ ig{
         "meta:Yukon"{
             ls{"Oge Yukon"}
         }
-        fallbackFormat{"{1} ({0})"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
         regionFormat{"Oge {0}"}
         regionFormatDaylight{"Oge Ihe {0}"}
         regionFormatStandard{"Oge Izugbe {0}"}

@@ -21,7 +21,7 @@
  * Test basic functionality of various API functions
  **/
 class IntlTestDateTimePatternGeneratorAPI : public IntlTest {
-    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL ) override;
+    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = nullptr ) override;
 
 private:
     /**
@@ -41,7 +41,9 @@ private:
     void test_jConsistencyOddLocales();
     void testBestPattern();
     void testDateTimePatterns();
+    void testISO8601();
     void testRegionOverride();
+    void testAlphabeticSubstitution23114();
 
     enum { kNumDateTimePatterns = 4 };
     typedef struct {

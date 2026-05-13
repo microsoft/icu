@@ -1,11 +1,10 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 so{
     units{
         acceleration{
             g-force{
-                dnam{"cadaadis dib ku riixaya"}
                 one{"{0} cadaadis dib ku riixaya"}
                 other{"{0} cadaadis dib ku riixaya"}
             }
@@ -21,18 +20,11 @@ so{
                 one{"{0} aarkminit"}
                 other{"{0} aarkminit"}
             }
-            arc-second{
-                dnam{"aarkseken"}
-                one{"{0} aarkseken"}
-                other{"{0} aarkseken"}
-            }
             degree{
-                dnam{"digrii"}
                 one{"{0} digrii"}
                 other{"{0} digrii"}
             }
             radian{
-                dnam{"raadiyan"}
                 one{"{0} raadiyan"}
                 other{"{0} raadiyan"}
             }
@@ -41,20 +33,18 @@ so{
                 one{"{0} wareeg"}
                 other{"{0} wareeg"}
             }
+            steradian{
+                dnam{"steradians"}
+                one{"{0} steradian"}
+                other{"{0} steradians"}
+            }
         }
         area{
             acre{
-                dnam{"aakre"}
                 one{"{0} aakre"}
                 other{"{0} aakre"}
             }
-            dunam{
-                dnam{"dunaam"}
-                one{"{0} dunaam"}
-                other{"{0} dunaam"}
-            }
             hectare{
-                dnam{"hektar"}
                 one{"hektar"}
                 other{"{0} hektar"}
             }
@@ -65,7 +55,6 @@ so{
                 per{"{0} jibaaran sentimitirkiiba"}
             }
             square-foot{
-                dnam{"fiit jibaaran"}
                 one{"{0} fiit jibaaran"}
                 other{"{0} fiit jibaaran"}
             }
@@ -82,31 +71,54 @@ so{
                 per{"{0} jibaaran kiilomitirkiiba"}
             }
             square-meter{
-                dnam{"mitir jibaaran"}
                 one{"{0} mitir jibaaran"}
                 other{"{0} mitir jibaaran"}
                 per{"{0} jibaaran mitirkiiba"}
             }
             square-mile{
-                dnam{"meyl jibaaran"}
                 one{"{0} meyl jibaaran"}
                 other{"{0} meyl jibaaran"}
                 per{"{0} jibaaran meylkiiba"}
             }
             square-yard{
-                dnam{"yaardi jibaaran"}
                 one{"{0} yaardi jibaaran"}
                 other{"{0} yaardi jibaaran"}
             }
         }
         compound{
-            1024p8{"dheer{0}"}
+            1024p1{"kibi{0}"}
+            1024p2{"mebi{0}"}
+            1024p3{"gibi{0}"}
+            1024p4{"tebi{0}"}
+            1024p5{"pebi{0}"}
+            1024p6{"exbi{0}"}
+            1024p7{"zebi{0}"}
+            1024p8{"yobi{0}"}
             10p-1{"deci{0}"}
+            10p-12{"pico{0}"}
+            10p-15{"femto{0}"}
+            10p-18{"atto{0}"}
             10p-2{"senti{0}"}
+            10p-21{"zepto{0}"}
+            10p-24{"yocto{0}"}
+            10p-27{"ronto{0}"}
+            10p-3{"milli{0}"}
+            10p-30{"quecto{0}"}
+            10p-6{"mikro{0}"}
+            10p-9{"nano{0}"}
+            10p1{"deka{0}"}
+            10p12{"tera{0}"}
             10p15{"peta{0}"}
             10p18{"exa{0}"}
+            10p2{"hecto{0}"}
             10p21{"zetta{0}"}
             10p24{"yotta{0}"}
+            10p27{"ronna{0}"}
+            10p3{"kilo{0}"}
+            10p30{"quetta{0}"}
+            10p6{"mega{0}"}
+            10p9{"giga{0}"}
+            per{"{0} kiiba {1}"}
             power2{
                 one{
                     _{
@@ -143,6 +155,11 @@ so{
                 one{"{0} karaat"}
                 other{"{0} karaat"}
             }
+            katal{
+                dnam{"katals"}
+                one{"{0} katal"}
+                other{"{0} katals"}
+            }
             milligram-ofglucose-per-deciliter{
                 dnam{"miligaraam disilitirkiiba"}
                 one{"{0} miligaraam disilitirkiib"}
@@ -153,28 +170,35 @@ so{
                 one{"{0} milimool litirkiiba"}
                 other{"{0} milimool litirkiiba"}
             }
-            mole{
-                dnam{"mool"}
-                one{"{0} mool"}
-                other{"{0} mool"}
+            ofglucose{
+                dnam{"ee kulukoos"}
+                one{"{0} ee kulukoos"}
+                other{"{0} ee kulukoos"}
             }
-            percent{
-                dnam{"boqolkiiba"}
-                one{"boqolkiiba {0}"}
-                other{"boqolkiiba {0}"}
+            part{
+                dnam{"qeybo"}
+                one{"{0} qeyb"}
+                other{"{0} qeybo"}
             }
-            permille{
-                dnam{"baarmiil"}
-                one{"{0} baarmiil"}
-                other{"{0} baarmiil"}
-            }
-            permillion{
+            part-per-1e6{
                 dnam{"qeyb milyankiiba"}
                 one{"{0} qeyb milyankiiba"}
                 other{"{0} qeyb milyankiiba"}
             }
+            part-per-1e9{
+                dnam{"qeybaha bilyankiiba"}
+                one{"{0} qeybaha bilyankiiba"}
+                other{"{0} qeybaha bilyankiiba"}
+            }
+            percent{
+                one{"boqolkiiba {0}"}
+                other{"boqolkiiba {0}"}
+            }
+            permille{
+                one{"{0} baarmiil"}
+                other{"{0} baarmiil"}
+            }
             permyriad{
-                dnam{"bermiraad"}
                 one{"{0} bermiraad"}
                 other{"{0} bermiraad"}
             }
@@ -214,8 +238,6 @@ so{
             }
             byte{
                 dnam{"beytis"}
-                one{"{0} beyt"}
-                other{"{0} beyt"}
             }
             gigabit{
                 dnam{"gigabitis"}
@@ -265,7 +287,7 @@ so{
         }
         duration{
             century{
-                dnam{"qarni"}
+                dnam{"qarniyo"}
                 one{"{0} qarni"}
                 other{"{0} qarniyo"}
             }
@@ -281,7 +303,6 @@ so{
                 other{"{0} dec"}
             }
             hour{
-                dnam{"saacado"}
                 one{"{0} saacad"}
                 other{"{0} saacadood"}
                 per{"{0} saacadiiba"}
@@ -312,11 +333,11 @@ so{
                 one{"{0} nanoseken"}
                 other{"{0} nanoseken"}
             }
+            night{
+                per{"{0} halkii habeen"}
+            }
             quarter{
                 dnam{"Rubucyo"}
-                one{"{0} rubac"}
-                other{"{0} rubac"}
-                per{"{0}/rubac"}
             }
             second{
                 dnam{"ilbiriqsi"}
@@ -343,6 +364,21 @@ so{
                 one{"{0} ambeer"}
                 other{"{0} ambeer"}
             }
+            coulomb{
+                dnam{"coulombs"}
+                one{"{0} coulomb"}
+                other{"{0} coulombs"}
+            }
+            farad{
+                dnam{"farads"}
+                one{"{0} farad"}
+                other{"{0} farads"}
+            }
+            henry{
+                dnam{"henrys"}
+                one{"{0} henry"}
+                other{"{0} henrys"}
+            }
             milliampere{
                 dnam{"miliambeeris"}
                 one{"{0} miliambeer"}
@@ -352,13 +388,22 @@ so{
                 one{"{0} ohm"}
                 other{"{0} ohm"}
             }
+            siemens{
+                dnam{"siemens"}
+                one{"{0} siemens"}
+                other{"{0} siemens"}
+            }
             volt{
-                dnam{"fooltis"}
                 one{"{0} foolt"}
                 other{"{0} foolt"}
             }
         }
         energy{
+            becquerel{
+                dnam{"becquerels"}
+                one{"{0} becquerel"}
+                other{"{0} becquerels"}
+            }
             british-thermal-unit{
                 dnam{"halbeega kulaylka ee Biritishka"}
                 one{"halbeega kulaylka ee Biritishka"}
@@ -368,6 +413,11 @@ so{
                 dnam{"kalooris"}
                 one{"{0} kalooris"}
                 other{"{0} kalooris"}
+            }
+            calorie-it{
+                dnam{"kalooriyo [IT]"}
+                one{"{0} kaloori [IT]"}
+                other{"{0} kalooriyo [IT]"}
             }
             electronvolt{
                 dnam{"Elektarofooltis"}
@@ -379,13 +429,17 @@ so{
                 one{"{0} Kalooris"}
                 other{"{0} Kalooris"}
             }
+            gray{
+                dnam{"grays"}
+                one{"{0} gray"}
+                other{"{0} grays"}
+            }
             joule{
                 dnam{"Juules"}
                 one{"{0} juul"}
                 other{"{0} juules"}
             }
             kilocalorie{
-                dnam{"kilokalooris"}
                 one{"{0} kilokalooris"}
                 other{"{0} kilokalooris"}
             }
@@ -399,8 +453,18 @@ so{
                 one{"{0} kiilowaat saacadiiba"}
                 other{"{0} kiilowaat saacadiiba"}
             }
+            sievert{
+                dnam{"sieverts"}
+                one{"{0} sievert"}
+                other{"{0} sieverts"}
+            }
         }
         force{
+            kilogram-force{
+                dnam{"kilograms-force"}
+                one{"{0} kilogram-force"}
+                other{"{0} kilograms-force"}
+            }
             kilowatt-hour-per-100-kilometer{
                 dnam{"kilowatt-saacadood 100 kiilomitirba"}
                 one{"{0} kilowatt-saacadood 100 kiilomitirba"}
@@ -411,7 +475,6 @@ so{
                 other{"{0} nuyuuton"}
             }
             pound-force{
-                dnam{"rodol xoog"}
                 one{"{0} rodol xoog"}
                 other{"{0} rodolo xoog"}
             }
@@ -439,15 +502,21 @@ so{
             }
         }
         graphics{
+            dot{
+                dnam{"dhibicyo"}
+            }
             dot-per-centimeter{
                 dnam{"dhibco halkii sentimitir"}
-                one{"dhibco halkii sentimitir"}
-                other{"{0} dhibco halkii sentimitirkii"}
+                one{"{0} dhibco halkii sentimitir"}
+                other{"{0} dhibco halkii sentimitir"}
             }
             dot-per-inch{
                 dnam{"dhibco injigiiba"}
                 one{"{0} dhibic injigiiba"}
                 other{"{0} dhibic injigiiba"}
+            }
+            em{
+                dnam{"ems qoraal ahaan ah"}
             }
         }
         length{
@@ -467,11 +536,19 @@ so{
                 one{"{0} desimitir"}
                 other{"{0} dsimitir"}
             }
+            fathom{
+                one{"{0} fathom"}
+                other{"{0} fathoms"}
+            }
             foot{
                 dnam{"fiit"}
                 one{"Fuudh"}
                 other{"{0} fiit"}
                 per{"{0} fiitkiiba"}
+            }
+            furlong{
+                one{"{0} furlong"}
+                other{"{0} furlongs"}
             }
             inch{
                 dnam{"Injis"}
@@ -537,7 +614,6 @@ so{
                 other{"{0} bikomitir"}
             }
             point{
-                dnam{"dhibco"}
                 one{"{0} dhibic"}
                 other{"{0} dhibco"}
             }
@@ -552,8 +628,15 @@ so{
             }
         }
         light{
+            candela{
+                one{"{0} candela"}
+                other{"{0} candela"}
+            }
+            lumen{
+                one{"{0} lumen"}
+                other{"{0} lumen"}
+            }
             lux{
-                dnam{"laks"}
                 one{"{0} laks"}
                 other{"{0} laks"}
             }
@@ -563,9 +646,20 @@ so{
                 other{"{0} iftiinada qorraxda"}
             }
         }
+        magnetic{
+            tesla{
+                dnam{"teslas"}
+                one{"{0} tesla"}
+                other{"{0} teslas"}
+            }
+            weber{
+                dnam{"webers"}
+                one{"{0} weber"}
+                other{"{0} webers"}
+            }
+        }
         mass{
             carat{
-                dnam{"karaats"}
                 one{"{0} karaats"}
                 other{"{0} karaats"}
             }
@@ -580,7 +674,6 @@ so{
                 other{"{0} cufka Dhulka"}
             }
             gram{
-                dnam{"garaam"}
                 one{"{0} garaam"}
                 other{"{0} garaam"}
                 per{"{0} garaamkiiba"}
@@ -613,7 +706,6 @@ so{
                 other{"{0} torooy ownis"}
             }
             pound{
-                dnam{"bownd"}
                 one{"{0} bownd"}
                 other{"{0} bownd"}
                 per{"{0} bowndkiiba"}
@@ -623,8 +715,11 @@ so{
                 one{"{0} cufka qorraxda"}
                 other{"{0} cufka qorraxda"}
             }
+            stone{
+                one{"{0} dhagax"}
+                other{"{0} dhagaxo"}
+            }
             ton{
-                dnam{"tan"}
                 one{"{0} tan"}
                 other{"{0} tan"}
             }
@@ -702,6 +797,11 @@ so{
                 one{"{0} milimitir maarkuri"}
                 other{"{0} milimitir maarkuri"}
             }
+            ofhg{
+                dnam{"ee merkuriga"}
+                one{"{0} ee merkuri"}
+                other{"{0} ee merkuri"}
+            }
             pound-force-per-square-inch{
                 dnam{"rodol halkii inji ee Isku weer ah"}
                 one{"{0} rodol halkii inji ee Isku weer ah"}
@@ -709,6 +809,11 @@ so{
             }
         }
         speed{
+            beaufort{
+                dnam{"Beaufort"}
+                one{"Beaufort {0}"}
+                other{"Beaufort {0}"}
+            }
             kilometer-per-hour{
                 dnam{"kiilomitir saacadiiba"}
                 one{"{0} kiilomitir saacadiiba"}
@@ -725,7 +830,6 @@ so{
                 other{"{0} mitir ilbiriqsigiiba"}
             }
             mile-per-hour{
-                dnam{"meyl saacadiiba"}
                 one{"{0} meyl saacadiiba"}
                 other{"{0} meyl saacadiiba"}
             }
@@ -766,12 +870,10 @@ so{
                 other{"{0} akre-fiit"}
             }
             barrel{
-                dnam{"foosto"}
                 one{"{0} foosto"}
                 other{"{0} foosto"}
             }
             bushel{
-                dnam{"cabirka bushels"}
                 one{"{0}cabirka bushel"}
                 other{"{0}cabirka bushels"}
             }
@@ -818,7 +920,6 @@ so{
                 other{"{0} yaardi saddex jibaaran"}
             }
             cup{
-                dnam{"koob"}
                 one{"{0} koob"}
                 other{"{0} koob"}
             }
@@ -843,9 +944,13 @@ so{
                 other{"{0} owniska dareeraha"}
             }
             fluid-ounce-imperial{
-                dnam{"imb. owniska dareeraha"}
                 one{"{0} imb. owniska dareeraha"}
                 other{"{0} imb. owniska dareeraha"}
+            }
+            fluid-ounce-metric{
+                dnam{"wiqaayadaha cabbirka dareeraha"}
+                one{"{0} wiqaayada cabbirka dareeraha"}
+                other{"{0} mwiqaayadaha cabbirka dareeraha"}
             }
             gallon{
                 dnam{"galaan"}
@@ -865,7 +970,6 @@ so{
                 other{"{0} hektolitar"}
             }
             liter{
-                dnam{"litar"}
                 one{"{0} litar"}
                 other{"{0} litar"}
                 per{"{0} litarkiiba"}
@@ -908,6 +1012,12 @@ so{
         }
     }
     unitsNarrow{
+        angle{
+            steradian{
+                one{"{0} sr"}
+                other{"{0} sr"}
+            }
+        }
         area{
             square-yard{
                 dnam{"yd²"}
@@ -915,22 +1025,37 @@ so{
         }
         concentr{
             item{
-                dnam{"shay"}
                 one{"{0}shay"}
                 other{"{0}shay"}
             }
+            katal{
+                one{"{0} kat"}
+                other{"{0} kat"}
+            }
             milligram-ofglucose-per-deciliter{
-                dnam{"mg/dL"}
                 one{"{0}mg/dL"}
                 other{"{0}mg/dL"}
             }
-            percent{
-                dnam{"%"}
+            ofglucose{
+                dnam{"Glc"}
             }
-            permillion{
+            part{
+                dnam{"qeyb"}
+                one{"{0} qeyb"}
+                other{"{0} qeyb"}
+            }
+            part-per-1e6{
                 dnam{"ppm"}
                 one{"{0}ppm"}
                 other{"{0}ppm#"}
+            }
+            part-per-1e9{
+                dnam{"qb"}
+                one{"{0}qb"}
+                other{"{0}qb"}
+            }
+            percent{
+                dnam{"%"}
             }
         }
         consumption{
@@ -941,7 +1066,6 @@ so{
             }
         }
         coordinate{
-            dnam{"jiho"}
             east{"{0}B"}
             north{"{0}W"}
             south{"{0}K"}
@@ -949,7 +1073,6 @@ so{
         }
         duration{
             day{
-                dnam{"mln"}
                 one{"{0}m"}
                 other{"{0}m"}
                 per{"{0}/m"}
@@ -979,11 +1102,12 @@ so{
                 one{"{0}b"}
                 other{"{0}b"}
             }
+            night{
+                one{"{0}habeen"}
+                other{"{0}habeeno"}
+            }
             quarter{
                 dnam{"Rubac"}
-                one{"{0} rubac"}
-                other{"{0} rubac"}
-                per{"{0}/rubac"}
             }
             second{
                 one{"{0}il"}
@@ -1001,9 +1125,21 @@ so{
                 other{"{0}s"}
             }
         }
+        energy{
+            becquerel{
+                one{"{0} Bq"}
+                other{"{0} Bq"}
+            }
+            calorie-it{
+                dnam{"cal-IT"}
+            }
+            foodcalorie{
+                one{"{0}Kal"}
+                other{"{0}Kal"}
+            }
+        }
         force{
             kilowatt-hour-per-100-kilometer{
-                dnam{"kWh/100km"}
                 one{"{0}kWh/100km"}
                 other{"{0}kWh/100km"}
             }
@@ -1014,6 +1150,14 @@ so{
                 one{"{0}dhibic"}
                 other{"{0}dhibic"}
             }
+            dot-per-centimeter{
+                one{"{0}dpcm"}
+                other{"{0}dpcm"}
+            }
+            dot-per-inch{
+                one{"{0}dhbi"}
+                other{"{0}dhbi"}
+            }
         }
         length{
             centimeter{
@@ -1021,16 +1165,20 @@ so{
                 other{"{0}cm"}
             }
             earth-radius{
-                dnam{"R⊕"}
                 one{"{0}R⊕"}
                 other{"{0}R⊕"}
+            }
+            fathom{
+                dnam{"fathom"}
+            }
+            furlong{
+                dnam{"furlong"}
             }
             kilometer{
                 one{"{0}km"}
                 other{"{0}km"}
             }
             meter{
-                dnam{"m"}
                 one{"{0}m"}
                 other{"{0}m"}
             }
@@ -1041,14 +1189,18 @@ so{
         }
         light{
             candela{
-                dnam{"cd"}
                 one{"{0}cd"}
                 other{"{0}cd"}
             }
             lumen{
-                dnam{"lm"}
                 one{"{0}lm"}
                 other{"{0}lm"}
+            }
+        }
+        magnetic{
+            weber{
+                one{"{0} Wb"}
+                other{"{0} Wb"}
             }
         }
         mass{
@@ -1058,13 +1210,17 @@ so{
                 other{"{0}gr"}
             }
             gram{
-                dnam{"garaam"}
                 one{"{0}g"}
                 other{"{0}g"}
             }
             kilogram{
                 one{"{0}kg"}
                 other{"{0}kg"}
+            }
+            stone{
+                dnam{"dx"}
+                one{"{0}dx"}
+                other{"{0}dx"}
             }
         }
         pressure{
@@ -1074,12 +1230,15 @@ so{
                 other{"{0}″ Hg"}
             }
             millimeter-ofhg{
-                dnam{"mmHg"}
                 one{"{0}mmHg"}
                 other{"{0}mmHg"}
             }
+            ofhg{
+                dnam{"ee Hg"}
+                one{"{0} ee Hg"}
+                other{"{0} ee Hg"}
+            }
             pound-force-per-square-inch{
-                dnam{"psi"}
                 one{"{0}psi"}
                 other{"{0}psi"}
             }
@@ -1087,8 +1246,14 @@ so{
         speed{
             kilometer-per-hour{
                 dnam{"km/s"}
-                one{"{0} km/s"}
-                other{"{0} km/s"}
+            }
+            knot{
+                one{"{0}nt"}
+                other{"{0}nt"}
+            }
+            light-speed{
+                one{"{0}nal"}
+                other{"{0}nal"}
             }
         }
         temperature{
@@ -1098,7 +1263,6 @@ so{
         }
         torque{
             pound-force-foot{
-                dnam{"lbf⋅ft"}
                 one{"{0}lbf⋅ft"}
                 other{"{0}lbf⋅ft"}
             }
@@ -1131,12 +1295,10 @@ so{
                 other{"{0}dr"}
             }
             jigger{
-                dnam{"jigger"}
                 one{"{0}jigger"}
                 other{"{0}jigger"}
             }
             liter{
-                dnam{"litar"}
                 one{"{0}L"}
                 other{"{0}L"}
             }
@@ -1146,7 +1308,6 @@ so{
                 other{"{0}pn"}
             }
             quart-imperial{
-                dnam{"qt Imp"}
                 one{"{0}qt-Imp."}
                 other{"{0}qt-Imp."}
             }
@@ -1181,13 +1342,15 @@ so{
             }
             radian{
                 dnam{"raadiyan"}
-                one{"{0} rad"}
-                other{"{0} rad"}
             }
             revolution{
                 dnam{"wreg"}
                 one{"{0} wreg"}
                 other{"{0} wreg"}
+            }
+            steradian{
+                one{"{0} sr"}
+                other{"{0} sr"}
             }
         }
         area{
@@ -1236,15 +1399,30 @@ so{
                 one{"{0} kr"}
                 other{"{0} kr"}
             }
-            milligram-ofglucose-per-deciliter{
-                dnam{"mg/dL"}
-                one{"{0} mg/dL"}
-                other{"{0} mg/dL"}
+            katal{
+                one{"{0} kat"}
+                other{"{0} kat"}
             }
             mole{
                 dnam{"mool"}
                 one{"{0} mool"}
                 other{"{0} mool"}
+            }
+            ofglucose{
+                dnam{"Glc"}
+            }
+            part{
+                dnam{"qeyb"}
+                one{"{0} qeyb"}
+                other{"{0} qeyb"}
+            }
+            part-per-1e6{
+                dnam{"qeyb/milyankiiba"}
+            }
+            part-per-1e9{
+                dnam{"qeybaha/bilyan"}
+                one{"{0} qb"}
+                other{"{0} qb"}
             }
             percent{
                 dnam{"boqolkiiba"}
@@ -1252,15 +1430,8 @@ so{
             permille{
                 dnam{"baarmiil"}
             }
-            permillion{
-                dnam{"qeyb/milyankiiba"}
-                one{"{0} ppm"}
-                other{"{0} ppm"}
-            }
             permyriad{
                 dnam{"bermiraad"}
-                one{"{0}‱"}
-                other{"{0}‱"}
             }
         }
         consumption{
@@ -1364,8 +1535,12 @@ so{
             }
             nanosecond{
                 dnam{"nanosek"}
-                one{"{0} ns"}
-                other{"{0} ns"}
+            }
+            night{
+                dnam{"habeeno"}
+                one{"{0} habeen"}
+                other{"{0} habeeno"}
+                per{"{0}/habeen"}
             }
             quarter{
                 dnam{"Rubuc"}
@@ -1407,6 +1582,10 @@ so{
             }
         }
         energy{
+            becquerel{
+                one{"{0} Bq"}
+                other{"{0} Bq"}
+            }
             british-thermal-unit{
                 dnam{"HKB"}
                 one{"{0} Hkb"}
@@ -1417,10 +1596,11 @@ so{
                 one{"{0} kal"}
                 other{"{0} kal"}
             }
+            calorie-it{
+                dnam{"cal-IT"}
+            }
             electronvolt{
                 dnam{"Elektarofoolt"}
-                one{"{0} eV"}
-                other{"{0} eV"}
             }
             foodcalorie{
                 dnam{"Kal"}
@@ -1443,29 +1623,29 @@ so{
                 one{"{0} KWs"}
                 other{"{0} KWs"}
             }
+            sievert{
+                one{"{0} Sv"}
+                other{"{0} Sv"}
+            }
         }
         force{
-            kilowatt-hour-per-100-kilometer{
-                dnam{"kWh/100km"}
-                one{"{0} kWh/100km"}
-                other{"{0} kWh/100km"}
-            }
             newton{
                 dnam{"nuyuuton"}
-                one{"{0} N"}
-                other{"{0} N"}
             }
             pound-force{
                 dnam{"rodol xoog"}
-                one{"{0} lbf"}
-                other{"{0} lbf"}
             }
         }
         graphics{
+            dot{
+                dnam{"Dhibicyo"}
+                one{"{0} dhiibic"}
+                other{"{0} dhibicyo"}
+            }
             dot-per-centimeter{
-                dnam{"dhsm"}
-                one{"dhsm"}
-                other{"{0} dhsm"}
+                dnam{"dpcm"}
+                one{"{0} dpcm"}
+                other{"{0} dpcm"}
             }
             dot-per-inch{
                 dnam{"dhbi"}
@@ -1482,6 +1662,12 @@ so{
             decimeter{
                 one{"{0}dm"}
                 other{"{0}dm"}
+            }
+            fathom{
+                dnam{"fathoms"}
+            }
+            furlong{
+                dnam{"furlongs"}
             }
             inch{
                 dnam{"injis"}
@@ -1535,13 +1721,23 @@ so{
             }
         }
         light{
+            candela{
+                dnam{"candela"}
+            }
+            lumen{
+                dnam{"lumen"}
+            }
             lux{
                 dnam{"laks"}
             }
             solar-luminosity{
                 dnam{"iftiinada qorraxda"}
-                one{"{0} L☉"}
-                other{"{0} L☉"}
+            }
+        }
+        magnetic{
+            weber{
+                one{"{0} Wb"}
+                other{"{0} Wb"}
             }
         }
         mass{
@@ -1583,6 +1779,11 @@ so{
                 one{"{0} CQ"}
                 other{"{0} CQ"}
             }
+            stone{
+                dnam{"dhagaxo"}
+                one{"{0} dx"}
+                other{"{0} dx"}
+            }
             ton{
                 dnam{"tan"}
             }
@@ -1608,11 +1809,6 @@ so{
                 one{"{0} hBa"}
                 other{"{0} hBa"}
             }
-            inch-ofhg{
-                dnam{"inHg"}
-                one{"{0} inHg"}
-                other{"{0} inHg"}
-            }
             kilopascal{
                 dnam{"kBa"}
                 one{"{0} kBa"}
@@ -1628,10 +1824,10 @@ so{
                 one{"{0} mmHg"}
                 other{"{0} mmHg"}
             }
-            pound-force-per-square-inch{
-                dnam{"psi"}
-                one{"{0} psi"}
-                other{"{0} psi"}
+            ofhg{
+                dnam{"ee Hg"}
+                one{"{0} ee Hg"}
+                other{"{0} ee Hg"}
             }
         }
         speed{
@@ -1644,6 +1840,11 @@ so{
                 dnam{"nt"}
                 one{"{0} nt"}
                 other{"{0} nt"}
+            }
+            light-speed{
+                dnam{"nal"}
+                one{"{0} nal"}
+                other{"{0} nal"}
             }
             meter-per-second{
                 dnam{"mitir/ilbrqsi"}
@@ -1662,18 +1863,6 @@ so{
             }
             fahrenheit{
                 dnam{"deg. F"}
-            }
-        }
-        torque{
-            newton-meter{
-                dnam{"N⋅m"}
-                one{"{0} N⋅m"}
-                other{"{0} N⋅m"}
-            }
-            pound-force-foot{
-                dnam{"lbf⋅ft"}
-                one{"{0} lbf⋅ft"}
-                other{"{0} lbf⋅ft"}
             }
         }
         volume{
@@ -1736,7 +1925,6 @@ so{
                 dnam{"gal"}
                 one{"{0} gal"}
                 other{"{0} gal"}
-                per{"{0}/gal US"}
             }
             gallon-imperial{
                 dnam{"imb. gal"}

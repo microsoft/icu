@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 te{
     zoneStrings{
         "Africa:Abidjan"{
@@ -58,7 +58,7 @@ te{
             ec{"దార్ ఎస్ సలామ్"}
         }
         "Africa:Djibouti"{
-            ec{"డిజ్బౌటి"}
+            ec{"జిబూటి"}
         }
         "Africa:Douala"{
             ec{"డౌలా"}
@@ -258,6 +258,9 @@ te{
         "America:Chihuahua"{
             ec{"చువావా"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"సియుదాద్ హ్వారెజ్"}
+        }
         "America:Coral_Harbour"{
             ec{"అటికోకన్"}
         }
@@ -266,6 +269,9 @@ te{
         }
         "America:Costa_Rica"{
             ec{"కోస్టా రికా"}
+        }
+        "America:Coyhaique"{
+            ec{"కొయాయ్కె"}
         }
         "America:Creston"{
             ec{"క్రెస్టన్"}
@@ -462,9 +468,6 @@ te{
         "America:New_York"{
             ec{"న్యూయార్క్"}
         }
-        "America:Nipigon"{
-            ec{"నిపిగోన్"}
-        }
         "America:Nome"{
             ec{"నోమ్"}
         }
@@ -485,9 +488,6 @@ te{
         }
         "America:Panama"{
             ec{"పనామా"}
-        }
-        "America:Pangnirtung"{
-            ec{"పాంగ్‌నీర్‌టుంగ్"}
         }
         "America:Paramaribo"{
             ec{"పరామారిబో"}
@@ -510,9 +510,6 @@ te{
         "America:Punta_Arenas"{
             ec{"పుంటా అరీనస్"}
         }
-        "America:Rainy_River"{
-            ec{"రెయినీ రివర్"}
-        }
         "America:Rankin_Inlet"{
             ec{"రన్‌కిన్ ఇన్‌లెట్"}
         }
@@ -527,9 +524,6 @@ te{
         }
         "America:Rio_Branco"{
             ec{"రియో బ్రాంకో"}
-        }
-        "America:Santa_Isabel"{
-            ec{"శాంటా ఇసబెల్"}
         }
         "America:Santarem"{
             ec{"సాంటరెమ్"}
@@ -576,9 +570,6 @@ te{
         "America:Thule"{
             ec{"థులే"}
         }
-        "America:Thunder_Bay"{
-            ec{"థండర్ బే"}
-        }
         "America:Tijuana"{
             ec{"టిజువానా"}
         }
@@ -600,9 +591,6 @@ te{
         "America:Yakutat"{
             ec{"యకుటాట్"}
         }
-        "America:Yellowknife"{
-            ec{"ఎల్లోనైఫ్"}
-        }
         "Antarctica:Casey"{
             ec{"కేసీ"}
         }
@@ -613,7 +601,7 @@ te{
             ec{"డ్యూమాంట్ డి’ఉర్విల్లే"}
         }
         "Antarctica:Macquarie"{
-            ec{"మకారీ"}
+            ec{"మకారీ దీవి"}
         }
         "Antarctica:Mawson"{
             ec{"మాసన్"}
@@ -692,9 +680,6 @@ te{
         }
         "Asia:Chita"{
             ec{"చితా"}
-        }
-        "Asia:Choibalsan"{
-            ec{"చోయిబాల్సన్"}
         }
         "Asia:Colombo"{
             ec{"కొలంబో"}
@@ -867,6 +852,9 @@ te{
         "Asia:Ulaanbaatar"{
             ec{"ఉలాన్బాటర్"}
         }
+        "Asia:Urumqi"{
+            ec{"ఉరుమ్‌కీ"}
+        }
         "Asia:Ust-Nera"{
             ec{"అస్ట్-నెరా"}
         }
@@ -924,9 +912,6 @@ te{
         "Australia:Broken_Hill"{
             ec{"బ్రోకెన్ హిల్"}
         }
-        "Australia:Currie"{
-            ec{"కర్రీ"}
-        }
         "Australia:Darwin"{
             ec{"డార్విన్"}
         }
@@ -940,7 +925,7 @@ te{
             ec{"లిండెమాన్"}
         }
         "Australia:Lord_Howe"{
-            ec{"లార్డ్ హౌ"}
+            ec{"లార్డ్ హౌ దీవి"}
         }
         "Australia:Melbourne"{
             ec{"మెల్బోర్న్"}
@@ -955,7 +940,7 @@ te{
             ls{"సమన్వయ సార్వజనీన సమయం"}
         }
         "Etc:Unknown"{
-            ec{"తెలియని నగరం"}
+            ec{"తెలియని లొకేషన్"}
         }
         "Europe:Amsterdam"{
             ec{"ఆమ్‌స్టర్‌డామ్"}
@@ -1109,9 +1094,6 @@ te{
         "Europe:Ulyanovsk"{
             ec{"ఉల్యనోవ్స్క్"}
         }
-        "Europe:Uzhgorod"{
-            ec{"ఉజ్‌హోరోడ్"}
-        }
         "Europe:Vaduz"{
             ec{"వాడుజ్"}
         }
@@ -1133,9 +1115,6 @@ te{
         "Europe:Zagreb"{
             ec{"జాగ్రెబ్"}
         }
-        "Europe:Zaporozhye"{
-            ec{"జపరోజై"}
-        }
         "Europe:Zurich"{
             ec{"జ్యూరిచ్"}
         }
@@ -1146,10 +1125,10 @@ te{
             ec{"చాగోస్"}
         }
         "Indian:Christmas"{
-            ec{"క్రిస్మస్"}
+            ec{"క్రిస్మస్ దీవి"}
         }
         "Indian:Cocos"{
-            ec{"కోకోస్"}
+            ec{"కోకోస్ దీవులు"}
         }
         "Indian:Comoro"{
             ec{"కొమోరో"}
@@ -1182,7 +1161,7 @@ te{
             ec{"బొగెయిన్‌విల్లే"}
         }
         "Pacific:Chatham"{
-            ec{"చాథమ్"}
+            ec{"చాథమ్ దీవులు"}
         }
         "Pacific:Easter"{
             ec{"ఈస్టర్"}
@@ -1191,7 +1170,7 @@ te{
             ec{"ఇఫేట్"}
         }
         "Pacific:Enderbury"{
-            ec{"ఎండర్బెరీ"}
+            ec{"క్యాంటన్ దీవి"}
         }
         "Pacific:Fakaofo"{
             ec{"ఫాకోఫో"}
@@ -1216,12 +1195,6 @@ te{
         }
         "Pacific:Honolulu"{
             ec{"హోనోలులు"}
-        }
-        "Pacific:Johnston"{
-            ec{"జాన్సటన్"}
-        }
-        "Pacific:Kanton"{
-            ec{"కాంతోన్"}
         }
         "Pacific:Kiritimati"{
             ec{"కిరీటిమాటి"}
@@ -1248,7 +1221,7 @@ te{
             ec{"నియూ"}
         }
         "Pacific:Norfolk"{
-            ec{"నోర్ఫోక్"}
+            ec{"నార్ఫక్ దీవి"}
         }
         "Pacific:Noumea"{
             ec{"నౌమియా"}
@@ -1287,10 +1260,10 @@ te{
             ec{"చుక్"}
         }
         "Pacific:Wake"{
-            ec{"వేక్"}
+            ec{"వేక్ దీవి"}
         }
         "Pacific:Wallis"{
-            ec{"వాల్లిస్"}
+            ec{"వాల్లిస్ & ఫ్యూటునా"}
         }
         "meta:Acre"{
             ld{"ఏకర్ వేసవి సమయం"}
@@ -1310,9 +1283,7 @@ te{
             ls{"దక్షిణ ఆఫ్రికా ప్రామాణిక సమయం"}
         }
         "meta:Africa_Western"{
-            ld{"పశ్చిమ ఆఫ్రికా వేసవి సమయం"}
-            lg{"పశ్చిమ ఆఫ్రికా సమయం"}
-            ls{"పశ్చిమ ఆఫ్రికా ప్రామాణిక సమయం"}
+            ls{"పశ్చిమ ఆఫ్రికా సమయం"}
         }
         "meta:Alaska"{
             ld{"అలాస్కా పగటి వెలుతురు సమయం"}
@@ -1355,9 +1326,9 @@ te{
             ls{"అనాన్డ్రి ప్రామాణిక సమయం"}
         }
         "meta:Apia"{
-            ld{"ఏపియా పగటి సమయం"}
-            lg{"ఏపియా సమయం"}
-            ls{"ఏపియా ప్రామాణిక సమయం"}
+            ld{"సమోవా పగటి వెలుతురు సమయం"}
+            lg{"సమోవా సమయం"}
+            ls{"సమోవా ప్రామాణిక సమయం"}
         }
         "meta:Aqtau"{
             ld{"అక్వాటు వేసవి సమయం"}
@@ -1441,7 +1412,7 @@ te{
             ls{"బ్రెజిలియా ప్రామాణిక సమయం"}
         }
         "meta:Brunei"{
-            ls{"బ్రూనే దరుసలామ్ సమయం"}
+            ls{"బ్రూనై దారుసలామ్ సమయం"}
         }
         "meta:Cape_Verde"{
             ld{"కేప్ వెర్డె వేసవి సమయం"}
@@ -1465,11 +1436,6 @@ te{
             ld{"చైనా పగటి వెలుతురు సమయం"}
             lg{"చైనా సమయం"}
             ls{"చైనా ప్రామాణిక సమయం"}
-        }
-        "meta:Choibalsan"{
-            ld{"చోయిబల్సాన్ వేసవి సమయం"}
-            lg{"చోయిబల్సాన్ సమయం"}
-            ls{"చోయిబల్సాన్ ప్రామాణిక సమయం"}
         }
         "meta:Christmas"{
             ls{"క్రిస్మస్ దీవి సమయం"}
@@ -1579,6 +1545,9 @@ te{
         "meta:Guyana"{
             ls{"గయానా సమయం"}
         }
+        "meta:Hawaii"{
+            ls{"హవాయ్-అల్యూషియన్ ప్రామాణిక సమయం"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"హవాయ్-అల్యూషియన్ పగటి వెలుతురు సమయం"}
             lg{"హవాయ్-అల్యూషియన్ సమయం"}
@@ -1638,6 +1607,9 @@ te{
             lg{"పెట్రోపావ్లోవ్స్క్-కామ్ఛాట్స్కి సమయం"}
             ls{"పెట్రోపావ్లోవ్స్క్-కామ్ఛాట్స్కి ప్రామాణిక సమయం"}
         }
+        "meta:Kazakhstan"{
+            ls{"కజకిస్తాన్ సమయం"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"తూర్పు కజకి‌స్తాన్ సమయం"}
         }
@@ -1667,7 +1639,7 @@ te{
             ls{"లైన్ దీవుల సమయం"}
         }
         "meta:Lord_Howe"{
-            ld{"లార్డ్ హోవ్ పగటి సమయం"}
+            ld{"లార్డ్ హోవ్ పగటి వెలుతురు సమయం"}
             lg{"లార్డ్ హోవ్ సమయం"}
             ls{"లార్డ్ హోవ్ ప్రామాణిక సమయం"}
         }
@@ -1675,9 +1647,6 @@ te{
             ld{"మకావ్ వేసవి సమయం"}
             lg{"మకావ్ సమయం"}
             ls{"మకావ్ ప్రామాణిక సమయం"}
-        }
-        "meta:Macquarie"{
-            ls{"మాక్క్వారీ దీవి సమయం"}
         }
         "meta:Magadan"{
             ld{"మగడాన్ వేసవి సమయం"}
@@ -1703,11 +1672,6 @@ te{
         }
         "meta:Mawson"{
             ls{"మాసన్ సమయం"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"వాయువ్య మెక్సికో పగటి వెలుతురు సమయం"}
-            lg{"వాయువ్య మెక్సికో సమయం"}
-            ls{"వాయువ్య మెక్సికో ప్రామాణిక సమయం"}
         }
         "meta:Mexico_Pacific"{
             ld{"మెక్సికన్ పసిఫిక్ పగటి వెలుతురు సమయం"}
@@ -1752,7 +1716,7 @@ te{
             ls{"నియూ సమయం"}
         }
         "meta:Norfolk"{
-            ld{"నార్ఫోక్ దీవి పగటి సమయం"}
+            ld{"నార్ఫోక్ దీవి పగటి వెలుతురు సమయం"}
             lg{"నార్ఫోక్ దీవి సమయం"}
             ls{"నార్ఫోక్ దీవి ప్రామాణిక సమయం"}
         }
@@ -1815,7 +1779,7 @@ te{
             ls{"పొనేప్ సమయం"}
         }
         "meta:Pyongyang"{
-            ls{"ప్యోంగాంగ్ సమయం"}
+            ls{"ఉత్తర కొరియా సమయం"}
         }
         "meta:Qyzylorda"{
             ld{"కిజిలోర్డా వేసవి సమయం"}
@@ -1865,9 +1829,9 @@ te{
             ls{"తహితి సమయం"}
         }
         "meta:Taipei"{
-            ld{"తైపీ పగటి వెలుతురు సమయం"}
-            lg{"తైపీ సమయం"}
-            ls{"తైపీ ప్రామాణిక సమయం"}
+            ld{"తైవాన్ పగటి వెలుతురు సమయం"}
+            lg{"తైవాన్ సమయం"}
+            ls{"తైవాన్ ప్రామాణిక సమయం"}
         }
         "meta:Tajikistan"{
             ls{"తజికిస్తాన్ సమయం"}
@@ -1882,6 +1846,11 @@ te{
         }
         "meta:Truk"{
             ls{"చక్ సమయం"}
+        }
+        "meta:Turkey"{
+            ld{"టర్కీ వేసవి సమయం"}
+            lg{"టర్కీ సమయం"}
+            ls{"టర్కీ ప్రామాణిక సమయం"}
         }
         "meta:Turkmenistan"{
             ld{"తుర్క్‌మెనిస్తాన్ వేసవి సమయం"}
@@ -1941,12 +1910,8 @@ te{
         "meta:Yukon"{
             ls{"యుకోన్ సమయం"}
         }
-        fallbackFormat{"{1} ({0})"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
         regionFormat{"{0} సమయం"}
-        regionFormatDaylight{"{0} పగటి వెలుతురు సమయం"}
+        regionFormatDaylight{"{0} పగటి కాంతి సమయం"}
         regionFormatStandard{"{0} ప్రామాణిక సమయం"}
     }
 }

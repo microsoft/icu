@@ -1,17 +1,8 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 supplementalData:table(nofallback){
     CurrencyMap{
-        029{
-            {
-                from:intvector{
-                    -507,
-                    95619072,
-                }
-                id{"XCD"}
-            }
-        }
         AC{
             {
                 from:intvector{
@@ -553,10 +544,21 @@ supplementalData:table(nofallback){
         BG{
             {
                 from:intvector{
+                    411,
+                    1994041344,
+                }
+                id{"EUR"}
+            }
+            {
+                from:intvector{
                     216,
                     -875103232,
                 }
                 id{"BGN"}
+                to:intvector{
+                    412,
+                    377474047,
+                }
             }
             {
                 from:intvector{
@@ -1168,6 +1170,10 @@ supplementalData:table(nofallback){
                     1468155904,
                 }
                 id{"CUC"}
+                to:intvector{
+                    377,
+                    -905637889,
+                }
             }
             {
                 from:intvector{
@@ -1204,10 +1210,21 @@ supplementalData:table(nofallback){
         CW{
             {
                 from:intvector{
+                    405,
+                    -363122176,
+                }
+                id{"XCG"}
+            }
+            {
+                from:intvector{
                     299,
                     -1821388800,
                 }
                 id{"ANG"}
+                to:intvector{
+                    407,
+                    -1004256769,
+                }
             }
         }
         CX{
@@ -1951,7 +1968,7 @@ supplementalData:table(nofallback){
             {
                 from:intvector{
                     389,
-                    1788921856,
+                    1785321856,
                 }
                 id{"EUR"}
             }
@@ -1963,7 +1980,7 @@ supplementalData:table(nofallback){
                 id{"HRK"}
                 to:intvector{
                     389,
-                    -1210045441,
+                    -1300045441,
                 }
             }
             {
@@ -3793,8 +3810,8 @@ supplementalData:table(nofallback){
                 }
                 id{"SLL"}
                 to:intvector{
-                    391,
-                    974987263,
+                    396,
+                    -1034816513,
                 }
             }
             {
@@ -3954,10 +3971,21 @@ supplementalData:table(nofallback){
         SX{
             {
                 from:intvector{
+                    405,
+                    -363122176,
+                }
+                id{"XCG"}
+            }
+            {
+                from:intvector{
                     299,
                     -1821388800,
                 }
                 id{"ANG"}
+                to:intvector{
+                    407,
+                    -1004256769,
+                }
             }
         }
         SY{
@@ -4710,6 +4738,13 @@ supplementalData:table(nofallback){
         ZW{
             {
                 from:intvector{
+                    400,
+                    1286681600,
+                }
+                id{"ZWG"}
+            }
+            {
+                from:intvector{
                     288,
                     -1751148544,
                 }
@@ -4722,8 +4757,8 @@ supplementalData:table(nofallback){
                 }
                 id{"ZWL"}
                 to:intvector{
-                    288,
-                    -1664748545,
+                    401,
+                    -1428052993,
                 }
             }
             {
@@ -4761,6 +4796,14 @@ supplementalData:table(nofallback){
             }
         }
         ZZ{
+            {
+                from:intvector{
+                    406,
+                    -1043689472,
+                }
+                id{"XAD"}
+                tender{"false"}
+            }
             {
                 id{"XAG"}
                 tender{"false"}
@@ -4917,7 +4960,7 @@ supplementalData:table(nofallback){
             0,
         }
         COP:intvector{
-            2,
+            0,
             0,
             0,
             0,
@@ -4971,13 +5014,13 @@ supplementalData:table(nofallback){
             0,
         }
         HUF:intvector{
-            2,
             0,
             0,
             0,
+            5,
         }
         IDR:intvector{
-            2,
+            0,
             0,
             0,
             0,
@@ -5115,7 +5158,7 @@ supplementalData:table(nofallback){
             0,
         }
         PKR:intvector{
-            2,
+            0,
             0,
             0,
             0,
@@ -5127,7 +5170,7 @@ supplementalData:table(nofallback){
             0,
         }
         RSD:intvector{
-            0,
+            2,
             0,
             0,
             0,
@@ -5246,10 +5289,22 @@ supplementalData:table(nofallback){
             0,
             0,
         }
+        XAD:intvector{
+            2,
+            0,
+            2,
+            0,
+        }
         XAF:intvector{
             0,
             0,
             0,
+            0,
+        }
+        XAU:intvector{
+            2,
+            0,
+            2,
             0,
         }
         XOF:intvector{

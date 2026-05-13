@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 zh_Hans_SG{
     calendar{
         buddhist{
@@ -24,10 +24,16 @@ zh_Hans_SG{
                 "ahmmssz",
                 "ahmmss",
                 "ahmm",
-                "GyMEEEEd",
-                "GyMd",
-                "GyMd",
+                "GyMMMEEEEd",
+                "GyMMMd",
+                "GyMMMd",
                 "GyyMd",
+            }
+            intervalFormats{
+                Hv{
+                    H{"vHH–HH"}
+                }
+                fallback{"{0}至{1}"}
             }
         }
         chinese{
@@ -96,9 +102,9 @@ zh_Hans_SG{
                 "ahmmssz",
                 "ahmmss",
                 "ahmm",
-                "GyMEEEEd",
-                "GyMd",
-                "GyMd",
+                "GyMMMEEEEd",
+                "GyMMMd",
+                "GyMMMd",
                 "GGGGGyyMMdd",
             }
             availableFormats{
@@ -165,9 +171,9 @@ zh_Hans_SG{
                 "ahmmssz",
                 "ahmmss",
                 "ahmm",
-                "yMEEEEd",
-                "yMd",
-                "yMd",
+                "yMMMEEEEd",
+                "yMMMd",
+                "yMMMd",
                 "yyMMdd",
             }
             availableFormats{
@@ -238,9 +244,9 @@ zh_Hans_SG{
                 "ahmmssz",
                 "ahmmss",
                 "ahmm",
-                "GyMEEEEd",
-                "GyMd",
-                "GyMd",
+                "GyMMMEEEEd",
+                "GyMMMd",
+                "GyMMMd",
                 "GyyMd",
             }
         }
@@ -265,14 +271,44 @@ zh_Hans_SG{
                 "ahmmssz",
                 "ahmmss",
                 "ahmm",
-                "GyMEEEEd",
-                "GyMd",
-                "GyMd",
+                "GyMMMEEEEd",
+                "GyMMMd",
+                "GyMMMd",
                 "GyyMd",
             }
             availableFormats{
                 MEd{"M/dE"}
                 Md{"M/d"}
+            }
+        }
+        roc{
+            DateTimePatterns{
+                "zzzz ah:mm:ss",
+                "z ah:mm:ss",
+                "ah:mm:ss",
+                "ah:mm",
+                "Gy年M月d日EEEE",
+                "Gy年M月d日",
+                "Gy年M月d日",
+                "Gd/M/yy",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+            }
+            DateTimeSkeletons{
+                "ahmmsszzzz",
+                "ahmmssz",
+                "ahmmss",
+                "ahmm",
+                "GyMMMEEEEd",
+                "GyMMMd",
+                "GyMMMd",
+                "GyyMd",
+            }
+            availableFormats{
+                MMM{"M月"}
             }
         }
     }

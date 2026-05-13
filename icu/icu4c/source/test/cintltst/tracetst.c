@@ -80,11 +80,11 @@ static void test_format(const char *format, int32_t bufCap, int32_t indent,
 
     /* check that local buffers are big enough for the test case */
     if ((int32_t)sizeof(buf) <= bufCap) {
-        log_err("At file:line %s:%d, requested bufCap too large.\n", __FILE__, line);
+        log_err("At file:line %s:%d, requested bufCap too large.\n");
         return;
     }
     if (strlen(result) >= sizeof(expectedResult)) {
-        log_err("At file:line %s:%d, expected result too large.\n", __FILE__, line);
+        log_err("At file:line %s:%d, expected result too large.\n");
         return;
     }
 
@@ -209,7 +209,7 @@ static void pseudo_ucnv_close(UConverter * cnv)
 /*
  *   TestTraceAPI
  */
-static void TestTraceAPI() {
+static void TestTraceAPI(void) {
 
 
     UTraceEntry   *originalTEntryFunc;
@@ -227,17 +227,17 @@ static void TestTraceAPI() {
 
 
     /* verify that set/get of tracing functions returns what was set.  */
-    {
+    if (originalTContext != NULL) {
         UTraceEntry *e;
         UTraceExit  *x;
         UTraceData  *d;
         const void  *context;
         const void  *newContext = (const char *)originalTContext + 1;
-        
+
         TEST_ASSERT(originalTEntryFunc != testTraceEntry);
         TEST_ASSERT(originalTExitFunc != testTraceExit);
         TEST_ASSERT(originalTDataFunc != testTraceData);
-        
+
         utrace_setFunctions(newContext, testTraceEntry, testTraceExit, testTraceData);
         utrace_getFunctions(&context, &e, &x, &d);
         TEST_ASSERT(e == testTraceEntry);
@@ -288,9 +288,15 @@ static void TestTraceAPI() {
         TEST_ASSERT(U_SUCCESS(status));
         pseudo_ucnv_close(cnv);
 #endif
-        TEST_ASSERT(gTraceEntryCount > 0);
-        TEST_ASSERT(gTraceExitCount  > 0);
-        TEST_ASSERT(gTraceDataCount  > 0);
+        if (originalTContext == NULL) {
+            TEST_ASSERT(gTraceEntryCount == 0);
+            TEST_ASSERT(gTraceExitCount  == 0);
+            TEST_ASSERT(gTraceDataCount  == 0);
+        } else {
+            TEST_ASSERT(gTraceEntryCount > 0);
+            TEST_ASSERT(gTraceExitCount  > 0);
+            TEST_ASSERT(gTraceDataCount  > 0);
+        }
         TEST_ASSERT(gFnNameError   == false);
         TEST_ASSERT(gFnFormatError == false);
     }

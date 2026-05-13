@@ -32,9 +32,8 @@
       <TypeLibraryName>$(OutDir)\iotest.tlb</TypeLibraryName>
     </Midl>
     <ClCompile>
-      <AdditionalIncludeDirectories>..\..\..\include;..\..\tools\ctestfw;..\..\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\tools\ctestfw;..\..\common;..\..\i18n;..\..\io;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>U_ATTRIBUTE_DEPRECATED=;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <WarningLevel>Level3</WarningLevel>
       <CompileAs>Default</CompileAs>
       <PrecompiledHeaderOutputFile>$(OutDir)\iotest.pch</PrecompiledHeaderOutputFile>
@@ -51,7 +50,6 @@
   <!-- Options that are common to all 'Debug' project configurations -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
-      <BrowseInformation>true</BrowseInformation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -72,7 +70,6 @@
     <ClCompile Include="filetst.c" />
     <ClCompile Include="iotest.cpp" />
     <ClCompile Include="stream.cpp">
-      <DisableLanguageExtensions>false</DisableLanguageExtensions>
     </ClCompile>
     <ClCompile Include="strtst.c" />
     <ClCompile Include="trnstst.c" />

@@ -47,7 +47,7 @@
 class DictionaryTriePerfTest : public UPerfTest {
 public:
     DictionaryTriePerfTest(int32_t argc, const char *argv[], UErrorCode &status)
-            : UPerfTest(argc, argv, NULL, 0, "", status), numTextLines(0) {
+            : UPerfTest(argc, argv, nullptr, 0, "", status), numTextLines(0) {
         if(hasFile()) {
             getLines(status);
             for(int32_t i=0; i<numLines; ++i) {
@@ -56,7 +56,7 @@ public:
                     ++numTextLines;
                     // Remove trailing CR LF.
                     int32_t len=lines[i].len;
-                    UChar c;
+                    char16_t c;
                     while(len>0 && ((c=lines[i].name[len-1])==0xa || c==0xd)) {
                         --len;
                     }
@@ -66,11 +66,11 @@ public:
         }
     }
 
-    virtual UPerfFunction *runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL);
+    UPerfFunction* runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
 
     const char *getSourceDir() const { return sourceDir; }
 
-    UBool hasFile() const { return ucharBuf!=NULL; }
+    UBool hasFile() const { return ucharBuf!=nullptr; }
     const ULine *getCachedLines() const { return lines; }
     int32_t getNumLines() const { return numLines; }
     int32_t numTextLines;  // excluding comment lines
@@ -99,7 +99,7 @@ public:
 
     // virtual void call(UErrorCode* pErrorCode) { ... }
 
-    virtual long getOperationsPerIteration() {
+    long getOperationsPerIteration() override {
         return pkg.getItemCount();
     }
 
@@ -151,15 +151,15 @@ public:
             itemNames.append("icudt46l/", errorCode);
             itemNames.append(name, strlen(name)+1, errorCode);
         }
-        printf("size of item names: %6ld\n", (long)itemNames.length());
-        printf("size of TOC:        %6ld\n", (long)(count*8));
-        printf("total index size:   %6ld\n", (long)(itemNames.length()+count*8));
+        printf("size of item names: %6ld\n", static_cast<long>(itemNames.length()));
+        printf("size of TOC:        %6ld\n", static_cast<long>(count * 8));
+        printf("total index size:   %6ld\n", static_cast<long>(itemNames.length() + count * 8));
     }
     virtual ~BinarySearchPackageLookup() {
         delete[] toc;
     }
 
-    virtual void call(UErrorCode * /*pErrorCode*/) {
+    void call(UErrorCode* /*pErrorCode*/) override {
         int32_t count=pkg.getItemCount();
         const char *itemNameChars=itemNames.data();
         const char *name=itemNameChars;
@@ -192,8 +192,8 @@ static int32_t strcmpAfterPrefix(const char *s1, const char *s2, int32_t &prefix
     s2+=pl;
     int32_t cmp=0;
     for(;;) {
-        int32_t c1=(uint8_t)*s1++;
-        int32_t c2=(uint8_t)*s2++;
+        int32_t c1 = static_cast<uint8_t>(*s1++);
+        int32_t c2 = static_cast<uint8_t>(*s2++);
         cmp=c1-c2;
         if(cmp!=0 || c1==0) {  // different or done
             break;
@@ -249,7 +249,7 @@ public:
     PrefixBinarySearchPackageLookup(const DictionaryTriePerfTest &perf)
             : BinarySearchPackageLookup(perf) {}
 
-    virtual void call(UErrorCode * /*pErrorCode*/) {
+    void call(UErrorCode* /*pErrorCode*/) override {
         int32_t count=pkg.getItemCount();
         const char *itemNameChars=itemNames.data();
         const char *name=itemNameChars;
@@ -297,16 +297,16 @@ public:
             itemNames.append(0, errorCode);
         }
         int32_t length=builder->buildStringPiece(USTRINGTRIE_BUILD_SMALL, errorCode).length();
-        printf("size of BytesTrie:   %6ld\n", (long)length);
+        printf("size of BytesTrie:   %6ld\n", static_cast<long>(length));
         // count+1: +1 for the last-item limit offset which we should have always had
-        printf("size of dataOffsets:%6ld\n", (long)((count+1)*4));
-        printf("total index size:   %6ld\n", (long)(length+(count+1)*4));
+        printf("size of dataOffsets:%6ld\n", static_cast<long>((count + 1) * 4));
+        printf("total index size:   %6ld\n", static_cast<long>(length + (count + 1) * 4));
     }
     virtual ~BytesTriePackageLookup() {
         delete builder;
     }
 
-    virtual void call(UErrorCode *pErrorCode) {
+    void call(UErrorCode* pErrorCode) override {
         int32_t count=pkg.getItemCount();
         const char *nameTrieBytes=builder->buildStringPiece(USTRINGTRIE_BUILD_SMALL, *pErrorCode).data();
         const char *name=itemNames.data();
@@ -331,7 +331,7 @@ class DictLookup : public UPerfFunction {
 public:
     DictLookup(const DictionaryTriePerfTest &perfTest) : perf(perfTest) {}
 
-    virtual long getOperationsPerIteration() {
+    long getOperationsPerIteration() override {
         return perf.numTextLines;
     }
 
@@ -352,7 +352,7 @@ ucharsTrieMatches(UCharsTrie &trie,
     UChar32 c=utext_next32(text);
     // Notes:
     // a) CompactTrieDictionary::matches() does not check for U_SENTINEL.
-    // b) It also ignores non-BMP code points by casting to UChar!
+    // b) It also ignores non-BMP code points by casting to char16_t!
     if(c<0) {
         return 0;
     }
@@ -380,7 +380,7 @@ ucharsTrieMatches(UCharsTrie &trie,
         UChar32 c=utext_next32(text);
         // Notes:
         // a) CompactTrieDictionary::matches() does not check for U_SENTINEL.
-        // b) It also ignores non-BMP code points by casting to UChar!
+        // b) It also ignores non-BMP code points by casting to char16_t!
         if(c<0) {
             break;
         }
@@ -406,7 +406,7 @@ ucharsTrieMatches(UCharsTrie &trie,
 class UCharsTrieDictLookup : public DictLookup {
 public:
     UCharsTrieDictLookup(const DictionaryTriePerfTest &perfTest)
-            : DictLookup(perfTest), trie(NULL) {
+            : DictLookup(perfTest), trie(nullptr) {
         IcuToolErrorCode errorCode("UCharsTrieDictLookup()");
         builder=new UCharsTrieBuilder(errorCode);
         const ULine *lines=perf.getCachedLines();
@@ -420,7 +420,7 @@ public:
         }
         UnicodeString trieUChars;
         int32_t length=builder->buildUnicodeString(USTRINGTRIE_BUILD_SMALL, trieUChars, errorCode).length();
-        printf("size of UCharsTrie:          %6ld bytes\n", (long)length*2);
+        printf("size of UCharsTrie:          %6ld bytes\n", static_cast<long>(length) * 2);
         trie=builder->build(USTRINGTRIE_BUILD_SMALL, errorCode);
     }
 
@@ -439,7 +439,7 @@ public:
     UCharsTrieDictMatches(const DictionaryTriePerfTest &perfTest)
             : UCharsTrieDictLookup(perfTest) {}
 
-    virtual void call(UErrorCode *pErrorCode) {
+    void call(UErrorCode* pErrorCode) override {
         UText text=UTEXT_INITIALIZER;
         int32_t lengths[20];
         const ULine *lines=perf.getCachedLines();
@@ -454,7 +454,7 @@ public:
             ucharsTrieMatches(*trie, &text, lines[i].len,
                               lengths, count, UPRV_LENGTHOF(lengths));
             if(count==0 || lengths[count-1]!=lines[i].len) {
-                fprintf(stderr, "word %ld (0-based) not found\n", (long)i);
+                fprintf(stderr, "word %ld (0-based) not found\n", static_cast<long>(i));
             }
         }
     }
@@ -465,7 +465,7 @@ public:
     UCharsTrieDictContains(const DictionaryTriePerfTest &perfTest)
             : UCharsTrieDictLookup(perfTest) {}
 
-    virtual void call(UErrorCode * /*pErrorCode*/) {
+    void call(UErrorCode* /*pErrorCode*/) override {
         const ULine *lines=perf.getCachedLines();
         int32_t numLines=perf.getNumLines();
         for(int32_t i=0; i<numLines; ++i) {
@@ -474,7 +474,7 @@ public:
                 continue;
             }
             if(!USTRINGTRIE_HAS_VALUE(trie->reset().next(lines[i].name, lines[i].len))) {
-                fprintf(stderr, "word %ld (0-based) not found\n", (long)i);
+                fprintf(stderr, "word %ld (0-based) not found\n", static_cast<long>(i));
             }
         }
     }
@@ -490,13 +490,13 @@ static inline int32_t thaiCharToByte(UChar32 c) {
     }
 }
 
-static UBool thaiWordToBytes(const UChar *s, int32_t length,
+static UBool thaiWordToBytes(const char16_t *s, int32_t length,
                              CharString &str, UErrorCode &errorCode) {
     for(int32_t i=0; i<length; ++i) {
-        UChar c=s[i];
+        char16_t c=s[i];
         int32_t b=thaiCharToByte(c);
         if(b>=0) {
-            str.append((char)b, errorCode);
+            str.append(static_cast<char>(b), errorCode);
         } else {
             fprintf(stderr, "thaiWordToBytes(): unable to encode U+%04X as a byte\n", c);
             return false;
@@ -508,7 +508,7 @@ static UBool thaiWordToBytes(const UChar *s, int32_t length,
 class BytesTrieDictLookup : public DictLookup {
 public:
     BytesTrieDictLookup(const DictionaryTriePerfTest &perfTest)
-            : DictLookup(perfTest), trie(NULL), noDict(false) {
+            : DictLookup(perfTest), trie(nullptr), noDict(false) {
         IcuToolErrorCode errorCode("BytesTrieDictLookup()");
         builder=new BytesTrieBuilder(errorCode);
         CharString str;
@@ -520,7 +520,7 @@ public:
                 continue;
             }
             if(!thaiWordToBytes(lines[i].name, lines[i].len, str.clear(), errorCode)) {
-                fprintf(stderr, "thaiWordToBytes(): failed for word %ld (0-based)\n", (long)i);
+                fprintf(stderr, "thaiWordToBytes(): failed for word %ld (0-based)\n", static_cast<long>(i));
                 noDict=true;
                 break;
             }
@@ -528,7 +528,7 @@ public:
         }
         if(!noDict) {
             int32_t length=builder->buildStringPiece(USTRINGTRIE_BUILD_SMALL, errorCode).length();
-            printf("size of BytesTrie:           %6ld bytes\n", (long)length);
+            printf("size of BytesTrie:           %6ld bytes\n", static_cast<long>(length));
             trie=builder->build(USTRINGTRIE_BUILD_SMALL, errorCode);
         }
     }
@@ -585,7 +585,7 @@ public:
     BytesTrieDictMatches(const DictionaryTriePerfTest &perfTest)
             : BytesTrieDictLookup(perfTest) {}
 
-    virtual void call(UErrorCode *pErrorCode) {
+    void call(UErrorCode* pErrorCode) override {
         if(noDict) {
             return;
         }
@@ -603,7 +603,7 @@ public:
             bytesTrieMatches(*trie, &text, lines[i].len,
                              lengths, count, UPRV_LENGTHOF(lengths));
             if(count==0 || lengths[count-1]!=lines[i].len) {
-                fprintf(stderr, "word %ld (0-based) not found\n", (long)i);
+                fprintf(stderr, "word %ld (0-based) not found\n", static_cast<long>(i));
             }
         }
     }
@@ -614,14 +614,14 @@ public:
     BytesTrieDictContains(const DictionaryTriePerfTest &perfTest)
             : BytesTrieDictLookup(perfTest) {}
 
-    virtual void call(UErrorCode * /*pErrorCode*/) {
+    void call(UErrorCode* /*pErrorCode*/) override {
         if(noDict) {
             return;
         }
         const ULine *lines=perf.getCachedLines();
         int32_t numLines=perf.getNumLines();
         for(int32_t i=0; i<numLines; ++i) {
-            const UChar *line=lines[i].name;
+            const char16_t *line=lines[i].name;
             // Skip comment lines (start with a character below 'A').
             if(line[0]<0x41) {
                 continue;
@@ -630,13 +630,13 @@ public:
             int32_t lineLength=lines[i].len;
             for(int32_t j=1; j<lineLength; ++j) {
                 if(!USTRINGTRIE_HAS_NEXT(result)) {
-                    fprintf(stderr, "word %ld (0-based) not found\n", (long)i);
+                    fprintf(stderr, "word %ld (0-based) not found\n", static_cast<long>(i));
                     break;
                 }
                 result=trie->next(thaiCharToByte(line[j]));
             }
             if(!USTRINGTRIE_HAS_VALUE(result)) {
-                fprintf(stderr, "word %ld (0-based) not found\n", (long)i);
+                fprintf(stderr, "word %ld (0-based) not found\n", static_cast<long>(i));
             }
         }
     }
@@ -703,7 +703,7 @@ UPerfFunction *DictionaryTriePerfTest::runIndexedTest(int32_t index, UBool exec,
             break;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 int main(int argc, const char *argv[]) {

@@ -12,6 +12,8 @@
 #include <math.h>
 #include <stdio.h>
 
+#include <utility>
+
 #include "unicode/utypes.h"
 #include "unicode/localpointer.h"
 #include "unicode/plurrule.h"
@@ -40,6 +42,7 @@
 #include "util.h"
 #include "pluralranges.h"
 #include "numrange_impl.h"
+#include "ulocimp.h"
 
 #if !UCONFIG_NO_FORMATTING
 
@@ -50,24 +53,24 @@ using icu::number::impl::DecNum;
 using icu::number::impl::DecimalQuantity;
 using icu::number::impl::RoundingMode;
 
-static const UChar PLURAL_KEYWORD_OTHER[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,0};
-static const UChar PLURAL_DEFAULT_RULE[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,COLON,SPACE,LOW_N,0};
-static const UChar PK_IN[]={LOW_I,LOW_N,0};
-static const UChar PK_NOT[]={LOW_N,LOW_O,LOW_T,0};
-static const UChar PK_IS[]={LOW_I,LOW_S,0};
-static const UChar PK_MOD[]={LOW_M,LOW_O,LOW_D,0};
-static const UChar PK_AND[]={LOW_A,LOW_N,LOW_D,0};
-static const UChar PK_OR[]={LOW_O,LOW_R,0};
-static const UChar PK_VAR_N[]={LOW_N,0};
-static const UChar PK_VAR_I[]={LOW_I,0};
-static const UChar PK_VAR_F[]={LOW_F,0};
-static const UChar PK_VAR_T[]={LOW_T,0};
-static const UChar PK_VAR_E[]={LOW_E,0};
-static const UChar PK_VAR_C[]={LOW_C,0};
-static const UChar PK_VAR_V[]={LOW_V,0};
-static const UChar PK_WITHIN[]={LOW_W,LOW_I,LOW_T,LOW_H,LOW_I,LOW_N,0};
-static const UChar PK_DECIMAL[]={LOW_D,LOW_E,LOW_C,LOW_I,LOW_M,LOW_A,LOW_L,0};
-static const UChar PK_INTEGER[]={LOW_I,LOW_N,LOW_T,LOW_E,LOW_G,LOW_E,LOW_R,0};
+static const char16_t PLURAL_KEYWORD_OTHER[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,0};
+static const char16_t PLURAL_DEFAULT_RULE[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,COLON,SPACE,LOW_N,0};
+static const char16_t PK_IN[]={LOW_I,LOW_N,0};
+static const char16_t PK_NOT[]={LOW_N,LOW_O,LOW_T,0};
+static const char16_t PK_IS[]={LOW_I,LOW_S,0};
+static const char16_t PK_MOD[]={LOW_M,LOW_O,LOW_D,0};
+static const char16_t PK_AND[]={LOW_A,LOW_N,LOW_D,0};
+static const char16_t PK_OR[]={LOW_O,LOW_R,0};
+static const char16_t PK_VAR_N[]={LOW_N,0};
+static const char16_t PK_VAR_I[]={LOW_I,0};
+static const char16_t PK_VAR_F[]={LOW_F,0};
+static const char16_t PK_VAR_T[]={LOW_T,0};
+static const char16_t PK_VAR_E[]={LOW_E,0};
+static const char16_t PK_VAR_C[]={LOW_C,0};
+static const char16_t PK_VAR_V[]={LOW_V,0};
+static const char16_t PK_WITHIN[]={LOW_W,LOW_I,LOW_T,LOW_H,LOW_I,LOW_N,0};
+static const char16_t PK_DECIMAL[]={LOW_D,LOW_E,LOW_C,LOW_I,LOW_M,LOW_A,LOW_L,0};
+static const char16_t PK_INTEGER[]={LOW_I,LOW_N,LOW_T,LOW_E,LOW_G,LOW_E,LOW_R,0};
 
 UOBJECT_DEFINE_RTTI_IMPLEMENTATION(PluralRules)
 UOBJECT_DEFINE_RTTI_IMPLEMENTATION(PluralKeywordEnumeration)
@@ -652,6 +655,11 @@ PluralRuleParser::parse(const UnicodeString& ruleData, PluralRules *prules, UErr
         case tEqual:
             {
                 U_ASSERT(curAndConstraint != nullptr);
+                if (curAndConstraint->rangeList != nullptr) {
+                    // Already get a '='.
+                    status = U_UNEXPECTED_TOKEN;
+                    break;
+                }
                 LocalPointer<UVector32> newRangeList(new UVector32(status), status);
                 if (U_FAILURE(status)) {
                     break;
@@ -669,20 +677,40 @@ PluralRuleParser::parse(const UnicodeString& ruleData, PluralRules *prules, UErr
             U_ASSERT(curAndConstraint != nullptr);
             if ( (curAndConstraint->op==AndConstraint::MOD)&&
                  (curAndConstraint->opNum == -1 ) ) {
-                curAndConstraint->opNum=getNumberValue(token);
+                int32_t num = getNumberValue(token);
+                if (num == -1) {
+                    status = U_UNEXPECTED_TOKEN;
+                    break;
+                }
+                curAndConstraint->opNum=num;
             }
             else {
                 if (curAndConstraint->rangeList == nullptr) {
                     // this is for an 'is' rule
-                    curAndConstraint->value = getNumberValue(token);
+                    int32_t num = getNumberValue(token);
+                    if (num == -1) {
+                        status = U_UNEXPECTED_TOKEN;
+                        break;
+                    }
+                    curAndConstraint->value = num;
                 } else {
                     // this is for an 'in' or 'within' rule
                     if (curAndConstraint->rangeList->elementAti(rangeLowIdx) == -1) {
-                        curAndConstraint->rangeList->setElementAt(getNumberValue(token), rangeLowIdx);
-                        curAndConstraint->rangeList->setElementAt(getNumberValue(token), rangeHiIdx);
+                        int32_t num = getNumberValue(token);
+                        if (num == -1) {
+                            status = U_UNEXPECTED_TOKEN;
+                            break;
+                        }
+                        curAndConstraint->rangeList->setElementAt(num, rangeLowIdx);
+                        curAndConstraint->rangeList->setElementAt(num, rangeHiIdx);
                     }
                     else {
-                        curAndConstraint->rangeList->setElementAt(getNumberValue(token), rangeHiIdx);
+                        int32_t num = getNumberValue(token);
+                        if (num == -1) {
+                            status = U_UNEXPECTED_TOKEN;
+                            break;
+                        }
+                        curAndConstraint->rangeList->setElementAt(num, rangeHiIdx);
                         if (curAndConstraint->rangeList->elementAti(rangeLowIdx) >
                                 curAndConstraint->rangeList->elementAti(rangeHiIdx)) {
                             // Range Lower bound > Range Upper bound.
@@ -822,19 +850,22 @@ PluralRules::getRuleFromResource(const Locale& locale, UPluralType type, UErrorC
     }
     int32_t resLen=0;
     const char *curLocaleName=locale.getBaseName();
-    const UChar* s = ures_getStringByKey(locRes.getAlias(), curLocaleName, &resLen, &errCode);
+    const char16_t* s = ures_getStringByKey(locRes.getAlias(), curLocaleName, &resLen, &errCode);
 
     if (s == nullptr) {
         // Check parent locales.
         UErrorCode status = U_ZERO_ERROR;
-        char parentLocaleName[ULOC_FULLNAME_CAPACITY];
         const char *curLocaleName2=locale.getBaseName();
-        uprv_strcpy(parentLocaleName, curLocaleName2);
+        CharString parentLocaleName(curLocaleName2, status);
 
-        while (uloc_getParent(parentLocaleName, parentLocaleName,
-                                       ULOC_FULLNAME_CAPACITY, &status) > 0) {
+        for (;;) {
+            {
+                CharString tmp = ulocimp_getParent(parentLocaleName.data(), status);
+                if (tmp.isEmpty()) break;
+                parentLocaleName = std::move(tmp);
+            }
             resLen=0;
-            s = ures_getStringByKey(locRes.getAlias(), parentLocaleName, &resLen, &status);
+            s = ures_getStringByKey(locRes.getAlias(), parentLocaleName.data(), &resLen, &status);
             if (s != nullptr) {
                 errCode = U_ZERO_ERROR;
                 break;
@@ -1114,7 +1145,7 @@ static UnicodeString tokenString(tokenType tok) {
 
 void
 RuleChain::dumpRules(UnicodeString& result) {
-    UChar digitString[16];
+    char16_t digitString[16];
 
     if ( ruleHeader != nullptr ) {
         result +=  fKeyword;
@@ -1249,13 +1280,8 @@ PluralRuleParser::~PluralRuleParser() {
 
 int32_t
 PluralRuleParser::getNumberValue(const UnicodeString& token) {
-    int32_t i;
-    char digits[128];
-
-    i = token.extract(0, token.length(), digits, UPRV_LENGTHOF(digits), US_INV);
-    digits[i]='\0';
-
-    return((int32_t)atoi(digits));
+    int32_t pos = 0;
+    return ICU_Utility::parseNumber(token, pos, 10);
 }
 
 
@@ -1378,7 +1404,7 @@ PluralRuleParser::getNextToken(UErrorCode &status)
         return;
     }
 
-    UChar ch;
+    char16_t ch;
     while (ruleIndex < ruleSrc->length()) {
         ch = ruleSrc->charAt(ruleIndex);
         type = charType(ch);
@@ -1459,7 +1485,7 @@ PluralRuleParser::getNextToken(UErrorCode &status)
 }
 
 tokenType
-PluralRuleParser::charType(UChar ch) {
+PluralRuleParser::charType(char16_t ch) {
     if ((ch>=U_ZERO) && (ch<=U_NINE)) {
         return tNumber;
     }
@@ -1573,7 +1599,7 @@ PluralKeywordEnumeration::PluralKeywordEnumeration(RuleChain *header, UErrorCode
 const UnicodeString*
 PluralKeywordEnumeration::snext(UErrorCode& status) {
     if (U_SUCCESS(status) && pos < fKeywordNames.size()) {
-        return (const UnicodeString*)fKeywordNames.elementAt(pos++);
+        return static_cast<const UnicodeString*>(fKeywordNames.elementAt(pos++));
     }
     return nullptr;
 }
@@ -1749,13 +1775,15 @@ void FixedDecimal::init(double n, int32_t v, int64_t f, int32_t e, int32_t c) {
     if (exponent == 0) {
         exponent = c;
     }
-    if (_isNaN || _isInfinite) {
+    if (_isNaN || _isInfinite ||
+        source > static_cast<double>(U_INT64_MAX) ||
+        source < static_cast<double>(U_INT64_MIN)) {
         v = 0;
         f = 0;
         intValue = 0;
         _hasIntegerValue = false;
     } else {
-        intValue = (int64_t)source;
+        intValue = static_cast<int64_t>(source);
         _hasIntegerValue = (source == intValue);
     }
 
@@ -1839,17 +1867,17 @@ int64_t FixedDecimal::getFractionalDigits(double n, int32_t v) {
     n = fabs(n);
     double fract = n - floor(n);
     switch (v) {
-      case 1: return (int64_t)(fract*10.0 + 0.5);
-      case 2: return (int64_t)(fract*100.0 + 0.5);
-      case 3: return (int64_t)(fract*1000.0 + 0.5);
+      case 1: return static_cast<int64_t>(fract * 10.0 + 0.5);
+      case 2: return static_cast<int64_t>(fract * 100.0 + 0.5);
+      case 3: return static_cast<int64_t>(fract * 1000.0 + 0.5);
       default:
-          double scaled = floor(fract * pow(10.0, (double)v) + 0.5);
+          double scaled = floor(fract * pow(10.0, static_cast<double>(v)) + 0.5);
           if (scaled >= static_cast<double>(U_INT64_MAX)) {
               // Note: a double cannot accurately represent U_INT64_MAX. Casting it to double
               //       will round up to the next representable value, which is U_INT64_MAX + 1.
               return U_INT64_MAX;
           } else {
-              return (int64_t)scaled;
+              return static_cast<int64_t>(scaled);
           }
       }
 }
@@ -1874,7 +1902,7 @@ void FixedDecimal::adjustForMinFractionDigits(int32_t minFractionDigits) {
 double FixedDecimal::getPluralOperand(PluralOperand operand) const {
     switch(operand) {
         case PLURAL_OPERAND_N: return (exponent == 0 ? source : source * pow(10.0, exponent));
-        case PLURAL_OPERAND_I: return (double) longValue();
+        case PLURAL_OPERAND_I: return static_cast<double>(longValue());
         case PLURAL_OPERAND_F: return static_cast<double>(decimalDigits);
         case PLURAL_OPERAND_T: return static_cast<double>(decimalDigitsWithoutTrailingZeros);
         case PLURAL_OPERAND_V: return visibleDecimalDigitCount;
@@ -1931,7 +1959,7 @@ int64_t FixedDecimal::longValue() const {
     if (exponent == 0) {
         return intValue;
     } else {
-        return (long) (pow(10.0, exponent) * intValue);
+        return static_cast<long>(pow(10.0, exponent) * intValue);
     }
 }
 

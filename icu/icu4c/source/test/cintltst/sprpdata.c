@@ -141,8 +141,8 @@ getValues(uint32_t result, int32_t* value, UBool* isIndex){
         }
         if((result>>2) == _SPREP_MAX_INDEX_VALUE){
             type = USPREP_DELETE;
-            isIndex =false;
-            value = 0;
+            *isIndex = false;
+            *value = 0;
         }
     }
     return type;
@@ -161,7 +161,7 @@ compareMapping(UStringPrepProfile* data, uint32_t codepoint, uint32_t* mapping,i
     const uint16_t* mappingData = data->mappingData;
     int32_t realLength =0;
     int32_t j=0;
-    int32_t i=0;
+    int8_t i=0;
 
     UTRIE_GET16(&trie, codepoint, result);
     retType = getValues(result,&value,&isIndex);

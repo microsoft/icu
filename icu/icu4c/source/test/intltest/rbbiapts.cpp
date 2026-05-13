@@ -50,10 +50,10 @@ void RBBIAPITest::TestCloneEquals()
 {
 
     UErrorCode status=U_ZERO_ERROR;
-    RuleBasedBreakIterator* bi1     = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status);
-    RuleBasedBreakIterator* biequal = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status);
-    RuleBasedBreakIterator* bi3     = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status);
-    RuleBasedBreakIterator* bi2     = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createWordInstance(Locale::getDefault(), status);
+    RuleBasedBreakIterator* bi1     = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status));
+    RuleBasedBreakIterator* biequal = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status));
+    RuleBasedBreakIterator* bi3     = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status));
+    RuleBasedBreakIterator* bi2     = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createWordInstance(Locale::getDefault(), status));
     if(U_FAILURE(status)){
         errcheckln(status, "Fail : in construction - %s", u_errorName(status));
         return;
@@ -67,9 +67,9 @@ void RBBIAPITest::TestCloneEquals()
 
     bi3->setText("hello");
 
-    logln((UnicodeString)"Testing equals()");
+    logln(UnicodeString("Testing equals()"));
 
-    logln((UnicodeString)"Testing == and !=");
+    logln(UnicodeString("Testing == and !="));
     bool b = (*bi1 != *biequal);
     b |= *bi1 == *bi2;
     b |= *bi1 == *bi3;
@@ -88,7 +88,7 @@ void RBBIAPITest::TestCloneEquals()
     //    source and dest iterator produce the same next() after assignment.
     //    deleting one doesn't disable the other.
     logln("Testing assignment");
-    RuleBasedBreakIterator *bix = (RuleBasedBreakIterator *)BreakIterator::createLineInstance(Locale::getDefault(), status);
+    RuleBasedBreakIterator *bix = dynamic_cast<RuleBasedBreakIterator *>(BreakIterator::createLineInstance(Locale::getDefault(), status));
     if(U_FAILURE(status)){
         errcheckln(status, "Fail : in construction - %s", u_errorName(status));
         return;
@@ -131,7 +131,7 @@ void RBBIAPITest::TestCloneEquals()
 
 
 
-    logln((UnicodeString)"Testing clone()");
+    logln(UnicodeString("Testing clone()"));
     RuleBasedBreakIterator* bi1clone = bi1->clone();
     RuleBasedBreakIterator* bi2clone = bi2->clone();
 
@@ -190,15 +190,15 @@ void RBBIAPITest::TestgetRules()
     UErrorCode status=U_ZERO_ERROR;
 
     LocalPointer<RuleBasedBreakIterator> bi1(
-            (RuleBasedBreakIterator*)RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status), status);
+            dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status)), status);
     LocalPointer<RuleBasedBreakIterator> bi2(
-            (RuleBasedBreakIterator*)RuleBasedBreakIterator::createWordInstance(Locale::getDefault(), status), status);
+            dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createWordInstance(Locale::getDefault(), status)), status);
     if(U_FAILURE(status)){
         errcheckln(status, "%s:%d, FAIL: in construction - %s", __FILE__, __LINE__, u_errorName(status));
         return;
     }
 
-    logln((UnicodeString)"Testing getRules()");
+    logln(UnicodeString("Testing getRules()"));
 
     UnicodeString text(u"Hello there");
     bi1->setText(text);
@@ -220,9 +220,9 @@ void RBBIAPITest::TestgetRules()
 void RBBIAPITest::TestHashCode()
 {
     UErrorCode status=U_ZERO_ERROR;
-    RuleBasedBreakIterator* bi1     = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status);
-    RuleBasedBreakIterator* bi3     = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status);
-    RuleBasedBreakIterator* bi2     = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createWordInstance(Locale::getDefault(), status);
+    RuleBasedBreakIterator* bi1     = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status));
+    RuleBasedBreakIterator* bi3     = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status));
+    RuleBasedBreakIterator* bi2     = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createWordInstance(Locale::getDefault(), status));
     if(U_FAILURE(status)){
         errcheckln(status, "Fail : in construction - %s", u_errorName(status));
         delete bi1;
@@ -232,22 +232,22 @@ void RBBIAPITest::TestHashCode()
     }
 
 
-    logln((UnicodeString)"Testing hashCode()");
+    logln(UnicodeString("Testing hashCode()"));
 
-    bi1->setText((UnicodeString)"Hash code");
-    bi2->setText((UnicodeString)"Hash code");
-    bi3->setText((UnicodeString)"Hash code");
+    bi1->setText(UnicodeString("Hash code"));
+    bi2->setText(UnicodeString("Hash code"));
+    bi3->setText(UnicodeString("Hash code"));
 
     RuleBasedBreakIterator* bi1clone= bi1->clone();
     RuleBasedBreakIterator* bi2clone= bi2->clone();
 
     if(bi1->hashCode() != bi1clone->hashCode() ||  bi1->hashCode() != bi3->hashCode() ||
         bi1clone->hashCode() != bi3->hashCode() || bi2->hashCode() != bi2clone->hashCode())
-        errln((UnicodeString)"ERROR: identical objects have different hashcodes");
+        errln(UnicodeString("ERROR: identical objects have different hashcodes"));
 
     if(bi1->hashCode() == bi2->hashCode() ||  bi2->hashCode() == bi3->hashCode() ||
         bi1clone->hashCode() == bi2clone->hashCode() || bi1clone->hashCode() == bi2->hashCode())
-        errln((UnicodeString)"ERROR: different objects have same hashcodes");
+        errln(UnicodeString("ERROR: different objects have same hashcodes"));
 
     delete bi1clone;
     delete bi2clone;
@@ -258,12 +258,12 @@ void RBBIAPITest::TestHashCode()
 }
 void RBBIAPITest::TestGetSetAdoptText()
 {
-    logln((UnicodeString)"Testing getText setText ");
+    logln(UnicodeString("Testing getText setText "));
     IcuTestErrorCode status(*this, "TestGetSetAdoptText");
     UnicodeString str1="first string.";
     UnicodeString str2="Second string.";
-    LocalPointer<RuleBasedBreakIterator> charIter1((RuleBasedBreakIterator*)RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status));
-    LocalPointer<RuleBasedBreakIterator> wordIter1((RuleBasedBreakIterator*)RuleBasedBreakIterator::createWordInstance(Locale::getDefault(), status));
+    LocalPointer<RuleBasedBreakIterator> charIter1(dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status)));
+    LocalPointer<RuleBasedBreakIterator> wordIter1(dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createWordInstance(Locale::getDefault(), status)));
     if(status.isFailure()){
         errcheckln(status, "Fail : in construction - %s", status.errorName());
             return;
@@ -281,13 +281,13 @@ void RBBIAPITest::TestGetSetAdoptText()
     tci->getText(tstr);
     TEST_ASSERT(tstr == str1);
     if(wordIter1->current() != 0)
-        errln((UnicodeString)"ERROR:1 setText did not set the iteration position to the beginning of the text, it is" + wordIter1->current() + (UnicodeString)"\n");
+        errln(UnicodeString("ERROR:1 setText did not set the iteration position to the beginning of the text, it is") + wordIter1->current() + UnicodeString("\n"));
 
     wordIter1->next(2);
 
     wordIter1->setText(str2);
     if(wordIter1->current() != 0)
-        errln((UnicodeString)"ERROR:2 setText did not reset the iteration position to the beginning of the text, it is" + wordIter1->current() + (UnicodeString)"\n");
+        errln(UnicodeString("ERROR:2 setText did not reset the iteration position to the beginning of the text, it is") + wordIter1->current() + UnicodeString("\n"));
 
 
     charIter1->adoptText(text1Clone);
@@ -303,10 +303,10 @@ void RBBIAPITest::TestGetSetAdoptText()
     LocalPointer<RuleBasedBreakIterator> rb(wordIter1->clone());
     rb->adoptText(text1);
     if(rb->getText() != *text1)
-        errln((UnicodeString)"ERROR:1 error in adoptText ");
+        errln(UnicodeString("ERROR:1 error in adoptText "));
     rb->adoptText(text2);
     if(rb->getText() != *text2)
-        errln((UnicodeString)"ERROR:2 error in adoptText ");
+        errln(UnicodeString("ERROR:2 error in adoptText "));
 
     // Adopt where iterator range is less than the entire original source string.
     //   (With the change of the break engine to working with UText internally,
@@ -330,7 +330,7 @@ void RBBIAPITest::TestGetSetAdoptText()
     //                012345678901
 
     status.reset();
-    LocalUTextPointer ut(utext_openUTF8(NULL, s1, -1, status));
+    LocalUTextPointer ut(utext_openUTF8(nullptr, s1, -1, status));
     wordIter1->setText(ut.getAlias(), status);
     TEST_ASSERT_SUCCESS(status);
 
@@ -347,7 +347,7 @@ void RBBIAPITest::TestGetSetAdoptText()
     TEST_ASSERT(pos==UBRK_DONE);
 
     status.reset();
-    LocalUTextPointer ut2(utext_openUTF8(NULL, s2, -1, status));
+    LocalUTextPointer ut2(utext_openUTF8(nullptr, s2, -1, status));
     TEST_ASSERT_SUCCESS(status);
     wordIter1->setText(ut2.getAlias(), status);
     TEST_ASSERT_SUCCESS(status);
@@ -372,7 +372,7 @@ void RBBIAPITest::TestGetSetAdoptText()
 
     status.reset();
     UnicodeString sEmpty;
-    LocalUTextPointer gut2(utext_openUnicodeString(NULL, &sEmpty, status));
+    LocalUTextPointer gut2(utext_openUnicodeString(nullptr, &sEmpty, status));
     wordIter1->getUText(gut2.getAlias(), status);
     TEST_ASSERT_SUCCESS(status);
     status.reset();
@@ -385,43 +385,43 @@ void RBBIAPITest::TestIteration()
     // Testing for correct operation of the break rules happens elsewhere.
 
     UErrorCode status=U_ZERO_ERROR;
-    RuleBasedBreakIterator* bi  = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status);
-    if (U_FAILURE(status) || bi == NULL)  {
+    RuleBasedBreakIterator* bi  = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status));
+    if (U_FAILURE(status) || bi == nullptr)  {
         errcheckln(status, "Failure creating character break iterator.  Status = %s", u_errorName(status));
     }
     delete bi;
 
     status=U_ZERO_ERROR;
-    bi  = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createWordInstance(Locale::getDefault(), status);
-    if (U_FAILURE(status) || bi == NULL)  {
+    bi  = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createWordInstance(Locale::getDefault(), status));
+    if (U_FAILURE(status) || bi == nullptr)  {
         errcheckln(status, "Failure creating Word break iterator.  Status = %s", u_errorName(status));
     }
     delete bi;
 
     status=U_ZERO_ERROR;
-    bi  = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createLineInstance(Locale::getDefault(), status);
-    if (U_FAILURE(status) || bi == NULL)  {
+    bi  = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createLineInstance(Locale::getDefault(), status));
+    if (U_FAILURE(status) || bi == nullptr)  {
         errcheckln(status, "Failure creating Line break iterator.  Status = %s", u_errorName(status));
     }
     delete bi;
 
     status=U_ZERO_ERROR;
-    bi  = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createSentenceInstance(Locale::getDefault(), status);
-    if (U_FAILURE(status) || bi == NULL)  {
+    bi  = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createSentenceInstance(Locale::getDefault(), status));
+    if (U_FAILURE(status) || bi == nullptr)  {
         errcheckln(status, "Failure creating Sentence break iterator.  Status = %s", u_errorName(status));
     }
     delete bi;
 
     status=U_ZERO_ERROR;
-    bi  = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createTitleInstance(Locale::getDefault(), status);
-    if (U_FAILURE(status) || bi == NULL)  {
+    bi  = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createTitleInstance(Locale::getDefault(), status));
+    if (U_FAILURE(status) || bi == nullptr)  {
         errcheckln(status, "Failure creating Title break iterator.  Status = %s", u_errorName(status));
     }
     delete bi;
 
     status=U_ZERO_ERROR;
-    bi  = (RuleBasedBreakIterator*)RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status);
-    if (U_FAILURE(status) || bi == NULL)  {
+    bi  = dynamic_cast<RuleBasedBreakIterator*>(RuleBasedBreakIterator::createCharacterInstance(Locale::getDefault(), status));
+    if (U_FAILURE(status) || bi == nullptr)  {
         errcheckln(status, "Failure creating character break iterator.  Status = %s", u_errorName(status));
         return;   // Skip the rest of these tests.
     }
@@ -651,7 +651,7 @@ void RBBIAPITest::TestQuoteGrouping() {
 //      Test word break rule status constants.
 //
 void RBBIAPITest::TestRuleStatus() {
-     UChar str[30];
+     char16_t str[30];
      //no longer test Han or hiragana breaking here: ruleStatusVec would return nothing
      // changed UBRK_WORD_KANA to UBRK_WORD_IDEO
      u_unescape("plain word 123.45 \\u30a1\\u30a2 ",
@@ -881,6 +881,35 @@ void RBBIAPITest::TestBug2190() {
      delete bi;
 }
 
+void RBBIAPITest::TestBug22580() {
+     UParseError    parseError;
+     // Test single ' will not cause infinity loop
+     {
+         UnicodeString rulesString = u"'";
+         UErrorCode status=U_ZERO_ERROR;
+         RuleBasedBreakIterator(rulesString, parseError, status);
+     }
+     if (quick) {
+         return;
+     }
+     // Test any 1 or 2 ASCII chars as rule will not cause infinity loop.
+     // only in exhaust mode
+     for (char16_t u1 = u' '; u1 <= u'~'; u1++) {
+         {
+             UnicodeString rule = u1;
+             UErrorCode status=U_ZERO_ERROR;
+             RuleBasedBreakIterator bi (rule, parseError, status);
+         }
+         for (char16_t u2 = u' '; u2 <= u'~'; u2++) {
+             {
+                 UnicodeString rule;
+                 rule.append(u1).append(u2);
+                 UErrorCode status=U_ZERO_ERROR;
+                 RuleBasedBreakIterator bi (rule, parseError, status);
+             }
+         }
+     }
+}
 
 void RBBIAPITest::TestRegistration() {
 #if !UCONFIG_NO_SERVICE
@@ -1039,9 +1068,9 @@ void RBBIAPITest::RoundtripRule(const char *dataFile) {
         return;
     }
 
-    builtRules = (const uint8_t *)udata_getMemory(data.getAlias());
+    builtRules = static_cast<const uint8_t*>(udata_getMemory(data.getAlias()));
     builtSource = UnicodeString::fromUTF8(
-        (const char *)(builtRules + ((RBBIDataHeader *)builtRules)->fRuleSource));
+        reinterpret_cast<const char*>(builtRules + reinterpret_cast<const RBBIDataHeader*>(builtRules)->fRuleSource));
     LocalPointer<RuleBasedBreakIterator> brkItr (new RuleBasedBreakIterator(builtSource, parseError, status));
     if (U_FAILURE(status)) {
         errln("%s:%d createRuleBasedBreakIterator: ICU Error \"%s\"  at line %d, column %d\n",
@@ -1051,7 +1080,7 @@ void RBBIAPITest::RoundtripRule(const char *dataFile) {
     }
     rbbiRules = brkItr->getBinaryRules(length);
     logln("Comparing \"%s\" len=%d", dataFile, length);
-    if (memcmp(builtRules, rbbiRules, (int32_t)length) != 0) {
+    if (memcmp(builtRules, rbbiRules, static_cast<int32_t>(length)) != 0) {
         errln("%s:%d Built rules and rebuilt rules are different %s", __FILE__, __LINE__, dataFile);
         return;
     }
@@ -1079,8 +1108,8 @@ void RBBIAPITest::TestGetBinaryRules() {
         return;
     }
     RuleBasedBreakIterator *rbbi = dynamic_cast<RuleBasedBreakIterator *>(bi.getAlias());
-    if (rbbi == NULL) {
-        dataerrln("FAIL: RuleBasedBreakIterator is NULL");
+    if (rbbi == nullptr) {
+        dataerrln("FAIL: RuleBasedBreakIterator is nullptr");
         return;
     }
 
@@ -1097,7 +1126,7 @@ void RBBIAPITest::TestGetBinaryRules() {
     uint32_t ruleLength;
     const uint8_t *binRules = rbbi->getBinaryRules(ruleLength);
     TEST_ASSERT(ruleLength > 0);
-    TEST_ASSERT(binRules != NULL);
+    TEST_ASSERT(binRules != nullptr);
 
     // Clone the binary rules, and create a break iterator from that.
     // The break iterator does not adopt the rules; we must delete when we are finished with the iterator.
@@ -1126,12 +1155,12 @@ void RBBIAPITest::TestRefreshInputText() {
      *    runs BreakIterator::next() repeatedly, moving the text in the middle of the sequence.
      *    The right set of boundaries should still be found.
      */
-    UChar testStr[]  = {0x20, 0x41, 0x20, 0x42, 0x20, 0x43, 0x20, 0x44, 0x0};  /* = " A B C D"  */
-    UChar movedStr[] = {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  0};
+    char16_t testStr[]  = {0x20, 0x41, 0x20, 0x42, 0x20, 0x43, 0x20, 0x44, 0x0};  /* = " A B C D"  */
+    char16_t movedStr[] = {0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20, 0x20,  0};
     UErrorCode status = U_ZERO_ERROR;
     UText ut1 = UTEXT_INITIALIZER;
     UText ut2 = UTEXT_INITIALIZER;
-    RuleBasedBreakIterator *bi = (RuleBasedBreakIterator *)BreakIterator::createLineInstance(Locale::getEnglish(), status);
+    RuleBasedBreakIterator *bi = dynamic_cast<RuleBasedBreakIterator *>(BreakIterator::createLineInstance(Locale::getEnglish(), status));
     TEST_ASSERT_SUCCESS(status);
 
     utext_openUChars(&ut1, testStr, -1, &status);
@@ -1169,7 +1198,7 @@ void RBBIAPITest::TestRefreshInputText() {
 
 #if !UCONFIG_NO_BREAK_ITERATION && !UCONFIG_NO_FILTERED_BREAK_ITERATION
 static void prtbrks(BreakIterator* brk, const UnicodeString &ustr, IntlTest &it) {
-  static const UChar PILCROW=0x00B6, CHSTR=0x3010, CHEND=0x3011; // lenticular brackets
+  static const char16_t PILCROW=0x00B6, CHSTR=0x3010, CHEND=0x3011; // lenticular brackets
   it.logln(UnicodeString("String:'")+ustr+UnicodeString("'"));
 
   int32_t *pos = new int32_t[ustr.length()];
@@ -1185,16 +1214,16 @@ static void prtbrks(BreakIterator* brk, const UnicodeString &ustr, IntlTest &it)
     }
   }
   UnicodeString out;
-  out.append((UChar)CHSTR);
+  out.append(CHSTR);
   int32_t prev = 0;
   for(int32_t i=0;i<posCount;i++) {
     int32_t n=pos[i];
     out.append(ustr.tempSubString(prev,n-prev));
-    out.append((UChar)PILCROW);
+    out.append(PILCROW);
     prev=n;
   }
   out.append(ustr.tempSubString(prev,ustr.length()-prev));
-  out.append((UChar)CHEND);
+  out.append(CHEND);
   it.logln(out);
 
   out.remove();
@@ -1415,7 +1444,7 @@ void RBBIAPITest::TestFilteredBreakIteratorBuilder() {
 
 void RBBIAPITest::runIndexedTest( int32_t index, UBool exec, const char* &name, char* /*par*/ )
 {
-    if (exec) logln((UnicodeString)"TestSuite RuleBasedBreakIterator API ");
+    if (exec) logln(UnicodeString("TestSuite RuleBasedBreakIterator API "));
     TESTCASE_AUTO_BEGIN;
 #if !UCONFIG_NO_FILE_IO
     TESTCASE_AUTO(TestCloneEquals);
@@ -1428,6 +1457,7 @@ void RBBIAPITest::runIndexedTest( int32_t index, UBool exec, const char* &name, 
     TESTCASE_AUTO(TestQuoteGrouping);
     TESTCASE_AUTO(TestRuleStatusVec);
     TESTCASE_AUTO(TestBug2190);
+    TESTCASE_AUTO(TestBug22580);
 #if !UCONFIG_NO_FILE_IO
     TESTCASE_AUTO(TestRegistration);
     TESTCASE_AUTO(TestBoilerPlate);
@@ -1448,21 +1478,21 @@ void RBBIAPITest::runIndexedTest( int32_t index, UBool exec, const char* &name, 
 //---------------------------------------------
 
 void RBBIAPITest::doBoundaryTest(BreakIterator& bi, UnicodeString& text, int32_t *boundaries){
-     logln((UnicodeString)"testIsBoundary():");
+     logln(UnicodeString("testIsBoundary():"));
         int32_t p = 0;
         UBool isB;
         for (int32_t i = 0; i < text.length(); i++) {
             isB = bi.isBoundary(i);
-            logln((UnicodeString)"bi.isBoundary(" + i + ") -> " + isB);
+            logln(UnicodeString("bi.isBoundary(") + i + ") -> " + isB);
 
             if (i == boundaries[p]) {
                 if (!isB)
-                    errln((UnicodeString)"Wrong result from isBoundary() for " + i + (UnicodeString)": expected true, got false");
+                    errln(UnicodeString("Wrong result from isBoundary() for ") + i + UnicodeString(": expected true, got false"));
                 p++;
             }
             else {
                 if (isB)
-                    errln((UnicodeString)"Wrong result from isBoundary() for " + i + (UnicodeString)": expected false, got true");
+                    errln(UnicodeString("Wrong result from isBoundary() for ") + i + UnicodeString(": expected false, got true"));
             }
         }
 }
@@ -1471,7 +1501,7 @@ void RBBIAPITest::doTest(UnicodeString& testString, int32_t start, int32_t gotof
     UnicodeString expected=CharsToUnicodeString(expectedString);
 
     if(gotoffset != expectedOffset)
-         errln((UnicodeString)"ERROR:****returned #" + gotoffset + (UnicodeString)" instead of #" + expectedOffset);
+         errln(UnicodeString("ERROR:****returned #") + gotoffset + UnicodeString(" instead of #") + expectedOffset);
     if(start <= gotoffset){
         testString.extractBetween(start, gotoffset, selected);
     }
@@ -1479,7 +1509,7 @@ void RBBIAPITest::doTest(UnicodeString& testString, int32_t start, int32_t gotof
         testString.extractBetween(gotoffset, start, selected);
     }
     if(selected.compare(expected) != 0)
-         errln(prettify((UnicodeString)"ERROR:****selected \"" + selected + "\" instead of \"" + expected + "\""));
+         errln(prettify(UnicodeString("ERROR:****selected \"") + selected + "\" instead of \"" + expected + "\""));
     else
         logln(prettify("****selected \"" + selected + "\""));
 }

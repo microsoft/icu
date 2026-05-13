@@ -24,7 +24,7 @@
  * NumberFormat.
  */
 class IntlTestNumberFormat: public IntlTest {
-    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = NULL ) override;
+    void runIndexedTest( int32_t index, UBool exec, const char* &name, char* par = nullptr ) override;
 
 private:
 
@@ -81,7 +81,7 @@ public:
      **/
     static double randFraction()
     {
-        return (double)randLong() / (double)0xFFFFFFFF;
+        return static_cast<double>(randLong()) / static_cast<double>(0xFFFFFFFF);
     }
 
 };

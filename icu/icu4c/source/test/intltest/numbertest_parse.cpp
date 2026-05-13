@@ -123,10 +123,14 @@ void NumberParserTest::testBasic() {
                  {3, u"                              1,234", u"a0", 35, 1234.}, // should not hang
                  {3, u"NaN", u"0", 3, NAN},
                  {3, u"NaN E5", u"0", 6, NAN},
+                 {3, u"~100", u"~0", 4, 100.0},
+                 {3, u" ~ 100", u"~0", 6, 100.0},
+                 {3, u"≈100", u"~0", 4, 100.0},
+                 {3, u"100≈", u"~0", 3, 100.0},
                  {3, u"0", u"0", 1, 0.0}};
 
     parse_flags_t parseFlags = PARSE_FLAG_IGNORE_CASE | PARSE_FLAG_INCLUDE_UNPAIRED_AFFIXES;
-    for (auto& cas : cases) {
+    for (const auto& cas : cases) {
         UnicodeString inputString(cas.inputString);
         UnicodeString patternString(cas.patternString);
         LocalPointer<const NumberParserImpl> parser(
@@ -180,6 +184,10 @@ void NumberParserTest::testBasic() {
             assertEquals("Strict Parse failed: " + message,
                 cas.expectedResultDouble, resultObject.getDouble(status));
         }
+
+        if (status.errDataIfFailureAndReset("parsing test failed")) {
+            continue;
+        }
     }
 }
 
@@ -227,7 +235,7 @@ void NumberParserTest::testSeriesMatcher() {
                  {u"+-  %  ", 7, true},
                  {u"+-%$", 3, false}};
 
-    for (auto& cas : cases) {
+    for (const auto& cas : cases) {
         UnicodeString input(cas.input);
 
         StringSegment segment(input, false);
@@ -275,7 +283,7 @@ void NumberParserTest::testCombinedCurrencyMatcher() {
               {u"euros", u"EUR", u""},
               {u"ICU", u"ICU", u"ICU"},
               {u"IU$", u"ICU", u"ICU"}};
-    for (auto& cas : cases) {
+    for (const auto& cas : cases) {
         UnicodeString input(cas.input);
 
         {
@@ -333,7 +341,7 @@ void NumberParserTest::testAffixPatternMatcher() {
                  {true, u"abc", 3, u"abc"},
                  {false, u"hello-to+this%very¤long‰string", 59, u"hello-to+this%very USD long‰string"}};
 
-    for (auto& cas : cases) {
+    for (const auto& cas : cases) {
         UnicodeString affixPattern(cas.affixPattern);
         UnicodeString sampleParseableString(cas.sampleParseableString);
         int parseFlags = cas.exactMatch ? PARSE_FLAG_EXACT_AFFIX : 0;

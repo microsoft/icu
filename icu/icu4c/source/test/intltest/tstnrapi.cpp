@@ -53,12 +53,12 @@ BasicNormalizerTest::TestNormalizerAPI() {
         errln("error in Normalizer(Normalizer(CharacterIterator)).clone()->next().hashCode()==copy.hashCode()");
     }
     delete clone;
-    clone=0;
+    clone = nullptr;
 
     // test compose() and decompose()
     UnicodeString tel, nfkc, nfkd;
-    tel=UnicodeString(1, (UChar32)0x2121, 10);
-    tel.insert(1, (UChar)0x301);
+    tel = UnicodeString(1, static_cast<UChar32>(0x2121), 10);
+    tel.insert(1, static_cast<char16_t>(0x301));
 
     UErrorCode errorCode=U_ZERO_ERROR;
     Normalizer::compose(tel, true, 0, nfkc, errorCode);
@@ -95,7 +95,7 @@ BasicNormalizerTest::TestNormalizerAPI() {
         }
     }
 
-    // test setText(UChar *), getUMode() and setMode()
+    // test setText(char16_t *), getUMode() and setMode()
     errorCode=U_ZERO_ERROR;
     copy.setText(s.getBuffer()+1, s.length()-1, errorCode);
     copy.setMode(UNORM_NFD);
@@ -103,19 +103,19 @@ BasicNormalizerTest::TestNormalizerAPI() {
         errln("error in Normalizer::setMode() or Normalizer::getUMode()");
     }
     if(copy.next()!=0x308 || copy.next()!=0x1100) {
-        dataerrln("error in Normalizer::setText(UChar *) or Normalizer::setMode()");
+        dataerrln("error in Normalizer::setText(char16_t *) or Normalizer::setMode()");
     }
 
-    // test setText(UChar *, length=-1)
+    // test setText(char16_t *, length=-1)
     errorCode=U_ZERO_ERROR;
 
     // NUL-terminate s
-    s.append((UChar)0);         // append NUL
+    s.append(static_cast<char16_t>(0)); // append NUL
     s.truncate(s.length()-1);   // undo length change
 
     copy.setText(s.getBuffer()+1, -1, errorCode);
     if(copy.endIndex()!=s.length()-1) {
-        errln("error in Normalizer::setText(UChar *, -1)");
+        errln("error in Normalizer::setText(char16_t *, -1)");
     }
 
     // test setOption() and getOption()
@@ -127,7 +127,7 @@ BasicNormalizerTest::TestNormalizerAPI() {
 
     // test last()/previous() with an internal buffer overflow
     errorCode=U_ZERO_ERROR;
-    copy.setText(UnicodeString(1000, (UChar32)0x308, 1000), errorCode);
+    copy.setText(UnicodeString(1000, static_cast<UChar32>(0x308), 1000), errorCode);
     if(copy.last()!=0x308) {
         errln("error in Normalizer(1000*U+0308).last()");
     }
@@ -143,7 +143,7 @@ BasicNormalizerTest::TestNormalizerAPI() {
     }
 
     // test that the same string can be used as source and destination
-    s.setTo((UChar)0xe4);
+    s.setTo(static_cast<char16_t>(0xe4));
     Normalizer::normalize(s, UNORM_NFD, 0, s, status);
     if(s.charAt(1)!=0x308) {
         dataerrln("error in Normalizer::normalize(UNORM_NFD, self)");

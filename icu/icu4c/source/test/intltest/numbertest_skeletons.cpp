@@ -6,6 +6,8 @@
 #if !UCONFIG_NO_FORMATTING
 
 #include "unicode/dcfmtsym.h"
+#include "unicode/ustring.h"
+#include "unicode/unistr.h"
 
 #include "cstr.h"
 #include "numbertest.h"
@@ -32,6 +34,7 @@ void NumberSkeletonTest::runIndexedTest(int32_t index, UBool exec, const char*& 
         TESTCASE_AUTO(wildcardCharacters);
         TESTCASE_AUTO(perUnitInArabic);
         TESTCASE_AUTO(perUnitToSkeleton);
+        TESTCASE_AUTO(measurementSystemOverride);
     TESTCASE_AUTO_END;
 }
 
@@ -444,6 +447,11 @@ void NumberSkeletonTest::perUnitInArabic() {
             skeleton += cas2.subtype;
 
             status.setScope(skeleton);
+            if (u_strcmp(cas1.type, u"volume")==0 || u_strcmp(cas2.type, u"volume")==0) {
+                logKnownIssue("ICU-23229", " Handling of volume units in Arabic locale are causing "
+                                           "status failure in NumberFormatter");
+                continue;
+            }
             UnicodeString actual = NumberFormatter::forSkeleton(skeleton, status).locale("ar")
                                    .formatDouble(5142.3, status)
                                    .toString(status);
@@ -461,26 +469,35 @@ void NumberSkeletonTest::perUnitToSkeleton() {
         {u"area", u"acre"},
         {u"concentr", u"percent"},
         {u"concentr", u"permille"},
-        {u"concentr", u"permillion"},
         {u"concentr", u"permyriad"},
         {u"digital", u"bit"},
         {u"length", u"yard"},
+        {u"concentr", u"part-per-1e9"},
     };
 
-    for (const auto& cas1 : cases) {
-        for (const auto& cas2 : cases) {
+    for (const auto& numeratorCase : cases) {
+        for (const auto& denominatorCase : cases) {
             UnicodeString skeleton(u"measure-unit/");
-            skeleton += cas1.type;
+            skeleton += numeratorCase.type;
             skeleton += u"-";
-            skeleton += cas1.subtype;
+            skeleton += numeratorCase.subtype;
             skeleton += u" ";
             skeleton += u"per-measure-unit/";
-            skeleton += cas2.type;
+            skeleton += denominatorCase.type;
             skeleton += u"-";
-            skeleton += cas2.subtype;
+            skeleton += denominatorCase.subtype;
+
+            // Convert UTF-16 string to UTF-8 for forIdentifier
+            UnicodeString temp(denominatorCase.subtype);
+            CStr utf8String(temp);
+            MeasureUnit denominatorUnit = MeasureUnit::forIdentifier(utf8String(), status);
+            
+            // If the units has a constant denominator, we skip the test because we could not have a per unit with a constant denominator.
+            if (denominatorUnit.getConstantDenominator(status) != 0) {
+                continue;
+            }
 
             status.setScope(skeleton);
-            if (cas1.type != cas2.type && cas1.subtype != cas2.subtype) {
                 UnicodeString toSkeleton = NumberFormatter::forSkeleton(
                     skeleton, status).toSkeleton(status);
                 if (status.errIfFailureAndReset()) {
@@ -490,19 +507,67 @@ void NumberSkeletonTest::perUnitToSkeleton() {
                 UnicodeString msg;
                 msg.append(toSkeleton)
                     .append(" should contain '")
-                    .append(UnicodeString(cas1.subtype))
+                    .append(UnicodeString(numeratorCase.subtype))
                     .append("' when constructed from ")
                     .append(skeleton);
-                assertTrue(msg, toSkeleton.indexOf(cas1.subtype) >= 0);
+                assertTrue(msg, toSkeleton.indexOf(numeratorCase.subtype) >= 0);
 
                 msg.remove();
                 msg.append(toSkeleton)
                     .append(" should contain '")
-                    .append(UnicodeString(cas2.subtype))
+                    .append(UnicodeString(denominatorCase.subtype))
                     .append("' when constructed from ")
                     .append(skeleton);
-                assertTrue(msg, toSkeleton.indexOf(cas2.subtype) >= 0);
-            }
+                assertTrue(msg, toSkeleton.indexOf(denominatorCase.subtype) >= 0);
+        }
+    }
+}
+
+void NumberSkeletonTest::measurementSystemOverride() {
+    // NOTE TO REVIEWERS: When the appropriate changes are made on the CLDR side, do we want to keep this
+    // test or rely on additions the CLDR project makes to unitPreferencesTest.txt? --rtg 8/29/23
+    IcuTestErrorCode status(*this, "measurementSystemOverride");
+    struct TestCase {
+        const char* locale;
+        const char16_t* skeleton;
+        const char16_t* expectedResult;
+    } testCases[] = {
+        // Norway uses m/s for wind speed and should with or without the "ms-metric" subtag in the locale,
+        // but it uses km/h for other speeds.  France uses km/h for all speeds.  And in both places, if
+        // you say "ms-ussystem", you should get mph.  In the US, we use mph for all speeds, but should
+        // use km/h if the locale has "ms-metric" in it.
+        { "nn_NO",                  u"unit/kilometer-per-hour usage/wind",    u"0,34 m/s" },
+        { "nn_NO@measure=metric",   u"unit/kilometer-per-hour usage/wind",    u"0,34 m/s" },
+        { "nn_NO@measure=ussystem", u"unit/kilometer-per-hour usage/wind",    u"0,76 mile/t" },
+        { "fr_FR",                  u"unit/kilometer-per-hour usage/wind",    u"1,2\u202Fkm/h" },
+        { "fr_FR@measure=metric",   u"unit/kilometer-per-hour usage/wind",    u"1,2\u202Fkm/h" },
+        { "fr_FR@measure=ussystem", u"unit/kilometer-per-hour usage/wind",    u"0,76\u202Fmi/h" },
+        { "en_US",                  u"unit/kilometer-per-hour usage/wind",    u"0.76 mph" },
+        { "en_US@measure=metric",   u"unit/kilometer-per-hour usage/wind",    u"1.2 km/h" },
+        { "en_US@measure=ussystem", u"unit/kilometer-per-hour usage/wind",    u"0.76 mph" },
+
+        { "nn_NO",                  u"unit/kilometer-per-hour usage/default", u"1,2 km/t" },
+        { "nn_NO@measure=metric",   u"unit/kilometer-per-hour usage/default", u"1,2 km/t" },
+        { "nn_NO@measure=ussystem", u"unit/kilometer-per-hour usage/default", u"0,76 mile/t" },
+        { "fr_FR",                  u"unit/kilometer-per-hour usage/default", u"1,2\u202Fkm/h" },
+        { "fr_FR@measure=metric",   u"unit/kilometer-per-hour usage/default", u"1,2\u202Fkm/h" },
+        { "fr_FR@measure=ussystem", u"unit/kilometer-per-hour usage/default", u"0,76\u202Fmi/h" },
+        { "en_US",                  u"unit/kilometer-per-hour usage/default", u"0.76 mph" },
+        { "en_US@measure=metric",   u"unit/kilometer-per-hour usage/default", u"1.2 km/h" },
+        { "en_US@measure=ussystem", u"unit/kilometer-per-hour usage/default", u"0.76 mph" },
+    };
+    
+    for (const auto& testCase : testCases) {
+        UErrorCode err = U_ZERO_ERROR;
+        LocalizedNumberFormatter nf = NumberFormatter::forSkeleton(testCase.skeleton, err).locale(testCase.locale);
+        UnicodeString actualResult = nf.formatDouble(1.23, err).toString(err);
+        
+        UnicodeString errorMessage = ": ";
+        errorMessage += testCase.locale;
+        errorMessage += "/";
+        errorMessage += testCase.skeleton;
+        if (assertSuccess(u"Formatting error" + errorMessage, err)) {
+            assertEquals(u"Wrong result" + errorMessage, testCase.expectedResult, actualResult);
         }
     }
 }

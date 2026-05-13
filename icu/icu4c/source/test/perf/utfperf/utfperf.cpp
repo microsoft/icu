@@ -34,9 +34,9 @@
 #define OUTPUT_CAPACITY INPUT_CAPACITY
 
 static char utf8[INPUT_CAPACITY];
-static UChar pivot[INTERMEDIATE_CAPACITY];
+static char16_t pivot[INTERMEDIATE_CAPACITY];
 
-static UChar output[OUTPUT_CAPACITY];
+static char16_t output[OUTPUT_CAPACITY];
 static char intermediate[OUTPUT_CAPACITY];
 
 static int32_t utf8Length, encodedLength, outputLength, countInputCodePoints;
@@ -76,26 +76,26 @@ public:
 
             chunkLength = atoi(options[CHUNK_LENGTH].value);
             if (chunkLength < 1 || OUTPUT_CAPACITY < chunkLength) {
-                fprintf(stderr, "error: chunk length must be 1..%ld\n", (long)OUTPUT_CAPACITY);
+                fprintf(stderr, "error: chunk length must be 1..%ld\n", static_cast<long>(OUTPUT_CAPACITY));
                 status = U_ILLEGAL_ARGUMENT_ERROR;
             }
 
             pivotLength = atoi(options[PIVOT_LENGTH].value);
             if (pivotLength < 1 || PIVOT_CAPACITY < pivotLength) {
-                fprintf(stderr, "error: pivot length must be 1..%ld\n", (long)PIVOT_CAPACITY);
+                fprintf(stderr, "error: pivot length must be 1..%ld\n", static_cast<long>(PIVOT_CAPACITY));
                 status = U_ILLEGAL_ARGUMENT_ERROR;
             }
 
             int32_t inputLength;
             UPerfTest::getBuffer(inputLength, status);
             countInputCodePoints = u_countChar32(buffer, bufferLen);
-            u_strToUTF8(utf8, (int32_t)sizeof(utf8), &utf8Length, buffer, bufferLen, &status);
+            u_strToUTF8(utf8, static_cast<int32_t>(sizeof(utf8)), &utf8Length, buffer, bufferLen, &status);
         }
     }
 
-    virtual UPerfFunction* runIndexedTest(int32_t index, UBool exec, const char* &name, char* par = NULL);
+    UPerfFunction* runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
 
-    const UChar *getBuffer() const { return buffer; }
+    const char16_t *getBuffer() const { return buffer; }
     int32_t getBufferLen() const { return bufferLen; }
 
     const char *charset;
@@ -107,7 +107,7 @@ U_CDECL_BEGIN
 static void U_CALLCONV
 fromUCallback(const void *context,
               UConverterFromUnicodeArgs *fromUArgs,
-              const UChar *codeUnits,
+              const char16_t *codeUnits,
               int32_t length,
               UChar32 codePoint,
               UConverterCallbackReason reason,
@@ -130,7 +130,7 @@ protected:
         if (U_FAILURE(errorCode)) {
             fprintf(stderr, "error opening converter for \"%s\" - %s\n", testcase.charset, u_errorName(errorCode));
         }
-        ucnv_setFromUCallBack(cnv, fromUCallback, NULL, NULL, NULL, &errorCode);
+        ucnv_setFromUCallBack(cnv, fromUCallback, nullptr, nullptr, nullptr, &errorCode);
     }
 public:
     virtual ~Command(){
@@ -139,12 +139,12 @@ public:
         }
     }
     // virtual void call(UErrorCode* pErrorCode) { ... }
-    virtual long getOperationsPerIteration(){
+    long getOperationsPerIteration() override {
         return countInputCodePoints;
     }
 
     const UtfPerformanceTest &testcase;
-    const UChar *input;
+    const char16_t *input;
     int32_t inputLength;
     UErrorCode errorCode;
     UConverter *cnv;
@@ -161,12 +161,12 @@ public:
             return t;
         } else {
             delete t;
-            return NULL;
+            return nullptr;
         }
     }
-    virtual void call(UErrorCode* pErrorCode){
-        const UChar *pIn, *pInLimit;
-        UChar *pOut, *pOutLimit;
+    void call(UErrorCode* pErrorCode) override {
+        const char16_t *pIn, *pInLimit;
+        char16_t *pOut, *pOutLimit;
         char *pInter, *pInterLimit;
         const char *p;
         UBool flush;
@@ -188,8 +188,8 @@ public:
         do {
             /* convert a block of [pIn..pInLimit[ to the encoding in intermediate[] */
             pInter=intermediate;
-            ucnv_fromUnicode(cnv, &pInter, pInterLimit, &pIn, pInLimit, NULL, true, pErrorCode);
-            encodedLength+=(int32_t)(pInter-intermediate);
+            ucnv_fromUnicode(cnv, &pInter, pInterLimit, &pIn, pInLimit, nullptr, true, pErrorCode);
+            encodedLength += static_cast<int32_t>(pInter - intermediate);
 
             if(*pErrorCode==U_BUFFER_OVERFLOW_ERROR) {
                 /* make sure that we convert once more to really flush */
@@ -202,7 +202,7 @@ public:
 
             /* convert the block [intermediate..pInter[ back to UTF-16 */
             p=intermediate;
-            ucnv_toUnicode(cnv, &pOut, pOutLimit,&p, pInter,NULL, flush,pErrorCode);
+            ucnv_toUnicode(cnv, &pOut, pOutLimit,&p, pInter,nullptr, flush,pErrorCode);
             if(U_FAILURE(*pErrorCode)) {
                 return;
             }
@@ -228,11 +228,11 @@ public:
             return t;
         } else {
             delete t;
-            return NULL;
+            return nullptr;
         }
     }
-    virtual void call(UErrorCode* pErrorCode){
-        const UChar *pIn, *pInLimit;
+    void call(UErrorCode* pErrorCode) override {
+        const char16_t *pIn, *pInLimit;
         char *pInter, *pInterLimit;
 
         ucnv_resetFromUnicode(cnv);
@@ -247,8 +247,8 @@ public:
 
         for(;;) {
             pInter=intermediate;
-            ucnv_fromUnicode(cnv, &pInter, pInterLimit, &pIn, pInLimit, NULL, true, pErrorCode);
-            encodedLength+=(int32_t)(pInter-intermediate);
+            ucnv_fromUnicode(cnv, &pInter, pInterLimit, &pIn, pInLimit, nullptr, true, pErrorCode);
+            encodedLength += static_cast<int32_t>(pInter - intermediate);
 
             if(*pErrorCode==U_BUFFER_OVERFLOW_ERROR) {
                 /* make sure that we convert once more to really flush */
@@ -267,7 +267,7 @@ class FromUTF8 : public Command {
 protected:
     FromUTF8(const UtfPerformanceTest &testcase)
             : Command(testcase),
-              utf8Cnv(NULL),
+              utf8Cnv(nullptr),
               input8(utf8), input8Length(utf8Length) {
         utf8Cnv=ucnv_open("UTF-8", &errorCode);
     }
@@ -278,16 +278,16 @@ public:
             return t;
         } else {
             delete t;
-            return NULL;
+            return nullptr;
         }
     }
     ~FromUTF8() {
         ucnv_close(utf8Cnv);
     }
-    virtual void call(UErrorCode* pErrorCode){
+    void call(UErrorCode* pErrorCode) override {
         const char *pIn, *pInLimit;
         char *pInter, *pInterLimit;
-        UChar *pivotSource, *pivotTarget, *pivotLimit;
+        char16_t *pivotSource, *pivotTarget, *pivotLimit;
 
         ucnv_resetToUnicode(utf8Cnv);
         ucnv_resetFromUnicode(cnv);
@@ -310,7 +310,7 @@ public:
                            &pIn, pInLimit,
                            pivot, &pivotSource, &pivotTarget, pivotLimit,
                            false, true, pErrorCode);
-            encodedLength+=(int32_t)(pInter-intermediate);
+            encodedLength += static_cast<int32_t>(pInter - intermediate);
 
             if(*pErrorCode==U_BUFFER_OVERFLOW_ERROR) {
                 /* make sure that we convert once more to really flush */
@@ -335,7 +335,7 @@ UPerfFunction* UtfPerformanceTest::runIndexedTest(int32_t index, UBool exec, con
         case 2: name = "FromUTF8";      if (exec) return FromUTF8::get(*this); break;
         default: name = ""; break;
     }
-    return NULL;
+    return nullptr;
 }
 
 int main(int argc, const char *argv[])
@@ -361,7 +361,7 @@ int main(int argc, const char *argv[])
     }
 
     if (fromUCallbackCount > 0) {
-        printf("Number of fromUnicode callback calls in the last iteration: %ld\n", (long)fromUCallbackCount);
+        printf("Number of fromUnicode callback calls in the last iteration: %ld\n", static_cast<long>(fromUCallbackCount));
     }
 
     return 0;

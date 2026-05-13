@@ -85,7 +85,7 @@ struct RBBIDataHeader {
     uint32_t         fTrie;           /*  Offset to Trie data for character categories */
     uint32_t         fTrieLen;
     uint32_t         fRuleSource;     /*  Offset to the source for for the break */
-    uint32_t         fRuleSourceLen;  /*    rules.  Stored UChar *. */
+    uint32_t         fRuleSourceLen;  /*    rules.  Stored char16_t *. */
     uint32_t         fStatusTable;    /* Offset to the table of rule status values */
     uint32_t         fStatusTableLen;
 
@@ -135,7 +135,7 @@ struct RBBIStateTable {
     uint32_t         fNumStates;            // Number of states.
     uint32_t         fRowLen;               // Length of a state table row, in bytes.
     uint32_t         fDictCategoriesStart;  // Char category number of the first dictionary
-                                            //   char class, or the the largest category number + 1
+                                            //   char class, or the largest category number + 1
                                             //   if there are no dictionary categories.
     uint32_t         fLookAheadResultsSize; // Size of run-time array required for holding
                                             //   look-ahead results. Indexed by row.fLookAhead.
@@ -205,7 +205,7 @@ private:
 
 U_NAMESPACE_END
 
-U_CFUNC UBool rbbi_cleanup(void);
+U_CFUNC UBool rbbi_cleanup();
 
 #endif /* C++ */
 

@@ -72,117 +72,117 @@ class NumberFormatTest: public CalendarTimeZoneTest {
     /**
      * Test APIs (to increase code coverage)
      */
-    void TestAPI(void);
+    void TestAPI();
 
-    void TestCoverage(void);
+    void TestCoverage();
     void TestLocalizedPatternSymbolCoverage();
 
     /**
      * Test the handling of quotes
      **/
-    void TestQuotes(void);
+    void TestQuotes();
     /**
      * Test patterns with exponential representation
      **/
-    void TestExponential(void);
+    void TestExponential();
     /**
      * Test handling of patterns with currency symbols
      **/
-    void TestCurrencySign(void);
+    void TestCurrencySign();
     /**
      * Test different format patterns
      **/
-    void TestPatterns(void);
+    void TestPatterns();
     /**
      * API coverage for DigitList
      **/
-    //void TestDigitList(void);
+    //void TestDigitList();
 
-    void Test20186_SpacesAroundSemicolon(void);
+    void Test20186_SpacesAroundSemicolon();
 
     /**
      * Test localized currency patterns.
      */
-    void TestCurrency(void);
+    void TestCurrency();
 
     /**
      * Test the Currency object handling, new as of ICU 2.2.
      */
-    void TestCurrencyObject(void);
+    void TestCurrencyObject();
 
-    void TestCurrencyPatterns(void);
+    void TestCurrencyPatterns();
 
     /**
      * Do rudimentary testing of parsing.
      */
-    void TestParse(void);
+    void TestParse();
     /**
      * Test proper rounding by the format method.
      */
-    void TestRounding487(void);
+    void TestRounding487();
 
     // New tests for alphaWorks upgrade
-    void TestExponent(void);
+    void TestExponent();
 
-    void TestScientific(void);
+    void TestScientific();
 
-    void TestScientific2(void);
+    void TestScientific2();
 
-    void TestScientificGrouping(void);
+    void TestScientificGrouping();
 
-    void TestInt64(void);
+    void TestInt64();
 
-    void TestSurrogateSupport(void);
+    void TestSurrogateSupport();
 
     /**
      * Test the functioning of the secondary grouping value.
      */
-    void TestSecondaryGrouping(void);
+    void TestSecondaryGrouping();
 
-    void TestWhiteSpaceParsing(void);
+    void TestWhiteSpaceParsing();
 
-    void TestComplexCurrency(void);
+    void TestComplexCurrency();
 
-    void TestPad(void);
-    void TestPatterns2(void);
+    void TestPad();
+    void TestPatterns2();
 
     /**
      * Test currency registration.
      */
-    void TestRegCurrency(void);
+    void TestRegCurrency();
 
-    void TestCurrencyNames(void);
+    void TestCurrencyNames();
 
-    void TestCurrencyVariants(void);
+    void TestCurrencyVariants();
 
-    void TestCurrencyAmount(void);
+    void TestCurrencyAmount();
 
-    void TestCurrencyUnit(void);
+    void TestCurrencyUnit();
 
-    void TestSymbolsWithBadLocale(void);
+    void TestSymbolsWithBadLocale();
 
-    void TestAdoptDecimalFormatSymbols(void);
+    void TestAdoptDecimalFormatSymbols();
 
-    void TestPerMill(void);
+    void TestPerMill();
 
-    void TestIllegalPatterns(void);
+    void TestIllegalPatterns();
 
-    void TestCases(void);
+    void TestCases();
 
-    void TestJB3832(void);
+    void TestJB3832();
 
-    void TestHost(void);
+    void TestHost();
 
-    void TestHostClone(void);
+    void TestHostClone();
 
-    void TestCurrencyFormat(void);
+    void TestCurrencyFormat();
 
     /* Port of ICU4J rounding test. */
-    void TestRounding(void);
+    void TestRounding();
 
-    void TestRoundingPattern(void);
+    void TestRoundingPattern();
 
-    void TestNonpositiveMultiplier(void);
+    void TestNonpositiveMultiplier();
 
     void TestNumberingSystems();
 
@@ -201,6 +201,7 @@ class NumberFormatTest: public CalendarTimeZoneTest {
     void TestLenientParse();
 
     void TestDecimal();
+    void TestDecimalFormatParse7E();
     void TestCurrencyFractionDigits();
 
     void TestExponentParse();
@@ -283,6 +284,7 @@ class NumberFormatTest: public CalendarTimeZoneTest {
     void Test11649_DecFmtCurrencies();
     void Test13148_ParseGroupingSeparators();
     void Test12753_PatternDecimalPoint();
+    void Test22303_PatternDecimalPoint_InfNaN();
     void Test11647_PatternCurrencySymbols();
     void Test11913_BigDecimal();
     void Test11020_RoundingInScientificNotation();
@@ -309,11 +311,12 @@ class NumberFormatTest: public CalendarTimeZoneTest {
     void Test10997_FormatCurrency();
     void Test21556_CurrencyAsDecimal();
     void Test22088_Ethiopic();
+    void Test22983_LongFraction();
 
  private:
     UBool testFormattableAsUFormattable(const char *file, int line, Formattable &f);
 
-    void expectParseCurrency(const NumberFormat &fmt, const UChar* currency, double amount, const char *text);
+    void expectParseCurrency(const NumberFormat &fmt, const char16_t* currency, double amount, const char *text);
 
     static UBool equalValue(const Formattable& a, const Formattable& b);
 
@@ -373,10 +376,10 @@ class NumberFormatTest: public CalendarTimeZoneTest {
                         double value, const UnicodeString& string);
 
     void expectPad(DecimalFormat& fmt, const UnicodeString& pat,
-                   int32_t pos, int32_t width, UChar pad);
+                   int32_t pos, int32_t width, char16_t pad);
 
     void expectPad(DecimalFormat& fmt, const char *pat,
-                   int32_t pos, int32_t width, UChar pad) {
+                   int32_t pos, int32_t width, char16_t pad) {
         expectPad(fmt, UnicodeString(pat, ""), pos, width, pad);
     }
 
@@ -399,7 +402,7 @@ class NumberFormatTest: public CalendarTimeZoneTest {
 
     void expectPad(DecimalFormat& fmt, const char *pat,
                    int32_t pos) {
-        expectPad(fmt, pat, pos, 0, (UChar)0);
+        expectPad(fmt, pat, pos, 0, static_cast<char16_t>(0));
     }
 
     void expect_rbnf(NumberFormat& fmt, const UnicodeString& str, const Formattable& n);

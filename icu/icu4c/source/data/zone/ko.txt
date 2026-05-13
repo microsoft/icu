@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 ko{
     zoneStrings{
         "Africa:Abidjan"{
@@ -258,6 +258,9 @@ ko{
         "America:Chihuahua"{
             ec{"치와와"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"시우다드후아레스"}
+        }
         "America:Coral_Harbour"{
             ec{"코랄하버"}
         }
@@ -266,6 +269,9 @@ ko{
         }
         "America:Costa_Rica"{
             ec{"코스타리카"}
+        }
+        "America:Coyhaique"{
+            ec{"코이아이케"}
         }
         "America:Creston"{
             ec{"크레스톤"}
@@ -462,9 +468,6 @@ ko{
         "America:New_York"{
             ec{"뉴욕"}
         }
-        "America:Nipigon"{
-            ec{"니피곤"}
-        }
         "America:Nome"{
             ec{"놈"}
         }
@@ -485,9 +488,6 @@ ko{
         }
         "America:Panama"{
             ec{"파나마"}
-        }
-        "America:Pangnirtung"{
-            ec{"팡니르퉁"}
         }
         "America:Paramaribo"{
             ec{"파라마리보"}
@@ -510,9 +510,6 @@ ko{
         "America:Punta_Arenas"{
             ec{"푼타아레나스"}
         }
-        "America:Rainy_River"{
-            ec{"레이니강"}
-        }
         "America:Rankin_Inlet"{
             ec{"랭킹 인렛"}
         }
@@ -527,9 +524,6 @@ ko{
         }
         "America:Rio_Branco"{
             ec{"히우 브랑쿠"}
-        }
-        "America:Santa_Isabel"{
-            ec{"산타 이사벨"}
         }
         "America:Santarem"{
             ec{"산타렘"}
@@ -576,9 +570,6 @@ ko{
         "America:Thule"{
             ec{"툴레"}
         }
-        "America:Thunder_Bay"{
-            ec{"선더베이"}
-        }
         "America:Tijuana"{
             ec{"티후아나"}
         }
@@ -599,9 +590,6 @@ ko{
         }
         "America:Yakutat"{
             ec{"야쿠타트"}
-        }
-        "America:Yellowknife"{
-            ec{"옐로나이프"}
         }
         "Antarctica:Casey"{
             ec{"케이시"}
@@ -692,9 +680,6 @@ ko{
         }
         "Asia:Chita"{
             ec{"치타"}
-        }
-        "Asia:Choibalsan"{
-            ec{"초이발산"}
         }
         "Asia:Colombo"{
             ec{"콜롬보"}
@@ -867,6 +852,9 @@ ko{
         "Asia:Ulaanbaatar"{
             ec{"울란바토르"}
         }
+        "Asia:Urumqi"{
+            ec{"우루무치"}
+        }
         "Asia:Ust-Nera"{
             ec{"우스티네라"}
         }
@@ -923,9 +911,6 @@ ko{
         }
         "Australia:Broken_Hill"{
             ec{"브로컨힐"}
-        }
-        "Australia:Currie"{
-            ec{"퀴리"}
         }
         "Australia:Darwin"{
             ec{"다윈"}
@@ -1109,9 +1094,6 @@ ko{
         "Europe:Ulyanovsk"{
             ec{"울리야노프스크"}
         }
-        "Europe:Uzhgorod"{
-            ec{"우주고로트"}
-        }
         "Europe:Vaduz"{
             ec{"파두츠"}
         }
@@ -1132,9 +1114,6 @@ ko{
         }
         "Europe:Zagreb"{
             ec{"자그레브"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"자포로지예"}
         }
         "Europe:Zurich"{
             ec{"취리히"}
@@ -1191,7 +1170,7 @@ ko{
             ec{"에파테"}
         }
         "Pacific:Enderbury"{
-            ec{"엔더베리"}
+            ec{"칸톤"}
         }
         "Pacific:Fakaofo"{
             ec{"파카오푸"}
@@ -1216,12 +1195,6 @@ ko{
         }
         "Pacific:Honolulu"{
             ec{"호놀룰루"}
-        }
-        "Pacific:Johnston"{
-            ec{"존스톤"}
-        }
-        "Pacific:Kanton"{
-            ec{"칸톤"}
         }
         "Pacific:Kiritimati"{
             ec{"키리티마티"}
@@ -1310,9 +1283,7 @@ ko{
             ls{"남아프리카 시간"}
         }
         "meta:Africa_Western"{
-            ld{"서아프리카 하계 표준시"}
-            lg{"서아프리카 시간"}
-            ls{"서아프리카 표준시"}
+            ls{"서아프리카 시간"}
         }
         "meta:Alaska"{
             ld{"알래스카 하계 표준시"}
@@ -1395,24 +1366,24 @@ ko{
             ls{"대서양 표준시"}
         }
         "meta:Australia_Central"{
-            ld{"오스트레일리아 중부 하계 표준시"}
-            lg{"오스트레일리아 중부 시간"}
-            ls{"오스트레일리아 중부 표준시"}
+            ld{"호주 중부 하계 표준시"}
+            lg{"호주 중부 시간"}
+            ls{"호주 중부 표준시"}
         }
         "meta:Australia_CentralWestern"{
-            ld{"오스트레일리아 중서부 하계 표준시"}
-            lg{"오스트레일리아 중서부 시간"}
-            ls{"오스트레일리아 중서부 표준시"}
+            ld{"호주 중서부 하계 표준시"}
+            lg{"호주 중서부 시간"}
+            ls{"호주 중서부 표준시"}
         }
         "meta:Australia_Eastern"{
-            ld{"오스트레일리아 동부 하계 표준시"}
-            lg{"오스트레일리아 동부 시간"}
-            ls{"오스트레일리아 동부 표준시"}
+            ld{"호주 동부 하계 표준시"}
+            lg{"호주 동부 시간"}
+            ls{"호주 동부 표준시"}
         }
         "meta:Australia_Western"{
-            ld{"오스트레일리아 서부 하계 표준시"}
-            lg{"오스트레일리아 서부 시간"}
-            ls{"오스트레일리아 서부 표준시"}
+            ld{"호주 서부 하계 표준시"}
+            lg{"호주 서부 시간"}
+            ls{"호주 서부 표준시"}
         }
         "meta:Azerbaijan"{
             ld{"아제르바이잔 하계 표준시"}
@@ -1468,11 +1439,6 @@ ko{
             ld{"중국 하계 표준시"}
             lg{"중국 시간"}
             ls{"중국 표준시"}
-        }
-        "meta:Choibalsan"{
-            ld{"초이발산 하계 표준시"}
-            lg{"초이발산 시간"}
-            ls{"초이발산 표준시"}
         }
         "meta:Christmas"{
             ls{"크리스마스섬 시간"}
@@ -1579,6 +1545,9 @@ ko{
         "meta:Guyana"{
             ls{"가이아나 시간"}
         }
+        "meta:Hawaii"{
+            ls{"하와이 알류샨 표준시"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"하와이 알류샨 하계 표준시"}
             lg{"하와이 알류샨 시간"}
@@ -1637,6 +1606,9 @@ ko{
             lg{"페트로파블롭스크-캄차츠키 시간"}
             ls{"페트로파블롭스크-캄차츠키 표준시"}
         }
+        "meta:Kazakhstan"{
+            ls{"카자흐스탄 시간"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"동부 카자흐스탄 시간"}
         }
@@ -1644,9 +1616,9 @@ ko{
             ls{"서부 카자흐스탄 시간"}
         }
         "meta:Korea"{
-            ld{"대한민국 하계 표준시"}
-            lg{"대한민국 시간"}
-            ls{"대한민국 표준시"}
+            ld{"한국 하계 표준시"}
+            lg{"한국 시간"}
+            ls{"한국 표준시"}
         }
         "meta:Kosrae"{
             ls{"코스라에섬 시간"}
@@ -1672,9 +1644,6 @@ ko{
             lg{"마카오 시간"}
             ls{"마카오 표준 시간"}
         }
-        "meta:Macquarie"{
-            ls{"매쿼리섬 시간"}
-        }
         "meta:Magadan"{
             ld{"마가단 하계 표준시"}
             lg{"마가단 시간"}
@@ -1699,11 +1668,6 @@ ko{
         }
         "meta:Mawson"{
             ls{"모슨 시간"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"멕시코 북서부 하계 표준시"}
-            lg{"멕시코 북서부 시간"}
-            ls{"멕시코 북서부 표준시"}
         }
         "meta:Mexico_Pacific"{
             ld{"멕시코 태평양 하계 표준시"}
@@ -1935,9 +1899,6 @@ ko{
             ls{"유콘 시간"}
         }
         fallbackFormat{"{1}({0})"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
         regionFormat{"{0} 시간"}
         regionFormatDaylight{"{0} 하계 표준시"}
         regionFormatStandard{"{0} 표준시"}

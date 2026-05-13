@@ -22,7 +22,7 @@
 #include "unicode/dtfmtsym.h"
 #include "uassert.h"
 
-static const UChar kJPY[] = {0x4A, 0x50, 0x59};
+static const char16_t kJPY[] = {0x4A, 0x50, 0x59};
 
 static void fixNonBreakingSpace(UnicodeString &str) {
     for (int32_t i = 0; i < str.length(); ++i) {
@@ -39,7 +39,7 @@ static NumberFormat *nfWithPattern(const char *pattern) {
     DecimalFormat *result = new DecimalFormat(
             upattern, new DecimalFormatSymbols("fr", status), status);
     if (U_FAILURE(status)) {
-        return NULL;
+        return nullptr;
     }
 
     return result;
@@ -64,7 +64,8 @@ public:
     void TestPercent();
     void TestPerMilli();
     void TestPadding();
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=0) override;
+    void runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
+
 private:
     void assertPatternFr(
             const char *expected, double x, const char *pattern, UBool possibleDataError=false);
@@ -101,7 +102,7 @@ void NumberFormatSpecificationTest::TestBasicPatterns() {
 
 void NumberFormatSpecificationTest::TestNfSetters() {
     LocalPointer<NumberFormat> nf(nfWithPattern("#,##0.##"));
-    if (nf == NULL) {
+    if (nf == nullptr) {
         dataerrln("Error creating NumberFormat");
         return;
     }

@@ -37,7 +37,7 @@
 #include "unicode/ustring.h"
 
 static UCollator *myCollation = NULL;
-const static UChar testSourceCases[][MAX_TOKEN_LEN] = {
+static const UChar testSourceCases[][MAX_TOKEN_LEN] = {
         {(UChar)0x0061 /* 'a' */, (UChar)0x0062 /* 'b' */, 0},
         {(UChar)0x0062 /* 'b' */, (UChar)0x006C /* 'l' */, (UChar)0x0061 /* 'a' */, (UChar)0x0063 /* 'c' */, (UChar)0x006B /* 'k' */, (UChar)0x002D /* '-' */, (UChar)0x0062 /* 'b' */, (UChar)0x0069 /* 'i' */, (UChar)0x0072 /* 'r' */, (UChar)0x0064 /* 'd' */, 0},
         {(UChar)0x0062 /* 'b' */, (UChar)0x006C /* 'l' */, (UChar)0x0061 /* 'a' */, (UChar)0x0063 /* 'c' */, (UChar)0x006B /* 'k' */, (UChar)0x0020 /* ' ' */, (UChar)0x0062 /* 'b' */, (UChar)0x0069 /* 'i' */, (UChar)0x0072 /* 'r' */, (UChar)0x0064 /* 'd' */, 0},
@@ -89,7 +89,7 @@ const static UChar testSourceCases[][MAX_TOKEN_LEN] = {
         {(UChar)0x0070 /* 'p' */, 0x00E9, (UChar)0x0063 /* 'c' */, (UChar)0x0068 /* 'h' */, 0x00E9, 0}                                            
 };
 
-const static UChar testTargetCases[][MAX_TOKEN_LEN] = {
+static const UChar testTargetCases[][MAX_TOKEN_LEN] = {
         {(UChar)0x0061 /* 'a' */, (UChar)0x0062 /* 'b' */, (UChar)0x0063 /* 'c' */, 0},
         {(UChar)0x0062 /* 'b' */, (UChar)0x006C /* 'l' */, (UChar)0x0061 /* 'a' */, (UChar)0x0063 /* 'c' */, (UChar)0x006B /* 'k' */, (UChar)0x0062 /* 'b' */, (UChar)0x0069 /* 'i' */, (UChar)0x0072 /* 'r' */, (UChar)0x0064 /* 'd' */, 0},
         {(UChar)0x0062 /* 'b' */, (UChar)0x006C /* 'l' */, (UChar)0x0061 /* 'a' */, (UChar)0x0063 /* 'c' */, (UChar)0x006B /* 'k' */, (UChar)0x002D /* '-' */, (UChar)0x0062 /* 'b' */, (UChar)0x0069 /* 'i' */, (UChar)0x0072 /* 'r' */, (UChar)0x0064 /* 'd' */, 0},
@@ -141,7 +141,7 @@ const static UChar testTargetCases[][MAX_TOKEN_LEN] = {
         {(UChar)0x0070 /* 'p' */, 0x00EA, (UChar)0x0063 /* 'c' */, (UChar)0x0068 /* 'h' */, (UChar)0x0065 /* 'e' */, 0}                                                 
 };
 
-const static UCollationResult results[] = {
+static const UCollationResult results[] = {
         UCOL_LESS, 
         UCOL_LESS, /*UCOL_GREATER,*/
         UCOL_LESS,
@@ -197,7 +197,7 @@ const static UCollationResult results[] = {
         UCOL_LESS                                                                         /* 49 */
 };
 
-const static UChar testBugs[][MAX_TOKEN_LEN] = {
+static const UChar testBugs[][MAX_TOKEN_LEN] = {
     {(UChar)0x0061 /* 'a' */, 0},
     {(UChar)0x0041 /* 'A' */, 0},
     {(UChar)0x0065 /* 'e' */, 0},
@@ -213,7 +213,7 @@ const static UChar testBugs[][MAX_TOKEN_LEN] = {
 
 /* 0x0300 is grave, 0x0301 is acute
    the order of elements in this array must be different than the order in CollationFrenchTest */
-const static UChar testAcute[][MAX_TOKEN_LEN] = {
+static const UChar testAcute[][MAX_TOKEN_LEN] = {
     {(UChar)0x0065 /* 'e' */, (UChar)0x0065 /* 'e' */, 0},
     {(UChar)0x0065 /* 'e' */, (UChar)0x0065 /* 'e' */, 0x0301, 0},
     {(UChar)0x0065 /* 'e' */, (UChar)0x0065 /* 'e' */, 0x0301, 0x0300, 0},
@@ -262,7 +262,7 @@ void addEnglishCollTest(TestNode** root)
 
 }
 
-static void TestTertiary( )
+static void TestTertiary(void)
 {
     int32_t testMoreSize;
     UCollationResult expected=UCOL_EQUAL;
@@ -305,7 +305,7 @@ static void TestTertiary( )
     ucol_close(myCollation);
 }
 
-static void TestPrimary()
+static void TestPrimary(void)
 {
     
     int32_t i;
@@ -324,7 +324,7 @@ static void TestPrimary()
     ucol_close(myCollation);
 }
 
-static void TestSecondary()
+static void TestSecondary(void)
 {
     UCollationResult expected=UCOL_EQUAL;
     int32_t i,j, testAcuteSize;

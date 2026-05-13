@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 es_CO{
     %%Parent{"es_419"}
     NumberElements{
@@ -70,7 +70,7 @@ es_CO{
                 d{
                     d{"d 'a' d"}
                 }
-                fallback{"{0} ‘al’ {1}"}
+                fallback{"{0} al {1}"}
                 y{
                     y{"y 'a' y G"}
                 }
@@ -109,6 +109,14 @@ es_CO{
             }
         }
         gregorian{
+            AmPmMarkers{
+                "a. m.",
+                "p. m.",
+            }
+            AmPmMarkersAbbr{
+                "a. m.",
+                "p. m.",
+            }
             DateTimePatterns{
                 "h:mm:ss a zzzz",
                 "h:mm:ss a z",
@@ -153,7 +161,7 @@ es_CO{
                         "D",
                         "L",
                         "M",
-                        "M",
+                        "m",
                         "J",
                         "V",
                         "S",
@@ -182,10 +190,17 @@ es_CO{
                 }
                 stand-alone{
                     abbreviated{
+                        am{"a. m."}
                         noon{"m."}
+                        pm{"p. m."}
                     }
                     narrow{
-                        noon{"m."}
+                        am{"a. m."}
+                        pm{"p. m."}
+                    }
+                    wide{
+                        am{"a. m."}
+                        pm{"p. m."}
                     }
                 }
             }
@@ -229,7 +244,7 @@ es_CO{
                 d{
                     d{"d 'a' d"}
                 }
-                fallback{"{0} ‘al’ {1}"}
+                fallback{"{0} al {1}"}
                 h{
                     a{"h a 'a' h a"}
                     h{"h 'a' h a"}

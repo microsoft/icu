@@ -32,7 +32,7 @@ void TestChoiceFormat::runIndexedTest(int32_t index, UBool exec,
     }
 }
 
-static UBool chkstatus( UErrorCode &status, const char* msg = NULL )
+static UBool chkstatus( UErrorCode &status, const char* msg = nullptr )
 {
     UBool ok = U_SUCCESS(status);
     if (!ok) it_errln( msg );
@@ -40,7 +40,7 @@ static UBool chkstatus( UErrorCode &status, const char* msg = NULL )
 }
 
 void
-TestChoiceFormat::TestSimpleExample( void )
+TestChoiceFormat::TestSimpleExample()
 {
     double limits[] = {1,2,3,4,5,6,7};
     UnicodeString monthNames[] = {"Sun","Mon","Tue","Wed","Thur","Fri","Sat"};
@@ -86,15 +86,15 @@ TestChoiceFormat::TestSimpleExample( void )
     int32_t count=0;
     const double *gotLimits=form->getLimits(count);
 #if 1  // ICU 4.8 deprecates and disables the ChoiceFormat getters.
-    if(count != 0 || gotLimits != NULL) {
+    if(count != 0 || gotLimits != nullptr) {
         errln("getLimits() returns something, should be disabled");
     }
     const UnicodeString *gotFormats=form->getFormats(count);
-    if(count != 0 || gotFormats != NULL) {
+    if(count != 0 || gotFormats != nullptr) {
         errln("getFormats() returns something, should be disabled");
     }
     const UBool *gotClosures=form->getClosures(count);
-    if(count != 0 || gotClosures != NULL) {
+    if(count != 0 || gotClosures != nullptr) {
         errln("getClosures() returns something, should be disabled");
     }
 #else
@@ -123,7 +123,7 @@ TestChoiceFormat::TestSimpleExample( void )
 }
 
 void
-TestChoiceFormat::TestComplexExample( void )
+TestChoiceFormat::TestComplexExample()
 {
     UErrorCode status = U_ZERO_ERROR;
     const double filelimits[] = {-1, 0,1,2};
@@ -138,7 +138,7 @@ TestChoiceFormat::TestComplexExample( void )
 
     Format* filenumform = NumberFormat::createInstance( status );
     if (!filenumform) { 
-        dataerrln((UnicodeString)"***  test_complex_example filenumform - " + u_errorName(status)); 
+        dataerrln(UnicodeString("***  test_complex_example filenumform - ") + u_errorName(status));
         delete fileform;
         return; 
     }
@@ -148,7 +148,7 @@ TestChoiceFormat::TestComplexExample( void )
         return;
     }
 
-    //const Format* testFormats[] = { fileform, NULL, filenumform };
+    //const Format* testFormats[] = { fileform, nullptr, filenumform };
     //pattform->setFormats( testFormats, 3 );
 
     MessageFormat* pattform = new MessageFormat("There {0} on {1}", status );
@@ -169,7 +169,7 @@ TestChoiceFormat::TestComplexExample( void )
     pattform->setFormat( 2, *filenumform );
 
 
-    Formattable testArgs[] = {(int32_t)0, "Disk_A", (int32_t)0};
+    Formattable testArgs[] = {static_cast<int32_t>(0), "Disk_A", static_cast<int32_t>(0)};
     UnicodeString str;
     UnicodeString res1, res2;
     pattform->toPattern( res1 );
@@ -207,7 +207,7 @@ TestChoiceFormat::TestComplexExample( void )
     for (i = start; i < 4; ++i) {
         str = "";
         status = U_ZERO_ERROR;
-        testArgs[0] = Formattable((int32_t)i);
+        testArgs[0] = Formattable(i);
         testArgs[2] = testArgs[0];
         res2 = pattform->format(testArgs, 3, str, fpos, status );
         if (!chkstatus( status, "***  test_complex_example format" )) {
@@ -273,7 +273,7 @@ TestChoiceFormat::TestComplexExample( void )
     for (i = 0; i < 4; ++i) {
         str = "";
         status = U_ZERO_ERROR;
-        testArgs[0] = Formattable((int32_t)i);
+        testArgs[0] = Formattable(i);
         testArgs[2] = testArgs[0];
         res2 = pattform->format(testArgs, 3, str, fpos, status );
         if (!chkstatus( status, "***  test_complex_example format 2" )) {
@@ -389,7 +389,7 @@ TestChoiceFormat::TestComplexExample( void )
     it_logln(UnicodeString("ChoiceFormat format:") + res1);
     if (res1 != "third") it_errln("***  ChoiceFormat format (int32_t, ...) result!");
 
-    Formattable ft( (int32_t)3 );
+    Formattable ft(static_cast<int32_t>(3));
     str = "";
     fpos = 0;
     status = U_ZERO_ERROR;
@@ -403,7 +403,7 @@ TestChoiceFormat::TestComplexExample( void )
     it_logln(UnicodeString("ChoiceFormat format:") + res1);
     if (res1 != "third") it_errln("***  ChoiceFormat format (Formattable, ...) result!");
 
-    Formattable fta[] = { (int32_t)3 };
+    Formattable fta[] = {static_cast<int32_t>(3)};
     str = "";
     fpos = 0;
     status = U_ZERO_ERROR;
@@ -456,7 +456,7 @@ TestChoiceFormat::TestComplexExample( void )
 /**
  * Test new closure API
  */
-void TestChoiceFormat::TestClosures(void) {
+void TestChoiceFormat::TestClosures() {
     // Construct open, half-open, half-open (the other way), and closed
     // intervals.  Do this both using arrays and using a pattern.
 
@@ -548,9 +548,9 @@ void TestChoiceFormat::TestClosures(void) {
             double x = ix / 10.0; // -0.5 to 5.5 step +0.5
             FMT[pass]->format(x, str);
             if (str == exp[j]) {
-                logln((UnicodeString)"Ok: " + x + " => " + str);
+                logln(UnicodeString("Ok: ") + x + " => " + str);
             } else {
-                errln((UnicodeString)"FAIL: " + x + " => " + str +
+                errln(UnicodeString("FAIL: ") + x + " => " + str +
                       ", expected " + exp[j]);
             }
             str.truncate(0);
@@ -571,20 +571,20 @@ void TestChoiceFormat::_testPattern(const char* pattern,
     ChoiceFormat fmt(pattern, ec);
     if (!isValid) {
         if (U_FAILURE(ec)) {
-            logln((UnicodeString)"Ok: " + pattern + " failed");
+            logln(UnicodeString("Ok: ") + pattern + " failed");
         } else {
-            logln((UnicodeString)"FAIL: " + pattern + " accepted");
+            logln(UnicodeString("FAIL: ") + pattern + " accepted");
         }
         return;
     }
     if (U_FAILURE(ec)) {
-        errln((UnicodeString)"FAIL: ChoiceFormat(" + pattern + ") failed");
+        errln(UnicodeString("FAIL: ChoiceFormat(") + pattern + ") failed");
         return;
     } else {
-        logln((UnicodeString)"Ok: Pattern: " + pattern);
+        logln(UnicodeString("Ok: Pattern: ") + pattern);
     }
     UnicodeString out;
-    logln((UnicodeString)"  toPattern: " + fmt.toPattern(out));
+    logln(UnicodeString("  toPattern: ") + fmt.toPattern(out));
 
     double v[] = {v1, v2, v3};
     const char* str[] = {str1, str2, str3};
@@ -592,9 +592,9 @@ void TestChoiceFormat::_testPattern(const char* pattern,
         out.truncate(0);
         fmt.format(v[i], out);
         if (out == str[i]) {
-            logln((UnicodeString)"Ok: " + v[i] + " => " + out); 
+            logln(UnicodeString("Ok: ") + v[i] + " => " + out);
         } else {
-            errln((UnicodeString)"FAIL: " + v[i] + " => " + out +
+            errln(UnicodeString("FAIL: ") + v[i] + " => " + out +
                   ", expected " + str[i]);
         }
     }
@@ -603,7 +603,7 @@ void TestChoiceFormat::_testPattern(const char* pattern,
 /**
  * Test applyPattern
  */
-void TestChoiceFormat::TestPatterns(void) {
+void TestChoiceFormat::TestPatterns() {
     // Try a pattern that isolates a single value.  Create
     // three ranges: [-Inf,1.0) [1.0,1.0] (1.0,+Inf]
     _testPattern("0.0#a|1.0#b|1.0<c", true,

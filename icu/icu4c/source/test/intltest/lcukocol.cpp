@@ -31,7 +31,7 @@
 #include "sfwdchit.h"
 
 LotusCollationKoreanTest::LotusCollationKoreanTest()
-: myCollation(0)
+: myCollation(nullptr)
 {
     UErrorCode status = U_ZERO_ERROR;
     myCollation = Collator::createInstance("ko_kr", status);
@@ -40,7 +40,7 @@ LotusCollationKoreanTest::LotusCollationKoreanTest()
     } else {
       errcheckln(status, "Couldn't instantiate the collator with %s", u_errorName(status));
       delete myCollation;
-      myCollation = 0;
+      myCollation = nullptr;
     }
 
 }
@@ -50,12 +50,12 @@ LotusCollationKoreanTest::~LotusCollationKoreanTest()
     delete myCollation;
 }
 
-const UChar LotusCollationKoreanTest::testSourceCases[][LotusCollationKoreanTest::MAX_TOKEN_LEN] = {
+const char16_t LotusCollationKoreanTest::testSourceCases[][LotusCollationKoreanTest::MAX_TOKEN_LEN] = {
     {0xac00, 0}
     
 };
 
-const UChar LotusCollationKoreanTest::testTargetCases[][LotusCollationKoreanTest::MAX_TOKEN_LEN] = {
+const char16_t LotusCollationKoreanTest::testTargetCases[][LotusCollationKoreanTest::MAX_TOKEN_LEN] = {
     {0xac01, 0}
 };
 

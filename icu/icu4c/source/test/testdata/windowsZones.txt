@@ -169,7 +169,7 @@ windowsZones:table(nofallback){
         }
         "China Standard Time"{
             001{"Asia/Shanghai"}
-            CN{"Asia/Shanghai Asia/Chongqing Asia/Harbin"}
+            CN{"Asia/Shanghai Asia/Chongqing Asia/Harbin Asia/Kashgar Asia/Urumqi"}
             HK{"Asia/Hong_Kong"}
             MO{"Asia/Macau"}
         }
