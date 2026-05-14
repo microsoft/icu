@@ -58,6 +58,10 @@
  */
 typedef uint8_t UVersionInfo[U_MAX_VERSION_LENGTH];
 
+//IGNORE_WINDOWS_HEADERS_START
+// MSFT-Change: Since the Windows OS ICU headers are for C APIs only, we don't
+// need or want any C++ namespace support.
+
 /*===========================================================================*/
 /* C++ namespace if supported. Versioned unless versioning is disabled.      */
 /*===========================================================================*/
@@ -183,6 +187,8 @@ typedef uint8_t UVersionInfo[U_MAX_VERSION_LENGTH];
 namespace U_HEADER_ONLY_NAMESPACE {}
 
 #endif /* __cplusplus */
+
+//IGNORE_WINDOWS_HEADERS_END
 
 /*===========================================================================*/
 /* General version helper functions. Definitions in putil.c                  */
