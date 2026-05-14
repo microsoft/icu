@@ -286,6 +286,7 @@
     <ClCompile Include="static_unicode_sets.cpp" />
     <ClCompile Include="restrace.cpp" />
     <ClCompile Include="fixedstring.cpp" />
+    <ClCompile Include="uprefs.cpp" />
     <ClInclude Include="localsvc.h" />
     <ClInclude Include="msvcres.h" />
     <ClInclude Include="pluralmap.h" />
@@ -405,6 +406,7 @@
     <ClInclude Include="capi_helper.h" />
     <ClInclude Include="restrace.h" />
     <ClInclude Include="fixedstring.h" />
+    <ClInclude Include="uprefs.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="common.rc" />
