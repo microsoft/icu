@@ -30,8 +30,12 @@
 #include "unicode/udata.h"
 #include "umapfile.h"
 
-
-#define COMMON_DATA_NAME U_ICUDATA_NAME
+// MSFT-Change: In the Windows OS ICU build, we only have one data package, and we use a versionless name in filename.
+#if defined(ICU_DATA_DIR_WINDOWS)
+#  define COMMON_DATA_NAME "icudtl"
+#else
+#  define COMMON_DATA_NAME U_ICUDATA_NAME
+#endif
 
 typedef struct  {
     uint16_t    headerSize;
