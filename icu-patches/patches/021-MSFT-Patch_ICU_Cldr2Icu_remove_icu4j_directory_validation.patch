@@ -1,0 +1,20 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Thu, 14 May 2026 14:30:00 +0530
+Subject: MSFT-PATCH: Remove icu4j directory validation from Cldr2Icu (icu4c-only fork)
+
+diff --git a/icu/tools/cldr/cldr-to-icu/src/main/java/org/unicode/icu/tool/cldrtoicu/Cldr2IcuCliOptions.java b/icu/tools/cldr/cldr-to-icu/src/main/java/org/unicode/icu/tool/cldrtoicu/Cldr2IcuCliOptions.java
+index d9b46014438..9ff85b38d86 100644
+--- a/icu/tools/cldr/cldr-to-icu/src/main/java/org/unicode/icu/tool/cldrtoicu/Cldr2IcuCliOptions.java
++++ b/icu/tools/cldr/cldr-to-icu/src/main/java/org/unicode/icu/tool/cldrtoicu/Cldr2IcuCliOptions.java
+@@ -380,7 +380,9 @@ private void validateEnvironment() {
+ 
+         if (!new File(icuDir).isDirectory()
+                 || ! new File(icuDir, "icu4c").isDirectory()
+-                || ! new File(icuDir, "icu4j").isDirectory()
++                // MSFT-Change: microsoft/icu fork is icu4c-only; no icu4j source tree.
++                // The Maven dependency on icu4j (used by TransformsMapper) is still
++                // resolved from ~/.m2 at runtime, so source-tree absence is harmless.
+                 || ! new File(icuDir, "tools/cldr/cldr-to-icu").isDirectory()
+                 || ! new File(icuDir, "tools/cldr/cldr-to-icu/pom.xml").isFile()) {
+             System.err.println("The `" + icuDir + "` directory does not look like a valid icu root.");
