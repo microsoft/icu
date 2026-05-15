@@ -47,7 +47,6 @@ pt{
         ann{"obolo"}
         anp{"angika"}
         ar{"árabe"}
-        ar_001{"árabe moderno"}
         arc{"aramaico"}
         arn{"mapudungun"}
         arp{"arapaho"}
@@ -61,7 +60,6 @@ pt{
         awa{"awadhi"}
         ay{"aimará"}
         az{"azerbaijano"}
-        az_Arab{"azeri sul"}
         ba{"bashkir"}
         bal{"balúchi"}
         ban{"balinês"}
@@ -139,7 +137,6 @@ pt{
         dar{"dargwa"}
         dav{"taita"}
         de{"alemão"}
-        de_CH{"alto alemão (Suíça)"}
         del{"delaware"}
         den{"slave"}
         dgr{"dogrib"}
@@ -169,7 +166,6 @@ pt{
         eu{"basco"}
         ewo{"ewondo"}
         fa{"persa"}
-        fa_AF{"dari"}
         fan{"fangue"}
         fat{"fanti"}
         ff{"fula"}
@@ -216,7 +212,6 @@ pt{
         hax{"haida do sul"}
         he{"hebraico"}
         hi{"hindi"}
-        hi_Latn{"hindi (latim)"}
         hil{"hiligaynon"}
         hit{"hitita"}
         hmn{"hmong"}
@@ -376,14 +371,12 @@ pt{
         nb{"bokmål norueguês"}
         nd{"ndebele do norte"}
         nds{"baixo alemão"}
-        nds_NL{"baixo saxão"}
         ne{"nepalês"}
         new{"newari"}
         ng{"dongo"}
         nia{"nias"}
         niu{"niueano"}
         nl{"holandês"}
-        nl_BE{"flamengo"}
         nmg{"kwasio"}
         nn{"nynorsk norueguês"}
         nnh{"ngiemboon"}
@@ -440,7 +433,6 @@ pt{
         rm{"romanche"}
         rn{"rundi"}
         ro{"romeno"}
-        ro_MD{"moldávio"}
         rof{"rombo"}
         rom{"romani"}
         ru{"russo"}
@@ -468,7 +460,6 @@ pt{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"irlandês arcaico"}
-        sh{"servo-croata"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"árabe chadiano"}
@@ -500,7 +491,6 @@ pt{
         sux{"sumério"}
         sv{"sueco"}
         sw{"suaíli"}
-        sw_CD{"suaíli do Congo"}
         swb{"comoriano"}
         syc{"siríaco clássico"}
         syr{"siríaco"}
@@ -584,8 +574,6 @@ pt{
         zen{"zenaga"}
         zgh{"tamazirte marroqino padrão"}
         zh{"chinês"}
-        zh_Hans{"chinês simplificado"}
-        zh_Hant{"chinês tradicional"}
         zu{"zulu"}
         zun{"zunhi"}
         zxx{"sem conteúdo linguístico"}
@@ -596,20 +584,6 @@ pt{
     }
     Languages%extension{
         ku{"curmânji"}
-    }
-    Languages%long{
-        zh_Hans{"chinês mandarim (simplificado)"}
-        zh_Hant{"chinês mandarim (tradicional)"}
-    }
-    Languages%menu{
-        ckb{"curdo, central"}
-        yue{"cantonês (tradicional)"}
-        zh{"chinês, mandarim"}
-    }
-    Languages%variant{
-        ckb{"curdo sorâni"}
-        hi_Latn{"hinglish"}
-        ps{"pushto"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -777,7 +751,6 @@ pt{
             iso8601{"Calendário ISO-8601"}
             japanese{"Calendário Japonês"}
             persian{"Calendário Persa"}
-            roc{"Calendário da República da China"}
         }
         calendar%core{
             buddhist{"Budista"}
@@ -793,7 +766,6 @@ pt{
             islamic-umalqura{"Hegírico (Umm al‑Qura)"}
             japanese{"Japonês"}
             persian{"Persa"}
-            roc{"Minguo"}
         }
         cf{
             account{"Formato de moeda para contabilidade"}

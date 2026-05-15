@@ -38,7 +38,6 @@ ar{
                 nan{"ليس رقمًا"}
             }
         }
-        default{"latn"}
         default_latn{"latn"}
         latn{
             miscPatterns{
@@ -1298,13 +1297,6 @@ ar{
                         "بهمن",
                         "اسفندار",
                     }
-                }
-            }
-        }
-        roc{
-            eras{
-                abbreviated{
-                    1{"جمهورية الصي"}
                 }
             }
         }

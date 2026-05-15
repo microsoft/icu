@@ -581,13 +581,6 @@ lb{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    1{"Minguo"}
-                }
-            }
-        }
     }
     delimiters{
         alternateQuotationEnd{"‘"}

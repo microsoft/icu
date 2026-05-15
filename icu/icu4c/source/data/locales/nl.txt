@@ -1483,29 +1483,6 @@ nl{
                 "{1} {0}",
             }
         }
-        roc{
-            DateTimePatterns{
-                "HH:mm:ss zzzz",
-                "HH:mm:ss z",
-                "HH:mm:ss",
-                "HH:mm",
-                "EEEE d MMMM y G",
-                "d MMMM y G",
-                "d MMM y G",
-                "dd-MM-yy GGGGG",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-            }
-            eras{
-                abbreviated{
-                    0{"voor R.O.C."}
-                    1{"Minguo"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"activiteit"}

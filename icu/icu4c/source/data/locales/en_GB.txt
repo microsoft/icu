@@ -229,6 +229,9 @@ en_GB{
                 MMMEEEEd{"EEEE d MMM"}
                 MMMEd{"E d MMM"}
                 MMMMEEEEd{"EEEE d MMMM"}
+                h{"h a"}
+                hm{"h:mm a"}
+                hms{"h:mm:ss a"}
                 yMMMEEEEd{"EEEE, d MMM y"}
                 yMMMMEEEEd{"EEEE, d MMMM y"}
             }

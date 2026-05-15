@@ -39,10 +39,8 @@ yo_BJ{
         CL{"Shílè"}
         CN{"Sháínà"}
         CZ{"Shɛ́ɛ́kì"}
-        DG{"Diego Gashia"}
         DJ{"Díbɔ́ótì"}
         DK{"Dɛ́mákì"}
-        EH{"Ìwɔ̀òòrùn Sàhárà"}
         EU{"Àpapɔ̀ Yúróòpù"}
         FO{"Àwɔn Erékùsù ti Faroe"}
         GB{"Gɛ̀ɛ́sì"}
@@ -50,7 +48,6 @@ yo_BJ{
         GF{"Firenshi Guana"}
         GS{"Gúúsù Georgia àti Gúúsù Àwɔn Erékùsù Sandwich"}
         HK{"Agbègbè Ìshàkóso Ìshúná Hong Kong Tí Shánà Ń Darí"}
-        IC{"Ɛrékùsù Kánárì"}
         ID{"Indonéshíà"}
         IL{"Iserɛli"}
         IM{"Erékùshù ilɛ̀ Man"}
@@ -102,25 +99,9 @@ yo_BJ{
         VI{"Etikun Fagini ti Amɛrika"}
         VN{"Fɛtinami"}
         WS{"Samɔ"}
-        XA{"ìsɔ̀rɔ̀sí irɔ́"}
-        XB{"Agbègbè irɔ́"}
         ZA{"Gúúshù Áfíríkà"}
         ZM{"Shamibia"}
         ZW{"Shimibabe"}
         ZZ{"Àgbègbè àìmɔ̀"}
-    }
-    Countries%biot{
-        IO{"Àlà-ilɛ̀ Bírítéènì ní Etíkun Índíà"}
-    }
-    Countries%chagos{
-        IO{"Àkójɔpɔ̀ Àwɔn Erékùshù Shágòsì"}
-    }
-    Countries%short{
-        PS{"Palɛsítínì"}
-    }
-    Countries%variant{
-        CZ{"Shɛ́ɛ́kì Olómìnira"}
-        TL{"Ìlà Òòrùn Tímɔ̀"}
-        TR{"Tɔ́kì"}
     }
 }

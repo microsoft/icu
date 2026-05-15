@@ -935,20 +935,6 @@ is{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"fyrir lýðv. Kína"}
-                    1{"Minguo"}
-                }
-                narrow{
-                    0{"fyrir lv.K."}
-                }
-                wide{
-                    0{"fyrir lýðveldi Kína"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"virkni"}

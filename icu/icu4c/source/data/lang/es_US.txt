@@ -53,7 +53,6 @@ es_US{
         smn{"sami de Inari"}
         ss{"siswati"}
         str{"straits salish"}
-        sw_CD{"swahili del Congo"}
         syr{"siriaco"}
         tce{"tutchone del sur"}
         tet{"tetún"}
@@ -64,9 +63,6 @@ es_US{
     }
     Languages%extension{
         ku{"kurdo kurmanyi"}
-    }
-    Languages%variant{
-        ug{"uigur variante"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -80,7 +76,6 @@ es_US{
         }
         calendar%core{
             dangi{"coreano"}
-            roc{"chino"}
         }
         collation%core{
             ducet{"predeterminado Unicode"}

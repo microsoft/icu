@@ -32,7 +32,6 @@ sq{
         ann{"oboloisht"}
         anp{"angikisht"}
         ar{"arabisht"}
-        ar_001{"arabishte standarde moderne"}
         arn{"mapuçisht"}
         arp{"arapahoisht"}
         ars{"arabishte naxhdi"}
@@ -100,8 +99,6 @@ sq{
         dar{"darguaisht"}
         dav{"tajtaisht"}
         de{"gjermanisht"}
-        de_AT{"gjermanishte austriake"}
-        de_CH{"gjermanishte zvicerane (dialekti i Alpeve)"}
         dgr{"dogribisht"}
         dje{"zarmaisht"}
         doi{"dogrisht"}
@@ -117,20 +114,12 @@ sq{
         eka{"ekajukisht"}
         el{"greqisht"}
         en{"anglisht"}
-        en_AU{"anglishte australiane"}
-        en_CA{"anglishte kanadeze"}
-        en_GB{"anglishte britanike"}
-        en_US{"anglishte amerikane"}
         eo{"esperanto"}
         es{"spanjisht"}
-        es_419{"spanjishte amerikano-latine"}
-        es_ES{"spanjishte evropiane"}
-        es_MX{"spanjishte meksikane"}
         et{"estonisht"}
         eu{"baskisht"}
         ewo{"euondoisht"}
         fa{"persisht"}
-        fa_AF{"darisht"}
         ff{"fulaisht"}
         fi{"finlandisht"}
         fil{"filipinisht"}
@@ -138,8 +127,6 @@ sq{
         fo{"faroisht"}
         fon{"fonisht"}
         fr{"frëngjisht"}
-        fr_CA{"frëngjishte kanadeze"}
-        fr_CH{"frëngjishte zvicerane"}
         frc{"frëngjishte kajune"}
         frr{"frisianishte veriore"}
         fur{"friulianisht"}
@@ -164,7 +151,6 @@ sq{
         hax{"haidaishte jugore"}
         he{"hebraisht"}
         hi{"indisht"}
-        hi_Latn{"hindisht (latine)"}
         hil{"hiligajnonisht"}
         hmn{"hmongisht"}
         hr{"kroatisht"}
@@ -299,14 +285,12 @@ sq{
         nb{"norvegjishte letrare"}
         nd{"ndebelishte veriore"}
         nds{"gjermanishte e vendeve të ulëta"}
-        nds_NL{"gjermanishte saksone e vendeve të ulëta"}
         ne{"nepalisht"}
         new{"neuarisht"}
         ng{"ndongaisht"}
         nia{"niasisht"}
         niu{"niueanisht"}
         nl{"holandisht"}
-        nl_BE{"flamandisht"}
         nmg{"kuasisht"}
         nn{"norvegjishte nynorsk"}
         nnh{"ngiembunisht"}
@@ -340,8 +324,6 @@ sq{
         prg{"prusisht"}
         ps{"pashtoisht"}
         pt{"portugalisht"}
-        pt_BR{"portugalishte braziliane"}
-        pt_PT{"portugalishte evropiane"}
         qu{"keçuaisht"}
         quc{"kiçeisht"}
         raj{"raxhastanisht"}
@@ -351,7 +333,6 @@ sq{
         rm{"retoromanisht"}
         rn{"rundisht"}
         ro{"rumanisht"}
-        ro_MD{"moldavisht"}
         rof{"romboisht"}
         ru{"rusisht"}
         rup{"vllahisht"}
@@ -373,7 +354,6 @@ sq{
         seh{"senaisht"}
         ses{"senishte kojrabore"}
         sg{"sangoisht"}
-        sh{"serbo-kroatisht"}
         shi{"taçelitisht"}
         shn{"shanisht"}
         si{"sinhalisht"}
@@ -399,7 +379,6 @@ sq{
         suk{"sukumaisht"}
         sv{"suedisht"}
         sw{"suahilisht"}
-        sw_CD{"suahilishte kongoleze"}
         swb{"kamorianisht"}
         syr{"siriakisht"}
         szl{"silesisht"}
@@ -468,8 +447,6 @@ sq{
         za{"zhuangisht"}
         zgh{"tamaziatishte standarde marokene"}
         zh{"kinezisht"}
-        zh_Hans{"kinezishte e thjeshtuar"}
-        zh_Hant{"kinezishte tradicionale"}
         zu{"zuluisht"}
         zun{"zunisht"}
         zxx{"nuk ka përmbajtje gjuhësore"}
@@ -480,22 +457,6 @@ sq{
     }
     Languages%extension{
         ku{"kurmanjisht"}
-    }
-    Languages%long{
-        zh_Hans{"kinezishte mandarine (e thjeshtuar)"}
-        zh_Hant{"kinezishte mandarine (tradicionale)"}
-    }
-    Languages%menu{
-        yue{"kinezishte kantoneze"}
-        zh{"kinezishte mandarine"}
-    }
-    Languages%short{
-        az{"azerisht"}
-        en_GB{"anglishte e Mbretërisë së Bashkuar"}
-        en_US{"anglishte e SHBA-së"}
-    }
-    Languages%variant{
-        hi_Latn{"hinglisht"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -699,7 +660,6 @@ sq{
             iso8601{"kalendar ISO-8601"}
             japanese{"kalendar japonez"}
             persian{"kalendar persian"}
-            roc{"kalendar minguo"}
         }
         calendar%core{
             buddhist{"budist"}
@@ -716,7 +676,6 @@ sq{
             islamic-umalqura{"islam (um al-qura)"}
             japanese{"japonez"}
             persian{"persian"}
-            roc{"minguo"}
         }
         cf{
             account{"format valutor llogaritës"}

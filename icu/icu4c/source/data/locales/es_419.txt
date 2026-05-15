@@ -477,14 +477,6 @@ es_419{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"antes de R.O.C."}
-                    1{"R.O.C."}
-                }
-            }
-        }
     }
     characterLabel{
         box_drawing{"Cuadros de dibujo"}

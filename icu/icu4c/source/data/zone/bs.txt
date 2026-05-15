@@ -213,9 +213,6 @@ bs{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumči"}
-        }
         "Asia:Vientiane"{
             ec{"Vijentijan"}
         }

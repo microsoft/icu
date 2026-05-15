@@ -50,7 +50,6 @@ no{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabisk"}
-        ar_001{"moderne standardarabisk"}
         arc{"arameisk"}
         arn{"mapudungun"}
         aro{"araona"}
@@ -190,7 +189,6 @@ no{
         ewo{"ewondo"}
         ext{"ekstremaduransk"}
         fa{"persisk"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulfulde"}
@@ -418,7 +416,6 @@ no{
         nb{"norsk bokmål"}
         nd{"nord-ndebele"}
         nds{"nedertysk"}
-        nds_NL{"nedersaksisk"}
         ne{"nepali"}
         new{"newari"}
         ng{"ndonga"}
@@ -426,7 +423,6 @@ no{
         niu{"niueansk"}
         njo{"ao naga"}
         nl{"nederlandsk"}
-        nl_BE{"flamsk"}
         nmg{"kwasio"}
         nn{"norsk nynorsk"}
         nnh{"ngiemboon"}
@@ -493,7 +489,6 @@ no{
         rm{"retoromansk"}
         rn{"rundi"}
         ro{"rumensk"}
-        ro_MD{"moldovsk"}
         rof{"rombo"}
         rom{"romani"}
         rtm{"rotumansk"}
@@ -528,7 +523,6 @@ no{
         sg{"sango"}
         sga{"gammelirsk"}
         sgs{"samogitisk"}
-        sh{"serbokroatisk"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"tsjadisk arabisk"}
@@ -563,7 +557,6 @@ no{
         sux{"sumerisk"}
         sv{"svensk"}
         sw{"swahili"}
-        sw_CD{"kongolesisk swahili"}
         swb{"komorisk"}
         syc{"klassisk syrisk"}
         syr{"syriakisk"}
@@ -659,8 +652,6 @@ no{
         zen{"zenaga"}
         zgh{"standard marrokansk tamazight"}
         zh{"kinesisk"}
-        zh_Hans{"forenklet kinesisk"}
-        zh_Hant{"tradisjonell kinesisk"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"uten språklig innhold"}
@@ -671,24 +662,6 @@ no{
     }
     Languages%extension{
         ku{"kurmanji"}
-    }
-    Languages%long{
-        zh_Hans{"forenklet mandarinkinesisk"}
-        zh_Hant{"tradisjonell mandarinkinesisk"}
-    }
-    Languages%menu{
-        ars{"arabisk (najdi)"}
-        ckb{"kurdisk (sentral)"}
-        yue{"kinesisk, kantonesisk"}
-        zh{"kinesisk, mandarin"}
-    }
-    Languages%short{
-        az{"azeri"}
-    }
-    Languages%variant{
-        ckb{"kurdisk (sorani)"}
-        hi_Latn{"hinglish"}
-        ps{"pushto"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -892,7 +865,6 @@ no{
             iso8601{"ISO 8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
-            roc{"minguo-kalender"}
         }
         calendar%core{
             buddhist{"buddhistisk"}
@@ -908,7 +880,6 @@ no{
             islamic-umalqura{"hijri (Umm al-Qura)"}
             japanese{"japansk"}
             persian{"persisk"}
-            roc{"minguo"}
         }
         cf{
             account{"valutaformat for regnskapsføring"}

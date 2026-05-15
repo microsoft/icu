@@ -899,20 +899,6 @@ lv{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"pirms republikas"}
-                    1{"Miņgo"}
-                }
-                narrow{
-                    0{"pirms rep."}
-                }
-                wide{
-                    0{"pirms Ķīnas Republikas dibināšanas"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktivitātes"}

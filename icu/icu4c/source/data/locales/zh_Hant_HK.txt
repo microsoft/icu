@@ -462,13 +462,6 @@ zh_Hant_HK{
                 hms{"ah:mm:ss"}
             }
         }
-        roc{
-            availableFormats{
-                MEd{"d-M（E）"}
-                Md{"d-M"}
-                yyyyMEd{"Gy/M/dE"}
-            }
-        }
     }
     characterLabel{
         arrows{"箭嘴"}

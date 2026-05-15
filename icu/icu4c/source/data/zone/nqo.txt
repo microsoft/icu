@@ -849,9 +849,6 @@ nqo{
         "Asia:Ulaanbaatar"{
             ec{"ߎߟߊ߲ߓߊߕߐߙ"}
         }
-        "Asia:Urumqi"{
-            ec{"ߎߙߎ߲ߞߌ߫"}
-        }
         "Asia:Ust-Nera"{
             ec{"ߎߛߕ-ߣߋߙߊ߫"}
         }

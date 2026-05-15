@@ -300,9 +300,6 @@ pl{
         "Asia:Ulaanbaatar"{
             ec{"Ułan Bator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumczi"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Niera"}
         }

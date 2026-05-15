@@ -708,13 +708,6 @@ fy{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    1{"Minguo"}
-                }
-            }
-        }
     }
     contextTransforms{
         day-format-except-narrow:intvector{

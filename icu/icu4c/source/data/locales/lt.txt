@@ -1024,13 +1024,6 @@ lt{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"Prieš R.O.C."}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"veikla"}

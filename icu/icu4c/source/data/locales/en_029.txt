@@ -1,8 +1,14 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/
-en_DG{
-    %%Parent{"en_001"}
+en_029{
+    NumberElements{
+        latn{
+            patterns{
+                percentFormat{"#,##0 %"}
+            }
+        }
+    }
     calendar{
         gregorian{
             DateTimePatterns{
@@ -10,7 +16,7 @@ en_DG{
                 "HH:mm:ss z",
                 "HH:mm:ss",
                 "HH:mm",
-                "EEEE, d MMMM y",
+                "EEEE, dd MMMM y",
                 "d MMMM y",
                 "d MMM y",
                 "dd/MM/y",
@@ -20,15 +26,11 @@ en_DG{
                 "{1}, {0}",
                 "{1}, {0}",
             }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "yMMMMEEEEd",
-                "yMMMMd",
-                "yMMMd",
-                "yMMdd",
+            availableFormats{
+                Hm{"H:mm"}
+                Hms{"H:mm:ss"}
+                MMMEd{"E, d MMMM"}
+                yMMMM{"MMMM, y"}
             }
         }
     }

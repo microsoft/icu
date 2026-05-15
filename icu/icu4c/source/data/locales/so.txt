@@ -1248,22 +1248,6 @@ so{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"Kahor R.O.C."}
-                    1{"Minguo"}
-                }
-            }
-            intervalFormats{
-                Bh{
-                    B{"h B – h B"}
-                }
-                Bhm{
-                    B{"h:mm B – h:mm B"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Waxqabad"}

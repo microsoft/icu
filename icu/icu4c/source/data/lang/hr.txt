@@ -47,7 +47,6 @@ hr{
         ann{"obolo"}
         anp{"angika"}
         ar{"arapski"}
-        ar_001{"moderni standardni arapski"}
         arc{"aramejski"}
         arn{"mapuche"}
         arp{"arapaho"}
@@ -61,7 +60,6 @@ hr{
         awa{"awadhi"}
         ay{"ajmarski"}
         az{"azerbajdžanski"}
-        az_Arab{"južnoazerbajdžanski"}
         ba{"baškirski"}
         bal{"belučki"}
         ban{"balijski"}
@@ -139,8 +137,6 @@ hr{
         dar{"dargwa"}
         dav{"taita"}
         de{"njemački"}
-        de_AT{"austrijski njemački"}
-        de_CH{"gornjonjemački (švicarski)"}
         del{"delavarski"}
         den{"slave"}
         dgr{"dogrib"}
@@ -163,21 +159,13 @@ hr{
         el{"grčki"}
         elx{"elamitski"}
         en{"engleski"}
-        en_AU{"australski engleski"}
-        en_CA{"kanadski engleski"}
-        en_GB{"britanski engleski"}
-        en_US{"američki engleski"}
         enm{"srednjoengleski"}
         eo{"esperanto"}
         es{"španjolski"}
-        es_419{"latinoamerički španjolski"}
-        es_ES{"europski španjolski"}
-        es_MX{"meksički španjolski"}
         et{"estonski"}
         eu{"baskijski"}
         ewo{"ewondo"}
         fa{"perzijski"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fula"}
@@ -187,8 +175,6 @@ hr{
         fo{"ferojski"}
         fon{"fon"}
         fr{"francuski"}
-        fr_CA{"kanadski francuski"}
-        fr_CH{"švicarski francuski"}
         frc{"kajunski francuski"}
         frm{"srednjofrancuski"}
         fro{"starofrancuski"}
@@ -385,14 +371,12 @@ hr{
         nb{"norveški bokmål"}
         nd{"sjeverni ndebele"}
         nds{"donjonjemački"}
-        nds_NL{"donjosaksonski"}
         ne{"nepalski"}
         new{"newari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niujski"}
         nl{"nizozemski"}
-        nl_BE{"flamanski"}
         nmg{"kwasio"}
         nn{"norveški nynorsk"}
         nnh{"ngiemboon"}
@@ -440,8 +424,6 @@ hr{
         pro{"staroprovansalski"}
         ps{"paštunski"}
         pt{"portugalski"}
-        pt_BR{"brazilski portugalski"}
-        pt_PT{"europski portugalski"}
         qu{"kečuanski"}
         quc{"kiče"}
         raj{"rajasthani"}
@@ -451,7 +433,6 @@ hr{
         rm{"retoromanski"}
         rn{"rundi"}
         ro{"rumunjski"}
-        ro_MD{"moldavski"}
         rof{"rombo"}
         rom{"romski"}
         ru{"ruski"}
@@ -479,7 +460,6 @@ hr{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"staroirski"}
-        sh{"srpsko-hrvatski"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"čadski arapski"}
@@ -511,7 +491,6 @@ hr{
         sux{"sumerski"}
         sv{"švedski"}
         sw{"svahili"}
-        sw_CD{"kongoanski svahili"}
         swb{"komorski"}
         syc{"klasični sirski"}
         syr{"sirijski"}
@@ -595,8 +574,6 @@ hr{
         zen{"zenaga"}
         zgh{"standardni marokanski tamašek"}
         zh{"kineski"}
-        zh_Hans{"kineski (pojednostavljeni)"}
-        zh_Hant{"kineski (tradicionalni)"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"bez jezičnog sadržaja"}
@@ -607,26 +584,6 @@ hr{
     }
     Languages%extension{
         ku{"kurmanji"}
-    }
-    Languages%long{
-        zh_Hans{"mandarinski kineski (pojednostavljeni)"}
-        zh_Hant{"mandarinski kineski (tradicionalni)"}
-    }
-    Languages%menu{
-        ars{"arapski, najdi"}
-        ckb{"kurdski, sorani"}
-        yue{"kineski, kantonski"}
-        zh{"kineski, mandarinski"}
-    }
-    Languages%short{
-        az{"azerski"}
-        en_GB{"engleski (UK)"}
-        en_US{"engleski (SAD)"}
-    }
-    Languages%variant{
-        ckb{"kurdski, soranski"}
-        hi_Latn{"hinglish"}
-        ps{"puštu"}
     }
     Scripts{
         Adlm{"adlam pismo"}
@@ -818,7 +775,6 @@ hr{
             iso8601{"ISO-8601 kalendar"}
             japanese{"japanski kalendar"}
             persian{"perzijski kalendar"}
-            roc{"kalendar Republike Kine"}
         }
         calendar%core{
             buddhist{"budistički"}
@@ -834,7 +790,6 @@ hr{
             islamic-umalqura{"hijri (Umm al-Qura)"}
             japanese{"japanski"}
             persian{"perzijski"}
-            roc{"minguo"}
         }
         cf{
             account{"računovodstveni format valute"}

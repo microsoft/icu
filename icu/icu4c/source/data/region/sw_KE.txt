@@ -31,7 +31,6 @@ sw_KE{
         CC{"Visiwa vya Kokos (Keeling)"}
         CV{"Kepuvede"}
         CW{"Kurakao"}
-        EA{"Keuta na Melilla"}
         EC{"Ekwado"}
         GA{"Gaboni"}
         GP{"Gwadelupe"}
@@ -78,12 +77,7 @@ sw_KE{
         VA{"Mji wa Vatikani"}
         VG{"Visiwa vya Virgin vya Uingereza"}
         VI{"Visiwa vya Virgin vya Marekani"}
-        XA{"Lafudhi za Kigeni"}
-        XB{"Lugha Bandia"}
         YT{"Mayote"}
         ZZ{"Eneo Lisilojulikana"}
-    }
-    Countries%short{
-        US{"Marekani"}
     }
 }

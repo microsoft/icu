@@ -1,8 +1,8 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/
-oc_ES{
-    Countries%short{
-        HK{"Hong Kong"}
+zh_Hans_HK{
+    Countries{
+        HK{"香港特别行政区"}
     }
 }

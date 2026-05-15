@@ -1519,13 +1519,6 @@ lo{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"ກ່ອນ R.O.C."}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"ການເຄື່ອນໄຫວ"}

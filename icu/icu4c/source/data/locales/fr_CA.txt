@@ -733,16 +733,6 @@ fr_CA{
                 }
             }
         }
-        roc{
-            intervalFormats{
-                Bh{
-                    B{"h 'h' B – h 'h' B"}
-                }
-                Bhm{
-                    B{"h 'h' mm B – h 'h' mm B"}
-                }
-            }
-        }
     }
     characterLabel{
         braille{"braille"}
