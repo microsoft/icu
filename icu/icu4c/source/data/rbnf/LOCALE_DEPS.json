@@ -9,10 +9,7 @@
         "in": "id",
         "iw": "he",
         "sh": "sr_Latn",
-        "yue": "yue_Hant_HK",
-        "yue_Hans": "yue_Hans_CN",
         "zh_HK": "zh_Hant_HK",
-        "zh_Hant_HK": "yue",
         "zh_MO": "zh_Hant_MO",
         "zh_TW": "zh_Hant_TW"
     },
