@@ -813,7 +813,7 @@ static void TestGetKeywordValuesForLocale(void) {
             { "und",                "USD", "USN", NULL },
  /*           { "und_ZZ",             "USD", NULL, NULL },  -- temporarily remove as this locale now has 15 entries */
             { "en_US",              "USD", "USN", NULL },
-            { "en_029",             "USD", "USN", NULL },
+            { "en_029",             "XCD", NULL, NULL },
             { "en_TH",              "THB", NULL, NULL },
             { "de",                 "EUR", NULL, NULL },
             { "de_DE",              "EUR", NULL, NULL },
@@ -827,11 +827,11 @@ static void TestGetKeywordValuesForLocale(void) {
             { "en_US@currency=CAD;rg=THZZZZ", "THB", NULL, NULL },
     };
     const int32_t EXPECTED_SIZE[PREFERRED_SIZE] = {
-            2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 1
+            2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 1
     };
     /* ucurr_forLocale results for same locales; "" if no result expected */
     const char *FORLOCALE[PREFERRED_SIZE] = {
-            "",    "",    "USD", "",
+            "",    "",    "USD", "XCD",
             "THB", "",    "EUR", "",
             "ILS", "CAD", "ZZZ", "DEM",
             "THB", "USD", "CAD"
