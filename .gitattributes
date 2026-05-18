@@ -87,3 +87,6 @@ configure text
 # Use JSONC for syntax highlighting on GitHub.com
 *.json linguist-language=jsonc
 
+# Codepoint trie golden tests compare bytes; keep generated TOML line endings stable.
+icu/icu4c/source/test/testdata/codepointtrie/*.toml text eol=lf
+
