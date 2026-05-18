@@ -1268,8 +1268,8 @@ typedef struct {
 
 static const DisplayNameBracketsItem displayNameBracketsItems[] = {
     { "en", "CC", "en_CC",      "Cocos (Keeling) Islands",  "English (Cocos [Keeling] Islands)"  },
-    { "en", "MM", "my_MM",      "Myanmar (Burma)",          "Burmese (Myanmar [Burma])"          },
-    { "en", "MM", "my_Mymr_MM", "Myanmar (Burma)",          "Burmese (Myanmar, Myanmar [Burma])" },
+    { "en", "MM", "my_MM",      "Myanmar",                  "Burmese (Myanmar)"                  },
+    { "en", "MM", "my_Mymr_MM", "Myanmar",                  "Burmese (Myanmar, Myanmar)"         },
     { "zh", "CC", "en_CC",      "\\u79D1\\u79D1\\u65AF\\uFF08\\u57FA\\u6797\\uFF09\\u7FA4\\u5C9B", "\\u82F1\\u8BED\\uFF08\\u79D1\\u79D1\\u65AF\\uFF3B\\u57FA\\u6797\\uFF3D\\u7FA4\\u5C9B\\uFF09" },
     { "zh", "CG", "fr_CG",      "\\u521A\\u679C\\uFF08\\u5E03\\uFF09",                             "\\u6CD5\\u8BED\\uFF08\\u521A\\u679C\\uFF3B\\u5E03\\uFF3D\\uFF09" },
     { NULL, NULL, NULL,         NULL,                       NULL                                 }
@@ -7163,11 +7163,11 @@ static const UldnItem en_StdMidLong[] = {
 	{ "en",                     TEST_ULOC_LANGUAGE, u"English" },
 	// https://unicode-org.atlassian.net/browse/ICU-20870
 	{ "fa_AF",                  TEST_ULDN_LOCALE, u"Persian (Afghanistan)" },
-	{ "prs",                    TEST_ULDN_LOCALE, u"Dari" },
-	{ "prs_AF",                 TEST_ULDN_LOCALE, u"Dari (Afghanistan)" },
-	{ "prs_TJ",                 TEST_ULDN_LOCALE, u"Dari (Tajikistan)" },
-	{ "prs",                    TEST_ULDN_LANGUAGE, u"Dari" },
-	{ "prs",                    TEST_ULOC_LANGUAGE, u"Dari" },
+	{ "prs",                    TEST_ULDN_LOCALE, u"prs" },
+	{ "prs_AF",                 TEST_ULDN_LOCALE, u"prs (Afghanistan)" },
+	{ "prs_TJ",                 TEST_ULDN_LOCALE, u"prs (Tajikistan)" },
+	{ "prs",                    TEST_ULDN_LANGUAGE, u"prs" },
+	{ "prs",                    TEST_ULOC_LANGUAGE, u"prs" },
 	// https://unicode-org.atlassian.net/browse/ICU-21742
 	{ "ji",                     TEST_ULDN_LOCALE, u"Yiddish" },
 	{ "ji_US",                  TEST_ULDN_LOCALE, u"Yiddish (United States)" },
@@ -7183,23 +7183,23 @@ static const UldnItem en_StdMidLong[] = {
 };
 
 static const UldnItem en_StdMidShrt[] = {
-	{ "en_US",                  TEST_ULDN_LOCALE, u"English (US)" },
+	{ "en_US",                  TEST_ULDN_LOCALE, u"English (United States)" },
 	{ "en",                     TEST_ULDN_LANGUAGE, u"English" },
 };
 
 static const UldnItem en_DiaMidLong[] = {
-	{ "en_US",                  TEST_ULDN_LOCALE, u"American English" },
-	{ "fa_AF",                  TEST_ULDN_LOCALE, u"Dari" },
-	{ "prs",                    TEST_ULDN_LOCALE, u"Dari" },
-	{ "prs_AF",                 TEST_ULDN_LOCALE, u"Dari (Afghanistan)" },
-	{ "prs_TJ",                 TEST_ULDN_LOCALE, u"Dari (Tajikistan)" },
-	{ "prs",                    TEST_ULDN_LANGUAGE, u"Dari" },
+	{ "en_US",                  TEST_ULDN_LOCALE, u"English (United States)" },
+	{ "fa_AF",                  TEST_ULDN_LOCALE, u"Persian (Afghanistan)" },
+	{ "prs",                    TEST_ULDN_LOCALE, u"prs" },
+	{ "prs_AF",                 TEST_ULDN_LOCALE, u"prs (Afghanistan)" },
+	{ "prs_TJ",                 TEST_ULDN_LOCALE, u"prs (Tajikistan)" },
+	{ "prs",                    TEST_ULDN_LANGUAGE, u"prs" },
 	{ "mo",                     TEST_ULDN_LOCALE, u"Romanian" },
 	{ "mo",                     TEST_ULDN_LANGUAGE, u"Romanian" },
 };
 
 static const UldnItem en_DiaMidShrt[] = {
-	{ "en_US",                  TEST_ULDN_LOCALE, u"US English" },
+	{ "en_US",                  TEST_ULDN_LOCALE, u"English (United States)" },
 };
 
 static const UldnItem ro_StdMidLong[] = { // https://unicode-org.atlassian.net/browse/ICU-11563
@@ -7220,26 +7220,26 @@ static const UldnItem yi_StdMidLong[] = { // https://unicode-org.atlassian.net/b
 
 static const UldnItem zh_DiaMidLong[] = {
     // zh and zh_Hant both have dialect names for the following in ICU 73
-    { "ar_001",                 TEST_ULDN_LOCALE, u"现代标准阿拉伯语" },
-    { "nl_BE",                  TEST_ULDN_LOCALE, u"弗拉芒语" },
-    { "ro_MD",                  TEST_ULDN_LOCALE, u"摩尔多瓦语" },
+    { "ar_001",                 TEST_ULDN_LOCALE, u"阿拉伯语（世界）" },
+    { "nl_BE",                  TEST_ULDN_LOCALE, u"荷兰语（比利时）" },
+    { "ro_MD",                  TEST_ULDN_LOCALE, u"罗马尼亚语（摩尔多瓦）" },
     // zh has dialect names for the following in ICU 73
-    { "en_AU",                  TEST_ULDN_LOCALE, u"澳大利亚英语" },
-    { "en_CA",                  TEST_ULDN_LOCALE, u"加拿大英语" },
-    { "en_GB",                  TEST_ULDN_LOCALE, u"英国英语" },
-    { "en_US",                  TEST_ULDN_LOCALE, u"美国英语" },
-    { "es_419",                 TEST_ULDN_LOCALE, u"拉丁美洲西班牙语" },
-    { "es_ES",                  TEST_ULDN_LOCALE, u"欧洲西班牙语" },
-    { "es_MX",                  TEST_ULDN_LOCALE, u"墨西哥西班牙语" },
-    { "fr_CA",                  TEST_ULDN_LOCALE, u"加拿大法语" },
-    { "fr_CH",                  TEST_ULDN_LOCALE, u"瑞士法语" },
+    { "en_AU",                  TEST_ULDN_LOCALE, u"英语（澳大利亚）" },
+    { "en_CA",                  TEST_ULDN_LOCALE, u"英语（加拿大）" },
+    { "en_GB",                  TEST_ULDN_LOCALE, u"英语（英国）" },
+    { "en_US",                  TEST_ULDN_LOCALE, u"英语（美国）" },
+    { "es_419",                 TEST_ULDN_LOCALE, u"西班牙语（拉丁美洲）" },
+    { "es_ES",                  TEST_ULDN_LOCALE, u"西班牙语（西班牙）" },
+    { "es_MX",                  TEST_ULDN_LOCALE, u"西班牙语（墨西哥）" },
+    { "fr_CA",                  TEST_ULDN_LOCALE, u"法语（加拿大）" },
+    { "fr_CH",                  TEST_ULDN_LOCALE, u"法语（瑞士）" },
 };
 
 static const UldnItem zh_Hant_DiaMidLong[] = {
     // zh and zh_Hant both have dialect names for the following in ICU 73
-    { "ar_001",                 TEST_ULDN_LOCALE, u"現代標準阿拉伯文" },
-    { "nl_BE",                  TEST_ULDN_LOCALE, u"法蘭德斯文" },
-    { "ro_MD",                  TEST_ULDN_LOCALE, u"摩爾多瓦文" },
+    { "ar_001",                 TEST_ULDN_LOCALE, u"阿拉伯文（世界）" },
+    { "nl_BE",                  TEST_ULDN_LOCALE, u"荷蘭文（比利時）" },
+    { "ro_MD",                  TEST_ULDN_LOCALE, u"羅馬尼亞文（摩爾多瓦）" },
     // zh_Hant no dialect names for the following in ICU-73,
     // use standard name
     { "en_AU",                  TEST_ULDN_LOCALE, u"英文（澳洲）" },

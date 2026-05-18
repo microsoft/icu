@@ -104,7 +104,7 @@ void LocaleDisplayNamesTest::TestCreateDialect() {
   LocaleDisplayNames *ldn = LocaleDisplayNames::createInstance(Locale::getUS(), ULDN_DIALECT_NAMES);
   ldn->localeDisplayName("en_GB", temp);
   delete ldn;
-  test_assert_equal("British English", temp);
+  test_assert_equal("English (United Kingdom)", temp);
 }
 
 void LocaleDisplayNamesTest::TestWithKeywordsAndEverything() {
@@ -190,7 +190,7 @@ void LocaleDisplayNamesTest::TestUldnOpenDialect() {
   test_assert(U_SUCCESS(status));
 
   UnicodeString str(result, len, kMaxResultSize);
-  test_assert_equal("British English", str);
+  test_assert_equal("English (United Kingdom)", str);
 }
 
 void LocaleDisplayNamesTest::TestUldnWithGarbage() {
