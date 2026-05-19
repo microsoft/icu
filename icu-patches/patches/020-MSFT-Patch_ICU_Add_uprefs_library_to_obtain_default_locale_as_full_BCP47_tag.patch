@@ -1,61 +1,57 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Erik Torres <26077674+erik0686@users.noreply.github.com>
-Date: Wed, 6 Oct 2021 15:06:30 -0700
-Subject: Add uprefs library to ICU to obtain the default locale as a full
- BCP47 tag (#112)
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Tue, 19 May 2026 06:45:00 +0530
+Subject: MSFT-PATCH: Refresh uprefs default-locale library for ICU 78
 
-Currently, for many processes and tasks, ICU gets the default locale and caches it. This means that when needed, ICU will get something like "en-US" and that will not change even if you were to change your language or region in your device.
-Furthermore, ICU has currently no way of getting other globalization settings such as currency, calendar, hour cycle, first day of week, sorting method and measurement system.
-We have decided to add a way to solve these two problems.
-By adding the uprefs library (only to the Windows implementation of uprv_getDefaultLocaleID()), we are adding the Uprefs_getBCP47Tag() internal API, which obtains a full, canonical and valid BCP47Tag containing all of the settings.
+Refreshes the Windows uprefs library patch against the ICU 78 source tree.
 
-This means we also change the way we get the default locale. We go from getting only the locale and region, to getting the full thing.
+This records the final ICU 78 version of the project-file, putil, uconfig, source-list, and uprefstest changes instead of the stale ICU 72-era patch content.
 
 diff --git a/icu/icu4c/source/common/common.vcxproj b/icu/icu4c/source/common/common.vcxproj
-index f8f28ad768ca2b4e7ec93893b213c3b426f294c1..305b705430837c9c928690bf1fd5aa46de81d5fd 100644
+index f0f13aa1e2ec1f953b4b0957763e50560ae3d0a1..aca55a102f96a8694e62c3e7b7affe4479e1a133 100644
 --- a/icu/icu4c/source/common/common.vcxproj
 +++ b/icu/icu4c/source/common/common.vcxproj
-@@ -282,6 +282,7 @@
-     <ClCompile Include="utf_impl.cpp" />
+@@ -286,6 +286,7 @@
      <ClCompile Include="static_unicode_sets.cpp" />
      <ClCompile Include="restrace.cpp" />
+     <ClCompile Include="fixedstring.cpp" />
 +    <ClCompile Include="uprefs.cpp" />
      <ClInclude Include="localsvc.h" />
      <ClInclude Include="msvcres.h" />
      <ClInclude Include="pluralmap.h" />
-@@ -397,6 +398,7 @@
-     <ClInclude Include="static_unicode_sets.h" />
+@@ -405,6 +406,7 @@
      <ClInclude Include="capi_helper.h" />
      <ClInclude Include="restrace.h" />
+     <ClInclude Include="fixedstring.h" />
 +    <ClInclude Include="uprefs.h" />
    </ItemGroup>
    <ItemGroup>
      <ResourceCompile Include="common.rc" />
 diff --git a/icu/icu4c/source/common/common_uwp.vcxproj b/icu/icu4c/source/common/common_uwp.vcxproj
-index a57917292a7405b0a55fd8a34f9edd970c2951ef..0e346ccec772f6d37777505638ec7b242e21da5c 100644
+index 01906f3caf9a4c6f330b235c9b58b1b9179c82e0..113c241890217adcd4ebf14bc562e319a3e27c22 100644
 --- a/icu/icu4c/source/common/common_uwp.vcxproj
 +++ b/icu/icu4c/source/common/common_uwp.vcxproj
-@@ -404,6 +404,7 @@
-     <ClCompile Include="utf_impl.cpp" />
+@@ -409,6 +409,7 @@
      <ClCompile Include="static_unicode_sets.cpp" />
      <ClCompile Include="restrace.cpp" />
+     <ClCompile Include="fixedstring.cpp" />
 +    <ClCompile Include="uprefs.cpp" />
    </ItemGroup>
    <ItemGroup>
      <ClInclude Include="localsvc.h" />
-@@ -520,6 +521,7 @@
-     <ClInclude Include="static_unicode_sets.h" />
+@@ -529,6 +530,7 @@
      <ClInclude Include="capi_helper.h" />
      <ClInclude Include="restrace.h" />
+     <ClInclude Include="fixedstring.h" />
 +    <ClInclude Include="uprefs.h" />
    </ItemGroup>
    <ItemGroup>
      <ResourceCompile Include="common.rc" />
 diff --git a/icu/icu4c/source/common/putil.cpp b/icu/icu4c/source/common/putil.cpp
-index 3ed6a05d22d83972e3fdf2c356bc87a17babda27..4d80d514f84639e9aab7d1109ee28b45e2cf4d42 100644
+index ea15fdff0b0c67d09daf5a403f038be572cd1fbf..307b07d087de925095f6d6f976fbf37f21655b92 100644
 --- a/icu/icu4c/source/common/putil.cpp
 +++ b/icu/icu4c/source/common/putil.cpp
-@@ -71,6 +71,7 @@
+@@ -66,6 +66,7 @@
  #include "locmap.h"
  #include "ucln_cmn.h"
  #include "charstr.h"
@@ -63,7 +59,7 @@ index 3ed6a05d22d83972e3fdf2c356bc87a17babda27..4d80d514f84639e9aab7d1109ee28b45
  
  /* Include standard headers. */
  #include <stdio.h>
-@@ -1776,10 +1777,37 @@ The leftmost codepage (.xxx) wins.
+@@ -1794,10 +1795,37 @@ The leftmost codepage (.xxx) wins.
      return posixID;
  
  #elif U_PLATFORM_USES_ONLY_WIN32_API
@@ -102,7 +98,7 @@ index 3ed6a05d22d83972e3fdf2c356bc87a17babda27..4d80d514f84639e9aab7d1109ee28b45
      // If we have already figured this out just use the cached value
      if (gCorrectedPOSIXLocale != nullptr) {
          return gCorrectedPOSIXLocale;
-@@ -1821,11 +1849,11 @@ The leftmost codepage (.xxx) wins.
+@@ -1839,11 +1867,11 @@ The leftmost codepage (.xxx) wins.
          }
  
          // Now normalize the resulting name
@@ -116,7 +112,7 @@ index 3ed6a05d22d83972e3fdf2c356bc87a17babda27..4d80d514f84639e9aab7d1109ee28b45
              if (U_SUCCESS(status))
              {
                  *(correctedPOSIXLocale + posixLen) = 0;
-@@ -1839,6 +1867,7 @@ The leftmost codepage (.xxx) wins.
+@@ -1857,6 +1885,7 @@ The leftmost codepage (.xxx) wins.
              }
          }
      }
@@ -125,10 +121,10 @@ index 3ed6a05d22d83972e3fdf2c356bc87a17babda27..4d80d514f84639e9aab7d1109ee28b45
      // If unable to find a locale we can agree upon, use en-US by default
      if (gCorrectedPOSIXLocale == nullptr) {
 diff --git a/icu/icu4c/source/common/sources.txt b/icu/icu4c/source/common/sources.txt
-index e0410daaa475fad0b76587cec3e2dc4d124814f2..3ebc3c301130465cec837233540253110e8479cc 100644
+index 5b1c5e262eac42dc352f28b87033dff709376a2d..cfcfd95df56fac68a3cc224c4cd5a016a6099110 100644
 --- a/icu/icu4c/source/common/sources.txt
 +++ b/icu/icu4c/source/common/sources.txt
-@@ -157,6 +157,7 @@ unistr_titlecase_brkiter.cpp
+@@ -163,6 +163,7 @@ unistr_titlecase_brkiter.cpp
  unorm.cpp
  unormcmp.cpp
  uobject.cpp
@@ -137,10 +133,10 @@ index e0410daaa475fad0b76587cec3e2dc4d124814f2..3ebc3c301130465cec83723354025311
  ures_cnv.cpp
  uresbund.cpp
 diff --git a/icu/icu4c/source/common/unicode/uconfig.h b/icu/icu4c/source/common/unicode/uconfig.h
-index c4239fc9997028fb050be43740bb1cb368f514ba..da702d2d812fc4859ac6aa460bb8b0735ee28c29 100644
+index 3c1182886659252b44db3a0f28407dd994ca1447..f339dec982f4bcdfe7cff49130a84a1f5c4173f8 100644
 --- a/icu/icu4c/source/common/unicode/uconfig.h
 +++ b/icu/icu4c/source/common/unicode/uconfig.h
-@@ -390,6 +390,22 @@
+@@ -400,6 +400,22 @@
  #   define UCONFIG_USE_WINDOWS_LCID_MAPPING_API 1
  #endif
  
@@ -165,7 +161,7 @@ index c4239fc9997028fb050be43740bb1cb368f514ba..da702d2d812fc4859ac6aa460bb8b073
  /* i18n library switches ---------------------------------------------------- */
 diff --git a/icu/icu4c/source/common/uprefs.cpp b/icu/icu4c/source/common/uprefs.cpp
 new file mode 100644
-index 0000000000000000000000000000000000000000..b055cbe86f6ef16843444c1ea80667441a26bfa2
+index 0000000000000000000000000000000000000000..d9304a11de04e2a6416c40c8d957352be49b0a5e
 --- /dev/null
 +++ b/icu/icu4c/source/common/uprefs.cpp
 @@ -0,0 +1,553 @@
@@ -725,7 +721,7 @@ index 0000000000000000000000000000000000000000..b055cbe86f6ef16843444c1ea8066744
 \ No newline at end of file
 diff --git a/icu/icu4c/source/common/uprefs.h b/icu/icu4c/source/common/uprefs.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..2d77d0c9e7f8bdf9287b77d55741160f1c10a1fe
+index 0000000000000000000000000000000000000000..08ecd86189bb626b6ff7b55098e0cfb28ff033f8
 --- /dev/null
 +++ b/icu/icu4c/source/common/uprefs.h
 @@ -0,0 +1,29 @@
@@ -760,31 +756,31 @@ index 0000000000000000000000000000000000000000..2d77d0c9e7f8bdf9287b77d55741160f
 +#endif //UPREFS_H
 \ No newline at end of file
 diff --git a/icu/icu4c/source/test/intltest/Makefile.in b/icu/icu4c/source/test/intltest/Makefile.in
-index 13d3ea86dc9bd7c17c944b2fb7b04a143879421f..5f8822cedac4a5ddc9428cb85941b668f612c5a0 100644
+index 2e448319243dcd56431ccdfd3ddfdbce3eb2566f..eab33ebb0b6beb95282d568bfb98e0346ad0150c 100644
 --- a/icu/icu4c/source/test/intltest/Makefile.in
 +++ b/icu/icu4c/source/test/intltest/Makefile.in
-@@ -69,7 +69,7 @@ string_segment_test.o \
- numbertest_parse.o numbertest_doubleconversion.o numbertest_skeletons.o \
- static_unisets_test.o numfmtdatadriventest.o numbertest_range.o erarulestest.o \
- formattedvaluetest.o formatted_string_builder_test.o numbertest_permutation.o \
--units_data_test.o units_router_test.o units_test.o
-+units_data_test.o units_router_test.o units_test.o uprefstest.o
+@@ -78,7 +78,7 @@ units_data_test.o units_router_test.o units_test.o displayoptions_test.o \
+ numbertest_simple.o \
+ cplusplus_header_api_build_test.o uchar_type_build_test.o \
+ ucolheaderonlytest.o usetheaderonlytest.o utfiteratortest.o utfstringtest.o \
+-intltesttest.o
++intltesttest.o uprefstest.o
  
  DEPS = $(OBJECTS:.o=.d)
  
 diff --git a/icu/icu4c/source/test/intltest/intltest.vcxproj b/icu/icu4c/source/test/intltest/intltest.vcxproj
-index 319c3ab58f68f70f3da6ead4ca6cf5ca81da617b..20da05e608aeb4f472ef378d222732c863ec04aa 100644
+index ce69ec0de410b2ef93cb2bbb45592b581597c93a..0ee503fcbe4ba68b6b487bfb7cd66808dc6ec3b1 100644
 --- a/icu/icu4c/source/test/intltest/intltest.vcxproj
 +++ b/icu/icu4c/source/test/intltest/intltest.vcxproj
-@@ -288,6 +288,7 @@
-     <ClCompile Include="units_data_test.cpp" />
-     <ClCompile Include="units_router_test.cpp" />
-     <ClCompile Include="units_test.cpp" />
+@@ -247,6 +247,7 @@
+     <ClCompile Include="uchar_type_build_test.cpp" />
+     <ClCompile Include="ucolheaderonlytest.cpp" />
+     <ClCompile Include="usetheaderonlytest.cpp" />
 +    <ClCompile Include="uprefstest.cpp" />
    </ItemGroup>
    <ItemGroup>
      <ClInclude Include="colldata.h" />
-@@ -419,6 +420,7 @@
+@@ -378,6 +379,7 @@
      <ClInclude Include="csdetest.h" />
      <ClInclude Include="listformattertest.h" />
      <ClInclude Include="localebuildertest.h" />
@@ -793,7 +789,7 @@ index 319c3ab58f68f70f3da6ead4ca6cf5ca81da617b..20da05e608aeb4f472ef378d222732c8
    <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
    <ImportGroup Label="ExtensionTargets">
 diff --git a/icu/icu4c/source/test/intltest/itutil.cpp b/icu/icu4c/source/test/intltest/itutil.cpp
-index 228dbf2f218aa1a6ac6860ec54ed67303b243699..2f7ba22278596980f172617c2db9df55c28ee680 100644
+index 20c16389c0a071870de84b62f763eb80fa6b8e73..768507c632ad530359818716f82ad518423354da 100644
 --- a/icu/icu4c/source/test/intltest/itutil.cpp
 +++ b/icu/icu4c/source/test/intltest/itutil.cpp
 @@ -33,6 +33,9 @@
@@ -805,8 +801,8 @@ index 228dbf2f218aa1a6ac6860ec54ed67303b243699..2f7ba22278596980f172617c2db9df55
 +#endif
  
  extern IntlTest *createBytesTrieTest();
- extern IntlTest *createLocaleMatcherTest();
-@@ -67,6 +70,9 @@ void IntlTestUtilities::runIndexedTest( int32_t index, UBool exec, const char* &
+ #if !UCONFIG_NO_COLLATION
+@@ -76,6 +79,9 @@ void IntlTestUtilities::runIndexedTest( int32_t index, UBool exec, const char* &
      TESTCASE_AUTO_CLASS(LocaleAliasTest);
      TESTCASE_AUTO_CLASS(UnicodeSetTest);
      TESTCASE_AUTO_CLASS(ErrorCodeTest);
@@ -818,10 +814,10 @@ index 228dbf2f218aa1a6ac6860ec54ed67303b243699..2f7ba22278596980f172617c2db9df55
      TESTCASE_AUTO_CREATE_CLASS(UCharsTrieTest);
 diff --git a/icu/icu4c/source/test/intltest/uprefstest.cpp b/icu/icu4c/source/test/intltest/uprefstest.cpp
 new file mode 100644
-index 0000000000000000000000000000000000000000..f76997c66c45a694398c62ed23e94d0d1d509561
+index 0000000000000000000000000000000000000000..69c5265eed1c66bb29a1d5af840da5925cb57440
 --- /dev/null
 +++ b/icu/icu4c/source/test/intltest/uprefstest.cpp
-@@ -0,0 +1,437 @@
+@@ -0,0 +1,438 @@
 +// © 2016 and later: Unicode, Inc. and others.
 +// License & terms of use: http://www.unicode.org/copyright.html
 +#include "uprefstest.h"
@@ -829,12 +825,12 @@ index 0000000000000000000000000000000000000000..f76997c66c45a694398c62ed23e94d0d
 +
 +#define ARRAY_SIZE 512
 +
-+    std::wstring UPrefsTest::language = L"";
-+    std::wstring UPrefsTest::currency = L"";
-+    std::wstring UPrefsTest::hourCycle = L"";
-+    int32_t UPrefsTest::firstday = 0;
-+    int32_t UPrefsTest::measureSystem = 0;
-+    CALID UPrefsTest::calendar = 0;
++std::wstring UPrefsTest::language = L"";
++std::wstring UPrefsTest::currency = L"";
++std::wstring UPrefsTest::hourCycle = L"";
++int32_t UPrefsTest::firstday = 0;
++int32_t UPrefsTest::measureSystem = 0;
++CALID UPrefsTest::calendar = 0;
 +
 +void UPrefsTest::runIndexedTest( int32_t index, UBool exec, const char* &name, char* /*par*/ )
 +{
@@ -856,7 +852,8 @@ index 0000000000000000000000000000000000000000..f76997c66c45a694398c62ed23e94d0d
 +    TESTCASE_AUTO_END;
 +}
 +
-+int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPWSTR lpLCData, int cchData, UErrorCode* status)
++int32_t UPrefsTest::MockGetLocaleInfoEx(LPCWSTR lpLocaleName, LCTYPE LCType, LPWSTR lpLCData,
++                                        int cchData, UErrorCode *status)
 +{
 +    switch (LCType)
 +    {
@@ -1237,7 +1234,7 @@ index 0000000000000000000000000000000000000000..f76997c66c45a694398c62ed23e94d0d
 +    }
 +}
 +
-+void UPrefsTest::Get12HourCycle2()
++void UPrefsTest::Get12HourCycle2() 
 +{
 +    char languageBuffer[ARRAY_SIZE] = {0};
 +    language = L"ja-JP";
@@ -1249,11 +1246,11 @@ index 0000000000000000000000000000000000000000..f76997c66c45a694398c62ed23e94d0d
 +    UErrorCode status = U_ZERO_ERROR;
 +    char* expectedValue = "ja-JP-u-ca-buddhist-cu-mxn-fw-tue-hc-h12-ms-metric";
 +
-+    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51)
++    if (uprefs_getBCP47Tag(languageBuffer, ARRAY_SIZE, &status) != 51) 
 +    {
 +        errln("Expected length to be 51, but got: %d\n", uprv_strlen(languageBuffer));
 +    }
-+    if (uprv_strcmp(expectedValue, languageBuffer) != 0)
++    if (uprv_strcmp(expectedValue, languageBuffer) != 0) 
 +    {
 +        errln("Expected BCP47Tag to be %s, but got: %s\n", expectedValue, languageBuffer);
 +    }
@@ -1262,7 +1259,7 @@ index 0000000000000000000000000000000000000000..f76997c66c45a694398c62ed23e94d0d
 \ No newline at end of file
 diff --git a/icu/icu4c/source/test/intltest/uprefstest.h b/icu/icu4c/source/test/intltest/uprefstest.h
 new file mode 100644
-index 0000000000000000000000000000000000000000..d87452e6bbde65a03df43d549e01abd3890c557c
+index 0000000000000000000000000000000000000000..2f3e6515b060f962bc6afd4731aaf0033c062852
 --- /dev/null
 +++ b/icu/icu4c/source/test/intltest/uprefstest.h
 @@ -0,0 +1,50 @@

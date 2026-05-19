@@ -1,11 +1,14 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
-Date: Wed, 7 Apr 2021 20:47:31 -0700
-Subject: MSFT-PATCH: Increase the STRING_STORE_SIZE due to extra locales from CLDR-MS
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Tue, 19 May 2026 06:45:00 +0530
+Subject: MSFT-PATCH: Increase ICU string store for CLDR 48 extra locales
 
+Increases STRING_STORE_SIZE for the larger CLDR 48 / CLDR-MS locale set.
+
+The original 120000 value was carried from the older patch, but this ICU 78 upgrade settled on 200000 before the CLDR data build.
 
 diff --git a/icu/icu4c/source/tools/toolutil/package.h b/icu/icu4c/source/tools/toolutil/package.h
-index ea60c13a74a57b94057882e39b6aa05314c4ca1f..6c411ae5fd04c8463a089307efc056f4d2f622f9 100644
+index ea60c13a74a57b94057882e39b6aa05314c4ca1f..3a1d3cd23d9ee75ad2881d52c0f34413dbd554f1 100644
 --- a/icu/icu4c/source/tools/toolutil/package.h
 +++ b/icu/icu4c/source/tools/toolutil/package.h
 @@ -27,7 +27,7 @@
@@ -13,7 +16,7 @@ index ea60c13a74a57b94057882e39b6aa05314c4ca1f..6c411ae5fd04c8463a089307efc056f4
  // .dat package file representation ---------------------------------------- ***
  
 -#define STRING_STORE_SIZE 100000
-+#define STRING_STORE_SIZE 120000
++#define STRING_STORE_SIZE 200000
  #define MAX_PKG_NAME_LENGTH 64
  
  typedef void CheckDependency(void *context, const char *itemName, const char *targetName);
