@@ -36,9 +36,9 @@ Diff from `icu72-pre-swap` to HEAD (icu/ directory only):
 
 *No audit report found in `icu-patches`. Final patch records are summarized from `icu-patches/patches` instead.*
 
-- Latest patch-record commit: `aebb85791c4 Refresh ICU 78 patch records`
-- Patch files present: 19
-- Refreshed ICU 78 patch records: `002`, `017`, `018`, `020`, `022`
+- Latest patch-record commit: `70ae0ef8eab Refresh patch record for Saudi Riyal symbol override`
+- Patch files present: 20
+- Refreshed ICU 78 patch records: `002`, `017`, `018`, `020`, `022`, `023`
 - Validation used for refreshed records: `git apply --cached --check --reverse` against the final ICU index
 
 ## 4. Build Results
@@ -60,9 +60,12 @@ Diff from `icu72-pre-swap` to HEAD (icu/ directory only):
 | intlRelease-x64 | ✅ PASS | test-intltest-Release-x64.log |
 | ioRelease-x64 | ✅ PASS | test-iotest-Release-x64.log |
 
+Post-report targeted validation for patch `023`: `genrb` parsed `icu/icu4c/source/data/curr/ar_SA.txt`, and `currtest.c` passed C syntax checking with the available compiler.
+
 ## 6. Action Items
 
 - [x] Patch conflicts resolved and ICU 78 patch records refreshed
+- [x] Saudi Riyal symbol override for `ar_SA` added and recorded as patch `023`
 - [x] CLDR data rebuild consumed by ICU data generation
 - [x] Timezone data check/regeneration completed
 - [x] Full Stage 8 build/test pass completed
