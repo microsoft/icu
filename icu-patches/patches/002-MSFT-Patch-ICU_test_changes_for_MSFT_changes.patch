@@ -1,90 +1,363 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Daniel Ju <41210545+daniel-ju@users.noreply.github.com>
-Date: Thu, 10 Dec 2020 22:02:04 -0800
-Subject: MSFT-PATCH: Modify ICU tests to pass with Microsoft modified CLDR
- data.
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Tue, 19 May 2026 06:45:00 +0530
+Subject: MSFT-PATCH: Refresh ICU tests for Microsoft modified CLDR data on ICU 78
 
-This changes modifies the ICU tests to pass with the modified CLDR-MS
-data. The modifications are generally for the following reasons:
- - Some of data is different due to internal requirements.
- - Some are due to the extra locales that we pick up from CLDR Seed.
-   These Seed locales have data quality issues, which causes the
-   ICU tests to fail as they don't meet the ICU expectations.
- - Removal of the yue-* locales.
+Refreshes the ICU test expectation changes required by Microsoft-modified CLDR data after the ICU 78 upgrade.
 
-diff --git a/icu/icu4c/source/test/cintltst/cldrtest.c b/icu/icu4c/source/test/cintltst/cldrtest.c
-index e50ccb3cd1f9431afbd15c7d8a21a34632131c89..179539d5178b5cfd8b5350043c539e89e8740185 100644
---- a/icu/icu4c/source/test/cintltst/cldrtest.c
-+++ b/icu/icu4c/source/test/cintltst/cldrtest.c
-@@ -957,6 +957,25 @@ static void VerifyTranslation(void) {
-         //else if (uprv_strncmp(currLoc,"bem",3) == 0 || uprv_strncmp(currLoc,"mgo",3) == 0 || uprv_strncmp(currLoc,"nl",2) == 0) {
-         //    log_verbose("skipping test for %s, some month and country names known to use aux exemplars\n", currLoc);
-         //}
-+
-+        /* MSFT Change: Begin */
-+        else if (
-+            uprv_strncmp(currLoc, "ba", 2) == 0 || uprv_strncmp(currLoc, "ba_RU", 5) == 0     ||
-+            uprv_strncmp(currLoc, "byn", 3) == 0 || uprv_strncmp(currLoc, "byn_ER", 6) == 0   ||
-+            uprv_strncmp(currLoc, "cu", 2) == 0 || uprv_strncmp(currLoc, "cu_RU", 5) == 0     ||
-+            uprv_strncmp(currLoc, "dv", 2) == 0 || uprv_strncmp(currLoc, "dv_MV", 5) == 0     ||
-+            uprv_strncmp(currLoc, "iu", 2) == 0 || uprv_strncmp(currLoc, "iu_CA", 5) == 0     ||
-+            uprv_strncmp(currLoc, "mn_Mong", 7) == 0 || uprv_strncmp(currLoc, "mn_Mong_CN", 10) == 0   ||
-+            uprv_strncmp(currLoc, "nqo", 3) == 0 || uprv_strncmp(currLoc, "nqo_GN", 6) == 0   ||
-+            uprv_strncmp(currLoc, "oc", 2) == 0 || uprv_strncmp(currLoc, "oc_FR", 5) == 0     ||
-+            uprv_strncmp(currLoc, "syr", 3) == 0 || uprv_strncmp(currLoc, "syr_SY", 6) == 0   ||
-+            uprv_strncmp(currLoc, "tig", 3) == 0 || uprv_strncmp(currLoc, "tig_ER", 6) == 0   ||
-+            uprv_strncmp(currLoc, "wal", 3) == 0 || uprv_strncmp(currLoc, "wal_ET", 6) == 0
-+        ) {
-+            log_knownIssue("0", "MSFT Change: skipping test for %s which has issues due to CLDR Seed data.", currLoc);
-+        }
-+        /* MSFT Change: End */
-+
-         else {
-             UChar langBuffer[128];
-             int32_t langSize;
-@@ -1231,7 +1250,14 @@ static void TestExemplarSet(void){
-             }
+This replaces the stale/truncated ICU 72-era patch with the ICU 78 source-side fixes re-derived from the Stage 7/8 failures, including English AM/PM regular-space expectations and Microsoft locale display-name expectations.
+
+diff --git a/icu/icu4c/source/test/cintltst/ccaltst.c b/icu/icu4c/source/test/cintltst/ccaltst.c
+index 235eff26d1eafcdcb5406f51e625b7e157741f0e..50e0dca83e9cdf7992a7c1c89264706c76aed1d6 100644
+--- a/icu/icu4c/source/test/cintltst/ccaltst.c
++++ b/icu/icu4c/source/test/cintltst/ccaltst.c
+@@ -724,7 +724,7 @@ static void TestGetSetDateAPI(void)
  
-             if (existsInScript == FALSE){
--                log_err("ExemplarSet containment failed for locale : %s\n", locale);
-+                /* MSFT Change */
-+                if (uprv_strncmp(locale, "oc", 2) == 0 || uprv_strncmp(locale, "oc_FR", 5) == 0) {
-+                    log_knownIssue("0", "MSFT Change: oc and oc_FR have ExemplarSet issues.");
-+                    continue;
-+                } else {
-+                    log_err("ExemplarSet containment failed for locale : %s\n", locale);
-+                }
-+                /* MSFT Change: End */
-             }
-         }
-         assertTrue("case-folded is a superset",
+     /*Testing  if setDate works fine  */
+     log_verbose("\nTesting the ucal_setDate() function \n");
+-    u_strcpy(temp, u"Dec 17, 1971, 11:05:28\u202FPM");
++    u_strcpy(temp, u"Dec 17, 1971, 11:05:28 PM");
+     ucal_setDate(caldef,1971, UCAL_DECEMBER, 17, &status);
+     if(U_FAILURE(status)){
+         log_err("error in setting the calendar date : %s\n", u_errorName(status));
+@@ -755,7 +755,7 @@ static void TestGetSetDateAPI(void)
+ 
+     /*Testing if setDateTime works fine */
+     log_verbose("\nTesting the ucal_setDateTime() function \n");
+-    u_strcpy(temp, u"May 3, 1972, 4:30:42\u202FPM");
++    u_strcpy(temp, u"May 3, 1972, 4:30:42 PM");
+     ucal_setDateTime(caldef,1972, UCAL_MAY, 3, 16, 30, 42, &status);
+     if(U_FAILURE(status)){
+         log_err("error in setting the calendar date : %s\n", u_errorName(status));
+diff --git a/icu/icu4c/source/test/cintltst/cdateintervalformattest.c b/icu/icu4c/source/test/cintltst/cdateintervalformattest.c
+index 298dcae4247fb057e010cbd950cfa8708de9bbee..a4ecc7dc2eb6101b07c54a89cef42301ef86eec4 100644
+--- a/icu/icu4c/source/test/cintltst/cdateintervalformattest.c
++++ b/icu/icu4c/source/test/cintltst/cdateintervalformattest.c
+@@ -248,15 +248,15 @@ static const ExpectPosAndFormat exp_en_yyMMddHHmmss[kNumDeltas] = {
+ };
+ 
+ static const ExpectPosAndFormat exp_en_yMMMdhmmssz[kNumDeltas] = {
+-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT" },
+-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT" },
+-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u20099:00:20\\u202FAM GMT" },
+-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u20099:20:00\\u202FAM GMT" },
+-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u200911:00:00\\u202FAM GMT" },
+-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u20099:00:00\\u202FPM GMT" },
+-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u2009Nov 28, 2014, 9:00:00\\u202FAM GMT" },
+-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u2009Dec 6, 2014, 9:00:00\\u202FAM GMT" },
+-    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u2009Feb 28, 2015, 9:00:00\\u202FAM GMT" }
++    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT" },
++    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT" },
++    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u20099:00:20 AM GMT" },
++    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u20099:20:00 AM GMT" },
++    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u200911:00:00 AM GMT" },
++    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u20099:00:00 PM GMT" },
++    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u2009Nov 28, 2014, 9:00:00 AM GMT" },
++    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u2009Dec 6, 2014, 9:00:00 AM GMT" },
++    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u2009Feb 28, 2015, 9:00:00 AM GMT" }
+ };
+ 
+ static const ExpectPosAndFormat exp_ja_yyMMddHHmm[kNumDeltas] = {
+diff --git a/icu/icu4c/source/test/cintltst/cdattst.c b/icu/icu4c/source/test/cintltst/cdattst.c
+index e17ac06f06442c2d626c72321211f62e8eb03ed4..6f27ba32a72ea232e8aae63637598531e04fd1ae 100644
+--- a/icu/icu4c/source/test/cintltst/cdattst.c
++++ b/icu/icu4c/source/test/cintltst/cdattst.c
+@@ -176,7 +176,7 @@ static void TestDateFormat(void)
+ 
+     /*Testing udat_format()*/
+     log_verbose("\nTesting the udat_format() function of date format\n");
+-    u_strcpy(temp, u"7/10/96, 4:05\u202FPM");
++    u_strcpy(temp, u"7/10/96, 4:05 PM");
+     /*format using def */
+     resultlength=0;
+     resultlengthneeded=udat_format(def, d, NULL, resultlength, NULL, &status);
+@@ -245,7 +245,7 @@ static void TestDateFormat(void)
+ 
+     /*Testing parsing using udat_parse()*/
+     log_verbose("\nTesting parsing using udat_parse()\n");
+-    u_strcpy(temp, u"2/3/76, 2:50\u202FAM");
++    u_strcpy(temp, u"2/3/76, 2:50 AM");
+     parsepos=0;
+     status=U_ZERO_ERROR;
+ 
+@@ -966,7 +966,7 @@ static void TestDateFormatCalendar(void) {
+                 u_errorName(ec));
+         goto FAIL;
+     }
+-    u_strcpy(uExpected, u"5:45\u202FPM");
++    u_strcpy(uExpected, u"5:45 PM");
+     u_austrcpy(cbuf, uExpected);
+     if (u_strlen(uExpected) != len1 || u_strncmp(uExpected, buf1, len1) != 0) {
+         log_err("FAIL: udat_formatCalendar(17:45), expected: %s", cbuf);
+@@ -2101,10 +2101,10 @@ static void TestHourCycle(void) {
+     static const UDate date = -845601267742; // March 16, 1943 at 3:45 PM
+     const UChar* testCases[] = {
+         // test some locales for which we have data
+-        u"en_US", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+-        u"en_CA", u"Tuesday, March 16, 1943 at 3:45:32 p.m.",
++        u"en_US", u"Tuesday, March 16, 1943 at 3:45:32 PM",
++        u"en_CA", u"Tuesday, March 16, 1943 at 3:45:32 p.m.",
+         u"en_GB", u"Tuesday, 16 March 1943 at 15:45:32",
+-        u"en_AU", u"Tuesday, 16 March 1943 at 3:45:32 pm",
++        u"en_AU", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+         // test a couple locales for which we don't have specific locale files (we should still get the correct hour cycle)
+         u"en_CO", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+         u"en_MX", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+@@ -2112,12 +2112,12 @@ static void TestHourCycle(void) {
+         u"en_US@rg=GBzzzz", u"Tuesday, March 16, 1943 at 15:45:32",
+         u"en_US@rg=CAzzzz", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+         u"en_CA@rg=USzzzz", u"Tuesday, March 16, 1943 at 3:45:32 p.m.",
+-        u"en_GB@rg=USzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+-        u"en_GB@rg=CAzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+-        u"en_GB@rg=AUzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
++        u"en_GB@rg=USzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
++        u"en_GB@rg=CAzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
++        u"en_GB@rg=AUzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+         // test that the hc ("hours") subtag does the right thing
+         u"en_US@hours=h23", u"Tuesday, March 16, 1943 at 15:45:32",
+-        u"en_GB@hours=h12", u"Tuesday, 16 March 1943 at 3:45:32 pm",
++        u"en_GB@hours=h12", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+         // test that the rg and hc subtags do the right thing when used together
+         u"en_US@rg=GBzzzz;hours=h12", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+         u"en_GB@rg=USzzzz;hours=h23", u"Tuesday, 16 March 1943 at 15:45:32",
+diff --git a/icu/icu4c/source/test/cintltst/cdtrgtst.c b/icu/icu4c/source/test/cintltst/cdtrgtst.c
+index 54bdc7228fd14c4eec483e26cf5ee0740cad3adb..13aa8cfb67cf451b21e5e792eece45c623f3ae61 100644
+--- a/icu/icu4c/source/test/cintltst/cdtrgtst.c
++++ b/icu/icu4c/source/test/cintltst/cdtrgtst.c
+@@ -516,7 +516,7 @@ void Test714(void)
+     UErrorCode status = U_ZERO_ERROR;
+     UDateFormat *fmt;
+     UChar *result;
+-    const UChar* expect =  u"7:25:43\u202FAM";
++    const UChar* expect =  u"7:25:43 AM";
+     
+     ctest_setTimeZone(NULL, &status);
+ 
 diff --git a/icu/icu4c/source/test/cintltst/cloctst.c b/icu/icu4c/source/test/cintltst/cloctst.c
-index 61cfd4cb7cfeb78861932b9acd09b5743b42e483..aeb2c2a64d0f11c2d87bce4fb05fab4fc6480507 100644
+index 94f452aa561132186a99d02cb5879d36fdba0e9c..37cf24ded00c33ad69bafd45a2cbce86116da493 100644
 --- a/icu/icu4c/source/test/cintltst/cloctst.c
 +++ b/icu/icu4c/source/test/cintltst/cloctst.c
-@@ -1177,8 +1177,10 @@ typedef struct {
+@@ -1268,8 +1268,8 @@ typedef struct {
  
  static const DisplayNameBracketsItem displayNameBracketsItems[] = {
      { "en", "CC", "en_CC",      "Cocos (Keeling) Islands",  "English (Cocos [Keeling] Islands)"  },
 -    { "en", "MM", "my_MM",      "Myanmar (Burma)",          "Burmese (Myanmar [Burma])"          },
 -    { "en", "MM", "my_Mymr_MM", "Myanmar (Burma)",          "Burmese (Myanmar, Myanmar [Burma])" },
-+    /* MSFT Change: Begin */
-+    { "en", "MM", "my_MM",      "Myanmar",          "Burmese (Myanmar)"          },
-+    { "en", "MM", "my_Mymr_MM", "Myanmar",          "Burmese (Myanmar, Myanmar)" },
-+    /* MSFT Change: End */
++    { "en", "MM", "my_MM",      "Myanmar",                  "Burmese (Myanmar)"                  },
++    { "en", "MM", "my_Mymr_MM", "Myanmar",                  "Burmese (Myanmar, Myanmar)"         },
      { "zh", "CC", "en_CC",      "\\u79D1\\u79D1\\u65AF\\uFF08\\u57FA\\u6797\\uFF09\\u7FA4\\u5C9B", "\\u82F1\\u8BED\\uFF08\\u79D1\\u79D1\\u65AF\\uFF3B\\u57FA\\u6797\\uFF3D\\u7FA4\\u5C9B\\uFF09" },
      { "zh", "CG", "fr_CG",      "\\u521A\\u679C\\uFF08\\u5E03\\uFF09",                             "\\u6CD5\\u8BED\\uFF08\\u521A\\u679C\\uFF3B\\u5E03\\uFF3D\\uFF09" },
      { NULL, NULL, NULL,         NULL,                       NULL                                 }
+@@ -7163,11 +7163,11 @@ static const UldnItem en_StdMidLong[] = {
+ 	{ "en",                     TEST_ULOC_LANGUAGE, u"English" },
+ 	// https://unicode-org.atlassian.net/browse/ICU-20870
+ 	{ "fa_AF",                  TEST_ULDN_LOCALE, u"Persian (Afghanistan)" },
+-	{ "prs",                    TEST_ULDN_LOCALE, u"Dari" },
+-	{ "prs_AF",                 TEST_ULDN_LOCALE, u"Dari (Afghanistan)" },
+-	{ "prs_TJ",                 TEST_ULDN_LOCALE, u"Dari (Tajikistan)" },
+-	{ "prs",                    TEST_ULDN_LANGUAGE, u"Dari" },
+-	{ "prs",                    TEST_ULOC_LANGUAGE, u"Dari" },
++	{ "prs",                    TEST_ULDN_LOCALE, u"prs" },
++	{ "prs_AF",                 TEST_ULDN_LOCALE, u"prs (Afghanistan)" },
++	{ "prs_TJ",                 TEST_ULDN_LOCALE, u"prs (Tajikistan)" },
++	{ "prs",                    TEST_ULDN_LANGUAGE, u"prs" },
++	{ "prs",                    TEST_ULOC_LANGUAGE, u"prs" },
+ 	// https://unicode-org.atlassian.net/browse/ICU-21742
+ 	{ "ji",                     TEST_ULDN_LOCALE, u"Yiddish" },
+ 	{ "ji_US",                  TEST_ULDN_LOCALE, u"Yiddish (United States)" },
+@@ -7183,23 +7183,23 @@ static const UldnItem en_StdMidLong[] = {
+ };
+ 
+ static const UldnItem en_StdMidShrt[] = {
+-	{ "en_US",                  TEST_ULDN_LOCALE, u"English (US)" },
++	{ "en_US",                  TEST_ULDN_LOCALE, u"English (United States)" },
+ 	{ "en",                     TEST_ULDN_LANGUAGE, u"English" },
+ };
+ 
+ static const UldnItem en_DiaMidLong[] = {
+-	{ "en_US",                  TEST_ULDN_LOCALE, u"American English" },
+-	{ "fa_AF",                  TEST_ULDN_LOCALE, u"Dari" },
+-	{ "prs",                    TEST_ULDN_LOCALE, u"Dari" },
+-	{ "prs_AF",                 TEST_ULDN_LOCALE, u"Dari (Afghanistan)" },
+-	{ "prs_TJ",                 TEST_ULDN_LOCALE, u"Dari (Tajikistan)" },
+-	{ "prs",                    TEST_ULDN_LANGUAGE, u"Dari" },
++	{ "en_US",                  TEST_ULDN_LOCALE, u"English (United States)" },
++	{ "fa_AF",                  TEST_ULDN_LOCALE, u"Persian (Afghanistan)" },
++	{ "prs",                    TEST_ULDN_LOCALE, u"prs" },
++	{ "prs_AF",                 TEST_ULDN_LOCALE, u"prs (Afghanistan)" },
++	{ "prs_TJ",                 TEST_ULDN_LOCALE, u"prs (Tajikistan)" },
++	{ "prs",                    TEST_ULDN_LANGUAGE, u"prs" },
+ 	{ "mo",                     TEST_ULDN_LOCALE, u"Romanian" },
+ 	{ "mo",                     TEST_ULDN_LANGUAGE, u"Romanian" },
+ };
+ 
+ static const UldnItem en_DiaMidShrt[] = {
+-	{ "en_US",                  TEST_ULDN_LOCALE, u"US English" },
++	{ "en_US",                  TEST_ULDN_LOCALE, u"English (United States)" },
+ };
+ 
+ static const UldnItem ro_StdMidLong[] = { // https://unicode-org.atlassian.net/browse/ICU-11563
+@@ -7220,26 +7220,26 @@ static const UldnItem yi_StdMidLong[] = { // https://unicode-org.atlassian.net/b
+ 
+ static const UldnItem zh_DiaMidLong[] = {
+     // zh and zh_Hant both have dialect names for the following in ICU 73
+-    { "ar_001",                 TEST_ULDN_LOCALE, u"现代标准阿拉伯语" },
+-    { "nl_BE",                  TEST_ULDN_LOCALE, u"弗拉芒语" },
+-    { "ro_MD",                  TEST_ULDN_LOCALE, u"摩尔多瓦语" },
++    { "ar_001",                 TEST_ULDN_LOCALE, u"阿拉伯语（世界）" },
++    { "nl_BE",                  TEST_ULDN_LOCALE, u"荷兰语（比利时）" },
++    { "ro_MD",                  TEST_ULDN_LOCALE, u"罗马尼亚语（摩尔多瓦）" },
+     // zh has dialect names for the following in ICU 73
+-    { "en_AU",                  TEST_ULDN_LOCALE, u"澳大利亚英语" },
+-    { "en_CA",                  TEST_ULDN_LOCALE, u"加拿大英语" },
+-    { "en_GB",                  TEST_ULDN_LOCALE, u"英国英语" },
+-    { "en_US",                  TEST_ULDN_LOCALE, u"美国英语" },
+-    { "es_419",                 TEST_ULDN_LOCALE, u"拉丁美洲西班牙语" },
+-    { "es_ES",                  TEST_ULDN_LOCALE, u"欧洲西班牙语" },
+-    { "es_MX",                  TEST_ULDN_LOCALE, u"墨西哥西班牙语" },
+-    { "fr_CA",                  TEST_ULDN_LOCALE, u"加拿大法语" },
+-    { "fr_CH",                  TEST_ULDN_LOCALE, u"瑞士法语" },
++    { "en_AU",                  TEST_ULDN_LOCALE, u"英语（澳大利亚）" },
++    { "en_CA",                  TEST_ULDN_LOCALE, u"英语（加拿大）" },
++    { "en_GB",                  TEST_ULDN_LOCALE, u"英语（英国）" },
++    { "en_US",                  TEST_ULDN_LOCALE, u"英语（美国）" },
++    { "es_419",                 TEST_ULDN_LOCALE, u"西班牙语（拉丁美洲）" },
++    { "es_ES",                  TEST_ULDN_LOCALE, u"西班牙语（西班牙）" },
++    { "es_MX",                  TEST_ULDN_LOCALE, u"西班牙语（墨西哥）" },
++    { "fr_CA",                  TEST_ULDN_LOCALE, u"法语（加拿大）" },
++    { "fr_CH",                  TEST_ULDN_LOCALE, u"法语（瑞士）" },
+ };
+ 
+ static const UldnItem zh_Hant_DiaMidLong[] = {
+     // zh and zh_Hant both have dialect names for the following in ICU 73
+-    { "ar_001",                 TEST_ULDN_LOCALE, u"現代標準阿拉伯文" },
+-    { "nl_BE",                  TEST_ULDN_LOCALE, u"法蘭德斯文" },
+-    { "ro_MD",                  TEST_ULDN_LOCALE, u"摩爾多瓦文" },
++    { "ar_001",                 TEST_ULDN_LOCALE, u"阿拉伯文（世界）" },
++    { "nl_BE",                  TEST_ULDN_LOCALE, u"荷蘭文（比利時）" },
++    { "ro_MD",                  TEST_ULDN_LOCALE, u"羅馬尼亞文（摩爾多瓦）" },
+     // zh_Hant no dialect names for the following in ICU-73,
+     // use standard name
+     { "en_AU",                  TEST_ULDN_LOCALE, u"英文（澳洲）" },
+diff --git a/icu/icu4c/source/test/cintltst/cmsgtst.c b/icu/icu4c/source/test/cintltst/cmsgtst.c
+index 16263b5c7f4de4eb9c2839b21a7abbc20a16188c..ed20cf23ce057364963ec1996a672a7859661d32 100644
+--- a/icu/icu4c/source/test/cintltst/cmsgtst.c
++++ b/icu/icu4c/source/test/cintltst/cmsgtst.c
+@@ -44,7 +44,7 @@ static const char* const txt_testResultStrings[] = {
+     "Quotes ', {, a 1 {0}",
+     "Quotes ', {, a 1 {0}",
+     "You deposited 1 times an amount of $3,456.00 on 1/12/70",
+-    "{2,time,full}, for 3,456, 1 is 5:46:40\\u202FAM Pacific Standard Time and full date is Monday, January 12, 1970",
++    "{2,time,full}, for 3,456, 1 is 5:46:40 AM Pacific Standard Time and full date is Monday, January 12, 1970",
+     "{1,number,percent} for 1 is 345,600%"
+ };
+ 
+diff --git a/icu/icu4c/source/test/cintltst/creststn.c b/icu/icu4c/source/test/cintltst/creststn.c
+index 71fd936e377f97ae478a77489527c734b35d6421..63a758c5b78819b1ccdc65d0162e6f0240437927 100644
+--- a/icu/icu4c/source/test/cintltst/creststn.c
++++ b/icu/icu4c/source/test/cintltst/creststn.c
+@@ -2715,16 +2715,6 @@ static void TestGetFunctionalEquivalent(void) {
+         "f",    "nl_NL@collation=stroke",         "root",
+         "f",    "nl_NL_EEXT@collation=stroke",    "root",
+         /* Additions to test aliased locales */
+-        "f",    "yue_HK",                         "zh@collation=stroke",
+-        "f",    "yue_Hant",                       "zh@collation=stroke",
+-        "f",    "yue_Hant_HK",                    "zh@collation=stroke",
+-        "f",    "yue@collation=stroke",           "zh@collation=stroke",
+-        "f",    "yue@collation=pinyin",           "zh",
+-        "f",    "yue_CN",                         "zh",
+-        "f",    "yue_Hans",                       "zh",
+-        "f",    "yue_Hans_CN",                    "zh",
+-        "f",    "yue_Hans@collation=pinyin",      "zh",
+-        "f",    "yue_Hans@collation=stroke",      "zh@collation=stroke",
+         "f",    "mo",                             "mo",
+         "t",    "no",                             "no",
+         "t",    "nb",                             "no",
+@@ -2735,8 +2725,6 @@ static void TestGetFunctionalEquivalent(void) {
+         "f",    "zh_Hant_CN",                     "zh@collation=stroke",
+         "f",    "zh_Hant_US",                     "zh@collation=stroke",
+         "f",    "zh_Hans_US",                     "zh",
+-        "f",    "yue_TW",                         "zh@collation=stroke",
+-        "f",    "yue_US",                         "zh@collation=stroke",
+         "f",    "ja_CN",                          "ja",
+         "f",    "ja_US",                          "ja",
+         NULL
+diff --git a/icu/icu4c/source/test/cintltst/udatpg_test.c b/icu/icu4c/source/test/cintltst/udatpg_test.c
+index b9278085b2057d23bfc6e6778df11c0ce59717be..d6e6d209a97ae2064c1f89d576953b938dc670b5 100644
+--- a/icu/icu4c/source/test/cintltst/udatpg_test.c
++++ b/icu/icu4c/source/test/cintltst/udatpg_test.c
+@@ -405,9 +405,9 @@ enum { kTestOptionsPatLenMax = 32 };
+ static const UChar skel_Hmm[]     = u"Hmm";
+ static const UChar skel_HHmm[]    = u"HHmm";
+ static const UChar skel_hhmm[]    = u"hhmm";
+-static const UChar patn_hcmm_a[]  = u"h:mm\u202Fa";
++static const UChar patn_hcmm_a[]  = u"h:mm a";
+ static const UChar patn_HHcmm[]   = u"HH:mm";
+-static const UChar patn_hhcmm_a[] = u"hh:mm\u202Fa";
++static const UChar patn_hhcmm_a[] = u"hh:mm a";
+ static const UChar patn_HHpmm[]   = u"HH.mm";
+ static const UChar patn_hpmm_a[]  = u"h.mm\u202Fa";
+ static const UChar patn_Hpmm[]    = u"H.mm";
+@@ -656,10 +656,10 @@ static void TestDateTimePatterns(void) {
+     // The following tests some locales in which there are differences between the
+     // DateTimePatterns of various length styles.
+     DTPLocaleAndResults localeAndResults[] = {
+-        { "en", { u"EEEE, MMMM d, y 'at' h:mm\u202Fa", // long != medium
+-                  u"MMMM d, y 'at' h:mm\u202Fa",
+-                  u"MMM d, y, h:mm\u202Fa",
+-                  u"M/d/y, h:mm\u202Fa" } },
++        { "en", { u"EEEE, MMMM d, y 'at' h:mm a", // long != medium
++                  u"MMMM d, y 'at' h:mm a",
++                  u"MMM d, y, h:mm a",
++                  u"M/d/y, h:mm a" } },
+         { "fr", { u"EEEE d MMMM y 'à' HH:mm", // medium != short
+                   u"d MMMM y 'à' HH:mm",
+                   u"d MMM y, HH:mm",
+@@ -683,10 +683,10 @@ static void TestDateTimePatterns(void) {
+         u"{1} _2_ {0}",
+         u"{1} _3_ {0}"
+     };
+-    DTPLocaleAndResults enModResults = { "en", { u"EEEE, MMMM d, y _0_ h:mm\u202Fa",
+-                                                 u"MMMM d, y _1_ h:mm\u202Fa",
+-                                                 u"MMM d, y _2_ h:mm\u202Fa",
+-                                                 u"M/d/y _3_ h:mm\u202Fa" }
++    DTPLocaleAndResults enModResults = { "en", { u"EEEE, MMMM d, y _0_ h:mm a",
++                                                 u"MMMM d, y _1_ h:mm a",
++                                                 u"MMM d, y _2_ h:mm a",
++                                                 u"M/d/y _3_ h:mm a" }
+     };
+ 
+     // Test various locales with standard data
+@@ -817,7 +817,7 @@ static void TestRegionOverride(void) {
+     } RegionOverrideTest;
+ 
+     const RegionOverrideTest testCases[] = {
+-        { "en_US",           u"h:mm\u202fa", UDAT_HOUR_CYCLE_12 },
++        { "en_US",           u"h:mm a", UDAT_HOUR_CYCLE_12 },
+         { "en_GB",           u"HH:mm",  UDAT_HOUR_CYCLE_23 },
+         { "en_US@rg=GBZZZZ", u"HH:mm",  UDAT_HOUR_CYCLE_23 },
+         { "en_US@hours=h23", u"HH:mm",  UDAT_HOUR_CYCLE_23 },
+@@ -859,9 +859,9 @@ static void TestISO8601(void) {
+         { "en_US@calendar=iso8601",           u"Edjmm",         u"d, EEE, h:mm a" },
+         { "en_US@calendar=iso8601",           u"EdHmm",         u"d, EEE, HH:mm" },
+ 
+-        { "en_US",                            u"EEEEyMMMMdjmm", u"EEEE, MMMM d, y 'at' h:mm a" },
++        { "en_US",                            u"EEEEyMMMMdjmm", u"EEEE, MMMM d, y 'at' h:mm a" },
+         { "en_US",                            u"EEEEyMMMMdHmm", u"EEEE, MMMM d, y 'at' HH:mm" },
+-        { "en_US",                            u"Edjmm",         u"d EEE, h:mm a" },
++        { "en_US",                            u"Edjmm",         u"d EEE, h:mm a" },
+         { "en_US",                            u"EdHmm",         u"d EEE, HH:mm" },
+     };
+ 
 diff --git a/icu/icu4c/source/test/intltest/apicoll.cpp b/icu/icu4c/source/test/intltest/apicoll.cpp
-index 88eefa92b98ee35051dc44011ee1e4d932123f19..249d98747d92e677c5f78b81ce06ad61042c307f 100644
+index 4ccdc373e6ce912c464ce07c268d6fb88d45f118..a31873fe43664a6eba579a5cb2ea4b89b4542dd0 100644
 --- a/icu/icu4c/source/test/intltest/apicoll.cpp
 +++ b/icu/icu4c/source/test/intltest/apicoll.cpp
-@@ -1664,18 +1664,20 @@ void CollationAPITest::TestGetLocale() {
+@@ -1664,18 +1664,7 @@ void CollationAPITest::TestGetLocale() {
      { "zh_TW", "zh_Hant_TW", "zh@collation=stroke" },
      { "zh_TW@collation=pinyin", "zh_Hant_TW@collation=pinyin", "zh" },
      { "zh_CN@collation=stroke", "zh_Hans_CN@collation=stroke", "zh@collation=stroke" },
-+    /* MSFT Change: Begin */
-     // yue/yue_Hant aliased to zh_Hant, yue_Hans aliased to zh_Hans.
+-    // yue/yue_Hant aliased to zh_Hant, yue_Hans aliased to zh_Hans.
 -    { "yue", "zh_Hant", "zh@collation=stroke" },
 -    { "yue_HK", "zh_Hant", "zh@collation=stroke" },
 -    { "yue_Hant", "zh_Hant", "zh@collation=stroke" },
@@ -96,88 +369,677 @@ index 88eefa92b98ee35051dc44011ee1e4d932123f19..249d98747d92e677c5f78b81ce06ad61
 -    { "yue_Hans_CN", "zh_Hans", "zh" },
 -    { "yue_Hans@collation=stroke", "zh_Hans@collation=stroke", "zh@collation=stroke" },
 -    { "yue_CN@collation=stroke", "zh_Hans@collation=stroke", "zh@collation=stroke" }
-+    // { "yue", "zh_Hant", "zh@collation=stroke" },
-+    // { "yue_HK", "zh_Hant", "zh@collation=stroke" },
-+    // { "yue_Hant", "zh_Hant", "zh@collation=stroke" },
-+    // { "yue_Hant_HK", "zh_Hant", "zh@collation=stroke" },
-+    // { "yue@collation=pinyin", "zh_Hant@collation=pinyin", "zh" },
-+    // { "yue_HK@collation=pinyin", "zh_Hant@collation=pinyin", "zh" },
-+    // { "yue_CN", "zh_Hans", "zh" },
-+    // { "yue_Hans", "zh_Hans", "zh" },
-+    // { "yue_Hans_CN", "zh_Hans", "zh" },
-+    // { "yue_Hans@collation=stroke", "zh_Hans@collation=stroke", "zh@collation=stroke" },
-+    // { "yue_CN@collation=stroke", "zh_Hans@collation=stroke", "zh@collation=stroke" }
-+    /* MSFT Change: End */
++    // CLDR-MS does not ship yue collation aliases.
    };
  
    u_unescape(rules, rlz, 256);
+diff --git a/icu/icu4c/source/test/intltest/dtfmrgts.cpp b/icu/icu4c/source/test/intltest/dtfmrgts.cpp
+index 2fd10e01d874f370ee387e11c6e584c2072eecb7..fed3546b8d4bfb78c776b0c4176fe158f2a877e7 100644
+--- a/icu/icu4c/source/test/intltest/dtfmrgts.cpp
++++ b/icu/icu4c/source/test/intltest/dtfmrgts.cpp
+@@ -144,8 +144,8 @@ void DateFormatRegressionTest::Test4052408()
+     str = fmt->format(dt, str);
+     logln(str);
+     
+-    if(str != u"5/3/97, 8:55\u202FAM")
+-        errln(UnicodeString(u"Fail: Test broken; Want 5/3/97, 8:55\u202FAM Got ", -1) + str);
++    if(str != u"5/3/97, 8:55 AM")
++        errln(UnicodeString(u"Fail: Test broken; Want 5/3/97, 8:55 AM Got ", -1) + str);
+     
+     UnicodeString expected[] = {
+         UnicodeString(""),   //"ERA_FIELD",
+@@ -1227,7 +1227,7 @@ void DateFormatRegressionTest::Test714()
+     }
+ 
+     UnicodeString s;
+-        UnicodeString tests = UnicodeString(u"7:25:43\u202FAM");
++        UnicodeString tests = UnicodeString(u"7:25:43 AM");
+         UErrorCode status = U_ZERO_ERROR;
+         fmt->format (d,s);
+         if(U_FAILURE(status))
+diff --git a/icu/icu4c/source/test/intltest/dtfmttst.cpp b/icu/icu4c/source/test/intltest/dtfmttst.cpp
+index 9ef923fc25b05ce625a5a5ea28db176a30a076a6..7af9ebb0215658b2b54d7b30a713fc4e90f919b5 100644
+--- a/icu/icu4c/source/test/intltest/dtfmttst.cpp
++++ b/icu/icu4c/source/test/intltest/dtfmttst.cpp
+@@ -1003,7 +1003,7 @@ DateFormatTest::TestBadInput135()
+       dataerrln("could not create date time instance");
+       return;
+     }
+-    UnicodeString expected(u"March 1, 2000 at 1:23:45\u202FAM", -1);
++    UnicodeString expected(u"March 1, 2000 at 1:23:45 AM", -1);
+     for (int32_t i = 0; i < strings_length;++i) {
+         const char* text = strings[i];
+         for (int32_t j = 0; j < looks_length;++j) {
+@@ -1342,7 +1342,7 @@ DateFormatTest::TestLocaleDateFormat() // Bug 495
+         DateFormat::FULL, Locale::getUS());
+     UnicodeString expectedFRENCH ( u"lundi 15 septembre 1997 à 00:00:00 heure d’été du Pacifique nord-américain", -1 );
+     expectedFRENCH = expectedFRENCH.unescape();
+-    UnicodeString expectedUS ( u"Monday, September 15, 1997 at 12:00:00\u202FAM Pacific Daylight Time", -1 );
++    UnicodeString expectedUS ( u"Monday, September 15, 1997 at 12:00:00 AM Pacific Daylight Time", -1 );
+     logln(UnicodeString("Date set to : ") + dateToString(testDate));
+     UnicodeString out;
+     if (dfUS == nullptr || dfFrench == nullptr){
+@@ -5028,7 +5028,7 @@ void DateFormatTest::TestPatternFromSkeleton() {
+         const char16_t* const pattern;
+     } TESTDATA[] = {
+         // Ticket #11985
+-        {Locale::getEnglish(), "jjmm", u"h:mm\u202Fa"},
++        {Locale::getEnglish(), "jjmm", u"h:mm a"},
+         {Locale::getEnglish(), "JJmm", u"hh:mm"},
+         {Locale::getGerman(), "jjmm", u"HH:mm"},
+         {Locale::getGerman(), "JJmm", u"HH:mm"},
+@@ -5851,10 +5851,10 @@ void DateFormatTest::TestHourCycle() {
+         UnicodeString expectedResult;
+     } TEST_CASES[] = {
+         // test some locales for which we have data
+-        { "en-us", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
+-        { "en-ca", u"Tuesday, March 16, 1943 at 3:45:32 p.m." },
++        { "en-us", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
++        { "en-ca", u"Tuesday, March 16, 1943 at 3:45:32 p.m." },
+         { "en-gb", u"Tuesday, 16 March 1943 at 15:45:32" },
+-        { "en-au", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
++        { "en-au", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
+         // test a couple locales for which we don't have specific locale files (we should still get the correct hour cycle)
+         { "en-co", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
+         { "en-mx", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
+@@ -5862,12 +5862,12 @@ void DateFormatTest::TestHourCycle() {
+         { "en-us-u-rg-gbzzzz", u"Tuesday, March 16, 1943 at 15:45:32" },
+         { "en-us-u-rg-cazzzz", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
+         { "en-ca-u-rg-uszzzz", u"Tuesday, March 16, 1943 at 3:45:32 p.m." },
+-        { "en-gb-u-rg-uszzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
+-        { "en-gb-u-rg-cazzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
+-        { "en-gb-u-rg-auzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
++        { "en-gb-u-rg-uszzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
++        { "en-gb-u-rg-cazzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
++        { "en-gb-u-rg-auzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
+         // test that the hc ("hours") subtag does the right thing
+         { "en-us-u-hc-h23", u"Tuesday, March 16, 1943 at 15:45:32" },
+-        { "en-gb-u-hc-h12", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
++        { "en-gb-u-hc-h12", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
+         // test that the rg and hc subtags do the right thing when used together
+         { "en-us-u-rg-gbzzzz-hc-h12", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
+         { "en-gb-u-rg-uszzzz-hc-h23", u"Tuesday, 16 March 1943 at 15:45:32" },
+diff --git a/icu/icu4c/source/test/intltest/dtifmtts.cpp b/icu/icu4c/source/test/intltest/dtifmtts.cpp
+index f539104be66da6989ba776f7115090294281c1c5..62d05a90e3ee05815585bd4eec95cf880a2447e9 100644
+--- a/icu/icu4c/source/test/intltest/dtifmtts.cpp
++++ b/icu/icu4c/source/test/intltest/dtifmtts.cpp
+@@ -496,7 +496,7 @@ void DateIntervalFormatTest::testFormat() {
+ 
+         "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EddMMy", "Wed, 10/10/2007\\u2009\\u2013\\u2009Fri, 10/10/2008",
+ 
+-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmm", "10/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM",
++        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmm", "10/10/2007, 10:10 AM\\u2009\\u2013\\u200910/10/2008, 10:10 AM",
+ 
+         "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmmzz", "10/10/2007, 10:10\\u202FAM PDT\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM PDT",
+ 
+@@ -633,7 +633,7 @@ void DateIntervalFormatTest::testFormat() {
+ 
+         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EddMMy", "Sat, 11/10/2007\\u2009\\u2013\\u2009Tue, 11/20/2007",
+ 
+-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmm", "11/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM",
++        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmm", "11/10/2007, 10:10 AM\\u2009\\u2013\\u200911/20/2007, 10:10 AM",
+ 
+         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmmzz", "11/10/2007, 10:10\\u202FAM PST\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM PST",
+ 
+@@ -821,7 +821,7 @@ void DateIntervalFormatTest::testFormat() {
+         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "EEddMMyyyy", "Wed, 01/10/2007",
+ 
+ 
+-        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmm", "10:10\\u202FAM",
++        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmm", "10:10 AM",
+         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "HHmm", "10:10",
+ 
+         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmmzz", "10:10\\u202FAM PST",
+@@ -2382,7 +2382,7 @@ void DateIntervalFormatTest::testTicket21939() {
+         const DateFormat* df = dif->getDateFormat();
+         const SimpleDateFormat* sdf = dynamic_cast<const SimpleDateFormat*>(df);
+         UnicodeString pattern;
+-        assertEquals("Wrong pattern", u"M/d/r, h:mm\u202Fa", sdf->toPattern(pattern));
++        assertEquals("Wrong pattern", u"M/d/r, h:mm a", sdf->toPattern(pattern));
+     }
+ 
+     // additional tests for the related ICU-22202
 diff --git a/icu/icu4c/source/test/intltest/dtptngts.cpp b/icu/icu4c/source/test/intltest/dtptngts.cpp
-index faa850aa8384c09720fed2b637d82d11a2608b2c..dc86355f93fa68f509a0023dc95fc17a548170c1 100644
+index e7360dda69ff52fa7960c005a2ed3b52addf478a..e76ea5cfc5bc09a3b6d44390c496250ea53efe1c 100644
 --- a/icu/icu4c/source/test/intltest/dtptngts.cpp
 +++ b/icu/icu4c/source/test/intltest/dtptngts.cpp
-@@ -1398,8 +1398,25 @@ void IntlTestDateTimePatternGeneratorAPI::testJjMapping() {
-                      jPattern.extract(0, jPattern.length(), jpBuf, 32);
-                      const char* dfmtCalType = (dfmt->getCalendar())->getType();
-                      const char* validLoc = dfmt->getLocaleID(ULOC_VALID_LOCALE, status);
--                     errln("ERROR: locale %s (valid %s), expected j resolved char %s to occur in short time pattern '%s' for %s (best pattern: '%s')",
-+                     /* MSFT Change: Begin */
-+                     if (
-+                        uprv_strncmp(localeID, "byn", 3) == 0 || uprv_strncmp(localeID, "byn_ER", 6) == 0   ||
-+                        uprv_strncmp(localeID, "iu_Latn", 7) == 0 || uprv_strncmp(localeID, "iu_Latn_CA", 10) == 0   ||
-+                        uprv_strncmp(localeID, "mn_Mong", 7) == 0 || uprv_strncmp(localeID, "mn_Mong_CN", 10) == 0   ||
-+                        uprv_strncmp(localeID, "moh", 3) == 0 || uprv_strncmp(localeID, "moh_CA", 6) == 0   ||
-+                        uprv_strncmp(localeID, "ss_SZ", 5) == 0 || uprv_strncmp(localeID, "ssy", 3) == 0   ||
-+                        uprv_strncmp(localeID, "ssy_ER", 6) == 0 || uprv_strncmp(localeID, "st_LS", 5) == 0   ||
-+                        uprv_strncmp(localeID, "syr", 3) == 0 || uprv_strncmp(localeID, "syr_SY", 6) == 0   ||
-+                        uprv_strncmp(localeID, "tig", 3) == 0 || uprv_strncmp(localeID, "tig_ER", 6) == 0   ||
-+                        uprv_strncmp(localeID, "wal", 3) == 0 || uprv_strncmp(localeID, "wal_ET", 6) == 0
-+                     ) {
-+                         logKnownIssue("0", "MSFT Change: skipping test for %s which has issues due to CLDR Seed data.", localeID);
-+                     }
-+                     else {
-+                         errln("ERROR: locale %s (valid %s), expected j resolved char %s to occur in short time pattern '%s' for %s (best pattern: '%s')",
-                              localeID, validLoc, jcBuf, spBuf, dfmtCalType, jpBuf);
-+                     }
-+                     /* MSFT Change: End */
-                  }
-                  break;
-              }
+@@ -107,14 +107,14 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
+         UnicodeString("Jan 13"),                              // 05: MMMd
+         UnicodeString("January 13"),                          // 06: MMMMd
+         UnicodeString("Q1 1999"),                             // 07: yQQQ
+-        UnicodeString(u"11:58\u202FPM", -1),                 // 08: hhmm
++        UnicodeString(u"11:58 PM", -1),                 // 08: hhmm
+         UnicodeString("23:58"),                               // 09: HHmm
+-        UnicodeString(u"11:58\u202FPM", -1),                 // 10: jjmm
++        UnicodeString(u"11:58 PM", -1),                 // 10: jjmm
+         UnicodeString("58:59"),                               // 11: mmss
+         UnicodeString("January 1999"),                        // 12: yyyyMMMM
+         UnicodeString("Wed, Jan 13"),                         // 13: MMMEd -> EEE, MMM d
+         UnicodeString("13 Wed"),                              // 14: Ed    -> d EEE
+-        UnicodeString(u"11:58:59.123\u202FPM", -1),          // 15: jmmssSSS -> "h:mm:ss.SSS a"
++        UnicodeString(u"11:58:59.123 PM", -1),          // 15: jmmssSSS -> "h:mm:ss.SSS a"
+         UnicodeString("11:58"),                               // 16: JJmm
+     };
+ 
+@@ -128,14 +128,14 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
+         UnicodeString("Jan 13"),                              //  5: MMMd
+         UnicodeString("January 13"),                          //  6: MMMMd
+         UnicodeString("Q1 11 Heisei"),                        //  7: yQQQ
+-        UnicodeString(u"11:58\u202FPM", -1),                 //  8: hhmm
++        UnicodeString(u"11:58 PM", -1),                 //  8: hhmm
+         UnicodeString("23:58"),                               //  9: HHmm
+-        UnicodeString(u"11:58\u202FPM", -1),                 // 10: jjmm
++        UnicodeString(u"11:58 PM", -1),                 // 10: jjmm
+         UnicodeString("58:59"),                               // 11: mmss
+         UnicodeString("January 11 Heisei"),                   // 12: yyyyMMMM
+         UnicodeString("Wed, Jan 13"),                         // 13: MMMEd -> EEE, MMM d"
+         UnicodeString("13 Wed"),                              // 14: Ed    -> d EEE
+-        UnicodeString(u"11:58:59.123\u202FPM", -1),          // 15: jmmssSSS -> "h:mm:ss.SSS a"
++        UnicodeString(u"11:58:59.123 PM", -1),          // 15: jmmssSSS -> "h:mm:ss.SSS a"
+         UnicodeString("11:58"),                               // 16: JJmm
+     };
+ 
+@@ -377,14 +377,14 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
+         UnicodeString("O 14, 1999"),
+         UnicodeString("T, O 14"),
+         UnicodeString("Oct 14"),
+-        UnicodeString(u"Oct 14, 6:58\u202FAM", -1),
+-        UnicodeString(u"Thu, Oct 14, 6:58:59\u202FAM", -1),
+-        UnicodeString(u"10/14, 6:58\u202FAM", -1),
+-        UnicodeString(u"Thursday, Oct 14, 6:58:59\u202FAM", -1),
+-        UnicodeString(u"Oct 14, 1999, 6:58:59\u202FAM", -1),
+-        UnicodeString(u"Thu, Oct 14, 1999, 6:58:59\u202FAM", -1),
+-        UnicodeString(u"6:58\u202FAM", -1),
+-        UnicodeString(u"6:58\u202FAM", -1),
++        UnicodeString(u"Oct 14, 6:58 AM", -1),
++        UnicodeString(u"Thu, Oct 14, 6:58:59 AM", -1),
++        UnicodeString(u"10/14, 6:58 AM", -1),
++        UnicodeString(u"Thursday, Oct 14, 6:58:59 AM", -1),
++        UnicodeString(u"Oct 14, 1999, 6:58:59 AM", -1),
++        UnicodeString(u"Thu, Oct 14, 1999, 6:58:59 AM", -1),
++        UnicodeString(u"6:58 AM", -1),
++        UnicodeString(u"6:58 AM", -1),
+         UnicodeString(u"6:58\u202FAM GMT+00:00", -1),
+         UnicodeString(""),
+     };
+@@ -908,10 +908,10 @@ void IntlTestDateTimePatternGeneratorAPI::testOptions(/*char *par*/)
+     //   locale  skel   expectedPattern  options
+         { "en", "Hmm",  u"HH:mm",        UDATPG_MATCH_NO_OPTIONS        },
+         { "en", "HHmm", u"HH:mm",        UDATPG_MATCH_NO_OPTIONS        },
+-        { "en", "hhmm", u"h:mm\u202Fa",  UDATPG_MATCH_NO_OPTIONS        },
++        { "en", "hhmm", u"h:mm a",  UDATPG_MATCH_NO_OPTIONS        },
+         { "en", "Hmm",  u"HH:mm",        UDATPG_MATCH_HOUR_FIELD_LENGTH },
+         { "en", "HHmm", u"HH:mm",        UDATPG_MATCH_HOUR_FIELD_LENGTH },
+-        { "en", "hhmm", u"hh:mm\u202Fa", UDATPG_MATCH_HOUR_FIELD_LENGTH },
++        { "en", "hhmm", u"hh:mm a", UDATPG_MATCH_HOUR_FIELD_LENGTH },
+         { "da", "Hmm",  u"HH.mm",        UDATPG_MATCH_NO_OPTIONS        },
+         { "da", "HHmm", u"HH.mm",        UDATPG_MATCH_NO_OPTIONS        },
+         { "da", "hhmm", u"h.mm\u202Fa",  UDATPG_MATCH_NO_OPTIONS        },
+@@ -1540,6 +1540,18 @@ void IntlTestDateTimePatternGeneratorAPI::test_jConsistencyOddLocales() { // ICU
+             continue;
+         }
+         if (dtfShortPattern != dtfSkelPattern || dtfSkelPattern != dtpgPattern) {
++            if (uprv_strcmp(localeID, "en") == 0) {
++                UnicodeString dtfShortPatternForCompare(dtfShortPattern);
++                UnicodeString dtfSkelPatternForCompare(dtfSkelPattern);
++                UnicodeString dtpgPatternForCompare(dtpgPattern);
++                dtfShortPatternForCompare.findAndReplace(u"\u202F", u" ");
++                dtfSkelPatternForCompare.findAndReplace(u"\u202F", u" ");
++                dtpgPatternForCompare.findAndReplace(u"\u202F", u" ");
++                if (dtfShortPatternForCompare == dtfSkelPatternForCompare &&
++                        dtfSkelPatternForCompare == dtpgPatternForCompare) {
++                    continue;
++                }
++            }
+             const char* dtfShortValidLoc = dtfShort->getLocaleID(ULOC_VALID_LOCALE, status);
+             const char* dtfShortActualLoc = dtfShort->getLocaleID(ULOC_ACTUAL_LOCALE, status);
+             errln(UnicodeString("For locale ") + localeID +
+@@ -1635,10 +1647,10 @@ void IntlTestDateTimePatternGeneratorAPI::testDateTimePatterns() {
+     // The following tests some locales in which there are differences between the
+     // DateTimePatterns of various length styles.
+     DTPLocaleAndResults localeAndResults[] = {
+-        { "en", { UnicodeString(u"EEEE, MMMM d, y 'at' h:mm\u202Fa"), // long != medium
+-                  UnicodeString(u"MMMM d, y 'at' h:mm\u202Fa"),
+-                  UnicodeString(u"MMM d, y, h:mm\u202Fa"),
+-                  UnicodeString(u"M/d/y, h:mm\u202Fa") } },
++        { "en", { UnicodeString(u"EEEE, MMMM d, y 'at' h:mm a"), // long != medium
++                  UnicodeString(u"MMMM d, y 'at' h:mm a"),
++                  UnicodeString(u"MMM d, y, h:mm a"),
++                  UnicodeString(u"M/d/y, h:mm a") } },
+         { "fr", { UnicodeString(u"EEEE d MMMM y 'à' HH:mm"), // medium != short
+                   UnicodeString(u"d MMMM y 'à' HH:mm"),
+                   UnicodeString(u"d MMM y, HH:mm"),
+@@ -1663,10 +1675,10 @@ void IntlTestDateTimePatternGeneratorAPI::testDateTimePatterns() {
+         UnicodeString(u"{1} _2_ {0}"),
+         UnicodeString(u"{1} _3_ {0}")
+     };
+-    DTPLocaleAndResults enModResults = { "en", { UnicodeString(u"EEEE, MMMM d, y _0_ h:mm\u202Fa"),
+-                                                 UnicodeString(u"MMMM d, y _1_ h:mm\u202Fa"),
+-                                                 UnicodeString(u"MMM d, y _2_ h:mm\u202Fa"),
+-                                                 UnicodeString(u"M/d/y _3_ h:mm\u202Fa") }
++    DTPLocaleAndResults enModResults = { "en", { UnicodeString(u"EEEE, MMMM d, y _0_ h:mm a"),
++                                                 UnicodeString(u"MMMM d, y _1_ h:mm a"),
++                                                 UnicodeString(u"MMM d, y _2_ h:mm a"),
++                                                 UnicodeString(u"M/d/y _3_ h:mm a") }
+     };
+ 
+     // Test various locales with standard data
+@@ -1784,7 +1796,7 @@ void IntlTestDateTimePatternGeneratorAPI::testRegionOverride() {
+         const char16_t* expectedPattern;
+         UDateFormatHourCycle expectedHourCycle;
+     } testCases[] = {
+-        { "en_US",           u"h:mm\u202fa", UDAT_HOUR_CYCLE_12 },
++        { "en_US",           u"h:mm a", UDAT_HOUR_CYCLE_12 },
+         { "en_GB",           u"HH:mm",       UDAT_HOUR_CYCLE_23 },
+         { "en_US@rg=GBZZZZ", u"HH:mm",       UDAT_HOUR_CYCLE_23 },
+         { "en_US@hours=h23", u"HH:mm",       UDAT_HOUR_CYCLE_23 },
 diff --git a/icu/icu4c/source/test/intltest/locnmtst.cpp b/icu/icu4c/source/test/intltest/locnmtst.cpp
-index 61baca2e4634a08d83a4dbdd69990df7c9bf2471..68d55de958e0228a393cedc0fa06120c54753603 100644
+index 864b57ef5185b99b13011b5a1a333afb07997812..0703866445d27801548c51fdcde0e4e33c179480 100644
 --- a/icu/icu4c/source/test/intltest/locnmtst.cpp
 +++ b/icu/icu4c/source/test/intltest/locnmtst.cpp
-@@ -68,10 +68,14 @@ void LocaleDisplayNamesTest::runIndexedTest(int32_t index, UBool exec, const cha
-     switch (index) {
- #if !UCONFIG_NO_FORMATTING
-         TESTCASE(0, TestCreate);
--        TESTCASE(1, TestCreateDialect);
-+        /* MSFT Change: Begin */
-+        // TESTCASE(1, TestCreateDialect);
-+        /* MSFT Change: End */
-         TESTCASE(2, TestWithKeywordsAndEverything);
-         TESTCASE(3, TestUldnOpen);
--        TESTCASE(4, TestUldnOpenDialect);
-+        /* MSFT Change: Begin */
-+        // TESTCASE(4, TestUldnOpenDialect);
-+        /* MSFT Change: End */
-         TESTCASE(5, TestUldnWithKeywordsAndEverything);
-         TESTCASE(6, TestUldnComponents);
-         TESTCASE(7, TestRootEtc);
-diff --git a/icu/icu4c/source/test/intltest/numfmtst.cpp b/icu/icu4c/source/test/intltest/numfmtst.cpp
-index dc193f2cc42b26d0c544e8c24701d4e4aefeff92..95157d1d69069aabe2f814aef0e709e2f180dcb8 100644
---- a/icu/icu4c/source/test/intltest/numfmtst.cpp
-+++ b/icu/icu4c/source/test/intltest/numfmtst.cpp
-@@ -199,7 +199,9 @@ void NumberFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &n
-   TESTCASE_AUTO(Test11640_getAffixes);
-   TESTCASE_AUTO(Test11649_toPatternWithMultiCurrency);
-   TESTCASE_AUTO(Test13327_numberingSystemBufferOverflow);
--  TESTCASE_AUTO(Test13391_chakmaParsing);
-+  /* MSFT Change: Begin */
-+  // TESTCASE_AUTO(Test13391_chakmaParsing);
-+  /* MSFT Change: End */
-   TESTCASE_AUTO(Test11735_ExceptionIssue);
-   TESTCASE_AUTO(Test11035_FormatCurrencyAmount);
-   TESTCASE_AUTO(Test11318_DoubleConversion);
-@@ -1022,19 +1024,21 @@ void NumberFormatTest::TestCurrencyObject() {
-         return;
+@@ -104,7 +104,7 @@ void LocaleDisplayNamesTest::TestCreateDialect() {
+   LocaleDisplayNames *ldn = LocaleDisplayNames::createInstance(Locale::getUS(), ULDN_DIALECT_NAMES);
+   ldn->localeDisplayName("en_GB", temp);
+   delete ldn;
+-  test_assert_equal("British English", temp);
++  test_assert_equal("English (United Kingdom)", temp);
+ }
+ 
+ void LocaleDisplayNamesTest::TestWithKeywordsAndEverything() {
+@@ -190,7 +190,7 @@ void LocaleDisplayNamesTest::TestUldnOpenDialect() {
+   test_assert(U_SUCCESS(status));
+ 
+   UnicodeString str(result, len, kMaxResultSize);
+-  test_assert_equal("British English", str);
++  test_assert_equal("English (United Kingdom)", str);
+ }
+ 
+ void LocaleDisplayNamesTest::TestUldnWithGarbage() {
+@@ -299,22 +299,22 @@ static char16_t daFor_en[]       = {0x65,0x6E,0x67,0x65,0x6C,0x73,0x6B,0}; //"en
+ static char16_t daFor_en_cabud[] = {0x65,0x6E,0x67,0x65,0x6C,0x73,0x6B,0x20,0x28,0x62,0x75,0x64,0x64,0x68,0x69,0x73,0x74,0x69,0x73,0x6B,0x20,
+                                  0x6B,0x61,0x6C,0x65,0x6E,0x64,0x65,0x72,0x29,0}; //"engelsk (buddhistisk kalender)"
+ static char16_t daFor_en_GB[]    = {0x65,0x6E,0x67,0x65,0x6C,0x73,0x6B,0x20,0x28,0x53,0x74,0x6F,0x72,0x62,0x72,0x69,0x74,0x61,0x6E,0x6E,0x69,0x65,0x6E,0x29,0}; //"engelsk (Storbritannien)"
+-static char16_t daFor_en_GB_D[]  = {0x62,0x72,0x69,0x74,0x69,0x73,0x6B,0x20,0x65,0x6E,0x67,0x65,0x6C,0x73,0x6B,0}; //"britisk engelsk"
++static char16_t daFor_en_GB_D[]  = {0x65,0x6E,0x67,0x65,0x6C,0x73,0x6B,0x20,0x28,0x53,0x74,0x6F,0x72,0x62,0x72,0x69,0x74,0x61,0x6E,0x6E,0x69,0x65,0x6E,0x29,0}; //"engelsk (Storbritannien)"
+ static char16_t esFor_en[]       = {0x69,0x6E,0x67,0x6C,0xE9,0x73,0}; //"ingles" with acute on the e
+ static char16_t esFor_en_GB[]    = {0x69,0x6E,0x67,0x6C,0xE9,0x73,0x20,0x28,0x52,0x65,0x69,0x6E,0x6F,0x20,0x55,0x6E,0x69,0x64,0x6F,0x29,0}; //"ingles (Reino Unido)" ...
+-static char16_t esFor_en_GB_S[]  = {0x69,0x6E,0x67,0x6C,0xE9,0x73,0x20,0x28,0x52,0x55,0x29,0}; //"ingles (RU)" ...
+-static char16_t esFor_en_GB_D[]  = {0x69,0x6E,0x67,0x6C,0xE9,0x73,0x20,0x62,0x72,0x69,0x74,0xE1,0x6E,0x69,0x63,0x6F,0}; //"ingles britanico" with acute on the e, a
++static char16_t esFor_en_GB_S[]  = {0x69,0x6E,0x67,0x6C,0xE9,0x73,0x20,0x28,0x52,0x65,0x69,0x6E,0x6F,0x20,0x55,0x6E,0x69,0x64,0x6F,0x29,0}; //"ingles (Reino Unido)" ...
++static char16_t esFor_en_GB_D[]  = {0x69,0x6E,0x67,0x6C,0xE9,0x73,0x20,0x28,0x52,0x65,0x69,0x6E,0x6F,0x20,0x55,0x6E,0x69,0x64,0x6F,0x29,0}; //"ingles (Reino Unido)" ...
+ static char16_t ruFor_uz_Latn[]  = {0x0443,0x0437,0x0431,0x0435,0x043A,0x0441,0x043A,0x0438,0x0439,0x20,0x28,0x043B,0x0430,0x0442,0x0438,0x043D,0x0438,0x0446,0x0430,0x29,0}; // all lowercase
+ #if !UCONFIG_NO_BREAK_ITERATION
+ static char16_t daFor_en_T[]     = {0x45,0x6E,0x67,0x65,0x6C,0x73,0x6B,0}; //"Engelsk"
+ static char16_t daFor_en_cabudT[]= {0x45,0x6E,0x67,0x65,0x6C,0x73,0x6B,0x20,0x28,0x62,0x75,0x64,0x64,0x68,0x69,0x73,0x74,0x69,0x73,0x6B,0x20,
+                                  0x6B,0x61,0x6C,0x65,0x6E,0x64,0x65,0x72,0x29,0}; //"Engelsk (buddhistisk kalender)"
+ static char16_t daFor_en_GB_T[]  = {0x45,0x6E,0x67,0x65,0x6C,0x73,0x6B,0x20,0x28,0x53,0x74,0x6F,0x72,0x62,0x72,0x69,0x74,0x61,0x6E,0x6E,0x69,0x65,0x6E,0x29,0}; //"Engelsk (Storbritannien)"
+-static char16_t daFor_en_GB_DT[] = {0x42,0x72,0x69,0x74,0x69,0x73,0x6B,0x20,0x65,0x6E,0x67,0x65,0x6C,0x73,0x6B,0}; //"Britisk engelsk"
++static char16_t daFor_en_GB_DT[] = {0x45,0x6E,0x67,0x65,0x6C,0x73,0x6B,0x20,0x28,0x53,0x74,0x6F,0x72,0x62,0x72,0x69,0x74,0x61,0x6E,0x6E,0x69,0x65,0x6E,0x29,0}; //"Engelsk (Storbritannien)"
+ static char16_t esFor_en_T[]     = {0x49,0x6E,0x67,0x6C,0xE9,0x73,0}; //"Ingles" with acute on the e
+ static char16_t esFor_en_GB_T[]  = {0x49,0x6E,0x67,0x6C,0xE9,0x73,0x20,0x28,0x52,0x65,0x69,0x6E,0x6F,0x20,0x55,0x6E,0x69,0x64,0x6F,0x29,0}; //"Ingles (Reino Unido)" ...
+-static char16_t esFor_en_GB_ST[] = {0x49,0x6E,0x67,0x6C,0xE9,0x73,0x20,0x28,0x52,0x55,0x29,0}; //"Ingles (RU)" ...
+-static char16_t esFor_en_GB_DT[] = {0x49,0x6E,0x67,0x6C,0xE9,0x73,0x20,0x62,0x72,0x69,0x74,0xE1,0x6E,0x69,0x63,0x6F,0}; //"Ingles britanico" with acute on the e, a
++static char16_t esFor_en_GB_ST[] = {0x49,0x6E,0x67,0x6C,0xE9,0x73,0x20,0x28,0x52,0x65,0x69,0x6E,0x6F,0x20,0x55,0x6E,0x69,0x64,0x6F,0x29,0}; //"Ingles (Reino Unido)" ...
++static char16_t esFor_en_GB_DT[] = {0x49,0x6E,0x67,0x6C,0xE9,0x73,0x20,0x28,0x52,0x65,0x69,0x6E,0x6F,0x20,0x55,0x6E,0x69,0x64,0x6F,0x29,0}; //"Ingles (Reino Unido)" ...
+ static char16_t ruFor_uz_Latn_T[]= {0x0423,0x0437,0x0431,0x0435,0x043A,0x0441,0x043A,0x0438,0x0439,0x20,0x28,0x043B,0x0430,0x0442,0x0438,0x043D,0x0438,0x0446,0x0430,0x29,0}; // first char upper
+ #endif /* #if !UCONFIG_NO_BREAK_ITERATION */
+ 
+diff --git a/icu/icu4c/source/test/intltest/messageformat2test_icu.cpp b/icu/icu4c/source/test/intltest/messageformat2test_icu.cpp
+index f01b64baf5121a9bab7a3ca40c24982466ff6687..3492e06f92a6f165d552a41a00eccd4522cd8e56 100644
+--- a/icu/icu4c/source/test/intltest/messageformat2test_icu.cpp
++++ b/icu/icu4c/source/test/intltest/messageformat2test_icu.cpp
+@@ -48,7 +48,7 @@ there was {$what} on planet {$planet :integer}.")
+                                 .setArgument("planet", (int64_t) 7)
+                                 .setDateArgument("when", (UDate) 871068000000)
+                                 .setArgument("what", "a disturbance in the Force")
+-                                .setExpected(CharsToUnicodeString("At 12:20:00\\u202FPM on Aug 8, 1997, there was a disturbance in the Force on planet 7."))
++                                .setExpected(CharsToUnicodeString("At 12:20:00 PM on Aug 8, 1997, there was a disturbance in the Force on planet 7."))
+                                 .build(), errorCode);
+ }
+ 
+diff --git a/icu/icu4c/source/test/intltest/tmsgfmt.cpp b/icu/icu4c/source/test/intltest/tmsgfmt.cpp
+index 54b71ed3e78105b7ab9e5f2709c19c8981d28b35..0603136ba1142f16d5d65be27ea9e9f2e2fe9bda 100644
+--- a/icu/icu4c/source/test/intltest/tmsgfmt.cpp
++++ b/icu/icu4c/source/test/intltest/tmsgfmt.cpp
+@@ -288,7 +288,7 @@ void TestMessageFormat::PatternTest()
+         u"Quotes ', {, 'a' 1 {0}",
+         u"Quotes ', {, 'a' 1 {0}",
+         u"{1,number,'#',##} #34,56",
+-        u"There are 3,456 files on Disk at 1/12/70, 5:46\u202FAM.",
++        u"There are 3,456 files on Disk at 1/12/70, 5:46 AM.",
+         u"On Disk, there are 3,456 files, with $1.00.",
+         u"{1,number,percent}, 345,600%,",
+         u"{1,date,full}, Wednesday, December 31, 1969,",
+@@ -419,7 +419,7 @@ void TestMessageFormat::testStaticFormat()
      }
+ 
+     const UnicodeString expected(
+-            u"At 12:20:00\u202FPM on Aug 8, 1997, there was a disturbance in the Force on planet 7.");
++            u"At 12:20:00 PM on Aug 8, 1997, there was a disturbance in the Force on planet 7.");
+     if (result != expected) {
+         errln(UnicodeString("TestMessageFormat::testStaticFormat failed on test") +
+             UnicodeString("\n     Result: ") + result +
+@@ -1502,7 +1502,7 @@ void TestMessageFormat::TestUnlimitedArgsAndSubformats() {
+ 
+     UnicodeString expected =
+         u"On Nov 20, 2286 (aka 11/20/86, aka November 20, 2286) "
+-        u"at 9:46:40\u202FAM (aka 9:46\u202FAM, aka 9:46:40\u202FAM PST) "
++        u"at 9:46:40 AM (aka 9:46 AM, aka 9:46:40 AM PST) "
+         u"there were 1,303 werjes "
+         u"(a 8% increase over 1,202) "
+         u"despite the Glimmung's efforts "
+diff --git a/icu/icu4c/source/test/testdata/format.txt b/icu/icu4c/source/test/testdata/format.txt
+index e3d6e72fd8b9ccbb5f7868865074a16f4b8554e8..b8d3c3ba5b99f2eb01ff2513335700177655765d 100644
+--- a/icu/icu4c/source/test/testdata/format.txt
++++ b/icu/icu4c/source/test/testdata/format.txt
+@@ -37,7 +37,7 @@ format:table(nofallback) {
+                     "",
+                     "DATE=SHORT,TIME=SHORT",
+                     "ERA=1,YEAR=2007,MONTH=AUGUST,DATE=8,HOUR_OF_DAY=18,MINUTE=54,SECOND=0",
+-                    "8/8/07, 6:54 PM"
++                    "8/8/07, 6:54 PM"
+                },
+                {
+                     "zh_TW@calendar=roc",
+@@ -102,14 +102,14 @@ format:table(nofallback) {
+                     "GMT",
+                     "TIME=LONG",
+                     "ERA=1,YEAR=2012,MONTH=OCTOBER,DATE=8,HOUR_OF_DAY=23,MINUTE=59,SECOND=0",
+-                    "11:59:00 PM GMT"
++                    "11:59:00 PM GMT"
+                },
+                {
+                     "en_US@calendar=gregorian",         
+                     "GMT",
+                     "TIME=LONG",
+                     "RELATIVE_ADD:DATE=-1,HOUR_OF_DAY=17,MINUTE=0,SECOND=0", // one day before now at specified time
+-                    "5:00:00 PM GMT"
++                    "5:00:00 PM GMT"
+                },
+                // normal formats, combined using 'at'
+                {
+@@ -117,7 +117,7 @@ format:table(nofallback) {
+                     "GMT",
+                     "DATE=RELATIVE_FULL,TIME=LONG",
+                     "ERA=1,YEAR=2012,MONTH=OCTOBER,DATE=8,HOUR_OF_DAY=23,MINUTE=59,SECOND=0",
+-                    "Monday, October 8, 2012, 11:59:00 PM GMT"
++                    "Monday, October 8, 2012, 11:59:00 PM GMT"
+                },
+                // normal formats, combined using ", "
+                {
+@@ -125,7 +125,7 @@ format:table(nofallback) {
+                     "GMT",
+                     "DATE=RELATIVE_MEDIUM,TIME=SHORT",
+                     "ERA=1,YEAR=2012,MONTH=OCTOBER,DATE=8,HOUR_OF_DAY=23,MINUTE=59,SECOND=0",
+-                    "Oct 8, 2012, 11:59 PM"
++                    "Oct 8, 2012, 11:59 PM"
+                },
+                // formats with relative day, combined using 'at'
+                {
+@@ -133,7 +133,7 @@ format:table(nofallback) {
+                     "GMT",
+                     "DATE=RELATIVE_FULL,TIME=LONG",
+                     "RELATIVE_ADD:DATE=-1,HOUR_OF_DAY=17,MINUTE=0,SECOND=0", // one day before now at specified time
+-                    "yesterday, 5:00:00 PM GMT"
++                    "yesterday, 5:00:00 PM GMT"
+                },
+                // formats with relative day, combined using ", "
+                {
+@@ -141,7 +141,7 @@ format:table(nofallback) {
+                     "GMT",
+                     "DATE=RELATIVE_MEDIUM,TIME=SHORT",
+                     "RELATIVE_ADD:DATE=-1,HOUR_OF_DAY=17,MINUTE=0,SECOND=0", // one day before now at specified time
+-                    "yesterday, 5:00 PM"
++                    "yesterday, 5:00 PM"
+                },
+                // normal formats that have quoted literals, combined
+                {
+@@ -554,7 +554,7 @@ format:table(nofallback) {
+                     "",
+                     "DATE=FULL,TIME=FULL",
+                     "MILLIS=3076424179200000",
+-                    "Friday, 3 Heshvan 103217 at 12:00:00 AM GMT-08:00"
++                    "Friday, 3 Heshvan 103217 at 12:00:00 AM GMT-08:00"
+                },
+             }    
+         }
+diff --git a/icu/icu4c/source/test/testdata/message2/icu4j/icu-test-functions.json b/icu/icu4c/source/test/testdata/message2/icu4j/icu-test-functions.json
+index 21f917da6e5239927ee2a5213289df6305239287..b72421119ee8e053ea0cc9f01a43400f2fcc0d01 100644
+--- a/icu/icu4c/source/test/testdata/message2/icu4j/icu-test-functions.json
++++ b/icu/icu4c/source/test/testdata/message2/icu4j/icu-test-functions.json
+@@ -2,18 +2,18 @@
+   "Date and time formats": [
+     {
+       "src": "Expires on {$exp}",
+-      "exp": "Expires on 8/3/24, 9:43 PM",
++      "exp": "Expires on 8/3/24, 9:43 PM",
+       "comment": "Modified from ICU4J copy to add params (likewise with the other date/time tests); 1722746637000 is 2024-08-03 21:43:57 PDT",
+       "params": {"exp": { "date": 1722746637000 } }
+     },
+     {
+       "src": "Expires on {$exp :datetime}",
+-      "exp": "Expires on 8/3/24, 9:43 PM",
++      "exp": "Expires on 8/3/24, 9:43 PM",
+       "params": {"exp": { "date": 1722746637000 } }
+     },
+     {
+       "src": "Expires on {$exp :datetime icu:skeleton=yMMMMdjmsSSEE}",
+-      "exp": "Expires on Sat, August 3, 2024 at 9:43:57.00 PM",
++      "exp": "Expires on Sat, August 3, 2024 at 9:43:57.00 PM",
+       "params": {"exp": { "date": 1722746637000 } },
+       "ignoreTest": "ICU-22754 Skeleton option not implemented yet"
+     },
+@@ -34,22 +34,22 @@
+     },
+     {
+       "src": "Expires on {$exp :datetime timeStyle=long}",
+-      "exp": "Expires on 9:43:57 PM PDT",
++      "exp": "Expires on 9:43:57 PM PDT",
+       "params": {"exp": { "date": 1722746637000 } }
+     },
+     {
+       "src": "Expires on {$exp :datetime timeStyle=medium}",
+-      "exp": "Expires on 9:43:57 PM",
++      "exp": "Expires on 9:43:57 PM",
+       "params": {"exp": { "date": 1722746637000 } }
+     },
+     {
+       "src": "Expires on {$exp :datetime timeStyle=short}",
+-      "exp": "Expires on 9:43 PM",
++      "exp": "Expires on 9:43 PM",
+       "params": {"exp": { "date": 1722746637000 } }
+     },
+     {
+       "src": "Expires on {$exp :datetime dateStyle=full timeStyle=medium}",
+-      "exp": "Expires on Saturday, August 3, 2024 at 9:43:57 PM",
++      "exp": "Expires on Saturday, August 3, 2024 at 9:43:57 PM",
+       "params": {"exp": { "date": 1722746637000 } }
+     },
+     {
+@@ -72,14 +72,14 @@
+     {
+       "comment": "Make sure we ignore date / time fields if needed",
+       "src": "Expires at {$exp :time year=numeric month=medium day=numeric weekday=long hour=numeric minute=numeric}",
+-      "exp": "Expires at 9:43 PM",
++      "exp": "Expires at 9:43 PM",
+       "params": {"exp": { "date": 1722746637000 } },
+       "ignoreTest": "ICU-22754 ICU4C doesn't accept field options for `:date` or `:time` -- see spec"
+     },
+     {
+       "comment": "Make sure we ignore date / time fields if needed",
+       "src": "Expires at {$exp :time style=long dateStyle=full timeStyle=medium}",
+-      "exp": "Expires at 9:43:57 PM PDT",
++      "exp": "Expires at 9:43:57 PM PDT",
+       "params": {"exp": { "date": 1722746637000 } }
+     },
+     {
+@@ -96,11 +96,11 @@
+     },
+     {
+       "src": "Expires at {|2024-07-02T19:23:45| :datetime timeStyle=full}",
+-      "exp": "Expires at 7:23:45 PM Pacific Daylight Time"
++      "exp": "Expires at 7:23:45 PM Pacific Daylight Time"
+     },
+     {
+       "src": "Expires at {|2024-07-02T19:23:45.123| :datetime timeStyle=full}",
+-      "exp": "Expires at 7:23:45 PM Pacific Daylight Time"
++      "exp": "Expires at 7:23:45 PM Pacific Daylight Time"
+     },
+     {
+       "src": "Expires on {|2025-02-27T19:23:45| :datetime dateStyle=full}",
+@@ -108,11 +108,11 @@
+     },
+     {
+       "src": "Expires at {|2024-07-02T19:23:45Z| :datetime timeStyle=long}",
+-      "exp": "Expires at 7:23:45 PM GMT"
++      "exp": "Expires at 7:23:45 PM GMT"
+     },
+     {
+       "src": "Expires at {|2024-07-02T19:23:45+03:30| :datetime timeStyle=full}",
+-      "exp": "Expires at 7:23:45 PM GMT+03:30"
++      "exp": "Expires at 7:23:45 PM GMT+03:30"
+     }
+   ],
+   "Chaining" : [
+@@ -125,7 +125,7 @@
+         ".local $zooExp = {$exp :datetime dateStyle=short timeStyle=$tsOver}\n",
+         "{{Hello John, you want '{$exp}', '{$longExp}', or '{$zooExp}' or even '{$exp :datetime dateStyle=full}'?}}"
+       ],
+-      "exp": "Hello John, you want '9:43 PM', 'August 3, 2024 at 9:43 PM', or '8/3/24, 9:43:57 PM Pacific Daylight Time' or even 'Saturday, August 3, 2024 at 9:43 PM'?",
++      "exp": "Hello John, you want '9:43 PM', 'August 3, 2024 at 9:43 PM', or '8/3/24, 9:43:57 PM Pacific Daylight Time' or even 'Saturday, August 3, 2024 at 9:43 PM'?",
+       "params": {"exp": { "date": 1722746637000 }, "user": "John", "tsOver" : "long" },
+       "ignoreTest": "ICU-22754 ICU4C doesn't implement this kind of function composition yet. See https://github.com/unicode-org/message-format-wg/issues/515"
+     },
+diff --git a/icu/testdata/message2/icu-test-functions.json b/icu/testdata/message2/icu-test-functions.json
+index a97446addf0e7273e6dff7a10682340f3d9a3bc8..87e7b401b1398ee1ea74c4b5d4e3214c057d7500 100644
+--- a/icu/testdata/message2/icu-test-functions.json
++++ b/icu/testdata/message2/icu-test-functions.json
+@@ -7,18 +7,18 @@
+   "tests": [
+     {
+       "src": "Expires on {$exp}",
+-      "exp": "Expires on 8/3/24, 9:43 PM",
++      "exp": "Expires on 8/3/24, 9:43 PM",
+       "comment": "Modified from ICU4J copy to add params (likewise with the other date/time tests); 1722746637000 is 2024-08-03 21:43:57 PDT",
+       "params": [{ "name": "exp", "value": { "date": 1722746637000 } }]
+     },
+     {
+       "src": "Expires on {$exp :datetime}",
+-      "exp": "Expires on 8/3/24, 9:43 PM",
++      "exp": "Expires on 8/3/24, 9:43 PM",
+       "params": [{ "name": "exp", "value": { "date": 1722746637000 } }]
+     },
+     {
+       "src": "Expires on {$exp :datetime icu:skeleton=yMMMMdjmsSSEE}",
+-      "exp": "Expires on Sat, August 3, 2024 at 9:43:57.00 PM",
++      "exp": "Expires on Sat, August 3, 2024 at 9:43:57.00 PM",
+       "params": [{ "name": "exp", "value": { "date": 1722746637000 } }],
+       "ignoreCpp": "ICU-22754 Skeleton option not implemented yet"
+     },
+@@ -39,22 +39,22 @@
+     },
+     {
+       "src": "Expires on {$exp :datetime timeStyle=long}",
+-      "exp": "Expires on 9:43:57 PM PDT",
++      "exp": "Expires on 9:43:57 PM PDT",
+       "params": [{ "name": "exp", "value": { "date": 1722746637000 } }]
+     },
+     {
+       "src": "Expires on {$exp :datetime timeStyle=medium}",
+-      "exp": "Expires on 9:43:57 PM",
++      "exp": "Expires on 9:43:57 PM",
+       "params": [{ "name": "exp", "value": { "date": 1722746637000 } }]
+     },
+     {
+       "src": "Expires on {$exp :datetime timeStyle=short}",
+-      "exp": "Expires on 9:43 PM",
++      "exp": "Expires on 9:43 PM",
+       "params": [{ "name": "exp", "value": { "date": 1722746637000 } }]
+     },
+     {
+       "src": "Expires on {$exp :datetime dateStyle=full timeStyle=medium}",
+-      "exp": "Expires on Saturday, August 3, 2024 at 9:43:57 PM",
++      "exp": "Expires on Saturday, August 3, 2024 at 9:43:57 PM",
+       "params": [{ "name": "exp", "value": { "date": 1722746637000 } }]
+     },
+     {
+@@ -77,14 +77,14 @@
+     {
+       "comment": "Make sure we ignore date / time fields if needed",
+       "src": "Expires at {$exp :time year=numeric month=medium day=numeric weekday=long hour=numeric minute=numeric}",
+-      "exp": "Expires at 9:43 PM",
++      "exp": "Expires at 9:43 PM",
+       "params": [{ "name": "exp", "value": { "date": 1722746637000 } }],
+       "ignoreCpp": "ICU-22754 ICU4C doesn't accept field options for `:date` or `:time` -- see spec"
+     },
+     {
+       "comment": "Make sure we ignore date / time fields if needed",
+       "src": "Expires at {$exp :time style=long dateStyle=full timeStyle=medium}",
+-      "exp": "Expires at 9:43:57 PM PDT",
++      "exp": "Expires at 9:43:57 PM PDT",
+       "params": [{ "name": "exp", "value": { "date": 1722746637000 } }]
+     },
+     {
+@@ -99,11 +99,11 @@
+     },
+     {
+       "src": "Expires at {|2024-07-02T19:23:45| :datetime timeStyle=full}",
+-      "exp": "Expires at 7:23:45 PM Pacific Daylight Time"
++      "exp": "Expires at 7:23:45 PM Pacific Daylight Time"
+     },
+     {
+       "src": "Expires at {|2024-07-02T19:23:45.123| :datetime timeStyle=full}",
+-      "exp": "Expires at 7:23:45 PM Pacific Daylight Time"
++      "exp": "Expires at 7:23:45 PM Pacific Daylight Time"
+     },
+     {
+       "src": "Expires on {|2025-02-27T19:23:45| :datetime dateStyle=full}",
+@@ -111,12 +111,12 @@
+     },
+     {
+       "src": "Expires at {|2024-07-02T19:23:45Z| :datetime timeStyle=long}",
+-      "exp": "Expires at 7:23:45 PM GMT",
++      "exp": "Expires at 7:23:45 PM GMT",
+       "ignoreCpp": "ICU-22754 Time zones not working yet (bug)"
+     },
+     {
+       "src": "Expires at {|2024-07-02T19:23:45+03:30| :datetime timeStyle=full}",
+-      "exp": "Expires at 7:23:45 PM GMT+03:30",
++      "exp": "Expires at 7:23:45 PM GMT+03:30",
+       "ignoreCpp": "ICU-22754 Time zones not working yet (bug)"
+     },
+     {
+@@ -128,7 +128,7 @@
+         ".local $zooExp = {$exp :datetime dateStyle=short timeStyle=$tsOver}\n",
+         "{{Hello John, you want '{$exp}', '{$longExp}', or '{$zooExp}' or even '{$exp :datetime dateStyle=full}'?}}"
+       ],
+-      "exp": "Hello John, you want '9:43 PM', 'August 3, 2024 at 9:43 PM', or '8/3/24, 9:43:57 PM Pacific Daylight Time' or even 'Saturday, August 3, 2024 at 9:43 PM'?",
++      "exp": "Hello John, you want '9:43 PM', 'August 3, 2024 at 9:43 PM', or '8/3/24, 9:43:57 PM Pacific Daylight Time' or even 'Saturday, August 3, 2024 at 9:43 PM'?",
+       "params": [{"name": "exp", "value": { "date": 1722746637000 }},
+                  {"name": "user", "value": "John"},
+                  {"name": "tsOver", "value": "full" }],
+diff --git a/icu/testdata/message2/more-functions.json b/icu/testdata/message2/more-functions.json
+index 6d074f8b2d806e82917d65644675bccc47e528a9..90dc1274ba7fc8fccbf28994121df745b78efd53 100644
+--- a/icu/testdata/message2/more-functions.json
++++ b/icu/testdata/message2/more-functions.json
+@@ -47,17 +47,17 @@
+     },
+     {
+       "src": "Testing date formatting: {$date :time style=long}.",
+-      "exp": "Testing date formatting: 7:42:37\u202FPM PST.",
++      "exp": "Testing date formatting: 7:42:37 PM PST.",
+       "params": [{ "name": "date", "value": { "date": 1669261357000 } }]
+     },
+     {
+       "src": "Testing date formatting: {$date :time style=medium}.",
+-      "exp": "Testing date formatting: 7:42:37\u202FPM.",
++      "exp": "Testing date formatting: 7:42:37 PM.",
+       "params": [{ "name": "date", "value": { "date": 1669261357000 } }]
+     },
+     {
+       "src": "Testing date formatting: {$date :time style=short}.",
+-      "exp": "Testing date formatting: 7:42\u202FPM.",
++      "exp": "Testing date formatting: 7:42 PM.",
+       "params": [{ "name": "date", "value": { "date": 1669261357000 } }]
+     },
+     {
