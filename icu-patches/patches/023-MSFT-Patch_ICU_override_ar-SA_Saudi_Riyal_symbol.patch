@@ -1,0 +1,68 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Tue, 19 May 2026 13:59:57 +0530
+Subject: MSFT-PATCH: Override ar-SA Saudi Riyal symbol
+
+Use the Unicode U+20C1 SAUDI RIYAL SIGN for the ar-SA SAR currency symbol and add a C API regression test for the locale-specific override.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+
+diff --git a/icu/icu4c/source/data/curr/ar_SA.txt b/icu/icu4c/source/data/curr/ar_SA.txt
+index 32526c8458fe1a225180d35019a84f4ea40603fe..2d969daeb3b8debcb9321dbff9598db33b673f82 100644
+--- a/icu/icu4c/source/data/curr/ar_SA.txt
++++ b/icu/icu4c/source/data/curr/ar_SA.txt
+@@ -1,9 +1,11 @@
+ ﻿// © 2016 and later: Unicode, Inc. and others.
+ // License & terms of use: http://www.unicode.org/copyright.html
+ // Generated using tools/cldr/cldr-to-icu/
+-/**
+- * generated alias target
+- */
+ ar_SA{
+-    ___{""}
++    Currencies{
++        SAR{
++            "⃁",
++            "ريال سعودي",
++        }
++    }
+ }
+diff --git a/icu/icu4c/source/test/cintltst/currtest.c b/icu/icu4c/source/test/cintltst/currtest.c
+index d8355133a18bf24410a3a99eed8b27f2657b0d76..51dff0eb0b33653ae0e9d53bf4ceeb5677d50d4c 100644
+--- a/icu/icu4c/source/test/cintltst/currtest.c
++++ b/icu/icu4c/source/test/cintltst/currtest.c
+@@ -298,6 +298,26 @@ static void TestNumericCode(void) {
+     }
+ }
+ 
++static void TestSaudiRiyalSymbol(void) {
++    UErrorCode status = U_ZERO_ERROR;
++    UChar currency[4];
++    UBool isChoiceFormat = false;
++    int32_t len = 0;
++    static const UChar expectedSymbol[] = {0x20C1, 0};
++    const UChar* symbol;
++
++    u_charsToUChars("SAR", currency, UPRV_LENGTHOF(currency));
++    symbol = ucurr_getName(currency, "ar_SA", UCURR_SYMBOL_NAME, &isChoiceFormat, &len, &status);
++    if (U_FAILURE(status)) {
++        log_data_err("Error: ucurr_getName returned %s (Are you missing data?)\n", u_errorName(status));
++        return;
++    }
++    if (isChoiceFormat || len != 1 || symbol == NULL || u_strncmp(symbol, expectedSymbol, len) != 0) {
++        log_err("Error: SAR symbol for ar_SA should be U+20C1. Got length=%d first=U+%04X choice=%s\n",
++            len, (len > 0 && symbol != NULL) ? symbol[0] : 0, isChoiceFormat ? "true" : "false");
++    }
++}
++
+ void addCurrencyTest(TestNode** root);
+ 
+ #define TESTCASE(x) addTest(root, &x, "tsformat/currtest/" #x)
+@@ -310,6 +330,7 @@ void addCurrencyTest(TestNode** root)
+     TESTCASE(TestFractionDigitOverride);
+     TESTCASE(TestPrefixSuffix);
+     TESTCASE(TestNumericCode);
++    TESTCASE(TestSaudiRiyalSymbol);
+ }
+ 
+ #endif /* #if !UCONFIG_NO_FORMATTING */
