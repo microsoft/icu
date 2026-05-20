@@ -1,0 +1,7 @@
+name: "CodeQL config"
+
+paths-ignore:
+  # Upstream ICU source consumed by this fork. MSFT-owned patches live under icu-patches/.
+  - "icu/icu4c/**"
+  # Upstream ICU test data consumed with ICU source.
+  - "icu/testdata/**"
