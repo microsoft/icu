@@ -19,21 +19,11 @@ yo_BJ{
         chr{"Èdè Shɛ́rókiì"}
         cu{"Èdè Síláfííkì Ilé Ìjɔ́sìn"}
         cv{"Èdè Shufasi"}
-        de_AT{"Èdè Jámánì (Ɔ́síríà )"}
-        de_CH{"Èdè Ilɛ̀ Jámánì (Orílɛ́ède swítsàlandì)"}
         dje{"Shárúmà"}
         dsb{"Shóbíánù Apá Ìshàlɛ̀"}
         ebu{"Èdè Ɛmbù"}
         en{"Èdè Gɛ̀ɛ́sì"}
-        en_AU{"Èdè Gɛ̀ɛ́sì (órílɛ̀-èdè Ɔsirélíà)"}
-        en_CA{"Èdè Gɛ̀ɛ́sì (Orílɛ̀-èdè Kánádà)"}
-        en_GB{"Èdè òyìnbó Gɛ̀ɛ́sì"}
         es{"Èdè Sípáníìshì"}
-        es_419{"Èdè Sípáníìshì (orílɛ̀-èdè Látìn-Amɛ́ríkà)"}
-        es_ES{"Èdè Sípáníìshì (orílɛ̀-èdè Yúróòpù)"}
-        es_MX{"Èdè Sípáníìshì (orílɛ̀-èdè Mɛ́síkò)"}
-        fr_CA{"Èdè Faransé (orílɛ̀-èdè Kánádà)"}
-        fr_CH{"Èdè Faranshé (Súwísàlaǹdì)"}
         gez{"Ede Gɛ́sì"}
         id{"Èdè Indonéshíà"}
         ie{"Èdè àtɔwɔ́dá"}
@@ -51,7 +41,6 @@ yo_BJ{
         nb{"Nɔ́ɔ́wè Bokímàl"}
         nds{"Jámánì ìpìlɛ̀"}
         nl{"Èdè Dɔ́ɔ̀shì"}
-        nl_BE{"Èdè Flemishi"}
         nmg{"Kíwáshíò"}
         nn{"Nɔ́ɔ́wè Nínɔ̀sìkì"}
         nus{"Núɛ̀"}
@@ -61,8 +50,6 @@ yo_BJ{
         os{"Ɔshɛ́tíìkì"}
         prg{"Púrúshíànù"}
         pt{"Èdè Pɔtogí"}
-        pt_BR{"Èdè Pɔtogí (Orilɛ̀-èdè Bràsíl)"}
-        pt_PT{"Èdè Pɔtogí (orílɛ̀-èdè Yúróòpù)"}
         qu{"Kúɛ́ńjùà"}
         rm{"Rómáǹshì"}
         ru{"Èdè Rɔ́shíà"}
@@ -83,26 +70,10 @@ yo_BJ{
         za{"Shúwáànù"}
         zgh{"Àfɛnùkò Támásáìtì ti Mòrókò"}
         zh{"Edè Sháínà"}
-        zh_Hans{"Ɛdè Sháínà Onírɔ̀rùn"}
-        zh_Hant{"Èdè Sháínà Ìbílɛ̀"}
         zu{"Èdè Shulu"}
     }
     Languages%core{
         ku{"Èdè Kɔ́dìshì"}
-    }
-    Languages%long{
-        zh_Hans{"Èdè Mandárínì Sháínà Onírɔ̀rùn"}
-        zh_Hant{"Èdè Mandárínì Sháínà Ìbílɛ̀"}
-    }
-    Languages%menu{
-        zh{"Edè Sháínà, Mandárínì"}
-    }
-    Languages%short{
-        en_GB{"Èdè Gɛ̀ɛ́sì (GB)"}
-        en_US{"Èdè Gɛ̀ɛ́sì (US)"}
-    }
-    Languages%variant{
-        hi_Latn{"Èdè Híńgílíshì"}
     }
     Scripts{
         Armn{"Àmɛ́níà"}
@@ -138,7 +109,6 @@ yo_BJ{
             iso8601{"Kàlɛ́ńdà ISO-8601"}
             japanese{"Kàlɛ́ńdà ti Jàpánù"}
             persian{"Kàlɛ́ńdà Pásíànù"}
-            roc{"Kàlɛ́ńdà Minguo"}
         }
         calendar%core{
             chinese{"Ti Sháínà"}
@@ -146,7 +116,6 @@ yo_BJ{
             ethiopic-amete-alem{"Kàlɛ́ńdà Etiópíà"}
             islamic-civil{"Híjìrí (kàlɛ́ńdà oní-àtòkɔ ti arà-ìlú)"}
             persian{"Ti Páshíà"}
-            roc{"Kàlɛ́ńdà Sháínà"}
         }
         cf{
             account{"Ìgúnrégé Ìshirò Owó Kɔ́rɛ́ńsì"}

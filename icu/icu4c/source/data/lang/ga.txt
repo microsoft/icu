@@ -35,7 +35,6 @@ ga{
         ann{"Obolo"}
         anp{"Aingícis"}
         ar{"Araibis"}
-        ar_001{"Araibis Chaighdeánach"}
         arc{"Aramais"}
         arn{"Mapúitsis"}
         arp{"Arapachóis"}
@@ -108,8 +107,6 @@ ga{
         dar{"Dargais"}
         dav{"Taita"}
         de{"Gearmáinis"}
-        de_AT{"Gearmáinis na hOstaire"}
-        de_CH{"Ard-Ghearmáinis Eilvéiseach"}
         dgr{"Dograibis"}
         dje{"Zarmais"}
         doi{"Dóigris"}
@@ -127,21 +124,13 @@ ga{
         eka{"Acaidiúcais"}
         el{"Gréigis"}
         en{"Béarla"}
-        en_AU{"Béarla na hAstráile"}
-        en_CA{"Béarla Cheanada"}
-        en_GB{"Béarla na Breataine"}
-        en_US{"Béarla Mheiriceá"}
         enm{"Meán-Bhéarla"}
         eo{"Esperanto"}
         es{"Spáinnis"}
-        es_419{"Spáinnis Mheiriceá Laidinigh"}
-        es_ES{"Spáinnis Eorpach"}
-        es_MX{"Spáinnis Mheicsiceach"}
         et{"Eastóinis"}
         eu{"Bascais"}
         ewo{"Éabhandóis"}
         fa{"Peirsis"}
-        fa_AF{"Dairis"}
         ff{"Fuláinis"}
         fi{"Fionlainnis"}
         fil{"Filipínis"}
@@ -149,8 +138,6 @@ ga{
         fo{"Faróis"}
         fon{"Fonais"}
         fr{"Fraincis"}
-        fr_CA{"Fraincis Cheanada"}
-        fr_CH{"Fraincis na hEilvéise"}
         frc{"Fraincis Cajun"}
         frm{"Meán-Fhraincis"}
         fro{"Sean-Fhraincis"}
@@ -329,14 +316,12 @@ ga{
         nb{"Bocmál"}
         nd{"N-deibéilis an Tuaiscirt"}
         nds{"Gearmáinis Íochtarach"}
-        nds_NL{"Sacsainis Íochtarach"}
         ne{"Neipeailis"}
         new{"Néamharais"}
         ng{"Ndongais"}
         nia{"Niaisis"}
         niu{"Níobhais"}
         nl{"Ollainnis"}
-        nl_BE{"Pléimeannais"}
         nmg{"Cuaiseois"}
         nn{"Nua-Ioruais"}
         nnh{"Ngiemboon"}
@@ -374,8 +359,6 @@ ga{
         prg{"Prúisis"}
         ps{"Paistis"}
         pt{"Portaingéilis"}
-        pt_BR{"Portaingéilis Bhrasaíleach"}
-        pt_PT{"Portaingéilis Ibéarach"}
         qu{"Ceatsuais"}
         quc{"Cuitséis"}
         raj{"Rajasthani"}
@@ -385,7 +368,6 @@ ga{
         rm{"Rómainis"}
         rn{"Rúindis"}
         ro{"Rómáinis"}
-        ro_MD{"Moldáivis"}
         rof{"Rombo"}
         rom{"Romainis"}
         ru{"Rúisis"}
@@ -409,7 +391,6 @@ ga{
         ses{"Songais Oirthearach"}
         sg{"Sangóis"}
         sga{"Sean-Ghaeilge"}
-        sh{"Seirbea-Chróitis"}
         shi{"Tachelhit"}
         shn{"Seánais"}
         si{"Siolóinis"}
@@ -436,7 +417,6 @@ ga{
         sux{"Suiméiris"}
         sv{"Sualainnis"}
         sw{"Svahaílis"}
-        sw_CD{"Svahaílis an Chongó"}
         swb{"teanga na gComórach"}
         syr{"Siricis"}
         szl{"Siléisis"}
@@ -507,8 +487,6 @@ ga{
         zea{"Séalainnis"}
         zgh{"Tamaisis Chaighdeánach Mharacó"}
         zh{"Sínis"}
-        zh_Hans{"Sínis Shimplithe"}
-        zh_Hant{"Sínis Thraidisiúnta"}
         zu{"Súlúis"}
         zun{"Zúinis"}
         zxx{"Gan ábhar teangeolaíoch"}
@@ -519,22 +497,6 @@ ga{
     }
     Languages%extension{
         ku{"Curmainsis"}
-    }
-    Languages%long{
-        zh_Hans{"Mandairínis Shimplithe"}
-        zh_Hant{"Mandairínis Thraidisiúnta"}
-    }
-    Languages%menu{
-        yue{"Sínis, Cantainis"}
-        zh{"Sínis, Mandairínis"}
-    }
-    Languages%short{
-        az{"Asairis"}
-        en_GB{"Béarla na R.A."}
-        en_US{"Béarla S.A.M."}
-    }
-    Languages%variant{
-        ckb{"Coirdis, Sóráinis"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -714,7 +676,6 @@ ga{
             iso8601{"Féilire Ghréagóra (an bhliain ag an tús)"}
             japanese{"Féilire Seapánach"}
             persian{"Féilire Peirseach"}
-            roc{"Féilire Téavánach"}
         }
         calendar%core{
             buddhist{"Búdaíoch"}
@@ -730,7 +691,6 @@ ga{
             islamic-umalqura{"Moslamach (Umm al-Qura)"}
             japanese{"Seapánach"}
             persian{"Peirseach"}
-            roc{"Téavánach"}
         }
         cf{
             account{"Formáid Airgeadra don Chuntasaíocht"}

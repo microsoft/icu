@@ -3,7 +3,6 @@
 // Generated using tools/cldr/cldr-to-icu/
 ro_MD{
     Languages{
-        sw_CD{"swahili (R. D. Congo)"}
         wal{"wolaytta"}
     }
 }

@@ -31,7 +31,6 @@ so{
         ann{"Obolo"}
         anp{"U dhashay Anp"}
         ar{"Carabi"}
-        ar_001{"Carabiga rasmiga ah"}
         arn{"Mapuche"}
         arp{"U dhashay Arap"}
         ars{"Najdi Arabic"}
@@ -97,8 +96,6 @@ so{
         dar{"Dargwa"}
         dav{"Taiita"}
         de{"Jarmal"}
-        de_AT{"Jarmal Awsteeriya"}
-        de_CH{"Iswiiska Sare ee Jarmal"}
         dgr{"Dogrib"}
         dje{"Sarma"}
         doi{"Dogri"}
@@ -114,20 +111,12 @@ so{
         eka{"Ekajuk"}
         el{"Giriik"}
         en{"Ingiriisi"}
-        en_AU{"Ingiriis Austaraaliyaan"}
-        en_CA{"Ingiriis Kanadiyaan"}
-        en_GB{"Ingiriis Biritish"}
-        en_US{"Ingiriis Maraykan"}
         eo{"Isberaanto"}
         es{"Isbaanish"}
-        es_419{"Isbaanishka Laatiin Ameerika"}
-        es_ES{"Isbaanish Yurub"}
-        es_MX{"Isbaanishka Mexico"}
         et{"Istooniyaan"}
         eu{"Basquu"}
         ewo{"Eewondho"}
         fa{"Faarisi"}
-        fa_AF{"Faarsi"}
         ff{"Fuulah"}
         fi{"Finishka"}
         fil{"Filibiino"}
@@ -135,8 +124,6 @@ so{
         fo{"Farowsi"}
         fon{"Fon"}
         fr{"Faransiis"}
-        fr_CA{"Faransiiska Kanada"}
-        fr_CH{"Faransiis (Iswiiserlaand)"}
         frc{"Faransiiska Cajun"}
         frr{"Northern Frisian"}
         fur{"Firiyuuliyaan"}
@@ -160,7 +147,6 @@ so{
         hax{"Southern Haida"}
         he{"Cibraani"}
         hi{"Hindi"}
-        hi_Latn{"Hindi (Latin)"}
         hil{"Hiligaynon"}
         hmn{"Hamong"}
         hr{"Koro’eeshiyaan"}
@@ -300,7 +286,6 @@ so{
         nia{"Nias"}
         niu{"Niuean"}
         nl{"Holandays"}
-        nl_BE{"Af faleemi"}
         nmg{"Kuwaasiyo"}
         nn{"Nawriijiga Nynorsk"}
         nnh{"Ingiyembuun"}
@@ -334,8 +319,6 @@ so{
         prg{"Brashiyaan"}
         ps{"Bashtuu"}
         pt{"Boortaqiis"}
-        pt_BR{"Boortaqiiska Baraasiil"}
-        pt_PT{"Boortaqiiska Yurub"}
         qu{"Quechua"}
         raj{"Rajasthani"}
         rap{"Rapanui"}
@@ -452,8 +435,6 @@ so{
         za{"Zhuang"}
         zgh{"Morokaanka Tamasayt Rasmiga"}
         zh{"Shinees"}
-        zh_Hans{"Shiinaha Rasmiga ah"}
-        zh_Hant{"Af-Shiineeska Qadiimiga ah"}
         zu{"Zuulu"}
         zun{"Zuni"}
         zxx{"Luuqad Looma Hayo"}
@@ -464,22 +445,6 @@ so{
     }
     Languages%extension{
         ku{"Kurmanji"}
-    }
-    Languages%long{
-        zh_Hans{"Shiineeska Mandarin ee Rasmiga ah"}
-        zh_Hant{"Af-Shiineeska Mandarin ee Qadiimiga ah"}
-    }
-    Languages%menu{
-        yue{"Shiinays, Cantonese"}
-        zh{"Af-Shiineeska Mandarin"}
-    }
-    Languages%short{
-        en_GB{"Ingiriiska Boqortooyada Midooday"}
-        en_US{"Ingiriiska Maraykanka"}
-    }
-    Languages%variant{
-        ckb{"Kurdi, Sorani"}
-        hi_Latn{"Hinglish"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -675,7 +640,6 @@ so{
             iso8601{"Habeentiriska ISO-8601"}
             japanese{"Habeentiriska jabbaanka"}
             persian{"Habeentiriska Baarshiyaanka"}
-            roc{"Habeentiriska Minguwo"}
         }
         calendar%core{
             buddhist{"Qof Buddhi ah"}
@@ -692,7 +656,6 @@ so{
             islamic-umalqura{"Taariikhda Islaamiga (Umm al-Qura)"}
             japanese{"Jabaniis"}
             persian{"U dhashay Faariis"}
-            roc{"Minguo"}
         }
         cf{
             account{"Habka Xisaabinta Lacagta"}

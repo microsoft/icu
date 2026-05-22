@@ -24,9 +24,6 @@ ii{
         und{"ꅉꀋꌠꅇꂷ"}
         zh{"ꍏꇩꉙ"}
     }
-    Languages%variant{
-        hi_Latn{"ꑴꐛꑱꉙ"}
-    }
     Scripts{
         Arab{"ꀊꇁꀨꁱꂷ"}
         Cyrl{"ꀊꆨꌦꇁꃚꁱꂷ"}

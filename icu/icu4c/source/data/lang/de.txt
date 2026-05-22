@@ -50,7 +50,6 @@ de{
         ann{"Obolo"}
         anp{"Angika"}
         ar{"Arabisch"}
-        ar_001{"Modernes Hocharabisch"}
         arc{"Aramäisch"}
         arn{"Mapudungun"}
         aro{"Araona"}
@@ -156,8 +155,6 @@ de{
         dar{"Darginisch"}
         dav{"Taita"}
         de{"Deutsch"}
-        de_AT{"Österreichisches Deutsch"}
-        de_CH{"Schweizer Hochdeutsch"}
         del{"Delaware"}
         den{"Slave"}
         dgr{"Dogrib"}
@@ -191,7 +188,6 @@ de{
         ewo{"Ewondo"}
         ext{"Extremadurisch"}
         fa{"Persisch"}
-        fa_AF{"Dari"}
         fan{"Pangwe"}
         fat{"Fanti"}
         ff{"Ful"}
@@ -244,7 +240,6 @@ de{
         hax{"Süd-Haida"}
         he{"Hebräisch"}
         hi{"Hindi"}
-        hi_Latn{"Hindi (lateinisch)"}
         hif{"Fidschi-Hindi"}
         hil{"Hiligaynon"}
         hit{"Hethitisch"}
@@ -421,7 +416,6 @@ de{
         nb{"Norwegisch (Bokmål)"}
         nd{"Nord-Ndebele"}
         nds{"Niederdeutsch"}
-        nds_NL{"Niedersächsisch"}
         ne{"Nepalesisch"}
         new{"Newari"}
         ng{"Ndonga"}
@@ -429,7 +423,6 @@ de{
         niu{"Niue"}
         njo{"Ao-Naga"}
         nl{"Niederländisch"}
-        nl_BE{"Flämisch"}
         nmg{"Kwasio"}
         nn{"Norwegisch (Nynorsk)"}
         nnh{"Ngiemboon"}
@@ -496,7 +489,6 @@ de{
         rm{"Rätoromanisch"}
         rn{"Rundi"}
         ro{"Rumänisch"}
-        ro_MD{"Moldauisch"}
         rof{"Rombo"}
         rom{"Romani"}
         rtm{"Rotumanisch"}
@@ -531,7 +523,6 @@ de{
         sg{"Sango"}
         sga{"Altirisch"}
         sgs{"Samogitisch"}
-        sh{"Serbo-Kroatisch"}
         shi{"Taschelhit"}
         shn{"Schan"}
         shu{"Tschadisch-Arabisch"}
@@ -566,7 +557,6 @@ de{
         sux{"Sumerisch"}
         sv{"Schwedisch"}
         sw{"Suaheli"}
-        sw_CD{"Kongo-Swahili"}
         swb{"Komorisch"}
         syc{"Altsyrisch"}
         syr{"Syrisch"}
@@ -663,8 +653,6 @@ de{
         zen{"Zenaga"}
         zgh{"Tamazight"}
         zh{"Chinesisch"}
-        zh_Hans{"Chinesisch (vereinfacht)"}
-        zh_Hant{"Chinesisch (traditionell)"}
         zu{"Zulu"}
         zun{"Zuni"}
         zxx{"Keine Sprachinhalte"}
@@ -675,21 +663,6 @@ de{
     }
     Languages%extension{
         ku{"Kurmandschi"}
-    }
-    Languages%long{
-        zh_Hans{"Mandarin (Vereinfacht)"}
-        zh_Hant{"Mandarin (traditionell)"}
-    }
-    Languages%menu{
-        ckb{"Kurdisch (Sorani)"}
-        yue{"Chinesisch (Kantonesisch)"}
-        zh{"Chinesisch (Mandarin)"}
-    }
-    Languages%short{
-        en_GB{"Englisch (GB)"}
-    }
-    Languages%variant{
-        hi_Latn{"Hinglish"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -883,7 +856,6 @@ de{
             iso8601{"ISO-8601-Kalender"}
             japanese{"Japanischer Kalender"}
             persian{"Persischer Kalender"}
-            roc{"Minguo-Kalender"}
         }
         calendar%core{
             buddhist{"buddhistisch"}
@@ -899,7 +871,6 @@ de{
             islamic-umalqura{"Hidschra (Umm al-Qura)"}
             japanese{"japanisch"}
             persian{"persisch"}
-            roc{"Minguo"}
         }
         cf{
             account{"Währungsformat (Buchhaltung)"}

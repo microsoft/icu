@@ -16,7 +16,6 @@ kxv{
         af{"aprikaans"}
         am{"aarmenia"}
         ar{"arabic"}
-        ar_001{"punijuga mānānka arabic"}
         as{"aasamis"}
         az{"ajerbaijani"}
         be{"belarusiati"}
@@ -30,32 +29,19 @@ kxv{
         cs{"cek"}
         da{"denis"}
         de{"jerman"}
-        de_AT{"ausṭriati jerman"}
-        de_CH{"svis high jerman"}
         doi{"ḍogri"}
         el{"grīk"}
         en{"ingrajī"}
-        en_AU{"ausṭreliati ingarjī"}
-        en_CA{"kanaḍati ingarjī"}
-        en_GB{"briṭisti ingrajī"}
-        en_US{"amerikati ingrajī"}
         es{"spenis"}
-        es_419{"laṭin americati spenis"}
-        es_ES{"yuropīyati spenis"}
-        es_MX{"meksikoti spenis"}
         et{"esṭoniyati"}
         eu{"bask"}
         fa{"persiati"}
-        fa_AF{"ḍari"}
         fi{"pinnis"}
         fil{"pilipino"}
         fr{"prenc"}
-        fr_CA{"kanaḍati prenc"}
-        fr_CH{"svis prenc"}
         gl{"galesiati"}
         gu{"gujraṭī"}
         he{"hibru"}
-        hi_Latn{"hindi"}
         hr{"kroesiati"}
         hu{"hngeriyati"}
         hy{"aarmeniati"}
@@ -86,15 +72,11 @@ kxv{
         nb{"norvejiati būkmal"}
         ne{"nepaḷī"}
         nl{"ḍc"}
-        nl_BE{"vlaams"}
         or{"oḍiaa"}
         pa{"pnjabī"}
         pl{"polis"}
         pt{"portugīj"}
-        pt_BR{"brajilian portugīj"}
-        pt_PT{"yuropīyati portugīj"}
         ro{"romaniyati"}
-        ro_MD{"molḍaviati"}
         ru{"rusiyati"}
         sa{"sanskrit"}
         sat{"santalī"}
@@ -106,7 +88,6 @@ kxv{
         sr{"sarbiyati"}
         sv{"sviḍis"}
         sw{"svahili"}
-        sw_CD{"kongo svahili"}
         ta{"tamiḷ"}
         te{"telugu"}
         th{"tae"}
@@ -117,21 +98,7 @@ kxv{
         vi{"vietnaamti"}
         xnr{"kangri"}
         zh{"cainati"}
-        zh_Hans{"sahaj cainati"}
-        zh_Hant{"hirudlu cainati"}
         zu{"julu"}
-    }
-    Languages%long{
-        zh_Hans{"sahaj manḍarin cainati"}
-        zh_Hant{"hirudlu manḍarin cainati"}
-    }
-    Languages%menu{
-        zh{"cainati, manḍarin"}
-    }
-    Languages%short{
-        az{"ājeri"}
-        en_GB{"juktarajyati ingrajī"}
-        en_US{"juktarasṭrati ingrajī"}
     }
     Scripts{
         Arab{"aarabic"}
