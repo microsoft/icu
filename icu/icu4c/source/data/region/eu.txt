@@ -94,17 +94,14 @@ eu{
         CY{"Zipre"}
         CZ{"Txekia"}
         DE{"Alemania"}
-        DG{"Diego García"}
         DJ{"Djibuti"}
         DK{"Danimarka"}
         DM{"Dominika"}
         DO{"Dominikar Errepublika"}
         DZ{"Aljeria"}
-        EA{"Ceuta eta Melilla"}
         EC{"Ekuador"}
         EE{"Estonia"}
         EG{"Egipto"}
-        EH{"Mendebaldeko Sahara"}
         ER{"Eritrea"}
         ES{"Espainia"}
         ET{"Etiopia"}
@@ -141,7 +138,6 @@ eu{
         HR{"Kroazia"}
         HT{"Haiti"}
         HU{"Hungaria"}
-        IC{"Kanariak"}
         ID{"Indonesia"}
         IE{"Irlanda"}
         IL{"Israel"}
@@ -224,7 +220,7 @@ eu{
         PM{"Saint-Pierre eta Mikelune"}
         PN{"Pitcairn uharteak"}
         PR{"Puerto Rico"}
-        PS{"Palestinar Lurralde Okupatuak"}
+        PS{"Palestinako Aginte Nazionala"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguai"}
@@ -289,8 +285,6 @@ eu{
         VU{"Vanuatu"}
         WF{"Wallis eta Futuna"}
         WS{"Samoa"}
-        XA{"Sasiazentuak"}
-        XB{"Pseudobidia"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -298,23 +292,5 @@ eu{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Eskualde ezezaguna"}
-    }
-    Countries%chagos{
-        IO{"Txagos uhartedia"}
-    }
-    Countries%short{
-        GB{"EB"}
-        HK{"Hong Kong"}
-        MO{"Macau"}
-        PS{"Palestina"}
-        US{"AEB"}
-    }
-    Countries%variant{
-        CD{"Kongo (DR)"}
-        CG{"Kongoko Errepublika"}
-        CI{"C¨ôte d’Ivore"}
-        CZ{"Txekiar Errepublika"}
-        FK{"Falklandak (Malvinak)"}
-        NZ{"Aotearoa / Zeelanda Berria"}
     }
 }

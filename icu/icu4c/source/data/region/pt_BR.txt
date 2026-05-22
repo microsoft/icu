@@ -1,9 +1,8 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/
-/**
- * generated alias target
- */
-yue_Hant_HK{
-    ___{""}
+pt_BR{
+    Countries{
+        PS{"Autoridade Palestina"}
+    }
 }
