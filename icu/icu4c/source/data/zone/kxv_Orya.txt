@@ -847,9 +847,6 @@ kxv_Orya{
         "Asia:Ulaanbaatar"{
             ec{"ଉଲାନ୍‌ବାଟର୍‌"}
         }
-        "Asia:Urumqi"{
-            ec{"ଉରୁମକି"}
-        }
         "Asia:Ust-Nera"{
             ec{"ୟୁସ୍‍ଟ-ନେରା"}
         }

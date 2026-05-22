@@ -847,9 +847,6 @@ kxv_Deva{
         "Asia:Ulaanbaatar"{
             ec{"उलानबातर"}
         }
-        "Asia:Urumqi"{
-            ec{"उरूम्की"}
-        }
         "Asia:Ust-Nera"{
             ec{"यूस्ट–नेरा"}
         }

@@ -633,9 +633,6 @@ tk{
         "Asia:Ulaanbaatar"{
             ec{"Ulan-Bator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumçi"}
-        }
         "Asia:Vientiane"{
             ec{"Wýentýan"}
         }
