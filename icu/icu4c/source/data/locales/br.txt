@@ -998,18 +998,6 @@ br{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"a-raok R.S."}
-                    1{"R.S."}
-                }
-                wide{
-                    0{"a-raok Republik Sina"}
-                    1{"Republik Sina"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"obererezh"}

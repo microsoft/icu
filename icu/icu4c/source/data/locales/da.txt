@@ -926,14 +926,6 @@ da{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"før R.O.C."}
-                    1{"Minguo"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktiviteter"}

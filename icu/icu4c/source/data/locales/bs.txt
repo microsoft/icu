@@ -1272,17 +1272,6 @@ bs{
                 yQQQ{"QQQ y. GGGGG"}
             }
         }
-        roc{
-            availableFormats{
-                M{"L."}
-                d{"d."}
-            }
-            eras{
-                abbreviated{
-                    0{"prije R.O.C."}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktivnost"}

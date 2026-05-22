@@ -1240,62 +1240,6 @@ vi{
                 }
             }
         }
-        roc{
-            DateTimePatterns{
-                "HH:mm:ss zzzz",
-                "HH:mm:ss z",
-                "HH:mm:ss",
-                "HH:mm",
-                "EEEE, 'ngày' dd MMMM 'năm' y G",
-                "'ngày' d 'tháng' M 'năm' y G",
-                "d MMM, y G",
-                "d/M/y GGGGG",
-                "{0} {1}",
-                "{0} {1}",
-                "{0} {1}",
-                "{0} {1}",
-                "{0} {1}",
-            }
-            DateTimeSkeletons{
-                "HHmmsszzzz",
-                "HHmmssz",
-                "HHmmss",
-                "HHmm",
-                "GyMMMMEEEEdd",
-                "GyMdd",
-                "GyMMdd",
-                "GGGGGyMMdd",
-            }
-            availableFormats{
-                M{"'tháng' L"}
-                MEd{"E, dd-M"}
-                Md{"dd-M"}
-                d{"'Ngày' dd"}
-            }
-            eras{
-                abbreviated{
-                    0{"Trước R.O.C"}
-                }
-            }
-            intervalFormats{
-                Bh{
-                    B{"h B – h B"}
-                    h{"h – h B"}
-                }
-                GyMEd{
-                    G{"E, dd-MM-y GGGGG – E, dd-MM-y GGGGG"}
-                    M{"E, dd-MM-y – E, dd-MM-y GGGGG"}
-                    d{"E, dd-MM-y – E, dd-MM-y GGGGG"}
-                    y{"E, dd-MM-y – E, dd-MM-y GGGGG"}
-                }
-                GyMd{
-                    G{"dd-MM-y GGGGG – dd-MM-y GGGGG"}
-                    M{"dd-MM-y – dd-MM-y GGGGG"}
-                    d{"dd-MM-y – dd-MM-y GGGGG"}
-                    y{"dd-MM-y – dd-MM-y GGGGG"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"hoạt động"}

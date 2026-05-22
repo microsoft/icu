@@ -1347,21 +1347,6 @@ sv{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"före R.K."}
-                    1{"R.K."}
-                }
-                narrow{
-                    0{"f.R.K."}
-                }
-                wide{
-                    0{"före Republiken Kina"}
-                    1{"Minguo"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktiviteter"}

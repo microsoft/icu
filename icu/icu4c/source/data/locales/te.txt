@@ -837,13 +837,6 @@ te{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"R.O.C. పూర్వం"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"కార్యాచరణ"}

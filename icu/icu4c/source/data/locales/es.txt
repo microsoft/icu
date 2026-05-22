@@ -999,14 +999,6 @@ es{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"antes de RDC"}
-                    1{"minguo"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Actividades"}

@@ -1192,17 +1192,6 @@ he{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"לפני R.O.C"}
-                }
-                wide{
-                    0{"לפני הרפובליקה של סין"}
-                    1{"לספירת הרפובליקה של סין"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"פעילויות"}

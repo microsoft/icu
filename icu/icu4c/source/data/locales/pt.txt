@@ -804,14 +804,6 @@ pt{
                 "GGGGGyyMMdd",
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"Antes da R.C."}
-                    1{"Minguo"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"atividade"}

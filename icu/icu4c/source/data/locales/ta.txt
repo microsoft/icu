@@ -1001,16 +1001,6 @@ ta{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"ROCக்கு முன்"}
-                }
-                wide{
-                    0{"R.O.C. -க்கு முன்பு"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"செயல்பாடுகள்"}

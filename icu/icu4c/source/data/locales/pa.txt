@@ -947,17 +947,6 @@ pa{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"ਆਰ.ਓ.ਸੀ ਤੋਂ ਪਹਿਲਾਂ"}
-                    1{"ਮਿੰਗ"}
-                }
-                wide{
-                    0{"ਚੀਨ ਦੇ ਗਣਰਾਜ ਤੋਂ ਪਹਿਲਾਂ"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"ਸਰਗਰਮੀ"}

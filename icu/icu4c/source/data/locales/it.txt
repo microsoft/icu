@@ -761,14 +761,6 @@ it{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"Prima di R.O.C."}
-                    1{"Minguo"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Attività"}

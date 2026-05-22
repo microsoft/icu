@@ -939,18 +939,6 @@ ro{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"î.R.C."}
-                    1{"R.C."}
-                }
-                wide{
-                    0{"înainte de Republica China"}
-                    1{"Republica China"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"activitate"}

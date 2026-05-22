@@ -1155,17 +1155,6 @@ fr{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"av. RdC"}
-                    1{"RdC"}
-                }
-                wide{
-                    0{"avant RdC"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"activités"}

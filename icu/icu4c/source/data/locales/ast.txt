@@ -1584,29 +1584,6 @@ ast{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"A.R.D.C."}
-                    1{"Minguo"}
-                }
-                wide{
-                    0{"antes de la R.D.C."}
-                }
-            }
-            intervalFormats{
-                yMMMEd{
-                    M{"E, d MMM – E, d MMM y G"}
-                    y{"E, d MMM y – E, d MMM y G"}
-                }
-                yMMMM{
-                    y{"LLLL y – LLLL y G"}
-                }
-                yMMMd{
-                    y{"d MMM y – d MMM y G"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"actividaes"}

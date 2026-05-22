@@ -883,14 +883,6 @@ sl{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"pred RK"}
-                    1{"Minguo koledar"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"dejavnosti"}
