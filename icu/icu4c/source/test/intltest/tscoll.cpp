@@ -155,7 +155,7 @@ IntlTestCollator::doTestVariant(Collator* col, const UnicodeString &source, cons
       uiter_setString(&sIter, src, sLen);
       uiter_setString(&tIter, trg, tLen);
       compareResultIter = ucol_strcollIter(myCollation, &sIter, &tIter, &status);
-      if(compareResultIter != (UCollationResult)result) {
+      if (compareResultIter != static_cast<UCollationResult>(result)) {
         errln("Different result for iterative comparison "+source+" "+target);
       }
     }
@@ -211,7 +211,7 @@ IntlTestCollator::doTestVariant(Collator* col, const UnicodeString &source, cons
         log("%i ", partialSizes[i]);
 
         partialSKResult = compareUsingPartials(myCollation, src, sLen, trg, tLen, partialSizes[i], status);
-        if(partialSKResult != (UCollationResult)result) {
+        if (partialSKResult != static_cast<UCollationResult>(result)) {
           errln("Partial sortkey comparison returned wrong result: "+source+", "+target+" (size "+partialSizes[i]+")");           
         }
 
@@ -254,7 +254,7 @@ IntlTestCollator::doTest(Collator* col, const UnicodeString &source, const Unico
     }
 
     UErrorCode status = U_ZERO_ERROR;
-    LocalPointer<CollationElementIterator> c(((RuleBasedCollator *)col)->createCollationElementIterator(source));
+    LocalPointer<CollationElementIterator> c((dynamic_cast<RuleBasedCollator *>(col))->createCollationElementIterator(source));
     logln("Testing iterating source: "+source);
     backAndForth(*c);
     c->setText(target, status);

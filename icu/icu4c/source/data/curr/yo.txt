@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 yo{
     Currencies{
         AED{
@@ -519,9 +519,13 @@ yo{
             "SHP",
             "Pọ́n-un Elena",
         }
+        SLE{
+            "SLE",
+            "Líónì Sira Líonì",
+        }
         SLL{
             "SLL",
-            "Líónì Sira Líonì",
+            "Líónì Sira Líonì (1964—2022)",
         }
         SOS{
             "SOS",
@@ -631,6 +635,10 @@ yo{
             "EC$",
             "Dọ́là Ilà Oòrùn Karíbíà",
         }
+        XCG{
+            "Cg.",
+            "Owó ìlú Kùrásọ̀ àti Saint Mátìnì",
+        }
         XOF{
             "F CFA",
             "Faransì ìwọ̀-oorùn Afíríkà",
@@ -663,9 +671,10 @@ yo{
             "ZWD",
             "Dọla ti Orílẹ́ède Siibabuwe",
         }
-    }
-    Currencies%narrow{
-        KRW{"₩"}
+        ZWG{
+            "ZWG",
+            "Owó ìlú Sìnbábúwè",
+        }
     }
     CurrencyPlurals{
         ALL{
@@ -854,9 +863,6 @@ yo{
         NAD{
             other{"àwọn dọla Namibíà"}
         }
-        NGN{
-            other{"Náírà Nàìjíríà"}
-        }
         NIO{
             other{"àwọn kọ̀dóbà Naikarágúà"}
         }
@@ -881,9 +887,6 @@ yo{
         RSD{
             other{"àwọn dínárì Sàbíà"}
         }
-        RUB{
-            other{"Owó ruble ti ilẹ̀ Rọ́ṣíà"}
-        }
         RWF{
             other{"àwọn faransi Ruwanda"}
         }
@@ -899,8 +902,11 @@ yo{
         SHP{
             other{"àwọn pọ́n-un Elena"}
         }
-        SLL{
+        SLE{
             other{"àwọn líónì Sira Líonì"}
+        }
+        SLL{
+            other{"àwọn líónì Sira Líonì (1964—2022)"}
         }
         SOS{
             other{"àwọ́n ṣílè Somali"}
@@ -926,9 +932,6 @@ yo{
         UGX{
             other{"àwọn ṣile Uganda"}
         }
-        USD{
-            other{"Dọ́là ti Orílẹ̀-Èdè Amẹ́ríkà"}
-        }
         UYU{
             other{"àwọn pẹ́sò Úrúgúwè"}
         }
@@ -941,11 +944,11 @@ yo{
         XCD{
             other{"àwọn dọ́là Ilà Oòrùn Karíbíà"}
         }
+        XCG{
+            other{"Owó ìlú Kùrásọ̀ àti Saint Mátìnì"}
+        }
         XOF{
             other{"àwọn faransì ìwọ̀-oorùn Afíríkà"}
-        }
-        XXX{
-            other{"owóníná àìmọ̀"}
         }
         ZAR{
             other{"rándì Gúúsù Afíríkà"}
@@ -953,8 +956,8 @@ yo{
         ZMW{
             other{"àwọn kàwasà Sámbíà"}
         }
-    }
-    CurrencyUnitPatterns{
-        other{"{0} {1}"}
+        ZWG{
+            other{"Owó ìlú Sìnbábúwè"}
+        }
     }
 }

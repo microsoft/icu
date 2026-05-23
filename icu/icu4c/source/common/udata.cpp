@@ -358,7 +358,7 @@ static UDataMemory *udata_cacheDataItem(const char *path, UDataMemory *item, UEr
 
     baseName = findBasename(path);
     nameLen = (int32_t)uprv_strlen(baseName);
-    newElement->name = (char *)uprv_malloc(nameLen+1);
+    newElement->name = static_cast<char*>(uprv_malloc(nameLen + 1));
     if (newElement->name == NULL) {
         *pErr = U_MEMORY_ALLOCATION_ERROR;
         uprv_free(newElement->item);
@@ -475,7 +475,7 @@ UDataPathIterator::UDataPathIterator(const char *inPath, const char *pkg,
     if(basename == item) {
         nextPath = path;
     } else {
-        itemPath.append(item, (int32_t)(basename-item), *pErrorCode);
+        itemPath.append(item, static_cast<int32_t>(basename - item), *pErrorCode);
         nextPath = itemPath.data();
     }
 #ifdef UDATA_DEBUG
@@ -540,7 +540,7 @@ const char *UDataPathIterator::next(UErrorCode *pErrorCode)
                 pathLen = (int32_t)uprv_strlen(currentPath); 
             } else {
                 /* segment: until next segment */
-                pathLen = (int32_t)(nextPath - currentPath);
+                pathLen = static_cast<int32_t>(nextPath - currentPath);
                 /* skip divider */
                 nextPath ++;
             }
@@ -568,7 +568,7 @@ const char *UDataPathIterator::next(UErrorCode *pErrorCode)
         /* check for .dat files */
         pathBasename = findBasename(pathBuffer.data());
 
-        if(checkLastFour == true && 
+        if(checkLastFour && 
            (pathLen>=4) &&
            uprv_strncmp(pathBuffer.data() +(pathLen-4), suffix.data(), 4)==0 && /* suffix matches */
            uprv_strncmp(findBasename(pathBuffer.data()), basename, basenameLen)==0  && /* base matches */
@@ -777,17 +777,6 @@ openCommonData(const char *path,          /*  Path from OpenChoice?          */
         return NULL;
     }
 
-#if defined(OS390_STUBDATA) && defined(OS390BATCH)
-    if (!UDataMemory_isLoaded(&tData)) {
-        char ourPathBuffer[1024];
-        /* One more chance, for extendCommonData() */
-        uprv_strncpy(ourPathBuffer, path, 1019);
-        ourPathBuffer[1019]=0;
-        uprv_strcat(ourPathBuffer, ".dat");
-        uprv_mapFile(&tData, ourPathBuffer, pErrorCode);
-    }
-#endif
-
     if (U_FAILURE(*pErrorCode)) {
         return NULL;
     }
@@ -820,16 +809,6 @@ openCommonData(const char *path,          /*  Path from OpenChoice?          */
  *----------------------------------------------------------------------*/
 static UBool extendICUData(UErrorCode *pErr)
 {
-// MSFT-Change: For the Windows OS build of ICU, we only have one data file
-// and we don't use the extended data at all. We make this function a no-op
-// in order to save a few cycles for perf, but more importantly so that
-// we don't try to load a versioned data file (ex: icudt68l.dat) after
-// already loading the non-versioned common data file.
-#if defined(ICU_DATA_DIR_WINDOWS)
-    (void)pErr; // suppress unused variable.
-    return false;
-#endif
-
     UDataMemory   *pData;
     UDataMemory   copyPData;
     UBool         didUpdate = false;
@@ -860,12 +839,12 @@ static UBool extendICUData(UErrorCode *pErr)
        UDataMemory_init(&copyPData);
        if(pData != NULL) {
           UDatamemory_assign(&copyPData, pData);
-          copyPData.map = 0;              /* The mapping for this data is owned by the hash table */
-          copyPData.mapAddr = 0;          /*   which will unmap it when ICU is shut down.         */
-                                          /* CommonICUData is also unmapped when ICU is shut down.*/
-                                          /* To avoid unmapping the data twice, zero out the map  */
-                                          /*   fields in the UDataMemory that we're assigning     */
-                                          /*   to CommonICUData.                                  */
+          copyPData.map = nullptr;     /* The mapping for this data is owned by the hash table */
+          copyPData.mapAddr = nullptr; /*   which will unmap it when ICU is shut down.         */
+                                       /* CommonICUData is also unmapped when ICU is shut down.*/
+                                       /* To avoid unmapping the data twice, zero out the map  */
+                                       /*   fields in the UDataMemory that we're assigning     */
+                                       /*   to CommonICUData.                                  */
 
           didUpdate = /* no longer using this result */
               setCommonICUData(&copyPData,/*  The new common data.                                */
@@ -1025,6 +1004,7 @@ static UDataMemory *doLoadFromIndividualFiles(const char *pkgName,
                 *  and return it.   */
                 pEntryData->mapAddr = dataMemory.mapAddr;
                 pEntryData->map     = dataMemory.map;
+                pEntryData->length  = dataMemory.length;
 
 #ifdef UDATA_DEBUG
                 fprintf(stderr, "** Mapped file: %s\n", pathBuffer);
@@ -1206,7 +1186,7 @@ doOpenChoice(const char *path, const char *type, const char *name,
                 *p = U_FILE_SEP_CHAR;
             }
 #if defined (UDATA_DEBUG)
-            fprintf(stderr, "Changed path from [%s] to [%s]\n", path, altSepPath.s);
+            fprintf(stderr, "Changed path from [%s] to [%s]\n", path, altSepPath.data());
 #endif
             path = altSepPath.data();
         }
@@ -1241,7 +1221,7 @@ doOpenChoice(const char *path, const char *type, const char *name,
                 if(isICUData) {
                     pkgName.append(U_ICUDATA_NAME, *pErrorCode);
                 } else {
-                    pkgName.append(path, (int32_t)(treeChar-path), *pErrorCode);
+                    pkgName.append(path, static_cast<int32_t>(treeChar - path), *pErrorCode);
                     if (first == NULL) {
                         /*
                         This user data has no path, but there is a tree name.

@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 pt_PT{
     Keys{
         cf{"Formato monetário"}
@@ -19,6 +19,7 @@ pt_PT{
         af{"africanês"}
         alt{"altai do sul"}
         ang{"inglês antigo"}
+        ar_001{"árabe moderno padrão"}
         arn{"mapuche"}
         ars{"árabe do Négede"}
         av{"avar"}
@@ -36,10 +37,21 @@ pt_PT{
         crs{"francês crioulo seselwa"}
         cs{"checo"}
         cv{"chuvash"}
+        de_AT{"alemão austríaco"}
+        de_CH{"alto alemão suíço"}
         efi{"efik"}
         egy{"egípcio clássico"}
+        en_AU{"inglês australiano"}
+        en_CA{"inglês canadiano"}
+        en_GB{"inglês britânico"}
+        en_US{"inglês americano"}
+        es_419{"espanhol latino-americano"}
+        es_ES{"espanhol europeu"}
+        es_MX{"espanhol mexicano"}
         et{"estónio"}
         fon{"fon"}
+        fr_CA{"francês canadiano"}
+        fr_CH{"francês suíço"}
         fro{"francês antigo"}
         frs{"frísio oriental"}
         fy{"frísico ocidental"}
@@ -48,7 +60,6 @@ pt_PT{
         grc{"grego clássico"}
         gsw{"alemão suíço"}
         ha{"haúça"}
-        hi{"hindi"}
         hy{"arménio"}
         ikt{"inuktitut canadiano ocidental"}
         kbd{"cabardiano"}
@@ -67,6 +78,7 @@ pt_PT{
         mul{"vários idiomas"}
         nb{"norueguês bokmål"}
         nds{"baixo-alemão"}
+        nds_NL{"baixo-saxão"}
         nl{"neerlandês"}
         nn{"norueguês nynorsk"}
         non{"nórdico antigo"}
@@ -79,6 +91,8 @@ pt_PT{
         pon{"língua pohnpeica"}
         pro{"provençal antigo"}
         ps{"pastó"}
+        pt_BR{"português do Brasil"}
+        pt_PT{"português europeu"}
         raj{"rajastanês"}
         rhg{"rohingya"}
         se{"sami do norte"}
@@ -98,13 +112,31 @@ pt_PT{
         ttm{"tutchone do norte"}
         tzm{"tamazigue do Atlas Central"}
         uz{"usbeque"}
+        vec{"véneto"}
         wo{"uólofe"}
         xh{"xosa"}
+        xnr{"kangri"}
         xog{"soga"}
         yo{"ioruba"}
         zgh{"tamazight marroquino padrão"}
         zun{"zuni"}
         zza{"zaza"}
+    }
+    Languages%long{
+        zh_Hans{"chinês mandarim simplificado"}
+        zh_Hant{"chinês mandarim tradicional"}
+    }
+    Languages%menu{
+        ckb{"curdo sorani"}
+        zh{"chinês mandarim"}
+    }
+    Languages%short{
+        az{"azeri"}
+        en_GB{"inglês (RU)"}
+        en_US{"inglês (EUA)"}
+    }
+    Languages%variant{
+        ckb{"sorani (curdo)"}
     }
     Scripts{
         Aran{"nasta’liq"}
@@ -135,11 +167,16 @@ pt_PT{
             gregorian{"Calendário gregoriano"}
             hebrew{"Calendário hebraico"}
             indian{"Calendário nacional indiano"}
-            islamic{"Calendário islâmico"}
-            islamic-civil{"Calendário islâmico (civil)"}
-            islamic-umalqura{"Calendário islâmico (Umm al-Qura)"}
+            islamic{"Calendário hegírico"}
+            islamic-civil{"Calendário hegírico (civil)"}
+            islamic-umalqura{"Calendário hegírico (Umm al-Qura)"}
             japanese{"Calendário japonês"}
             persian{"Calendário persa"}
+        }
+        calendar%core{
+            ethiopic-amete-alem{"Etíope Amete Alem"}
+            islamic-civil{"Hegírico (civil)"}
+            roc{"República da China"}
         }
         cf{
             account{"Formato monetário contabilístico"}
@@ -178,15 +215,18 @@ pt_PT{
             tertiary{"Ordenar acentos/tipo de letra/largura"}
         }
         collation{
-            big5han{"Ordem do chinês tradicional - Big5"}
             eor{"Regras de ordenação europeias"}
-            gb2312han{"Ordem do chinês simplificado - GB2312"}
             phonebook{"Ordem da lista telefónica"}
             pinyin{"Ordem de pinyin"}
             standard{"Ordenação padrão"}
             stroke{"Ordem por traços"}
             unihan{"Ordem por radical e traços"}
             zhuyin{"Ordem de zhuyin"}
+        }
+        collation%core{
+            ducet{"Unicode padrão"}
+            phonebook{"Lista telefónica"}
+            unihan{"Radical e traços"}
         }
         d0{
             fwidth{"Largura completa"}
@@ -196,6 +236,15 @@ pt_PT{
             normal{"Estilo padrão de quebra de linha"}
             strict{"Estilo estrito de quebra de linha"}
         }
+        lb%core{
+            loose{"Flexível"}
+            normal{"Padrão"}
+        }
+        lw%core{
+            breakall{"Desfazer tudo"}
+            normal{"Padrão"}
+            phrase{"Manter nas frases"}
+        }
         m0{
             bgn{"Transliteração BGN"}
             ungegn{"Transliteração UNGEGN"}
@@ -203,6 +252,9 @@ pt_PT{
         ms{
             uksystem{"Sistema de medida imperial"}
             ussystem{"Sistema de medida americano"}
+        }
+        ms%core{
+            uksystem{"RU"}
         }
         numbers{
             arabext{"Algarismos indo-arábicos expandidos"}

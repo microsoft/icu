@@ -30,8 +30,8 @@ InputText::InputText(UErrorCode &status)
                                                  //   removed if appropriate.
       fByteStats(NEW_ARRAY(int16_t, 256)),       // byte frequency statistics for the input text.
                                                  //   Value is percent, not absolute.
-      fDeclaredEncoding(0),
-      fRawInput(0),
+      fDeclaredEncoding(nullptr),
+      fRawInput(nullptr),
       fRawLength(0)
 {
     if (fInputBytes == NULL || fByteStats == NULL) {
@@ -50,8 +50,8 @@ void InputText::setText(const char *in, int32_t len)
 {
     fInputLen  = 0;
     fC1Bytes   = false;
-    fRawInput  = (const uint8_t *) in;
-    fRawLength = len == -1? (int32_t)uprv_strlen(in) : len;
+    fRawInput = reinterpret_cast<const uint8_t*>(in);
+    fRawLength = len == -1 ? static_cast<int32_t>(uprv_strlen(in)) : len;
 }
 
 void InputText::setDeclaredEncoding(const char* encoding, int32_t len)

@@ -126,7 +126,7 @@ T_CString_toLowerCase(char* str)
 
     if (str) {
         do
-            *str = (char)uprv_tolower(*str);
+            *str = uprv_tolower(*str);
         while (*(str++));
     }
 
@@ -140,7 +140,7 @@ T_CString_toUpperCase(char* str)
 
     if (str) {
         do
-            *str = (char)uprv_toupper(*str);
+            *str = uprv_toupper(*str);
         while (*(str++));
     }
 
@@ -189,7 +189,7 @@ T_CString_integerToString(char* buffer, int32_t v, int32_t radix)
 /*
  * Takes a int64_t and fills in  a char* string with that number "radix"-based.
  * Writes at most 21: chars ("-9223372036854775807" plus NUL).
- * Returns the length of the string, not including the terminating NULL.
+ * Returns the length of the string, not including the terminating NUL.
  */
 U_CAPI int32_t U_EXPORT2
 T_CString_int64ToString(char* buffer, int64_t v, uint32_t radix)

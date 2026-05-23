@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 qu{
     Countries{
         001{"Pacha"}
@@ -85,6 +85,7 @@ qu{
         CN{"China"}
         CO{"Colombia"}
         CP{"Isla Clipperton"}
+        CQ{"Sark"}
         CR{"Costa Rica"}
         CU{"Cuba"}
         CV{"Cabo Verde"}
@@ -93,14 +94,17 @@ qu{
         CY{"Chipre"}
         CZ{"Chequia"}
         DE{"Alemania"}
+        DG{"Diego García"}
         DJ{"Yibuti"}
         DK{"Dinamarca"}
         DM{"Dominica"}
         DO{"República Dominicana"}
         DZ{"Argelia"}
+        EA{"Ceuta y Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egipto"}
+        EH{"Sahara Occidental"}
         ER{"Eritrea"}
         ES{"España"}
         ET{"Etiopía"}
@@ -137,6 +141,7 @@ qu{
         HR{"Croacia"}
         HT{"Haití"}
         HU{"Hungría"}
+        IC{"Islas Canarias"}
         ID{"Indonesia"}
         IE{"Irlanda"}
         IL{"Israel"}
@@ -219,7 +224,7 @@ qu{
         PM{"San Pedro y Miquelón"}
         PN{"Islas Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Autoridad Nacional Palestina"}
+        PS{"Palestina Kamachikuq"}
         PT{"Portugal"}
         PW{"Palaos"}
         PY{"Paraguay"}
@@ -284,6 +289,8 @@ qu{
         VU{"Vanuatu"}
         WF{"Wallis y Futuna"}
         WS{"Samoa"}
+        XA{"Seudo-Acentos"}
+        XB{"Seudo-Bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +298,18 @@ qu{
         ZM{"Zambia"}
         ZW{"Zimbabue"}
         ZZ{"Mana yachasqa Suyu"}
+    }
+    Countries%chagos{
+        IO{"Chagos Archipielago"}
+    }
+    Countries%short{
+        HK{"Hong Kong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+    }
+    Countries%variant{
+        CZ{"República Checa"}
+        NZ{"Aotearoa Nueva Zelanda"}
+        SZ{"Suazilandia"}
     }
 }

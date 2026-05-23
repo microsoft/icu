@@ -72,8 +72,12 @@ static UBool U_CALLCONV timeZoneNames_cleanup(void)
 static void U_CALLCONV
 deleteTimeZoneNamesCacheEntry(void *obj) {
     icu::TimeZoneNamesCacheEntry *entry = (icu::TimeZoneNamesCacheEntry*)obj;
-    delete (icu::TimeZoneNamesImpl*) entry->names;
-    uprv_free(entry);
+    if (entry->refCount <= 1) {
+        delete (icu::TimeZoneNamesImpl*) entry->names;
+        uprv_free(entry);
+    } else {
+        entry->refCount--;
+    }
 }
 U_CDECL_END
 
@@ -87,7 +91,7 @@ static void sweepCache() {
     const UHashElement* elem;
     double now = (double)uprv_getUTCtime();
 
-    while ((elem = uhash_nextElement(gTimeZoneNamesCache, &pos)) != 0) {
+    while ((elem = uhash_nextElement(gTimeZoneNamesCache, &pos)) != nullptr) {
         TimeZoneNamesCacheEntry *entry = (TimeZoneNamesCacheEntry *)elem->value.pointer;
         if (entry->refCount <= 0 && (now - entry->lastAccess) > CACHE_EXPIRATION) {
             // delete this entry
@@ -128,7 +132,7 @@ private:
 };
 
 TimeZoneNamesDelegate::TimeZoneNamesDelegate()
-: fTZnamesCacheEntry(0) {
+: fTZnamesCacheEntry(nullptr) {
 }
 
 TimeZoneNamesDelegate::TimeZoneNamesDelegate(const Locale& locale, UErrorCode& status) {
@@ -162,7 +166,7 @@ TimeZoneNamesDelegate::TimeZoneNamesDelegate(const Locale& locale, UErrorCode& s
             status = U_MEMORY_ALLOCATION_ERROR;
         }
         if (U_SUCCESS(status)) {
-            newKey = (char *)uprv_malloc(uprv_strlen(key) + 1);
+            newKey = static_cast<char*>(uprv_malloc(uprv_strlen(key) + 1));
             if (newKey == NULL) {
                 status = U_MEMORY_ALLOCATION_ERROR;
             } else {
@@ -175,17 +179,17 @@ TimeZoneNamesDelegate::TimeZoneNamesDelegate(const Locale& locale, UErrorCode& s
                 status = U_MEMORY_ALLOCATION_ERROR;
             } else {
                 cacheEntry->names = tznames;
-                cacheEntry->refCount = 1;
-                cacheEntry->lastAccess = (double)uprv_getUTCtime();
+                // The initial refCount is 2 because the entry is referenced both
+                // by this TimeZoneDelegate and by the gTimeZoneNamesCache
+                cacheEntry->refCount = 2;
+                cacheEntry->lastAccess = static_cast<double>(uprv_getUTCtime());
 
                 uhash_put(gTimeZoneNamesCache, newKey, cacheEntry, &status);
             }
         }
         if (U_FAILURE(status)) {
-            if (tznames != NULL) {
-                delete tznames;
-            }
-            if (newKey != NULL) {
+            delete tznames;
+            if (newKey != nullptr) {
                 uprv_free(newKey);
             }
             if (cacheEntry != NULL) {
@@ -211,9 +215,13 @@ TimeZoneNamesDelegate::~TimeZoneNamesDelegate() {
     umtx_lock(&gTimeZoneNamesLock);
     {
         if (fTZnamesCacheEntry) {
-            U_ASSERT(fTZnamesCacheEntry->refCount > 0);
-            // Just decrement the reference count
-            fTZnamesCacheEntry->refCount--;
+            if (fTZnamesCacheEntry->refCount <= 1) {
+                delete fTZnamesCacheEntry->names;
+                uprv_free(fTZnamesCacheEntry);
+            } else {
+                // Just decrement the reference count
+                fTZnamesCacheEntry->refCount--;
+            }
         }
     }
     umtx_unlock(&gTimeZoneNamesLock);
@@ -403,9 +411,7 @@ TimeZoneNames::MatchInfoCollection::MatchInfoCollection()
 }
 
 TimeZoneNames::MatchInfoCollection::~MatchInfoCollection() {
-    if (fMatches != NULL) {
-        delete fMatches;
-    }
+    delete fMatches;
 }
 
 void

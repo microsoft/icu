@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 se_FI{
     zoneStrings{
         "Africa:Cairo"{
@@ -154,9 +154,7 @@ se_FI{
             ls{"Lulli-Afrihká dálveáigi"}
         }
         "meta:Africa_Western"{
-            ld{"Oarje-Afrihká geasseáigi"}
-            lg{"Oarje-Afrihká áigi"}
-            ls{"Oarje-Afrihká dálveáigi"}
+            ls{"Oarje-Afrihká áigi"}
         }
         "meta:Alaska"{
             ld{"Alaska geasseáigi"}
@@ -290,11 +288,6 @@ se_FI{
             lg{"Kiinná áigi"}
             ls{"Kiinná dálveáigi"}
         }
-        "meta:Choibalsan"{
-            ld{"Choibolsana geasseáigi"}
-            lg{"Choibolsana áigi"}
-            ls{"Choibolsana dálveáigi"}
-        }
         "meta:Christmas"{
             ls{"Juovlasullo áigi"}
         }
@@ -400,6 +393,9 @@ se_FI{
         "meta:Guyana"{
             ls{"Guyana áigi"}
         }
+        "meta:Hawaii"{
+            ls{"Hawaii-aleuhtalaš dálveáigi"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"Hawaii-aleuhtalaš geasseáigi"}
             lg{"Hawaii-aleuhtalaš áigi"}
@@ -483,9 +479,6 @@ se_FI{
             lg{"Lord Howe áigi"}
             ls{"Lord Howe dálveáigi"}
         }
-        "meta:Macquarie"{
-            ls{"MacQuarie sullo áigi"}
-        }
         "meta:Magadan"{
             ld{"Magadana geasseáigi"}
             lg{"Magadana áigi"}
@@ -510,11 +503,6 @@ se_FI{
         }
         "meta:Mawson"{
             ls{"Mawsona áigi"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"Oarjedavvi-Meksiko geasseáigi"}
-            lg{"Oarjedavvi-Meksiko áigi"}
-            ls{"Oarjedavvi-Meksiko dálveáigi"}
         }
         "meta:Mexico_Pacific"{
             ld{"Meksiko Jáskesábi geasseáigi"}

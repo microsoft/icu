@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 sw_KE{
     zoneStrings{
         "America:Barbados"{
@@ -69,11 +69,6 @@ sw_KE{
         "meta:Afghanistan"{
             ls{"Saa za Afghanistani"}
         }
-        "meta:Africa_Western"{
-            ld{"Saa za Majira ya Joto za Afrika Magharibi"}
-            lg{"Saa za Afrika Magharibi"}
-            ls{"Saa za Wastani za Afrika Magharibi"}
-        }
         "meta:Amazon"{
             ld{"Saa za Majira ya Joto za Amazon"}
             lg{"Saa za Amazon"}
@@ -126,11 +121,6 @@ sw_KE{
             ld{"Saa za Majira ya Joto za Kepuvede"}
             lg{"Saa za Kepuvede"}
             ls{"Saa za Wastani za Kepuvede"}
-        }
-        "meta:Choibalsan"{
-            ld{"Saa za Majira ya Joto za Choibalsan"}
-            lg{"Saa za Choibalsan"}
-            ls{"Saa za Wastani za Choibalsan"}
         }
         "meta:Colombia"{
             ld{"Saa za Majira ya Joto za Kolombia"}
@@ -219,9 +209,6 @@ sw_KE{
             lg{"Saa za Krasnoyarsk"}
             ls{"Saa za Wastani za Krasnoyask"}
         }
-        "meta:Macquarie"{
-            ls{"Saa za Makwuarie"}
-        }
         "meta:Magadan"{
             ld{"Saa za Majira ya Joto za Magadan"}
             lg{"Saa za Magadan"}
@@ -237,11 +224,6 @@ sw_KE{
             ld{"Saa za Majira ya Joto za Morisi"}
             lg{"Saa za Morisi"}
             ls{"Saa za Wastani za Morisi"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"Saa za Mchana za Kaskazini Magharibi mwa Meksiko"}
-            lg{"Saa za Kaskazini Magharibi mwa Meksiko"}
-            ls{"Saa za Wastani za Kaskazini Magharibi mwa Meksiko"}
         }
         "meta:Mongolia"{
             ld{"Saa za Majira ya Joto za Ulaanbaatar"}

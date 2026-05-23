@@ -54,6 +54,7 @@ MessageFormatRegressionTest::runIndexedTest( int32_t index, UBool exec, const ch
     TESTCASE_AUTO(TestChoicePatternQuote);
     TESTCASE_AUTO(Test4112104);
     TESTCASE_AUTO(TestICU12584);
+    TESTCASE_AUTO(TestICU22798);
     TESTCASE_AUTO(TestAPI);
     TESTCASE_AUTO_END;
 }
@@ -208,7 +209,7 @@ void MessageFormatRegressionTest::Test4031438()
         //if(objs[7/*params.length*/] != NULL)
         //    errln("Parse failed with more than expected arguments");
 
-        NumberFormat *fmt = 0;
+        NumberFormat* fmt = nullptr;
         UnicodeString temp, temp1;
 
         for (int i = 0; i < count; i++) {
@@ -401,7 +402,7 @@ void MessageFormatRegressionTest::Test4106660()
     FieldPosition pos(FieldPosition::DONT_CARE);
     str = cf->format(d, str, pos);
     if (str != "Two")
-        errln( (UnicodeString) "format(" + d + ") = " + str);
+        errln(UnicodeString("format(") + d + ") = " + str);
 
     delete cf;
 }
@@ -476,9 +477,9 @@ void MessageFormatRegressionTest::Test4114743()
 void MessageFormatRegressionTest::Test4116444()
 {
     UnicodeString patterns [] = {
-        (UnicodeString)"",
-        (UnicodeString)"one",
-        (UnicodeString) "{0,date,short}"
+        UnicodeString(""),
+        UnicodeString("one"),
+        UnicodeString("{0,date,short}")
     };
 
     UErrorCode status = U_ZERO_ERROR;
@@ -640,17 +641,17 @@ void MessageFormatRegressionTest::Test4094906()
 {
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString pattern("-");
-    pattern += (UChar) 0x221E;
+    pattern += static_cast<char16_t>(0x221E);
     pattern += "<are negative|0<are no or fraction|1#is one|1<is 1+|";
-    pattern += (UChar) 0x221E;
+    pattern += static_cast<char16_t>(0x221E);
     pattern += "<are many.";
 
     ChoiceFormat *fmt = new ChoiceFormat(pattern, status);
     failure(status, "new ChoiceFormat");
     UnicodeString pat;
     if (fmt->toPattern(pat) != pattern) {
-        errln( (UnicodeString) "Formatter Pattern : " + pat);
-        errln( (UnicodeString) "Expected Pattern  : " + pattern);
+        errln(UnicodeString("Formatter Pattern : ") + pat);
+        errln(UnicodeString("Expected Pattern  : ") + pattern);
     }
     FieldPosition bogus(FieldPosition::DONT_CARE);
     UnicodeString str;
@@ -702,7 +703,7 @@ void MessageFormatRegressionTest::Test4118592()
     failure(status, "new messageFormat");
     UnicodeString pattern("{0,choice,1#YES|2#NO}");
     UnicodeString prefix("");
-    Formattable *objs = 0;
+    Formattable* objs = nullptr;
 
     for (int i = 0; i < 5; i++) {
         UnicodeString formatted;
@@ -722,9 +723,9 @@ void MessageFormatRegressionTest::Test4118592()
         else {
             UnicodeString temp;
             if(objs[0].getType() == Formattable::kString)
-                logln((UnicodeString)"  " + objs[0].getString(temp));
+                logln(UnicodeString("  ") + objs[0].getString(temp));
             else
-                logln((UnicodeString)"  " + (objs[0].getType() == Formattable::kLong ? objs[0].getLong() : objs[0].getDouble()));
+                logln(UnicodeString("  ") + (objs[0].getType() == Formattable::kLong ? objs[0].getLong() : objs[0].getDouble()));
             delete[] objs;
 
         }
@@ -797,9 +798,9 @@ void MessageFormatRegressionTest::Test4105380()
     failure(status, "new MessageFormat");
     double filelimits [] = {0,1,2};
     UnicodeString filepart [] = {
-        (UnicodeString)"no files",
-            (UnicodeString)"one file",
-            (UnicodeString)"{0,number} files"
+        UnicodeString("no files"),
+        UnicodeString("one file"),
+        UnicodeString("{0,number} files")
     };
     ChoiceFormat *fileform = new ChoiceFormat(filelimits, filepart, 3);
     form1->setFormat(1, *fileform);
@@ -807,7 +808,7 @@ void MessageFormatRegressionTest::Test4105380()
     //Object[] testArgs = {new Long(12373), "MyDisk"};
     Formattable testArgs [] = {
         Formattable((int32_t)12373),
-            Formattable((UnicodeString)"MyDisk")
+        Formattable(UnicodeString("MyDisk"))
     };
 
     FieldPosition bogus(FieldPosition::DONT_CARE);
@@ -832,9 +833,9 @@ void MessageFormatRegressionTest::Test4120552()
     MessageFormat *mf = new MessageFormat("pattern", status);
     failure(status, "new MessageFormat");
     UnicodeString texts[] = {
-        (UnicodeString)"pattern",
-            (UnicodeString)"pat",
-            (UnicodeString)"1234"
+        UnicodeString("pattern"),
+        UnicodeString("pat"),
+        UnicodeString("1234")
     };
     UnicodeString pat;
     logln("pattern: \"" + mf->toPattern(pat) + "\"");
@@ -893,12 +894,12 @@ void MessageFormatRegressionTest::Test4142938()
         if (!failure(status, "mf->format", true)) {
             if (SUFFIX[i] == "") {
                 if (out != PREFIX[i])
-                    errln((UnicodeString)"" + i + ": Got \"" + out + "\"; Want \"" + PREFIX[i] + "\"");
+                    errln(UnicodeString("") + i + ": Got \"" + out + "\"; Want \"" + PREFIX[i] + "\"");
             }
             else {
                 if (!out.startsWith(PREFIX[i]) ||
                     !out.endsWith(SUFFIX[i]))
-                    errln((UnicodeString)"" + i + ": Got \"" + out + "\"; Want \"" + PREFIX[i] + "\"...\"" +
+                    errln(UnicodeString("") + i + ": Got \"" + out + "\"; Want \"" + PREFIX[i] + "\"...\"" +
                           SUFFIX[i] + "\"");
             }
         }
@@ -1012,6 +1013,23 @@ void MessageFormatRegressionTest::TestICU12584() {
     count = 0;
     inner_msg.getFormats(count);
     assertEquals("Inner placeholder match", 3, count);
+}
+void MessageFormatRegressionTest::TestICU22798() {
+    // Test deep nested choice will not cause stack overflow but return error
+    // instead.
+    UErrorCode status = U_ZERO_ERROR;
+    UnicodeString pattern;
+    constexpr static int testNestedLevel = 30000;
+    for (int i = 0; i < testNestedLevel; i++) {
+      pattern += u"A{0,choice,0#";
+    }
+    pattern += u"text";
+    for (int i = 0; i < testNestedLevel; i++) {
+      pattern += u"}a";
+    }
+    MessageFormat msg(pattern, status);
+    assertEquals("Deep nested choice should cause error but not crash",
+                 U_INDEX_OUTOFBOUNDS_ERROR, status);
 }
 
 void MessageFormatRegressionTest::TestAPI() {

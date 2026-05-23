@@ -87,7 +87,7 @@ void test_FieldPosition_example( void )
     int32_t dNumSize = UPRV_LENGTHOF(doubleNum);
 
     UErrorCode status = U_ZERO_ERROR;
-    DecimalFormat* fmt = (DecimalFormat*) NumberFormat::createInstance(status);
+    DecimalFormat* fmt = dynamic_cast<DecimalFormat*>(NumberFormat::createInstance(status));
     if (U_FAILURE(status)) {
         it_dataerrln("NumberFormat::createInstance() error");
         return;
@@ -313,8 +313,8 @@ void test_Formattable( void )
         delete pf;
     }
 
-    const Formattable ftarr1[] = { Formattable( (int32_t)1 ), Formattable( (int32_t)2 ) };
-    const Formattable ftarr2[] = { Formattable( (int32_t)3 ), Formattable( (int32_t)4 ) };
+    const Formattable ftarr1[] = { Formattable(static_cast<int32_t>(1)), Formattable(static_cast<int32_t>(2)) };
+    const Formattable ftarr2[] = { Formattable(static_cast<int32_t>(3)), Formattable(static_cast<int32_t>(4)) };
 
     const int32_t ftarr1_cnt = UPRV_LENGTHOF(ftarr1);
     const int32_t ftarr2_cnt = UPRV_LENGTHOF(ftarr2);

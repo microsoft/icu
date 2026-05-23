@@ -17,7 +17,7 @@
 
 class PluralMapForPluralMapTest : public PluralMap<UnicodeString> {
 public:
-    bool operator==(const PluralMapForPluralMapTest &other) {
+    bool operator==(const PluralMapForPluralMapTest &other) const {
         return equals(other, strEqual);
     }
 private:
@@ -36,7 +36,7 @@ public:
     void TestIterate();
     void TestEqual();
     void TestCopyAndAssign();
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=0) override;
+    void runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
     void addVariant(
             PluralMapBase::Category v,
             const UnicodeString &value,
@@ -56,25 +56,16 @@ void PluralMapTest::runIndexedTest(int32_t index, UBool exec, const char* &name,
 }
 
 void PluralMapTest::TestToCategory() {
-    assertEquals("", (int32_t)PluralMapBase::OTHER, PluralMapBase::toCategory("other"));
-    assertEquals("", (int32_t)PluralMapBase::ZERO, PluralMapBase::toCategory("zero"));
-    assertEquals("", (int32_t)PluralMapBase::ONE, PluralMapBase::toCategory("one"));
-    assertEquals("", (int32_t)PluralMapBase::TWO, PluralMapBase::toCategory("two"));
-    assertEquals("", (int32_t)PluralMapBase::FEW, PluralMapBase::toCategory("few"));
-    assertEquals("", (int32_t)PluralMapBase::MANY, PluralMapBase::toCategory("many"));
-    assertEquals("", (int32_t)PluralMapBase::NONE, PluralMapBase::toCategory("Many"));
-    assertEquals(
-            "",
-            (int32_t)PluralMapBase::FEW,
-            PluralMapBase::toCategory(UnicodeString("few")));
-    assertEquals(
-            "",
-            (int32_t)PluralMapBase::MANY,
-            PluralMapBase::toCategory(UnicodeString("many")));
-    assertEquals(
-            "",
-            (int32_t)PluralMapBase::NONE,
-            PluralMapBase::toCategory(UnicodeString("Many")));
+    assertEquals("", PluralMapBase::OTHER, PluralMapBase::toCategory("other"));
+    assertEquals("", PluralMapBase::ZERO, PluralMapBase::toCategory("zero"));
+    assertEquals("", PluralMapBase::ONE, PluralMapBase::toCategory("one"));
+    assertEquals("", PluralMapBase::TWO, PluralMapBase::toCategory("two"));
+    assertEquals("", PluralMapBase::FEW, PluralMapBase::toCategory("few"));
+    assertEquals("", PluralMapBase::MANY, PluralMapBase::toCategory("many"));
+    assertEquals("", PluralMapBase::NONE, PluralMapBase::toCategory("Many"));
+    assertEquals("", PluralMapBase::FEW, PluralMapBase::toCategory(UnicodeString("few")));
+    assertEquals("", PluralMapBase::MANY, PluralMapBase::toCategory(UnicodeString("many")));
+    assertEquals("", PluralMapBase::NONE, PluralMapBase::toCategory(UnicodeString("Many")));
 }
 
 void PluralMapTest::TestGetCategoryName() {
@@ -117,24 +108,24 @@ void PluralMapTest::TestIterate() {
     PluralMapBase::Category index = PluralMapBase::NONE;
     const UnicodeString *current = map.next(index);
     assertEquals("", "pickles", *current);
-    assertEquals("", (int32_t)PluralMapBase::OTHER, index);
+    assertEquals("", PluralMapBase::OTHER, index);
     current = map.next(index);
     assertEquals("", "pickle", *current);
-    assertEquals("", (int32_t)PluralMapBase::ONE, index);
+    assertEquals("", PluralMapBase::ONE, index);
     current = map.next(index);
     assertEquals("", "picklefew", *current);
-    assertEquals("", (int32_t)PluralMapBase::FEW, index);
+    assertEquals("", PluralMapBase::FEW, index);
     current = map.next(index);
-    assertEquals("", (int32_t)PluralMapBase::CATEGORY_COUNT, index);
+    assertEquals("", PluralMapBase::CATEGORY_COUNT, index);
     assertTrue("", current == NULL);
 
     PluralMapForPluralMapTest map2;
     index = PluralMapBase::NONE;
     current = map2.next(index);
     assertEquals("", "", *current);
-    assertEquals("", (int32_t)PluralMapBase::OTHER, index);
+    assertEquals("", PluralMapBase::OTHER, index);
     current = map2.next(index);
-    assertEquals("", (int32_t)PluralMapBase::CATEGORY_COUNT, index);
+    assertEquals("", PluralMapBase::CATEGORY_COUNT, index);
     assertTrue("", current == NULL);
 }
 

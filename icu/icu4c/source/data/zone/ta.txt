@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 ta{
     zoneStrings{
         "Africa:Abidjan"{
@@ -258,6 +258,9 @@ ta{
         "America:Chihuahua"{
             ec{"சுவாவா"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"சியுடாட் வாரஸ்"}
+        }
         "America:Coral_Harbour"{
             ec{"அடிகோகன்"}
         }
@@ -266,6 +269,9 @@ ta{
         }
         "America:Costa_Rica"{
             ec{"கோஸ்டா ரிகா"}
+        }
+        "America:Coyhaique"{
+            ec{"கொயாய்கே"}
         }
         "America:Creston"{
             ec{"க்ரெஸ்டான்"}
@@ -462,9 +468,6 @@ ta{
         "America:New_York"{
             ec{"நியூயார்க்"}
         }
-        "America:Nipigon"{
-            ec{"நிபிகான்"}
-        }
         "America:Nome"{
             ec{"நோம்"}
         }
@@ -485,9 +488,6 @@ ta{
         }
         "America:Panama"{
             ec{"பனாமா"}
-        }
-        "America:Pangnirtung"{
-            ec{"பாங்னிர்துங்"}
         }
         "America:Paramaribo"{
             ec{"பரமரிபோ"}
@@ -510,9 +510,6 @@ ta{
         "America:Punta_Arenas"{
             ec{"புன்டா அரீனாஸ்"}
         }
-        "America:Rainy_River"{
-            ec{"ரெய்னி ரிவர்"}
-        }
         "America:Rankin_Inlet"{
             ec{"ரான்கின் இன்லெட்"}
         }
@@ -527,9 +524,6 @@ ta{
         }
         "America:Rio_Branco"{
             ec{"ரியோ பிரான்கோ"}
-        }
-        "America:Santa_Isabel"{
-            ec{"சான்டா இசபெல்"}
         }
         "America:Santarem"{
             ec{"சான்டரெம்"}
@@ -576,9 +570,6 @@ ta{
         "America:Thule"{
             ec{"துலே"}
         }
-        "America:Thunder_Bay"{
-            ec{"தண்டர் பே"}
-        }
         "America:Tijuana"{
             ec{"டிஜுவானா"}
         }
@@ -599,9 +590,6 @@ ta{
         }
         "America:Yakutat"{
             ec{"யகுடட்"}
-        }
-        "America:Yellowknife"{
-            ec{"யெல்லோநைஃப்"}
         }
         "Antarctica:Casey"{
             ec{"கேஸி"}
@@ -692,9 +680,6 @@ ta{
         }
         "Asia:Chita"{
             ec{"சிடா"}
-        }
-        "Asia:Choibalsan"{
-            ec{"சோய்பால்சான்"}
         }
         "Asia:Colombo"{
             ec{"கொழும்பு"}
@@ -867,6 +852,9 @@ ta{
         "Asia:Ulaanbaatar"{
             ec{"உலான்பாட்டர்"}
         }
+        "Asia:Urumqi"{
+            ec{"உரும்கி"}
+        }
         "Asia:Ust-Nera"{
             ec{"உஸ்ட்-நேரா"}
         }
@@ -923,9 +911,6 @@ ta{
         }
         "Australia:Broken_Hill"{
             ec{"புரோக்கன் ஹில்"}
-        }
-        "Australia:Currie"{
-            ec{"கியூரி"}
         }
         "Australia:Darwin"{
             ec{"டார்வின்"}
@@ -1109,9 +1094,6 @@ ta{
         "Europe:Ulyanovsk"{
             ec{"உல்யானோஸ்க்"}
         }
-        "Europe:Uzhgorod"{
-            ec{"உஷோரோட்"}
-        }
         "Europe:Vaduz"{
             ec{"வதுஸ்"}
         }
@@ -1132,9 +1114,6 @@ ta{
         }
         "Europe:Zagreb"{
             ec{"ஸக்ரெப்"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"ஜபோரோஸியே"}
         }
         "Europe:Zurich"{
             ec{"ஜூரிச்"}
@@ -1191,7 +1170,7 @@ ta{
             ec{"ஈஃபேட்"}
         }
         "Pacific:Enderbury"{
-            ec{"எண்டர்பரி"}
+            ec{"கேன்டன்"}
         }
         "Pacific:Fakaofo"{
             ec{"ஃபகாஃபோ"}
@@ -1216,12 +1195,6 @@ ta{
         }
         "Pacific:Honolulu"{
             ec{"ஹோனோலூலூ"}
-        }
-        "Pacific:Johnston"{
-            ec{"ஜோன்ஸ்டன்"}
-        }
-        "Pacific:Kanton"{
-            ec{"கேன்டன்"}
         }
         "Pacific:Kiritimati"{
             ec{"கிரிடிமாட்டி"}
@@ -1310,9 +1283,7 @@ ta{
             ls{"தென் ஆப்பிரிக்க நிலையான நேரம்"}
         }
         "meta:Africa_Western"{
-            ld{"மேற்கு ஆப்பிரிக்க கோடை நேரம்"}
-            lg{"மேற்கு ஆப்பிரிக்க நேரம்"}
-            ls{"மேற்கு ஆப்பிரிக்க நிலையான நேரம்"}
+            ls{"மேற்கு ஆப்பிரிக்க நேரம்"}
         }
         "meta:Alaska"{
             ld{"அலாஸ்கா பகலொளி நேரம்"}
@@ -1466,11 +1437,6 @@ ta{
             lg{"சீன நேரம்"}
             ls{"சீன நிலையான நேரம்"}
         }
-        "meta:Choibalsan"{
-            ld{"சோய்பால்சன் கோடை நேரம்"}
-            lg{"சோய்பால்சன் நேரம்"}
-            ls{"சோய்பால்சன் நிலையான நேரம்"}
-        }
         "meta:Christmas"{
             ls{"கிறிஸ்துமஸ் தீவு நேரம்"}
         }
@@ -1579,6 +1545,9 @@ ta{
         "meta:Guyana"{
             ls{"கயானா நேரம்"}
         }
+        "meta:Hawaii"{
+            ls{"ஹவாய்-அலேஷியன் நிலையான நேரம்"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"ஹவாய்-அலேஷியன் பகலொளி நேரம்"}
             lg{"ஹவாய்-அலேஷியன் நேரம்"}
@@ -1638,6 +1607,9 @@ ta{
             lg{"பெட்ரோபவ்லோவ்ஸ்க் கம்சட்ஸ்கி நேரம்"}
             ls{"பெட்ரோபவ்லோவ்ஸ்க் கம்சட்ஸ்கி தர நேரம்"}
         }
+        "meta:Kazakhstan"{
+            ls{"கஜகஸ்தான் நேரம்"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"கிழக்கு கஜகஸ்தான் நேரம்"}
         }
@@ -1676,9 +1648,6 @@ ta{
             lg{"மக்காவ் நேரம்"}
             ls{"மக்காவ் தர நேரம்"}
         }
-        "meta:Macquarie"{
-            ls{"மாக்கியூரி தீவு நேரம்"}
-        }
         "meta:Magadan"{
             ld{"மகதன் கோடை நேரம்"}
             lg{"மகதன் நேரம்"}
@@ -1703,11 +1672,6 @@ ta{
         }
         "meta:Mawson"{
             ls{"மாசன் நேரம்"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"வடமேற்கு மெக்ஸிகோ பகலொளி நேரம்"}
-            lg{"வடமேற்கு மெக்ஸிகோ நேரம்"}
-            ls{"வடமேற்கு மெக்ஸிகோ நிலையான நேரம்"}
         }
         "meta:Mexico_Pacific"{
             ld{"மெக்ஸிகன் பசிபிக் பகலொளி நேரம்"}
@@ -1866,7 +1830,7 @@ ta{
         }
         "meta:Taipei"{
             ld{"தாய்பே பகலொளி நேரம்"}
-            lg{"தாய்பே நேரம்"}
+            lg{"தைவான் நேரம்"}
             ls{"தாய்பே நிலையான நேரம்"}
         }
         "meta:Tajikistan"{
@@ -1882,6 +1846,11 @@ ta{
         }
         "meta:Truk"{
             ls{"சுக் நேரம்"}
+        }
+        "meta:Turkey"{
+            ld{"துருக்கி கோடை நேரம்"}
+            lg{"துருக்கி நேரம்"}
+            ls{"துருக்கி தர நேரம்"}
         }
         "meta:Turkmenistan"{
             ld{"துர்க்மெனிஸ்தான் கோடை நேரம்"}
@@ -1941,10 +1910,6 @@ ta{
         "meta:Yukon"{
             ls{"யூகோன் நேரம்"}
         }
-        fallbackFormat{"{1} ({0})"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
         regionFormat{"{0} நேரம்"}
         regionFormatDaylight{"{0} பகலொளி நேரம்"}
         regionFormatStandard{"{0} நிலையான நேரம்"}

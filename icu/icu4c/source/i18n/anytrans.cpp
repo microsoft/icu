@@ -286,7 +286,7 @@ Transliterator* AnyTransliterator::getTransliterator(UScriptCode source) const {
     Transliterator* t = NULL;
     {
         Mutex m(NULL);
-        t = (Transliterator*) uhash_iget(cache, (int32_t) source);
+        t = static_cast<Transliterator*>(uhash_iget(cache, static_cast<int32_t>(source)));
     }
     if (t == NULL) {
         UErrorCode ec = U_ZERO_ERROR;
@@ -312,10 +312,10 @@ Transliterator* AnyTransliterator::getTransliterator(UScriptCode source) const {
             Transliterator *rt = NULL;
             {
                 Mutex m(NULL);
-                rt = static_cast<Transliterator *> (uhash_iget(cache, (int32_t) source));
+                rt = static_cast<Transliterator*>(uhash_iget(cache, static_cast<int32_t>(source)));
                 if (rt == NULL) {
                     // Common case, no race to cache this new transliterator.
-                    uhash_iput(cache, (int32_t) source, t, &ec);
+                    uhash_iput(cache, static_cast<int32_t>(source), t, &ec);
                 } else {
                     // Race case, some other thread beat us to caching this transliterator.
                     Transliterator *temp = rt;

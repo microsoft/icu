@@ -174,7 +174,7 @@ CollationRootElements::getPrimaryAfter(uint32_t p, int32_t index, UBool isCompre
     U_ASSERT(p == (elements[index] & 0xffffff00) || isEndOfPrimaryRange(elements[index + 1]));
     uint32_t q = elements[++index];
     int32_t step;
-    if((q & SEC_TER_DELTA_FLAG) == 0 && (step = (int32_t)q & PRIMARY_STEP_MASK) != 0) {
+    if ((q & SEC_TER_DELTA_FLAG) == 0 && (step = static_cast<int32_t>(q) & PRIMARY_STEP_MASK) != 0) {
         // Return the next primary in this range.
         if((p & 0xffff) == 0) {
             return Collation::incTwoBytePrimaryByOffset(p, isCompressible, step);

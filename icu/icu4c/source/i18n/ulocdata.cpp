@@ -16,6 +16,7 @@
 *   created by: Ram Viswanadha,John Emmons
 */
 
+#include "charstr.h"
 #include "cmemory.h"
 #include "unicode/ustring.h"
 #include "unicode/ures.h"
@@ -67,12 +68,18 @@ ulocdata_open(const char *localeID, UErrorCode *status)
    uld->langBundle = NULL;
 
    uld->noSubstitute = false;
-   uld->bundle = ures_open(NULL, localeID, status);
-   uld->langBundle = ures_open(U_ICUDATA_LANG, localeID, status);
+   uld->bundle = ures_open(nullptr, localeID, status);
 
    if (U_FAILURE(*status)) {
       uprv_free(uld);
-      return NULL;
+      return nullptr;
+   }
+
+   // ICU-22149: not all functions require lang data, so fail gracefully if it is not present
+   UErrorCode oldStatus = *status;
+   uld->langBundle = ures_open(U_ICUDATA_LANG, localeID, status);
+   if (*status == U_MISSING_RESOURCE_ERROR) {
+      *status = oldStatus;
    }
 
    return uld;
@@ -191,17 +198,20 @@ ulocdata_getDelimiter(ULocaleData *uld, ULocaleDataDelimiterType type,
     return len;
 }
 
-static UResourceBundle * measurementTypeBundleForLocale(const char *localeID, const char *measurementType, UErrorCode *status){
-    char region[ULOC_COUNTRY_CAPACITY];
+namespace {
+
+UResourceBundle * measurementTypeBundleForLocale(const char *localeID, const char *measurementType, UErrorCode *status){
+    if (U_FAILURE(*status)) { return nullptr; }
+
     UResourceBundle *rb;
     UResourceBundle *measTypeBundle = NULL;
-    
-    ulocimp_getRegionForSupplementalData(localeID, true, region, ULOC_COUNTRY_CAPACITY, status);
-    
+
+    icu::CharString region = ulocimp_getRegionForSupplementalData(localeID, true, *status);
+
     rb = ures_openDirect(NULL, "supplementalData", status);
     ures_getByKey(rb, "measurementData", rb, status);
     if (rb != NULL) {
-        UResourceBundle *measDataBundle = ures_getByKey(rb, region, NULL, status);
+        UResourceBundle *measDataBundle = ures_getByKey(rb, region.data(), nullptr, status);
         if (U_SUCCESS(*status)) {
         	measTypeBundle = ures_getByKey(measDataBundle, measurementType, NULL, status);
         }
@@ -218,6 +228,8 @@ static UResourceBundle * measurementTypeBundleForLocale(const char *localeID, co
     ures_close(rb);
     return measTypeBundle;
 }
+
+}  // namespace
 
 U_CAPI UMeasurementSystem U_EXPORT2
 ulocdata_getMeasurementSystem(const char *localeID, UErrorCode *status){
@@ -269,8 +281,9 @@ ulocdata_getPaperSize(const char* localeID, int32_t *height, int32_t *width, UEr
 
 U_CAPI void U_EXPORT2
 ulocdata_getCLDRVersion(UVersionInfo versionArray, UErrorCode *status) {
-    UResourceBundle *rb = NULL;
-    rb = ures_openDirect(NULL, "supplementalData", status);
+    if (U_FAILURE(*status)) { return; }
+    UResourceBundle *rb = nullptr;
+    rb = ures_openDirect(nullptr, "supplementalData", status);
     ures_getVersionByKey(rb, "cldrVersion", versionArray, status);
     ures_close(rb);
 }
@@ -288,7 +301,12 @@ ulocdata_getLocaleDisplayPattern(ULocaleData *uld,
     if (U_FAILURE(*status))
         return 0;
 
-    patternBundle = ures_getByKey(uld->langBundle, "localeDisplayPattern", NULL, &localStatus);
+    if (uld->langBundle == nullptr) {
+        *status = U_MISSING_RESOURCE_ERROR;
+        return 0;
+    }
+
+    patternBundle = ures_getByKey(uld->langBundle, "localeDisplayPattern", nullptr, &localStatus);
 
     if ( (localStatus == U_USING_DEFAULT_WARNING) && uld->noSubstitute ) {
         localStatus = U_MISSING_RESOURCE_ERROR;
@@ -340,7 +358,12 @@ ulocdata_getLocaleSeparator(ULocaleData *uld,
     if (U_FAILURE(*status))
         return 0;
 
-    separatorBundle = ures_getByKey(uld->langBundle, "localeDisplayPattern", NULL, &localStatus);
+    if (uld->langBundle == nullptr) {
+        *status = U_MISSING_RESOURCE_ERROR;
+        return 0;
+    }
+
+    separatorBundle = ures_getByKey(uld->langBundle, "localeDisplayPattern", nullptr, &localStatus);
 
     if ( (localStatus == U_USING_DEFAULT_WARNING) && uld->noSubstitute ) {
         localStatus = U_MISSING_RESOURCE_ERROR;

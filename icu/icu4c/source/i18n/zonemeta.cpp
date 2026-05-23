@@ -120,6 +120,7 @@ static const char gKeyTypeData[]        = "keyTypeData";
 static const char gTypeAliasTag[]       = "typeAlias";
 static const char gTypeMapTag[]         = "typeMap";
 static const char gTimezoneTag[]        = "timezone";
+static const char gIanaMapTag[]         = "ianaMap";
 
 static const char gPrimaryZonesTag[]    = "primaryZones";
 
@@ -308,7 +309,7 @@ ZoneMeta::getCanonicalCLDRID(const UnicodeString &tzid, UErrorCode& status) {
             } else {
                 int32_t len = u_strlen(derefer);
                 u_UCharsToChars(derefer,id,len);
-                id[len] = (char) 0; // Make sure it is null terminated.
+                id[len] = static_cast<char>(0); // Make sure it is null terminated.
 
                 // replace '/' with ':'
                 char *q = id;
@@ -347,7 +348,7 @@ ZoneMeta::getCanonicalCLDRID(const UnicodeString &tzid, UErrorCode& status) {
                 const UChar* key = ZoneMeta::findTimeZoneID(tzid);
                 U_ASSERT(key != NULL);
                 if (key != NULL) {
-                    idInCache = (const UChar *)uhash_put(gCanonicalIDCache, (void *)key, (void *)canonicalID, &status);
+                    idInCache = static_cast<const char16_t*>(uhash_put(gCanonicalIDCache, const_cast<char16_t*>(key), const_cast<char16_t*>(canonicalID), &status));
                     U_ASSERT(idInCache == NULL);
                 }
             }
@@ -355,7 +356,7 @@ ZoneMeta::getCanonicalCLDRID(const UnicodeString &tzid, UErrorCode& status) {
                 // Also put canonical ID itself into the cache if not exist
                 const UChar *canonicalInCache = (const UChar*)uhash_get(gCanonicalIDCache, canonicalID);
                 if (canonicalInCache == NULL) {
-                    canonicalInCache = (const UChar *)uhash_put(gCanonicalIDCache, (void *)canonicalID, (void *)canonicalID, &status);
+                    canonicalInCache = static_cast<const char16_t*>(uhash_put(gCanonicalIDCache, const_cast<char16_t*>(canonicalID), const_cast<char16_t*>(canonicalID), &status));
                     U_ASSERT(canonicalInCache == NULL);
                 }
             }
@@ -387,6 +388,35 @@ ZoneMeta::getCanonicalCLDRID(const TimeZone& tz) {
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString tzID;
     return getCanonicalCLDRID(tz.getID(tzID), status);
+}
+
+UnicodeString& U_EXPORT2
+ZoneMeta::getIanaID(const UnicodeString& tzid, UnicodeString& ianaID, UErrorCode& status) {
+    // First, get CLDR canonical ID
+    const char16_t *canonicalID = getCanonicalCLDRID(tzid, status);
+    if (U_FAILURE(status) || canonicalID == nullptr) {
+        ianaID.setToBogus();
+        return ianaID;
+    }
+    // Find IANA mapping if any.
+    UErrorCode tmpStatus = U_ZERO_ERROR;
+    UnicodeString tmpKey(canonicalID);
+    tmpKey.findAndReplace(UnicodeString("/"), UnicodeString(":"));
+    char keyBuf[ZID_KEY_MAX + 1];
+    /* int32_t keyLen = */ tmpKey.extract(0, tmpKey.length(), keyBuf, sizeof(keyBuf), US_INV);
+
+    StackUResourceBundle r;
+    ures_openDirectFillIn(r.getAlias(), nullptr, gKeyTypeData, &tmpStatus);
+    ures_getByKey(r.getAlias(), gIanaMapTag, r.getAlias(), &tmpStatus);
+    ures_getByKey(r.getAlias(), gTimezoneTag, r.getAlias(), &tmpStatus);
+    int32_t tmpLen = 0;
+    const char16_t* tmpIana = ures_getStringByKey(r.getAlias(), keyBuf, &tmpLen, &tmpStatus);
+    if (U_SUCCESS(tmpStatus)) {
+        ianaID.setTo(true, tmpIana, -1);
+    } else {
+        ianaID.setTo(true, canonicalID, -1);
+    }
+    return ianaID;
 }
 
 static void U_CALLCONV countryInfoVectorsInit(UErrorCode &status) {
@@ -566,7 +596,7 @@ ZoneMeta::getMetazoneMappings(const UnicodeString &tzid) {
 
     umtx_lock(&gZoneMetaLock);
     {
-        result = (UVector*) uhash_get(gOlsonToMeta, tzidUChars);
+        result = static_cast<UVector*>(uhash_get(gOlsonToMeta, tzidUChars));
     }
     umtx_unlock(&gZoneMetaLock);
 
@@ -585,7 +615,7 @@ ZoneMeta::getMetazoneMappings(const UnicodeString &tzid) {
     umtx_lock(&gZoneMetaLock);
     {
         // make sure it's already created
-        result = (UVector*) uhash_get(gOlsonToMeta, tzidUChars);
+        result = static_cast<UVector*>(uhash_get(gOlsonToMeta, tzidUChars));
         if (result == NULL) {
             // add the one just created
             int32_t tzidLen = tzid.length() + 1;
@@ -776,7 +806,7 @@ static void U_CALLCONV initAvailableMetaZoneIDs () {
         }
         const char *mzID = ures_getKey(res.getAlias());
         int32_t len = static_cast<int32_t>(uprv_strlen(mzID));
-        LocalMemory<UChar> uMzID((UChar*)uprv_malloc(sizeof(UChar) * (len + 1)));
+        LocalMemory<char16_t> uMzID(static_cast<char16_t*>(uprv_malloc(sizeof(char16_t) * (len + 1))));
         if (uMzID.isNull()) {
             status = U_MEMORY_ALLOCATION_ERROR;
             break;
@@ -858,15 +888,15 @@ ZoneMeta::formatCustomID(uint8_t hour, uint8_t min, uint8_t sec, UBool negative,
           id.append((UChar)0x2B);    // '+'
         }
         // Always use US-ASCII digits
-        id.append((UChar)(0x30 + (hour%100)/10));
-        id.append((UChar)(0x30 + (hour%10)));
+        id.append(static_cast<char16_t>(0x30 + (hour % 100) / 10));
+        id.append(static_cast<char16_t>(0x30 + (hour % 10)));
         id.append((UChar)0x3A);    // ':'
-        id.append((UChar)(0x30 + (min%100)/10));
-        id.append((UChar)(0x30 + (min%10)));
+        id.append(static_cast<char16_t>(0x30 + (min % 100) / 10));
+        id.append(static_cast<char16_t>(0x30 + (min % 10)));
         if (sec != 0) {
           id.append((UChar)0x3A);    // ':'
-          id.append((UChar)(0x30 + (sec%100)/10));
-          id.append((UChar)(0x30 + (sec%10)));
+          id.append(static_cast<char16_t>(0x30 + (sec % 100) / 10));
+          id.append(static_cast<char16_t>(0x30 + (sec % 10)));
         }
     }
     return id;
@@ -903,7 +933,7 @@ ZoneMeta::getShortIDFromCanonical(const UChar* canonicalID) {
     char tzidKey[ZID_KEY_MAX + 1];
 
     u_UCharsToChars(canonicalID, tzidKey, len);
-    tzidKey[len] = (char) 0; // Make sure it is null terminated.
+    tzidKey[len] = static_cast<char>(0); // Make sure it is null terminated.
 
     // replace '/' with ':'
     char *p = tzidKey;

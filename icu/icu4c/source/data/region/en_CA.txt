@@ -1,12 +1,13 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 en_CA{
     Countries{
         057{"Micronesian region"}
         AG{"Antigua and Barbuda"}
         BA{"Bosnia and Herzegovina"}
         BL{"Saint-Barthélemy"}
+        EA{"Ceuta and Melilla"}
         GS{"South Georgia and South Sandwich Islands"}
         HM{"Heard and McDonald Islands"}
         KN{"Saint Kitts and Nevis"}
@@ -23,6 +24,8 @@ en_CA{
         VC{"Saint Vincent and the Grenadines"}
         VI{"US Virgin Islands"}
         WF{"Wallis and Futuna"}
-        ZZ{"unknown region"}
+    }
+    Countries%short{
+        MO{"Macau"}
     }
 }

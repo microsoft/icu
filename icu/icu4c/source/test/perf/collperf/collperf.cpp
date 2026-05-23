@@ -40,11 +40,11 @@ struct CompactArrays{\
     UNIT    * data; /*the real space to hold strings*/ \
     \
     ~CompactArrays(){free(index);free(data);} \
-    CompactArrays():data(NULL), index(NULL), count(0){ \
+    CompactArrays():count(0), index(nullptr), data(nullptr){ \
     index = (int32_t *) realloc(index, sizeof(int32_t)); \
     index[0] = 0; \
     } \
-    void append_one(int32_t theLen){ /*include terminal NULL*/ \
+    void append_one(int32_t theLen){ /*include terminal NUL*/ \
     count++; \
     index = (int32_t *) realloc(index, sizeof(int32_t) * (count + 1)); \
     index[count] = index[count - 1] + theLen; \
@@ -52,7 +52,7 @@ struct CompactArrays{\
     } \
     UNIT * last(){return data + index[count - 1];} \
     UNIT * dataOf(int32_t i){return data + index[i];} \
-    int32_t lengthOf(int i){return index[i+1] - index[i] - 1; }	/*exclude terminating NULL*/  \
+    int32_t lengthOf(int i){return index[i+1] - index[i] - 1; }	/*exclude terminating NUL*/  \
 };
 
 //typedef CompactArrays<UChar> CA_uchar;
@@ -102,9 +102,9 @@ public:
     CmdKeyGen(UErrorCode, UCollator * col,DWORD win_langid, int32_t count, DataIndex * data,Func fn,int32_t)
         :col(col),win_langid(win_langid), count(count), data(data), fn(fn){}
 
-        virtual long getOperationsPerIteration(){return count;}
+        long getOperationsPerIteration() override { return count; }
 
-        virtual void call(UErrorCode* status){
+        void call(UErrorCode* status) override {
             for(int32_t i = 0; i< count; i++){
                 (this->*fn)(i);
             }
@@ -155,9 +155,9 @@ public:
             ucol_closeElements(iter);
         }
 
-        virtual long getOperationsPerIteration(){return exec_count ? exec_count : 1;}
+        long getOperationsPerIteration() override { return exec_count ? exec_count : 1; }
 
-        virtual void call(UErrorCode* status){
+        void call(UErrorCode* status) override {
             exec_count = 0;
             for(int32_t i = 0; i< count; i++){
                 (this->*fn)(status, i);
@@ -188,7 +188,6 @@ public:
 class CmdIterAll : public UPerfFunction {
     typedef	void (CmdIterAll::* Func)(UErrorCode* status);
     int32_t     count;
-    UChar *     data;
     Func        fn;
     UCollationElements *iter;
     int32_t     exec_count;
@@ -200,7 +199,7 @@ public:
         ucol_closeElements(iter);
     }
     CmdIterAll(UErrorCode & status, UCollator * col, int32_t count,  UChar * data, CALL call,int32_t,int32_t)
-        :count(count),data(data)
+        :count(count)
     {
         exec_count = 0;
         if (call == forward_null || call == backward_null) {
@@ -215,9 +214,9 @@ public:
             fn = &CmdIterAll::icu_backward_all;
         }
     }
-    virtual long getOperationsPerIteration(){return exec_count ? exec_count : 1;}
+    long getOperationsPerIteration() override { return exec_count ? exec_count : 1; }
 
-    virtual void call(UErrorCode* status){
+    void call(UErrorCode* status) override {
         (this->*fn)(status);
     }
 
@@ -297,7 +296,7 @@ struct CmdQsort : public UPerfFunction{
 
     static int icu_cmpkey (const void *a, const void *b){ 
         QCAST(); 
-        return strcmp((char *) da->icu_key, (char *) db->icu_key); 
+        return strcmp(reinterpret_cast<char*>(da->icu_key), reinterpret_cast<char*>(db->icu_key));
     }
 
 #if U_PLATFORM_HAS_WIN32_API
@@ -355,7 +354,7 @@ private:
     void *  backup; //copy source of base
 public:
     CmdQsort(UErrorCode & status,void *theBase, int32_t num, int32_t width, Func fn, int32_t,int32_t)
-        :backup(theBase),num(num),width(width),fn(fn){
+        :fn(fn),num(num),width(width),backup(theBase){
             base = malloc(num * width);
             time_empty(100, &status); // warm memory/cache
         }
@@ -379,18 +378,18 @@ public:
             return utimer_getDeltaSeconds(&start,&stop); // ms
         }
 
-        virtual void call(UErrorCode* status){
+        void call(UErrorCode* status) override {
             exec_count = 0;
             memcpy(base, backup, num * width);
             qsort(base, num, width, fn);
         }
-        virtual double time(int32_t n, UErrorCode* status) {
+        double time(int32_t n, UErrorCode* status) override {
             double t1 = time_empty(n,status);
             double t2 = UPerfFunction::time(n, status);
             return  t2-t1;// < 0 ? t2 : t2-t1;
         }
 
-        virtual long getOperationsPerIteration(){ return exec_count?exec_count:1;}
+        long getOperationsPerIteration() override { return exec_count ? exec_count : 1; }
 };
 int32_t CmdQsort::exec_count;
 
@@ -411,13 +410,13 @@ public:
         :col(col),win_langid(win_langid), count(count), rnd(rnd), ord(ord), fn(fn),exec_count(0){}
 
 
-        virtual void call(UErrorCode* status){
+        void call(UErrorCode* status) override {
             exec_count = 0;
             for(int32_t i = 0; i< count; i++){ // search all data
                 binary_search(i);
             }
         }
-        virtual long getOperationsPerIteration(){ return exec_count?exec_count:1;}
+        long getOperationsPerIteration() override { return exec_count ? exec_count : 1; }
 
         void binary_search(int32_t random)	{
             int low   = 0;
@@ -452,7 +451,8 @@ public:
         }
 
         int icu_cmpkey(int32_t i, int32_t j) {
-            return strcmp( (char *) rnd[i].icu_key, (char *) ord[j].icu_key );
+            return strcmp(reinterpret_cast<char*>(rnd[i].icu_key),
+                          reinterpret_cast<char*>(ord[j].icu_key));
         }
 
 #if U_PLATFORM_HAS_WIN32_API
@@ -684,7 +684,7 @@ public:
     temp++\
 
 
-    virtual UPerfFunction* runIndexedTest( /*[in]*/int32_t index, /*[in]*/UBool exec, /*[out]*/const char* &name, /*[in]*/ char* par = NULL ){
+    UPerfFunction* runIndexedTest(/*[in]*/int32_t index, /*[in]*/UBool exec, /*[out]*/const char*& name, /*[in]*/char* par = nullptr) override {
         int temp = 0;
 
 #define TEST_KEYGEN(testname, func)\
@@ -769,7 +769,7 @@ public:
             } else {
                 icu_data->append_one(len);
                 memcpy(icu_data->last(), line, len * sizeof(UChar));
-                icu_data->last()[len -1] = NULL;
+                icu_data->last()[len -1] = 0;
             }
         }
         if(U_FAILURE(status)) return;
@@ -780,11 +780,11 @@ public:
 
         count = icu_data->count;
 
-        icu_data_all_len =  icu_data->index[count]; // includes all NULLs
-        icu_data_all_len -= count;  // excludes all NULLs
-        icu_data_all_len += 1;      // the terminal NULL
+        icu_data_all_len =  icu_data->index[count]; // includes all NULs
+        icu_data_all_len -= count;  // excludes all NULs
+        icu_data_all_len += 1;      // the terminal NUL
         icu_data_all = new UChar[icu_data_all_len];
-        icu_data_all[icu_data_all_len - 1] = 0; //the terminal NULL
+        icu_data_all[icu_data_all_len - 1] = 0; //the terminal NUL
 
         icu_key  = new CA_uint8;
         win_data = new CA_win_wchar;
@@ -820,7 +820,7 @@ public:
             } else {
                 return;
             }
-            posix_data->append_one(s + 1); // plus terminal NULL
+            posix_data->append_one(s + 1); // plus terminal NUL
             t = ucnv_fromUChars(conv,posix_data->last(), s, icu_data->dataOf(i), icu_data->lengthOf(i), &status);
             if (U_FAILURE(status)) return;
             if ( t != s){status = U_INVALID_FORMAT_ERROR;return;}
@@ -835,7 +835,7 @@ public:
 
 #if U_PLATFORM_HAS_WIN32_API
             // Win data
-            s = icu_data->lengthOf(i) + 1; // plus terminal NULL
+            s = icu_data->lengthOf(i) + 1; // plus terminal NUL
             win_data->append_one(s);
             memcpy(win_data->last(), icu_data->dataOf(i), sizeof(WCHAR) * s);
 

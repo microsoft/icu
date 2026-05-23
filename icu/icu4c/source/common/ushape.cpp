@@ -28,6 +28,7 @@
 #include "ubidi_props.h"
 #include "uassert.h"
 
+#include <limits>
 /*
  * This implementation is designed for 16-bit Unicode strings.
  * The main assumption is that the Arabic characters and their
@@ -360,8 +361,8 @@ _shapeToArabicDigitsWithContext(UChar *s, int32_t length,
                 lastStrongWasAL=true;
                 break;
             case U_EUROPEAN_NUMBER: /* EN */
-                if(lastStrongWasAL && (uint32_t)(c-0x30)<10) {
-                    s[i]=(UChar)(digitBase+c); /* digitBase+(c-0x30) - digitBase was modified above */
+                if (lastStrongWasAL && static_cast<uint32_t>(c - 0x30) < 10) {
+                    s[i] = static_cast<char16_t>(digitBase + c); /* digitBase+(c-0x30) - digitBase was modified above */
                 }
                 break;
             default :
@@ -380,8 +381,8 @@ _shapeToArabicDigitsWithContext(UChar *s, int32_t length,
                 lastStrongWasAL=true;
                 break;
             case U_EUROPEAN_NUMBER: /* EN */
-                if(lastStrongWasAL && (uint32_t)(c-0x30)<10) {
-                    s[i]=(UChar)(digitBase+c); /* digitBase+(c-0x30) - digitBase was modified above */
+                if (lastStrongWasAL && static_cast<uint32_t>(c - 0x30) < 10) {
+                    s[i] = static_cast<char16_t>(digitBase + c); /* digitBase+(c-0x30) - digitBase was modified above */
                 }
                 break;
             default :
@@ -483,7 +484,7 @@ countSpaces(UChar *dest, int32_t size, uint32_t /*options*/, int32_t *spacesCoun
  */
 static inline int32_t
 isTashkeelChar(UChar ch) {
-    return (int32_t)( ch>=0x064B && ch<= 0x0652 );
+    return static_cast<int32_t>(ch >= 0x064B && ch <= 0x0652);
 }
 
 /*
@@ -492,7 +493,7 @@ isTashkeelChar(UChar ch) {
  */
 static inline int32_t
 isTashkeelCharFE(UChar ch) {
-    return (int32_t)( ch>=0xFE70 && ch<= 0xFE7F );
+    return static_cast<int32_t>(ch >= 0xFE70 && ch <= 0xFE7F);
 }
 
 /*
@@ -501,7 +502,7 @@ isTashkeelCharFE(UChar ch) {
  */
 static inline int32_t
 isAlefChar(UChar ch) {
-    return (int32_t)( (ch==0x0622)||(ch==0x0623)||(ch==0x0625)||(ch==0x0627) );
+    return static_cast<int32_t>(ch == 0x0622 || ch == 0x0623 || ch == 0x0625 || ch == 0x0627);
 }
 
 /*
@@ -510,7 +511,7 @@ isAlefChar(UChar ch) {
  */
 static inline int32_t
 isLamAlefChar(UChar ch) {
-    return (int32_t)((ch>=0xFEF5)&&(ch<=0xFEFC) );
+    return static_cast<int32_t>(ch >= 0xFEF5 && ch <= 0xFEFC);
 }
 
 /*BIDI
@@ -564,7 +565,7 @@ isSeenFamilyChar(UChar  ch){
  */
 static inline int32_t
 isAlefMaksouraChar(UChar ch) {
-    return (int32_t)( (ch == 0xFEEF) || ( ch == 0xFEF0) || (ch == 0x0649));
+    return static_cast<int32_t>(ch == 0xFEEF || ch == 0xFEF0 || ch == 0x0649);
 }
 
 /*
@@ -747,9 +748,13 @@ handleGeneratedSpaces(UChar *dest, int32_t sourceLength,
         }
     }
 
-    tempbuffer = (UChar *)uprv_malloc((sourceLength+1)*U_SIZEOF_UCHAR);
-    /* Test for NULL */
-    if(tempbuffer == NULL) {
+    if (static_cast<size_t>(sourceLength) + 1 > std::numeric_limits<size_t>::max() / U_SIZEOF_UCHAR) {
+        *pErrorCode = U_INDEX_OUTOFBOUNDS_ERROR;
+        return 0;
+    }
+    tempbuffer = static_cast<char16_t*>(uprv_malloc((sourceLength + 1) * U_SIZEOF_UCHAR));
+    /* Test for nullptr */
+    if(tempbuffer == nullptr) {
         *pErrorCode = U_MEMORY_ALLOCATION_ERROR;
         return 0;
     }
@@ -905,7 +910,7 @@ expandCompositCharAtBegin(UChar *dest, int32_t sourceLength, int32_t destSize,UE
     int32_t      countl = 0;
     UChar    *tempbuffer=NULL;
 
-    tempbuffer = (UChar *)uprv_malloc((sourceLength+1)*U_SIZEOF_UCHAR);
+    tempbuffer = static_cast<char16_t*>(uprv_malloc((sourceLength + 1) * U_SIZEOF_UCHAR));
 
     /* Test for NULL */
     if(tempbuffer == NULL) {
@@ -967,7 +972,7 @@ expandCompositCharAtEnd(UChar *dest, int32_t sourceLength, int32_t destSize,UErr
     int32_t  inpsize = sourceLength;
 
     UChar    *tempbuffer=NULL;
-    tempbuffer = (UChar *)uprv_malloc((sourceLength+1)*U_SIZEOF_UCHAR);
+    tempbuffer = static_cast<char16_t*>(uprv_malloc((sourceLength + 1) * U_SIZEOF_UCHAR));
 
     /* Test for NULL */
     if(tempbuffer == NULL) {
@@ -1154,7 +1159,7 @@ expandCompositChar(UChar *dest, int32_t sourceLength,
     if (shapingMode == 1){
         if ( (options&U_SHAPE_LAMALEF_MASK) == U_SHAPE_LAMALEF_RESIZE){
             destSize = calculateSize(dest,sourceLength,destSize,options);
-            tempbuffer = (UChar *)uprv_malloc((destSize+1)*U_SIZEOF_UCHAR);
+            tempbuffer = static_cast<char16_t*>(uprv_malloc((destSize + 1) * U_SIZEOF_UCHAR));
 
             /* Test for NULL */
             if(tempbuffer == NULL) {
@@ -1326,9 +1331,9 @@ shapeUnicode(UChar *dest, int32_t sourceLength,
                         dest[i] =  0xFE70 + IrrelevantPos[(dest[i] - 0x064B)] + static_cast<UChar>(Shape);
                     }
                 }else if ((currLink & APRESENT) > 0) {
-                    dest[i] = (UChar)(0xFB50 + (currLink >> 8) + Shape);
+                    dest[i] = static_cast<char16_t>(0xFB50 + (currLink >> 8) + Shape);
                 }else if ((currLink >> 8) > 0 && (currLink & IRRELEVANT) == 0) {
-                    dest[i] = (UChar)(0xFE70 + (currLink >> 8) + Shape);
+                    dest[i] = static_cast<char16_t>(0xFE70 + (currLink >> 8) + Shape);
                 }
             }
         }
@@ -1709,13 +1714,13 @@ u_shapeArabic(const UChar *source, int32_t sourceLength,
         case U_SHAPE_DIGITS_ALEN2AN_INIT_LR:
             _shapeToArabicDigitsWithContext(dest, destLength,
                                             digitBase,
-                                            (UBool)((options&U_SHAPE_TEXT_DIRECTION_MASK)==U_SHAPE_TEXT_DIRECTION_LOGICAL),
+                                            (options & U_SHAPE_TEXT_DIRECTION_MASK) == U_SHAPE_TEXT_DIRECTION_LOGICAL,
                                             false);
             break;
         case U_SHAPE_DIGITS_ALEN2AN_INIT_AL:
             _shapeToArabicDigitsWithContext(dest, destLength,
                                             digitBase,
-                                            (UBool)((options&U_SHAPE_TEXT_DIRECTION_MASK)==U_SHAPE_TEXT_DIRECTION_LOGICAL),
+                                            (options & U_SHAPE_TEXT_DIRECTION_MASK) == U_SHAPE_TEXT_DIRECTION_LOGICAL,
                                             true);
             break;
         default:

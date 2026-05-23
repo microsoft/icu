@@ -171,13 +171,13 @@ if (fr != NULL && it != NULL && de != NULL)
     if(U_FAILURE(status)) {
         errln("ERROR: format() failed (French)");
     }
-    logln( (UnicodeString) "" + d + " formatted to " + res1);
+    logln(UnicodeString("") + d + " formatted to " + res1);
 
     res2 = it->format(d, res2, pos2);
-    logln( (UnicodeString) "" + d + " formatted to " + res2);
+    logln(UnicodeString("") + d + " formatted to " + res2);
 
     res3 = de->format(d, res3);
-    logln( (UnicodeString) "" + d + " formatted to " + res3);
+    logln(UnicodeString("") + d + " formatted to " + res3);
 }
 
 // ======= Test parse()
@@ -214,7 +214,7 @@ if (fr != NULL && it != NULL && de != NULL)
 
     int32_t count = 0;
     const Locale *locales = DateFormat::getAvailableLocales(count);
-    logln((UnicodeString) "Got " + count + " locales" );
+    logln(UnicodeString("Got ") + count + " locales");
     for(int32_t i = 0; i < count; i++) {
         UnicodeString name;
         name = locales[i].getName();

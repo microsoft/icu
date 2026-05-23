@@ -30,7 +30,7 @@ void
 CollationInfo::printSizes(int32_t sizeWithHeader, const int32_t indexes[]) {
     int32_t totalSize = indexes[CollationDataReader::IX_TOTAL_SIZE];
     if(sizeWithHeader > totalSize) {
-        printf("  header size:                  %6ld\n", (long)(sizeWithHeader - totalSize));
+        printf("  header size:                  %6ld\n", static_cast<long>(sizeWithHeader - totalSize));
     }
 
     int32_t length = indexes[CollationDataReader::IX_INDEXES_LENGTH];

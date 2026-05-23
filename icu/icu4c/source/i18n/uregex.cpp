@@ -1204,11 +1204,11 @@ uregex_replaceAllUText(URegularExpression    *regexp2,
                        UErrorCode            *status)  {
     RegularExpression *regexp = (RegularExpression*)regexp2;
     if (validateRE(regexp, true, status) == false) {
-        return 0;
+        return nullptr;
     }
     if (replacementText == NULL) {
         *status = U_ILLEGAL_ARGUMENT_ERROR;
-        return 0;
+        return nullptr;
     }
 
     dest = regexp->fMatcher->replaceAll(replacementText, dest, *status);
@@ -1265,11 +1265,11 @@ uregex_replaceFirstUText(URegularExpression  *regexp2,
                          UErrorCode            *status)  {
     RegularExpression *regexp = (RegularExpression*)regexp2;
     if (validateRE(regexp, true, status) == false) {
-        return 0;
+        return nullptr;
     }
     if (replacementText == NULL) {
         *status = U_ILLEGAL_ARGUMENT_ERROR;
-        return 0;
+        return nullptr;
     }
 
     dest = regexp->fMatcher->replaceFirst(replacementText, dest, *status);
@@ -1842,12 +1842,12 @@ int32_t RegexCImpl::split(RegularExpression     *regexp,
                     // No fields are left.  Recycle the last one for holding the trailing part of
                     //   the input string.
                     i = destFieldsCapacity-1;
-                    destIdx = (int32_t)(destFields[i] - destFields[0]);
+                    destIdx = static_cast<int32_t>(destFields[i] - destFields[0]);
                 }
 
-                destFields[i] = &destBuf[destIdx];
+                destFields[i] = (destBuf == nullptr) ? nullptr :  &destBuf[destIdx];
                 destIdx += 1 + utext_extract(inputText, nextOutputStringStart, inputLen,
-                                             &destBuf[destIdx], REMAINING_CAPACITY(destIdx, destCapacity), status);
+                                             destFields[i], REMAINING_CAPACITY(destIdx, destCapacity), status);
             }
             break;
         }
@@ -1855,10 +1855,10 @@ int32_t RegexCImpl::split(RegularExpression     *regexp,
         if (regexp->fMatcher->find()) {
             // We found another delimiter.  Move everything from where we started looking
             //  up until the start of the delimiter into the next output string.
-            destFields[i] = &destBuf[destIdx];
+            destFields[i] = (destBuf == nullptr) ? nullptr :  &destBuf[destIdx];
 
             destIdx += 1 + utext_extract(inputText, nextOutputStringStart, regexp->fMatcher->fMatchStart,
-                                         &destBuf[destIdx], REMAINING_CAPACITY(destIdx, destCapacity), &tStatus);
+                                         destFields[i], REMAINING_CAPACITY(destIdx, destCapacity), &tStatus);
             if (tStatus == U_BUFFER_OVERFLOW_ERROR) {
                 tStatus = U_ZERO_ERROR;
             } else {
@@ -1914,9 +1914,9 @@ int32_t RegexCImpl::split(RegularExpression     *regexp,
         {
             // We ran off the end of the input while looking for the next delimiter.
             // All the remaining text goes into the current output string.
-            destFields[i] = &destBuf[destIdx];
+            destFields[i] = (destBuf == nullptr) ? nullptr : &destBuf[destIdx];
             destIdx += 1 + utext_extract(inputText, nextOutputStringStart, inputLen,
-                                         &destBuf[destIdx], REMAINING_CAPACITY(destIdx, destCapacity), status);
+                                         destFields[i], REMAINING_CAPACITY(destIdx, destCapacity), status);
             break;
         }
     }

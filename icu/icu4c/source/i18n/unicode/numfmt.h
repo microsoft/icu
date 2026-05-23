@@ -198,7 +198,22 @@ public:
           *  Return U_FORMAT_INEXACT_ERROR if number does not format exactly.
           *  @stable ICU 4.8
           */
-        kRoundUnnecessary
+        kRoundUnnecessary,
+        /**
+         * Rounds ties toward the odd number.
+         * @stable ICU 73
+         */
+        kRoundHalfOdd,
+        /**
+         * Rounds ties toward +∞.
+         * @stable ICU 73
+         */
+        kRoundHalfCeiling,
+        /**
+         * Rounds ties toward -∞.
+         * @stable ICU 73
+         */
+        kRoundHalfFloor,
     };
 
     /**

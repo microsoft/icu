@@ -71,17 +71,17 @@ static const DateIntervalFormatTestItem testItems[] = {
     { "de", "Hm",       CAP_NONE,  tzUSPacific, Date201009270800, Date201009270800 + 12.0*_HOUR, u"08:00\u201320:00 Uhr" },
     { "de", "Hm",       CAP_NONE,  tzUSPacific, Date201009270800, Date201009270800 + 31.0*_DAY,  u"27.9.2010, 08:00\u2009\u2013\u200928.10.2010, 08:00" },
     { "ja", "MMMd",     CAP_NONE,  tzUSPacific, Date201009270800, Date201009270800 + 1.0*_DAY,   u"9月27日～28日" },
-    { "cs", "MMMEd",    CAP_NONE,  tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"po 27. 9. \u2013 pá 26. 11." },
+    { "cs", "MMMEd",    CAP_NONE,  tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"po 27. 9.\u2009\u2013\u2009pá 26. 11." },
     { "cs", "yMMMM",    CAP_NONE,  tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"září\u2013listopad 2010" },
     { "cs", "yMMMM",    CAP_NONE,  tzUSPacific, Date201009270800, Date201009270800 + 1.0*_DAY,   u"září 2010" },
 #if !UCONFIG_NO_BREAK_ITERATION
-    { "cs", "MMMEd",    CAP_BEGIN, tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"Po 27. 9. \u2013 pá 26. 11." },
+    { "cs", "MMMEd",    CAP_BEGIN, tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"Po 27. 9.\u2009\u2013\u2009pá 26. 11." },
     { "cs", "yMMMM",    CAP_BEGIN, tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"Září\u2013listopad 2010" },
     { "cs", "yMMMM",    CAP_BEGIN, tzUSPacific, Date201009270800, Date201009270800 + 1.0*_DAY,   u"Září 2010" },
-    { "cs", "MMMEd",    CAP_LIST,  tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"Po 27. 9. \u2013 pá 26. 11." },
+    { "cs", "MMMEd",    CAP_LIST,  tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"Po 27. 9.\u2009\u2013\u2009pá 26. 11." },
     { "cs", "yMMMM",    CAP_LIST,  tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"Září\u2013listopad 2010" },
     { "cs", "yMMMM",    CAP_LIST,  tzUSPacific, Date201009270800, Date201009270800 + 1.0*_DAY,   u"Září 2010" },
-    { "cs", "MMMEd",    CAP_ALONE, tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"po 27. 9. \u2013 pá 26. 11." },
+    { "cs", "MMMEd",    CAP_ALONE, tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"po 27. 9.\u2009\u2013\u2009pá 26. 11." },
 #endif
     { "cs", "yMMMM",    CAP_ALONE, tzUSPacific, Date201009270800, Date201009270800 + 60.0*_DAY,  u"září\u2013listopad 2010" },
     { "cs", "yMMMM",    CAP_ALONE, tzUSPacific, Date201009270800, Date201009270800 + 1.0*_DAY,   u"září 2010" },
@@ -247,17 +247,16 @@ static const ExpectPosAndFormat exp_en_yyMMddHHmmss[kNumDeltas] = {
     { 13, 15, "11/20/14, 09:00:00\\u2009\\u2013\\u200902/28/15, 09:00:00" }
 };
 
-/*MSFT-Change: Replace NNBSP with ascii sapce*/
 static const ExpectPosAndFormat exp_en_yMMMdhmmssz[kNumDeltas] = {
-    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u20099:00:20 AM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u20099:20:00 AM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u200911:00:00 AM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u20099:00:00 PM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u2009Nov 28, 2014, 9:00:00 AM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u2009Dec 6, 2014, 9:00:00 AM GMT" },
-    { 16, 18, "Nov 20, 2014, 9:00:00 AM GMT\\u2009\\u2013\\u2009Feb 28, 2015, 9:00:00 AM GMT" }
+    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u20099:00:20\\u202FAM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u20099:20:00\\u202FAM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u200911:00:00\\u202FAM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u20099:00:00\\u202FPM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u2009Nov 28, 2014, 9:00:00\\u202FAM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u2009Dec 6, 2014, 9:00:00\\u202FAM GMT" },
+    { 16, 18, "Nov 20, 2014, 9:00:00\\u202FAM GMT\\u2009\\u2013\\u2009Feb 28, 2015, 9:00:00\\u202FAM GMT" }
 };
 
 static const ExpectPosAndFormat exp_ja_yyMMddHHmm[kNumDeltas] = {

@@ -1,10 +1,15 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 hi_Latn{
     %%Parent{"en_IN"}
     units{
         concentr{
+            ofglucose{
+                dnam{"glucose level"}
+                one{"{0} kaa glucose level"}
+                other{"{0} kaa glucose level"}
+            }
             percent{
                 dnam{"percent"}
                 one{"{0} percent"}
@@ -48,14 +53,13 @@ hi_Latn{
             }
         }
         graphics{
-            em{
-                dnam{"typographic em"}
+            dot-per-centimeter{
+                dnam{"dots per centimeter"}
+                one{"{0} dot per centimeter"}
+                other{"{0} dots per centimeter"}
             }
         }
         length{
-            micrometer{
-                dnam{"micrometres"}
-            }
             mile-scandinavian{
                 dnam{"Scandinavian miles"}
             }
@@ -66,8 +70,19 @@ hi_Latn{
                 one{"{0} stone"}
                 other{"{0} stones"}
             }
+            ton{
+                one{"{0} tonne"}
+                other{"{0} tons"}
+            }
+            tonne{
+                one{"{0} metric ton"}
+                other{"{0} tonnes"}
+            }
         }
         pressure{
+            gasoline-energy-density{
+                dnam{"gasoline equivalent"}
+            }
             inch-ofhg{
                 one{"{0} inch mercury"}
                 other{"{0} inches mercury"}
@@ -76,6 +91,11 @@ hi_Latn{
                 dnam{"millimetres mercury"}
                 one{"{0} millimetre mercury"}
                 other{"{0} millimetres mercury"}
+            }
+            ofhg{
+                dnam{"mercury level"}
+                one{"{0} kaa mercury level"}
+                other{"{0} kaa mercury level"}
             }
         }
         temperature{
@@ -165,6 +185,11 @@ hi_Latn{
                 one{"{0}bar"}
                 other{"{0}bars"}
             }
+            ofhg{
+                dnam{"Hg level"}
+                one{"{0} kaa Hg level"}
+                other{"{0} kaa Hg level"}
+            }
         }
         speed{
             mile-per-hour{
@@ -210,13 +235,6 @@ hi_Latn{
                 other{"{0} rev"}
             }
         }
-        compound{
-            10p-6{"μ {0}"}
-            10p-9{"n {0}"}
-            10p12{"T {0}"}
-            10p15{"P {0}"}
-            10p6{"M {0}"}
-        }
         concentr{
             karat{
                 dnam{"karats"}
@@ -259,6 +277,11 @@ hi_Latn{
             bar{
                 one{"{0} bar"}
                 other{"{0} bars"}
+            }
+            ofhg{
+                dnam{"Hg level"}
+                one{"{0} kaa Hg level"}
+                other{"{0} kaa Hg level"}
             }
         }
         volume{

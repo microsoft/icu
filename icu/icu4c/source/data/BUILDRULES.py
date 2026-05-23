@@ -16,6 +16,23 @@ import sys
 def generate(config, io, common_vars):
     requests = []
 
+    # By default, exclude collation data that mimics the order of some large legacy charsets.
+    # We do this in "subtractive" strategy by inserting a resourceFilter.
+    # Later rules from an explicit filter file may override this default behavior.
+    # (In "additive" strategy this is unnecessary.)
+    if config.strategy == "subtractive":
+        filters = config.filters_json_data.setdefault("resourceFilters", [])
+        omit_charset_collations = {
+            "categories": [
+                "coll_tree"
+            ],
+            "rules": [
+                "-/collations/big5han",
+                "-/collations/gb2312han"
+            ]
+        }
+        filters.insert(0, omit_charset_collations)
+
     if len(io.glob("misc/*")) == 0:
         print("Error: Cannot find data directory; please specify --src_dir", file=sys.stderr)
         exit(1)
@@ -27,6 +44,7 @@ def generate(config, io, common_vars):
     requests += generate_conversion_mappings(config, io, common_vars)
     requests += generate_brkitr_brk(config, io, common_vars)
     requests += generate_brkitr_lstm(config, io, common_vars)
+    requests += generate_brkitr_adaboost(config, io, common_vars)
     requests += generate_stringprep(config, io, common_vars)
     requests += generate_brkitr_dictionaries(config, io, common_vars)
     requests += generate_normalization(config, io, common_vars)
@@ -44,37 +62,37 @@ def generate(config, io, common_vars):
         "locales",
         None,
         config.use_pool_bundle,
-        [])
+        [DepTarget("cnvalias")])
 
     requests += generate_tree(config, io, common_vars,
         "curr",
         "curr",
         config.use_pool_bundle,
-        [])
+        [DepTarget("cnvalias")])
 
     requests += generate_tree(config, io, common_vars,
         "lang",
         "lang",
         config.use_pool_bundle,
-        [])
+        [DepTarget("cnvalias")])
 
     requests += generate_tree(config, io, common_vars,
         "region",
         "region",
         config.use_pool_bundle,
-        [])
+        [DepTarget("cnvalias")])
 
     requests += generate_tree(config, io, common_vars,
         "zone",
         "zone",
         config.use_pool_bundle,
-        [])
+        [DepTarget("cnvalias")])
 
     requests += generate_tree(config, io, common_vars,
         "unit",
         "unit",
         config.use_pool_bundle,
-        [])
+        [DepTarget("cnvalias")])
 
     requests += generate_tree(config, io, common_vars,
         "coll",
@@ -84,21 +102,21 @@ def generate(config, io, common_vars):
         # Depends on timezoneTypes.res and keyTypeData.res.
         # TODO: We should not need this dependency to build collation.
         # TODO: Bake keyTypeData.res into the common library?
-        [DepTarget("coll_ucadata"), DepTarget("misc_res"), InFile("unidata/UCARules.txt")])
+        [DepTarget("coll_ucadata"), DepTarget("misc_res"), InFile("unidata/UCARules.txt"), DepTarget("cnvalias")])
 
     requests += generate_tree(config, io, common_vars,
         "brkitr",
         "brkitr",
         # Never use pool bundle for coll, brkitr, or rbnf
         False,
-        [DepTarget("brkitr_brk"), DepTarget("dictionaries")])
+        [DepTarget("brkitr_brk"), DepTarget("dictionaries"), DepTarget("cnvalias")])
 
     requests += generate_tree(config, io, common_vars,
         "rbnf",
         "rbnf",
         # Never use pool bundle for coll, brkitr, or rbnf
         False,
-        [])
+        [DepTarget("cnvalias")])
 
     requests += [
         ListRequest(
@@ -140,7 +158,7 @@ def generate_confusables(config, io, common_vars):
         SingleExecutionRequest(
             name = "confusables",
             category = "confusables",
-            dep_targets = [DepTarget("cnvalias")],
+            dep_targets = [],
             input_files = [txt1, txt2],
             output_files = [cfu],
             tool = IcuTool("gencfu"),
@@ -184,7 +202,7 @@ def generate_brkitr_brk(config, io, common_vars):
             category = "brkitr_rules",
             dep_targets =
                 [DepTarget("cnvalias"),
-                    DepTarget("ulayout"), DepTarget("uemoji"), DepTarget("lstm_res")],
+                    DepTarget("ulayout"), DepTarget("uemoji"), DepTarget("lstm_res"), DepTarget("adaboost_res")],
             input_files = input_files,
             output_files = output_files,
             tool = IcuTool("genbrk"),
@@ -385,7 +403,7 @@ def generate_misc(config, io, common_vars):
         RepeatedExecutionRequest(
             name = "misc_res",
             category = "misc",
-            dep_targets = [DepTarget("cnvalias")], # ICU-21175
+            dep_targets = [DepTarget("cnvalias")],
             input_files = input_files,
             output_files = output_files,
             tool = IcuTool("genrb"),
@@ -409,7 +427,7 @@ def generate_curr_supplemental(config, io, common_vars):
         SingleExecutionRequest(
             name = "curr_supplemental_res",
             category = "curr_supplemental",
-            dep_targets = [],
+            dep_targets = [DepTarget("cnvalias")],
             input_files = [input_file],
             output_files = [output_file],
             tool = IcuTool("genrb"),
@@ -432,7 +450,7 @@ def generate_zone_supplemental(config, io, common_vars):
         SingleExecutionRequest(
             name = "zone_supplemental_res",
             category = "zone_supplemental",
-            dep_targets = [],
+            dep_targets = [DepTarget("cnvalias")],
             input_files = [input_file],
             output_files = [output_file],
             tool = IcuTool("genrb"),
@@ -454,6 +472,7 @@ def generate_translit(config, io, common_vars):
     ]
     dep_files = set(InFile(filename) for filename in io.glob("translit/*.txt"))
     dep_files -= set(input_files)
+    dep_files.add(DepTarget("cnvalias"))
     dep_files = list(sorted(dep_files))
     input_basenames = [v.filename[9:] for v in input_files]
     output_files = [
@@ -491,11 +510,37 @@ def generate_brkitr_lstm(config, io, common_vars):
         RepeatedOrSingleExecutionRequest(
             name = "lstm_res",
             category = "brkitr_lstm",
-            dep_targets = [],
+            dep_targets = [DepTarget("cnvalias")],
             input_files = input_files,
             output_files = output_files,
             tool = IcuTool("genrb"),
             args = "-s {IN_DIR}/brkitr/lstm -d {OUT_DIR}/brkitr -i {OUT_DIR} "
+                "-k "
+                "{INPUT_BASENAME}",
+            format_with = {
+            },
+            repeat_with = {
+                "INPUT_BASENAME": utils.SpaceSeparatedList(input_basenames)
+            }
+        )
+    ]
+
+def generate_brkitr_adaboost(config, io, common_vars):
+    input_files = [InFile(filename) for filename in io.glob("brkitr/adaboost/*.txt")]
+    input_basenames = [v.filename[16:] for v in input_files]
+    output_files = [
+        OutFile("brkitr/%s.res" % v[:-4])
+        for v in input_basenames
+    ]
+    return [
+        RepeatedOrSingleExecutionRequest(
+            name = "adaboost_res",
+            category = "brkitr_adaboost",
+            dep_targets = [DepTarget("cnvalias")],
+            input_files = input_files,
+            output_files = output_files,
+            tool = IcuTool("genrb"),
+            args = "-s {IN_DIR}/brkitr/adaboost -d {OUT_DIR}/brkitr -i {OUT_DIR} "
                 "-k "
                 "{INPUT_BASENAME}",
             format_with = {
@@ -622,6 +667,7 @@ def generate_tree(
         IndexRequest(
             name = index_file_target_name,
             category = category,
+            dep_targets = [DepTarget("cnvalias")],
             installed_files = installed_files,
             alias_files = alias_files,
             txt_file = index_file_txt,

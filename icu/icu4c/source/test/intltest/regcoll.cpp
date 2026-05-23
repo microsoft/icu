@@ -24,10 +24,10 @@ CollationRegressionTest::CollationRegressionTest()
 {
     UErrorCode status = U_ZERO_ERROR;
 
-    en_us = (RuleBasedCollator *)Collator::createInstance(Locale::getUS(), status);
+    en_us = dynamic_cast<RuleBasedCollator*>(Collator::createInstance(Locale::getUS(), status));
     if(U_FAILURE(status)) {
       delete en_us;
-      en_us = 0;
+      en_us = nullptr;
       errcheckln(status, "Collator creation failed with %s", u_errorName(status));
       return;
     }
@@ -370,7 +370,7 @@ void CollationRegressionTest::Test4062418(/* char* par */)
 
     RuleBasedCollator *c = NULL;
 
-    c = (RuleBasedCollator *) Collator::createInstance(Locale::getCanadaFrench(), status);
+    c = dynamic_cast<RuleBasedCollator*>(Collator::createInstance(Locale::getCanadaFrench(), status));
 
     if (c == NULL || U_FAILURE(status))
     {
@@ -450,7 +450,7 @@ void CollationRegressionTest::Test4066696(/* char* par */)
     UErrorCode status = U_ZERO_ERROR;
     RuleBasedCollator *c = NULL;
 
-    c = (RuleBasedCollator *)Collator::createInstance(Locale::getCanadaFrench(), status);
+    c = dynamic_cast<RuleBasedCollator*>(Collator::createInstance(Locale::getCanadaFrench(), status));
 
     if (c == NULL || U_FAILURE(status))
     {
@@ -554,8 +554,8 @@ void CollationRegressionTest::Test4078588(/* char *par */)
 
     if (result != Collator::LESS)
     {
-        errln((UnicodeString)"Compare(a,bb) returned " + (int)result
-            + (UnicodeString)"; expected -1");
+        errln(UnicodeString("Compare(a,bb) returned ") + static_cast<int>(result)
+            + UnicodeString("; expected -1"));
     }
 
     delete rbc;
@@ -599,7 +599,7 @@ void CollationRegressionTest::Test4087241(/* char* par */)
     Locale da_DK("da", "DK");
     RuleBasedCollator *c = NULL;
 
-    c = (RuleBasedCollator *) Collator::createInstance(da_DK, status);
+    c = dynamic_cast<RuleBasedCollator*>(Collator::createInstance(da_DK, status));
 
     if (c == NULL || U_FAILURE(status))
     {
@@ -1214,7 +1214,7 @@ void CollationRegressionTest::caseFirstCompressionSub(Collator *col, UnicodeStri
         if (U_FAILURE(status)) {
             errln("Error in caseFirstCompressionSub");
         } else if (cmpKey != cmpCol) {
-            errln((UnicodeString)"Inconsistent comparison(" + opt
+            errln(UnicodeString("Inconsistent comparison(") + opt
                 + "): str1=" + UnicodeString(str1, len) + ", str2=" + UnicodeString(str2, len)
                 + ", cmpKey=" + cmpKey + ", cmpCol=" + cmpCol);
         }
@@ -1246,6 +1246,57 @@ void CollationRegressionTest::TestBeforeWithTooStrongAfter() {
         errln("should forbid before-3-reset followed by primary or secondary relation");
     } else {
         errorCode.reset();
+    }
+}
+
+void CollationRegressionTest::TestICU22555InfinityLoop() {
+    char16_t data[] = {
+        0x0020, 0x0026, 0x4000, 0x002c, 0x6601, 0x0106, 0xff7f, 0xff99,
+        0x003b, 0x1141, 0x106a, 0x1006, 0x0001, 0x0080, 0x1141, 0x106a,
+        0x0026, 0x00ff, 0xff6f, 0xff99, 0x013b, 0x1141, 0x1067, 0x1026,
+        0x0601, 0x0080, 0x5f03, 0x17e3, 0x0000, 0x3e00, 0x3e3e, 0x0055,
+        0x8080, 0x0000, 0x01e4, 0x0000, 0x0300, 0x003d, 0x4cff, 0x8053,
+        0x7a65, 0x0000, 0x6400, 0x5f00, 0x0150, 0x9090, 0x9090, 0x2f5f,
+        0x0053, 0xffe4, 0x002c, 0x0300, 0x1f3d, 0x55f7, 0x8053, 0x1750,
+        0x3d00, 0xff00, 0x00ff, 0xff6f, 0x0099, 0x03fa, 0x0303, 0x0303,
+        0x0303, 0x0303, 0x0303, 0x0303, 0x0303, 0x0303, 0x0303, 0x0303,
+        0x0303, 0x0303, 0x0303, 0x0303, 0x0303, 0x0303, 0x0303, 0x0303,
+    };
+    icu::UnicodeString rule(false, data, sizeof(data)/sizeof(char16_t));
+    UErrorCode status = U_ZERO_ERROR;
+    icu::LocalPointer<icu::RuleBasedCollator> col1(
+        new icu::RuleBasedCollator(rule, status));
+}
+
+void CollationRegressionTest::TestICU22517() {
+    IcuTestErrorCode errorCode(*this, "TestICU22517");
+    char16_t data[] = u"&a=b쫊쫊쫊쫊쫊쫊쫊쫊";
+    icu::UnicodeString rule(true, data, -1);
+    int length = quick ? rule.length()-2 : rule.length();
+    for (int i = 4; i <= length; i++) {
+      UErrorCode status = U_ZERO_ERROR;
+      icu::LocalPointer<icu::RuleBasedCollator> col1(
+          new icu::RuleBasedCollator(rule.tempSubString(0, i), status));
+    }
+}
+
+void CollationRegressionTest::TestICU22277() {
+    IcuTestErrorCode errorCode(*this, "TestICU22277");
+    UErrorCode status = U_ZERO_ERROR;
+
+    Collator* c = Collator::createInstance("JA-u-Co-priVatE-KANa", status);
+    if(c != nullptr || U_SUCCESS(status)) {
+      errcheckln(status, "Collator should have failed with MemorySanitizer: use-of-uninitialized-value error - %s",
+                 u_errorName(status));
+      delete c;
+      return;
+    }
+    c = Collator::createInstance("hE-U-cO-pRIVate-UNihan", status);
+    if(c != nullptr || U_SUCCESS(status)) {
+      errcheckln(status, "Collator should have failed with MemorySanitizer: use-of-uninitialized-value error - %s",
+                 u_errorName(status));
+      delete c;
+      return;
     }
 }
 
@@ -1387,6 +1438,9 @@ void CollationRegressionTest::runIndexedTest(int32_t index, UBool exec, const ch
     TESTCASE_AUTO(TestCaseFirstCompression);
     TESTCASE_AUTO(TestTrailingComment);
     TESTCASE_AUTO(TestBeforeWithTooStrongAfter);
+    TESTCASE_AUTO(TestICU22277);
+    TESTCASE_AUTO(TestICU22517);
+    TESTCASE_AUTO(TestICU22555InfinityLoop);
     TESTCASE_AUTO_END;
 }
 

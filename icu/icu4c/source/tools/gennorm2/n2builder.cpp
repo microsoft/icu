@@ -59,8 +59,8 @@ static UDataInfo dataInfo={
     0,
 
     { 0x4e, 0x72, 0x6d, 0x32 }, /* dataFormat="Nrm2" */
-    { 4, 0, 0, 0 },             /* formatVersion */
-    { 11, 0, 0, 0 }             /* dataVersion (Unicode version) */
+    { 5, 0, 0, 0 },             /* formatVersion */
+    { 16, 0, 0, 0 }             /* dataVersion (Unicode version) */
 };
 
 U_NAMESPACE_BEGIN
@@ -254,7 +254,7 @@ UBool Normalizer2DataBuilder::mappingHasCompBoundaryAfter(const BuilderReorderin
     // characters following this mapping are possible.
     const Norm *starterNorm=norms.getNorm(starter);
     if(i==lastStarterIndex &&
-            (starterNorm==nullptr || starterNorm->compositions==nullptr)) {
+            (starterNorm==nullptr || !starterNorm->combinesFwd())) {
         return true;  // The last starter does not combine forward.
     }
     uint8_t prevCC=0;
@@ -270,14 +270,14 @@ UBool Normalizer2DataBuilder::mappingHasCompBoundaryAfter(const BuilderReorderin
             // The starter combines with c into a composite replacement starter.
             starterNorm=norms.getNorm(starter);
             if(i>=lastStarterIndex &&
-                    (starterNorm==nullptr || starterNorm->compositions==nullptr)) {
+                    (starterNorm==nullptr || !starterNorm->combinesFwd())) {
                 return true;  // The composite does not combine further.
             }
             // Keep prevCC because we "removed" the combining mark.
         } else if(cc==0) {
             starterNorm=norms.getNorm(c);
             if(i==lastStarterIndex &&
-                    (starterNorm==nullptr || starterNorm->compositions==nullptr)) {
+                    (starterNorm==nullptr || !starterNorm->combinesFwd())) {
                 return true;  // The new starter does not combine forward.
             }
             prevCC=0;
@@ -354,19 +354,38 @@ void Normalizer2DataBuilder::postProcess(Norm &norm) {
 
         norm.hasCompBoundaryBefore=
             !buffer.isEmpty() && norm.leadCC==0 && !norms.combinesBack(buffer.charAt(0));
+        // No comp-boundary-after when norm.combinesBack:
+        // MaybeNo character whose first mapping character may combine-back,
+        // in which case we would not recompose to this character,
+        // and may need more context.
         norm.hasCompBoundaryAfter=
-            norm.compositions==nullptr && mappingHasCompBoundaryAfter(buffer, norm.mappingType);
+            !norm.combinesBack && !norm.combinesFwd() &&
+            mappingHasCompBoundaryAfter(buffer, norm.mappingType);
 
         if(norm.combinesBack) {
-            norm.error="combines-back and decomposes, not possible in Unicode normalization";
+            if(norm.mappingType!=Norm::ROUND_TRIP) {
+                // One-way mappings don't get NFC_QC=Maybe, and
+                // should not have gotten combinesBack set.
+                norm.error="combines-back and has a one-way mapping, "
+                           "not possible in Unicode normalization";
+            } else if(norm.combinesFwd()) {
+                // Earlier code checked ccc=0.
+                norm.type=Norm::MAYBE_NO_COMBINES_FWD;
+            } else if(norm.cc==0) {
+                norm.type=Norm::MAYBE_NO_MAPPING_ONLY;
+            } else {
+                norm.error="combines-back and decomposes with ccc!=0, "
+                           "not possible in Unicode normalization";
+                // ... because we don't reorder again after composition.
+            }
         } else if(norm.mappingType==Norm::ROUND_TRIP) {
-            if(norm.compositions!=NULL) {
+            if(norm.combinesFwd()) {
                 norm.type=Norm::YES_NO_COMBINES_FWD;
             } else {
                 norm.type=Norm::YES_NO_MAPPING_ONLY;
             }
         } else {  // one-way mapping
-            if(norm.compositions!=NULL) {
+            if(norm.combinesFwd()) {
                 norm.error="combines-forward and has a one-way mapping, "
                            "not possible in Unicode normalization";
             } else if(buffer.isEmpty()) {
@@ -386,16 +405,16 @@ void Normalizer2DataBuilder::postProcess(Norm &norm) {
         norm.hasCompBoundaryBefore=
             norm.cc==0 && !norm.combinesBack;
         norm.hasCompBoundaryAfter=
-            norm.cc==0 && !norm.combinesBack && norm.compositions==nullptr;
+            norm.cc==0 && !norm.combinesBack && !norm.combinesFwd();
 
         if(norm.combinesBack) {
-            if(norm.compositions!=nullptr) {
+            if(norm.combinesFwd()) {
                 // Earlier code checked ccc=0.
                 norm.type=Norm::MAYBE_YES_COMBINES_FWD;
             } else {
                 norm.type=Norm::MAYBE_YES_SIMPLE;  // any ccc
             }
-        } else if(norm.compositions!=nullptr) {
+        } else if(norm.combinesFwd()) {
             // Earlier code checked ccc=0.
             norm.type=Norm::YES_YES_COMBINES_FWD;
         } else if(norm.cc!=0) {
@@ -419,7 +438,7 @@ public:
 
 void Normalizer2DataBuilder::setSmallFCD(UChar32 c) {
     UChar32 lead= c<=0xffff ? c : U16_LEAD(c);
-    smallFCD[lead>>8]|=(uint8_t)1<<((lead>>5)&7);
+    smallFCD[lead >> 8] |= static_cast<uint8_t>(1) << ((lead >> 5) & 7);
 }
 
 void Normalizer2DataBuilder::writeNorm16(UMutableCPTrie *norm16Trie, UChar32 start, UChar32 end, Norm &norm) {
@@ -469,6 +488,12 @@ void Normalizer2DataBuilder::writeNorm16(UMutableCPTrie *norm16Trie, UChar32 sta
             norm16=getMinNoNoDelta()+offset;
             break;
         }
+    case Norm::MAYBE_NO_MAPPING_ONLY:
+        norm16=indexes[Normalizer2Impl::IX_MIN_MAYBE_NO]+norm.offset*2;
+        break;
+    case Norm::MAYBE_NO_COMBINES_FWD:
+        norm16=indexes[Normalizer2Impl::IX_MIN_MAYBE_NO_COMBINES_FWD]+norm.offset*2;
+        break;
     case Norm::MAYBE_YES_COMBINES_FWD:
         norm16=indexes[Normalizer2Impl::IX_MIN_MAYBE_YES]+norm.offset*2;
         break;
@@ -593,17 +618,26 @@ LocalUCPTriePointer Normalizer2DataBuilder::processData() {
     extraData.append(extra.noNoMappingsEmpty);
     indexes[Normalizer2Impl::IX_LIMIT_NO_NO]=extraData.length()*2;
 
-    // Pad the maybeYesCompositions length to a multiple of 4,
+    int32_t maybeDataLength=
+        extra.maybeNoMappingsOnly.length()+
+        extra.maybeNoMappingsAndCompositions.length()+
+        extra.maybeYesCompositions.length();
+    int32_t minMaybeNo=Normalizer2Impl::MIN_NORMAL_MAYBE_YES-maybeDataLength*2;
+    // Adjust minMaybeNo down to 8-align it,
     // so that NO_NO_DELTA bits 2..1 can be used without subtracting the center.
-    while(extra.maybeYesCompositions.length()&3) {
-        extra.maybeYesCompositions.append((UChar)0);
-    }
-    extraData.insert(0, extra.maybeYesCompositions);
-    indexes[Normalizer2Impl::IX_MIN_MAYBE_YES]=
-        Normalizer2Impl::MIN_NORMAL_MAYBE_YES-
-        extra.maybeYesCompositions.length()*2;
+    minMaybeNo&=~7;
 
-    // Pad to even length for 4-byte alignment of following data.
+    int32_t index=minMaybeNo;
+    indexes[Normalizer2Impl::IX_MIN_MAYBE_NO]=index;
+    extraData.append(extra.maybeNoMappingsOnly);
+    index+=extra.maybeNoMappingsOnly.length()*2;
+    indexes[Normalizer2Impl::IX_MIN_MAYBE_NO_COMBINES_FWD]=index;
+    extraData.append(extra.maybeNoMappingsAndCompositions);
+    index+=extra.maybeNoMappingsAndCompositions.length()*2;
+    indexes[Normalizer2Impl::IX_MIN_MAYBE_YES]=index;
+    extraData.append(extra.maybeYesCompositions);
+
+    // Pad the extraData to even length for 4-byte alignment of following data.
     if(extraData.length()&1) {
         extraData.append((UChar)0);
     }
@@ -736,7 +770,7 @@ LocalUCPTriePointer Normalizer2DataBuilder::processData() {
     ucptrie_toBinary(builtTrie.getAlias(), norm16TrieBytes, norm16TrieLength, errorCode);
     errorCode.assertSuccess();
 
-    int32_t offset=(int32_t)sizeof(indexes);
+    int32_t offset = static_cast<int32_t>(sizeof(indexes));
     indexes[Normalizer2Impl::IX_NORM_TRIE_OFFSET]=offset;
     offset+=norm16TrieLength;
     indexes[Normalizer2Impl::IX_EXTRA_DATA_OFFSET]=offset;
@@ -749,22 +783,38 @@ LocalUCPTriePointer Normalizer2DataBuilder::processData() {
     }
 
     if(beVerbose) {
-        printf("size of normalization trie:         %5ld bytes\n", (long)norm16TrieLength);
-        printf("size of 16-bit extra data:          %5ld uint16_t\n", (long)extraData.length());
-        printf("size of small-FCD data:             %5ld bytes\n", (long)sizeof(smallFCD));
-        printf("size of binary data file contents:  %5ld bytes\n", (long)totalSize);
-        printf("minDecompNoCodePoint:              U+%04lX\n", (long)indexes[Normalizer2Impl::IX_MIN_DECOMP_NO_CP]);
-        printf("minCompNoMaybeCodePoint:           U+%04lX\n", (long)indexes[Normalizer2Impl::IX_MIN_COMP_NO_MAYBE_CP]);
-        printf("minLcccCodePoint:                  U+%04lX\n", (long)indexes[Normalizer2Impl::IX_MIN_LCCC_CP]);
-        printf("minYesNo: (with compositions)      0x%04x\n", (int)indexes[Normalizer2Impl::IX_MIN_YES_NO]);
-        printf("minYesNoMappingsOnly:              0x%04x\n", (int)indexes[Normalizer2Impl::IX_MIN_YES_NO_MAPPINGS_ONLY]);
-        printf("minNoNo: (comp-normalized)         0x%04x\n", (int)indexes[Normalizer2Impl::IX_MIN_NO_NO]);
-        printf("minNoNoCompBoundaryBefore:         0x%04x\n", (int)indexes[Normalizer2Impl::IX_MIN_NO_NO_COMP_BOUNDARY_BEFORE]);
-        printf("minNoNoCompNoMaybeCC:              0x%04x\n", (int)indexes[Normalizer2Impl::IX_MIN_NO_NO_COMP_NO_MAYBE_CC]);
-        printf("minNoNoEmpty:                      0x%04x\n", (int)indexes[Normalizer2Impl::IX_MIN_NO_NO_EMPTY]);
-        printf("limitNoNo:                         0x%04x\n", (int)indexes[Normalizer2Impl::IX_LIMIT_NO_NO]);
-        printf("minNoNoDelta:                      0x%04x\n", (int)minNoNoDelta);
-        printf("minMaybeYes:                       0x%04x\n", (int)indexes[Normalizer2Impl::IX_MIN_MAYBE_YES]);
+        printf("size of normalization trie:         %5ld bytes\n", static_cast<long>(norm16TrieLength));
+        printf("size of 16-bit extra data:          %5ld uint16_t\n", static_cast<long>(extraData.length()));
+        printf("size of small-FCD data:             %5ld bytes\n", static_cast<long>(sizeof(smallFCD)));
+        printf("size of binary data file contents:  %5ld bytes\n", static_cast<long>(totalSize));
+        printf("minDecompNoCodePoint:              U+%04lX\n",
+               static_cast<long>(indexes[Normalizer2Impl::IX_MIN_DECOMP_NO_CP]));
+        printf("minCompNoMaybeCodePoint:           U+%04lX\n",
+               static_cast<long>(indexes[Normalizer2Impl::IX_MIN_COMP_NO_MAYBE_CP]));
+        printf("minLcccCodePoint:                  U+%04lX\n",
+               static_cast<long>(indexes[Normalizer2Impl::IX_MIN_LCCC_CP]));
+        printf("minYesNo: (with compositions)      0x%04x\n",
+               static_cast<int>(indexes[Normalizer2Impl::IX_MIN_YES_NO]));
+        printf("minYesNoMappingsOnly:              0x%04x\n",
+               static_cast<int>(indexes[Normalizer2Impl::IX_MIN_YES_NO_MAPPINGS_ONLY]));
+        printf("minNoNo: (comp-normalized)         0x%04x\n",
+               static_cast<int>(indexes[Normalizer2Impl::IX_MIN_NO_NO]));
+        printf("minNoNoCompBoundaryBefore:         0x%04x\n",
+               static_cast<int>(indexes[Normalizer2Impl::IX_MIN_NO_NO_COMP_BOUNDARY_BEFORE]));
+        printf("minNoNoCompNoMaybeCC:              0x%04x\n",
+               static_cast<int>(indexes[Normalizer2Impl::IX_MIN_NO_NO_COMP_NO_MAYBE_CC]));
+        printf("minNoNoEmpty:                      0x%04x\n",
+               static_cast<int>(indexes[Normalizer2Impl::IX_MIN_NO_NO_EMPTY]));
+        printf("limitNoNo:                         0x%04x\n",
+               static_cast<int>(indexes[Normalizer2Impl::IX_LIMIT_NO_NO]));
+        printf("minNoNoDelta:                      0x%04x\n",
+               static_cast<int>(minNoNoDelta));
+        printf("minMaybeNo:                        0x%04x\n",
+               static_cast<int>(indexes[Normalizer2Impl::IX_MIN_MAYBE_NO]));
+        printf("minMaybeNoCombinesFwd:             0x%04x\n",
+               static_cast<int>(indexes[Normalizer2Impl::IX_MIN_MAYBE_NO_COMBINES_FWD]));
+        printf("minMaybeYes:                       0x%04x\n",
+               static_cast<int>(indexes[Normalizer2Impl::IX_MIN_MAYBE_YES]));
     }
 
     UVersionInfo nullVersion={ 0, 0, 0, 0 };
@@ -810,11 +860,11 @@ Normalizer2DataBuilder::writeCSourceFile(const char *filename) {
 
     IcuToolErrorCode errorCode("gennorm2/writeCSourceFile()");
     const char *basename=findBasename(filename);
-    CharString path(filename, (int32_t)(basename-filename), errorCode);
+    CharString path(filename, static_cast<int32_t>(basename - filename), errorCode);
     CharString dataName(basename, errorCode);
     const char *extension=strrchr(basename, '.');
     if(extension!=NULL) {
-        dataName.truncate((int32_t)(extension-basename));
+        dataName.truncate(static_cast<int32_t>(extension - basename));
     }
     const char *name=dataName.data();
     errorCode.assertSuccess();

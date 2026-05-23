@@ -50,7 +50,7 @@ U_NAMESPACE_BEGIN
  * segments, or null if there are none.  The array itself is adopted,
  * but the pointers within it are not.
  * @param segsCount number of elements in segs[]
- * @param anchorStart true if the the rule is anchored on the left to
+ * @param anchorStart true if the rule is anchored on the left to
  * the context start
  * @param anchorEnd true if the rule is anchored on the right to the
  * context limit
@@ -65,7 +65,7 @@ TransliterationRule::TransliterationRule(const UnicodeString& input,
                                          const TransliterationRuleData* theData,
                                          UErrorCode& status) :
     UMemory(),
-    segments(0),
+    segments(nullptr),
     data(theData) {
 
     if (U_FAILURE(status)) {
@@ -121,7 +121,7 @@ TransliterationRule::TransliterationRule(const UnicodeString& input,
         anteContext = new StringMatcher(pattern, 0, anteContextLength,
                                         false, *data);
         /* test for NULL */
-        if (anteContext == 0) {
+        if (anteContext == nullptr) {
             status = U_MEMORY_ALLOCATION_ERROR;
             return;
         }
@@ -132,7 +132,7 @@ TransliterationRule::TransliterationRule(const UnicodeString& input,
         key = new StringMatcher(pattern, anteContextLength, anteContextLength + keyLength,
                                 false, *data);
         /* test for NULL */
-        if (key == 0) {
+        if (key == nullptr) {
             status = U_MEMORY_ALLOCATION_ERROR;
             return;
         }
@@ -144,7 +144,7 @@ TransliterationRule::TransliterationRule(const UnicodeString& input,
         postContext = new StringMatcher(pattern, anteContextLength + keyLength, pattern.length(),
                                         false, *data);
         /* test for NULL */
-        if (postContext == 0) {
+        if (postContext == nullptr) {
             status = U_MEMORY_ALLOCATION_ERROR;
             return;
         }
@@ -152,7 +152,7 @@ TransliterationRule::TransliterationRule(const UnicodeString& input,
 
     this->output = new StringReplacer(outputStr, cursorPosition + cursorOffset, data);
     /* test for NULL */
-    if (this->output == 0) {
+    if (this->output == nullptr) {
         status = U_MEMORY_ALLOCATION_ERROR;
         return;
     }
@@ -225,7 +225,7 @@ int16_t TransliterationRule::getIndexValue() const {
         return -1;
     }
     UChar32 c = pattern.char32At(anteContextLength);
-    return (int16_t)(data->lookupMatcher(c) == NULL ? (c & 0xFF) : -1);
+    return static_cast<int16_t>(data->lookupMatcher(c) == nullptr ? (c & 0xFF) : -1);
 }
 
 /**
@@ -488,13 +488,13 @@ UnicodeString& TransliterationRule::toRule(UnicodeString& rule,
     ICU_Utility::appendToRule(rule, anteContext, escapeUnprintable, quoteBuf);
 
     if (emitBraces) {
-        ICU_Utility::appendToRule(rule, (UChar) 0x007B /*{*/, true, escapeUnprintable, quoteBuf);
+        ICU_Utility::appendToRule(rule, static_cast<char16_t>(0x007B) /*{*/, true, escapeUnprintable, quoteBuf);
     }
 
     ICU_Utility::appendToRule(rule, key, escapeUnprintable, quoteBuf);
 
     if (emitBraces) {
-        ICU_Utility::appendToRule(rule, (UChar) 0x007D /*}*/, true, escapeUnprintable, quoteBuf);
+        ICU_Utility::appendToRule(rule, static_cast<char16_t>(0x007D) /*}*/, true, escapeUnprintable, quoteBuf);
     }
 
     ICU_Utility::appendToRule(rule, postContext, escapeUnprintable, quoteBuf);
@@ -511,7 +511,7 @@ UnicodeString& TransliterationRule::toRule(UnicodeString& rule,
     ICU_Utility::appendToRule(rule, output->toReplacer()->toReplacerPattern(str, escapeUnprintable),
                               true, escapeUnprintable, quoteBuf);
 
-    ICU_Utility::appendToRule(rule, (UChar) 0x003B /*;*/, true, escapeUnprintable, quoteBuf);
+    ICU_Utility::appendToRule(rule, static_cast<char16_t>(0x003B) /*;*/, true, escapeUnprintable, quoteBuf);
 
     return rule;
 }

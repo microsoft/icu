@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 fil{
     Currencies{
         AED{
@@ -535,9 +535,13 @@ fil{
             "SKK",
             "Slovak Koruna",
         }
+        SLE{
+            "SLE",
+            "Sierra Leonean Leone",
+        }
         SLL{
             "SLL",
-            "Sierra Leonean Leone",
+            "Sierra Leonean Leone (1964—2022)",
         }
         SOS{
             "SOS",
@@ -655,6 +659,10 @@ fil{
             "EC$",
             "Dolyar ng Silangang Caribbean",
         }
+        XCG{
+            "Cg.",
+            "Caribbean guilder",
+        }
         XOF{
             "F CFA",
             "CFA Franc ng Kanlurang Africa",
@@ -683,109 +691,18 @@ fil{
             "ZMW",
             "Zambian Kwacha",
         }
+        ZWG{
+            "ZWG",
+            "Zimbabwean Gold",
+        }
     }
     Currencies%narrow{
-        AOA{"Kz"}
-        ARS{"$"}
-        AUD{"$"}
-        BAM{"KM"}
-        BBD{"$"}
-        BDT{"৳"}
-        BMD{"$"}
-        BND{"$"}
-        BOB{"Bs"}
-        BRL{"R$"}
-        BSD{"$"}
-        BWP{"P"}
         BYN{"р."}
-        BZD{"$"}
-        CAD{"$"}
-        CLP{"$"}
-        CNY{"¥"}
-        COP{"$"}
-        CRC{"₡"}
-        CUC{"$"}
-        CUP{"$"}
-        CZK{"Kč"}
-        DKK{"kr"}
-        DOP{"$"}
-        EGP{"E£"}
-        EUR{"€"}
-        FJD{"$"}
-        FKP{"£"}
-        GBP{"£"}
-        GEL{"₾"}
-        GIP{"£"}
-        GNF{"FG"}
-        GTQ{"Q"}
-        GYD{"$"}
-        HKD{"$"}
-        HNL{"L"}
-        HRK{"kn"}
-        HUF{"Ft"}
-        IDR{"Rp"}
-        ILS{"₪"}
-        INR{"₹"}
-        ISK{"kr"}
-        JMD{"$"}
-        JPY{"¥"}
-        KHR{"៛"}
-        KMF{"CF"}
-        KPW{"₩"}
-        KRW{"₩"}
-        KYD{"$"}
-        KZT{"₸"}
-        LAK{"₭"}
-        LBP{"L£"}
-        LKR{"Rs"}
-        LRD{"$"}
-        MGA{"Ar"}
-        MMK{"K"}
-        MNT{"₮"}
-        MUR{"Rs"}
-        MXN{"$"}
-        MYR{"RM"}
-        NAD{"$"}
-        NGN{"₦"}
-        NIO{"C$"}
-        NOK{"kr"}
-        NPR{"Rs"}
-        NZD{"$"}
-        PHP{"₱"}
-        PKR{"Rs"}
-        PLN{"zł"}
-        PYG{"₲"}
-        RON{"lei"}
-        RUB{"₽"}
-        RWF{"RF"}
-        SBD{"$"}
-        SEK{"kr"}
-        SGD{"$"}
-        SHP{"£"}
-        SRD{"$"}
-        SSP{"£"}
-        STN{"Db"}
-        SYP{"£"}
-        THB{"฿"}
-        TOP{"T$"}
-        TRY{"₺"}
-        TTD{"$"}
         TWD{"NT$"}
-        UAH{"₴"}
-        USD{"$"}
-        UYU{"$"}
-        VEF{"Bs"}
-        VND{"₫"}
-        XCD{"$"}
-        ZAR{"R"}
-        ZMW{"ZK"}
-    }
-    Currencies%variant{
-        TRY{"TL"}
     }
     CurrencyPlurals{
         AED{
-            one{"UAE dirham"}
+            one{"dirham ng UAE"}
             other{"UAE dirhams"}
         }
         AFN{
@@ -1129,8 +1046,8 @@ fil{
             other{"Latvian lati"}
         }
         LYD{
-            one{"Libyan dinar"}
-            other{"Libyan dinars"}
+            one{"dinar ng Libya"}
+            other{"mga dinar ng Libya"}
         }
         MAD{
             one{"Moroccan dirham"}
@@ -1296,9 +1213,13 @@ fil{
             one{"Saint Helena pound"}
             other{"Saint Helena pounds"}
         }
-        SLL{
+        SLE{
             one{"Sierra Leonean leone"}
             other{"Sierra Leonean leones"}
+        }
+        SLL{
+            one{"Sierra Leonean leone (1964—2022)"}
+            other{"Sierra Leonean leones (1964—2022)"}
         }
         SOS{
             one{"Somali shilling"}
@@ -1412,6 +1333,10 @@ fil{
             one{"dolyar ng Silangang Caribbean"}
             other{"dolyares ng Silangang Caribbean"}
         }
+        XCG{
+            one{"Caribbean guilder"}
+            other{"Caribbean guilders"}
+        }
         XOF{
             one{"CFA franc ng Kanlurang Africa"}
             other{"CFA francs ng Kanlurang Africa"}
@@ -1436,9 +1361,9 @@ fil{
             one{"Zambian kwacha"}
             other{"Zambian kwachas"}
         }
-    }
-    CurrencyUnitPatterns{
-        one{"{0} {1}"}
-        other{"{0} {1}"}
+        ZWG{
+            one{"Zimbabwean gold"}
+            other{"Zimbabwean gold"}
+        }
     }
 }

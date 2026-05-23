@@ -40,7 +40,7 @@ equal_uint32(const uint32_t *s, const uint32_t *t, int32_t length) {
         ++t;
         --length;
     }
-    return (UBool)(length==0);
+    return length == 0;
 }
 
 /* Building a trie ----------------------------------------------------------*/
@@ -68,7 +68,7 @@ utrie_open(UNewTrie *fillIn,
         }
     }
     uprv_memset(trie, 0, sizeof(UNewTrie));
-    trie->isAllocated= (UBool)(fillIn==NULL);
+    trie->isAllocated = fillIn == nullptr;
 
     if(aliasData!=NULL) {
         trie->data=aliasData;
@@ -250,7 +250,7 @@ utrie_get32(UNewTrie *trie, UChar32 c, UBool *pInBlockZero) {
 
     block=trie->index[c>>UTRIE_SHIFT];
     if(pInBlockZero!=NULL) {
-        *pInBlockZero= (UBool)(block==0);
+        *pInBlockZero = block == 0;
     }
 
     return trie->data[ABS(block)+(c&UTRIE_MASK)];
@@ -884,7 +884,7 @@ utrie_unserialize(UTrie *trie, const void *data, int32_t length, UErrorCode *pEr
         *pErrorCode=U_INVALID_FORMAT_ERROR;
         return -1;
     }
-    trie->isLatin1Linear= (UBool)((options&UTRIE_OPTIONS_LATIN1_IS_LINEAR)!=0);
+    trie->isLatin1Linear = (options & UTRIE_OPTIONS_LATIN1_IS_LINEAR) != 0;
 
     /* get the length values */
     trie->indexLength=header->indexLength;

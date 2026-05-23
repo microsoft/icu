@@ -33,6 +33,8 @@ public:
     UnicodeSetTest();
     ~UnicodeSetTest();
 
+    static UBool checkEqual(IntlTest& intlTest, const UnicodeSet& s, const UnicodeSet& t, const char* message);
+
 private:
     void runIndexedTest(int32_t index, UBool exec, const char* &name, char* par=NULL) override;
 
@@ -73,13 +75,16 @@ private:
 
     void TestExhaustive(void);
 
-    void TestCloseOver(void);
+    void TestCloseOver();
+    void TestCloseOverSimpleCaseFolding();
+    void TestCloseOverLargeSets();
 
     void TestEscapePattern(void);
 
     void TestInvalidCodePoint(void);
 
-    void TestSymbolTable(void);
+    void TestSymbolTable();
+    void TestLookupSymbolTable();
 
     void TestSurrogate();
 
@@ -100,6 +105,14 @@ private:
     void assertNext(UnicodeSetIterator &iter, const UnicodeString &expected);
     void TestSkipToStrings();
     void TestPatternCodePointComplement();
+
+    void TestCodePointIterator();
+    void TestRangeIterator();
+    void TestStringIterator();
+    void TestElementIterator();
+
+    void TestToPatternOutput();
+    void TestParseErrors();
 
 private:
 

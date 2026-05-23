@@ -28,6 +28,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <iterator>
 
 #include "unicode/localpointer.h"
 #include "unicode/regex.h"
@@ -107,6 +108,7 @@ void RegexTest::runIndexedTest( int32_t index, UBool exec, const char* &name, ch
     TESTCASE_AUTO(TestBug13632);
     TESTCASE_AUTO(TestBug20359);
     TESTCASE_AUTO(TestBug20863);
+    TESTCASE_AUTO(TestBug23143);
     TESTCASE_AUTO_END;
 }
 
@@ -2030,7 +2032,7 @@ void RegexTest::API_Match_UTF8() {
         //const char str_0123456789[] = { 0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39, 0x00 }; /* 0123456789 */
         //  Test shallow-clone API
         int64_t   group_len;
-        result = matcher->group((UText *)NULL, group_len, status);
+        result = matcher->group(nullptr, group_len, status);
         REGEX_CHECK_STATUS;
         REGEX_ASSERT_UTEXT_UTF8(str_0123456789, result);
         utext_close(result);
@@ -3479,7 +3481,7 @@ void RegexTest::regex_find(const UnicodeString &pattern,
     //
     numFinds = 1;
     for (i=2; i<=9; i++) {
-        if (flags.indexOf((UChar)(0x30 + i)) >= 0) {   // digit flag
+        if (flags.indexOf(static_cast<char16_t>(0x30 + i)) >= 0) { // digit flag
             if (numFinds != 1) {
                 errln("Line %d: more than one digit flag.  Scanning %d.", line, i);
                 goto cleanupAndReturn;
@@ -3661,7 +3663,7 @@ void RegexTest::regex_find(const UnicodeString &pattern,
         UTF8Matcher->setTrace(false);
     }
     if (U_FAILURE(status)) {
-        errln("Error at line %d. ICU ErrorCode is %s", line, u_errorName(status));
+        errln("Error at line %d. ICU ErrorCode is %s", u_errorName(status));
     }
 
     //
@@ -3781,8 +3783,8 @@ void RegexTest::regex_find(const UnicodeString &pattern,
 
 cleanupAndReturn:
     if (failed) {
-        infoln((UnicodeString)"\""+pattern+(UnicodeString)"\"  "
-            +flags+(UnicodeString)"  \""+inputString+(UnicodeString)"\"");
+        infoln(UnicodeString("\"") + pattern + UnicodeString("\"  ")
+            + flags + UnicodeString("  \"") + inputString + UnicodeString("\""));
         // callerPattern->dump();
     }
     delete parseMatcher;
@@ -4229,7 +4231,7 @@ void RegexTest::PerlTests() {
 
         if (expectedS.compare(resultString) != 0) {
             err("Line %d: Incorrect perl expression results.", lineNum);
-            infoln((UnicodeString)"Expected \""+expectedS+(UnicodeString)"\"; got \""+resultString+(UnicodeString)"\"");
+            infoln(UnicodeString("Expected \"") + expectedS + UnicodeString("\"; got \"") + resultString + UnicodeString("\""));
         }
 
         delete testMat;
@@ -4619,7 +4621,7 @@ void RegexTest::PerlTestsUTF8() {
 
         if (expectedS.compare(resultString) != 0) {
             err("Line %d: Incorrect perl expression results.", lineNum);
-            infoln((UnicodeString)"Expected \""+expectedS+(UnicodeString)"\"; got \""+resultString+(UnicodeString)"\"");
+            infoln(UnicodeString("Expected \"") + expectedS + UnicodeString("\"; got \"") + resultString + UnicodeString("\""));
         }
 
         delete testMat;
@@ -4697,7 +4699,7 @@ struct callBackContext {
 U_CDECL_BEGIN
 static UBool U_CALLCONV
 testCallBackFn(const void *context, int32_t steps) {
-    callBackContext  *info = (callBackContext *)context;
+    callBackContext  *info = static_cast<callBackContext *>(const_cast<void*>(context));
     if (info->lastSteps+1 != steps) {
         info->test->errln("incorrect steps in callback.  Expected %d, got %d\n", info->lastSteps+1, steps);
     }
@@ -5814,6 +5816,32 @@ void RegexTest::TestBug20359() {
     assertSuccess(WHERE, status);
 }
 
+
+void RegexTest::TestBug23143() {
+    // Test pattern with unpaired surrogate matching against text
+    // with a valid surrogate pair. Originally caused an assertion failure
+    // in the implementation.
+
+    // Note: can't use normal C++ string literals because unpaired surrogates are illegal in them.
+    const char16_t regex_array[] = {u'a', 0xD805, u'.', u'*', u'b'};
+    UnicodeString regex(regex_array, std::size(regex_array));
+
+    const char16_t haystack_array[] = {u'a', 0xD805, 0xDF20};
+    UnicodeString haystack(haystack_array, std::size(haystack_array));
+
+    UErrorCode status = U_ZERO_ERROR;
+    std::unique_ptr<icu::RegexPattern> re(icu::RegexPattern::compile(regex, 0, status));
+    if (!assertSuccess(WHERE, status)) {
+        return;
+    }
+    // re->dumpPattern();
+    std::unique_ptr<icu::RegexMatcher> regex_matcher(re->matcher(haystack, status));
+    if (!assertSuccess(WHERE, status)) {
+        return;
+    }
+    assertFalse(WHERE, regex_matcher->find(0, status));
+    assertSuccess(WHERE, status);
+}
 
 void RegexTest::TestBug20863() {
     // Test that patterns with a large number of named capture groups work correctly.

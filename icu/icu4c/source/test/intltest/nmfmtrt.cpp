@@ -70,7 +70,7 @@ NumberFormatRoundTripTest::randLong()
     char* poke = (char*)&d;
     for (i=0; i < sizeof(uint32_t); ++i)
     {
-        poke[i] = (char)(rand() & 0xFF);
+        poke[i] = static_cast<char>(rand() & 0xFF);
     }
     return d;
 }

@@ -626,7 +626,7 @@ void SSearchTest::offsetTest()
 
     int32_t testCount = UPRV_LENGTHOF(test);
     UErrorCode status = U_ZERO_ERROR;
-    RuleBasedCollator *col = (RuleBasedCollator *) Collator::createInstance(Locale::getEnglish(), status);
+    RuleBasedCollator *col = dynamic_cast<RuleBasedCollator*>(Collator::createInstance(Locale::getEnglish(), status));
     if (U_FAILURE(status)) {
         errcheckln(status, "Failed to create collator in offsetTest! - %s", u_errorName(status));
         return;
@@ -945,7 +945,7 @@ const char *cPattern = "maketh houndes ete hem";
     // Find the match position usgin strstr
     const char *pm = strstr(longishText, cPattern);
     TEST_ASSERT_M(pm!=NULL, "No pattern match with strstr");
-    int32_t  refMatchPos = (int32_t)(pm - longishText);
+    int32_t refMatchPos = static_cast<int32_t>(pm - longishText);
     int32_t  icuMatchPos;
     int32_t  icuMatchEnd;
     usearch_search(uss.getAlias(), 0, &icuMatchPos, &icuMatchEnd, &status);
@@ -988,7 +988,7 @@ static uint32_t m_seed = 1;
 static uint32_t m_rand()
 {
     m_seed = m_seed * 1103515245 + 12345;
-    return (uint32_t)(m_seed/65536) % 32768;
+    return (m_seed / 65536) % 32768;
 }
 
 class Monkey
@@ -1142,7 +1142,7 @@ UnicodeString &StringSetMonkey::generateAlternative(const UnicodeString &testCas
             matches = ceList.matchesAt(offset, ceList2);
 
             if (! matches) {
-                collData->freeCEList((CEList *) ceList2);
+                collData->freeCEList(const_cast<CEList*>(ceList2));
             }
         } while (! matches);
 
@@ -1289,8 +1289,8 @@ static int32_t  getIntParam(UnicodeString name, UnicodeString &params, int32_t d
         char valString[100];
         int32_t paramLength = m.end(1, status) - m.start(1, status);
 
-        if (paramLength >= (int32_t)(sizeof(valString)-1)) {
-            paramLength = (int32_t)(sizeof(valString)-2);
+        if (paramLength >= static_cast<int32_t>(sizeof(valString) - 1)) {
+            paramLength = static_cast<int32_t>(sizeof(valString) - 2);
         }
 
         params.extract(m.start(1, status), paramLength, valString, sizeof(valString));

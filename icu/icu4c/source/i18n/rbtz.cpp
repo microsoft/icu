@@ -195,7 +195,7 @@ RuleBasedTimeZone::complete(UErrorCode& status) {
         if (fHistoricRules != NULL && fHistoricRules->size() > 0) {
             int32_t i;
             int32_t historicCount = fHistoricRules->size();
-            LocalMemory<bool> done((bool *)uprv_malloc(sizeof(bool) * historicCount));
+            LocalMemory<bool> done(static_cast<bool*>(uprv_malloc(sizeof(bool) * historicCount)));
             if (done == NULL) {
                 status = U_MEMORY_ALLOCATION_ERROR;
                 goto cleanup;
@@ -446,7 +446,7 @@ RuleBasedTimeZone::getOffsetInternal(UDate date, UBool local,
                 if (rule == NULL) {
                     // no final rules or the given time is before the first transition
                     // specified by the final rules -> use the last rule 
-                    rule = ((Transition*)fHistoricTransitions->elementAt(idx))->to;
+                    rule = static_cast<Transition*>(fHistoricTransitions->elementAt(idx))->to;
                 }
             } else {
                 // Find a historical transition
@@ -457,7 +457,7 @@ RuleBasedTimeZone::getOffsetInternal(UDate date, UBool local,
                     }
                     idx--;
                 }
-                rule = ((Transition*)fHistoricTransitions->elementAt(idx))->to;
+                rule = static_cast<Transition*>(fHistoricTransitions->elementAt(idx))->to;
             }
         }
     }
@@ -549,8 +549,8 @@ RuleBasedTimeZone::getNextTransition(UDate base, UBool inclusive, TimeZoneTransi
     UBool found = findNext(base, inclusive, transitionTime, fromRule, toRule);
     if (found) {
         result.setTime(transitionTime);
-        result.setFrom((const TimeZoneRule&)*fromRule);
-        result.setTo((const TimeZoneRule&)*toRule);
+        result.setFrom(*fromRule);
+        result.setTo(*toRule);
         return true;
     }
     return false;
@@ -568,8 +568,8 @@ RuleBasedTimeZone::getPreviousTransition(UDate base, UBool inclusive, TimeZoneTr
     UBool found = findPrev(base, inclusive, transitionTime, fromRule, toRule);
     if (found) {
         result.setTime(transitionTime);
-        result.setFrom((const TimeZoneRule&)*fromRule);
-        result.setTo((const TimeZoneRule&)*toRule);
+        result.setFrom(*fromRule);
+        result.setTo(*toRule);
         return true;
     }
     return false;
@@ -634,11 +634,9 @@ RuleBasedTimeZone::deleteRules(void) {
 }
 
 void
-RuleBasedTimeZone::deleteTransitions(void) {
-    if (fHistoricTransitions != NULL) {
-        delete fHistoricTransitions;
-    }
-    fHistoricTransitions = NULL;
+RuleBasedTimeZone::deleteTransitions() {
+    delete fHistoricTransitions;
+    fHistoricTransitions = nullptr;
 }
 
 UVector*
@@ -654,7 +652,7 @@ RuleBasedTimeZone::copyRules(UVector* source) {
     }
     int32_t i;
     for (i = 0; i < size; i++) {
-        LocalPointer<TimeZoneRule> rule(((TimeZoneRule*)source->elementAt(i))->clone(), ec);
+        LocalPointer<TimeZoneRule> rule(static_cast<TimeZoneRule*>(source->elementAt(i))->clone(), ec);
         rules->adoptElement(rule.orphan(), ec);
         if (U_FAILURE(ec)) {
             return nullptr;

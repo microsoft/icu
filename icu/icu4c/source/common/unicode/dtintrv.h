@@ -91,7 +91,6 @@ public:
      */
     virtual UClassID getDynamicClassID(void) const override;
 
-    
     /**
      * Copy constructor.
      * @stable ICU 4.0

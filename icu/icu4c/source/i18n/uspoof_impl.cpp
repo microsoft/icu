@@ -108,7 +108,7 @@ USpoofChecker *SpoofImpl::asUSpoofChecker() {
 //    received from the C API.
 //
 const SpoofImpl *SpoofImpl::validateThis(const USpoofChecker *sc, UErrorCode &status) {
-    auto* This = validate(sc, status);
+    const auto* This = validate(sc, status);
     if (U_FAILURE(status)) {
         return NULL;
     }
@@ -148,7 +148,7 @@ void SpoofImpl::setAllowedLocales(const char *localesList, UErrorCode &status) {
         if (trimmedEnd <= locStart) {
             break;
         }
-        const char *locale = uprv_strndup(locStart, (int32_t)(trimmedEnd + 1 - locStart));
+        const char* locale = uprv_strndup(locStart, static_cast<int32_t>(trimmedEnd + 1 - locStart));
         localeListCount++;
 
         // We have one locale from the locales list.
@@ -688,13 +688,13 @@ void SpoofData::initPtrs(UErrorCode &status) {
         return;
     }
     if (fRawData->fCFUKeys != 0) {
-        fCFUKeys = (int32_t *)((char *)fRawData + fRawData->fCFUKeys);
+        fCFUKeys = reinterpret_cast<int32_t*>(reinterpret_cast<char*>(fRawData) + fRawData->fCFUKeys);
     }
     if (fRawData->fCFUStringIndex != 0) {
-        fCFUValues = (uint16_t *)((char *)fRawData + fRawData->fCFUStringIndex);
+        fCFUValues = reinterpret_cast<uint16_t*>(reinterpret_cast<char*>(fRawData) + fRawData->fCFUStringIndex);
     }
     if (fRawData->fCFUStringTable != 0) {
-        fCFUStrings = (UChar *)((char *)fRawData + fRawData->fCFUStringTable);
+        fCFUStrings = reinterpret_cast<char16_t*>(reinterpret_cast<char*>(fRawData) + fRawData->fCFUStringTable);
     }
 }
 

@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 id{
     Countries{
         001{"Dunia"}
@@ -85,6 +85,7 @@ id{
         CN{"Tiongkok"}
         CO{"Kolombia"}
         CP{"Pulau Clipperton"}
+        CQ{"Sark"}
         CR{"Kosta Rika"}
         CU{"Kuba"}
         CV{"Tanjung Verde"}
@@ -93,14 +94,17 @@ id{
         CY{"Siprus"}
         CZ{"Ceko"}
         DE{"Jerman"}
+        DG{"Diego Garcia"}
         DJ{"Jibuti"}
         DK{"Denmark"}
         DM{"Dominika"}
         DO{"Republik Dominika"}
         DZ{"Aljazair"}
+        EA{"Ceuta dan Melilla"}
         EC{"Ekuador"}
         EE{"Estonia"}
         EG{"Mesir"}
+        EH{"Sahara Barat"}
         ER{"Eritrea"}
         ES{"Spanyol"}
         ET{"Etiopia"}
@@ -137,6 +141,7 @@ id{
         HR{"Kroasia"}
         HT{"Haiti"}
         HU{"Hungaria"}
+        IC{"Kepulauan Canaria"}
         ID{"Indonesia"}
         IE{"Irlandia"}
         IL{"Israel"}
@@ -219,7 +224,7 @@ id{
         PM{"Saint Pierre dan Miquelon"}
         PN{"Kepulauan Pitcairn"}
         PR{"Puerto Riko"}
-        PS{"Otoritas Palestina"}
+        PS{"Wilayah Palestina"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -284,6 +289,8 @@ id{
         VU{"Vanuatu"}
         WF{"Kepulauan Wallis dan Futuna"}
         WS{"Samoa"}
+        XA{"Aksen Asing"}
+        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Yaman"}
         YT{"Mayotte"}
@@ -291,5 +298,27 @@ id{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Wilayah Tidak Dikenal"}
+    }
+    Countries%chagos{
+        IO{"Kepulauan Chagos"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"Makau"}
+        PS{"Palestina"}
+        UN{"PBB"}
+        US{"AS"}
+    }
+    Countries%variant{
+        CD{"Kongo (RDK)"}
+        CG{"Kongo (Republik)"}
+        CI{"Pantai Gading"}
+        CZ{"Republik Ceko"}
+        FK{"Kepulauan Falkland (Malvinas)"}
+        NZ{"Aotearoa (Selandia Baru)"}
+        SZ{"Eswatini"}
+        TL{"Timor Timur"}
+        TR{"Turkiye"}
     }
 }

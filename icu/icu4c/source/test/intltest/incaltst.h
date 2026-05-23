@@ -40,26 +40,32 @@ public:
     void TestJapanese3860(void);
     void TestForceGannenNumbering(void);
     
-    void TestPersian(void);
-    void TestPersianFormat(void);
+    void TestPersian();
+    void TestPersianJulianDayToYMD();
+    void TestPersianYMDToJulianDay();
+    void TestPersianJan1ToGregorian();
+    void TestGregorianToPersian();
+    void TestPersianFormat();
 
-    void TestConsistencyGregorian(void);
-    void TestConsistencyCoptic(void);
-    void TestConsistencyEthiopic(void);
-    void TestConsistencyROC(void);
-    void TestConsistencyChinese(void);
-    void TestConsistencyDangi(void);
-    void TestConsistencyBuddhist(void);
-    void TestConsistencyEthiopicAmeteAlem(void);
-    void TestConsistencyHebrew(void);
-    void TestConsistencyIndian(void);
-    void TestConsistencyIslamic(void);
-    void TestConsistencyIslamicCivil(void);
-    void TestConsistencyIslamicRGSA(void);
-    void TestConsistencyIslamicTBLA(void);
-    void TestConsistencyIslamicUmalqura(void);
-    void TestConsistencyPersian(void);
-    void TestConsistencyJapanese(void);
+    void TestConsistencyGregorian();
+    void TestConsistencyCoptic();
+    void TestConsistencyEthiopic();
+    void TestConsistencyROC();
+    void TestConsistencyChinese();
+    void TestConsistencyDangi();
+    void TestConsistencyBuddhist();
+    void TestConsistencyEthiopicAmeteAlem();
+    void TestConsistencyHebrew();
+    void TestConsistencyIndian();
+    void TestConsistencyIslamic();
+    void TestConsistencyIslamicCivil();
+    void TestConsistencyIslamicRGSA();
+    void TestConsistencyIslamicTBLA();
+    void TestConsistencyIslamicUmalqura();
+    void TestConsistencyPersian();
+    void TestConsistencyJapanese();
+    void TestIslamicUmalquraCalendarSlow();
+    void TestJapaneseLargeEra();
 
  protected:
     // Test a Gregorian-Like calendar

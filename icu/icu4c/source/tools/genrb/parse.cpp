@@ -297,7 +297,7 @@ static char *getInvariantString(ParseState* state, uint32_t *line, struct UStrin
 
     if(!uprv_isInvariantUString(tokenValue->fChars, tokenValue->fLength)) {
         *status = U_INVALID_FORMAT_ERROR;
-        error(*line, "invariant characters required for table keys, binary data, etc.");
+        error((line == nullptr) ? 0 : *line, "invariant characters required for table keys, binary data, etc.");
         return NULL;
     }
 
@@ -319,10 +319,9 @@ parseUCARules(ParseState* state, char *tag, uint32_t startline, const struct USt
 {
     struct SResource *result = NULL;
     struct UString   *tokenValue;
-    FileStream       *file          = NULL;
-    char              filename[256] = { '\0' };
-    char              cs[128]       = { '\0' };
-    uint32_t          line;
+    FileStream       *file          = nullptr;
+    CharString       filename;
+    uint32_t         line;
     UBool quoted = false;
     UCHARBUF *ucbuf=NULL;
     UChar32   c     = 0;
@@ -335,7 +334,7 @@ parseUCARules(ParseState* state, char *tag, uint32_t startline, const struct USt
     expect(state, TOK_STRING, &tokenValue, NULL, &line, status);
 
     if(isVerbose()){
-        printf(" %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
     if (U_FAILURE(*status))
@@ -345,15 +344,15 @@ parseUCARules(ParseState* state, char *tag, uint32_t startline, const struct USt
     /* make the filename including the directory */
     if (state->inputdir != NULL)
     {
-        uprv_strcat(filename, state->inputdir);
+        filename.append(state->inputdir, -1, *status);
 
         if (state->inputdir[state->inputdirLength - 1] != U_FILE_SEP_CHAR)
         {
-            uprv_strcat(filename, U_FILE_SEP_STRING);
+            filename.append(U_FILE_SEP_CHAR, *status);
         }
     }
 
-    u_UCharsToChars(tokenValue->fChars, cs, tokenValue->fLength);
+    filename.appendInvariantChars(tokenValue->fChars, tokenValue->fLength, *status);
 
     expect(state, TOK_CLOSE_BRACE, NULL, NULL, NULL, status);
 
@@ -361,16 +360,15 @@ parseUCARules(ParseState* state, char *tag, uint32_t startline, const struct USt
     {
         return NULL;
     }
-    uprv_strcat(filename, cs);
 
     if(state->omitCollationRules) {
         return res_none();
     }
 
-    ucbuf = ucbuf_open(filename, &cp, getShowWarning(),false, status);
+    ucbuf = ucbuf_open(filename.data(), &cp, getShowWarning(),false, status);
 
     if (U_FAILURE(*status)) {
-        error(line, "An error occurred while opening the input file %s\n", filename);
+        error(line, "An error occurred while opening the input file %s\n", filename.data());
         return NULL;
     }
 
@@ -379,7 +377,7 @@ parseUCARules(ParseState* state, char *tag, uint32_t startline, const struct USt
     * is not known in UTF-8 byte stream
     */
     size        = ucbuf_size(ucbuf) + 1;
-    pTarget     = (UChar*) uprv_malloc(U_SIZEOF_UCHAR * size);
+    pTarget = static_cast<char16_t*>(uprv_malloc(U_SIZEOF_UCHAR * size));
     uprv_memset(pTarget, 0, size*U_SIZEOF_UCHAR);
     target      = pTarget;
     targetLimit = pTarget+size;
@@ -448,7 +446,7 @@ parseUCARules(ParseState* state, char *tag, uint32_t startline, const struct USt
         *target = 0x0000;
     }
 
-    result = string_open(state->bundle, tag, pTarget, (int32_t)(target - pTarget), NULL, status);
+    result = string_open(state->bundle, tag, pTarget, static_cast<int32_t>(target - pTarget), nullptr, status);
 
 
     ucbuf_close(ucbuf);
@@ -476,7 +474,7 @@ parseTransliterator(ParseState* state, char *tag, uint32_t startline, const stru
     expect(state, TOK_STRING, &tokenValue, NULL, &line, status);
 
     if(isVerbose()){
-        printf(" %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
     if (U_FAILURE(*status))
@@ -517,7 +515,7 @@ parseTransliterator(ParseState* state, char *tag, uint32_t startline, const stru
     * is not known in UTF-8 byte stream
     */
     pSource = ucbuf_getBuffer(ucbuf, &size, status);
-    pTarget     = (UChar*) uprv_malloc(U_SIZEOF_UCHAR * (size + 1));
+    pTarget = static_cast<char16_t*>(uprv_malloc(U_SIZEOF_UCHAR * (size + 1)));
     uprv_memset(pTarget, 0, size*U_SIZEOF_UCHAR);
 
 #if !UCONFIG_NO_TRANSLITERATION
@@ -549,7 +547,7 @@ parseDependency(ParseState* state, char *tag, uint32_t startline, const struct U
     expect(state, TOK_STRING, &tokenValue, NULL, &line, status);
 
     if(isVerbose()){
-        printf(" %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
     if (U_FAILURE(*status))
@@ -609,7 +607,7 @@ parseString(ParseState* state, char *tag, uint32_t startline, const struct UStri
         return parseUCARules(tag, startline, status);
     }*/
     if(isVerbose()){
-        printf(" string %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" string %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
     expect(state, TOK_STRING, &tokenValue, NULL, NULL, status);
 
@@ -642,7 +640,7 @@ parseAlias(ParseState* state, char *tag, uint32_t startline, const struct UStrin
     expect(state, TOK_STRING, &tokenValue, NULL, NULL, status);
 
     if(isVerbose()){
-        printf(" alias %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" alias %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
     if (U_SUCCESS(*status))
@@ -668,7 +666,7 @@ parseAlias(ParseState* state, char *tag, uint32_t startline, const struct UStrin
 
 namespace {
 
-static struct SResource* resLookup(struct SResource* res, const char* key){
+struct SResource* resLookup(struct SResource* res, const char* key) {
     if (res == res_none() || !res->isTable()) {
         return NULL;
     }
@@ -728,7 +726,7 @@ GenrbImporter::getRules(
              */
             StringPiece dir = filename.toStringPiece();
             const char *filenameLimit = filename.data() + filename.length();
-            dir.remove_suffix((int32_t)(filenameLimit - filenameBegin));
+            dir.remove_suffix(static_cast<int32_t>(filenameLimit - filenameBegin));
             inputDirBuf.append(dir, errorCode);
             inputDir = inputDirBuf.data();
         }
@@ -794,7 +792,7 @@ GenrbImporter::getRules(
 
 // Quick-and-dirty escaping function.
 // Assumes that we are on an ASCII-based platform.
-static void
+void
 escape(const UChar *s, char *buffer, size_t n) {
     int32_t length = u_strlen(s);
     int32_t i = 0;
@@ -882,14 +880,14 @@ writeCollationDiacriticsTOML(const char* outputdir, const char* name, const char
             limit = c;
             break;
         } else {
-            uint64_t ce = uint64_t(icu::Collation::ceFromCE32(ce32));
-            if ((ce & 0xFFFFFFFF0000FFFF) != uint64_t(icu::Collation::COMMON_TERTIARY_CE)) {
+            uint64_t ce = static_cast<uint64_t>(icu::Collation::ceFromCE32(ce32));
+            if ((ce & 0xFFFFFFFF0000FFFF) != static_cast<uint64_t>(icu::Collation::COMMON_TERTIARY_CE)) {
                 // Not a CE where only the secondary weight differs from the expected
                 // pattern.
                 limit = c;
                 break;
             }
-            secondary = uint16_t(ce >> 16);
+            secondary = static_cast<uint16_t>(ce >> 16);
         }
         secondaries[c - ICU4X_DIACRITIC_BASE] = secondary;
 
@@ -1023,7 +1021,7 @@ writeCollationSpecialPrimariesTOML(const char* outputdir, const char* name, cons
     for (int32_t i = 0; i < 4; ++i) {
         // getLastPrimaryForGroup subtracts one from a 16-bit value, so we add one
         // back to get a value that fits in 16 bits.
-        lastPrimaries[i] = (uint16_t)((data->getLastPrimaryForGroup(UCOL_REORDER_CODE_FIRST + i) + 1) >> 16);
+        lastPrimaries[i] = static_cast<uint16_t>((data->getLastPrimaryForGroup(UCOL_REORDER_CODE_FIRST + i) + 1) >> 16);
     }
 
     uint32_t numericPrimary = data->numericPrimary;
@@ -1034,6 +1032,7 @@ writeCollationSpecialPrimariesTOML(const char* outputdir, const char* name, cons
     }
 
     usrc_writeArray(f, "last_primaries = [\n  ", lastPrimaries, 16, 4, "  ", "\n]\n");
+    usrc_writeArray(f, "compressible_bytes = [\n  ", data->compressibleBytes, 1, 256, "  ", "\n]\n");
     fprintf(f, "numeric_primary = 0x%X\n", numericPrimary >> 24);
     fclose(f);
 }
@@ -1153,7 +1152,7 @@ addCollation(ParseState* state, TableResource  *result, const char *collationTyp
     struct UString    *tokenValue;
     struct UString     comment;
     enum   ETokenType  token;
-    char               subtag[1024];
+    CharString         subtag;
     UnicodeString      rules;
     UBool              haveRules = false;
     UVersionInfo       version;
@@ -1189,15 +1188,15 @@ addCollation(ParseState* state, TableResource  *result, const char *collationTyp
             return NULL;
         }
 
-        u_UCharsToChars(tokenValue->fChars, subtag, u_strlen(tokenValue->fChars) + 1);
-
+        subtag.clear();
+        subtag.appendInvariantChars(tokenValue->fChars, u_strlen(tokenValue->fChars), *status);
         if (U_FAILURE(*status))
         {
             res_close(result);
             return NULL;
         }
 
-        member = parseResource(state, subtag, NULL, status);
+        member = parseResource(state, subtag.data(), nullptr, status);
 
         if (U_FAILURE(*status))
         {
@@ -1208,7 +1207,7 @@ addCollation(ParseState* state, TableResource  *result, const char *collationTyp
         {
             // Ignore the parsed resources, continue parsing.
         }
-        else if (uprv_strcmp(subtag, "Version") == 0 && member->isString())
+        else if (uprv_strcmp(subtag.data(), "Version") == 0 && member->isString())
         {
             StringResource *sr = static_cast<StringResource *>(member);
             char     ver[40];
@@ -1225,11 +1224,11 @@ addCollation(ParseState* state, TableResource  *result, const char *collationTyp
             result->add(member, line, *status);
             member = NULL;
         }
-        else if(uprv_strcmp(subtag, "%%CollationBin")==0)
+        else if(uprv_strcmp(subtag.data(), "%%CollationBin")==0)
         {
             /* discard duplicate %%CollationBin if any*/
         }
-        else if (uprv_strcmp(subtag, "Sequence") == 0 && member->isString())
+        else if (uprv_strcmp(subtag.data(), "Sequence") == 0 && member->isString())
         {
             StringResource *sr = static_cast<StringResource *>(member);
             rules = sr->fString;
@@ -1395,7 +1394,7 @@ parseCollationElements(ParseState* state, char *tag, uint32_t startline, UBool n
     struct UString    *tokenValue;
     struct UString     comment;
     enum   ETokenType  token;
-    char               subtag[1024], typeKeyword[1024];
+    CharString         subtag, typeKeyword;
     uint32_t           line;
 
     result = table_open(state->bundle, tag, NULL, status);
@@ -1405,7 +1404,7 @@ parseCollationElements(ParseState* state, char *tag, uint32_t startline, UBool n
         return NULL;
     }
     if(isVerbose()){
-        printf(" collation elements %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" collation elements %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
     if(!newCollation) {
         return addCollation(state, result, "(no type)", startline, status);
@@ -1437,7 +1436,8 @@ parseCollationElements(ParseState* state, char *tag, uint32_t startline, UBool n
                 return NULL;
             }
 
-            u_UCharsToChars(tokenValue->fChars, subtag, u_strlen(tokenValue->fChars) + 1);
+            subtag.clear();
+            subtag.appendInvariantChars(tokenValue->fChars, u_strlen(tokenValue->fChars), *status);
 
             if (U_FAILURE(*status))
             {
@@ -1445,9 +1445,9 @@ parseCollationElements(ParseState* state, char *tag, uint32_t startline, UBool n
                 return NULL;
             }
 
-            if (uprv_strcmp(subtag, "default") == 0)
+            if (uprv_strcmp(subtag.data(), "default") == 0)
             {
-                member = parseResource(state, subtag, NULL, status);
+                member = parseResource(state, subtag.data(), nullptr, status);
 
                 if (U_FAILURE(*status))
                 {
@@ -1466,22 +1466,29 @@ parseCollationElements(ParseState* state, char *tag, uint32_t startline, UBool n
                 if(token == TOK_OPEN_BRACE) {
                     token = getToken(state, &tokenValue, &comment, &line, status);
                     TableResource *collationRes;
-                    if (keepCollationType(subtag)) {
-                        collationRes = table_open(state->bundle, subtag, NULL, status);
+                    if (keepCollationType(subtag.data())) {
+                        collationRes = table_open(state->bundle, subtag.data(), nullptr, status);
                     } else {
                         collationRes = NULL;
                     }
                     // need to parse the collation data regardless
-                    collationRes = addCollation(state, collationRes, subtag, startline, status);
+                    collationRes = addCollation(state, collationRes, subtag.data(), startline, status);
                     if (collationRes != NULL) {
                         result->add(collationRes, startline, *status);
                     }
                 } else if(token == TOK_COLON) { /* right now, we'll just try to see if we have aliases */
                     /* we could have a table too */
                     token = peekToken(state, 1, &tokenValue, &line, &comment, status);
-                    u_UCharsToChars(tokenValue->fChars, typeKeyword, u_strlen(tokenValue->fChars) + 1);
-                    if(uprv_strcmp(typeKeyword, "alias") == 0) {
-                        member = parseResource(state, subtag, NULL, status);
+                    typeKeyword.clear();
+                    typeKeyword.appendInvariantChars(tokenValue->fChars, u_strlen(tokenValue->fChars), *status);
+                    if (U_FAILURE(*status))
+                    {
+                        res_close(result);
+                        return nullptr;
+                    }
+
+                    if(uprv_strcmp(typeKeyword.data(), "alias") == 0) {
+                        member = parseResource(state, subtag.data(), nullptr, status);
                         if (U_FAILURE(*status))
                         {
                             res_close(result);
@@ -1523,14 +1530,14 @@ realParseTable(ParseState* state, TableResource *table, char *tag, uint32_t star
     struct UString    *tokenValue=NULL;
     struct UString    comment;
     enum   ETokenType token;
-    char              subtag[1024];
+    CharString        subtag;
     uint32_t          line;
     UBool             readToken = false;
 
     /* '{' . (name resource)* '}' */
 
     if(isVerbose()){
-        printf(" parsing table %s at line %i \n", (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" parsing table %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
     for (;;)
     {
@@ -1562,7 +1569,8 @@ realParseTable(ParseState* state, TableResource *table, char *tag, uint32_t star
         }
 
         if(uprv_isInvariantUString(tokenValue->fChars, -1)) {
-            u_UCharsToChars(tokenValue->fChars, subtag, u_strlen(tokenValue->fChars) + 1);
+            subtag.clear();
+            subtag.appendInvariantChars(tokenValue->fChars, u_strlen(tokenValue->fChars), *status);
         } else {
             *status = U_INVALID_FORMAT_ERROR;
             error(line, "invariant characters required for table keys");
@@ -1575,7 +1583,7 @@ realParseTable(ParseState* state, TableResource *table, char *tag, uint32_t star
             return NULL;
         }
 
-        member = parseResource(state, subtag, &comment, status);
+        member = parseResource(state, subtag.data(), &comment, status);
 
         if (member == NULL || U_FAILURE(*status))
         {
@@ -1612,7 +1620,7 @@ parseTable(ParseState* state, char *tag, uint32_t startline, const struct UStrin
         return parseCollationElements(state, tag, startline, true, status);
     }
     if(isVerbose()){
-        printf(" table %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" table %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
     TableResource *result = table_open(state->bundle, tag, comment, status);
@@ -1640,7 +1648,7 @@ parseArray(ParseState* state, char *tag, uint32_t startline, const struct UStrin
         return NULL;
     }
     if(isVerbose()){
-        printf(" array %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" array %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
     ustr_init(&memberComments);
@@ -1729,7 +1737,7 @@ parseIntVector(ParseState* state, char *tag, uint32_t startline, const struct US
     }
 
     if(isVerbose()){
-        printf(" vector %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" vector %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
     ustr_init(&memberComments);
     /* '{' . string [','] '}' */
@@ -1762,7 +1770,7 @@ parseIntVector(ParseState* state, char *tag, uint32_t startline, const struct US
 
         /* For handling illegal char in the Intvector */
         value = uprv_strtoul(string, &stopstring, 0);/* make intvector support decimal,hexdigit,octal digit ranging from -2^31-2^32-1*/
-        int32_t len = (int32_t)(stopstring-string);
+        int32_t len = static_cast<int32_t>(stopstring - string);
 
         if(len==stringLength)
         {
@@ -1816,7 +1824,7 @@ parseBinary(ParseState* state, char *tag, uint32_t startline, const struct UStri
     }
 
     if(isVerbose()){
-        printf(" binary %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" binary %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
     LocalMemory<uint8_t> value;
@@ -1842,8 +1850,8 @@ parseBinary(ParseState* state, char *tag, uint32_t startline, const struct UStri
         toConv[1] = string[i++];
 
         char *stopstring;
-        value[count++] = (uint8_t) uprv_strtoul(toConv, &stopstring, 16);
-        uint32_t len=(uint32_t)(stopstring-toConv);
+        value[count++] = static_cast<uint8_t>(uprv_strtoul(toConv, &stopstring, 16));
+        uint32_t len = static_cast<uint32_t>(stopstring - toConv);
 
         if(len!=2)
         {
@@ -1886,7 +1894,7 @@ parseInteger(ParseState* state, char *tag, uint32_t startline, const struct UStr
     }
 
     if(isVerbose()){
-        printf(" integer %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" integer %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
     if (stringLength == 0)
@@ -1897,7 +1905,7 @@ parseInteger(ParseState* state, char *tag, uint32_t startline, const struct UStr
     /* Allow integer support for hexdecimal, octal digit and decimal*/
     /* and handle illegal char in the integer*/
     value = uprv_strtoul(string, &stopstring, 0);
-    int32_t len = (int32_t)(stopstring-string);
+    int32_t len = static_cast<int32_t>(stopstring - string);
     if(len==stringLength)
     {
         result = int_open(state->bundle, tag, value, comment, status);
@@ -1930,7 +1938,7 @@ parseImport(ParseState* state, char *tag, uint32_t startline, const struct UStri
     }
 
     if(isVerbose()){
-        printf(" import %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" import %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
     /* Open the input file for reading */
@@ -1997,10 +2005,10 @@ parseInclude(ParseState* state, char *tag, uint32_t startline, const struct UStr
     }
 
     if(isVerbose()){
-        printf(" include %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" include %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
-    fullname = (char *) uprv_malloc(state->inputdirLength + stringLength + 2);
+    fullname = static_cast<char*>(uprv_malloc(state->inputdirLength + stringLength + 2));
     /* test for NULL */
     if(fullname == NULL)
     {
@@ -2137,7 +2145,7 @@ void initParser()
 }
 
 static inline UBool isTable(enum EResourceType type) {
-    return (UBool)(type==RESTYPE_TABLE || type==RESTYPE_TABLE_NO_FALLBACK);
+    return type == RESTYPE_TABLE || type == RESTYPE_TABLE_NO_FALLBACK;
 }
 
 static enum EResourceType
@@ -2159,7 +2167,7 @@ parseResourceType(ParseState* state, UErrorCode *status)
 
     /* Search for normal types */
     result=RESTYPE_UNKNOWN;
-    while ((result=(EResourceType)(result+1)) < RESTYPE_RESERVED) {
+    while ((result = static_cast<EResourceType>(result + 1)) < RESTYPE_RESERVED) {
         if (u_strcmp(tokenValue->fChars, gResourceTypes[result].nameUChars) == 0) {
             break;
         }
@@ -2197,7 +2205,7 @@ parseResource(ParseState* state, char *tag, const struct UString *comment, UErro
     token = getToken(state, &tokenValue, NULL, &startline, status);
 
     if(isVerbose()){
-        printf(" resource %s at line %i \n",  (tag == NULL) ? "(null)" : tag, (int)startline);
+        printf(" resource %s at line %i \n", tag == nullptr ? "(null)" : tag, static_cast<int>(startline));
     }
 
     /* name . [ ':' type ] '{' resource '}' */
@@ -2334,9 +2342,9 @@ parse(UCHARBUF *buf, const char *inputDir, const char *outputDir, const char *fi
     initLookahead(&state, buf, status);
 
     state.inputdir       = inputDir;
-    state.inputdirLength = (state.inputdir != NULL) ? (uint32_t)uprv_strlen(state.inputdir) : 0;
+    state.inputdirLength = state.inputdir != nullptr ? static_cast<uint32_t>(uprv_strlen(state.inputdir)) : 0;
     state.outputdir       = outputDir;
-    state.outputdirLength = (state.outputdir != NULL) ? (uint32_t)uprv_strlen(state.outputdir) : 0;
+    state.outputdirLength = state.outputdir != nullptr ? static_cast<uint32_t>(uprv_strlen(state.outputdir)) : 0;
     state.filename = filename;
     state.makeBinaryCollation = makeBinaryCollation;
     state.omitCollationRules = omitCollationRules;

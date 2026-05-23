@@ -39,16 +39,20 @@ RuleBasedCollator::cloneRuleData(int32_t &length, UErrorCode &errorCode) const {
         errorCode = U_MEMORY_ALLOCATION_ERROR;
         return NULL;
     }
-    length = cloneBinary(buffer.getAlias(), 20000, errorCode);
-    if(errorCode == U_BUFFER_OVERFLOW_ERROR) {
-        if(buffer.allocateInsteadAndCopy(length, 0) == NULL) {
+    UErrorCode bufferStatus = U_ZERO_ERROR;
+    length = cloneBinary(buffer.getAlias(), 20000, bufferStatus);
+    if(bufferStatus == U_BUFFER_OVERFLOW_ERROR) {
+        if(buffer.allocateInsteadAndCopy(length, 0) == nullptr) {
             errorCode = U_MEMORY_ALLOCATION_ERROR;
             return NULL;
         }
-        errorCode = U_ZERO_ERROR;
-        length = cloneBinary(buffer.getAlias(), length, errorCode);
+        bufferStatus = U_ZERO_ERROR;
+        length = cloneBinary(buffer.getAlias(), length, bufferStatus);
     }
-    if(U_FAILURE(errorCode)) { return NULL; }
+    if(U_FAILURE(bufferStatus)) {
+        errorCode = bufferStatus;
+        return nullptr;
+    }
     return buffer.orphan();
 }
 

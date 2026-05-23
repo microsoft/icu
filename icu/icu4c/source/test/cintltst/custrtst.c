@@ -76,10 +76,10 @@ static void setUpDataTable()
 {
     int32_t i,j;
     if(dataTable == NULL) {
-        dataTable = (UChar***)calloc(sizeof(UChar**),3);
+        dataTable = (UChar***)calloc(3, sizeof(UChar**));
 
             for (i = 0; i < 3; i++) {
-              dataTable[i] = (UChar**)calloc(sizeof(UChar*),4);
+              dataTable[i] = (UChar**)calloc(4, sizeof(UChar*));
                 for (j = 0; j < 4; j++){
                     dataTable[i][j] = (UChar*) malloc(sizeof(UChar)*(strlen(raw[i][j])+1));
                     u_uastrcpy(dataTable[i][j],raw[i][j]);
@@ -971,11 +971,9 @@ TestSurrogateSearching() {
      * Condition: search the same string while the first char is not an
      * surrogate and the last char is the leading surragte.
      */
-    {
-        static const UChar s[]={ 0x0020, 0xD9C1 };
-        if (u_strFindFirst(s, 2, s, 2) != s) {
-            log_err("error: ending with a partial supplementary code point should match\n");
-        }
+    static const UChar s2[]={ 0x0020, 0xD9C1 };
+    if (u_strFindFirst(s2, 2, s2, 2) != s2) {
+        log_err("error: ending with a partial supplementary code point should match\n");
     }
 }
 

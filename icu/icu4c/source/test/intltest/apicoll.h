@@ -167,13 +167,14 @@ public:
     /**
     * Test NULL
     */
-    void TestNULLCharTailoring();
+    void TestNullptrCharTailoring();
 
     void TestClone();
     void TestCloneBinary();
     void TestIterNumeric();
     void TestBadKeywords();
     void TestGapTooSmall();
+    void TestNFCNull();
 
 private:
     // If this is too small for the test data, just increase it.

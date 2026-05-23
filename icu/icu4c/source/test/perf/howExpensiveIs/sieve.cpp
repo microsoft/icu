@@ -89,7 +89,7 @@ double midpoint(double *times, double i, int n) {
   if(fl==ce) {
     return times[(int)fl];
   } else {
-    return (times[(int)fl]+times[(int)ce])/2;
+    return (times[static_cast<int>(fl)] + times[static_cast<int>(ce)]) / 2;
   }
 }
 

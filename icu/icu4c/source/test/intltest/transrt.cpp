@@ -544,7 +544,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
     TransliteratorPointer sourceToTarget(
         Transliterator::createInstance(transliteratorID, UTRANS_FORWARD, parseError,
                                        status));
-    if ((Transliterator *)sourceToTarget == NULL) {
+    if (sourceToTarget == nullptr) {
         parent->dataerrln("FAIL: createInstance(" + transliteratorID +
                    ") returned NULL. Error: " + u_errorName(status)
                    + "\n\tpreContext : " + prettify(parseError.preContext) 
@@ -553,7 +553,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
                 return;
     }
     TransliteratorPointer targetToSource(sourceToTarget->createInverse(status));
-    if ((Transliterator *)targetToSource == NULL) {
+    if (targetToSource == nullptr) {
         parent->errln("FAIL: " + transliteratorID +
                    ".createInverse() returned NULL. Error:" + u_errorName(status)          
                    + "\n\tpreContext : " + prettify(parseError.preContext) 
@@ -606,7 +606,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
           if (!usi.next() || usi.isString()) break;
           UChar32 c = usi.getCodepoint();
                     
-          UnicodeString srcStr((UChar32)c);
+          UnicodeString srcStr(c);
           UnicodeString targ = srcStr;
           sourceToTarget->transliterate(targ);
           UnicodeString targ2 = srcStr;
@@ -621,7 +621,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
           if (!usi.next() || usi.isString()) break;
           UChar32 c = usi.getCodepoint();
               
-          UnicodeString srcStr((UChar32)c);
+          UnicodeString srcStr(c);
           UnicodeString targ = srcStr;
           targetToSource->transliterate(targ);
           UnicodeString targ2 = srcStr;
@@ -640,7 +640,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
         if (!usi.next() || usi.isString()) break;
         UChar32 c = usi.getCodepoint();
                 
-        UnicodeString srcStr((UChar32)c);
+        UnicodeString srcStr(c);
         UnicodeString targ = srcStr;
         sourceToTarget->transliterate(targ);
         if (toTarget.containsAll(targ) == false
@@ -689,8 +689,8 @@ void RTTest::test2(UBool quickRt, int32_t density) {
             UChar32 d = usi2.getCodepoint();
                     
             UnicodeString srcStr;
-            srcStr += (UChar32)c;
-            srcStr += (UChar32)d;
+            srcStr += c;
+            srcStr += d;
             UnicodeString targ = srcStr;
             sourceToTarget->transliterate(targ);
             if (toTarget.containsAll(targ) == false || 
@@ -734,7 +734,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
         if(usi.isString()){
             srcStr = usi.getString();
         }else{
-            srcStr = (UnicodeString)usi.getCodepoint();
+            srcStr = UnicodeString(usi.getCodepoint());
         }
 
         UChar32 c = srcStr.char32At(0);
@@ -801,7 +801,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
         if (++count > pairLimit) {
             //throw new TestTruncated("Test truncated at " + pairLimit + " x 64k pairs");
             parent->logln("");
-            parent->logln((UnicodeString)"Test truncated at " + pairLimit + " x 64k pairs");
+            parent->logln(UnicodeString("Test truncated at ") + pairLimit + " x 64k pairs");
             return;
         }
 
@@ -864,7 +864,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
 void RTTest::logWrongScript(const UnicodeString& label,
                             const UnicodeString& from,
                             const UnicodeString& to) {
-    parent->errln((UnicodeString)"FAIL " +
+    parent->errln(UnicodeString("FAIL ") +
                label + ": " +
                from + "(" + TestUtility::hex(from) + ") => " +
                to + "(" + TestUtility::hex(to) + ")");
@@ -876,7 +876,7 @@ void RTTest::logNotCanonical(const UnicodeString& label,
                              const UnicodeString& to,
                              const UnicodeString& fromCan,
                              const UnicodeString& toCan) {
-    parent->errln((UnicodeString)"FAIL (can.equiv)" +
+    parent->errln(UnicodeString("FAIL (can.equiv)") +
                label + ": " +
                from + "(" + TestUtility::hex(from) + ") => " +
                to + "(" + TestUtility::hex(to) + ")" +
@@ -888,7 +888,7 @@ void RTTest::logNotCanonical(const UnicodeString& label,
 }
 
 void RTTest::logFails(const UnicodeString& label) {
-    parent->errln((UnicodeString)"<br>FAIL " + label);
+    parent->errln(UnicodeString("<br>FAIL ") + label);
     ++errorCount;
 }
 
@@ -897,7 +897,7 @@ void RTTest::logToRulesFails(const UnicodeString& label,
                              const UnicodeString& to, 
                              const UnicodeString& otherTo)
 {
-    parent->errln((UnicodeString)"FAIL: " +
+    parent->errln(UnicodeString("FAIL: ") +
                label + ": " +
                from + "(" + TestUtility::hex(from) + ") => " +
                to + "(" + TestUtility::hex(to) + ")" +
@@ -916,10 +916,10 @@ void RTTest::logRoundTripFailure(const UnicodeString& from,
                                  const UnicodeString& back) {
     if (legalSource->is(from) == false) return; // skip illegals
 
-    parent->errln((UnicodeString)"FAIL Roundtrip: " +
+    parent->errln(UnicodeString("FAIL Roundtrip: ") +
                from + "(" + TestUtility::hex(from) + ") => " +
-               to + "(" + TestUtility::hex(to) + ")  "+toID+" => " +
-               back + "(" + TestUtility::hex(back) + ") "+backID+" => ");
+               to + "(" + TestUtility::hex(to) + ")  " + toID + " => " +
+               back + "(" + TestUtility::hex(back) + ") " + backID + " => ");
     ++errorCount;
 }
 
@@ -1329,7 +1329,7 @@ void TransliteratorRoundTripTest::TestDevanagariLatin() {
         UErrorCode status = U_ZERO_ERROR;
         UParseError parseError;
         TransliteratorPointer t1(Transliterator::createInstance("[\\u0964-\\u0965\\u0981-\\u0983\\u0985-\\u098C\\u098F-\\u0990\\u0993-\\u09A8\\u09AA-\\u09B0\\u09B2\\u09B6-\\u09B9\\u09BC\\u09BE-\\u09C4\\u09C7-\\u09C8\\u09CB-\\u09CD\\u09D7\\u09DC-\\u09DD\\u09DF-\\u09E3\\u09E6-\\u09FA];NFD;Bengali-InterIndic;InterIndic-Gujarati;NFC;",UTRANS_FORWARD, parseError, status));
-        if((Transliterator *)t1 != NULL){
+        if(t1 != nullptr){
             TransliteratorPointer t2(t1->createInverse(status));
             if(U_FAILURE(status)){
                 errln("FAIL: could not create the Inverse:-( \n");

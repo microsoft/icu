@@ -73,9 +73,9 @@ u_vsscanf(const UChar   *buffer,
     int32_t size = (int32_t)uprv_strlen(patternSpecification) + 1;
 
     /* convert from the default codepage to Unicode */
-    if (size >= (int32_t)MAX_UCHAR_BUFFER_SIZE(patBuffer)) {
+    if (size >= MAX_UCHAR_BUFFER_SIZE(patBuffer)) {
         pattern = (UChar *)uprv_malloc(size * sizeof(UChar));
-        if(pattern == 0) {
+        if (pattern == nullptr) {
             return 0;
         }
     }
@@ -114,7 +114,7 @@ u_vsscanf_u(const UChar *buffer,
     inStr.str.fPos = (UChar *)buffer;
     inStr.str.fLimit = buffer + u_strlen(buffer);
 
-    if(u_locbund_init(&inStr.str.fBundle, "en_US_POSIX") == 0) {
+    if (u_locbund_init(&inStr.str.fBundle, "en_US_POSIX") == nullptr) {
         return 0;
     }
 

@@ -530,7 +530,7 @@ void CodePointsVectorizer::vectorize(
             // Since the LSTMBreakEngine is currently only accept chars in BMP,
             // we can ignore the possibility of hitting supplementary code
             // point.
-            str[0] = (UChar) utext_next32(text);
+            str[0] = static_cast<char16_t>(utext_next32(text));
             U_ASSERT(!U_IS_SURROGATE(str[0]));
             offsets.addElement(current, status);
             indices.addElement(stringToIndex(str), status);
@@ -809,7 +809,15 @@ U_CAPI const LSTMData* U_EXPORT2 CreateLSTMDataForScript(UScriptCode script, UEr
 
 U_CAPI const LSTMData* U_EXPORT2 CreateLSTMData(UResourceBundle* rb, UErrorCode& status)
 {
-    return new LSTMData(rb, status);
+    if (U_FAILURE(status)) {
+        return nullptr;
+    }
+    const LSTMData* result = new LSTMData(rb, status);
+    if (U_FAILURE(status)) {
+        delete result;
+        return nullptr;
+    }
+    return result;
 }
 
 U_CAPI const LanguageBreakEngine* U_EXPORT2

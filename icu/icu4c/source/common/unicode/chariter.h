@@ -134,7 +134,7 @@ public:
      * @stable ICU 2.0
      */
     virtual int32_t hashCode(void) const = 0;
-    
+
     /**
      * Returns a UClassID for this ForwardCharacterIterator ("poor man's
      * RTTI").<P> Despite the fact that this function is public,
@@ -143,7 +143,7 @@ public:
      * @stable ICU 2.0
      */
     virtual UClassID getDynamicClassID(void) const override = 0;
-    
+
     /**
      * Gets the current code unit for returning and advances to the next code unit
      * in the iteration range
@@ -153,7 +153,7 @@ public:
      * @stable ICU 2.0
      */
     virtual char16_t         nextPostInc(void) = 0;
-    
+
     /**
      * Gets the current code point for returning and advances to the next code point
      * in the iteration range
@@ -163,7 +163,7 @@ public:
      * @stable ICU 2.0
      */
     virtual UChar32       next32PostInc(void) = 0;
-    
+
     /**
      * Returns false if there are no more code units or code points
      * at or after the current position in the iteration range.
@@ -297,7 +297,7 @@ protected:
  * \code
  *  void traverseForward(CharacterIterator& iter)
  *  {
- *      for(char16_t c = iter.first(); c != CharacterIterator.DONE; c = iter.next()) {
+ *      for(char16_t c = iter.first(); c != CharacterIterator::DONE; c = iter.next()) {
  *          processChar(c);
  *      }
  *  }
@@ -308,7 +308,7 @@ protected:
  * \code
  *  void traverseBackward(CharacterIterator& iter)
  *  {
- *      for(char16_t c = iter.last(); c != CharacterIterator.DONE; c = iter.previous()) {
+ *      for(char16_t c = iter.last(); c != CharacterIterator::DONE; c = iter.previous()) {
  *          processChar(c);
  *      }
  *  }
@@ -322,11 +322,11 @@ protected:
  * {
  *      char16_t c;
  *      for (c = iter.setIndex(pos);
- *      c != CharacterIterator.DONE && (Unicode::isLetter(c) || Unicode::isDigit(c));
+ *      c != CharacterIterator::DONE && (Unicode::isLetter(c) || Unicode::isDigit(c));
  *          c = iter.next()) {}
  *      int32_t end = iter.getIndex();
  *      for (c = iter.setIndex(pos);
- *          c != CharacterIterator.DONE && (Unicode::isLetter(c) || Unicode::isDigit(c));
+ *          c != CharacterIterator::DONE && (Unicode::isLetter(c) || Unicode::isDigit(c));
  *          c = iter.previous()) {}
  *      int32_t start = iter.getIndex() + 1;
  *  
@@ -439,7 +439,7 @@ public:
      * @stable ICU 2.0
      */
     virtual char16_t         last(void) = 0;
-        
+
     /**
      * Sets the iterator to refer to the last code point in its
      * iteration range, and returns that code unit.
@@ -487,14 +487,14 @@ public:
      * @stable ICU 2.0
      */
     virtual char16_t         current(void) const = 0;
-        
+
     /**
      * Returns the code point the iterator currently refers to.  
      * @return the current code point.
      * @stable ICU 2.0
      */
     virtual UChar32       current32(void) const = 0;
-        
+
     /**
      * Advances to the next code unit in the iteration range
      * (toward endIndex()), and returns that code unit.  If there are
@@ -503,7 +503,7 @@ public:
      * @stable ICU 2.0
      */
     virtual char16_t         next(void) = 0;
-        
+
     /**
      * Advances to the next code point in the iteration range
      * (toward endIndex()), and returns that code point.  If there are
@@ -515,7 +515,7 @@ public:
      * @stable ICU 2.0
      */
     virtual UChar32       next32(void) = 0;
-        
+
     /**
      * Advances to the previous code unit in the iteration range
      * (toward startIndex()), and returns that code unit.  If there are
@@ -556,7 +556,7 @@ public:
      * @stable ICU 2.0
      */
     inline int32_t       startIndex(void) const;
-        
+
     /**
      * Returns the numeric index in the underlying text-storage
      * object of the position immediately BEYOND the character
@@ -567,7 +567,7 @@ public:
      * @stable ICU 2.0
      */
     inline int32_t       endIndex(void) const;
-        
+
     /**
      * Returns the numeric index in the underlying text-storage
      * object of the character the iterator currently refers to

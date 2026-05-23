@@ -167,7 +167,8 @@ public:
     }
     
     virtual UObject* handleDefault(const ICUServiceKey& key, UnicodeString* actualID, UErrorCode& status) const override {
-        LocaleKey& lkey = (LocaleKey&)key;
+        const LocaleKey* lkey = dynamic_cast<const LocaleKey*>(&key);
+        U_ASSERT(lkey != nullptr);
         if (actualID) {
             // Ugly Hack Alert! We return an empty actualID to signal
             // to callers that this is a default object, not a "real"
@@ -175,7 +176,7 @@ public:
             actualID->truncate(0);
         }
         Locale loc("");
-        lkey.canonicalLocale(loc);
+        lkey->canonicalLocale(loc);
         return Collator::makeInstance(loc, status);
     }
     
@@ -260,7 +261,7 @@ static UBool isAvailableLocaleListInitialized(UErrorCode &status) {
 
 namespace {
 
-static const struct {
+const struct {
     const char *name;
     UColAttribute attr;
 } collAttributes[] = {
@@ -273,7 +274,7 @@ static const struct {
     { "colNumeric", UCOL_NUMERIC_COLLATION }
 };
 
-static const struct {
+const struct {
     const char *name;
     UColAttributeValue value;
 } collAttributeValues[] = {
@@ -291,7 +292,7 @@ static const struct {
     { "upper", UCOL_UPPER_FIRST }
 };
 
-static const char *collReorderCodes[UCOL_REORDER_CODE_LIMIT - UCOL_REORDER_CODE_FIRST] = {
+const char* collReorderCodes[UCOL_REORDER_CODE_LIMIT - UCOL_REORDER_CODE_FIRST] = {
     "space", "punct", "symbol", "currency", "digit"
 };
 
@@ -430,7 +431,7 @@ Collator* U_EXPORT2 Collator::createInstance(const Locale& desiredLocale,
                                    UErrorCode& status)
 {
     if (U_FAILURE(status)) 
-        return 0;
+        return nullptr;
     if (desiredLocale.isBogus()) {
         // Locale constructed from malformed locale ID or language tag.
         status = U_ILLEGAL_ARGUMENT_ERROR;
@@ -746,9 +747,10 @@ UObject*
 CFactory::create(const ICUServiceKey& key, const ICUService* /* service */, UErrorCode& status) const
 {
     if (handlesKey(key, status)) {
-        const LocaleKey& lkey = (const LocaleKey&)key;
+        const LocaleKey* lkey = dynamic_cast<const LocaleKey*>(&key);
+        U_ASSERT(lkey != nullptr);
         Locale validLoc;
-        lkey.currentLocale(validLoc);
+        lkey->currentLocale(validLoc);
         return _delegate->createCollator(validLoc);
     }
     return NULL;

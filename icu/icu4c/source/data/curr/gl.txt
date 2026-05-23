@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 gl{
     Currencies{
         ADP{
@@ -257,7 +257,7 @@ gl{
             {
                 "#,##0.00 ¤",
                 ",",
-                ".",
+                " ",
             }
         }
         ETB{
@@ -478,7 +478,7 @@ gl{
         }
         MDL{
             "MDL",
-            "leu moldavo",
+            "leu moldovo",
         }
         MGA{
             "MGA",
@@ -668,9 +668,13 @@ gl{
             "SHP",
             "libra de Santa Helena",
         }
+        SLE{
+            "SLE",
+            "leone de Serra Leoa",
+        }
         SLL{
             "SLL",
-            "leone de Serra Leoa",
+            "leone de Serra Leoa (1964–2022)",
         }
         SOS{
             "SOS",
@@ -812,6 +816,10 @@ gl{
             "XCD",
             "dólar do Caribe Oriental",
         }
+        XCG{
+            "ƒ",
+            "florín caribeño",
+        }
         XOF{
             "F CFA",
             "franco CFA (BCEAO)",
@@ -848,105 +856,16 @@ gl{
             "ZMW",
             "kwacha zambiano",
         }
+        ZWG{
+            "ZWG",
+            "ouro de Zimbabwe",
+        }
     }
     Currencies%narrow{
-        AOA{"Kz"}
-        ARS{"$"}
-        AUD{"$"}
-        BAM{"KM"}
-        BBD{"$"}
-        BDT{"৳"}
-        BMD{"$"}
-        BND{"$"}
-        BOB{"Bs"}
-        BRL{"R$"}
-        BSD{"$"}
-        BWP{"P"}
         BYN{"Br"}
-        BZD{"$"}
-        CAD{"$"}
-        CLP{"$"}
-        CNY{"¥"}
-        COP{"$"}
-        CRC{"₡"}
-        CUC{"$"}
-        CUP{"$"}
-        CZK{"Kč"}
-        DKK{"kr"}
-        DOP{"$"}
-        EGP{"E£"}
-        EUR{"€"}
-        FJD{"$"}
-        FKP{"£"}
-        GBP{"£"}
-        GEL{"₾"}
-        GIP{"£"}
-        GNF{"FG"}
-        GTQ{"Q"}
-        GYD{"$"}
-        HKD{"$"}
-        HNL{"L"}
-        HRK{"kn"}
-        HUF{"Ft"}
-        IDR{"Rp"}
-        ILS{"₪"}
-        INR{"₹"}
-        ISK{"kr"}
-        JMD{"$"}
-        JPY{"¥"}
-        KHR{"៛"}
         KMF{"FC"}
-        KPW{"₩"}
-        KRW{"₩"}
-        KYD{"$"}
-        KZT{"₸"}
-        LAK{"₭"}
-        LBP{"L£"}
-        LKR{"Rs"}
-        LRD{"$"}
-        MGA{"Ar"}
-        MMK{"K"}
-        MNT{"₮"}
-        MUR{"Rs"}
-        MXN{"$"}
-        MYR{"RM"}
-        NAD{"$"}
-        NGN{"₦"}
-        NIO{"C$"}
-        NOK{"kr"}
-        NPR{"Rs"}
-        NZD{"$"}
-        PHP{"₱"}
-        PKR{"Rs"}
-        PLN{"zł"}
-        PYG{"₲"}
-        RON{"lei"}
         RUB{"руб"}
-        RWF{"RF"}
-        SBD{"$"}
-        SEK{"kr"}
-        SGD{"$"}
-        SHP{"£"}
-        SRD{"$"}
-        SSP{"£"}
-        STN{"Db"}
-        SYP{"£"}
-        THB{"฿"}
-        TOP{"T$"}
-        TRY{"₺"}
-        TTD{"$"}
         TWD{"NT$"}
-        UAH{"₴"}
-        USD{"$"}
-        UYU{"$"}
-        VEF{"Bs"}
-        VND{"₫"}
-        XCD{"$"}
-        ZAR{"R"}
-        ZMW{"ZK"}
-    }
-    Currencies%variant{
-        TRY{"TL"}
     }
     CurrencyPlurals{
         ADP{
@@ -1370,8 +1289,8 @@ gl{
             other{"dirhams marroquís"}
         }
         MDL{
-            one{"leu moldavo"}
-            other{"lei moldavos"}
+            one{"leu moldovo"}
+            other{"lei moldovos"}
         }
         MGA{
             one{"ariary malgaxe"}
@@ -1537,9 +1456,13 @@ gl{
             one{"libra de Santa Helena"}
             other{"libras de Santa Helena"}
         }
-        SLL{
+        SLE{
             one{"leone de Serra Leoa"}
             other{"leones de Serra Leoa"}
+        }
+        SLL{
+            one{"leone de Serra Leoa (1964–2022)"}
+            other{"leones de Serra Leoa (1964–2022)"}
         }
         SOS{
             one{"xilin somalí"}
@@ -1665,6 +1588,10 @@ gl{
             one{"dólar do Caribe Oriental"}
             other{"dólares do Caribe Oriental"}
         }
+        XCG{
+            one{"florín caribeño"}
+            other{"florín caribeño"}
+        }
         XOF{
             one{"franco CFA (BCEAO)"}
             other{"francos CFA (BCEAO)"}
@@ -1689,9 +1616,9 @@ gl{
             one{"kwacha zambiano"}
             other{"kwachas zambianos"}
         }
-    }
-    CurrencyUnitPatterns{
-        one{"{0} {1}"}
-        other{"{0} {1}"}
+        ZWG{
+            one{"ouro de Zimbabwe"}
+            other{"ouro de Zimbabwe"}
+        }
     }
 }

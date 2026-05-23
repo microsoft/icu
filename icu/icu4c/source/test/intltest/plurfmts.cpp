@@ -147,7 +147,7 @@ void PluralFormatTest::pluralFormatBasicTest(/*char *par*/)
     PluralFormat *pf = new PluralFormat(stat);
     Formattable *f = new Formattable();
     ParsePosition *pp = new ParsePosition();
-    pf->parseObject((UnicodeString)"",*f,*pp);
+    pf->parseObject(UnicodeString(""), *f, *pp);
     if(U_FAILURE(stat)) {
         dataerrln("ERROR: PluralFormat::parseObject: %s", u_errorName(stat));
     }
@@ -240,8 +240,8 @@ void PluralFormatTest::pluralFormatUnitTest(/*char *par*/)
             errln("ERROR:  PluralFormat failed to apply pattern- "+patternTestData[i]);
             continue;
         }
-        numberFormatTest(&plFmt, numFmt.getAlias(), 1, 10, (UnicodeString *)&patternOddTestResult[i], 
-                         (UnicodeString *)&patternEvenTestResult[i], overwrite[i], &message);
+        numberFormatTest(&plFmt, numFmt.getAlias(), 1, 10, dynamic_cast<UnicodeString *>(&patternOddTestResult[i]), 
+                         dynamic_cast<UnicodeString *>(&patternEvenTestResult[i]), overwrite[i], &message);
     }
     
     // ======= Test set locale
@@ -729,7 +729,6 @@ PluralFormatTest::numberFormatTest(PluralFormat* plFmt,
             }
         }
     }
-    return;
 }
 
 
@@ -751,7 +750,7 @@ PluralFormatTest::helperTestResults(const char** localeArray,
     
     for (int32_t i=0; i<capacityOfArray; ++i) {
         const char *locale = localeArray[i];
-        Locale ulocale((const char *)locale);
+        Locale ulocale(locale);
         status = U_ZERO_ERROR;
         PluralFormat plFmt(ulocale, testPattern, status);
         if (U_FAILURE(status)) {

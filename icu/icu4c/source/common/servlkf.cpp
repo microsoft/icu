@@ -76,7 +76,7 @@ LocaleKeyFactory::updateVisibleIDs(Hashtable& result, UErrorCode& status) const 
         const UHashElement* elem = NULL;
         int32_t pos = UHASH_FIRST;
         while ((elem = supported->nextElement(pos)) != NULL) {
-            const UnicodeString& id = *((const UnicodeString*)elem->key.pointer);
+            const UnicodeString& id = *static_cast<const UnicodeString*>(elem->key.pointer);
             if (!visible) {
                 result.remove(id);
             } else {

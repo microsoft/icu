@@ -34,16 +34,13 @@ public:
 
     void TestCoverage(void);
 
-    void TestSunriseTimes(void);
-
-    void TestBasics(void);
+    void TestBasics();
     
     void TestMoonAge(void);
  private:
-    void initAstro(UErrorCode&);
-    void closeAstro(UErrorCode&);
+    void init(UErrorCode&);
+    void close(UErrorCode&);
     
-    CalendarAstronomer *astro;
     Calendar *gc;
     
 };

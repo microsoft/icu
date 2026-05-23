@@ -78,9 +78,9 @@ void DateFormatRegressionTest::Test4029195(void)
     UErrorCode status = U_ZERO_ERROR;
 
     UDate today = Calendar::getNow();
-    logln((UnicodeString) "today: " + today);
+    logln(UnicodeString("today: ") + today);
 
-    SimpleDateFormat *sdf = (SimpleDateFormat*) DateFormat::createDateInstance();
+    SimpleDateFormat *sdf = dynamic_cast<SimpleDateFormat*>(DateFormat::createDateInstance());
     if (failure(status, "SimpleDateFormat::createDateInstance")) {
         return;
     }
@@ -105,7 +105,7 @@ void DateFormatRegressionTest::Test4029195(void)
     //try {
         today = sdf->parse(todayS, status);
         failure(status, "sdf->parse");
-        logln((UnicodeString)"today date: " + today);
+        logln(UnicodeString("today date: ") + today);
     /*} catch(Exception e) {
         logln("Error reparsing date: " + e.getMessage());
     }*/
@@ -144,29 +144,28 @@ void DateFormatRegressionTest::Test4052408(void)
     str = fmt->format(dt, str);
     logln(str);
     
-    /*MSFT-Change: Replace NNBSP with ascii space*/
-    if(str != u"5/3/97, 8:55 AM")
-        errln(UnicodeString(u"Fail: Test broken; Want 5/3/97, 8:55 AM Got ", -1) + str);
+    if(str != u"5/3/97, 8:55\u202FAM")
+        errln(UnicodeString(u"Fail: Test broken; Want 5/3/97, 8:55\u202FAM Got ", -1) + str);
     
     UnicodeString expected[] = {
-        (UnicodeString) "", //"ERA_FIELD",
-        (UnicodeString) "97", //"YEAR_FIELD",
-        (UnicodeString) "5", //"MONTH_FIELD",
-        (UnicodeString) "3", //"DATE_FIELD",
-        (UnicodeString) "", //"HOUR_OF_DAY1_FIELD",
-        (UnicodeString) "", //"HOUR_OF_DAY0_FIELD",
-        (UnicodeString) "55", //"MINUTE_FIELD",
-        (UnicodeString) "", //"SECOND_FIELD",
-        (UnicodeString) "", //"MILLISECOND_FIELD",
-        (UnicodeString) "", //"DAY_OF_WEEK_FIELD",
-        (UnicodeString) "", //"DAY_OF_YEAR_FIELD",
-        (UnicodeString) "", //"DAY_OF_WEEK_IN_MONTH_FIELD",
-        (UnicodeString) "", //"WEEK_OF_YEAR_FIELD",
-        (UnicodeString) "", //"WEEK_OF_MONTH_FIELD",
-        (UnicodeString) "AM", //"AM_PM_FIELD",
-        (UnicodeString) "8", //"HOUR1_FIELD",
-        (UnicodeString) "", //"HOUR0_FIELD",
-        (UnicodeString) "" //"TIMEZONE_FIELD"
+        UnicodeString(""),   //"ERA_FIELD",
+        UnicodeString("97"), //"YEAR_FIELD",
+        UnicodeString("5"),  //"MONTH_FIELD",
+        UnicodeString("3"),  //"DATE_FIELD",
+        UnicodeString(""),   //"HOUR_OF_DAY1_FIELD",
+        UnicodeString(""),   //"HOUR_OF_DAY0_FIELD",
+        UnicodeString("55"), //"MINUTE_FIELD",
+        UnicodeString(""),   //"SECOND_FIELD",
+        UnicodeString(""),   //"MILLISECOND_FIELD",
+        UnicodeString(""),   //"DAY_OF_WEEK_FIELD",
+        UnicodeString(""),   //"DAY_OF_YEAR_FIELD",
+        UnicodeString(""),   //"DAY_OF_WEEK_IN_MONTH_FIELD",
+        UnicodeString(""),   //"WEEK_OF_YEAR_FIELD",
+        UnicodeString(""),   //"WEEK_OF_MONTH_FIELD",
+        UnicodeString("AM"), //"AM_PM_FIELD",
+        UnicodeString("8"),  //"HOUR1_FIELD",
+        UnicodeString(""),   //"HOUR0_FIELD",
+        UnicodeString("")    //"TIMEZONE_FIELD"
     };
     
     //Hashtable expected;// = new Hashtable();
@@ -179,24 +178,24 @@ void DateFormatRegressionTest::Test4052408(void)
     
     //StringBuffer buf = new StringBuffer();
     UnicodeString fieldNames[] = {
-        (UnicodeString) "ERA_FIELD",
-        (UnicodeString) "YEAR_FIELD",
-        (UnicodeString) "MONTH_FIELD",
-        (UnicodeString) "DATE_FIELD",
-        (UnicodeString) "HOUR_OF_DAY1_FIELD",
-        (UnicodeString) "HOUR_OF_DAY0_FIELD",
-        (UnicodeString) "MINUTE_FIELD",
-        (UnicodeString) "SECOND_FIELD",
-        (UnicodeString) "MILLISECOND_FIELD",
-        (UnicodeString) "DAY_OF_WEEK_FIELD",
-        (UnicodeString) "DAY_OF_YEAR_FIELD",
-        (UnicodeString) "DAY_OF_WEEK_IN_MONTH_FIELD",
-        (UnicodeString) "WEEK_OF_YEAR_FIELD",
-        (UnicodeString) "WEEK_OF_MONTH_FIELD",
-        (UnicodeString) "AM_PM_FIELD",
-        (UnicodeString) "HOUR1_FIELD",
-        (UnicodeString) "HOUR0_FIELD",
-        (UnicodeString) "TIMEZONE_FIELD"
+        UnicodeString("ERA_FIELD"),
+        UnicodeString("YEAR_FIELD"),
+        UnicodeString("MONTH_FIELD"),
+        UnicodeString("DATE_FIELD"),
+        UnicodeString("HOUR_OF_DAY1_FIELD"),
+        UnicodeString("HOUR_OF_DAY0_FIELD"),
+        UnicodeString("MINUTE_FIELD"),
+        UnicodeString("SECOND_FIELD"),
+        UnicodeString("MILLISECOND_FIELD"),
+        UnicodeString("DAY_OF_WEEK_FIELD"),
+        UnicodeString("DAY_OF_YEAR_FIELD"),
+        UnicodeString("DAY_OF_WEEK_IN_MONTH_FIELD"),
+        UnicodeString("WEEK_OF_YEAR_FIELD"),
+        UnicodeString("WEEK_OF_MONTH_FIELD"),
+        UnicodeString("AM_PM_FIELD"),
+        UnicodeString("HOUR1_FIELD"),
+        UnicodeString("HOUR0_FIELD"),
+        UnicodeString("TIMEZONE_FIELD")
     };
 
     UBool pass = true;
@@ -208,9 +207,9 @@ void DateFormatRegressionTest::Test4052408(void)
         UnicodeString dst;
         buf.extractBetween(pos.getBeginIndex(), pos.getEndIndex(), dst);
         UnicodeString str(dst);
-        logln((UnicodeString)"" + i + (UnicodeString)": " + fieldNames[i] +
-                (UnicodeString)", \"" + str + (UnicodeString)"\", " +
-                pos.getBeginIndex() + (UnicodeString)", " +
+        logln(UnicodeString("") + i + UnicodeString(": ") + fieldNames[i] +
+                UnicodeString(", \"") + str + UnicodeString("\", ") +
+                pos.getBeginIndex() + UnicodeString(", ") +
                 pos.getEndIndex());
         UnicodeString exp = expected[i];
         if((exp.length() == 0 && str.length() == 0) || str == exp)
@@ -253,11 +252,11 @@ void DateFormatRegressionTest::Test4056591(void)
             date(1861-1900, UCAL_DECEMBER, 25),
         };
 
-        UnicodeString strings [] = {
-            (UnicodeString) "091225",
-            (UnicodeString) "091224",
-            (UnicodeString) "091226",
-            (UnicodeString) "611225"
+        UnicodeString strings[] = {
+            UnicodeString("091225"),
+            UnicodeString("091224"),
+            UnicodeString("091226"),
+            UnicodeString("611225")
         };
 
         /*Object[] DATA = {
@@ -365,8 +364,7 @@ void DateFormatRegressionTest::Test4060212(void)
     cal->setTime(myDate, status);
     failure(status, "cal->setTime");
     if ((cal->get(UCAL_DAY_OF_YEAR, status) != 40) || failure(status, "cal->get"))
-        errln((UnicodeString) "Fail: Got " + cal->get(UCAL_DAY_OF_YEAR, status) +
-                            " Want 40");
+        errln(UnicodeString("Fail: Got ") + cal->get(UCAL_DAY_OF_YEAR, status) + " Want 40");
 
     // this is an odd usage of "ddd" and it doesn't
     // work now that date values are range checked per #3579.
@@ -380,8 +378,7 @@ void DateFormatRegressionTest::Test4060212(void)
     cal->setTime(myDate, status);
     failure(status, "cal->setTime");
     if ((cal->get(UCAL_DAY_OF_YEAR, status) != 40) || failure(status, "cal->get"))
-        errln((UnicodeString) "Fail: Got " + cal->get(UCAL_DAY_OF_YEAR, status) +
-                            " Want 40");
+        errln(UnicodeString("Fail: Got ") + cal->get(UCAL_DAY_OF_YEAR, status) + " Want 40");
 }
 
 /**
@@ -519,8 +516,8 @@ void DateFormatRegressionTest::Test4071441(void)
     }
 
     // {sfb} Is it OK to cast away const here?
-    Calendar *calA = (Calendar*) fmtA->getCalendar();
-    Calendar *calB = (Calendar*) fmtB->getCalendar();
+    Calendar *calA = const_cast<Calendar*>(fmtA->getCalendar());
+    Calendar *calB = const_cast<Calendar*>(fmtB->getCalendar());
     if(!calA || !calB) {
       errln("Couldn't get proper calendars, exiting");
       delete fmtA;
@@ -574,11 +571,11 @@ void DateFormatRegressionTest::Test4073003(void)
         dataerrln("FAIL: SimpleDateFormat constructor - %s", u_errorName(ec));
         return;
     }
-        UnicodeString tests [] = { 
-            (UnicodeString) "12/25/61", 
-            (UnicodeString) "12/25/1961", 
-            (UnicodeString) "4/3/2010", 
-            (UnicodeString) "4/3/10" 
+        UnicodeString tests[] = {
+            UnicodeString("12/25/61"),
+            UnicodeString("12/25/1961"),
+            UnicodeString("4/3/2010"),
+            UnicodeString("4/3/10")
         };
         UErrorCode status = U_ZERO_ERROR;
         for(int i= 0; i < 4; i+=2) {
@@ -591,9 +588,9 @@ void DateFormatRegressionTest::Test4073003(void)
             UnicodeString ss;
             ss = fmt.format(dd, ss);
             if (d != dd)
-                errln((UnicodeString) "Fail: " + d + " != " + dd);
+                errln(UnicodeString("Fail: ") + d + " != " + dd);
             if (s != ss)
-                errln((UnicodeString)"Fail: " + s + " != " + ss);
+                errln(UnicodeString("Fail: ") + s + " != " + ss);
             logln("Ok: " + s + " " + d);
         }
 }
@@ -605,7 +602,7 @@ void DateFormatRegressionTest::Test4089106(void)
 {
     TimeZone *def = TimeZone::createDefault();
     //try {
-        TimeZone *z = new SimpleTimeZone((int)(1.25 * 3600000), "FAKEZONE");
+        TimeZone* z = new SimpleTimeZone(static_cast<int>(1.25 * 3600000), "FAKEZONE");
         TimeZone::setDefault(*z);
         UErrorCode status = U_ZERO_ERROR;
         SimpleDateFormat *f = new SimpleDateFormat(status);
@@ -796,10 +793,10 @@ void DateFormatRegressionTest::Test4104136(void)
     sdf->applyPattern(pattern); 
     logln("pattern: \"" + pattern + "\""); 
 
-    UnicodeString strings [] = {
-        (UnicodeString)"time 10:30",
-        (UnicodeString) "time 10:x",
-        (UnicodeString) "time 10x"
+    UnicodeString strings[] = {
+        UnicodeString("time 10:30"),
+        UnicodeString("time 10:x"),
+        UnicodeString("time 10x")
     };
 
     ParsePosition ppos [] = {
@@ -829,11 +826,11 @@ void DateFormatRegressionTest::Test4104136(void)
         UDate d = sdf->parse(text, pos);
         logln(" text: \"" + text + "\""); 
         logln(" index: %d", pos.getIndex()); 
-        logln((UnicodeString) " result: " + d);
+        logln(UnicodeString(" result: ") + d);
         if(pos.getIndex() != finish.getIndex())
             errln(UnicodeString("Fail: Expected pos ") + finish.getIndex());
         if (! ((d == 0 && exp == -1) || (d == exp)))
-            errln((UnicodeString) "Fail: Expected result " + exp);
+            errln(UnicodeString("Fail: Expected result ") + exp);
     }
 
     delete sdf;
@@ -907,11 +904,11 @@ void DateFormatRegressionTest::Test4106807(void)
     failure(status, "new SimpleDateFormat");
     
     UnicodeString strings [] = {
-        (UnicodeString) "19980211140000",
-        (UnicodeString) "19980211140000",
-        (UnicodeString) "19980211140000",
-        (UnicodeString) "19980211140000a",
-        (UnicodeString) "19980211140000 "
+        UnicodeString("19980211140000"),
+        UnicodeString("19980211140000"),
+        UnicodeString("19980211140000"),
+        UnicodeString("19980211140000a"),
+        UnicodeString("19980211140000 ")
     };
 
     /*Object[] data = {
@@ -1114,7 +1111,7 @@ void DateFormatRegressionTest::Test4182066(void) {
         "09/12/001",
     };
     int32_t STRINGS_COUNT = UPRV_LENGTHOF(STRINGS);
-    UDate FAIL_DATE = (UDate) 0;
+    UDate FAIL_DATE = static_cast<UDate>(0);
     UDate DATES[] = {
         date(2000-1900, UCAL_FEBRUARY, 29),
         date(2001-1900, UCAL_JANUARY,  23),
@@ -1141,7 +1138,7 @@ void DateFormatRegressionTest::Test4182066(void) {
             actStr.append("null");
         } else {
             // Yuck: See j25
-            ((DateFormat*)&dispFmt)->format(actual, actStr);
+            (dynamic_cast<DateFormat*>(&dispFmt))->format(actual, actStr);
         }
 
         if (expected == actual) {
@@ -1152,7 +1149,7 @@ void DateFormatRegressionTest::Test4182066(void) {
                 expStr.append("null");
             } else {
                 // Yuck: See j25
-                ((DateFormat*)&dispFmt)->format(expected, expStr);
+                (dynamic_cast<DateFormat*>(&dispFmt))->format(expected, expStr);
             }
             out.append("FAIL: " + str + " => " + actStr
                        + ", expected " + expStr + "\n");
@@ -1176,8 +1173,8 @@ DateFormatRegressionTest::Test4210209(void) {
     UnicodeString pattern("MMM d, yyyy");
     SimpleDateFormat sfmt(pattern, Locale::getUS(), status);
     SimpleDateFormat sdisp("MMM dd yyyy GG", Locale::getUS(), status);
-    DateFormat& fmt = *(DateFormat*)&sfmt; // Yuck: See j25
-    DateFormat& disp = *(DateFormat*)&sdisp; // Yuck: See j25
+    DateFormat& fmt = *dynamic_cast<DateFormat*>(&sfmt); // Yuck: See j25
+    DateFormat& disp = *dynamic_cast<DateFormat*>(&sdisp); // Yuck: See j25
     if (U_FAILURE(status)) {
         dataerrln("Couldn't create SimpleDateFormat - %s", u_errorName(status));
         return;
@@ -1229,21 +1226,19 @@ void DateFormatRegressionTest::Test714(void)
         return;
     }
 
-    /*MSFT-Change: Replace NNBSP with ascii space*/
     UnicodeString s;
-        UnicodeString tests = 
-          (UnicodeString) u"7:25:43 AM" ;
+        UnicodeString tests = UnicodeString(u"7:25:43\u202FAM");
         UErrorCode status = U_ZERO_ERROR;
         fmt->format (d,s);
         if(U_FAILURE(status))
           {
-            errln((UnicodeString) "Fail, errmsg " + u_errorName(status));
+            errln(UnicodeString("Fail, errmsg ") + u_errorName(status));
             return;
           }
         
         if(s != tests)
         {
-          errln((UnicodeString) "Fail: " + s + " != " + tests);
+          errln(UnicodeString("Fail: ") + s + " != " + tests);
         }
         else
         {
@@ -1356,7 +1351,7 @@ void DateFormatRegressionTest::Test1684(void)
     UDate ms2 = cal->getTime(status);
             
     if (ms2 != ms) {
-      errln((UnicodeString)"\nError: GregorianUCAL_DOM gave " + ms +
+      errln(UnicodeString("\nError: GregorianUCAL_DOM gave ") + ms +
             "\n       GregorianUCAL_WOM gave " + ms2);
       error++;
     } else {
@@ -1369,7 +1364,7 @@ void DateFormatRegressionTest::Test1684(void)
     }
     
     if (ms2!=ms) {
-      errln((UnicodeString)"\nError: GregorianCalendar gave      " + ms +
+      errln(UnicodeString("\nError: GregorianCalendar gave      ") + ms +
             "\n       SimpleDateFormat.parse gave " + ms2);
       error++;
     } else {
@@ -1390,12 +1385,12 @@ void DateFormatRegressionTest::Test1684(void)
     UDate ms3;
     ms3 = sdf->parse(result, status);
     if(U_FAILURE(status)) {
-      errln("parse exception 2: " + (UnicodeString)u_errorName(status));
+      errln("parse exception 2: " + UnicodeString(u_errorName(status)));
     }
     
     if (ms3!=ms) {
       error++;
-      errln((UnicodeString)"\nError: Re-parse of '" + result + "' gave time of " +
+      errln(UnicodeString("\nError: Re-parse of '") + result + "' gave time of " +
           "\n        " + ms3 +
           "\n    not " + ms);
     } else {

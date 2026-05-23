@@ -427,7 +427,7 @@ TimeZoneBoundaryTest::TestNewRules()
         SimpleTimeZone *tz;
         logln("-----------------------------------------------------------------");
         logln("Aug 2ndTues .. Mar 15");
-        tz = new SimpleTimeZone(- 8 * (int32_t)ONE_HOUR, "Test_1", UCAL_AUGUST, 2, UCAL_TUESDAY, 2 * (int32_t)ONE_HOUR, UCAL_MARCH, 15, 0, 2 * (int32_t)ONE_HOUR, status);
+        tz = new SimpleTimeZone(-8 * static_cast<int32_t>(ONE_HOUR), "Test_1", UCAL_AUGUST, 2, UCAL_TUESDAY, 2 * static_cast<int32_t>(ONE_HOUR), UCAL_MARCH, 15, 0, 2 * static_cast<int32_t>(ONE_HOUR), status);
         logln("========================================");
         testUsingBinarySearch(tz, date(97, 0, 1), 858416400000.0);
         logln("========================================");
@@ -435,7 +435,7 @@ TimeZoneBoundaryTest::TestNewRules()
         delete tz;
         logln("-----------------------------------------------------------------");
         logln("Apr Wed>=14 .. Sep Sun<=20");
-        tz = new SimpleTimeZone(- 8 * (int32_t)ONE_HOUR, "Test_2", UCAL_APRIL, 14, - UCAL_WEDNESDAY, 2 *(int32_t)ONE_HOUR, UCAL_SEPTEMBER, - 20, - UCAL_SUNDAY, 2 * (int32_t)ONE_HOUR, status);
+        tz = new SimpleTimeZone(-8 * static_cast<int32_t>(ONE_HOUR), "Test_2", UCAL_APRIL, 14, -UCAL_WEDNESDAY, 2 * static_cast<int32_t>(ONE_HOUR), UCAL_SEPTEMBER, -20, -UCAL_SUNDAY, 2 * static_cast<int32_t>(ONE_HOUR), status);
         logln("========================================");
         testUsingBinarySearch(tz, date(97, 0, 1), 861184800000.0);
         logln("========================================");

@@ -81,10 +81,9 @@ USearchAttributeValue SearchIterator::getAttribute(
 {
     switch (attribute) {
     case USEARCH_OVERLAP :
-        return (m_search_->isOverlap == true ? USEARCH_ON : USEARCH_OFF);
+        return (m_search_->isOverlap ? USEARCH_ON : USEARCH_OFF);
     case USEARCH_CANONICAL_MATCH :
-        return (m_search_->isCanonicalMatch == true ? USEARCH_ON : 
-                                                                USEARCH_OFF);
+        return (m_search_->isCanonicalMatch ? USEARCH_ON : USEARCH_OFF);
     case USEARCH_ELEMENT_COMPARISON :
         {
             int16_t value = m_search_->elementComparisonType;
@@ -137,7 +136,7 @@ void SearchIterator::setBreakIterator(BreakIterator *breakiter,
         //
         // Besides, a UBreakIterator is a BreakIterator, so
         // any subclass of BreakIterator should work fine here...
-        m_search_->breakIter = (UBreakIterator *) breakiter;
+        m_search_->breakIter = reinterpret_cast<UBreakIterator*>(breakiter);
 #endif
         
         m_breakiterator_ = breakiter;
@@ -191,8 +190,9 @@ bool SearchIterator::operator==(const SearchIterator &that) const
             m_search_->matchedLength    == that.m_search_->matchedLength &&
             m_search_->textLength       == that.m_search_->textLength &&
             getOffset() == that.getOffset() &&
+            (m_search_->textLength == 0 ||
             (uprv_memcmp(m_search_->text, that.m_search_->text, 
-                              m_search_->textLength * sizeof(UChar)) == 0));
+                              m_search_->textLength * sizeof(char16_t)) == 0)));
 }
 
 // public methods ----------------------------------------------------
@@ -242,7 +242,7 @@ int32_t SearchIterator::next(UErrorCode &status)
         int32_t matchindex  = m_search_->matchedIndex;
         int32_t     matchlength = m_search_->matchedLength;
         m_search_->reset = false;
-        if (m_search_->isForwardSearching == true) {
+        if (m_search_->isForwardSearching) {
             int32_t textlength = m_search_->textLength;
             if (offset == textlength || matchindex == textlength || 
                 (matchindex != USEARCH_DONE && 
@@ -295,7 +295,7 @@ int32_t SearchIterator::previous(UErrorCode &status)
         }
         
         int32_t matchindex = m_search_->matchedIndex;
-        if (m_search_->isForwardSearching == true) {
+        if (m_search_->isForwardSearching) {
             // switching direction. 
             // if matchedIndex == USEARCH_DONE, it means that either a 
             // setOffset has been called or that next ran off the text

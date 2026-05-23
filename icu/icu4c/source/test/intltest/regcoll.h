@@ -237,6 +237,13 @@ public:
     void TestTrailingComment();
     void TestBeforeWithTooStrongAfter();
 
+    // Test use-of-uninitialized-value
+    void TestICU22277();
+
+    void TestICU22517();
+
+    void TestICU22555InfinityLoop();
+
 private:
     //------------------------------------------------------------------------
     // Internal utilities

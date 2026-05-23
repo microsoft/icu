@@ -180,21 +180,21 @@ void IntlTestDecimalFormatSymbols::testSymbols(/* char *par */)
     }
 
     // test get/setSymbol()
-    if((int) UNUM_FORMAT_SYMBOL_COUNT != (int) DecimalFormatSymbols::kFormatSymbolCount) {
+    if (static_cast<int>(UNUM_FORMAT_SYMBOL_COUNT) != static_cast<int>(DecimalFormatSymbols::kFormatSymbolCount)) {
         errln("unum.h and decimfmt.h have inconsistent numbers of format symbols!");
         return;
     }
 
     int i;
-    for(i = 0; i < (int)DecimalFormatSymbols::kFormatSymbolCount; ++i) {
-        foo.setSymbol((DecimalFormatSymbols::ENumberFormatSymbol)i, UnicodeString((UChar32)(0x10330 + i)));
+    for (i = 0; i < static_cast<int>(DecimalFormatSymbols::kFormatSymbolCount); ++i) {
+        foo.setSymbol(static_cast<DecimalFormatSymbols::ENumberFormatSymbol>(i), UnicodeString(static_cast<UChar32>(0x10330 + i)));
     }
-    for(i = 0; i < (int)DecimalFormatSymbols::kFormatSymbolCount; ++i) {
-        if(foo.getSymbol((DecimalFormatSymbols::ENumberFormatSymbol)i) != UnicodeString((UChar32)(0x10330 + i))) {
+    for (i = 0; i < static_cast<int>(DecimalFormatSymbols::kFormatSymbolCount); ++i) {
+        if (foo.getSymbol(static_cast<DecimalFormatSymbols::ENumberFormatSymbol>(i)) != UnicodeString(static_cast<UChar32>(0x10330 + i))) {
             errln("get/setSymbol did not roundtrip, got " +
                   foo.getSymbol((DecimalFormatSymbols::ENumberFormatSymbol)i) +
                   ", expected " +
-                  UnicodeString((UChar32)(0x10330 + i)));
+                  UnicodeString(static_cast<UChar32>(0x10330 + i)));
         }
     }
 
@@ -384,7 +384,7 @@ void IntlTestDecimalFormatSymbols::testNumberingSystem() {
         Verify(1234.56, "#,##0.##", dfs, expected1);
         // The percent sign differs by numbering system.
         UnicodeString actual2 = dfs.getSymbol(DecimalFormatSymbols::kPercentSymbol);
-        assertEquals((UnicodeString) "Percent sign with " + cas.locid + " and " + cas.nsname,
+        assertEquals(UnicodeString("Percent sign with ") + cas.locid + " and " + cas.nsname,
             expected2,
             actual2);
     }
@@ -401,7 +401,7 @@ void IntlTestDecimalFormatSymbols::Verify(double value, const UnicodeString& pat
     FieldPosition pos(FieldPosition::DONT_CARE);
     buffer = df.format(value, buffer, pos);
     if(buffer != expected){
-        errln((UnicodeString)"ERROR: format() returns wrong result\n Expected " +
+        errln(UnicodeString("ERROR: format() returns wrong result\n Expected ") +
             expected + ", Got " + buffer);
     }
 }

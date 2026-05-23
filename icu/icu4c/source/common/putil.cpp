@@ -46,11 +46,6 @@
 // First, the platform type. Need this for U_PLATFORM.
 #include "unicode/platform.h"
 
-#if U_PLATFORM == U_PF_MINGW && defined __STRICT_ANSI__
-/* tzset isn't defined in strict ANSI on MinGW. */
-#undef __STRICT_ANSI__
-#endif
-
 /*
  * Cygwin with GCC requires inclusion of time.h after the above disabling strict asci mode statement.
  */
@@ -71,7 +66,6 @@
 #include "locmap.h"
 #include "ucln_cmn.h"
 #include "charstr.h"
-#include "uprefs.h"
 
 /* Include standard headers. */
 #include <stdio.h>
@@ -82,7 +76,7 @@
 #include <float.h>
 
 #ifndef U_COMMON_IMPLEMENTATION
-#error U_COMMON_IMPLEMENTATION not set - must be set for all ICU source files in common/ - see https://unicode-org.github.io/icu/userguide/howtouseicu
+#error U_COMMON_IMPLEMENTATION not set - must be set for all ICU source files in common/ - see https://unicode-org.github.io/icu/userguide/icu/howtouseicu.html
 #endif
 
 
@@ -181,8 +175,8 @@ typedef union {
     int64_t i64; /* This must be defined first in order to allow the initialization to work. This is a C89 feature. */
     double d64;
 } BitPatternConversion;
-static const BitPatternConversion gNan = { (int64_t) INT64_C(0x7FF8000000000000) };
-static const BitPatternConversion gInf = { (int64_t) INT64_C(0x7FF0000000000000) };
+static const BitPatternConversion gNan = {static_cast<int64_t>(INT64_C(0x7FF8000000000000))};
+static const BitPatternConversion gInf = {static_cast<int64_t>(INT64_C(0x7FF0000000000000))};
 
 /*---------------------------------------------------------------------------
   Platform utilities
@@ -231,7 +225,7 @@ u_signBit(double d) {
 #if U_IS_BIG_ENDIAN
     hiByte = *(uint8_t *)&d;
 #else
-    hiByte = *(((uint8_t *)&d) + sizeof(double) - 1);
+    hiByte = *(reinterpret_cast<uint8_t*>(&d) + sizeof(double) - 1);
 #endif
     return (hiByte & 0x80) != 0;
 }
@@ -348,7 +342,7 @@ uprv_isNaN(double number)
     BitPatternConversion convertedNumber;
     convertedNumber.d64 = number;
     /* Infinity is 0x7FF0000000000000U. Anything greater than that is a NaN */
-    return (UBool)((convertedNumber.i64 & U_INT64_MAX) > gInf.i64);
+    return (convertedNumber.i64 & U_INT64_MAX) > gInf.i64;
 
 #elif U_PLATFORM == U_PF_OS390
     uint32_t highBits = *(uint32_t*)u_topNBytesOfDouble(&number,
@@ -374,7 +368,7 @@ uprv_isInfinite(double number)
     BitPatternConversion convertedNumber;
     convertedNumber.d64 = number;
     /* Infinity is exactly 0x7FF0000000000000U. */
-    return (UBool)((convertedNumber.i64 & U_INT64_MAX) == gInf.i64);
+    return (convertedNumber.i64 & U_INT64_MAX) == gInf.i64;
 #elif U_PLATFORM == U_PF_OS390
     uint32_t highBits = *(uint32_t*)u_topNBytesOfDouble(&number,
                         sizeof(uint32_t));
@@ -395,7 +389,7 @@ U_CAPI UBool U_EXPORT2
 uprv_isPositiveInfinity(double number)
 {
 #if IEEE_754 || U_PLATFORM == U_PF_OS390
-    return (UBool)(number > 0 && uprv_isInfinite(number));
+    return number > 0 && uprv_isInfinite(number);
 #else
     return uprv_isInfinite(number);
 #endif
@@ -405,7 +399,7 @@ U_CAPI UBool U_EXPORT2
 uprv_isNegativeInfinity(double number)
 {
 #if IEEE_754 || U_PLATFORM == U_PF_OS390
-    return (UBool)(number < 0 && uprv_isInfinite(number));
+    return number < 0 && uprv_isInfinite(number);
 
 #else
     uint32_t highBits = *(uint32_t*)u_topNBytesOfDouble(&number,
@@ -723,7 +717,7 @@ extern U_IMPORT char *U_TZNAME[];
 #include <dirent.h>  /* Needed to search through system timezone files */
 #endif
 static char gTimeZoneBuffer[PATH_MAX];
-static char *gTimeZoneBufferPtr = NULL;
+static const char *gTimeZoneBufferPtr = nullptr;
 #endif
 
 #if !U_PLATFORM_USES_ONLY_WIN32_API
@@ -750,11 +744,11 @@ static UBool isValidOlsonID(const char *id) {
     The timezone is sometimes set to "CST-7CDT", "CST6CDT5,J129,J131/19:30",
     "GRNLNDST3GRNLNDDT" or similar, so we cannot use it.
     The rest of the time it could be an Olson ID. George */
-    return (UBool)(id[idx] == 0
+    return id[idx] == 0
         || uprv_strcmp(id, "PST8PDT") == 0
         || uprv_strcmp(id, "MST7MDT") == 0
         || uprv_strcmp(id, "CST6CDT") == 0
-        || uprv_strcmp(id, "EST5EDT") == 0);
+        || uprv_strcmp(id, "EST5EDT") == 0;
 }
 
 /* On some Unix-like OS, 'posix' subdirectory in
@@ -933,7 +927,7 @@ static UBool compareBinaryFiles(const char* defaultTZFileName, const char* TZFil
              */
             if (tzInfo->defaultTZBuffer == NULL) {
                 rewind(tzInfo->defaultTZFilePtr);
-                tzInfo->defaultTZBuffer = (char*)uprv_malloc(sizeof(char) * tzInfo->defaultTZFileSize);
+                tzInfo->defaultTZBuffer = static_cast<char*>(uprv_malloc(sizeof(char) * tzInfo->defaultTZFileSize));
                 sizeFileRead = fread(tzInfo->defaultTZBuffer, 1, tzInfo->defaultTZFileSize, tzInfo->defaultTZFilePtr);
             }
             rewind(file);
@@ -1172,16 +1166,31 @@ uprv_tzname(int n)
         because the tzfile contents is underspecified.
         This isn't guaranteed to work because it may not be a symlink.
         */
-        int32_t ret = (int32_t)readlink(TZDEFAULT, gTimeZoneBuffer, sizeof(gTimeZoneBuffer)-1);
-        if (0 < ret) {
+        char *ret = realpath(TZDEFAULT, gTimeZoneBuffer);
+        if (ret != nullptr && uprv_strcmp(TZDEFAULT, gTimeZoneBuffer) != 0) {
             int32_t tzZoneInfoTailLen = uprv_strlen(TZZONEINFOTAIL);
-            gTimeZoneBuffer[ret] = 0;
-            char *  tzZoneInfoTailPtr = uprv_strstr(gTimeZoneBuffer, TZZONEINFOTAIL);
-
-            if (tzZoneInfoTailPtr != NULL
-                && isValidOlsonID(tzZoneInfoTailPtr + tzZoneInfoTailLen))
-            {
-                return (gTimeZoneBufferPtr = tzZoneInfoTailPtr + tzZoneInfoTailLen);
+            const char *tzZoneInfoTailPtr = uprv_strstr(gTimeZoneBuffer, TZZONEINFOTAIL);
+            // MacOS14 has the realpath as something like
+            // /usr/share/zoneinfo.default/Australia/Melbourne
+            // which will not have "/zoneinfo/" in the path.
+            // Therefore if we fail, we fall back to read the link which is
+            // /var/db/timezone/zoneinfo/Australia/Melbourne
+            // We also fall back to reading the link if the realpath leads to something like
+            // /usr/share/zoneinfo/posixrules
+            if (tzZoneInfoTailPtr == nullptr ||
+                    uprv_strcmp(tzZoneInfoTailPtr + tzZoneInfoTailLen, "posixrules") == 0) {
+                ssize_t size = readlink(TZDEFAULT, gTimeZoneBuffer, sizeof(gTimeZoneBuffer)-1);
+                if (size > 0) {
+                    gTimeZoneBuffer[size] = 0;
+                    tzZoneInfoTailPtr = uprv_strstr(gTimeZoneBuffer, TZZONEINFOTAIL);
+                }
+            }
+            if (tzZoneInfoTailPtr != nullptr) {
+                tzZoneInfoTailPtr += tzZoneInfoTailLen;
+                skipZoneIDPrefix(&tzZoneInfoTailPtr);
+                if (isValidOlsonID(tzZoneInfoTailPtr)) {
+                    return (gTimeZoneBufferPtr = tzZoneInfoTailPtr);
+                }
             }
         } else {
 #if defined(SEARCH_TZFILE)
@@ -1464,7 +1473,7 @@ static void U_CALLCONV dataDirectoryInitFn() {
 # endif
 # if defined(ICU_DATA_DIR_PREFIX_ENV_VAR)
         if (prefix != NULL) {
-            snprintf(datadir_path_buffer, PATH_MAX, "%s%s", prefix, path);
+            snprintf(datadir_path_buffer, sizeof(datadir_path_buffer), "%s%s", prefix, path);
             path=datadir_path_buffer;
         }
 # endif
@@ -1484,7 +1493,6 @@ static void U_CALLCONV dataDirectoryInitFn() {
     }
 
     u_setDataDirectory(path);
-    return;
 }
 
 U_CAPI const char * U_EXPORT2
@@ -1554,7 +1562,7 @@ static void U_CALLCONV TimeZoneDataDirInitFn(UErrorCode &status) {
 
 #if defined(ICU_TIMEZONE_FILES_DIR_PREFIX_ENV_VAR)
     if (prefix != NULL) {
-        snprintf(timezonefilesdir_path_buffer, PATH_MAX, "%s%s", prefix, dir);
+        snprintf(timezonefilesdir_path_buffer, sizeof(timezonefilesdir_path_buffer), "%s%s", prefix, dir);
         dir = timezonefilesdir_path_buffer;
     }
 #endif
@@ -1608,7 +1616,7 @@ static const char *uprv_getPOSIXIDForCategory(int category)
         * of NULL, will modify the libc behavior.
         */
         posixID = setlocale(category, NULL);
-        if ((posixID == 0)
+        if ((posixID == nullptr)
             || (uprv_strcmp("C", posixID) == 0)
             || (uprv_strcmp("POSIX", posixID) == 0))
         {
@@ -1622,16 +1630,16 @@ static const char *uprv_getPOSIXIDForCategory(int category)
                 posixID = getenv(category == LC_MESSAGES ? "LC_MESSAGES" : "LC_CTYPE");
                 if ((posixID == 0) || (posixID[0] == '\0')) {
 #else
-            if (posixID == 0) {
+            if (posixID == nullptr) {
                 posixID = getenv(category == LC_MESSAGES ? "LC_MESSAGES" : "LC_CTYPE");
-                if (posixID == 0) {
+                if (posixID == nullptr) {
 #endif
                     posixID = getenv("LANG");
                 }
             }
         }
     }
-    if ((posixID==0)
+    if ((posixID == nullptr)
         || (uprv_strcmp("C", posixID) == 0)
         || (uprv_strcmp("POSIX", posixID) == 0))
     {
@@ -1651,7 +1659,7 @@ static const char *uprv_getPOSIXIDForCategory(int category)
 static const char *uprv_getPOSIXIDForDefaultLocale(void)
 {
     static const char* posixID = NULL;
-    if (posixID == 0) {
+    if (posixID == nullptr) {
         posixID = uprv_getPOSIXIDForCategory(LC_MESSAGES);
     }
     return posixID;
@@ -1786,37 +1794,10 @@ The leftmost codepage (.xxx) wins.
     return posixID;
 
 #elif U_PLATFORM_USES_ONLY_WIN32_API
+#define POSIX_LOCALE_CAPACITY 64
     UErrorCode status = U_ZERO_ERROR;
     char *correctedPOSIXLocale = nullptr;
 
-#if UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY 
-
-    int32_t neededBufferSize = uprefs_getBCP47Tag(nullptr, 0, &status);
-    MaybeStackArray<char,ULOC_FULLNAME_CAPACITY> windowsLocale(neededBufferSize, status);
-    int32_t length = uprefs_getBCP47Tag(windowsLocale.getAlias(), neededBufferSize, &status);
-
-    if (length > 0) // If length is 0, then the call to uprefs_getBCP47Tag failed.
-    {
-        // Now normalize the resulting name
-        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(length * 2));
-        /* TODO: Should we just exit on memory allocation failure? */
-        if (correctedPOSIXLocale)
-        {
-            int32_t posixLen = uloc_canonicalize(windowsLocale.getAlias(), correctedPOSIXLocale, length * 2, &status);
-            if (U_SUCCESS(status))
-            {
-                *(correctedPOSIXLocale + posixLen) = 0;
-                gCorrectedPOSIXLocale = correctedPOSIXLocale;
-                gCorrectedPOSIXLocaleHeapAllocated = true;
-                ucln_common_registerCleanup(UCLN_COMMON_PUTIL, putil_cleanup);
-            }
-            else
-            {
-                uprv_free(correctedPOSIXLocale);
-            }
-        }
-    }
-#else
     // If we have already figured this out just use the cached value
     if (gCorrectedPOSIXLocale != nullptr) {
         return gCorrectedPOSIXLocale;
@@ -1858,11 +1839,11 @@ The leftmost codepage (.xxx) wins.
         }
 
         // Now normalize the resulting name
-        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(length * 2));
+        correctedPOSIXLocale = static_cast<char *>(uprv_malloc(POSIX_LOCALE_CAPACITY + 1));
         /* TODO: Should we just exit on memory allocation failure? */
         if (correctedPOSIXLocale)
         {
-            int32_t posixLen = uloc_canonicalize(modifiedWindowsLocale, correctedPOSIXLocale, length * 2, &status);
+            int32_t posixLen = uloc_canonicalize(modifiedWindowsLocale, correctedPOSIXLocale, POSIX_LOCALE_CAPACITY, &status);
             if (U_SUCCESS(status))
             {
                 *(correctedPOSIXLocale + posixLen) = 0;
@@ -1876,7 +1857,6 @@ The leftmost codepage (.xxx) wins.
             }
         }
     }
-#endif
 
     // If unable to find a locale we can agree upon, use en-US by default
     if (gCorrectedPOSIXLocale == nullptr) {
@@ -2120,9 +2100,9 @@ getCodepageFromPOSIXID(const char *localeName, char * buffer, int32_t buffCapaci
     if (localeName != NULL && (name = (uprv_strchr(localeName, '.'))) != NULL) {
         size_t localeCapacity = uprv_min(sizeof(localeBuf), (name-localeName)+1);
         uprv_strncpy(localeBuf, localeName, localeCapacity);
-        localeBuf[localeCapacity-1] = 0; /* ensure NULL termination */
+        localeBuf[localeCapacity-1] = 0; /* ensure NUL termination */
         name = uprv_strncpy(buffer, name+1, buffCapacity);
-        buffer[buffCapacity-1] = 0; /* ensure NULL termination */
+        buffer[buffCapacity-1] = 0; /* ensure NUL termination */
         if ((variant = const_cast<char *>(uprv_strchr(name, '@'))) != NULL) {
             *variant = 0;
         }
@@ -2161,7 +2141,7 @@ int_getDefaultCodepage()
 
     strncpy(codepage, nl_langinfo(CODESET),63-strlen(UCNV_SWAP_LFNL_OPTION_STRING));
     strcat(codepage,UCNV_SWAP_LFNL_OPTION_STRING);
-    codepage[63] = 0; /* NULL terminate */
+    codepage[63] = 0; /* NUL terminate */
 
     return codepage;
 

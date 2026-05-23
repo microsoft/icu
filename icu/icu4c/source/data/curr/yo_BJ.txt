@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 yo_BJ{
     Currencies{
         AED{
@@ -391,6 +391,10 @@ yo_BJ{
             "EC$",
             "Dɔ́là Ilà Oòrùn Karíbíà",
         }
+        XCG{
+            "Cg.",
+            "Owó ìlú Kùrásɔ̀ àti Saint Mátìnì",
+        }
         XOF{
             "F CFA",
             "Faransì ìwɔ̀-oorùn Afíríkà",
@@ -611,9 +615,6 @@ yo_BJ{
         RSD{
             other{"àwɔn dínárì Sàbíà"}
         }
-        RUB{
-            other{"Owó ruble ti ilɛ̀ Rɔ́shíà"}
-        }
         RWF{
             other{"àwɔn faransi Ruwanda"}
         }
@@ -629,8 +630,11 @@ yo_BJ{
         SHP{
             other{"àwɔn pɔ́n-un Elena"}
         }
-        SLL{
+        SLE{
             other{"àwɔn líónì Sira Líonì"}
+        }
+        SLL{
+            other{"àwɔn líónì Sira Líonì (1964—2022)"}
         }
         SOS{
             other{"àwɔ́n shílè Somali"}
@@ -653,9 +657,6 @@ yo_BJ{
         UGX{
             other{"àwɔn shile Uganda"}
         }
-        USD{
-            other{"Dɔ́là ti Orílɛ̀-Èdè Amɛ́ríkà"}
-        }
         UYU{
             other{"àwɔn pɛ́sò Úrúgúwè"}
         }
@@ -668,11 +669,11 @@ yo_BJ{
         XCD{
             other{"àwɔn dɔ́là Ilà Oòrùn Karíbíà"}
         }
+        XCG{
+            other{"Owó ìlú Kùrásɔ̀ àti Saint Mátìnì"}
+        }
         XOF{
             other{"àwɔn faransì ìwɔ̀-oorùn Afíríkà"}
-        }
-        XXX{
-            other{"owóníná àìmɔ̀"}
         }
         ZMW{
             other{"àwɔn kàwasà Sámbíà"}

@@ -273,8 +273,8 @@ private:
      * @return        the stand-in character used to represent it.
      */
     UChar parseSet(const UnicodeString& rule,
-                   ParsePosition& pos,
-                   UErrorCode& status);
+                      ParsePosition& pos,
+                      UErrorCode& status);
 
     /**
      * Generate and return a stand-in for a new UnicodeFunctor.  Store

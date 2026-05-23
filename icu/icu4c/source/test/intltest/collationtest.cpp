@@ -11,6 +11,10 @@
 * created by: Markus W. Scherer
 */
 
+#include <map>
+#include <string>
+#include <vector>
+
 #include "unicode/utypes.h"
 
 #if !UCONFIG_NO_COLLATION
@@ -80,6 +84,12 @@ public:
     void TestDataDriven();
     void TestLongLocale();
     void TestBuilderContextsOverflow();
+    void TestHang22414();
+    void TestCollatorPredicates();
+    void TestUCollatorPredicates();
+    void TestCollatorPredicateTypes();
+    void TestUCollatorPredicateTypes();
+    void TestCollatorMap();
 
 private:
     void checkFCD(const char *name, CollationIterator &ci, CodePointIterator &cpi);
@@ -152,6 +162,12 @@ void CollationTest::runIndexedTest(int32_t index, UBool exec, const char *&name,
     TESTCASE_AUTO(TestDataDriven);
     TESTCASE_AUTO(TestLongLocale);
     TESTCASE_AUTO(TestBuilderContextsOverflow);
+    TESTCASE_AUTO(TestHang22414);
+    TESTCASE_AUTO(TestCollatorPredicates);
+    TESTCASE_AUTO(TestUCollatorPredicates);
+    TESTCASE_AUTO(TestCollatorPredicateTypes);
+    TESTCASE_AUTO(TestUCollatorPredicateTypes);
+    TESTCASE_AUTO(TestCollatorMap);
     TESTCASE_AUTO_END;
 }
 
@@ -200,7 +216,7 @@ void CollationTest::TestImplicits() {
 
     // Implicit primary weights should be assigned for the following sets,
     // and sort in ascending order by set and then code point.
-    // See http://www.unicode.org/reports/tr10/#Implicit_Weights
+    // See https://www.unicode.org/reports/tr10/#Implicit_Weights
 
     // core Han Unified Ideographs
     UnicodeSet coreHan("[\\p{unified_ideograph}&"
@@ -264,10 +280,10 @@ void CollationTest::TestImplicits() {
             }
             if((ce & 0xffffffff) != Collation::COMMON_SEC_AND_TER_CE) {
                 errln("%s: CollationIterator.nextCE(U+%04lx) has non-common sec/ter weights: %08lx",
-                      setName, (long)c, (long)(ce & 0xffffffff));
+                      setName, static_cast<long>(c), static_cast<long>(ce & 0xffffffff));
                 continue;
             }
-            uint32_t primary = (uint32_t)(ce >> 32);
+            uint32_t primary = static_cast<uint32_t>(ce >> 32);
             if(!(primary > prevPrimary) && inOrder.contains(c) && inOrder.contains(prev)) {
                 errln("%s: CE(U+%04lx)=%04lx.. not greater than CE(U+%04lx)=%04lx..",
                       setName, (long)c, (long)primary, (long)prev, (long)prevPrimary);
@@ -541,7 +557,7 @@ void CollationTest::checkAllocWeights(CollationWeights &cw,
             errln("CollationWeights::allocWeights(%lx, %lx, %ld).nextWeight() "
                   "number %ld -> %lx not between %lx and %lx",
                   (long)lowerLimit, (long)upperLimit, (long)n,
-                  (long)(i + 1), (long)w, (long)previous, (long)upperLimit);
+                  static_cast<long>(i + 1), static_cast<long>(w), static_cast<long>(previous), static_cast<long>(upperLimit));
             return;
         }
         if(CollationWeights::lengthOfWeight(w) == someLength) { ++count; }
@@ -694,7 +710,7 @@ UBool isValidCE(const CollationRootElements &re, const CollationData &data,
 }
 
 UBool isValidCE(const CollationRootElements &re, const CollationData &data, int64_t ce) {
-    uint32_t p = (uint32_t)(ce >> 32);
+    uint32_t p = static_cast<uint32_t>(ce >> 32);
     uint32_t secTer = (uint32_t)ce;
     return isValidCE(re, data, p, secTer >> 16, secTer & 0xffff);
 }
@@ -965,7 +981,7 @@ void CollationTest::TestTailoredElements() {
 UnicodeString CollationTest::printSortKey(const uint8_t *p, int32_t length) {
     UnicodeString s;
     for(int32_t i = 0; i < length; ++i) {
-        if(i > 0) { s.append((UChar)0x20); }
+        if (i > 0) { s.append(static_cast<char16_t>(0x20)); }
         uint8_t b = p[i];
         if(b == 0) {
             s.append((UChar)0x2e);  // period
@@ -996,7 +1012,7 @@ UBool CollationTest::readNonEmptyLine(UCHARBUF *f, IcuTestErrorCode &errorCode) 
         // Strip trailing CR/LF, comments, and spaces.
         const UChar *comment = u_memchr(line, 0x23, lineLength);  // '#'
         if(comment != NULL) {
-            lineLength = (int32_t)(comment - line);
+            lineLength = static_cast<int32_t>(comment - line);
         } else {
             while(lineLength > 0 && isCROrLF(line[lineLength - 1])) { --lineLength; }
         }
@@ -1270,7 +1286,7 @@ void CollationTest::buildTailoring(UCHARBUF *f, IcuTestErrorCode &errorCode) {
     if(errorCode.isFailure()) {
         dataerrln("RuleBasedCollator(rules) failed - %s", errorCode.errorName());
         infoln(UnicodeString("  reason: ") + reason);
-        if(parseError.offset >= 0) { infoln("  rules offset: %d", (int)parseError.offset); }
+        if (parseError.offset >= 0) { infoln("  rules offset: %d", static_cast<int>(parseError.offset)); }
         if(parseError.preContext[0] != 0 || parseError.postContext[0] != 0) {
             infoln(UnicodeString("  snippet: ...") +
                 parseError.preContext + "(!)" + parseError.postContext + "...");
@@ -1334,7 +1350,7 @@ UBool CollationTest::needsNormalization(const UnicodeString &s, UErrorCode &erro
     // those composites must be decomposed.
     // Check if s contains 0F71 immediately followed by 0F73 or 0F75 or 0F81.
     int32_t index = 0;
-    while((index = s.indexOf((UChar)0xf71, index)) >= 0) {
+    while ((index = s.indexOf(static_cast<char16_t>(0xf71), index)) >= 0) {
         if(++index < s.length()) {
             UChar c = s[index];
             if(c == 0xf73 || c == 0xf75 || c == 0xf81) { return true; }
@@ -1738,10 +1754,10 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
     //   sortkey(str1 + "\uFFFE" + str2) == mergeSortkeys(sortkey(str1), sortkey(str2))
     // only that those two methods yield the same order.
     //
-    // Use bit-wise OR so that getMergedCollationKey() is always called for both strings.
-    if((getMergedCollationKey(prevString.getBuffer(), prevString.length(), prevKey, errorCode) |
-                getMergedCollationKey(s.getBuffer(), s.length(), key, errorCode)) ||
-            errorCode.isFailure()) {
+    // Use two variables so that getMergedCollationKey() is always called for both strings.
+    if (UBool prev = getMergedCollationKey(prevString.getBuffer(), prevString.length(), prevKey, errorCode),
+              curr = getMergedCollationKey(s.getBuffer(), s.length(), key, errorCode);
+        prev || curr || errorCode.isFailure()) {
         order = prevKey.compareTo(key, errorCode);
         if(order != expectedOrder || errorCode.isFailure()) {
             infoln(fileTestName);
@@ -1879,6 +1895,22 @@ void CollationTest::TestLongLocale() {
     LocalPointer<Collator> coll(Collator::createInstance(longLocale, errorCode));
 }
 
+void CollationTest::TestHang22414() {
+    IcuTestErrorCode errorCode(*this, "TestHang22414");
+    const char* cases[] = {
+        "en", // just make sure the code work.
+        // The following hang before fixing ICU-22414
+        "sr-Latn-TH-t-su-BM-u-co-private-unihan-x-lvariant-zxsuhc-vss-vjf-0-kn-"
+        "uaktmtca-uce66u-vtcb1ik-ubsuuuk8-u3iucls-ue38925l-vau30i-u6uccttg-"
+        "u1iuylik-u-ueein-zzzz",
+    };
+    for(int32_t i = 0; i < UPRV_LENGTHOF(cases); i ++) {
+        icu::Locale l = icu::Locale::forLanguageTag(cases[i], errorCode);
+        // Make sure the following won't hang.
+        LocalPointer<Collator> coll(Collator::createInstance(l, errorCode));
+        errorCode.reset();
+    }
+}
 void CollationTest::TestBuilderContextsOverflow() {
     IcuTestErrorCode errorCode(*this, "TestBuilderContextsOverflow");
     // ICU-20715: Bad memory access in what looks like a bogus CharsTrie after
@@ -1905,6 +1937,189 @@ void CollationTest::TestBuilderContextsOverflow() {
     if(errorCode.isSuccess()) {
         logln("successfully built the Collator");
     }
+}
+
+// Verify that every Collator predicate performs the correct comparison.
+void CollationTest::TestCollatorPredicates() {
+    IcuTestErrorCode status(*this, "TestCollatorPredicates");
+    setRootCollator(status);
+    status.assertSuccess();
+
+    assertTrue("[01] equal_to", coll->equal_to()("aaa", "aaa"));
+    assertTrue("[02] not_equal_to", coll->not_equal_to()("aaa", "bbb"));
+
+    assertTrue("[03] greater", coll->greater()("bbb", "aaa"));
+    assertTrue("[04] less", coll->less()("aaa", "bbb"));
+
+    assertTrue("[05] greater_equal", coll->greater_equal()("aaa", "aaa"));
+    assertTrue("[06] greater_equal", coll->greater_equal()("bbb", "aaa"));
+    assertTrue("[07] less_equal", coll->less_equal()("aaa", "aaa"));
+    assertTrue("[08] less_equal", coll->less_equal()("aaa", "bbb"));
+
+    assertFalse("[09] equal_to", coll->equal_to()("aaa", "bbb"));
+    assertFalse("[10] not_equal_to", coll->not_equal_to()("aaa", "aaa"));
+
+    assertFalse("[11] greater", coll->greater()("aaa", "aaa"));
+    assertFalse("[12] greater", coll->greater()("aaa", "bbb"));
+    assertFalse("[13] less", coll->less()("aaa", "aaa"));
+    assertFalse("[14] less", coll->less()("bbb", "aaa"));
+
+    assertFalse("[15] greater_equal", coll->greater_equal()("aaa", "bbb"));
+    assertFalse("[16] less_equal", coll->less_equal()("bbb", "aaa"));
+}
+
+// Verify that every UCollator predicate performs the correct comparison.
+void CollationTest::TestUCollatorPredicates() {
+    using namespace U_HEADER_NESTED_NAMESPACE;
+    IcuTestErrorCode status(*this, "TestUCollatorPredicates");
+    setRootCollator(status);
+    status.assertSuccess();
+    const UCollator* const ucol = coll->toUCollator();
+
+    assertTrue("[01] equal_to", collator::equal_to(ucol)("aaa", "aaa"));
+    assertTrue("[02] not_equal_to", collator::not_equal_to(ucol)("aaa", "bbb"));
+
+    assertTrue("[03] greater", collator::greater(ucol)("bbb", "aaa"));
+    assertTrue("[04] less", collator::less(ucol)("aaa", "bbb"));
+
+    assertTrue("[05] greater_equal", collator::greater_equal(ucol)("aaa", "aaa"));
+    assertTrue("[06] greater_equal", collator::greater_equal(ucol)("bbb", "aaa"));
+    assertTrue("[07] less_equal", collator::less_equal(ucol)("aaa", "aaa"));
+    assertTrue("[08] less_equal", collator::less_equal(ucol)("aaa", "bbb"));
+
+    assertFalse("[09] equal_to", collator::equal_to(ucol)("aaa", "bbb"));
+    assertFalse("[10] not_equal_to", collator::not_equal_to(ucol)("aaa", "aaa"));
+
+    assertFalse("[11] greater", collator::greater(ucol)("aaa", "aaa"));
+    assertFalse("[12] greater", collator::greater(ucol)("aaa", "bbb"));
+    assertFalse("[13] less", collator::less(ucol)("aaa", "aaa"));
+    assertFalse("[14] less", collator::less(ucol)("bbb", "aaa"));
+
+    assertFalse("[15] greater_equal", collator::greater_equal(ucol)("aaa", "bbb"));
+    assertFalse("[16] less_equal", collator::less_equal(ucol)("bbb", "aaa"));
+}
+
+namespace {
+
+constexpr char16_t TEXT_CHAR16[] = u"char16";
+#if !U_CHAR16_IS_TYPEDEF && (!defined(_LIBCPP_VERSION) || _LIBCPP_VERSION < 180000)
+constexpr uint16_t TEXT_UINT16[] = { 0x75, 0x69, 0x6e, 0x74, 0x31, 0x36, 0x00 };
+#endif
+#if U_SIZEOF_WCHAR_T==2
+constexpr wchar_t TEXT_WCHAR[] = L"wchar";
+#endif
+
+constexpr char TEXT_CHAR[] = "char";
+#if defined(__cpp_char8_t)
+constexpr char8_t TEXT_CHAR8[] = u8"char8";
+#endif
+
+}  // namespace
+
+// Verify that the Collator predicates handle all string types.
+void CollationTest::TestCollatorPredicateTypes() {
+    IcuTestErrorCode status(*this, "TestCollatorPredicateTypes");
+    setRootCollator(status);
+    status.assertSuccess();
+    const auto equal_to = coll->equal_to();
+
+    assertTrue("char16_t", equal_to(TEXT_CHAR16, TEXT_CHAR16));
+    assertTrue("u16string_view", equal_to(std::u16string_view{TEXT_CHAR16}, TEXT_CHAR16));
+
+#if !U_CHAR16_IS_TYPEDEF && (!defined(_LIBCPP_VERSION) || _LIBCPP_VERSION < 180000)
+    assertTrue("uint16_t", equal_to(TEXT_UINT16, TEXT_UINT16));
+    assertTrue("basic_string_view<uint16_t>",
+               equal_to(std::basic_string_view<uint16_t>{TEXT_UINT16}, TEXT_UINT16));
+#endif
+
+#if U_SIZEOF_WCHAR_T==2
+    assertTrue("wchar_t", equal_to(TEXT_WCHAR, TEXT_WCHAR));
+    assertTrue("wstring_view", equal_to(std::wstring_view{TEXT_WCHAR}, TEXT_WCHAR));
+#endif
+
+    assertTrue("char", equal_to(TEXT_CHAR, TEXT_CHAR));
+    assertTrue("string_view", equal_to(std::string_view{TEXT_CHAR}, TEXT_CHAR));
+
+#if defined(__cpp_char8_t)
+    assertTrue("char8_t", equal_to(TEXT_CHAR8, TEXT_CHAR8));
+    assertTrue("u8string_view", equal_to(std::u8string_view{TEXT_CHAR8}, TEXT_CHAR8));
+#endif
+
+    assertTrue("UnicodeString", equal_to(UnicodeString::readOnlyAlias(TEXT_CHAR16), TEXT_CHAR16));
+    assertTrue("string", equal_to(std::string{TEXT_CHAR}, TEXT_CHAR));
+}
+
+// Verify that the UCollator predicates handle all string types.
+void CollationTest::TestUCollatorPredicateTypes() {
+    using namespace U_HEADER_NESTED_NAMESPACE;
+    IcuTestErrorCode status(*this, "TestUCollatorPredicateTypes");
+    setRootCollator(status);
+    status.assertSuccess();
+    const auto equal_to = collator::equal_to(coll->toUCollator());
+
+    assertTrue("char16_t", equal_to(TEXT_CHAR16, TEXT_CHAR16));
+    assertTrue("u16string_view", equal_to(std::u16string_view{TEXT_CHAR16}, TEXT_CHAR16));
+
+#if !U_CHAR16_IS_TYPEDEF && (!defined(_LIBCPP_VERSION) || _LIBCPP_VERSION < 180000)
+    assertTrue("uint16_t", equal_to(TEXT_UINT16, TEXT_UINT16));
+    assertTrue("basic_string_view<uint16_t>",
+               equal_to(std::basic_string_view<uint16_t>{TEXT_UINT16}, TEXT_UINT16));
+#endif
+
+#if U_SIZEOF_WCHAR_T==2
+    assertTrue("wchar_t", equal_to(TEXT_WCHAR, TEXT_WCHAR));
+    assertTrue("wstring_view", equal_to(std::wstring_view{TEXT_WCHAR}, TEXT_WCHAR));
+#endif
+
+    assertTrue("char", equal_to(TEXT_CHAR, TEXT_CHAR));
+    assertTrue("string_view", equal_to(std::string_view{TEXT_CHAR}, TEXT_CHAR));
+
+#if defined(__cpp_char8_t)
+    assertTrue("char8_t", equal_to(TEXT_CHAR8, TEXT_CHAR8));
+    assertTrue("u8string_view", equal_to(std::u8string_view{TEXT_CHAR8}, TEXT_CHAR8));
+#endif
+
+    assertTrue("UnicodeString", equal_to(UnicodeString::readOnlyAlias(TEXT_CHAR16), TEXT_CHAR16));
+    assertTrue("string", equal_to(std::string{TEXT_CHAR}, TEXT_CHAR));
+}
+
+void CollationTest::TestCollatorMap() {
+    using namespace U_HEADER_NESTED_NAMESPACE;
+    IcuTestErrorCode status(*this, "TestCollatorMap");
+    setRootCollator(status);
+    status.assertSuccess();
+    coll->setStrength(Collator::PRIMARY);
+    std::map<std::string, int, decltype(coll->less())> m{coll->less()};
+    ++m["a"];
+    ++m["b"];
+    ++m["A"];
+    assertEquals("m.size()", 2, m.size());
+    assertEquals(R"(m["a"])", 2, m["a"]);
+
+    std::map<std::u16string, int, collator::less> u16m{collator::less(coll->toUCollator())};
+    ++u16m[u"a"];
+    ++u16m[u"b"];
+    ++u16m[u"A"];
+    assertEquals("u16m.size()", 2, u16m.size());
+    assertEquals(R"(u16m["a"])", 2, u16m[u"a"]);
+
+#if defined(__cpp_char8_t)
+    std::map<std::u8string, int, collator::less> u8m{collator::less(coll->toUCollator())};
+    ++u8m[u8"a"];
+    ++u8m[u8"b"];
+    ++u8m[u8"A"];
+    assertEquals("u8m.size()", 2, u8m.size());
+    assertEquals(R"(u8m["a"])", 2, u8m[u8"a"]);
+#endif
+
+    std::map<UnicodeString, int, collator::less> um{collator::less(coll->toUCollator())};
+    // Only UnicodeString allows heterogeneous lookup across encodings:
+    ++um[u"a"];
+    ++um["b"];
+    // ++um[u8"A"];  // TODO(egg): Should this be legal?
+    ++um["A"];
+    assertEquals("u16m.size()", 2, um.size());
+    assertEquals(R"(u16m["a"])", 2, um[u"a"]);
 }
 
 #endif  // !UCONFIG_NO_COLLATION

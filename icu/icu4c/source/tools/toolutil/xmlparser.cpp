@@ -182,8 +182,8 @@ UXMLParser::parseFile(const char *filename, UErrorCode &errorCode) {
         return NULL;
     }
 
-    bytesLength=T_FileStream_read(f, bytes, (int32_t)sizeof(bytes));
-    if(bytesLength<(int32_t)sizeof(bytes)) {
+    bytesLength = T_FileStream_read(f, bytes, static_cast<int32_t>(sizeof(bytes)));
+    if (bytesLength < static_cast<int32_t>(sizeof(bytes))) {
         // we have already read the entire file
         fileLength=bytesLength;
     } else {
@@ -222,7 +222,7 @@ UXMLParser::parseFile(const char *filename, UErrorCode &errorCode) {
             &pu, buffer+src.getCapacity(),
             &pb, bytes+bytesLength,
             NULL, true, &errorCode);
-        src.releaseBuffer(U_SUCCESS(errorCode) ? (int32_t)(pu-buffer) : 0);
+        src.releaseBuffer(U_SUCCESS(errorCode) ? static_cast<int32_t>(pu - buffer) : 0);
         ucnv_close(cnv);
         cnv=NULL;
         if(U_FAILURE(errorCode)) {
@@ -235,7 +235,7 @@ UXMLParser::parseFile(const char *filename, UErrorCode &errorCode) {
         if(mXMLDecl.reset(src).lookingAt(0, errorCode)) {
             int32_t declEnd=mXMLDecl.end(errorCode);
             // go beyond <?xml
-            int32_t pos=src.indexOf((UChar)x_l)+1;
+            int32_t pos = src.indexOf(static_cast<char16_t>(x_l)) + 1;
 
             mAttrValue.reset(src);
             while(pos<declEnd && mAttrValue.lookingAt(pos, errorCode)) {  // loop runs once per attribute on this element.
@@ -248,7 +248,7 @@ UXMLParser::parseFile(const char *filename, UErrorCode &errorCode) {
                 attValue.truncate(attValue.length()-1);  // and one from the end.
 
                 if(attName==UNICODE_STRING("encoding", 8)) {
-                    length=attValue.extract(0, 0x7fffffff, charsetBuffer, (int32_t)sizeof(charsetBuffer));
+                    length = attValue.extract(0, 0x7fffffff, charsetBuffer, static_cast<int32_t>(sizeof(charsetBuffer)));
                     charset=charsetBuffer;
                     break;
                 }
@@ -290,7 +290,7 @@ UXMLParser::parseFile(const char *filename, UErrorCode &errorCode) {
                 cnv, &pu, buffer+src.getCapacity(),
                 &pb, bytes+bytesLength,
                 NULL, false, &errorCode);
-            src.releaseBuffer(U_SUCCESS(errorCode) ? (int32_t)(pu-buffer) : 0);
+            src.releaseBuffer(U_SUCCESS(errorCode) ? static_cast<int32_t>(pu - buffer) : 0);
             if(errorCode==U_BUFFER_OVERFLOW_ERROR) {
                 errorCode=U_ZERO_ERROR;
                 capacity=(3*src.getCapacity())/2; // increase capacity by 50%
@@ -308,7 +308,7 @@ UXMLParser::parseFile(const char *filename, UErrorCode &errorCode) {
         }
 
         // read next block
-        bytesLength=T_FileStream_read(f, bytes, (int32_t)sizeof(bytes));
+        bytesLength = T_FileStream_read(f, bytes, static_cast<int32_t>(sizeof(bytes)));
         if(bytesLength==0) {
             // reached end of file, convert once more to flush the converter
             flush=true;
@@ -639,7 +639,7 @@ UXMLParser::error(const char *message, UErrorCode &status) {
     int  line = 0;
     int  ci = 0;
     while (ci < fPos && ci>=0) {
-        ci = src.indexOf((UChar)0x0a, ci+1);
+        ci = src.indexOf(static_cast<char16_t>(0x0a), ci + 1);
         line++;
     }
     fprintf(stderr, "Error: %s at line %d\n", message, line);
@@ -716,7 +716,7 @@ UXMLElement::appendText(UnicodeString &text, UBool recurse) const {
     const UObject *node;
     int32_t i, count=fChildren.size();
     for(i=0; i<count; ++i) {
-        node=(const UObject *)fChildren.elementAt(i);
+        node = static_cast<const UObject*>(fChildren.elementAt(i));
         const UnicodeString *s=dynamic_cast<const UnicodeString *>(node);
         if(s!=NULL) {
             text.append(*s);
@@ -753,7 +753,7 @@ UXMLElement::getAttribute(const UnicodeString &name) const {
 
     int32_t i, count=fAttNames.size();
     for(i=0; i<count; ++i) {
-        if(p==(const UnicodeString *)fAttNames.elementAt(i)) {
+        if (p == static_cast<const UnicodeString*>(fAttNames.elementAt(i))) {
             return (const UnicodeString *)fAttValues.elementAt(i);
         }
     }
@@ -768,7 +768,7 @@ UXMLElement::countChildren() const {
 const UObject *
 UXMLElement::getChild(int32_t i, UXMLNodeType &type) const {
     if(0<=i && i<fChildren.size()) {
-        const UObject *node=(const UObject *)fChildren.elementAt(i);
+        const UObject* node = static_cast<const UObject*>(fChildren.elementAt(i));
         if(dynamic_cast<const UXMLElement *>(node)!=NULL) {
             type=UXML_NODE_TYPE_ELEMENT;
         } else {
@@ -789,7 +789,7 @@ UXMLElement::nextChildElement(int32_t &i) const {
     const UObject *node;
     int32_t count=fChildren.size();
     while(i<count) {
-        node=(const UObject *)fChildren.elementAt(i++);
+        node = static_cast<const UObject*>(fChildren.elementAt(i++));
         const UXMLElement *elem=dynamic_cast<const UXMLElement *>(node);
         if(elem!=NULL) {
             return elem;
@@ -810,7 +810,7 @@ UXMLElement::getChildElement(const UnicodeString &name) const {
     const UObject *node;
     int32_t i, count=fChildren.size();
     for(i=0; i<count; ++i) {
-        node=(const UObject *)fChildren.elementAt(i);
+        node = static_cast<const UObject*>(fChildren.elementAt(i));
         const UXMLElement *elem=dynamic_cast<const UXMLElement *>(node);
         if(elem!=NULL) {
             if(p==elem->fName) {

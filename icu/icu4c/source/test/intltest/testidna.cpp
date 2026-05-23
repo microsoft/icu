@@ -430,7 +430,7 @@ void TestIDNA::debug(const UChar* src, int32_t srcLength, int32_t options){
     transOutLength  = trans->process(src,srcLength,transOut, 0, prepOptions>0, &parseError, transStatus);
     if( transStatus == U_BUFFER_OVERFLOW_ERROR){
         transStatus = U_ZERO_ERROR;
-        transOut    = (UChar*) malloc(U_SIZEOF_UCHAR * transOutLength);
+        transOut = static_cast<char16_t*>(malloc(U_SIZEOF_UCHAR * transOutLength));
         transOutLength = trans->process(src,srcLength,transOut, transOutLength, prepOptions>0, &parseError, transStatus);
     }
 
@@ -438,7 +438,7 @@ void TestIDNA::debug(const UChar* src, int32_t srcLength, int32_t options){
 
     if( prepStatus == U_BUFFER_OVERFLOW_ERROR){
         prepStatus = U_ZERO_ERROR;
-        prepOut    = (UChar*) malloc(U_SIZEOF_UCHAR * prepOutLength);
+        prepOut = static_cast<char16_t*>(malloc(U_SIZEOF_UCHAR * prepOutLength));
         prepOutLength  = usprep_prepare(prep.getAlias(), src, srcLength, prepOut, prepOutLength, prepOptions, &parseError, &prepStatus);
     }
 
@@ -467,7 +467,7 @@ void TestIDNA::testAPI(const UChar* src, const UChar* expected, const char* test
 
     if(src != NULL){
         tSrcLen = u_strlen(src);
-        tSrc  =(UChar*) malloc( U_SIZEOF_UCHAR * tSrcLen );
+        tSrc = static_cast<char16_t*>(malloc(U_SIZEOF_UCHAR * tSrcLen));
         memcpy(tSrc,src,tSrcLen * U_SIZEOF_UCHAR);
     }
 
@@ -703,7 +703,7 @@ void TestIDNA::testToASCII(const char* testName, TestFunc func){
     UChar buf[MAX_DEST_SIZE];
 
     for(i=0;i< UPRV_LENGTHOF(unicodeIn); i++){
-        u_charsToUChars(asciiIn[i],buf, (int32_t)(strlen(asciiIn[i])+1));
+        u_charsToUChars(asciiIn[i], buf, static_cast<int32_t>(strlen(asciiIn[i]) + 1));
         testAPI(unicodeIn[i], buf,testName, false,U_ZERO_ERROR, true, true, func);
         
     }
@@ -715,7 +715,7 @@ void TestIDNA::testToUnicode(const char* testName, TestFunc func){
     UChar buf[MAX_DEST_SIZE];
     
     for(i=0;i< UPRV_LENGTHOF(asciiIn); i++){
-        u_charsToUChars(asciiIn[i],buf, (int32_t)(strlen(asciiIn[i])+1));
+        u_charsToUChars(asciiIn[i], buf, static_cast<int32_t>(strlen(asciiIn[i]) + 1));
         testAPI(buf,unicodeIn[i],testName,false,U_ZERO_ERROR, true, true, func);
     }
 }
@@ -801,7 +801,7 @@ void TestIDNA::testCompare(const char* testName, CompareFunc func){
 
     for(i=0;i< UPRV_LENGTHOF(unicodeIn); i++){
 
-        u_charsToUChars(asciiIn[i],buf+4, (int32_t)(strlen(asciiIn[i])+1));
+        u_charsToUChars(asciiIn[i], buf + 4, static_cast<int32_t>(strlen(asciiIn[i]) + 1));
         u_strcat(buf,com);
 
         // for every entry in unicodeIn array
@@ -1161,7 +1161,7 @@ void TestIDNA::testChaining(const char* toASCIIName, TestFunc toASCII,
     UChar buf[MAX_DEST_SIZE];
     
     for(i=0;i< UPRV_LENGTHOF(asciiIn); i++){
-        u_charsToUChars(asciiIn[i],buf, (int32_t)(strlen(asciiIn[i])+1));
+        u_charsToUChars(asciiIn[i], buf, static_cast<int32_t>(strlen(asciiIn[i]) + 1));
         testChaining(buf,5,toUnicodeName, false, false, toUnicode);
     }
     for(i=0;i< UPRV_LENGTHOF(unicodeIn); i++){
@@ -1200,7 +1200,7 @@ void TestIDNA::testRootLabelSeparator(const char* testName, CompareFunc func,
 
     for(i=0;i< UPRV_LENGTHOF(unicodeIn); i++){
 
-        u_charsToUChars(asciiIn[i],buf+4, (int32_t)(strlen(asciiIn[i])+1));
+        u_charsToUChars(asciiIn[i], buf + 4, static_cast<int32_t>(strlen(asciiIn[i]) + 1));
         u_strcat(buf,com);
 
         // for every entry in unicodeIn array
@@ -1248,7 +1248,7 @@ extern IntlTest *createUTS46Test();
 
 void TestIDNA::runIndexedTest( int32_t index, UBool exec, const char* &name, char* par)
 {
-    if (exec) logln((UnicodeString)"TestSuite IDNA API ");
+    if (exec) logln(UnicodeString("TestSuite IDNA API "));
     switch (index) {
 
         case 0: name = "TestToASCII"; if (exec) TestToASCII(); break;
@@ -1341,7 +1341,7 @@ randul()
     // Assume rand has at least 12 bits of precision
     uint32_t l = 0;
     for (uint32_t i=0; i<sizeof(l); ++i)
-        ((char*)&l)[i] = (char)((rand() & 0x0FF0) >> 4);
+        reinterpret_cast<char*>(&l)[i] = static_cast<char>((rand() & 0x0FF0) >> 4);
     return l;
 }
 
@@ -1351,7 +1351,7 @@ randul()
  */
 static int32_t rand_uni()
 {
-   int32_t retVal = (int32_t)(randul()& 0x3FFFF);
+   int32_t retVal = static_cast<int32_t>(randul() & 0x3FFFF);
    if(retVal >= 0x30000){
        retVal+=0xB0000;
    }
@@ -1359,7 +1359,7 @@ static int32_t rand_uni()
 }
 
 static int32_t randi(int32_t n){
-    return (int32_t) (randul() % (n+1));
+    return static_cast<int32_t>(randul() % (n + 1));
 }
 
 void getTestSource(UnicodeString& fillIn) {
@@ -1408,7 +1408,7 @@ UnicodeString TestIDNA::testCompareReferenceImpl(UnicodeString& src,
                + " Got: " + UnicodeString(u_errorName(gotStatus))
                + " for Source: "+ prettify(srcUChars) 
                + " Options: " + options);
-        return UnicodeString("");
+        return {""};
     }
     
     // now we know that both implementations yielded same error
@@ -1430,7 +1430,7 @@ UnicodeString TestIDNA::testCompareReferenceImpl(UnicodeString& src,
             + " with "+ UnicodeString(uIDNAName) 
             +" for input: " + prettify(srcUChars));
     }
-    return UnicodeString("");
+    return {""};
 }
 
 void TestIDNA::testCompareReferenceImpl(const UChar* src, int32_t srcLen){

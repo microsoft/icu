@@ -12,8 +12,13 @@
 */
 
 #include <stdio.h>
-
 #include <string.h>
+
+#include <array>
+#include <map>
+#include <string_view>
+#include <unordered_map>
+
 #include "unicode/utypes.h"
 #include "usettest.h"
 #include "unicode/ucnv.h"
@@ -25,9 +30,11 @@
 #include "unicode/symtable.h"
 #include "unicode/utf8.h"
 #include "unicode/utf16.h"
+#include "unicode/utfiterator.h"
 #include "unicode/uversion.h"
 #include "cmemory.h"
 #include "hash.h"
+#include <variant>
 
 #define TEST_ASSERT_SUCCESS(status) UPRV_BLOCK_MACRO_BEGIN { \
     if (U_FAILURE(status)) { \
@@ -85,9 +92,12 @@ UnicodeSetTest::runIndexedTest(int32_t index, UBool exec,
     TESTCASE_AUTO(TestStrings);
     TESTCASE_AUTO(Testj2268);
     TESTCASE_AUTO(TestCloseOver);
+    TESTCASE_AUTO(TestCloseOverSimpleCaseFolding);
+    TESTCASE_AUTO(TestCloseOverLargeSets);
     TESTCASE_AUTO(TestEscapePattern);
     TESTCASE_AUTO(TestInvalidCodePoint);
     TESTCASE_AUTO(TestSymbolTable);
+    TESTCASE_AUTO(TestLookupSymbolTable);
     TESTCASE_AUTO(TestSurrogate);
     TESTCASE_AUTO(TestPosixClasses);
     TESTCASE_AUTO(TestIteration);
@@ -101,6 +111,12 @@ UnicodeSetTest::runIndexedTest(int32_t index, UBool exec,
     TESTCASE_AUTO(TestEmptyString);
     TESTCASE_AUTO(TestSkipToStrings);
     TESTCASE_AUTO(TestPatternCodePointComplement);
+    TESTCASE_AUTO(TestCodePointIterator);
+    TESTCASE_AUTO(TestRangeIterator);
+    TESTCASE_AUTO(TestStringIterator);
+    TESTCASE_AUTO(TestElementIterator);
+    TESTCASE_AUTO(TestToPatternOutput);
+    TESTCASE_AUTO(TestParseErrors);
     TESTCASE_AUTO_END;
 }
 
@@ -138,7 +154,7 @@ void UnicodeSetTest::TestToPattern() {
             ec = U_ZERO_ERROR;
             UnicodeSet s(OTHER_TOPATTERN_TESTS[j], ec);
             if (U_FAILURE(ec)) {
-                dataerrln((UnicodeString)"FAIL: bad pattern " + OTHER_TOPATTERN_TESTS[j] + " - " + UnicodeString(u_errorName(ec)));
+                dataerrln(UnicodeString("FAIL: bad pattern ") + OTHER_TOPATTERN_TESTS[j] + " - " + UnicodeString(u_errorName(ec)));
                 continue;
             }
             checkPat(OTHER_TOPATTERN_TESTS[j], s);
@@ -250,7 +266,7 @@ UBool UnicodeSetTest::checkPat(const UnicodeString& source,
     // if (!checkPat(source + " (in code)", testSet, pat3)) return false;
     
     //logln(source + " => " + pat0 + ", " + pat1 + ", " + pat2 + ", " + pat3);
-    logln((UnicodeString)source + " => " + pat0 + ", " + pat2);
+    logln(UnicodeString(source) + " => " + pat0 + ", " + pat2);
     return true;
 }
 
@@ -260,7 +276,7 @@ UBool UnicodeSetTest::checkPat(const UnicodeString& source,
     UErrorCode ec = U_ZERO_ERROR;
     UnicodeSet testSet2(pat, ec);
     if (testSet2 != testSet) {
-        errln((UnicodeString)"Fail toPattern: " + source + " => " + pat);
+        errln(UnicodeString("Fail toPattern: ") + source + " => " + pat);
         return false;
     }
     return true;
@@ -279,7 +295,7 @@ UnicodeSetTest::TestPatterns(void) {
     // Throw in a test of complement
     set.complement();
     UnicodeString exp;
-    exp.append((UChar)0x0000).append("aeeoouu").append((UChar)(u'z'+1)).append((UChar)0xFFFF);
+    exp.append(static_cast<char16_t>(0x0000)).append("aeeoouu").append(static_cast<char16_t>(u'z' + 1)).append(static_cast<char16_t>(0xFFFF));
     expectPairs(set, exp);
 }
 
@@ -289,7 +305,7 @@ UnicodeSetTest::TestCategories(void) {
     const char* pat = " [:Lu:] "; // Whitespace ok outside [:..:]
     UnicodeSet set(pat, status);
     if (U_FAILURE(status)) {
-        dataerrln((UnicodeString)"Fail: Can't construct set with " + pat + " - " + UnicodeString(u_errorName(status)));
+        dataerrln(UnicodeString("Fail: Can't construct set with ") + pat + " - " + UnicodeString(u_errorName(status)));
         return;
     } else {
         expectContainment(set, pat, "ABC", "abc");
@@ -304,7 +320,7 @@ UnicodeSetTest::TestCategories(void) {
     for (i=0; i<0x200; ++i) {
         UBool l = u_isalpha((UChar)i);
         if (l != set.contains(i)) {
-            errln((UnicodeString)"FAIL: L contains " + (unsigned short)i + " = " + 
+            errln(UnicodeString("FAIL: L contains ") + static_cast<unsigned short>(i) + " = " +
                   set.contains(i));
             if (++failures == 10) break;
         }
@@ -315,7 +331,7 @@ UnicodeSetTest::TestCategories(void) {
     for (i=0; i<0x200; ++i) {
         UBool lu = (u_charType((UChar)i) == U_UPPERCASE_LETTER);
         if (lu != set.contains(i)) {
-            errln((UnicodeString)"FAIL: Lu contains " + (unsigned short)i + " = " + 
+            errln(UnicodeString("FAIL: Lu contains ") + static_cast<unsigned short>(i) + " = " +
                   set.contains(i));
             if (++failures == 20) break;
         }
@@ -330,13 +346,13 @@ UnicodeSetTest::TestCloneEqualHash(void) {
     UnicodeSet *set1=new UnicodeSet(u"\\p{Lowercase Letter}", status); //  :Ll: Letter, lowercase
     UnicodeSet *set1a=new UnicodeSet(u"[:Ll:]", status); //  Letter, lowercase
     if (U_FAILURE(status)){
-        dataerrln((UnicodeString)"FAIL: Can't construst set with category->Ll" + " - " + UnicodeString(u_errorName(status)));
+        dataerrln(UnicodeString("FAIL: Can't construst set with category->Ll") + " - " + UnicodeString(u_errorName(status)));
         return;
     }
     UnicodeSet *set2=new UnicodeSet(u"\\p{Decimal Number}", status);   //Number, Decimal digit
     UnicodeSet *set2a=new UnicodeSet(u"[:Nd:]", status);   //Number, Decimal digit
     if (U_FAILURE(status)){
-        errln((UnicodeString)"FAIL: Can't construct set with category->Nd");
+        errln(UnicodeString("FAIL: Can't construct set with category->Nd"));
         return;
     }
 
@@ -526,36 +542,33 @@ void UnicodeSetTest::TestAPI() {
     // default ct
     UnicodeSet set;
     if (!set.isEmpty() || set.getRangeCount() != 0) {
-        errln((UnicodeString)"FAIL, set should be empty but isn't: " +
-              set);
+        errln(UnicodeString("FAIL, set should be empty but isn't: ") + set);
     }
 
     // clear(), isEmpty()
     set.add(0x0061);
     if (set.isEmpty()) {
-        errln((UnicodeString)"FAIL, set shouldn't be empty but is: " +
-              set);
+        errln(UnicodeString("FAIL, set shouldn't be empty but is: ") + set);
     }
     set.clear();
     if (!set.isEmpty()) {
-        errln((UnicodeString)"FAIL, set should be empty but isn't: " +
-              set);
+        errln(UnicodeString("FAIL, set should be empty but isn't: ") + set);
     }
 
     // size()
     set.clear();
     if (set.size() != 0) {
-        errln((UnicodeString)"FAIL, size should be 0, but is " + set.size() +
+        errln(UnicodeString("FAIL, size should be 0, but is ") + set.size() +
               ": " + set);
     }
     set.add(0x0061);
     if (set.size() != 1) {
-        errln((UnicodeString)"FAIL, size should be 1, but is " + set.size() +
+        errln(UnicodeString("FAIL, size should be 1, but is ") + set.size() +
               ": " + set);
     }
     set.add(0x0031, 0x0039);
     if (set.size() != 10) {
-        errln((UnicodeString)"FAIL, size should be 10, but is " + set.size() +
+        errln(UnicodeString("FAIL, size should be 10, but is ") + set.size() +
               ": " + set);
     }
 
@@ -567,67 +580,67 @@ void UnicodeSetTest::TestAPI() {
         UChar32 a = set.getRangeStart(i);
         UChar32 b = set.getRangeEnd(i);
         if (!set.contains(a, b)) {
-            errln((UnicodeString)"FAIL, should contain " + (unsigned short)a + '-' + (unsigned short)b +
+            errln(UnicodeString("FAIL, should contain ") + static_cast<unsigned short>(a) + '-' + static_cast<unsigned short>(b) +
                   " but doesn't: " + set);
         }
-        if (set.contains((UChar32)(a-1), b)) {
-            errln((UnicodeString)"FAIL, shouldn't contain " +
-                  (unsigned short)(a-1) + '-' + (unsigned short)b +
+        if (set.contains(static_cast<UChar32>(a - 1), b)) {
+            errln(UnicodeString("FAIL, shouldn't contain ") +
+                  static_cast<unsigned short>(a - 1) + '-' + static_cast<unsigned short>(b) +
                   " but does: " + set);
         }
-        if (set.contains(a, (UChar32)(b+1))) {
-            errln((UnicodeString)"FAIL, shouldn't contain " +
-                  (unsigned short)a + '-' + (unsigned short)(b+1) +
+        if (set.contains(a, static_cast<UChar32>(b + 1))) {
+            errln(UnicodeString("FAIL, shouldn't contain ") +
+                  static_cast<unsigned short>(a) + '-' + static_cast<unsigned short>(b + 1) +
                   " but does: " + set);
         }
     }
 
     // Ported InversionList test.
-    UnicodeSet a((UChar32)3,(UChar32)10);
-    UnicodeSet b((UChar32)7,(UChar32)15);
+    UnicodeSet a(static_cast<UChar32>(3), static_cast<UChar32>(10));
+    UnicodeSet b(static_cast<UChar32>(7), static_cast<UChar32>(15));
     UnicodeSet c;
 
-    logln((UnicodeString)"a [3-10]: " + a);
-    logln((UnicodeString)"b [7-15]: " + b);
+    logln(UnicodeString("a [3-10]: ") + a);
+    logln(UnicodeString("b [7-15]: ") + b);
     c = a;
     c.addAll(b);
-    UnicodeSet exp((UChar32)3,(UChar32)15);
+    UnicodeSet exp(static_cast<UChar32>(3), static_cast<UChar32>(15));
     if (c == exp) {
-        logln((UnicodeString)"c.set(a).add(b): " + c);
+        logln(UnicodeString("c.set(a).add(b): ") + c);
     } else {
-        errln((UnicodeString)"FAIL: c.set(a).add(b) = " + c + ", expect " + exp);
+        errln(UnicodeString("FAIL: c.set(a).add(b) = ") + c + ", expect " + exp);
     }
     c.complement();
     exp.set((UChar32)0, (UChar32)2);
     exp.add((UChar32)16, UnicodeSet::MAX_VALUE);
     if (c == exp) {
-        logln((UnicodeString)"c.complement(): " + c);
+        logln(UnicodeString("c.complement(): ") + c);
     } else {
-        errln((UnicodeString)"FAIL: c.complement() = " + c + ", expect " + exp);
+        errln(UnicodeString("FAIL: c.complement() = ") + c + ", expect " + exp);
     }
     c.complement();
     exp.set((UChar32)3, (UChar32)15);
     if (c == exp) {
-        logln((UnicodeString)"c.complement(): " + c);
+        logln(UnicodeString("c.complement(): ") + c);
     } else {
-        errln((UnicodeString)"FAIL: c.complement() = " + c + ", expect " + exp);
+        errln(UnicodeString("FAIL: c.complement() = ") + c + ", expect " + exp);
     }
     c = a;
     c.complementAll(b);
-    exp.set((UChar32)3,(UChar32)6);
-    exp.add((UChar32)11,(UChar32) 15);
+    exp.set(static_cast<UChar32>(3), static_cast<UChar32>(6));
+    exp.add(static_cast<UChar32>(11), static_cast<UChar32>(15));
     if (c == exp) {
-        logln((UnicodeString)"c.set(a).exclusiveOr(b): " + c);
+        logln(UnicodeString("c.set(a).exclusiveOr(b): ") + c);
     } else {
-        errln((UnicodeString)"FAIL: c.set(a).exclusiveOr(b) = " + c + ", expect " + exp);
+        errln(UnicodeString("FAIL: c.set(a).exclusiveOr(b) = ") + c + ", expect " + exp);
     }
 
     exp = c;
     bitsToSet(setToBits(c), c);
     if (c == exp) {
-        logln((UnicodeString)"bitsToSet(setToBits(c)): " + c);
+        logln(UnicodeString("bitsToSet(setToBits(c)): ") + c);
     } else {
-        errln((UnicodeString)"FAIL: bitsToSet(setToBits(c)) = " + c + ", expect " + exp);
+        errln(UnicodeString("FAIL: bitsToSet(setToBits(c)) = ") + c + ", expect " + exp);
     }
 
     // Additional tests for coverage JB#2118
@@ -893,9 +906,9 @@ void UnicodeSetTest::TestStrings() {
             testList[i]->toPattern(pat0, true);
             testList[i+1]->toPattern(pat1, true);
             if (*testList[i] == *testList[i+1]) {
-                logln((UnicodeString)"Ok: " + pat0 + " == " + pat1);
+                logln(UnicodeString("Ok: ") + pat0 + " == " + pat1);
             } else {
-                logln((UnicodeString)"FAIL: " + pat0 + " != " + pat1);
+                logln(UnicodeString("FAIL: ") + pat0 + " != " + pat1);
             }
         }
         delete testList[i];
@@ -1090,7 +1103,7 @@ void UnicodeSetTest::TestPropertySet() {
         // Script_Extensions, new in Unicode 6.0
         "[:scx=Arab:]",
         "\\u061E\\u061F\\u0620\\u0621\\u063F\\u0640\\u0650\\u065E\\uFDF1\\uFDF2\\uFDF3",
-        "\\u088F\\uFDEF\\uFEFE",
+        "\\uFDEF\\uFEFE",
 
         // U+FDF2 has Script=Arabic and also Arab in its Script_Extensions,
         // so scx-sc is missing U+FDF2.
@@ -1235,7 +1248,7 @@ void UnicodeSetTest::TestIndexOf() {
     }
     int32_t j = set.indexOf(u'q');
     if (j != -1) {
-        errln((UnicodeString)"FAIL: indexOf('q') = " + j);
+        errln(UnicodeString("FAIL: indexOf('q') = ") + j);
     }
 }
 
@@ -1243,17 +1256,24 @@ void UnicodeSetTest::TestIndexOf() {
  * Test closure API.
  */
 void UnicodeSetTest::TestCloseOver() {
-    UErrorCode ec = U_ZERO_ERROR;
-
-    char CASE[] = {(char)USET_CASE_INSENSITIVE};
-    char CASE_MAPPINGS[] = {(char)USET_ADD_CASE_MAPPINGS};
-    const char* DATA[] = {
+    static constexpr char CASE[] = {static_cast<char>(USET_CASE_INSENSITIVE)};
+    static constexpr char CASE_MAPPINGS[] = {static_cast<char>(USET_ADD_CASE_MAPPINGS)};
+    static constexpr char SIMPLE_CASE_INSENSITIVE[] = {static_cast<char>(USET_SIMPLE_CASE_INSENSITIVE)};
+    static const char* DATA[] = {
         // selector, input, output
         CASE,
         "[aq\\u00DF{Bc}{bC}{Fi}]",
         "[aAqQ\\u00DF\\u1E9E\\uFB01{ss}{bc}{fi}]",  // U+1E9E LATIN CAPITAL LETTER SHARP S is new in Unicode 5.1
 
+        SIMPLE_CASE_INSENSITIVE,
+        "[aq\\u00DF{Bc}{bC}{Fi}]",
+        "[aAqQ\\u00DF\\u1E9E{bc}{fi}]",
+
         CASE,
+        "[\\u01F1]", // 'DZ'
+        "[\\u01F1\\u01F2\\u01F3]",
+
+        SIMPLE_CASE_INSENSITIVE,
         "[\\u01F1]", // 'DZ'
         "[\\u01F1\\u01F2\\u01F3]",
 
@@ -1261,9 +1281,13 @@ void UnicodeSetTest::TestCloseOver() {
         "[\\u1FB4]",
         "[\\u1FB4{\\u03AC\\u03B9}]",
 
+        SIMPLE_CASE_INSENSITIVE,
+        "[\\u1FB4]",
+        "[\\u1FB4]",
+
         CASE,
         "[{F\\uFB01}]",
-        "[\\uFB03{ffi}]",            
+        "[\\uFB03{ffi}]",
 
         CASE, // make sure binary search finds limits
         "[a\\uFF3A]",
@@ -1271,6 +1295,10 @@ void UnicodeSetTest::TestCloseOver() {
 
         CASE,
         "[a-z]","[A-Za-z\\u017F\\u212A]",
+
+        SIMPLE_CASE_INSENSITIVE,
+        "[a-z]","[A-Za-z\\u017F\\u212A]",
+
         CASE,
         "[abc]","[A-Ca-c]",
         CASE,
@@ -1311,7 +1339,7 @@ void UnicodeSetTest::TestCloseOver() {
         CASE_MAPPINGS,
         "[\\u01F1]", // 'DZ'
         "[\\u01F1\\u01F2\\u01F3]",
-        
+
         CASE_MAPPINGS,
         "[a-z]",
         "[A-Za-z]",
@@ -1326,6 +1354,8 @@ void UnicodeSetTest::TestCloseOver() {
         int32_t selector = DATA[i][0];
         UnicodeString pat(DATA[i+1], -1, US_INV);
         UnicodeString exp(DATA[i+2], -1, US_INV);
+
+        UErrorCode ec = U_ZERO_ERROR;
         s.applyPattern(pat, ec);
         s.closeOver(selector);
         t.applyPattern(exp, ec);
@@ -1334,76 +1364,16 @@ void UnicodeSetTest::TestCloseOver() {
             continue;
         }
         if (s == t) {
-            logln((UnicodeString)"Ok: " + pat + ".closeOver(" + selector + ") => " + exp);
+            logln(UnicodeString("Ok: ") + pat + ".closeOver(" + selector + ") => " + exp);
         } else {
-            dataerrln((UnicodeString)"FAIL: " + pat + ".closeOver(" + selector + ") => " +
+            dataerrln(UnicodeString("FAIL: ") + pat + ".closeOver(" + selector + ") => " +
                   s.toPattern(buf, true) + ", expected " + exp);
         }
     }
 
-#if 0
-    /*
-     * Unused test code.
-     * This was used to compare the old implementation (using USET_CASE)
-     * with the new one (using 0x100 temporarily)
-     * while transitioning from hardcoded case closure tables in uniset.cpp
-     * (moved to uniset_props.cpp) to building the data by gencase into ucase.icu.
-     * and using ucase.c functions for closure.
-     * See Jitterbug 3432 RFE: Move uniset.cpp data to a data file
-     *
-     * Note: The old and new implementation never fully matched because
-     * the old implementation turned out to not map U+0130 and U+0131 correctly
-     * (dotted I and dotless i) and because the old implementation's data tables
-     * were outdated compared to Unicode 4.0.1 at the time of the change to the
-     * new implementation. (So sigmas and some other characters were not handled
-     * according to the newer Unicode version.)
-     */
-    UnicodeSet sens("[:case_sensitive:]", ec), sens2, s2;
-    UnicodeSetIterator si(sens);
-    UnicodeString str, buf2;
-    const UnicodeString *pStr;
-    UChar32 c;
-    while(si.next()) {
-        if(!si.isString()) {
-            c=si.getCodepoint();
-            s.clear();
-            s.add(c);
-
-            str.setTo(c);
-            str.foldCase();
-            sens2.add(str);
-
-            t=s;
-            s.closeOver(USET_CASE);
-            t.closeOver(0x100);
-            if(s!=t) {
-                errln("FAIL: closeOver(U+%04x) differs: ", c);
-                errln((UnicodeString)"old "+s.toPattern(buf, true)+" new: "+t.toPattern(buf2, true));
-            }
-        }
-    }
-    // remove all code points
-    // should contain all full case folding mapping strings
-    sens2.remove(0, 0x10ffff);
-    si.reset(sens2);
-    while(si.next()) {
-        if(si.isString()) {
-            pStr=&si.getString();
-            s.clear();
-            s.add(*pStr);
-            t=s2=s;
-            s.closeOver(USET_CASE);
-            t.closeOver(0x100);
-            if(s!=t) {
-                errln((UnicodeString)"FAIL: closeOver("+s2.toPattern(buf, true)+") differs: ");
-                errln((UnicodeString)"old "+s.toPattern(buf, true)+" new: "+t.toPattern(buf2, true));
-            }
-        }
-    }
-#endif
-
     // Test the pattern API
-    s.applyPattern("[abc]", USET_CASE_INSENSITIVE, NULL, ec);
+    UErrorCode ec = U_ZERO_ERROR;
+    s.applyPattern("[abc]", USET_CASE_INSENSITIVE, nullptr, ec);
     if (U_FAILURE(ec)) {
         errln("FAIL: applyPattern failed");
     } else {
@@ -1420,6 +1390,123 @@ void UnicodeSetTest::TestCloseOver() {
         errln("FAIL: construct w/case mappings failed");
     } else {
         expectContainment(cm, "abckABCK", CharsToUnicodeString("defDEF\\u212A"));
+    }
+}
+
+namespace {
+
+void addIfAbsent(const std::unordered_multimap<UChar32, UChar32> &closure, UChar32 c, UChar32 t,
+                 std::unordered_multimap<UChar32, UChar32> &additions) {
+    for (auto it = closure.find(c);; ++it) {
+        if (it == closure.end() || it->first != c) {
+            // absent
+            additions.insert({c, t});
+            break;
+        } else if (it->second == t) {
+            // present
+            break;
+        }
+    }
+}
+
+}  // namespace
+
+void UnicodeSetTest::TestCloseOverSimpleCaseFolding() {
+    IcuTestErrorCode errorCode(*this, "TestCloseOverSimpleCaseFolding");
+    const UnicodeSet *sensitive =
+        UnicodeSet::fromUSet(u_getBinaryPropertySet(UCHAR_CASE_SENSITIVE, errorCode));
+    if (errorCode.errIfFailureAndReset("u_getBinaryPropertySet(UCHAR_CASE_SENSITIVE) failed")) {
+        return;
+    }
+    // Compute the scf=Simple_Case_Folding closure:
+    // For each scf(c)=t, start with mappings c->t and t->c.
+    std::unordered_multimap<UChar32, UChar32> closure;
+    UnicodeSetIterator iter(*sensitive);
+    while (iter.next()) {
+        UChar32 c = iter.getCodepoint();
+        UChar32 scfChar = u_foldCase(c, U_FOLD_CASE_DEFAULT);
+        if (scfChar != c) {
+            closure.insert({c, scfChar});
+            closure.insert({scfChar, c});
+        }
+    }
+    // Complete the closure: Add mappings of mappings.
+    for (;;) {
+        std::unordered_multimap<UChar32, UChar32> additions;
+        // for each mapping c->t
+        for (auto mapping : closure) {
+            UChar32 c = mapping.first;
+            UChar32 t = mapping.second;
+            // enumerate each t->u
+            for (auto it = closure.find(t); it != closure.end() && it->first == t; ++it) {
+                UChar32 u = it->second;
+                if (u != c) {
+                    addIfAbsent(closure, c, u, additions);
+                    addIfAbsent(closure, u, c, additions);
+                }
+            }
+        }
+        if (additions.empty()) {
+            break;  // The closure is complete.
+        }
+        closure.insert(additions.begin(), additions.end());
+    }
+    // Compare closeOver(USET_SIMPLE_CASE_INSENSITIVE) with an unoptimized implementation.
+    // Here we focus on single code points as input.
+    // Other examples, including strings, are tested in TestCloseOver().
+    int32_t errors = 0;
+    iter.reset();
+    UnicodeSet set, expected;
+    while (iter.next()) {
+        UChar32 c = iter.getCodepoint();
+        // closeOver()
+        set.clear().add(c);
+        set.closeOver(USET_SIMPLE_CASE_INSENSITIVE);
+        // From-first-principles implementation.
+        expected.clear().add(c);
+        for (auto it = closure.find(c); it != closure.end() && it->first == c; ++it) {
+            expected.add(it->second);
+        }
+        // compare
+        if (!checkEqual(expected, set, "closeOver() vs. test impl")) {
+            errln("    c=U+%04X", c);
+            if (++errors == 10) {
+                break;
+            }
+        }
+    }
+}
+
+void UnicodeSetTest::TestCloseOverLargeSets() {
+    IcuTestErrorCode errorCode(*this, "TestCloseOverLargeSets");
+    // Check that an optimization for large sets does not change the result.
+
+    // Most code points except ones that are boring for case mappings.
+    UnicodeSet manyCp(u"[^[:C:][:Ideographic:][:Hang:]]", errorCode);
+    // Main Unihan block.
+    constexpr UChar32 LARGE_START = 0x4E00;
+    constexpr UChar32 LARGE_END = 0x9FFF;
+
+    static constexpr int32_t OPTIONS[] = {
+        USET_CASE_INSENSITIVE, USET_ADD_CASE_MAPPINGS, USET_SIMPLE_CASE_INSENSITIVE
+    };
+    UnicodeSet input, small, large;
+    for (int32_t option : OPTIONS) {
+        UnicodeSetIterator iter(manyCp);
+        while (iter.next()) {
+            UChar32 c = iter.getCodepoint();
+            input.clear().add(c);
+            small = input;
+            small.closeOver(option);
+            large = input;
+            large.add(LARGE_START, LARGE_END);
+            large.closeOver(option);
+            large.remove(LARGE_START, LARGE_END);
+            if (!checkEqual(small, large, "small != large")) {
+                errln("    option=%d c=U+%04X", option, c);
+                break;
+            }
+        }
     }
 }
 
@@ -1442,7 +1529,7 @@ void UnicodeSetTest::TestEscapePattern() {
 
         UnicodeSet set(pat, ec);
         if (U_SUCCESS(ec) != isPatternValid){
-            errln((UnicodeString)"FAIL: applyPattern(" +
+            errln(UnicodeString("FAIL: applyPattern(") +
                   escape(pat) + ") => " +
                   u_errorName(ec));
             continue;
@@ -1451,7 +1538,7 @@ void UnicodeSetTest::TestEscapePattern() {
             continue;
         }
         if (set.contains(u'\u0644')){
-            errln((UnicodeString)"FAIL: " + escape(pat) + " contains(U+0664)");
+            errln(UnicodeString("FAIL: ") + escape(pat) + " contains(U+0664)");
         }
 
         UnicodeString newpat;
@@ -1459,20 +1546,20 @@ void UnicodeSetTest::TestEscapePattern() {
         if (newpat == UnicodeString(exp, -1, US_INV)) {
             logln(escape(pat) + " => " + newpat);
         } else {
-            errln((UnicodeString)"FAIL: " + escape(pat) + " => " + newpat);
+            errln(UnicodeString("FAIL: ") + escape(pat) + " => " + newpat);
         }
 
         for (int32_t i=0; i<set.getRangeCount(); ++i) {
             UnicodeString str("Range ");
-            str.append((UChar)(u'0' + i))
+            str.append(static_cast<char16_t>(u'0' + i))
                 .append(": ")
-                .append((UChar32)set.getRangeStart(i))
+                .append(set.getRangeStart(i))
                 .append(" - ")
-                .append((UChar32)set.getRangeEnd(i));
+                .append(set.getRangeEnd(i));
             str = str + " (" + set.getRangeStart(i) + " - " +
                 set.getRangeEnd(i) + ")";
             if (set.getRangeStart(i) < 0) {
-                errln((UnicodeString)"FAIL: " + escape(str));
+                errln(UnicodeString("FAIL: ") + escape(str));
             } else {
                 logln(escape(str));
             }
@@ -1489,7 +1576,7 @@ void UnicodeSetTest::expectRange(const UnicodeString& label,
         logln(label + " => " + set.toPattern(pat, true));
     } else {
         UnicodeString xpat;
-        errln((UnicodeString)"FAIL: " + label + " => " +
+        errln(UnicodeString("FAIL: ") + label + " => " +
               set.toPattern(pat, true) +
               ", expected " + exp.toPattern(xpat, true));
     }
@@ -1517,12 +1604,12 @@ void UnicodeSetTest::TestInvalidCodePoint() {
         // Try various API using the test code points
 
         UnicodeSet set(start, end);
-        expectRange((UnicodeString)"ct(" + start + "," + end + ")",
+        expectRange(UnicodeString("ct(") + start + "," + end + ")",
                     set, xstart, xend);
         
         set.clear();
         set.set(start, end);
-        expectRange((UnicodeString)"set(" + start + "," + end + ")",
+        expectRange(UnicodeString("set(") + start + "," + end + ")",
                     set, xstart, xend);
         
         UBool b = set.contains(start);
@@ -1536,12 +1623,12 @@ void UnicodeSetTest::TestInvalidCodePoint() {
         set.clear();
         set.add(start);
         set.add(start, end);
-        expectRange((UnicodeString)"add(" + start + "," + end + ")",
+        expectRange(UnicodeString("add(") + start + "," + end + ")",
                     set, xstart, xend);
 
         set.set(0, 0x10FFFF);
         set.retain(start, end);
-        expectRange((UnicodeString)"retain(" + start + "," + end + ")",
+        expectRange(UnicodeString("retain(") + start + "," + end + ")",
                     set, xstart, xend);
         set.retain(start);
 
@@ -1549,13 +1636,13 @@ void UnicodeSetTest::TestInvalidCodePoint() {
         set.remove(start);
         set.remove(start, end);
         set.complement();
-        expectRange((UnicodeString)"!remove(" + start + "," + end + ")",
+        expectRange(UnicodeString("!remove(") + start + "," + end + ")",
                     set, xstart, xend);
 
         set.set(0, 0x10FFFF);
         set.complement(start, end);
         set.complement();
-        expectRange((UnicodeString)"!complement(" + start + "," + end + ")",
+        expectRange(UnicodeString("!complement(") + start + "," + end + ")",
                     set, xstart, xend);
         set.complement(start);
     }
@@ -1577,33 +1664,33 @@ void UnicodeSetTest::TestInvalidCodePoint() {
         // For single-codepoint contains, invalid codepoints are NOT contained
         UBool b = set.contains(c);
         if (b == valid) {
-            logln((UnicodeString)"[\\u0000-\\U0010FFFF].contains(" + c +
+            logln(UnicodeString("[\\u0000-\\U0010FFFF].contains(") + c +
                   ") = " + b);
         } else {
-            errln((UnicodeString)"FAIL: [\\u0000-\\U0010FFFF].contains(" + c +
+            errln(UnicodeString("FAIL: [\\u0000-\\U0010FFFF].contains(") + c +
                   ") = " + b);
         }
 
         // For codepoint range contains, containsNone, and containsSome,
         // invalid or empty (start > end) ranges have UNDEFINED behavior.
         b = set.contains(c, end);
-        logln((UnicodeString)"* [\\u0000-\\U0010FFFF].contains(" + c +
+        logln(UnicodeString("* [\\u0000-\\U0010FFFF].contains(") + c +
               "," + end + ") = " + b);
 
         b = set.containsNone(c, end);
-        logln((UnicodeString)"* [\\u0000-\\U0010FFFF].containsNone(" + c +
+        logln(UnicodeString("* [\\u0000-\\U0010FFFF].containsNone(") + c +
               "," + end + ") = " + b);
 
         b = set.containsSome(c, end);
-        logln((UnicodeString)"* [\\u0000-\\U0010FFFF].containsSome(" + c +
+        logln(UnicodeString("* [\\u0000-\\U0010FFFF].containsSome(") + c +
               "," + end + ") = " + b);
 
         int32_t index = set.indexOf(c);
         if ((index >= 0) == valid) {
-            logln((UnicodeString)"[\\u0000-\\U0010FFFF].indexOf(" + c +
+            logln(UnicodeString("[\\u0000-\\U0010FFFF].indexOf(") + c +
                   ") = " + index);
         } else {
-            errln((UnicodeString)"FAIL: [\\u0000-\\U0010FFFF].indexOf(" + c +
+            errln(UnicodeString("FAIL: [\\u0000-\\U0010FFFF].indexOf(") + c +
                   ") = " + index);
         }
     }
@@ -1635,7 +1722,7 @@ public:
      * SymbolTable API
      */
     virtual const UnicodeString* lookup(const UnicodeString& s) const override {
-        return (const UnicodeString*) contents.get(s);
+        return static_cast<const UnicodeString*>(contents.get(s));
     }
 
     /**
@@ -1673,11 +1760,21 @@ void UnicodeSetTest::TestSymbolTable() {
     // Multiple test cases can be set up here.  Each test case
     // is terminated by null:
     // var, value, var, value,..., input pat., exp. output pat., null
-    const char* DATA[] = {
-        "us", "a-z", "[0-1$us]", "[0-1a-z]", NULL,
-        "us", "[a-z]", "[0-1$us]", "[0-1[a-z]]", NULL,
-        "us", "\\[a\\-z\\]", "[0-1$us]", "[-01\\[\\]az]", NULL,
-        NULL
+    const char *DATA[] = {
+        "us", "a-z", "[0-1$us]", "[0-1a-z]", nullptr,
+        "us", "[a-z]", "[0-1$us]", "[0-1[a-z]]", nullptr,
+        "us", "\\[a\\-z\\]", "[0-1$us]", "[-01\\[\\]az]", nullptr,
+        // Things that probably should not work, but currently do:
+        "open", "[", "$open a-z]", "[a-z]", nullptr,
+        "open", "[", "close", "]", "hyphenMinus", "-",
+            "[ $open a $hyphenMinus z] $hyphenMinus [ c-z $close $hyphenMinus ]",
+            "[[a-z]-[c-z]-]", nullptr,
+        "string", "{", "end", "}", "[ $string Zeichenkette $end ]", "[{Zeichenkette}]", nullptr,
+        "privateUse", "[[:Co:]]", "$privateUse", "[[:Co:]]", nullptr,
+        "smiling", ":-]", "laughing", ":-D",
+            "[ {$smiling} $laughing $smiling",
+            R"([\-\:-D{\:\-\]}])", nullptr,
+        nullptr
     };
 
     for (int32_t i=0; DATA[i]!=NULL; ++i) {
@@ -1711,7 +1808,7 @@ void UnicodeSetTest::TestSymbolTable() {
 
         // results
         if (pos.getIndex() != inpat.length()) {
-            errln((UnicodeString)"Failed to read to end of string \""
+            errln(UnicodeString("Failed to read to end of string \"")
                   + inpat + "\": read to "
                   + pos.getIndex() + ", length is "
                   + inpat.length());
@@ -1725,12 +1822,309 @@ void UnicodeSetTest::TestSymbolTable() {
         
         UnicodeString a, b;
         if (us != us2) {
-            errln((UnicodeString)"Failed, got " + us.toPattern(a, true) +
+            errln(UnicodeString("Failed, got ") + us.toPattern(a, true) +
                   ", expected " + us2.toPattern(b, true));
         } else {
-            logln((UnicodeString)"Ok, got " + us.toPattern(a, true));
+            logln(UnicodeString("Ok, got ") + us.toPattern(a, true));
         }
     }
+    struct TestCase {
+        struct Variable {
+            std::u16string_view name;
+            std::u16string_view value;
+        };
+        std::vector<Variable> variables;
+        std::u16string_view expression;
+        UErrorCode expectedErrorCode;
+        std::u16string_view expectedPattern;
+    };
+    for (const auto &[variables, expression, expectedErrorCode, expectedPattern] : std::vector<TestCase>{
+            // You should not do this, but it works.
+            {{{u"privateUseOrUnassigned", u"[[:Co:][:Cn:]"}, {u"close", u"]"}},
+            u"$privateUseOrUnassigned$close",
+            U_ZERO_ERROR,
+            u"[[:Co:][:Cn:]]"},
+            // This works and it is fine.
+            {{{u"privateUse", u"[[:Co:]]"}}, u"$privateUse", U_ZERO_ERROR, u"[[:Co:]]"},
+            // This should work! But it does not. Note the doubled brackets on the one that works above.
+            // We are not yet inside the variable when we call lookahead(), so we try to parse
+            // $privateUse rather than [:Co:].
+            {{{u"privateUse", u"[:Co:]"}}, u"[$privateUse]", U_ILLEGAL_ARGUMENT_ERROR, u"[]"},
+            // This should not work, and it does not (we try to parse [$sad$surprised] as a
+            // property-query).
+            {{{u"sad", u":C"}, {u"surprised", u"o:"}},
+            u"[$sad$surprised]",
+            U_ILLEGAL_ARGUMENT_ERROR,
+            u"[]"},
+        }) {
+        UErrorCode errorCode = U_ZERO_ERROR;
+        TokenSymbolTable symbols(errorCode);
+        if (U_FAILURE(errorCode)) {
+            errln("FAIL: Couldn’t construct symbol table");
+            continue;
+        }
+        for (const auto &[name, value] : variables) {
+            symbols.add(name, value, errorCode);
+            if (U_FAILURE(errorCode)) {
+                errln("FAIL: Couldn’t add variable " + name);
+                continue;
+            }
+        }
+        const UnicodeSet set(expression, USET_IGNORE_SPACE, &symbols, errorCode);
+        if (errorCode != expectedErrorCode) {
+            errln(u"Parsing " + expression + u": Expected " + u_errorName(expectedErrorCode) + ", got " +
+                  u_errorName(errorCode));
+        }
+        UnicodeString actual;
+        if (set.toPattern(actual) != expectedPattern) {
+            errln(u"UnicodeSet(R\"(" + expression + u")\").toPattern() expected " + expectedPattern +
+                  ", got " + actual);
+        }
+    }
+}
+
+void UnicodeSetTest::TestLookupSymbolTable() {
+    UErrorCode errorCode = U_ZERO_ERROR;
+    // We let `variables` be empty by default in the test cases below.
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wmissing-field-initializers"
+    struct TestCase {
+        struct Variable {
+            std::u16string_view name;
+            std::u16string_view value;
+        };
+        std::u16string_view expression;
+        UErrorCode expectedErrorCode;
+        std::u16string_view expectedPattern;
+        std::u16string_view expectedRegeneratedPattern;
+        // Hyrum’s law at work: Some users (RBBI) depend on the sequencing of `lookup` and
+        // `lookupMatcher` calls, so we test that.
+        std::vector<std::variant<UnicodeString, UChar32>> expectedLookups;
+        // Variables for `lookup`.
+        std::vector<Variable> variables;
+    };
+    class TestSymbolTable : public SymbolTable {
+      public:
+        const UnicodeString *lookup(const UnicodeString &name) const override {
+            auto it = variables_.find(name);
+            lookupTrace_.push_back(name);
+            return it == variables_.end() ? nullptr : &it->second;
+        }
+
+        const UnicodeFunctor *lookupMatcher(UChar32 c) const override {
+            lookupTrace_.push_back(c);
+            return symbols_.find(c) != symbols_.end() ? &symbols_.at(c)
+                                                                    : nullptr;
+        }
+
+        virtual UnicodeString parseReference(const UnicodeString &text, ParsePosition &pos,
+                                                 int32_t limit) const override {
+                const auto limitedText = std::u16string_view(text).substr(pos.getIndex(), limit);
+                for (auto codeUnits : header::utfStringCodePoints<UChar32, UTF_BEHAVIOR_FFFD>(limitedText)) {
+                    if (!u_isIDPart(codeUnits.codePoint())) {
+                        pos.setIndex(pos.getIndex() + (codeUnits.begin() - limitedText.begin()));
+                        // TODO(egg): In C++20, this could use the two-iterator constructor of
+                        // std::u16string_view.
+                        return limitedText.substr(0, codeUnits.begin() - limitedText.begin());
+                    }
+                }
+                pos.setIndex(limit);
+                return limitedText;
+        }
+
+        void add(UChar32 c, UnicodeSet set) {
+            symbols_[c] = set;
+        }
+
+        void setVariables(const std::vector<TestCase::Variable>& variables) {
+            for (const auto &[name, value] : variables) {
+                variables_[name] = value;
+            }
+        }
+
+        const std::vector<std::variant<UnicodeString, UChar32>>& getLookupTrace() const {
+            return lookupTrace_;
+        }
+
+        void clearLookupTrace() {
+            lookupTrace_.clear();
+        }
+
+      private:
+        std::unordered_map<UChar32, UnicodeSet> symbols_;
+        std::map<UnicodeString, UnicodeString> variables_;
+        mutable std::vector<std::variant<UnicodeString, UChar32>> lookupTrace_;
+    };
+    TestSymbolTable symbols;
+    symbols.add(u'0', UnicodeSet(u"[ a-z ]", errorCode));
+    symbols.add(u'1', UnicodeSet(u"[ b-c ]", errorCode));
+    symbols.add(u'2', UnicodeSet(u"[: Co :]", errorCode));
+    for (const auto &[expression, expectedErrorCode, expectedPattern, expectedRegeneratedPattern,
+                      expectedLookups, variables] : std::vector<TestCase>{
+            {u"0", U_ZERO_ERROR, u"[a-z]", u"[a-z]", {u'0'}},
+            {u"[0-1]", U_ZERO_ERROR, u"[[a-z]-[bc]]", u"[ad-z]", {u'0', u'-', u'1', u']'}},
+            {u"[!-0]", U_MALFORMED_SET, u"[]", u"[]", {u'!', u'-', u'0'}},
+            // A call to lookupMatcher with the first character of the content of a variable happens
+            // immediately after a corresponding call to lookup, although we may lookup the variable
+            // several times before we call lookupMatcher.
+            {u"[0-$one]",
+            U_ZERO_ERROR,
+            u"[[a-z]-[bc]]",
+            u"[ad-z]",
+            {u'0', u'-', u"one", u"one", u'1', u']'},
+            {{u"zero", u"0"}, {u"one", u"1"}}},
+            {u"[$zero-$one]",
+            U_ZERO_ERROR,
+            u"[[a-z]-[bc]]",
+            u"[ad-z]",
+            {u"zero", u"zero", u"zero", u"zero", u'0', u'-', u"one", u"one", u'1', u']'},
+            {{u"zero", u"0"}, {u"one", u"1"}}},
+            // If the variable expands to multiple symbols, only the first one is sequenced right after
+            // the variable lookup.
+            {u"[$ten]",
+            U_ZERO_ERROR,
+            u"[[bc][a-z]]",
+            u"[a-z]",
+            {u"ten", u"ten", u"ten", u"ten", u'1', u'0', u']'},
+            {{u"ten", u"10"}}},
+            // Substitution of lookupMatcher symbols takes place after unescaping.
+            {uR"([!-\u0030])", U_MALFORMED_SET, u"[]", u"[]", {u'!', u'-', u'0'}},
+            // It does not take place in string literals.
+            {uR"([!-/{0}])", U_ZERO_ERROR, u"[!-0]", u"[!-0]", {u'!', u'-', u'/', u'{', u']'}},
+            {uR"([ 2 & 1 ])", U_ZERO_ERROR, u"[[: Co :]&[bc]]", u"[]", {u'2', u'&', u'1', u']'}},
+            {uR"([ 21 ])",
+            U_ZERO_ERROR,
+            u"[[: Co :][bc]]",
+            u"[bc\uE000-\uF8FF\U000F0000-\U000FFFFD\U00100000-\U0010FFFD]",
+            {u'2', u'1', u']'}},
+            {u"[ a-b 1 ]", U_ZERO_ERROR, u"[a-b[bc]]", u"[a-c]", {u'a', u'-', u'b', u'1', u']'}},
+        }) {
+        symbols.setVariables(variables);
+        symbols.clearLookupTrace();
+        UnicodeString actual;
+        UErrorCode errorCode = U_ZERO_ERROR;
+        const UnicodeSet set(expression, USET_IGNORE_SPACE, &symbols, errorCode);
+        if (errorCode != expectedErrorCode) {
+            errln(u"Parsing " + expression + u": Expected " + u_errorName(expectedErrorCode) + ", got " +
+                  u_errorName(errorCode));
+        }
+        if (set.toPattern(actual) != expectedPattern) {
+            errln(u"UnicodeSet(R\"(" + expression + u")\").toPattern() expected " + expectedPattern +
+                  ", got " + actual);
+        }
+        if (UnicodeSet(set).complement().complement().toPattern(actual) != expectedRegeneratedPattern) {
+            errln(u"UnicodeSet(R\"(" + expression +
+                  u")\").complement().complement().toPattern() expected " + expectedRegeneratedPattern +
+                  ", got " + actual);
+        }
+        if (symbols.getLookupTrace() != expectedLookups) {
+            UnicodeString expected;
+            UnicodeString actual;
+            for (const auto &l : expectedLookups) {
+                expected += std::holds_alternative<UChar32>(l)
+                                ? (u"u'" + UnicodeString(std::get<UChar32>(l)) + u"', ")
+                                : u"u\"" + std::get<UnicodeString>(l) + u"\", ";
+            }
+            for (const auto &l : symbols.getLookupTrace()) {
+                actual += std::holds_alternative<UChar32>(l)
+                              ? (u"u'" + UnicodeString(std::get<UChar32>(l)) + u"', ")
+                              : u"u\"" + std::get<UnicodeString>(l) + u"\", ";
+            }
+            errln(u"Unexpected sequence of lookups:\nExpected : " + expected + "\nActual   : " + actual);
+        }
+    }
+    // Test what happens when we define syntax characters as symbols.  It is an extraordinarily bad idea
+    // to rely on this behaviour, but since it has been around since ICU 2.8, we probably should not
+    // change it unknowingly.
+    symbols.add(u'-', UnicodeSet(u"[{hyphenMinus}]", errorCode));
+    symbols.add(u'&', UnicodeSet(u"[{ampersand}]", errorCode));
+    // This one is never used, except if escaped.
+    symbols.add(u'[', UnicodeSet(u"[{leftSquareBracket}]", errorCode));
+    symbols.add(u'^', UnicodeSet(u"[{circumflexAccent}]", errorCode));
+    symbols.add(u'{', UnicodeSet(u"[{leftCurlyBracket}]", errorCode));
+    symbols.add(u'}', UnicodeSet(u"[{rightCurlyBracket}]", errorCode));
+    symbols.add(u'$', UnicodeSet(u"[{dollarSign}]", errorCode));
+    symbols.add(u':', UnicodeSet(u"[{colon}]", errorCode));
+    symbols.add(u'\\', UnicodeSet(u"[{reverseSolidus}]", errorCode));
+    symbols.add(u'p', UnicodeSet(u"[{latinSmallLetterP}]", errorCode));
+    for (const auto &[expression, expectedErrorCode, expectedPattern, expectedRegeneratedPattern,
+                      expectedLookups, variables] : std::vector<TestCase>{
+            {u"-", U_ZERO_ERROR, u"[{hyphenMinus}]", u"[{hyphenMinus}]"},
+            {u"0", U_ZERO_ERROR, u"[a-z]", u"[a-z]"},
+            // The hyphen no longer works as set difference.
+            {u"[0-1]", U_ZERO_ERROR, u"[[a-z][{hyphenMinus}][bc]]", u"[a-z{hyphenMinus}]"},
+            {u"[!-0]", U_ZERO_ERROR, u"[![{hyphenMinus}][a-z]]", u"[!a-z{hyphenMinus}]"},
+            // An initial HYPHEN-MINUS is still treated as a literal '-', but a final one is treated
+            // as a set.
+            {u"[-1]", U_ZERO_ERROR, uR"([\-[bc]])", uR"([\-bc])"},
+            {u"[1-]", U_ZERO_ERROR, u"[[bc][{hyphenMinus}]]", u"[bc{hyphenMinus}]"},
+            // String literals no longer work.
+            {uR"([!-/{0}])", U_ZERO_ERROR,
+            u"[![{hyphenMinus}]/[{leftCurlyBracket}][a-z][{rightCurlyBracket}]]",
+            u"[!/a-z{hyphenMinus}{leftCurlyBracket}{rightCurlyBracket}]"},
+            // The ampersand no longer works as set intersection.
+            {uR"([ 2 & 1 ])", U_ZERO_ERROR, u"[[: Co :][{ampersand}][bc]]",
+            u"[bc-󰀀-󿿽􀀀-􏿽{ampersand}]"},
+            // Complementing still works.
+            {uR"([^ \u0000 ])", U_ZERO_ERROR, uR"([\u0001-\U0010FFFF])",
+            uR"([\u0001-\U0010FFFF])"},
+            // ^ elsewhere becomes a symbol rather than a syntax error.
+            {uR"([\u0000 ^ -])", U_ZERO_ERROR, uR"([\u0000[{circumflexAccent}][{hyphenMinus}]])",
+            uR"([\u0000{circumflexAccent}{hyphenMinus}])"},
+            // Opening brackets still work.
+            {uR"([^ [ [^] ] ])", U_ZERO_ERROR, uR"([^[[\u0000-\U0010FFFF]]])", uR"([])"},
+            // The only way to access the [ symbol is via escaping.
+            {uR"([ \[ ])", U_ZERO_ERROR, uR"([[{leftSquareBracket}]])", uR"([{leftSquareBracket}])"},
+            // Anchors are gone.
+            {uR"([$])", U_ZERO_ERROR, uR"([[{dollarSign}]])", uR"([{dollarSign}])"},
+            // Property queries are unaffected.
+            {u"[:Co:]", U_ZERO_ERROR, u"[:Co:]", u"[\uE000-\uF8FF\U000F0000-\U000FFFFD\U00100000-\U0010FFFD]"},
+            {uR"(\p{Co})", U_ZERO_ERROR, uR"(\p{Co})", u"[\uE000-\uF8FF\U000F0000-\U000FFFFD\U00100000-\U0010FFFD]"},
+        }) {
+        UnicodeString actual;
+        UErrorCode errorCode = U_ZERO_ERROR;
+        const UnicodeSet set(expression, USET_IGNORE_SPACE, &symbols, errorCode);
+        if (errorCode != expectedErrorCode) {
+            errln(u"Parsing " + expression + u": Expected " + u_errorName(expectedErrorCode) + ", got " +
+                  u_errorName(errorCode));
+        }
+        if (set.toPattern(actual) != expectedPattern) {
+            errln(u"UnicodeSet(R\"(" + expression + u")\").toPattern() expected " + expectedPattern +
+                  ", got " + actual);
+        }
+        if (UnicodeSet(set).complement().complement().toPattern(actual) != expectedRegeneratedPattern) {
+            errln(u"UnicodeSet(R\"(" + expression +
+                  u")\").complement().complement().toPattern() expected " + expectedRegeneratedPattern +
+                  ", got " + actual);
+        }
+    }
+    // If ] is defined as a symbol, everything breaks except a lone symbol or property-query, and the
+    // constructor returns an error but not an empty set. Don’t do that.
+    symbols.add(u']', UnicodeSet(u"[{rightSquareBracket}]", errorCode));
+    for (const auto &[expression, expectedErrorCode, expectedPattern, expectedRegeneratedPattern,
+                      expectedLookups, variables] : std::vector<TestCase>{
+            {u"]", U_ZERO_ERROR, u"[{rightSquareBracket}]", u"[{rightSquareBracket}]"},
+            {u"[:Co:]", U_ZERO_ERROR, u"[:Co:]", u"[\uE000-\uF8FF\U000F0000-\U000FFFFD\U00100000-\U0010FFFD]"},
+            {u"[]", U_MALFORMED_SET, u"[{rightSquareBracket}]", u"[{rightSquareBracket}]"},
+        }) {
+        UnicodeString actual;
+        UErrorCode errorCode = U_ZERO_ERROR;
+        const UnicodeSet set(expression, USET_IGNORE_SPACE, &symbols, errorCode);
+        if (errorCode != expectedErrorCode) {
+            errln(u"Parsing " + expression + u": Expected " + u_errorName(expectedErrorCode) + ", got " +
+                  u_errorName(errorCode));
+        }
+        if (set.toPattern(actual) != expectedPattern) {
+            errln(u"UnicodeSet(R\"(" + expression + u")\").toPattern() expected " + expectedPattern +
+                  ", got " + actual);
+        }
+        if (UnicodeSet(set).complement().complement().toPattern(actual) != expectedRegeneratedPattern) {
+            errln(u"UnicodeSet(R\"(" + expression +
+                  u")\").complement().complement().toPattern() expected " + expectedRegeneratedPattern +
+                  ", got " + actual);
+        }
+    }
+#pragma GCC diagnostic pop
 }
 
 void UnicodeSetTest::TestSurrogate() {
@@ -1739,11 +2133,11 @@ void UnicodeSetTest::TestSurrogate() {
         "[abc\\uD800\\uDC00]",
         // "[abc\uD800\uDC00]", // Can't do this on C -- only Java
         "[abc\\U00010000]",
-        0
+        nullptr
     };
-    for (int i=0; DATA[i] != 0; ++i) {
+    for (int i = 0; DATA[i] != nullptr; ++i) {
         UErrorCode ec = U_ZERO_ERROR;
-        logln((UnicodeString)"Test pattern " + i + " :" + UnicodeString(DATA[i], -1, US_INV));
+        logln(UnicodeString("Test pattern ") + i + " :" + UnicodeString(DATA[i], -1, US_INV));
         UnicodeString str = UnicodeString(DATA[i], -1, US_INV);
         UnicodeSet set(str, ec);
         if (U_FAILURE(ec)) {
@@ -1754,7 +2148,7 @@ void UnicodeSetTest::TestSurrogate() {
                           CharsToUnicodeString("abc\\U00010000"),
                           CharsToUnicodeString("\\uD800;\\uDC00")); // split apart surrogate-pair
         if (set.size() != 4) {
-            errln((UnicodeString)"FAIL: " + UnicodeString(DATA[i], -1, US_INV) + ".size() == " + 
+            errln(UnicodeString("FAIL: ") + UnicodeString(DATA[i], -1, US_INV) + ".size() == " +
                   set.size() + ", expected 4");
         }
 
@@ -1776,7 +2170,7 @@ void UnicodeSetTest::TestExhaustive() {
 
     for (int32_t i = 0; i < limit; ++i) {
         bitsToSet(i, x);
-        logln((UnicodeString)"Testing " + i + ", " + x);
+        logln(UnicodeString("Testing ") + i + ", " + x);
         _testComplement(i, x, y);
 
         UnicodeSet &toTest = bitsToSet(i, aa);
@@ -1801,10 +2195,10 @@ void UnicodeSetTest::_testComplement(int32_t a, UnicodeSet& x, UnicodeSet& z) {
     z.complement();
     int32_t c = setToBits(z);
     if (c != (~a)) {
-        errln((UnicodeString)"FAILED: add: ~" + x +  " != " + z);
-        errln((UnicodeString)"FAILED: add: ~" + a + " != " + c);
+        errln(UnicodeString("FAILED: add: ~") + x + " != " + z);
+        errln(UnicodeString("FAILED: add: ~") + a + " != " + c);
     }
-    checkCanonicalRep(z, (UnicodeString)"complement " + a);
+    checkCanonicalRep(z, UnicodeString("complement ") + a);
 }
 
 void UnicodeSetTest::_testAdd(int32_t a, int32_t b, UnicodeSet& x, UnicodeSet& y, UnicodeSet& z) {
@@ -1814,10 +2208,10 @@ void UnicodeSetTest::_testAdd(int32_t a, int32_t b, UnicodeSet& x, UnicodeSet& y
     z.addAll(y);
     int32_t c = setToBits(z);
     if (c != (a | b)) {
-        errln((UnicodeString)"FAILED: add: " + x + " | " + y + " != " + z);
-        errln((UnicodeString)"FAILED: add: " + a + " | " + b + " != " + c);
+        errln(UnicodeString("FAILED: add: ") + x + " | " + y + " != " + z);
+        errln(UnicodeString("FAILED: add: ") + a + " | " + b + " != " + c);
     }
-    checkCanonicalRep(z, (UnicodeString)"add " + a + "," + b);
+    checkCanonicalRep(z, UnicodeString("add ") + a + "," + b);
 }
 
 void UnicodeSetTest::_testRetain(int32_t a, int32_t b, UnicodeSet& x, UnicodeSet& y, UnicodeSet& z) {
@@ -1827,10 +2221,10 @@ void UnicodeSetTest::_testRetain(int32_t a, int32_t b, UnicodeSet& x, UnicodeSet
     z.retainAll(y);
     int32_t c = setToBits(z);
     if (c != (a & b)) {
-        errln((UnicodeString)"FAILED: retain: " + x + " & " + y + " != " + z);
-        errln((UnicodeString)"FAILED: retain: " + a + " & " + b + " != " + c);
+        errln(UnicodeString("FAILED: retain: ") + x + " & " + y + " != " + z);
+        errln(UnicodeString("FAILED: retain: ") + a + " & " + b + " != " + c);
     }
-    checkCanonicalRep(z, (UnicodeString)"retain " + a + "," + b);
+    checkCanonicalRep(z, UnicodeString("retain ") + a + "," + b);
 }
 
 void UnicodeSetTest::_testRemove(int32_t a, int32_t b, UnicodeSet& x, UnicodeSet& y, UnicodeSet& z) {
@@ -1840,10 +2234,10 @@ void UnicodeSetTest::_testRemove(int32_t a, int32_t b, UnicodeSet& x, UnicodeSet
     z.removeAll(y);
     int32_t c = setToBits(z);
     if (c != (a &~ b)) {
-        errln((UnicodeString)"FAILED: remove: " + x + " &~ " + y + " != " + z);
-        errln((UnicodeString)"FAILED: remove: " + a + " &~ " + b + " != " + c);
+        errln(UnicodeString("FAILED: remove: ") + x + " &~ " + y + " != " + z);
+        errln(UnicodeString("FAILED: remove: ") + a + " &~ " + b + " != " + c);
     }
-    checkCanonicalRep(z, (UnicodeString)"remove " + a + "," + b);
+    checkCanonicalRep(z, UnicodeString("remove ") + a + "," + b);
 }
 
 void UnicodeSetTest::_testXor(int32_t a, int32_t b, UnicodeSet& x, UnicodeSet& y, UnicodeSet& z) {
@@ -1853,10 +2247,10 @@ void UnicodeSetTest::_testXor(int32_t a, int32_t b, UnicodeSet& x, UnicodeSet& y
     z.complementAll(y);
     int32_t c = setToBits(z);
     if (c != (a ^ b)) {
-        errln((UnicodeString)"FAILED: complement: " + x + " ^ " + y + " != " + z);
-        errln((UnicodeString)"FAILED: complement: " + a + " ^ " + b + " != " + c);
+        errln(UnicodeString("FAILED: complement: ") + x + " ^ " + y + " != " + z);
+        errln(UnicodeString("FAILED: complement: ") + a + " ^ " + b + " != " + c);
     }
-    checkCanonicalRep(z, (UnicodeString)"complement " + a + "," + b);
+    checkCanonicalRep(z, UnicodeString("complement ") + a + "," + b);
 }
 
 /**
@@ -1866,7 +2260,7 @@ void UnicodeSetTest::_testXor(int32_t a, int32_t b, UnicodeSet& x, UnicodeSet& y
 void UnicodeSetTest::checkCanonicalRep(const UnicodeSet& set, const UnicodeString& msg) {
     int32_t n = set.getRangeCount();
     if (n < 0) {
-        errln((UnicodeString)"FAIL result of " + msg +
+        errln(UnicodeString("FAIL result of ") + msg +
               ": range count should be >= 0 but is " +
               n /*+ " for " + set.toPattern())*/);
         return;
@@ -1876,13 +2270,13 @@ void UnicodeSetTest::checkCanonicalRep(const UnicodeSet& set, const UnicodeStrin
         UChar32 start = set.getRangeStart(i);
         UChar32 end = set.getRangeEnd(i);
         if (start > end) {
-            errln((UnicodeString)"FAIL result of " + msg +
+            errln(UnicodeString("FAIL result of ") + msg +
                   ": range " + (i+1) +
                   " start > end: " + (int)start + ", " + (int)end +
                   " for " + set);
         }
         if (i > 0 && start <= last) {
-            errln((UnicodeString)"FAIL result of " + msg +
+            errln(UnicodeString("FAIL result of ") + msg +
                   ": range " + (i+1) +
                   " overlaps previous range: " + (int)start + ", " + (int)end +
                   " for " + set);
@@ -2040,20 +2434,26 @@ void UnicodeSetTest::copyWithIterator(UnicodeSet& t, const UnicodeSet& s, UBool 
 }
     
 UBool UnicodeSetTest::checkEqual(const UnicodeSet& s, const UnicodeSet& t, const char* message) {
-  assertEquals(UnicodeString("RangeCount: ","") + message, s.getRangeCount(), t.getRangeCount());
-  assertEquals(UnicodeString("size: ","") + message, s.size(), t.size());
+    return checkEqual(*this, s, t, message);
+}
+
+UBool UnicodeSetTest::checkEqual(
+        IntlTest& intlTest,
+        const UnicodeSet& s, const UnicodeSet& t, const char* message) {
+    intlTest.assertEquals(UnicodeString("RangeCount: ","") + message, s.getRangeCount(), t.getRangeCount());
+    intlTest.assertEquals(UnicodeString("size: ","") + message, s.size(), t.size());
     UnicodeString source; s.toPattern(source, true);
     UnicodeString result; t.toPattern(result, true);
     if (s != t) {
-        errln((UnicodeString)"FAIL: " + message
-              + "; source = " + source
-              + "; result = " + result
+        intlTest.errln(UnicodeString("FAIL: ") + message
+              + "\nsource = " + source
+              + "\nresult = " + result
               );
         return false;
     } else {
-        logln((UnicodeString)"Ok: " + message
-              + "; source = " + source
-              + "; result = " + result
+        intlTest.logln(UnicodeString("Ok: ") + message
+              + "\nsource = " + source
+              + "\nresult = " + result
               );
     }
     return true;
@@ -2066,7 +2466,7 @@ UnicodeSetTest::expectContainment(const UnicodeString& pat,
     UErrorCode ec = U_ZERO_ERROR;
     UnicodeSet set(pat, ec);
     if (U_FAILURE(ec)) {
-        dataerrln((UnicodeString)"FAIL: pattern \"" +
+        dataerrln(UnicodeString("FAIL: pattern \"") +
               pat + "\" => " + u_errorName(ec));
         return;
     }
@@ -2098,10 +2498,10 @@ UnicodeSetTest::expectContainment(const UnicodeSet& set,
         }
     }
     if (bad.length() > 0) {
-        errln((UnicodeString)"Fail: set " + setName + " does not contain " + prettify(bad) +
+        errln(UnicodeString("Fail: set ") + setName + " does not contain " + prettify(bad) +
               ", expected containment of " + prettify(charsIn));
     } else {
-        logln((UnicodeString)"Ok: set " + setName + " contains " + prettify(charsIn));
+        logln(UnicodeString("Ok: set ") + setName + " contains " + prettify(charsIn));
     }
 
     bad.truncate(0);
@@ -2112,10 +2512,10 @@ UnicodeSetTest::expectContainment(const UnicodeSet& set,
         }
     }
     if (bad.length() > 0) {
-        errln((UnicodeString)"Fail: set " + setName + " contains " + prettify(bad) +
+        errln(UnicodeString("Fail: set ") + setName + " contains " + prettify(bad) +
               ", expected non-containment of " + prettify(charsOut));
     } else {
-        logln((UnicodeString)"Ok: set " + setName + " does not contain " + prettify(charsOut));
+        logln(UnicodeString("Ok: set ") + setName + " does not contain " + prettify(charsOut));
     }
 }
 
@@ -2177,9 +2577,9 @@ void UnicodeSetTest::expectToPattern(const UnicodeSet& set,
     UnicodeString pat;
     set.toPattern(pat, true);
     if (pat == expPat) {
-        logln((UnicodeString)"Ok:   toPattern() => \"" + pat + "\"");
+        logln(UnicodeString("Ok:   toPattern() => \"") + pat + "\"");
     } else {
-        errln((UnicodeString)"FAIL: toPattern() => \"" + pat + "\", expected \"" + expPat + "\"");
+        errln(UnicodeString("FAIL: toPattern() => \"") + pat + "\", expected \"" + expPat + "\"");
         return;
     }
     if (expStrings == NULL) {
@@ -2194,18 +2594,18 @@ void UnicodeSetTest::expectToPattern(const UnicodeSet& set,
         UnicodeString s = CharsToUnicodeString(expStrings[i]);
         UBool contained = set.contains(s);
         if (contained == in) {
-            logln((UnicodeString)"Ok: " + expPat + 
+            logln(UnicodeString("Ok: ") + expPat +
                   (contained ? " contains {" : " does not contain {") +
                   escape(expStrings[i]) + "}");
         } else {
-            errln((UnicodeString)"FAIL: " + expPat + 
+            errln(UnicodeString("FAIL: ") + expPat +
                   (contained ? " contains {" : " does not contain {") +
                   escape(expStrings[i]) + "}");
         }
     }
 }
 
-static UChar toHexString(int32_t i) { return (UChar)(i + (i < 10 ? u'0' : (u'A' - 10))); }
+static char16_t toHexString(int32_t i) { return static_cast<char16_t>(i + (i < 10 ? u'0' : (u'A' - 10))); }
 
 void
 UnicodeSetTest::doAssert(UBool condition, const char *message)
@@ -2424,7 +2824,7 @@ public:
                     utf8Count+=
                         utf8Lengths[stringsLength]=length8=
                         appendUTF8(s->getBuffer(), s->length(),
-                                   s8, (int32_t)(sizeof(utf8)-utf8Count));
+                                   s8, static_cast<int32_t>(sizeof(utf8) - utf8Count));
                     if(length8==0) {
                         hasSurrogates=true;  // Contains unpaired surrogates.
                     }
@@ -2440,7 +2840,7 @@ public:
     }
 
     UBool hasStrings() const {
-        return (UBool)(stringsLength>0);
+        return stringsLength > 0;
     }
 
     UBool hasStringsWithSurrogates() const {
@@ -2934,7 +3334,7 @@ static inline USetSpanCondition invertSpanCondition(USetSpanCondition spanCondit
 }
 
 static inline int32_t slen(const void *s, UBool isUTF16) {
-    return isUTF16 ? u_strlen((const UChar *)s) : static_cast<int32_t>(strlen((const char *)s));
+    return isUTF16 ? u_strlen(static_cast<const char16_t*>(s)) : static_cast<int32_t>(strlen(static_cast<const char*>(s)));
 }
 
 /*
@@ -3034,8 +3434,8 @@ static int32_t getSpans(const UnicodeSetWithStrings &set, UBool isComplement,
             length=slen(s, isUTF16);
         }
         for(;;) {
-            start+= isUTF16 ? containsSpanUTF16(set, (const UChar *)s+start, length-start, spanCondition) :
-                              containsSpanUTF8(set, (const char *)s+start, length-start, spanCondition);
+            start += isUTF16 ? containsSpanUTF16(set, static_cast<const char16_t*>(s) + start, length - start, spanCondition) :
+                               containsSpanUTF8(set, static_cast<const char*>(s) + start, length - start, spanCondition);
             if(count<limitsCapacity) {
                 limits[count]=start;
             }
@@ -3050,15 +3450,15 @@ static int32_t getSpans(const UnicodeSetWithStrings &set, UBool isComplement,
     case 3:
         start=0;
         for(;;) {
-            start+= isUTF16 ? realSet.span((const UChar *)s+start, length>=0 ? length-start : length, spanCondition) :
-                              realSet.spanUTF8((const char *)s+start, length>=0 ? length-start : length, spanCondition);
+            start += isUTF16 ? realSet.span(static_cast<const char16_t*>(s) + start, length >= 0 ? length - start : length, spanCondition) :
+                               realSet.spanUTF8(static_cast<const char*>(s) + start, length >= 0 ? length - start : length, spanCondition);
             if(count<limitsCapacity) {
                 limits[count]=start;
             }
             ++count;
             if(length>=0 ? start>=length :
-                           isUTF16 ? ((const UChar *)s)[start]==0 :
-                                     ((const char *)s)[start]==0
+                           isUTF16 ? static_cast<const char16_t*>(s)[start] == 0 :
+                                     static_cast<const char*>(s)[start] == 0
             ) {
                 break;
             }
@@ -3075,7 +3475,7 @@ static int32_t getSpans(const UnicodeSetWithStrings &set, UBool isComplement,
             if(count<=limitsCapacity) {
                 limits[limitsCapacity-count]=length;
             }
-            length= isUTF16 ? containsSpanBackUTF16(set, (const UChar *)s, length, spanCondition) :
+            length = isUTF16 ? containsSpanBackUTF16(set, static_cast<const char16_t*>(s), length, spanCondition) :
                               containsSpanBackUTF8(set, (const char *)s, length, spanCondition);
             if(length==0 && spanCondition==firstSpanCondition) {
                 break;
@@ -3096,7 +3496,7 @@ static int32_t getSpans(const UnicodeSetWithStrings &set, UBool isComplement,
             // Note: Length<0 is tested only for the first spanBack().
             // If we wanted to keep length<0 for all spanBack()s, we would have to
             // temporarily modify the string by placing a NUL where the previous spanBack() stopped.
-            length= isUTF16 ? realSet.spanBack((const UChar *)s, length, spanCondition) :
+            length = isUTF16 ? realSet.spanBack(static_cast<const char16_t*>(s), length, spanCondition) :
                               realSet.spanBackUTF8((const char *)s, length, spanCondition);
             if(length==0 && spanCondition==firstSpanCondition) {
                 break;
@@ -3166,7 +3566,7 @@ void UnicodeSetTest::testSpan(const UnicodeSetWithStrings *sets[4],
             }
         }
         for(type=0;; ++type) {
-            limitsCount=getSpans(*sets[i], (UBool)(i&1),
+            limitsCount = getSpans(*sets[i], static_cast<UBool>(i & 1),
                                  s, length, isUTF16,
                                  whichSpans,
                                  type, typeName,
@@ -3204,7 +3604,7 @@ void UnicodeSetTest::testSpan(const UnicodeSetWithStrings *sets[4],
     // Compare span() with containsAll()/containsNone(),
     // but only if we have expectLimits[] from the uncomplemented set.
     if(isUTF16 && (whichSpans&SPAN_SET)!=0) {
-        const UChar *s16=(const UChar *)s;
+        const char16_t* s16 = static_cast<const char16_t*>(s);
         UnicodeString string;
         int32_t prev=0, limit, length;
         for(i=0; i<expectCount; ++i) {
@@ -3302,7 +3702,7 @@ void UnicodeSetTest::testSpanBothUTFs(const UnicodeSetWithStrings *sets[4],
     int32_t offsets[3000];
 
     const UChar *s16Limit=s16+length16;
-    char *t=(char *)s8;
+    char* t = reinterpret_cast<char*>(s8);
     char *tLimit=t+sizeof(s8);
     int32_t *o=offsets;
     UErrorCode errorCode=U_ZERO_ERROR;
@@ -3315,7 +3715,7 @@ void UnicodeSetTest::testSpanBothUTFs(const UnicodeSetWithStrings *sets[4],
         ucnv_resetFromUnicode(utf8Cnv);
         return;
     }
-    int32_t length8=(int32_t)(t-(char *)s8);
+    int32_t length8 = static_cast<int32_t>(t - reinterpret_cast<char*>(s8));
 
     // Convert expectLimits[].
     int32_t i, j, expect;
@@ -4177,5 +4577,200 @@ void UnicodeSetTest::TestPatternCodePointComplement() {
         assertTrue("[:Basic_Emoji:].complement().contains(chipmunk+emoji)",
                 notBasic.contains(u"🐿\uFE0F"));
         assertFalse("[:Basic_Emoji:].complement() --> no bicycle", notBasic.contains(U'🚲'));
+    }
+}
+
+void UnicodeSetTest::TestCodePointIterator() {
+    IcuTestErrorCode errorCode(*this, "TestCodePointIterator");
+    UnicodeSet set(u"[abcçカ🚴]", errorCode);
+    UnicodeString result;
+    for (UChar32 c : set.codePoints()) {
+        // printf("set.codePoint U+%04lx\n", (long)c);
+        result.append(u' ').append(c);
+    }
+    assertEquals(WHERE, u" a b c ç カ 🚴", result);
+
+    // codePoints() returns USetCodePoints for which explicit APIs are tested via USet
+    // in a header-only unit test file.
+}
+
+void UnicodeSetTest::TestRangeIterator() {
+    IcuTestErrorCode errorCode(*this, "TestRangeIterator");
+    UnicodeSet set(u"[abcçカ🚴]", errorCode);
+    UnicodeString result;
+    for (auto [start, end] : set.ranges()) {
+        // printf("set.range U+%04lx..U+%04lx\n", (long)start, (long)end);
+        result.append(u' ').append(start).append(u'-').append(end);
+    }
+    assertEquals(WHERE, u" a-c ç-ç カ-カ 🚴-🚴", result);
+    result.remove();
+    for (auto range : set.ranges()) {
+        for (UChar32 c : range) {
+            // printf("set.range.c U+%04lx\n", (long)c);
+            result.append(u' ').append(c);
+        }
+        result.append(u" |");
+    }
+    assertEquals(WHERE, u" a b c | ç | カ | 🚴 |", result);
+
+    // ranges() returns USetRanges for which explicit APIs are tested via USet
+    // in a header-only unit test file.
+}
+
+void UnicodeSetTest::TestStringIterator() {
+    IcuTestErrorCode errorCode(*this, "TestStringIterator");
+    UnicodeSet set(u"[abcçカ🚴{}{abc}{de}]", errorCode);
+    UnicodeString result;
+    for (auto s : set.strings()) {
+        // UnicodeString us(s);
+        // std::string u8;
+        // printf("set.string length %ld \"%s\"\n", (long)s.length(), us.toUTF8String(u8).c_str());
+        result.append(u" \"").append(s).append(u'"');
+    }
+    assertEquals(WHERE, uR"( "" "abc" "de")", result);
+
+    // strings() returns USetStrins for which explicit APIs are tested via USet
+    // in a header-only unit test file.
+}
+
+void UnicodeSetTest::TestElementIterator() {
+    IcuTestErrorCode errorCode(*this, "TestElementIterator");
+    UnicodeSet set(u"[abcçカ🚴{}{abc}{de}]", errorCode);
+    UnicodeString result;
+    for (auto el : set) {
+        // UnicodeString us(el);
+        // std::string u8;
+        // printf("set.element length %ld \"%s\"\n", (long)us.length(), us.toUTF8String(u8).c_str());
+        result.append(u" \"").append(el).append(u'"');
+    }
+    assertEquals(WHERE, uR"( "a" "b" "c" "ç" "カ" "🚴" "" "abc" "de")", result);
+
+    // begin() & end() return USetElementIterator for which explicit APIs are tested via USet
+    // in a header-only unit test file.
+}
+
+void UnicodeSetTest::TestToPatternOutput() {
+    for (const auto &[expression, expected] :
+        std::vector<std::pair<std::u16string_view, std::u16string_view>>{
+            // For a UnicodeSet which is not a property-query nor a named-element and without any
+            // Restriction among its Terms (that is, whose Union consists solely a sequence of Elements
+            // UnescapedHyphenMinus), toPattern merges and sorts ranges, and introduces a complement to
+            // minimize the result.
+            {u"[c-za-b]", u"[a-z]"},
+            {u"[  c - z  a - b  ]", u"[a-z]"},
+            {uR"([ ^ \u0000-b d-\U0010FFFF ])", u"[c]"},
+            {uR"([ \u0000-b d-\U0010FFFF ])", u"[^c]"},
+            {u"[ - - ]", uR"([\-])"},
+            {u"[ - _ - ]", uR"([\-_])"},
+            {u"[ - + - ]", uR"([+\-])"},
+            {u"[ { Z e i c h e n k e t t e } Zeichenmenge ]", u"[Zceg-imn{Zeichenkette}]"},
+            {uR"([ { \x5A e i c h e n k e t t e } \x5Aeichenmenge ])", u"[Zceg-imn{Zeichenkette}]"},
+            {u"[$d-za-c]", uR"([\$a-z])"},
+            {u"[a-c$d-z]", uR"([\$a-z])"},
+            {uR"([\uFFFFa-z])", uR"([a-z\uFFFF])"},
+            {u"[!-$z]", uR"([!-\$z])"},
+            {u"[-a-cd-z$-]", uR"([\$\-a-z])"},
+            {u"[-$-]", uR"([\$\-])"},
+            // A property-query or named-element is kept as-is:
+            {uR"(\p{ General_Category = Punctuation })", uR"(\p{ General_Category = Punctuation })"},
+            {uR"(\p{P})", uR"(\p{P})"},
+            {uR"(\p{gc=P})", uR"(\p{gc=P})"},
+            {uR"([: general category = punctuation :])", uR"([: general category = punctuation :])"},
+            {uR"([: ^general category = punctuation :])", uR"([: ^general category = punctuation :])"},
+            {uR"(\P{ gc = punctuation })", uR"(\P{ gc = punctuation })"},
+            {uR"(\N{ latin small letter a })", uR"(\N{ latin small letter a })"},
+            // If there is any Restriction among the terms, its syntax is mostly as-is (spaces are
+            // still eliminated), with the exception that an initial UnescapedHyphenMinus gets escaped.
+            // This is applied recursively, so innermost ranges-only UnicodeSets get normalized.
+            {u"[ c-z a-b [c-f g-z] ]", u"[c-za-b[c-z]]"},
+            {u"[- + c-z a-b [c-f g-z] -]", uR"([\-+c-za-b[c-z]-])"},
+            {uR"([ c-z a-b \p{ General_Category = Punctuation } ])",
+            uR"([c-za-b\p{ General_Category = Punctuation }])"},
+            {u"[^[c]]", uR"([^[c]])"},
+            {uR"([ ^ [ \u0000-b d-\U0010FFFF ] ])", uR"([^[^c]])"},
+            {u"[$[]]", uR"([\$[]])"},
+            // Spaces are eliminated within a string-literal even when the syntax is preserved.
+            {u"[ {Z e i c h e n k e t t e } [] Zeichenmenge ]", u"[{Zeichenkette}[]Zeichenmenge]"},
+            // Escapes are removed even when the syntax is preserved.
+            {uR"([ { \x5A e i c h e n k e t t e } [] \x5Aeichenmenge ])",
+            u"[{Zeichenkette}[]Zeichenmenge]"},
+            // A named-element is currently a nested set, so it is preserved and causes the syntax to be
+            // preserved.
+            {uR"([ \N{LATIN CAPITAL LETTER Z}eichenmenge ])", uR"([\N{LATIN CAPITAL LETTER Z}eichenmenge])"},
+            // An anchor also causes the syntax to be preserved.
+            {u"[ d-z a-c $ ]", u"[d-za-c$]"},
+            {u"[ - a-c d-z $ ]", uR"([\-a-cd-z$])"},
+            {u"[$$$]", uR"([\$\$$])"},
+        }) {
+        UErrorCode errorCode = U_ZERO_ERROR;
+        const UnicodeSet set(expression, errorCode);
+        UnicodeString actual;
+        if (U_FAILURE(errorCode)) {
+            errln(u"Failed to parse " + expression + u": " + u_errorName(errorCode));
+        } else if (set.toPattern(actual) != expected) {
+            errln(u"UnicodeSet(R\"(" + expression + u")\").toPattern() expected " + expected + ", got " +
+                  actual);
+        }
+    }
+}
+
+void UnicodeSetTest::TestParseErrors() {
+    for (const auto expression : std::vector<std::u16string_view>{
+            // Java error message: "Char expected after operator".
+            u"[a-[b]]",
+            // "Missing '['".
+            u"a-z",
+            // "Trailing '&'".
+            u"[[a]&]",
+            // "'-' not after char or set".
+            u"[[a]&-[z]]",
+            u"[[a]--[z]]",
+            u"[{aa}-{zz}]",
+            // "'&' not after set".
+            u"[a&z]",
+            u"[{aa}&{zz}]",
+            // "'^' not after '['"
+            u"[a^z]",  // TODO(egg): Exclude from literal-element in PDUTS61.
+            // "Missing operand after operator".
+            u"[a-{zz}]",
+            u"[[a]-{zz}]",
+            u"[[a]&{zz}]",
+            // "Invalid multicharacter string".
+            u"[{aa]",
+            // "Unquoted '$'".
+            u"[a-$]",
+            u"[!-$]",
+            // "Invalid range".
+            u"[a-a]",  // TODO(egg): Exclude in PDUTS61.
+            u"[z-a]",
+            // "Set expected after operator".
+            u"[[a]-z]",
+            u"[[a]&z]",
+            // "Missing ']'".
+            u"[a-z",
+        }) {
+        UErrorCode errorCode = U_ZERO_ERROR;
+        const UnicodeSet set(expression, errorCode);
+        if (errorCode != U_MALFORMED_SET) {
+            UnicodeString s;
+            errln(expression + u": Expected U_MALFORMED_SET, got " + u_errorName(errorCode) +
+                  ", set is " + UnicodeSet(set).complement().complement().toPattern(s));
+        }
+    }
+    for (const auto expression : std::vector<std::u16string_view>{
+            // Java error message: "Invalid property pattern".
+            u"[:]",
+            uR"(\p)"
+            u"[:^]",
+            uR"(\P)",
+            uR"(\N)",
+        }) {
+        UErrorCode errorCode = U_ZERO_ERROR;
+        const UnicodeSet set(expression, errorCode);
+        if (errorCode != U_ILLEGAL_ARGUMENT_ERROR) {
+            UnicodeString s;
+            errln(expression + u": Expected U_ILLEGAL_ARGUMENT_ERROR, got " + u_errorName(errorCode) +
+                  ", set is " + UnicodeSet(set).complement().complement().toPattern(s));
+        }
     }
 }

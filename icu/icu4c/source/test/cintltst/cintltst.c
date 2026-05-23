@@ -247,10 +247,10 @@ int main(int argc, const char* const argv[])
     endTime = uprv_getRawUTCtime();
     diffTime = (int32_t)(endTime - startTime);
     printf("Elapsed Time: %02d:%02d:%02d.%03d\n",
-        (int)((diffTime%U_MILLIS_PER_DAY)/U_MILLIS_PER_HOUR),
-        (int)((diffTime%U_MILLIS_PER_HOUR)/U_MILLIS_PER_MINUTE),
-        (int)((diffTime%U_MILLIS_PER_MINUTE)/U_MILLIS_PER_SECOND),
-        (int)(diffTime%U_MILLIS_PER_SECOND));
+        (diffTime % U_MILLIS_PER_DAY) / U_MILLIS_PER_HOUR,
+        (diffTime % U_MILLIS_PER_HOUR) / U_MILLIS_PER_MINUTE,
+        (diffTime % U_MILLIS_PER_MINUTE) / U_MILLIS_PER_SECOND,
+        (diffTime % U_MILLIS_PER_SECOND));
 
     return nerrors ? 1 : 0;
 }
@@ -380,7 +380,10 @@ const char *ctest_dataOutDir()
     */
 #if defined (U_TOPBUILDDIR)
     {
-        dataOutDir = U_TOPBUILDDIR "data"U_FILE_SEP_STRING"out"U_FILE_SEP_STRING;
+        dataOutDir = U_TOPBUILDDIR
+                "data" U_FILE_SEP_STRING
+                "out" U_FILE_SEP_STRING
+                "build" U_FILE_SEP_STRING;
     }
 #else
 
@@ -720,7 +723,7 @@ U_CFUNC UBool assertTrue(const char* msg, int /*not UBool*/ condition) {
         log_verbose("Ok: %s\n", msg);
     }
 #endif
-    return (UBool)condition;   
+    return condition;
 }
 
 U_CFUNC UBool assertEquals(const char* message, const char* expected,

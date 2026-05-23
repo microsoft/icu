@@ -62,6 +62,7 @@ void BasicNormalizerTest::runIndexedTest(int32_t index, UBool exec,
     TESTCASE_AUTO(TestNormalizeIllFormedText);
     TESTCASE_AUTO(TestComposeJamoTBase);
     TESTCASE_AUTO(TestComposeBoundaryAfter);
+    TESTCASE_AUTO(TestNFKC_SCF);
     TESTCASE_AUTO_END;
 }
 
@@ -368,9 +369,9 @@ void BasicNormalizerTest::TestZeroIndex(void) {
             UnicodeString exp(DATA[i+1], "");
             exp = exp.unescape();
             if (b == exp) {
-                logln((UnicodeString)"Ok: " + hex(a) + " x COMPOSE_COMPAT => " + hex(b));
+                logln(UnicodeString("Ok: ") + hex(a) + " x COMPOSE_COMPAT => " + hex(b));
             } else {
-                errln((UnicodeString)"FAIL: " + hex(a) + " x COMPOSE_COMPAT => " + hex(b) +
+                errln(UnicodeString("FAIL: ") + hex(a) + " x COMPOSE_COMPAT => " + hex(b) +
                       ", expect " + hex(exp));
             }
         }
@@ -380,9 +381,9 @@ void BasicNormalizerTest::TestZeroIndex(void) {
         } else {
             UnicodeString exp = UnicodeString(DATA[i+2], "").unescape();
             if (a == exp) {
-                logln((UnicodeString)"Ok: " + hex(b) + " x DECOMP => " + hex(a));
+                logln(UnicodeString("Ok: ") + hex(b) + " x DECOMP => " + hex(a));
             } else {
-                errln((UnicodeString)"FAIL: " + hex(b) + " x DECOMP => " + hex(a) +
+                errln(UnicodeString("FAIL: ") + hex(b) + " x DECOMP => " + hex(a) +
                       ", expect " + hex(exp));
             }
         }
@@ -880,7 +881,7 @@ void BasicNormalizerTest::TestConcatenate() {
 static int32_t
 ref_norm_compare(const UnicodeString &s1, const UnicodeString &s2, uint32_t options, UErrorCode &errorCode) {
     UnicodeString r1, r2, t1, t2;
-    int32_t normOptions=(int32_t)(options>>UNORM_COMPARE_NORM_OPTIONS_SHIFT);
+    int32_t normOptions = static_cast<int32_t>(options >> UNORM_COMPARE_NORM_OPTIONS_SHIFT);
 
     if(options&U_COMPARE_IGNORE_CASE) {
         Normalizer::decompose(s1, false, normOptions, r1, errorCode);
@@ -906,7 +907,7 @@ ref_norm_compare(const UnicodeString &s1, const UnicodeString &s2, uint32_t opti
 // test wrapper for Normalizer::compare, sets UNORM_INPUT_IS_FCD appropriately
 static int32_t
 _norm_compare(const UnicodeString &s1, const UnicodeString &s2, uint32_t options, UErrorCode &errorCode) {
-    int32_t normOptions=(int32_t)(options>>UNORM_COMPARE_NORM_OPTIONS_SHIFT);
+    int32_t normOptions = static_cast<int32_t>(options >> UNORM_COMPARE_NORM_OPTIONS_SHIFT);
 
     if( UNORM_YES==Normalizer::quickCheck(s1, UNORM_FCD, normOptions, errorCode) &&
         UNORM_YES==Normalizer::quickCheck(s2, UNORM_FCD, normOptions, errorCode)) {
@@ -1209,7 +1210,9 @@ BasicNormalizerTest::TestCompare() {
     if( nfcNorm2->composePair(0x20, 0x301)>=0 ||
         nfcNorm2->composePair(0x61, 0x305)>=0 ||
         nfcNorm2->composePair(0x1100, 0x1160)>=0 ||
-        nfcNorm2->composePair(0xac00, 0x11a7)>=0
+        nfcNorm2->composePair(0xac00, 0x11a7)>=0 ||
+        nfcNorm2->composePair(0x1100, 0x80000020)>= 0 ||  // ICU-22635
+        nfcNorm2->composePair(0xac00, 0x80000020)>= 0     // ICU-22635
     ) {
         errln("NFC.composePair() incorrectly composes some pairs of characters");
     }
@@ -1295,7 +1298,7 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
 
         if (U_FAILURE(errorCode)) {
             ++count;
-            dataerrln("U+%04lx: Failed with error %s", c, u_errorName(errorCode));
+            dataerrln("U+%04lx: Failed with error %s", u_errorName(errorCode));
         }
 
         // bad:
@@ -1871,6 +1874,22 @@ BasicNormalizerTest::TestComposeBoundaryAfter() {
     assertEquals("nfkc", expected, result);
     assertFalse("U+02DA boundary-after", nfkc->hasBoundaryAfter(0x2DA));
     assertFalse("U+FB2C boundary-after", nfkc->hasBoundaryAfter(0xFB2C));
+}
+
+void
+BasicNormalizerTest::TestNFKC_SCF() {
+    IcuTestErrorCode errorCode(*this, "TestNFKC_SCF");
+    const Normalizer2 *nfkc_scf = Normalizer2::getNFKCSimpleCasefoldInstance(errorCode);
+    if(errorCode.errDataIfFailureAndReset(
+            "Normalizer2::getNFKCSimpleCasefoldInstance() call failed")) {
+        return;
+    }
+    // Uses only Simple_Casefolding mappings.
+    UnicodeString s(u"aA\u0308 ßẞ \u1F80\u1F88");
+    UnicodeString expected(u"aä ßß \u1F80\u1F80");
+    UnicodeString result = nfkc_scf->normalize(s, errorCode);
+    assertSuccess("nfkc_scf", errorCode.get());
+    assertEquals("nfkc_scf", expected, result);
 }
 
 #endif /* #if !UCONFIG_NO_NORMALIZATION */

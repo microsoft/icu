@@ -12,7 +12,7 @@
 
 #include "srchtest.h"
 #if !UCONFIG_NO_BREAK_ITERATION
-#include "../cintltst/usrchdat.c"
+#include "../cintltst/usrchdat.inc"
 #endif
 #include "unicode/stsearch.h"
 #include "unicode/ustring.h"
@@ -48,26 +48,26 @@ StringSearchTest::StringSearchTest()
 #if !UCONFIG_NO_BREAK_ITERATION
     UErrorCode    status = U_ZERO_ERROR;
     
-    m_en_us_ = (RuleBasedCollator *)Collator::createInstance("en_US", status);
-    m_fr_fr_ = (RuleBasedCollator *)Collator::createInstance("fr_FR", status);
-    m_de_    = (RuleBasedCollator *)Collator::createInstance("de_DE", status);
-    m_es_    = (RuleBasedCollator *)Collator::createInstance("es_ES", status);
+    m_en_us_ = dynamic_cast<RuleBasedCollator*>(Collator::createInstance("en_US", status));
+    m_fr_fr_ = dynamic_cast<RuleBasedCollator*>(Collator::createInstance("fr_FR", status));
+    m_de_    = dynamic_cast<RuleBasedCollator*>(Collator::createInstance("de_DE", status));
+    m_es_    = dynamic_cast<RuleBasedCollator*>(Collator::createInstance("es_ES", status));
     if(U_FAILURE(status)) {
       delete m_en_us_;
       delete m_fr_fr_;
       delete m_de_;
       delete m_es_;
-      m_en_us_ = 0;
-      m_fr_fr_ = 0;
-      m_de_ = 0;
-      m_es_ = 0;
+      m_en_us_ = nullptr;
+      m_fr_fr_ = nullptr;
+      m_de_ = nullptr;
+      m_es_ = nullptr;
       errln("Collator creation failed with %s", u_errorName(status));
       return;
     }
 
     
     UnicodeString rules;
-    rules.setTo(((RuleBasedCollator *)m_de_)->getRules());
+    rules.setTo(m_de_->getRules());
     UChar extrarules[128];
     u_unescape(EXTRACOLLATIONRULE, extrarules, 128);
     rules.append(extrarules, u_strlen(extrarules));
@@ -75,7 +75,7 @@ StringSearchTest::StringSearchTest()
 
     m_de_ = new RuleBasedCollator(rules, status);
 
-    rules.setTo(((RuleBasedCollator *)m_es_)->getRules());
+    rules.setTo(m_es_->getRules());
     rules.append(extrarules, u_strlen(extrarules));
         
     delete m_es_;
@@ -170,6 +170,7 @@ void StringSearchTest::runIndexedTest(int32_t index, UBool exec,
         CASE(34, TestSubclass)
         CASE(35, TestCoverage)
         CASE(36, TestDiacriticMatch)
+        CASE(37, TestBug22775)
         default: name = ""; break;
     }
 #else
@@ -226,7 +227,7 @@ char * StringSearchTest::toCharString(const UnicodeString &text)
     for (; count < length; count ++) {
         UChar ch = text[count];
         if (ch >= 0x20 && ch <= 0x7e) {
-            result[index ++] = (char)ch;
+            result[index++] = static_cast<char>(ch);
         }
         else {
             snprintf(result+index, sizeof(result)-index, "\\u%04x", ch);
@@ -487,7 +488,7 @@ UBool StringSearchTest::assertEqual(const SearchData *search)
     }
 #endif
     collator->setStrength(getECollationStrength(search->strength));
-    strsrch = new StringSearch(pattern, text, (RuleBasedCollator *)collator, 
+    strsrch = new StringSearch(pattern, text, dynamic_cast<RuleBasedCollator*>(collator), 
                                breaker, status);
     if (U_FAILURE(status)) {
         errln("Error opening string search %s", u_errorName(status));
@@ -547,7 +548,7 @@ UBool StringSearchTest::assertCanonicalEqual(const SearchData *search)
 #endif
     collator->setStrength(getECollationStrength(search->strength));
     collator->setAttribute(UCOL_NORMALIZATION_MODE, UCOL_ON, status);
-    strsrch = new StringSearch(pattern, text, (RuleBasedCollator *)collator, 
+    strsrch = new StringSearch(pattern, text, dynamic_cast<RuleBasedCollator*>(collator), 
                                breaker, status);
     strsrch->setAttribute(USEARCH_CANONICAL_MATCH, USEARCH_ON, status);
     if (U_FAILURE(status)) {
@@ -599,7 +600,7 @@ UBool StringSearchTest::assertEqualWithAttribute(const SearchData *search,
     }
 #endif
     collator->setStrength(getECollationStrength(search->strength));
-    strsrch = new StringSearch(pattern, text, (RuleBasedCollator *)collator, 
+    strsrch = new StringSearch(pattern, text, dynamic_cast<RuleBasedCollator*>(collator), 
                                breaker, status);
     strsrch->setAttribute(USEARCH_CANONICAL_MATCH, canonical, status);
     strsrch->setAttribute(USEARCH_OVERLAP, overlap, status);
@@ -925,9 +926,7 @@ void StringSearchTest::TestBreakIterator()
         if (U_FAILURE(status) || 
             strsrch->getBreakIterator() != breaker) {
             errln("Error setting break iterator");
-            if (strsrch != NULL) {
-                delete strsrch;
-            }
+            delete strsrch;
         }
         if (!assertEqualWithStringSearch(strsrch, search)) {
             collator->setStrength(getECollationStrength(UCOL_TERTIARY));
@@ -1128,9 +1127,7 @@ void StringSearchTest::TestPattern()
     if (U_FAILURE(status)) {
         errln("Error opening string search %s", u_errorName(status));
         m_en_us_->setStrength(getECollationStrength(UCOL_TERTIARY));
-        if (strsrch != NULL) {
-            delete strsrch;
-        }
+        delete strsrch;
         return;
     }
     if (strsrch->getPattern() != pattern) {
@@ -1138,9 +1135,7 @@ void StringSearchTest::TestPattern()
     }
     if (!assertEqualWithStringSearch(strsrch, &PATTERN[0])) {
         m_en_us_->setStrength(getECollationStrength(UCOL_TERTIARY));
-        if (strsrch != NULL) {
-            delete strsrch;
-        }
+        delete strsrch;
         return;
     }
 
@@ -1150,9 +1145,7 @@ void StringSearchTest::TestPattern()
     if (pattern != strsrch->getPattern()) {
         errln("Error setting pattern");
         m_en_us_->setStrength(getECollationStrength(UCOL_TERTIARY));
-        if (strsrch != NULL) {
-            delete strsrch;
-        }
+        delete strsrch;
         return;
     }
     strsrch->reset();
@@ -1161,9 +1154,7 @@ void StringSearchTest::TestPattern()
     }
     if (!assertEqualWithStringSearch(strsrch, &PATTERN[1])) {
         m_en_us_->setStrength(getECollationStrength(UCOL_TERTIARY));
-        if (strsrch != NULL) {
-            delete strsrch;
-        }
+        delete strsrch;
         return;
     }
 
@@ -1173,9 +1164,7 @@ void StringSearchTest::TestPattern()
     if (pattern != strsrch->getPattern()) {
         errln("Error setting pattern");
         m_en_us_->setStrength(getECollationStrength(UCOL_TERTIARY));
-        if (strsrch != NULL) {
-            delete strsrch;
-        }
+        delete strsrch;
         return;
     }
     strsrch->reset();
@@ -1184,9 +1173,7 @@ void StringSearchTest::TestPattern()
     }
     if (!assertEqualWithStringSearch(strsrch, &PATTERN[0])) {
         m_en_us_->setStrength(getECollationStrength(UCOL_TERTIARY));
-        if (strsrch != NULL) {
-            delete strsrch;
-        }
+        delete strsrch;
         return;
     }
     /* enormous pattern size to see if this crashes */
@@ -1200,9 +1187,7 @@ void StringSearchTest::TestPattern()
         errln("Error setting pattern with size 512, %s", u_errorName(status));
     }
     m_en_us_->setStrength(getECollationStrength(UCOL_TERTIARY));
-    if (strsrch != NULL) {
-        delete strsrch;
-    }
+    delete strsrch;
 }
  
 void StringSearchTest::TestText()
@@ -1431,9 +1416,7 @@ void StringSearchTest::TestGetMatch()
                                              status);
     if (U_FAILURE(status)) {
         errln("Error opening string search %s", u_errorName(status));
-        if (strsrch != NULL) {
-            delete strsrch;
-        }
+        delete strsrch;
         return;
     }
     
@@ -1494,9 +1477,7 @@ void StringSearchTest::TestSetMatch()
                                                  NULL, status);
         if (U_FAILURE(status)) {
             errln("Error opening string search %s", u_errorName(status));
-            if (strsrch != NULL) {
-                delete strsrch;
-            }
+            delete strsrch;
             return;
         }
 
@@ -1554,9 +1535,7 @@ void StringSearchTest::TestReset()
                                               status);
     if (U_FAILURE(status)) {
         errln("Error opening string search %s", u_errorName(status));
-        if (strsrch != NULL) {
-            delete strsrch;
-        }
+        delete strsrch;
         return;
     }
     strsrch->setAttribute(USEARCH_OVERLAP, USEARCH_ON, status);
@@ -1941,9 +1920,7 @@ void StringSearchTest::TestCollatorCanonical()
     strsrch->setAttribute(USEARCH_CANONICAL_MATCH, USEARCH_ON, status);
     if (!assertEqualWithStringSearch(strsrch, &COLLATORCANONICAL[1])) {
         delete strsrch;
-        if (tailored != NULL) {
-            delete tailored;
-        }
+        delete tailored;
 
         return;
     }
@@ -1956,9 +1933,7 @@ void StringSearchTest::TestCollatorCanonical()
     if (!assertEqualWithStringSearch(strsrch, &COLLATORCANONICAL[0])) {
     }
     delete strsrch;
-    if (tailored != NULL) {
-        delete tailored;
-    }
+    delete tailored;
 }
     
 void StringSearchTest::TestPatternCanonical()
@@ -2024,9 +1999,7 @@ void StringSearchTest::TestPatternCanonical()
     }
 ENDTESTPATTERN:
     m_en_us_->setStrength(getECollationStrength(UCOL_TERTIARY));
-    if (strsrch != NULL) {
-        delete strsrch;
-    }
+    delete strsrch;
 }
     
 void StringSearchTest::TestTextCanonical()
@@ -2083,9 +2056,7 @@ void StringSearchTest::TestTextCanonical()
         goto ENDTESTPATTERN;
     }
 ENDTESTPATTERN:
-    if (strsrch != NULL) {
-        delete strsrch;
-    }
+    delete strsrch;
 }
     
 void StringSearchTest::TestCompositeBoundariesCanonical()
@@ -2240,7 +2211,7 @@ void StringSearchTest::TestContractionCanonical()
 
 void StringSearchTest::TestUClassID()
 {
-    char id = *((char *)StringSearch::getStaticClassID());
+    char id = *static_cast<char*>(StringSearch::getStaticClassID());
     if (id != 0) {
         errln("Static class id for StringSearch should be 0");
     }
@@ -2249,7 +2220,7 @@ void StringSearchTest::TestUClassID()
     UnicodeString  pattern("pattern");
     StringSearch  *strsrch = new StringSearch(pattern, text, m_en_us_, NULL, 
                                               status);
-    id = *((char *)strsrch->getDynamicClassID());
+    id = *static_cast<char*>(strsrch->getDynamicClassID());
     if (id != 0) {
         errln("Dynamic class id for StringSearch should be 0");
     }
@@ -2480,6 +2451,26 @@ void StringSearchTest::TestCoverage(){
     if (stub1 != stub2){
         errln("SearchIterator::operator =  assigned object should be equal");
     }
+}
+
+void StringSearchTest::TestBug22775() {
+    IcuTestErrorCode errorCode(*this, "TestBug22775()");
+    // Used to crash in Java due to bad management of the pattern collation element array.
+    UnicodeString pattern(
+        u"Xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        u"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        u"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        u"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa響");
+    LocalPointer<RuleBasedCollator> collator(
+        dynamic_cast<RuleBasedCollator *>(
+            Collator::createInstance(Locale::getUS(), errorCode)),
+        errorCode);
+    // Check that we have a collator before dereferencing.
+    if (errorCode.errDataIfFailureAndReset()) { return; }
+    collator->setAttribute(UCOL_STRENGTH, UCOL_PRIMARY, errorCode);
+    StringCharacterIterator text(u" ");
+    StringSearch stringSearch(pattern, text, collator.getAlias(), nullptr, errorCode);
+    stringSearch.next(errorCode);
 }
 
 #endif /* !UCONFIG_NO_BREAK_ITERATION */

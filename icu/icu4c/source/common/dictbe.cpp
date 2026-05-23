@@ -42,7 +42,7 @@ DictionaryBreakEngine::~DictionaryBreakEngine() {
 }
 
 UBool
-DictionaryBreakEngine::handles(UChar32 c) const {
+DictionaryBreakEngine::handles(UChar32 c, const char*) const {
     return fSet.contains(c);
 }
 
@@ -54,19 +54,19 @@ DictionaryBreakEngine::findBreaks( UText *text,
                                  UBool isPhraseBreaking,
                                  UErrorCode& status) const {
     if (U_FAILURE(status)) return 0;
-    (void)startPos;            // TODO: remove this param?
     int32_t result = 0;
 
     // Find the span of characters included in the set.
     //   The span to break begins at the current position in the text, and
     //   extends towards the start or end of the text, depending on 'reverse'.
 
-    int32_t start = (int32_t)utext_getNativeIndex(text);
+    utext_setNativeIndex(text, startPos);
+    int32_t start = static_cast<int32_t>(utext_getNativeIndex(text));
     int32_t current;
     int32_t rangeStart;
     int32_t rangeEnd;
     UChar32 c = utext_current32(text);
-    while((current = (int32_t)utext_getNativeIndex(text)) < endPos && fSet.contains(c)) {
+    while ((current = static_cast<int32_t>(utext_getNativeIndex(text))) < endPos && fSet.contains(c)) {
         utext_next32(text);         // TODO:  recast loop for postincrement
         c = utext_current32(text);
     }
@@ -356,14 +356,14 @@ foundBest:
                 utext_setNativeIndex(text, current+cuWordLength);
             }
         }
-        
+
         // Never stop before a combining mark.
         int32_t currPos;
         while ((currPos = (int32_t)utext_getNativeIndex(text)) < rangeEnd && fMarkSet.contains(utext_current32(text))) {
             utext_next32(text);
             cuWordLength += (int32_t)utext_getNativeIndex(text) - currPos;
         }
-        
+
         // Look ahead for possible suffixes if a dictionary word does not follow.
         // We do this in code rather than using a rule so that the heuristic
         // resynch continues to function. For example, one of the suffix characters
@@ -1054,9 +1054,10 @@ foundBest:
  */
 static const uint32_t kuint32max = 0xFFFFFFFF;
 CjkBreakEngine::CjkBreakEngine(DictionaryMatcher *adoptDictionary, LanguageType type, UErrorCode &status)
-: DictionaryBreakEngine(), fDictionary(adoptDictionary) {
+: DictionaryBreakEngine(), fDictionary(adoptDictionary), isCj(false) {
     UTRACE_ENTRY(UTRACE_UBRK_CREATE_BREAK_ENGINE);
     UTRACE_DATA1(UTRACE_INFO, "dictbe=%s", "Hani");
+    fMlBreakEngine = nullptr;
     nfkcNorm2 = Normalizer2::getNFKCInstance(status);
     // Korean dictionary only includes Hangul syllables
     fHangulWordSet.applyPattern(UnicodeString(u"[\\uac00-\\ud7a3]"), status);
@@ -1073,11 +1074,20 @@ CjkBreakEngine::CjkBreakEngine(DictionaryMatcher *adoptDictionary, LanguageType 
         if (U_SUCCESS(status)) {
             setCharacters(fHangulWordSet);
         }
-    } else { //Chinese and Japanese
+    } else { // Chinese and Japanese
         UnicodeSet cjSet(UnicodeString(u"[[:Han:][:Hiragana:][:Katakana:]\\u30fc\\uff70\\uff9e\\uff9f]"), status);
+        isCj = true;
         if (U_SUCCESS(status)) {
             setCharacters(cjSet);
+#if UCONFIG_USE_ML_PHRASE_BREAKING
+            fMlBreakEngine = new MlBreakEngine(fDigitOrOpenPunctuationOrAlphabetSet,
+                                               fClosePunctuationSet, status);
+            if (fMlBreakEngine == nullptr) {
+                status = U_MEMORY_ALLOCATION_ERROR;
+            }
+#else
             initJapanesePhraseParameter(status);
+#endif
         }
     }
     UTRACE_EXIT_STATUS(status);
@@ -1085,6 +1095,7 @@ CjkBreakEngine::CjkBreakEngine(DictionaryMatcher *adoptDictionary, LanguageType 
 
 CjkBreakEngine::~CjkBreakEngine(){
     delete fDictionary;
+    delete fMlBreakEngine;
 }
 
 // The katakanaCost values below are based on the length frequencies of all
@@ -1251,7 +1262,15 @@ CjkBreakEngine::divideUpDictionaryRange( UText *inText,
             }
         }
     }
-                
+
+#if UCONFIG_USE_ML_PHRASE_BREAKING
+    // PhraseBreaking is supported in ja and ko; MlBreakEngine only supports ja.
+    if (isPhraseBreaking && isCj) {
+        return fMlBreakEngine->divideUpRange(inText, rangeStart, rangeEnd, foundBreaks, inString,
+                                             inputMap, status);
+    }
+#endif
+
     // bestSnlp[i] is the snlp of the best segmentation of the first i
     // code points in the range to be matched.
     UVector32 bestSnlp(numCodePts + 1, status);
@@ -1334,7 +1353,7 @@ CjkBreakEngine::divideUpDictionaryRange( UText *inText,
             }
             if (katakanaRunLength < kMaxKatakanaGroupLength) {
                 uint32_t newSnlp = bestSnlp.elementAti(i) + getKatakanaCost(katakanaRunLength);
-                if (newSnlp < (uint32_t)bestSnlp.elementAti(i+katakanaRunLength)) {
+                if (newSnlp < static_cast<uint32_t>(bestSnlp.elementAti(i + katakanaRunLength))) {
                     bestSnlp.setElementAt(newSnlp, i+katakanaRunLength);
                     prev.setElementAt(i, i+katakanaRunLength);  // prev[j] = i;
                 }

@@ -19,7 +19,6 @@
 #include "unicode/udat.h"
 #include "unicode/ustring.h"
 #include "unicode/utf16.h"
-#include "bytesinkutil.h"
 #include "charstr.h"
 #include "tzgnames.h"
 #include "cmemory.h"
@@ -158,16 +157,12 @@ U_CDECL_BEGIN
  */
 static UBool U_CALLCONV tzfmt_cleanup(void)
 {
-    if (gZoneIdTrie != NULL) {
-        delete gZoneIdTrie;
-    }
-    gZoneIdTrie = NULL;
+    delete gZoneIdTrie;
+    gZoneIdTrie = nullptr;
     gZoneIdTrieInitOnce.reset();
 
-    if (gShortZoneIdTrie != NULL) {
-        delete gShortZoneIdTrie;
-    }
-    gShortZoneIdTrie = NULL;
+    delete gShortZoneIdTrie;
+    gShortZoneIdTrie = nullptr;
     gShortZoneIdTrieInitOnce.reset();
 
     return true;
@@ -230,7 +225,7 @@ GMTOffsetField::createText(const UnicodeString& text, UErrorCode& status) {
     }
 
     int32_t len = text.length();
-    result->fText = (UChar*)uprv_malloc((len + 1) * sizeof(UChar));
+    result->fText = static_cast<char16_t*>(uprv_malloc((len + 1) * sizeof(char16_t)));
     if (result->fText == NULL) {
         status = U_MEMORY_ALLOCATION_ERROR;
         delete result;
@@ -327,17 +322,14 @@ TimeZoneFormat::TimeZoneFormat(const Locale& locale, UErrorCode& status)
     const char* region = fLocale.getCountry();
     int32_t regionLen = static_cast<int32_t>(uprv_strlen(region));
     if (regionLen == 0) {
-        CharString loc;
-        {
-            CharStringByteSink sink(&loc);
-            ulocimp_addLikelySubtags(fLocale.getName(), sink, &status);
-        }
+        UErrorCode tempStatus = U_ZERO_ERROR;
+        CharString loc = ulocimp_addLikelySubtags(fLocale.getName(), tempStatus);
 
-        regionLen = uloc_getCountry(loc.data(), fTargetRegion, sizeof(fTargetRegion), &status);
-        if (U_SUCCESS(status)) {
+        regionLen = uloc_getCountry(loc.data(), fTargetRegion, sizeof(fTargetRegion), &tempStatus);
+        if (U_SUCCESS(tempStatus)) {
             fTargetRegion[regionLen] = 0;
         } else {
-            return;
+            fTargetRegion[0] = 0;
         }
     } else if (regionLen < (int32_t)sizeof(fTargetRegion)) {
         uprv_strcpy(fTargetRegion, region);
@@ -385,7 +377,7 @@ TimeZoneFormat::TimeZoneFormat(const Locale& locale, UErrorCode& status)
         UChar *sep = u_strchr(hourFormats, (UChar)0x003B /* ';' */);
         if (sep != NULL) {
             UErrorCode tmpStatus = U_ZERO_ERROR;
-            fGMTOffsetPatterns[UTZFMT_PAT_POSITIVE_HM].setTo(false, hourFormats, (int32_t)(sep - hourFormats));
+            fGMTOffsetPatterns[UTZFMT_PAT_POSITIVE_HM].setTo(false, hourFormats, static_cast<int32_t>(sep - hourFormats));
             fGMTOffsetPatterns[UTZFMT_PAT_NEGATIVE_HM].setTo(true, sep + 1, -1);
             expandOffsetPattern(fGMTOffsetPatterns[UTZFMT_PAT_POSITIVE_HM], fGMTOffsetPatterns[UTZFMT_PAT_POSITIVE_HMS], tmpStatus);
             expandOffsetPattern(fGMTOffsetPatterns[UTZFMT_PAT_NEGATIVE_HM], fGMTOffsetPatterns[UTZFMT_PAT_NEGATIVE_HMS], tmpStatus);
@@ -1548,8 +1540,8 @@ TimeZoneFormat::formatOffsetISO8601(int32_t offset, UBool isBasic, UBool useUtcI
         if (sep && idx != 0) {
             result.append(sep);
         }
-        result.append((UChar)(0x0030 + fields[idx]/10));
-        result.append((UChar)(0x0030 + fields[idx]%10));
+        result.append(static_cast<char16_t>(0x0030 + fields[idx] / 10));
+        result.append(static_cast<char16_t>(0x0030 + fields[idx] % 10));
     }
 
     return result;
@@ -1564,11 +1556,6 @@ TimeZoneFormat::formatOffsetLocalizedGMT(int32_t offset, UBool isShort, UnicodeS
     if (offset <= -MAX_OFFSET || offset >= MAX_OFFSET) {
         result.setToBogus();
         status = U_ILLEGAL_ARGUMENT_ERROR;
-        return result;
-    }
-
-    if (offset == 0) {
-        result.setTo(fGMTZeroFormat);
         return result;
     }
 
@@ -1649,7 +1636,7 @@ TimeZoneFormat::parseOffsetISO8601(const UnicodeString& text, ParsePosition& pos
     }
 
     UChar firstChar = text.charAt(start);
-    if (firstChar == ISO8601_UTC || firstChar == (UChar)(ISO8601_UTC + 0x20)) {
+    if (firstChar == ISO8601_UTC || firstChar == static_cast<char16_t>(ISO8601_UTC + 0x20)) {
         // "Z" (or "z") - indicates UTC
         pos.setIndex(start + 1);
         return 0;
@@ -2199,8 +2186,8 @@ TimeZoneFormat::formatOffsetWithAsciiDigits(int32_t offset, UChar sep, OffsetFie
         if (sep && idx != 0) {
             result.append(sep);
         }
-        result.append((UChar)(0x0030 + fields[idx]/10));
-        result.append((UChar)(0x0030 + fields[idx]%10));
+        result.append(static_cast<char16_t>(0x0030 + fields[idx] / 10));
+        result.append(static_cast<char16_t>(0x0030 + fields[idx] % 10));
     }
 
     return result;
@@ -2641,6 +2628,9 @@ TimeZoneFormat::initGMTOffsetPatterns(UErrorCode& status) {
             fGMTOffsetPatternItems[type] = parseOffsetPattern(fGMTOffsetPatterns[type], FIELDS_HMS, status);
             break;
         }
+    }
+    if (U_FAILURE(status)) {
+        return;
     }
     checkAbuttingHoursAndMinutes();
 }

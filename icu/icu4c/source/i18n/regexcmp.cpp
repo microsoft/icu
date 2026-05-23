@@ -165,7 +165,7 @@ void    RegexCompile::compile(
     // Main loop for the regex pattern parsing state machine.
     //   Runs once per state transition.
     //   Each time through optionally performs, depending on the state table,
-    //      - an advance to the the next pattern char
+    //      - an advance to the next pattern char
     //      - an action to be performed.
     //      - pushing or popping a state to/from the local state return stack.
     //   file regexcst.txt is the source for the state table.  The logic behind
@@ -2230,7 +2230,7 @@ void  RegexCompile::handleCloseParen() {
         //   The frame offset of the variables for this cg is obtained from the
         //       start capture op and put it into the end-capture op.
         {
-            int32_t   captureOp = (int32_t)fRXPat->fCompiledPat->elementAti(fMatchOpenParen+1);
+            int32_t captureOp = static_cast<int32_t>(fRXPat->fCompiledPat->elementAti(fMatchOpenParen + 1));
             U_ASSERT(URX_TYPE(captureOp) == URX_START_CAPTURE);
 
             int32_t   frameVarLocation = URX_VAL(captureOp);
@@ -2242,7 +2242,7 @@ void  RegexCompile::handleCloseParen() {
         //   Insert a LD_SP operation to restore the state stack to the position
         //   it was when the atomic parens were entered.
         {
-            int32_t   stoOp = (int32_t)fRXPat->fCompiledPat->elementAti(fMatchOpenParen+1);
+            int32_t stoOp = static_cast<int32_t>(fRXPat->fCompiledPat->elementAti(fMatchOpenParen + 1));
             U_ASSERT(URX_TYPE(stoOp) == URX_STO_SP);
             int32_t   stoLoc = URX_VAL(stoOp);
             appendOp(URX_LD_SP, stoLoc);
@@ -2251,7 +2251,7 @@ void  RegexCompile::handleCloseParen() {
 
     case lookAhead:
         {
-            int32_t  startOp = (int32_t)fRXPat->fCompiledPat->elementAti(fMatchOpenParen-5);
+            int32_t startOp = static_cast<int32_t>(fRXPat->fCompiledPat->elementAti(fMatchOpenParen - 5));
             U_ASSERT(URX_TYPE(startOp) == URX_LA_START);
             int32_t dataLoc  = URX_VAL(startOp);
             appendOp(URX_LA_END, dataLoc);
@@ -2261,7 +2261,7 @@ void  RegexCompile::handleCloseParen() {
     case negLookAhead:
         {
             // See comment at doOpenLookAheadNeg
-            int32_t  startOp = (int32_t)fRXPat->fCompiledPat->elementAti(fMatchOpenParen-1);
+            int32_t startOp = static_cast<int32_t>(fRXPat->fCompiledPat->elementAti(fMatchOpenParen - 1));
             U_ASSERT(URX_TYPE(startOp) == URX_LA_START);
             int32_t dataLoc  = URX_VAL(startOp);
             appendOp(URX_LA_END, dataLoc);
@@ -2283,7 +2283,7 @@ void  RegexCompile::handleCloseParen() {
             // See comment at doOpenLookBehind.
 
             // Append the URX_LB_END and URX_LA_END to the compiled pattern.
-            int32_t  startOp = (int32_t)fRXPat->fCompiledPat->elementAti(fMatchOpenParen-4);
+            int32_t startOp = static_cast<int32_t>(fRXPat->fCompiledPat->elementAti(fMatchOpenParen - 4));
             U_ASSERT(URX_TYPE(startOp) == URX_LB_START);
             int32_t dataLoc  = URX_VAL(startOp);
             appendOp(URX_LB_END, dataLoc);
@@ -2327,7 +2327,7 @@ void  RegexCompile::handleCloseParen() {
             // See comment at doOpenLookBehindNeg.
 
             // Append the URX_LBN_END to the compiled pattern.
-            int32_t  startOp = (int32_t)fRXPat->fCompiledPat->elementAti(fMatchOpenParen-5);
+            int32_t startOp = static_cast<int32_t>(fRXPat->fCompiledPat->elementAti(fMatchOpenParen - 5));
             U_ASSERT(URX_TYPE(startOp) == URX_LB_START);
             int32_t dataLoc  = URX_VAL(startOp);
             appendOp(URX_LBN_END, dataLoc);
@@ -3053,9 +3053,9 @@ void   RegexCompile::matchStartType() {
                 //      move loc forwards to the end of the loop, skipping over the body.
                 //   If the min count is > 0,
                 //      continue normal processing of the body of the loop.
-                int32_t loopEndLoc   = (int32_t)fRXPat->fCompiledPat->elementAti(loc+1);
+                int32_t loopEndLoc = static_cast<int32_t>(fRXPat->fCompiledPat->elementAti(loc + 1));
                         loopEndLoc   = URX_VAL(loopEndLoc);
-                int32_t minLoopCount = (int32_t)fRXPat->fCompiledPat->elementAti(loc+2);
+                int32_t minLoopCount = static_cast<int32_t>(fRXPat->fCompiledPat->elementAti(loc + 2));
                 if (minLoopCount == 0) {
                     // Min Loop Count of 0, treat like a forward branch and
                     //   move the current minimum length up to the target
@@ -3185,8 +3185,6 @@ void   RegexCompile::matchStartType() {
         // Matches can start with anything
         fRXPat->fStartType = START_NO_INFO;
     }
-
-    return;
 }
 
 
@@ -3370,9 +3368,9 @@ int32_t   RegexCompile::minMatchLength(int32_t start, int32_t end) {
                 //      move loc forwards to the end of the loop, skipping over the body.
                 //   If the min count is > 0,
                 //      continue normal processing of the body of the loop.
-                int32_t loopEndLoc   = (int32_t)fRXPat->fCompiledPat->elementAti(loc+1);
+                int32_t loopEndLoc = static_cast<int32_t>(fRXPat->fCompiledPat->elementAti(loc + 1));
                         loopEndLoc   = URX_VAL(loopEndLoc);
-                int32_t minLoopCount = (int32_t)fRXPat->fCompiledPat->elementAti(loc+2);
+                int32_t minLoopCount = static_cast<int32_t>(fRXPat->fCompiledPat->elementAti(loc + 2));
                 if (minLoopCount == 0) {
                     loc = loopEndLoc;
                 } else {
@@ -4036,7 +4034,7 @@ void RegexCompile::nextChar(RegexPatternChar &c) {
 
     if (fQuoteMode) {
         c.fQuoted = true;
-        if ((c.fChar==chBackSlash && peekCharLL()==chE && ((fModeFlags & UREGEX_LITERAL) == 0)) ||
+        if ((c.fChar == chBackSlash && peekCharLL() == chE && ((fModeFlags & UREGEX_LITERAL) == 0)) ||
             c.fChar == (UChar32)-1) {
             fQuoteMode = false;  //  Exit quote mode,
             nextCharLL();        // discard the E
@@ -4065,7 +4063,7 @@ void RegexCompile::nextChar(RegexPatternChar &c) {
                 if (c.fChar == (UChar32)-1) {
                     break;     // End of Input
                 }
-                if  (c.fChar == chPound && fEOLComments == true) {
+                if  (c.fChar == chPound && fEOLComments) {
                     // Start of a comment.  Consume the rest of it, until EOF or a new line
                     for (;;) {
                         c.fChar = nextCharLL();
@@ -4102,7 +4100,7 @@ void RegexCompile::nextChar(RegexPatternChar &c) {
 
                 if (UTEXT_FULL_TEXT_IN_CHUNK(fRXPat->fPattern, fPatternLength)) {
                     int32_t endIndex = (int32_t)pos;
-                    c.fChar = u_unescapeAt(uregex_ucstr_unescape_charAt, &endIndex, (int32_t)fPatternLength, (void *)fRXPat->fPattern->chunkContents);
+                    c.fChar = u_unescapeAt(uregex_ucstr_unescape_charAt, &endIndex, static_cast<int32_t>(fPatternLength), const_cast<char16_t*>(fRXPat->fPattern->chunkContents));
 
                     if (endIndex == pos) {
                         error(U_REGEX_BAD_ESCAPE_SEQUENCE);
@@ -4222,7 +4220,7 @@ UChar32  RegexCompile::scanNamedChar() {
 
     char name[100];
     if (!uprv_isInvariantUString(charName.getBuffer(), charName.length()) ||
-         (uint32_t)charName.length()>=sizeof(name)) {
+         static_cast<uint32_t>(charName.length()) >= sizeof(name)) {
         // All Unicode character names have only invariant characters.
         // The API to get a character, given a name, accepts only char *, forcing us to convert,
         //   which requires this error check

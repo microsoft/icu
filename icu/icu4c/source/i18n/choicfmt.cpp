@@ -137,7 +137,7 @@ ChoiceFormat::operator==(const Format& that) const
 {
     if (this == &that) return true;
     if (!NumberFormat::operator==(that)) return false;
-    ChoiceFormat& thatAlias = (ChoiceFormat&)that;
+    const ChoiceFormat& thatAlias = static_cast<const ChoiceFormat&>(that);
     return msgPattern == thatAlias.msgPattern;
 }
 
@@ -209,7 +209,7 @@ ChoiceFormat::dtos(double value,
             while (*itrPtr) {
                 *(expPtr++)  = *(itrPtr++);
             }
-            // NULL terminate
+            // NUL terminate
             *expPtr = 0;
         }
     }
@@ -380,7 +380,7 @@ ChoiceFormat::format(int64_t number,
                      UnicodeString& appendTo, 
                      FieldPosition& status) const
 {
-    return format((double) number, appendTo, status);
+    return format(static_cast<double>(number), appendTo, status);
 }
 
 // -------------------------------------
@@ -392,7 +392,7 @@ ChoiceFormat::format(int32_t number,
                      UnicodeString& appendTo, 
                      FieldPosition& status) const
 {
-    return format((double) number, appendTo, status);
+    return format(static_cast<double>(number), appendTo, status);
 }
 
 // -------------------------------------

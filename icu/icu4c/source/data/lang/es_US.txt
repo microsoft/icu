@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 es_US{
     %%Parent{"es_419"}
     Languages{
@@ -9,8 +9,10 @@ es_US{
         arp{"arapaho"}
         ars{"árabe najdi"}
         bax{"bamun"}
+        bgc{"hariana"}
         bho{"bhojpuri"}
         bla{"siksika"}
+        blo{"ani"}
         bua{"buriat"}
         clc{"chilcotín"}
         crj{"cree del sureste"}
@@ -33,7 +35,7 @@ es_US{
         inh{"ingusetio"}
         kab{"cabilio"}
         krc{"karachay-balkar"}
-        lo{"lao"}
+        lij{"ligur"}
         lou{"creole de Luisiana"}
         lrc{"lorí del norte"}
         lsm{"saamia"}
@@ -51,12 +53,20 @@ es_US{
         smn{"sami de Inari"}
         ss{"siswati"}
         str{"straits salish"}
+        sw_CD{"swahili del Congo"}
         syr{"siriaco"}
         tce{"tutchone del sur"}
         tet{"tetún"}
         ttm{"tutchone del norte"}
         tyv{"tuviniano"}
         wal{"wolayta"}
+        xnr{"dogrí"}
+    }
+    Languages%extension{
+        ku{"kurdo kurmanyi"}
+    }
+    Languages%variant{
+        ug{"uigur variante"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -65,12 +75,40 @@ es_US{
         Zzzz{"letra desconocida"}
     }
     Types{
+        calendar{
+            dangi{"calendario coreano"}
+        }
+        calendar%core{
+            dangi{"coreano"}
+            roc{"chino"}
+        }
+        collation%core{
+            ducet{"predeterminado Unicode"}
+            phonetic{"fonético"}
+            pinyin{"sistema piyin"}
+            stroke{"trazos"}
+            unihan{"trazos radicales"}
+            zhuyin{"sistema zhuyin"}
+        }
+        em%core{
+            emoji{"emoticón"}
+        }
+        lw%core{
+            breakall{"dividir todo"}
+            keepall{"mantener todo"}
+            normal{"regular"}
+            phrase{"mantener en frases"}
+        }
         numbers{
             cakm{"dígitos chakma"}
             gujr{"dígitos en gujarati"}
             java{"dígitos javaneses"}
             mtei{"dígitos meetei mayek"}
             olck{"dígitos ol chiki"}
+        }
+        ss%core{
+            none{"desactivado"}
+            standard{"activado"}
         }
     }
     characterLabelPattern{

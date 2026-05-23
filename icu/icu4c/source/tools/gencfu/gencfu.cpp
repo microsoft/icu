@@ -203,14 +203,6 @@ int  main(int argc, char **argv) {
     return (int)status;
 
 #else
-    /* Initialize ICU */
-    u_init(&status);
-    if (U_FAILURE(status)) {
-        fprintf(stderr, "%s: can not initialize ICU.  status = %s\n",
-            argv[0], u_errorName(status));
-        exit(1);
-    }
-    status = U_ZERO_ERROR;
 
     //  Read in the confusables source file
 
@@ -307,7 +299,7 @@ int  main(int argc, char **argv) {
     FILE        *file;
 
     file = fopen(fileName, "rb");
-    if( file == 0 ) {
+    if (file == nullptr) {
         return NULL;
     }
     fseek(file, 0, SEEK_END);

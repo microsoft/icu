@@ -1,6 +1,6 @@
 ﻿# © 2016 and later: Unicode, Inc. and others.
 # License & terms of use: http://www.unicode.org/copyright.html
-# Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+# Generated using tools/cldr/cldr-to-icu/
 #
 # File: blt_blt_FONIPA.txt
 # Generated from CLDR
@@ -42,7 +42,7 @@ $C = [$LO $HI];
 $V1 = [ꪵ ꪶ ꪹ ꪻ ꪼ];  # vowels written before consonant
 $V2 = [ \uAAB0 \uAAB2 \uAAB3 \uAAB4 \uAAB7 \uAAB8 \uAABE];  # vowels written above or below consonant
 $V3 = [ꪱ ꪮ ꪺ ꪽ];  # vowels written after consonant
-$DIGRAPHS = [{ꪹ  \uAAB8} {ꪹ  \uAAB7} {ꪹ ꪱ}];
+$DIGRAPHS = [{ꪹ\uAAB8} {ꪹ\uAAB7} {ꪹꪱ}];
 $V12 = [$V1 $V2 $DIGRAPHS];
 $V123 = [$V12 $V3];
 $W = [ꪫ];  # labialization marker

@@ -14,13 +14,12 @@
 *   created by: Markus W. Scherer
 */
 
-#ifdef U_HAVE_STRING_VIEW
 #include <string_view>
-#endif
-
 #include <cstddef>
 #include <string.h>
 #include <limits>
+#include <type_traits>
+#include <utility>
 
 #include "unicode/utypes.h"
 #include "unicode/putil.h"
@@ -32,6 +31,7 @@
 #include "unicode/utf8.h"
 #include "charstr.h"
 #include "cstr.h"
+#include "fixedstring.h"
 #include "intltest.h"
 #include "strtest.h"
 #include "uinvchar.h"
@@ -246,9 +246,7 @@ void StringTest::runIndexedTest(int32_t index, UBool exec, const char *&name, ch
     TESTCASE_AUTO(TestStringPieceComparisons);
     TESTCASE_AUTO(TestStringPieceFind);
     TESTCASE_AUTO(TestStringPieceOther);
-#ifdef U_HAVE_STRING_VIEW
     TESTCASE_AUTO(TestStringPieceStringView);
-#endif
     TESTCASE_AUTO(TestStringPieceU8);
     TESTCASE_AUTO(TestByteSink);
     TESTCASE_AUTO(TestCheckedArrayByteSink);
@@ -258,6 +256,8 @@ void StringTest::runIndexedTest(int32_t index, UBool exec, const char *&name, ch
     TESTCASE_AUTO(TestCStr);
     TESTCASE_AUTO(TestCharStrAppendNumber);
     TESTCASE_AUTO(Testctou);
+    TESTCASE_AUTO(TestFixedString);
+    TESTCASE_AUTO(TestCopyInvariantChars);
     TESTCASE_AUTO_END;
 }
 
@@ -508,11 +508,10 @@ StringTest::TestStringPieceOther() {
     Other other;
     StringPiece piece(other);
 
-    assertEquals("size()", piece.size(), static_cast<int32_t>(other.size()));
+    assertEquals("size()", piece.size(), other.size());
     assertEquals("data()", piece.data(), other.data());
 }
 
-#ifdef U_HAVE_STRING_VIEW
 void
 StringTest::TestStringPieceStringView() {
     static constexpr char msg[] = "Kapow!";
@@ -522,8 +521,12 @@ StringTest::TestStringPieceStringView() {
 
     assertEquals("size()", piece.size(), view.size());
     assertEquals("data()", piece.data(), view.data());
+
+    std::string_view v2 = piece;  // Internal implicit conversion.
+
+    assertEquals("size()", piece.size(), v2.size());
+    assertEquals("data()", piece.data(), v2.data());
 }
-#endif
 
 void
 StringTest::TestStringPieceU8() {
@@ -614,7 +617,7 @@ StringTest::TestByteSink() {
         return;
     }
     dest = sink.GetAppendBuffer(5, 50, scratch, (int32_t)sizeof(scratch), &capacity);
-    if(dest != scratch || capacity != (int32_t)sizeof(scratch)) {
+    if (dest != scratch || capacity != static_cast<int32_t>(sizeof(scratch))) {
         errln("ByteSink.GetAppendBuffer() did not properly return the scratch buffer");
     }
 }
@@ -645,7 +648,7 @@ StringTest::TestCheckedArrayByteSink() {
         return;
     }
     dest = sink.GetAppendBuffer(10, 50, scratch, (int32_t)sizeof(scratch), &capacity);
-    if(dest != buffer + 3 || capacity != (int32_t)sizeof(buffer) - 3) {
+    if (dest != buffer + 3 || capacity != static_cast<int32_t>(sizeof(buffer)) - 3) {
         errln("CheckedArrayByteSink.GetAppendBuffer() did not properly return its own buffer");
         return;
     }
@@ -659,7 +662,7 @@ StringTest::TestCheckedArrayByteSink() {
         return;
     }
     dest = sink.GetAppendBuffer(10, 50, scratch, (int32_t)sizeof(scratch), &capacity);
-    if(dest != scratch || capacity != (int32_t)sizeof(scratch)) {
+    if (dest != scratch || capacity != static_cast<int32_t>(sizeof(scratch))) {
         errln("CheckedArrayByteSink.GetAppendBuffer() did not properly return the scratch buffer");
     }
     memcpy(dest, "nopqrstuvw", 10);
@@ -695,7 +698,7 @@ StringTest::TestStringByteSink() {
     StringByteSink<std::string> sink2(&result, 20);
     if(result.capacity() < (result.length() + 20)) {
         errln("StringByteSink should have 20 append capacity, has only %d",
-              (int)(result.capacity() - result.length()));
+              static_cast<int>(result.capacity() - result.length()));
     }
     sink.Append("ghi", 3);
     if(result != "abcdefghi") {
@@ -878,6 +881,112 @@ void
 StringTest::Testctou() {
   const char *cs = "Fa\\u0127mu";
   UnicodeString u = ctou(cs);
-  assertEquals("Testing unescape@0", (int32_t)0x0046, u.charAt(0));
-  assertEquals("Testing unescape@2", (int32_t)295, u.charAt(2));
+  assertEquals("Testing unescape@0", 0x0046, u.charAt(0));
+  assertEquals("Testing unescape@2", 295, u.charAt(2));
+}
+
+void
+StringTest::TestFixedString() {
+    static_assert(std::is_default_constructible_v<FixedString>);
+    static_assert(std::is_copy_constructible_v<FixedString>);
+    static_assert(std::is_constructible_v<FixedString, std::string_view>);
+    static_assert(std::is_copy_assignable_v<FixedString>);
+    static_assert(std::is_assignable_v<FixedString, std::string_view>);
+    static_assert(std::is_move_constructible_v<FixedString>);
+    static_assert(std::is_move_assignable_v<FixedString>);
+
+    FixedString s;
+    assertTrue("default is empty", s.isEmpty());
+    assertTrue("default alias is nullptr", s.getAlias() == nullptr);
+    assertEquals("default data is empty", "", s.data());
+
+    FixedString empty("");
+    assertTrue("empty is empty", empty.isEmpty());
+    assertTrue("empty alias is nullptr", empty.getAlias() == nullptr);
+    assertEquals("empty data is empty", "", empty.data());
+
+    bool success = s.reserve(1);
+    assertTrue("reserve success", success);
+    assertFalse("reserved is empty", s.isEmpty());
+    assertFalse("reserved alias is nullptr", s.getAlias() == nullptr);
+
+    static constexpr char text[] = "foo";
+
+    FixedString init(text);
+    assertFalse("initialized is empty", init.isEmpty());
+    assertFalse("initialized alias is nullptr", init.getAlias() == nullptr);
+    assertEquals("initialized data is text", text, init.data());
+
+    FixedString copied(init);
+    assertFalse("copied is empty", copied.isEmpty());
+    assertFalse("copied alias is nullptr", copied.getAlias() == nullptr);
+    assertFalse("copied alias is same", copied.getAlias() == init.getAlias());
+    assertEquals("copied data is text", text, copied.data());
+
+    FixedString moved(std::move(copied));
+    assertFalse("moved is empty", moved.isEmpty());
+    assertFalse("moved alias is nullptr", moved.getAlias() == nullptr);
+    assertEquals("moved data is text", text, moved.data());
+
+    assertTrue("copied is empty after move", copied.isEmpty());
+    assertTrue("copied alias is nullptr after move", copied.getAlias() == nullptr);
+    assertEquals("copied data is empty after move", "", copied.data());
+
+    moved.clear();
+    assertTrue("cleared is empty", moved.isEmpty());
+    assertTrue("cleared alias is nullptr", moved.getAlias() == nullptr);
+    assertEquals("cleared data is empty", "", moved.data());
+
+    s = text;
+    assertFalse("assigned is empty", s.isEmpty());
+    assertFalse("assigned alias is nullptr", s.getAlias() == nullptr);
+    assertEquals("assigned data is text", text, s.data());
+
+    copied = s;
+    assertFalse("assign copied is empty", copied.isEmpty());
+    assertFalse("assign copied alias is nullptr", copied.getAlias() == nullptr);
+    assertFalse("assign copied alias is same", copied.getAlias() == s.getAlias());
+    assertEquals("assign copied data is text", text, copied.data());
+
+    moved = std::move(copied);
+    assertFalse("assign moved is empty", moved.isEmpty());
+    assertFalse("assign moved alias is nullptr", moved.getAlias() == nullptr);
+    assertEquals("assign moved data is text", text, moved.data());
+
+    assertTrue("copied is empty after move assign", copied.isEmpty());
+    assertTrue("copied alias is nullptr after move assign", copied.getAlias() == nullptr);
+    assertEquals("copied data is empty after move assign", "", copied.data());
+}
+
+void
+StringTest::TestCopyInvariantChars() {
+    IcuTestErrorCode status(*this, "TestCopyInvariantChars()");
+
+    static constexpr char text[] = "bar";
+
+    UnicodeString src(text);
+    FixedString dst;
+    copyInvariantChars(src, dst, status);
+
+    status.errIfFailureAndReset();
+    assertFalse("copied is empty", dst.isEmpty());
+    assertFalse("copied alias is nullptr", dst.getAlias() == nullptr);
+    assertEquals("copied data is text", text, dst.data());
+
+    src = "fubar";
+    status.set(U_INTERNAL_PROGRAM_ERROR);
+    copyInvariantChars(src, dst, status);
+
+    status.expectErrorAndReset(U_INTERNAL_PROGRAM_ERROR);
+    assertFalse("copied is empty", dst.isEmpty());
+    assertFalse("copied alias is nullptr", dst.getAlias() == nullptr);
+    assertEquals("copied data is text", text, dst.data());
+
+    src.remove();
+    copyInvariantChars(src, dst, status);
+
+    status.errIfFailureAndReset();
+    assertTrue("copied is empty", dst.isEmpty());
+    assertTrue("copied alias is nullptr", dst.getAlias() == nullptr);
+    assertEquals("copied data is empty", "", dst.data());
 }

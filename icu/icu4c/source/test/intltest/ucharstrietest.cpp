@@ -345,8 +345,8 @@ public:
     void next() {
         UChar c;
         s.truncate(0);
-        s.append(c=(UChar)(value>>16));
-        s.append((UChar)(value>>4));
+        s.append(c = static_cast<char16_t>(value >> 16));
+        s.append(static_cast<char16_t>(value >> 4));
         if(value&1) {
             s.append((UChar)value);
         }
@@ -1083,7 +1083,7 @@ void UCharsTrieTest::checkIterator(UCharsTrie::Iterator &iter,
             break;
         }
         UBool hasNext=iter.next(errorCode);
-        if(errorCode.errIfFailureAndReset("trie iterator next() for item %d: %s", (int)i, data[i].s)) {
+        if (errorCode.errIfFailureAndReset("trie iterator next() for item %d: %s", static_cast<int>(i), data[i].s)) {
             break;
         }
         if(!hasNext) {

@@ -88,14 +88,14 @@ UBool BiDiConformanceTest::parseLevels(const char *&start) {
             ++start;
         } else {
             char *end;
-            uint32_t value=(uint32_t)strtoul(start, &end, 10);
+            uint32_t value = static_cast<uint32_t>(strtoul(start, &end, 10));
             if(end<=start || (!U_IS_INV_WHITESPACE(*end) && *end!=0 && *end!=';')
                           || value>(UBIDI_MAX_EXPLICIT_LEVEL+1)) {
                 errln("\nError on line %d: Levels parse error at %s", (int)lineNumber, start);
                 printErrorLine();
                 return false;
             }
-            levels[levelsCount++]=(UBiDiLevel)value;
+            levels[levelsCount++] = static_cast<UBiDiLevel>(value);
             directionBits|=(1<<(value&1));
             start=end;
         }
@@ -107,13 +107,13 @@ UBool BiDiConformanceTest::parseOrdering(const char *start) {
     orderingCount=0;
     while(*start!=0 && *(start=u_skipWhitespace(start))!=0 && *start!=';') {
         char *end;
-        uint32_t value=(uint32_t)strtoul(start, &end, 10);
+        uint32_t value = static_cast<uint32_t>(strtoul(start, &end, 10));
         if(end<=start || (!U_IS_INV_WHITESPACE(*end) && *end!=0 && *end!=';') || value>=1000) {
             errln("\nError on line %d: Reorder parse error at %s", (int)lineNumber, start);
             printErrorLine();
             return false;
         }
-        ordering[orderingCount++]=(int32_t)value;
+        ordering[orderingCount++] = static_cast<int32_t>(value);
         start=end;
     }
     return true;
@@ -284,7 +284,7 @@ void BiDiConformanceTest::TestBidiTest() {
     errorCount=0;
     // paraLevelName must be initialized in case the first non-comment line is in error
     paraLevelName="N/A";
-    while(errorCount<10 && fgets(line, (int)sizeof(line), bidiTestFile.getAlias())!=NULL) {
+    while (errorCount < 10 && fgets(line, static_cast<int>(sizeof(line)), bidiTestFile.getAlias()) != nullptr) {
         ++lineNumber;
         // Remove trailing comments and whitespace.
         char *commentStart=strchr(line, '#');
@@ -320,7 +320,7 @@ void BiDiConformanceTest::TestBidiTest() {
             }
             start=u_skipWhitespace(start+1);
             char *end;
-            uint32_t bitset=(uint32_t)strtoul(start, &end, 16);
+            uint32_t bitset = static_cast<uint32_t>(strtoul(start, &end, 16));
             if(end<=start || (!U_IS_INV_WHITESPACE(*end) && *end!=';' && *end!=0)) {
                 errln("input bitset parse error at %s", start);
                 return;
@@ -446,7 +446,7 @@ void BiDiConformanceTest::TestBidiCharacterTest() {
     levelsCount=0;
     orderingCount=0;
     errorCount=0;
-    while(errorCount<20 && fgets(line, (int)sizeof(line), bidiTestFile.getAlias())!=NULL) {
+    while (errorCount < 20 && fgets(line, static_cast<int>(sizeof(line)), bidiTestFile.getAlias()) != nullptr) {
         ++lineNumber;
         paraLevelName="N/A";
         inputString="N/A";
@@ -477,7 +477,7 @@ void BiDiConformanceTest::TestBidiCharacterTest() {
         }
         start=u_skipWhitespace(start+1);
         char *end;
-        int32_t paraDirection=(int32_t)strtol(start, &end, 10);
+        int32_t paraDirection = static_cast<int32_t>(strtol(start, &end, 10));
         UBiDiLevel paraLevel=UBIDI_MAX_EXPLICIT_LEVEL+2;
         if(paraDirection==0) {
             paraLevel=0;
@@ -496,7 +496,7 @@ void BiDiConformanceTest::TestBidiCharacterTest() {
             paraLevelName="Auto/RTL";
         }
         else if(paraDirection<0 && -paraDirection<=(UBIDI_MAX_EXPLICIT_LEVEL+1)) {
-            paraLevel=(UBiDiLevel)(-paraDirection);
+            paraLevel = static_cast<UBiDiLevel>(-paraDirection);
             snprintf(levelNameString, sizeof(levelNameString), "%d", (int)paraLevel);
             paraLevelName=levelNameString;
         }
@@ -513,7 +513,7 @@ void BiDiConformanceTest::TestBidiCharacterTest() {
             continue;
         }
         start++;
-        uint32_t resolvedParaLevel=(uint32_t)strtoul(start, &end, 10);
+        uint32_t resolvedParaLevel = static_cast<uint32_t>(strtoul(start, &end, 10));
         if(end<=start || (!U_IS_INV_WHITESPACE(*end) && *end!=';' && *end!=0) ||
            resolvedParaLevel>1) {
             errln("\nError on line %d: Resolved paragraph level incorrect at %s", (int)lineNumber, start);
@@ -659,13 +659,13 @@ UBool BiDiConformanceTest::checkOrdering(UBiDi *ubidi) {
         printErrorLine();
         UnicodeString eord("Expected ordering: ");
         for(i=0; i<orderingCount; ++i) {
-            eord.append((UChar)0x20).append((UChar)(0x30+ordering[i]));
+            eord.append(static_cast<char16_t>(0x20)).append(static_cast<char16_t>(0x30 + ordering[i]));
         }
         UnicodeString aord("Actual   ordering: ");
         for(i=0; i<resultLength; ++i) {
             int32_t logicalIndex=ubidi_getLogicalIndex(ubidi, i, errorCode);
             if(levels[logicalIndex]<UBIDI_DEFAULT_LTR) {
-                aord.append((UChar)0x20).append((UChar)(0x30+logicalIndex));
+                aord.append(static_cast<char16_t>(0x20)).append(static_cast<char16_t>(0x30 + logicalIndex));
             }
         }
         errln(eord);

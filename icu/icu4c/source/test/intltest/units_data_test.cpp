@@ -52,6 +52,8 @@ void UnitsDataTest::testGetUnitCategory() {
         // Tests are:
         // {"liter-per-100-kilometer", "consumption"},
         // {"mile-per-gallon", "consumption"},
+        // {"knot", "speed"},
+        // {"beaufort", "speed"},
         {"cubic-meter-per-meter", "consumption"},
         {"meter-per-cubic-meter", "consumption"},
         {"kilogram-meter-per-square-meter-square-second", "pressure"},
@@ -76,9 +78,9 @@ void UnitsDataTest::testGetAllConversionRates() {
         ConversionRateInfo *cri = conversionInfo[i];
         logln("* conversionInfo %d: source=\"%s\", baseUnit=\"%s\", factor=\"%s\", offset=\"%s\"", i,
               cri->sourceUnit.data(), cri->baseUnit.data(), cri->factor.data(), cri->offset.data());
-        assertTrue("sourceUnit", cri->sourceUnit.length() > 0);
-        assertTrue("baseUnit", cri->baseUnit.length() > 0);
-        assertTrue("factor", cri->factor.length() > 0);
+        assertFalse("sourceUnit", cri->sourceUnit.isEmpty());
+        assertFalse("baseUnit", cri->baseUnit.isEmpty());
+        assertFalse("factor || special", cri->factor.isEmpty() && cri->specialMappingName.isEmpty());
     }
 }
 
@@ -132,8 +134,8 @@ void UnitsDataTest::testGetPreferencesFor() {
     };
     IcuTestErrorCode status(*this, "testGetPreferencesFor");
     UnitPreferencesOpenedUp preferences(status);
-    auto *metadata = preferences.getInternalMetadata();
-    auto *unitPrefs = preferences.getInternalUnitPrefs();
+    const auto* metadata = preferences.getInternalMetadata();
+    const auto* unitPrefs = preferences.getInternalUnitPrefs();
     assertTrue(UnicodeString("Metadata count: ") + metadata->length() + " > 200",
                metadata->length() > 200);
     assertTrue(UnicodeString("Preferences count: ") + unitPrefs->length() + " > 250",

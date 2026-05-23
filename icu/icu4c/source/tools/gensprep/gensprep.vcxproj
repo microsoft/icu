@@ -34,7 +34,6 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <CompileAs>Default</CompileAs>
-      <DisableLanguageExtensions>false</DisableLanguageExtensions>
       <AdditionalIncludeDirectories>..\..\common;..\toolutil;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PrecompiledHeaderOutputFile>$(OutDir)\gensprep.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
@@ -54,7 +53,6 @@
   <!-- Options that are common to all 'Debug' project configurations -->
   <ItemDefinitionGroup Condition="'$(Configuration)'=='Debug'">
     <ClCompile>
-      <BrowseInformation>true</BrowseInformation>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
