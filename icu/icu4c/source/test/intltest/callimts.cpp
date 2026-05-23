@@ -191,7 +191,7 @@ struct {
 }  // anonymous name space
 
 void
-CalendarLimitTest::TestLimits(void) {
+CalendarLimitTest::TestLimits() {
     gTestCaseIterator.reset();
 
     ThreadPool<CalendarLimitTest> threads(this, threadCount, &CalendarLimitTest::TestLimitsThread);
@@ -301,7 +301,7 @@ CalendarLimitTest::doTheoreticalLimitsTest(Calendar& cal, UBool leapMonth) {
 void
 CalendarLimitTest::doLimitsTest(Calendar& cal, UDate startDate, int32_t endTime) {
     int32_t testTime = quick ? ( endTime / 40 ) : endTime;
-    doLimitsTest(cal, NULL /*default fields*/, startDate, testTime);
+    doLimitsTest(cal, nullptr /*default fields*/, startDate, testTime);
 }
 
 void
@@ -347,7 +347,7 @@ CalendarLimitTest::doLimitsTest(Calendar& cal,
     }
     logln(UnicodeString("Start: ") + startDate);
 
-    if (fieldsToTest == NULL) {
+    if (fieldsToTest == nullptr) {
         fieldsToTest = FIELDS;
     }
 
@@ -382,7 +382,7 @@ CalendarLimitTest::doLimitsTest(Calendar& cal,
             return;
         }
         for (j = 0; fieldsToTest[j] >= 0; ++j) {
-            UCalendarDateFields f = (UCalendarDateFields)fieldsToTest[j];
+            UCalendarDateFields f = static_cast<UCalendarDateFields>(fieldsToTest[j]);
             int32_t v = cal.get(f, status);
             int32_t minActual = cal.getActualMinimum(f, status);
             int32_t maxActual = cal.getActualMaximum(f, status);
@@ -443,7 +443,7 @@ CalendarLimitTest::doLimitsTest(Calendar& cal,
     for (j = 0; fieldsToTest[j] >= 0; ++j) {
         int32_t rangeLow, rangeHigh;
         UBool fullRangeSeen = true;
-        UCalendarDateFields f = (UCalendarDateFields)fieldsToTest[j];
+        UCalendarDateFields f = static_cast<UCalendarDateFields>(fieldsToTest[j]);
 
         buf.remove();
         buf.append(UnicodeString("[") + cal.getType() + "] " + FIELD_NAME[f]);

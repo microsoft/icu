@@ -392,7 +392,7 @@ static void U_CALLCONV
 _Bocu1FromUnicodeWithOffsets(UConverterFromUnicodeArgs *pArgs,
                              UErrorCode *pErrorCode) {
     UConverter *cnv;
-    const UChar *source, *sourceLimit;
+    const char16_t *source, *sourceLimit;
     uint8_t *target;
     int32_t targetCapacity;
     int32_t *offsets;
@@ -456,7 +456,7 @@ fastSingle:
     }
     /* restore real values */
     targetCapacity = static_cast<int32_t>(reinterpret_cast<const uint8_t*>(pArgs->targetLimit) - target);
-    sourceIndex=nextSourceIndex; /* wrong if offsets==NULL but does not matter */
+    sourceIndex=nextSourceIndex; /* wrong if offsets==nullptr but does not matter */
 
     /* regular loop for all cases */
     while(source<sourceLimit) {
@@ -485,7 +485,7 @@ fastSingle:
 getTrail:
                 if(source<sourceLimit) {
                     /* test the following code unit */
-                    UChar trail=*source;
+                    char16_t trail=*source;
                     if(U16_IS_TRAIL(trail)) {
                         ++source;
                         ++nextSourceIndex;
@@ -653,7 +653,7 @@ static void U_CALLCONV
 _Bocu1FromUnicode(UConverterFromUnicodeArgs *pArgs,
                   UErrorCode *pErrorCode) {
     UConverter *cnv;
-    const UChar *source, *sourceLimit;
+    const char16_t *source, *sourceLimit;
     uint8_t *target;
     int32_t targetCapacity;
 
@@ -729,7 +729,7 @@ fastSingle:
 getTrail:
                 if(source<sourceLimit) {
                     /* test the following code unit */
-                    UChar trail=*source;
+                    char16_t trail=*source;
                     if(U16_IS_TRAIL(trail)) {
                         ++source;
                         c=U16_GET_SUPPLEMENTARY(c, trail);
@@ -957,8 +957,8 @@ _Bocu1ToUnicodeWithOffsets(UConverterToUnicodeArgs *pArgs,
                            UErrorCode *pErrorCode) {
     UConverter *cnv;
     const uint8_t *source, *sourceLimit;
-    UChar *target;
-    const UChar *targetLimit;
+    char16_t *target;
+    const char16_t *targetLimit;
     int32_t *offsets;
 
     int32_t prev, count, diff, c;
@@ -1027,7 +1027,7 @@ fastSingle:
         ++source;
         --count;
     }
-    sourceIndex=nextSourceIndex; /* wrong if offsets==NULL but does not matter */
+    sourceIndex=nextSourceIndex; /* wrong if offsets==nullptr but does not matter */
 
     /* decode a sequence of single and lead bytes */
     while(source<sourceLimit) {
@@ -1179,8 +1179,8 @@ _Bocu1ToUnicode(UConverterToUnicodeArgs *pArgs,
                 UErrorCode *pErrorCode) {
     UConverter *cnv;
     const uint8_t *source, *sourceLimit;
-    UChar *target;
-    const UChar *targetLimit;
+    char16_t *target;
+    const char16_t *targetLimit;
 
     int32_t prev, count, diff, c;
 
@@ -1369,27 +1369,27 @@ endloop:
 static const UConverterImpl _Bocu1Impl={
     UCNV_BOCU1,
 
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
 
-    NULL,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
 
     _Bocu1ToUnicode,
     _Bocu1ToUnicodeWithOffsets,
     _Bocu1FromUnicode,
     _Bocu1FromUnicodeWithOffsets,
-    NULL,
+    nullptr,
 
-    NULL,
-    NULL,
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
+    nullptr,
+    nullptr,
     ucnv_getCompleteUnicodeSet,
 
-    NULL,
-    NULL
+    nullptr,
+    nullptr
 };
 
 static const UConverterStaticData _Bocu1StaticData={
@@ -1397,7 +1397,7 @@ static const UConverterStaticData _Bocu1StaticData={
     "BOCU-1",
     1214, /* CCSID for BOCU-1 */
     UCNV_IBM, UCNV_BOCU1,
-    1, 4, /* one UChar generates at least 1 byte and at most 4 bytes */
+    1, 4, /* one char16_t generates at least 1 byte and at most 4 bytes */
     { 0x1a, 0, 0, 0 }, 1, /* BOCU-1 never needs to write a subchar */
     false, false,
     0,

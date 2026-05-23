@@ -57,7 +57,7 @@ struct LSR final : public UMemory {
         }
     }
 
-    LSR &operator=(LSR &&other) U_NOEXCEPT;
+    LSR &operator=(LSR &&other) noexcept;
     LSR &operator=(const LSR &other) = delete;
 
     /**

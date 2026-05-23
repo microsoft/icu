@@ -167,7 +167,7 @@ MBCSInit(MBCSData *mbcsData, UCMFile *ucm) {
 U_CFUNC NewConverter *
 MBCSOpen(UCMFile *ucm) {
     MBCSData *mbcsData=(MBCSData *)uprv_malloc(sizeof(MBCSData));
-    if(mbcsData==NULL) {
+    if(mbcsData==nullptr) {
         printf("out of memory\n");
         exit(U_MEMORY_ALLOCATION_ERROR);
     }
@@ -186,7 +186,7 @@ U_CDECL_BEGIN
 static void
 MBCSClose(NewConverter *cnvData) {
     MBCSData *mbcsData=(MBCSData *)cnvData;
-    if(mbcsData!=NULL) {
+    if(mbcsData!=nullptr) {
         MBCSDestruct(mbcsData);
         uprv_free(mbcsData);
     }
@@ -204,14 +204,14 @@ MBCSStartMappings(MBCSData *mbcsData) {
     /* allocate the code unit array and prefill it with "unassigned" values */
     sum=mbcsData->ucm->states.countToUCodeUnits;
     if(VERBOSE) {
-        printf("the total number of offsets is 0x%lx=%ld\n", (long)sum, (long)sum);
+        printf("the total number of offsets is 0x%lx=%ld\n", static_cast<long>(sum), static_cast<long>(sum));
     }
 
     if(sum>0) {
         mbcsData->unicodeCodeUnits = static_cast<uint16_t*>(uprv_malloc(sum * sizeof(uint16_t)));
-        if(mbcsData->unicodeCodeUnits==NULL) {
+        if(mbcsData->unicodeCodeUnits==nullptr) {
             fprintf(stderr, "error: out of memory allocating %ld 16-bit code units\n",
-                (long)sum);
+                static_cast<long>(sum));
             return false;
         }
         for(i=0; i<sum; ++i) {
@@ -231,8 +231,8 @@ MBCSStartMappings(MBCSData *mbcsData) {
         sum=0x100000*maxCharLength;
     }
     mbcsData->fromUBytes = static_cast<uint8_t*>(uprv_malloc(sum));
-    if(mbcsData->fromUBytes==NULL) {
-        fprintf(stderr, "error: out of memory allocating %ld B for target mappings\n", (long)sum);
+    if(mbcsData->fromUBytes==nullptr) {
+        fprintf(stderr, "error: out of memory allocating %ld B for target mappings\n", static_cast<long>(sum));
         return false;
     }
     uprv_memset(mbcsData->fromUBytes, 0, sum);
@@ -331,7 +331,7 @@ setFallback(MBCSData *mbcsData, uint32_t offset, UChar32 c) {
         /* if there is no fallback for this offset, then add one */
         i=mbcsData->countToUFallbacks;
         if(i>=MBCS_MAX_FALLBACK_COUNT) {
-            fprintf(stderr, "error: too many toUnicode fallbacks, currently at: U+%x\n", (int)c);
+            fprintf(stderr, "error: too many toUnicode fallbacks, currently at: U+%x\n", static_cast<int>(c));
             return false;
         } else {
             mbcsData->toUFallbacks[i].offset=offset;
@@ -607,7 +607,7 @@ MBCSSingleAddFromUnicode(MBCSData *mbcsData,
         newTop=newBlock+MBCS_STAGE_2_BLOCK_SIZE;
 
         if(newTop>MBCS_MAX_STAGE_2_TOP) {
-            fprintf(stderr, "error: too many stage 2 entries at U+%04x<->0x%02x\n", (int)c, b);
+            fprintf(stderr, "error: too many stage 2 entries at U+%04x<->0x%02x\n", static_cast<int>(c), b);
             return false;
         }
 
@@ -641,7 +641,7 @@ MBCSSingleAddFromUnicode(MBCSData *mbcsData,
         newTop=newBlock+blockSize;
 
         if(newTop>MBCS_STAGE_3_SBCS_SIZE) {
-            fprintf(stderr, "error: too many code points at U+%04x<->0x%02x\n", (int)c, b);
+            fprintf(stderr, "error: too many code points at U+%04x<->0x%02x\n", static_cast<int>(c), b);
             return false;
         }
         /* each block has 16 uint16_t entries */
@@ -668,11 +668,11 @@ MBCSSingleAddFromUnicode(MBCSData *mbcsData,
     if(old>=0x100) {
         if(flag>=0) {
             fprintf(stderr, "error: duplicate Unicode code point at U+%04x<->0x%02x see 0x%02x\n",
-                (int)c, b, old&0xff);
+                static_cast<int>(c), b, old & 0xff);
             return false;
         } else if(VERBOSE) {
             fprintf(stderr, "duplicate Unicode code point at U+%04x<->0x%02x see 0x%02x\n",
-                (int)c, b, old&0xff);
+                static_cast<int>(c), b, old & 0xff);
         }
         /* continue after the above warning if the precision of the mapping is unspecified */
     }
@@ -705,7 +705,7 @@ MBCSAddFromUnicode(MBCSData *mbcsData,
 
     if(flag==1 && length==1 && *bytes==0) {
         fprintf(stderr, "error: unable to encode a |1 fallback from U+%04x to 0x%02x\n",
-            (int)c, *bytes);
+            static_cast<int>(c), *bytes);
         return false;
     }
 
@@ -1217,7 +1217,7 @@ singleCompactStage2(MBCSData *mbcsData) {
     /* adjust stage2Top */
     if(VERBOSE && newStart<mbcsData->stage2Top) {
         printf("compacting stage 2 from stage2Top=0x%lx to 0x%lx, saving %ld bytes\n",
-                (unsigned long)mbcsData->stage2Top, (unsigned long)newStart,
+               static_cast<unsigned long>(mbcsData->stage2Top), static_cast<unsigned long>(newStart),
                static_cast<long>(mbcsData->stage2Top - newStart) * 2);
     }
     mbcsData->stage2Top=newStart;
@@ -1271,7 +1271,7 @@ singleCompactStage3(MBCSData *mbcsData) {
     /* adjust stage3Top */
     if(VERBOSE && newStart<mbcsData->stage3Top) {
         printf("compacting stage 3 from stage3Top=0x%lx to 0x%lx, saving %ld bytes\n",
-                (unsigned long)mbcsData->stage3Top, (unsigned long)newStart,
+               static_cast<unsigned long>(mbcsData->stage3Top), static_cast<unsigned long>(newStart),
                static_cast<long>(mbcsData->stage3Top - newStart) * 2);
     }
     mbcsData->stage3Top=newStart;
@@ -1329,7 +1329,7 @@ compactStage2(MBCSData *mbcsData) {
     /* adjust stage2Top */
     if(VERBOSE && newStart<mbcsData->stage2Top) {
         printf("compacting stage 2 from stage2Top=0x%lx to 0x%lx, saving %ld bytes\n",
-                (unsigned long)mbcsData->stage2Top, (unsigned long)newStart,
+                static_cast<unsigned long>(mbcsData->stage2Top), static_cast<unsigned long>(newStart),
                 static_cast<long>(mbcsData->stage2Top - newStart) * 4);
     }
     mbcsData->stage2Top=newStart;
@@ -1382,10 +1382,10 @@ MBCSPostprocess(MBCSData *mbcsData, const UConverterStaticData * /*staticData*/)
 
         printf("fromUnicode number of uint%s_t in stage 2: 0x%lx=%lu\n",
                maxCharLength==1 ? "16" : "32",
-               (unsigned long)mbcsData->stage2Top,
-               (unsigned long)mbcsData->stage2Top);
+               static_cast<unsigned long>(mbcsData->stage2Top),
+               static_cast<unsigned long>(mbcsData->stage2Top));
         printf("fromUnicode number of %d-byte stage 3 mapping entries: 0x%lx=%lu\n",
-               (int)stage3Width,
+               static_cast<int>(stage3Width),
                static_cast<unsigned long>(mbcsData->stage3Top) / stage3Width,
                static_cast<unsigned long>(mbcsData->stage3Top) / stage3Width);
 #if 0

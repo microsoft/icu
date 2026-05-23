@@ -134,7 +134,7 @@ void ICULanguageBreakFactory::ensureEngines(UErrorCode& status) {
 
 const LanguageBreakEngine *
 ICULanguageBreakFactory::getEngineFor(UChar32 c, const char* locale) {
-    const LanguageBreakEngine *lbe = NULL;
+    const LanguageBreakEngine *lbe = nullptr;
     UErrorCode  status = U_ZERO_ERROR;
     ensureEngines(status);
     if (U_FAILURE(status) ) {
@@ -184,7 +184,7 @@ ICULanguageBreakFactory::loadEngineFor(UChar32 c, const char*) {
         }
         status = U_ZERO_ERROR;  // fallback to dictionary based
         DictionaryMatcher *m = loadDictionaryMatcherFor(code);
-        if (m != NULL) {
+        if (m != nullptr) {
             switch(code) {
             case USCRIPT_THAI:
                 engine = new ThaiBreakEngine(m, status);
@@ -229,17 +229,17 @@ ICULanguageBreakFactory::loadEngineFor(UChar32 c, const char*) {
             default:
                 break;
             }
-            if (engine == NULL) {
+            if (engine == nullptr) {
                 delete m;
             }
             else if (U_FAILURE(status)) {
                 delete engine;
-                engine = NULL;
+                engine = nullptr;
             }
             return engine;
         }
     }
-    return NULL;
+    return nullptr;
 }
 
 DictionaryMatcher *
@@ -249,16 +249,16 @@ ICULanguageBreakFactory::loadDictionaryMatcherFor(UScriptCode script) {
     UResourceBundle *b = ures_open(U_ICUDATA_BRKITR, "", &status);
     b = ures_getByKeyWithFallback(b, "dictionaries", b, &status);
     int32_t dictnlength = 0;
-    const UChar *dictfname =
+    const char16_t *dictfname =
         ures_getStringByKeyWithFallback(b, uscript_getShortName(script), &dictnlength, &status);
     if (U_FAILURE(status)) {
         ures_close(b);
-        return NULL;
+        return nullptr;
     }
     CharString dictnbuf;
     CharString ext;
-    const UChar *extStart = u_memrchr(dictfname, 0x002e, dictnlength);  // last dot
-    if (extStart != NULL) {
+    const char16_t *extStart = u_memrchr(dictfname, 0x002e, dictnlength);  // last dot
+    if (extStart != nullptr) {
         int32_t len = static_cast<int32_t>(extStart - dictfname);
         ext.appendInvariantChars(UnicodeString(false, extStart + 1, dictnlength - len - 1), status);
         dictnlength = len;
@@ -269,11 +269,11 @@ ICULanguageBreakFactory::loadDictionaryMatcherFor(UScriptCode script) {
     UDataMemory *file = udata_open(U_ICUDATA_BRKITR, ext.data(), dictnbuf.data(), &status);
     if (U_SUCCESS(status)) {
         // build trie
-        const uint8_t *data = (const uint8_t *)udata_getMemory(file);
-        const int32_t *indexes = (const int32_t *)data;
+        const uint8_t* data = static_cast<const uint8_t*>(udata_getMemory(file));
+        const int32_t* indexes = reinterpret_cast<const int32_t*>(data);
         const int32_t offset = indexes[DictionaryData::IX_STRING_TRIE_OFFSET];
         const int32_t trieType = indexes[DictionaryData::IX_TRIE_TYPE] & DictionaryData::TRIE_TYPE_MASK;
-        DictionaryMatcher *m = NULL;
+        DictionaryMatcher *m = nullptr;
         if (trieType == DictionaryData::TRIE_TYPE_BYTES) {
             const int32_t transform = indexes[DictionaryData::IX_TRANSFORM];
             const char* characters = reinterpret_cast<const char*>(data + offset);
@@ -283,17 +283,17 @@ ICULanguageBreakFactory::loadDictionaryMatcherFor(UScriptCode script) {
             const char16_t* characters = reinterpret_cast<const char16_t*>(data + offset);
             m = new UCharsDictionaryMatcher(characters, file);
         }
-        if (m == NULL) {
+        if (m == nullptr) {
             // no matcher exists to take ownership - either we are an invalid 
             // type or memory allocation failed
             udata_close(file);
         }
         return m;
-    } else if (dictfname != NULL) {
+    } else if (dictfname != nullptr) {
         // we don't have a dictionary matcher.
-        // returning NULL here will cause us to fail to find a dictionary break engine, as expected
+        // returning nullptr here will cause us to fail to find a dictionary break engine, as expected
         status = U_ZERO_ERROR;
-        return NULL;
+        return nullptr;
     }
     return nullptr;
 }

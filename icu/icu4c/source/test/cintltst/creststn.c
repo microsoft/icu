@@ -51,7 +51,7 @@ static int32_t fail;
  */
 
 static uint32_t
-randul()
+randul(void)
 {
     uint32_t l=0;
     int32_t i;
@@ -72,7 +72,7 @@ randul()
  * Return a random double x where 0.0 <= x < 1.0.
  */
 static double
-randd()
+randd(void)
 {
     return ((double)randul()) / UINT32_MAX;
 }
@@ -385,7 +385,7 @@ static void TestAliasConflict(void) {
     }
     ures_close(iw);
     result = ures_getStringByKey(he, "ExemplarCharacters", &resultLen, &status);
-    if(U_FAILURE(status) || result == NULL) { 
+    if(U_FAILURE(status) || result == NULL) {
         log_err_status(status, "Failed to get resource ExemplarCharacters with %s\n", myErrorName(status));
     }
     ures_close(he);
@@ -407,7 +407,7 @@ static void TestAliasConflict(void) {
     }
 }
 
-static void TestDecodedBundle(){
+static void TestDecodedBundle(void){
 
     UErrorCode error = U_ZERO_ERROR;
 
@@ -483,7 +483,7 @@ static void TestDecodedBundle(){
     ures_close(resB);
 }
 
-static void TestNewTypes() {
+static void TestNewTypes(void) {
     UResourceBundle* theBundle = NULL;
     char action[256];
     const char* testdatapath;
@@ -718,7 +718,7 @@ static void TestNewTypes() {
                 log_err("Could not get testincludeUTF resource from testtypes bundle. Error: %s\n",u_errorName(status));
             }else{
                 /* open the file */
-                const char* cp = NULL; 
+                const char* cp = NULL;
                 UCHARBUF* ucbuf = ucbuf_open(testDataFileName,&cp,false,false,&status);
                 len = 0;
                 if(U_SUCCESS(status)){
@@ -785,7 +785,7 @@ static void TestNewTypes() {
 
 }
 
-static void TestEmptyTypes() {
+static void TestEmptyTypes(void) {
     UResourceBundle* theBundle = NULL;
     char action[256];
     const char* testdatapath;
@@ -930,7 +930,7 @@ static void TestEmptyTypes() {
     ures_close(theBundle);
 }
 
-static void TestEmptyBundle(){
+static void TestEmptyBundle(void){
     UErrorCode status = U_ZERO_ERROR;
     const char* testdatapath=NULL;
     UResourceBundle *resb=0, *dResB=0;
@@ -954,7 +954,7 @@ static void TestEmptyBundle(){
     ures_close(resb);
 }
 
-static void TestBinaryCollationData(){
+static void TestBinaryCollationData(void){
 #if !UCONFIG_NO_COLLATION
     UErrorCode status=U_ZERO_ERROR;
     const char*      locale="te";
@@ -1012,7 +1012,7 @@ static void TestBinaryCollationData(){
 #endif
 }
 
-static void TestAPI() {
+static void TestAPI(void) {
     UErrorCode status=U_ZERO_ERROR;
     int32_t len=0;
     const char* key=NULL;
@@ -1174,7 +1174,7 @@ static void TestAPI() {
     free(utestdatapath);
 }
 
-static void TestErrorConditions(){
+static void TestErrorConditions(void){
     UErrorCode status=U_ZERO_ERROR;
     const char *key=NULL;
     const UChar *value=NULL;
@@ -1250,17 +1250,17 @@ static void TestErrorConditions(){
     }
     /*Test ures_getType() with UResourceBundle = NULL should return URES_NONE==-1*/
     status=U_ZERO_ERROR;
-    if(ures_getType(NULL) != URES_NONE){  
+    if(ures_getType(NULL) != URES_NONE){
         log_err("ERROR: ures_getType() should return URES_NONE when UResourceBundle=NULL.  Got =%d\n", ures_getType(NULL));
     }
     /*Test ures_getKey() with UResourceBundle = NULL*/
     status=U_ZERO_ERROR;
-    if(ures_getKey(NULL) != NULL){  
+    if(ures_getKey(NULL) != NULL){
         log_err("ERROR: ures_getKey() should return NULL when UResourceBundle=NULL.  Got =%d\n", ures_getKey(NULL));
     }
     /*Test ures_hasNext() with UResourceBundle = NULL*/
     status=U_ZERO_ERROR;
-    if(ures_hasNext(NULL) != false){  
+    if(ures_hasNext(NULL) != false){
         log_err("ERROR: ures_hasNext() should return false when UResourceBundle=NULL.  Got =%d\n", ures_hasNext(NULL));
     }
     /*Test ures_get() with UResourceBundle = NULL*/
@@ -1330,7 +1330,7 @@ static void TestErrorConditions(){
     status=U_ZERO_ERROR;
     teFillin=ures_getNextResource(NULL, teFillin, &status);
     if(teFillin != NULL || status != U_ILLEGAL_ARGUMENT_ERROR){
-        log_err("ERROR: ures_getNextResource() with UResourceBundle = NULL is supposed to fail.  Expected : U_IILEGAL_ARGUMENT_ERROR, Got : %s\n", 
+        log_err("ERROR: ures_getNextResource() with UResourceBundle = NULL is supposed to fail.  Expected : U_IILEGAL_ARGUMENT_ERROR, Got : %s\n",
                                           myErrorName(status));
     }
     /*Test ures_getNextString with errorCode != U_ZERO_ERROR*/
@@ -1409,12 +1409,12 @@ static void TestErrorConditions(){
 
 }
 
-static void TestGetVersion(){
+static void TestGetVersion(void){
     UVersionInfo minVersionArray = {0x01, 0x00, 0x00, 0x00};
     UVersionInfo maxVersionArray = {0x50, 0xff, 0xcf, 0xcf};
     UVersionInfo versionArray;
     UErrorCode status= U_ZERO_ERROR;
-    UResourceBundle* resB = NULL; 
+    UResourceBundle* resB = NULL;
     int i=0, j = 0;
     int locCount = uloc_countAvailable();
     const char *locName = "root";
@@ -1447,13 +1447,13 @@ static void TestGetVersion(){
 }
 
 
-static void TestGetVersionColl(){
+static void TestGetVersionColl(void){
 #if !UCONFIG_NO_COLLATION
     UVersionInfo minVersionArray = {0x00, 0x00, 0x00, 0x00};
     UVersionInfo maxVersionArray = {0x50, 0x80, 0xcf, 0xcf};
     UVersionInfo versionArray;
     UErrorCode status= U_ZERO_ERROR;
-    UResourceBundle* resB = NULL;   
+    UResourceBundle* resB = NULL;
     UEnumeration *locs= NULL;
     int i=0;
     const char *locName = "root";
@@ -1511,7 +1511,7 @@ static void TestGetVersionColl(){
 #endif  /* !UCONFIG_NO_COLLATION */
 }
 
-static void TestResourceBundles()
+static void TestResourceBundles(void)
 {
     // The test expectation only works if the default locale is not one of the
     // locale bundle in the testdata which have those info. Therefore, we skip
@@ -1543,7 +1543,7 @@ static void TestResourceBundles()
 }
 
 
-static void TestConstruction1()
+static void TestConstruction1(void)
 {
     // The test expectation only works if the default locale is not one of the
     // locale bundle in the testdata which have those info. Therefore, we skip
@@ -2058,17 +2058,17 @@ static UBool testTag(const char* frag,
     return failNum == fail;
 }
 
-static void record_pass()
+static void record_pass(void)
 {
     ++pass;
 }
 
-static void record_fail()
+static void record_fail(void)
 {
     ++fail;
 }
 
-static void TestPreventFallback() {
+static void TestPreventFallback(void) {
     UResourceBundle* theBundle = NULL;
     const char* testdatapath;
     UErrorCode status = U_ZERO_ERROR;
@@ -2128,7 +2128,7 @@ static void TestPreventFallback() {
  * are set correctly
  */
 
-static void TestFallback()
+static void TestFallback(void)
 {
     UErrorCode status = U_ZERO_ERROR;
     UResourceBundle *fr_FR = NULL;
@@ -2226,7 +2226,7 @@ static void TestFallback()
 static void TestResourceLevelAliasing(void) {
     UErrorCode status = U_ZERO_ERROR;
     UResourceBundle *aliasB = NULL, *tb = NULL;
-    UResourceBundle *en = NULL, *uk = NULL, *testtypes = NULL;  
+    UResourceBundle *en = NULL, *uk = NULL, *testtypes = NULL;
     const char* testdatapath = NULL;
     const UChar *string = NULL, *sequence = NULL;
     /*const uint8_t *binary = NULL, *binSequence = NULL;*/
@@ -2366,7 +2366,7 @@ static void TestResourceLevelAliasing(void) {
                 }
             }
             for(i = 0; i < UPRV_LENGTHOF(strings); i++) {
-                result = tres_getString(tb, i, NULL, &resultLen, &status); 
+                result = tres_getString(tb, i, NULL, &resultLen, &status);
                 if(U_FAILURE(status)){
                     log_err("(2) Fetching the resource with key %s failed. Error: %s\n", keys[i], u_errorName(status));
                     continue;
@@ -3136,7 +3136,7 @@ tres_getString(const UResourceBundle *resB,
  * UTF-16 ures_getStringXYZ() that are called internally.
  */
 static void
-TestGetUTF8String() {
+TestGetUTF8String(void) {
     UResourceBundle *res;
     const char *testdatapath;
     char buffer8[16];

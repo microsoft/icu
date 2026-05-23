@@ -75,7 +75,7 @@ IntlTestDateFormat::testLocale(/*char* par, */const Locale& locale, const Unicod
     fLimit = 3;
 
     for (timeStyle = static_cast<DateFormat::EStyle>(0);
-        timeStyle < (DateFormat::EStyle)4; 
+         timeStyle < static_cast<DateFormat::EStyle>(4);
          timeStyle = static_cast<DateFormat::EStyle>(timeStyle + 1))
     {
         fTestName = UnicodeString("Time test ") + static_cast<int32_t>(timeStyle) + " (" + localeName + ")";
@@ -86,7 +86,7 @@ IntlTestDateFormat::testLocale(/*char* par, */const Locale& locale, const Unicod
     fLimit = 2;
 
     for (dateStyle = static_cast<DateFormat::EStyle>(0);
-        dateStyle < (DateFormat::EStyle)4; 
+         dateStyle < static_cast<DateFormat::EStyle>(4);
          dateStyle = static_cast<DateFormat::EStyle>(dateStyle + 1))
     {
         fTestName = UnicodeString("Date test ") + static_cast<int32_t>(dateStyle) + " (" + localeName + ")";
@@ -95,11 +95,11 @@ IntlTestDateFormat::testLocale(/*char* par, */const Locale& locale, const Unicod
     }
 
     for (dateStyle = static_cast<DateFormat::EStyle>(0);
-        dateStyle < (DateFormat::EStyle)4; 
+         dateStyle < static_cast<DateFormat::EStyle>(4);
          dateStyle = static_cast<DateFormat::EStyle>(dateStyle + 1))
     {
         for (timeStyle = static_cast<DateFormat::EStyle>(0);
-            timeStyle < (DateFormat::EStyle)4; 
+             timeStyle < static_cast<DateFormat::EStyle>(4);
              timeStyle = static_cast<DateFormat::EStyle>(timeStyle + 1))
         {
             fTestName = UnicodeString("DateTime test ") + static_cast<int32_t>(dateStyle) + "/" + static_cast<int32_t>(timeStyle) + " (" + localeName + ")";
@@ -233,7 +233,7 @@ double IntlTestDateFormat::randDouble()
     // that the system rand() function is very poor, which it always is.
     double d=0.0;
     uint32_t i;
-    char* poke = (char*)&d;
+    char* poke = reinterpret_cast<char*>(&d);
     do {
         do {
             for (i=0; i < sizeof(double); ++i)

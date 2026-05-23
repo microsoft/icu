@@ -59,12 +59,12 @@ public:
 
 inline UnicodeString &
 ICUDataTable::get(const char* tableKey, const char* itemKey, UnicodeString& result) const {
-    return get(tableKey, NULL, itemKey, result);
+    return get(tableKey, nullptr, itemKey, result);
 }
 
 inline UnicodeString &
 ICUDataTable::getNoFallback(const char* tableKey, const char* itemKey, UnicodeString& result) const {
-    return getNoFallback(tableKey, NULL, itemKey, result);
+    return getNoFallback(tableKey, nullptr, itemKey, result);
 }
 
 ICUDataTable::ICUDataTable(const char* path, const Locale& locale)
@@ -84,7 +84,7 @@ ICUDataTable::get(const char* tableKey, const char* subTableKey, const char* ite
   UErrorCode status = U_ZERO_ERROR;
   int32_t len = 0;
 
-  const UChar *s = uloc_getTableStringWithFallback(path, locale.getName(),
+  const char16_t *s = uloc_getTableStringWithFallback(path, locale.getName(),
                                                    tableKey, subTableKey, itemKey,
                                                    &len, &status);
   if (U_SUCCESS(status) && len > 0) {
@@ -99,7 +99,7 @@ ICUDataTable::getNoFallback(const char* tableKey, const char* subTableKey, const
   UErrorCode status = U_ZERO_ERROR;
   int32_t len = 0;
 
-  const UChar *s = uloc_getTableStringWithFallback(path, locale.getName(),
+  const char16_t *s = uloc_getTableStringWithFallback(path, locale.getName(),
                                                    tableKey, subTableKey, itemKey,
                                                    &len, &status);
   if (U_SUCCESS(status)) {
@@ -306,7 +306,7 @@ private:
     UnicodeString& keyDisplayName(const char* key, UnicodeString& result, bool skipAdjust) const;
     UnicodeString& keyValueDisplayName(const char* key, const char* value,
                                         UnicodeString& result, bool skipAdjust) const;
-    void initialize(void);
+    void initialize();
 
     struct CapitalizationContextSink;
 };
@@ -317,7 +317,7 @@ LocaleDisplayNamesImpl::LocaleDisplayNamesImpl(const Locale& locale,
     , langData(U_ICUDATA_LANG, locale)
     , regionData(U_ICUDATA_REGION, locale)
     , capitalizationContext(UDISPCTX_CAPITALIZATION_NONE)
-    , capitalizationBrkIter(NULL)
+    , capitalizationBrkIter(nullptr)
     , nameLength(UDISPCTX_LENGTH_FULL)
     , substitute(UDISPCTX_SUBSTITUTE)
 {
@@ -330,7 +330,7 @@ LocaleDisplayNamesImpl::LocaleDisplayNamesImpl(const Locale& locale,
     , langData(U_ICUDATA_LANG, locale)
     , regionData(U_ICUDATA_REGION, locale)
     , capitalizationContext(UDISPCTX_CAPITALIZATION_NONE)
-    , capitalizationBrkIter(NULL)
+    , capitalizationBrkIter(nullptr)
     , nameLength(UDISPCTX_LENGTH_FULL)
     , substitute(UDISPCTX_SUBSTITUTE)
 {
@@ -340,7 +340,7 @@ LocaleDisplayNamesImpl::LocaleDisplayNamesImpl(const Locale& locale,
             static_cast<UDisplayContextType>(static_cast<uint32_t>(value) >> 8);
         switch (selector) {
             case UDISPCTX_TYPE_DIALECT_HANDLING:
-                dialectHandling = (UDialectHandling)value;
+                dialectHandling = static_cast<UDialectHandling>(value);
                 break;
             case UDISPCTX_TYPE_CAPITALIZATION:
                 capitalizationContext = value;
@@ -407,7 +407,7 @@ struct LocaleDisplayNamesImpl::CapitalizationContextSink : public ResourceSink {
 LocaleDisplayNamesImpl::CapitalizationContextSink::~CapitalizationContextSink() {}
 
 void
-LocaleDisplayNamesImpl::initialize(void) {
+LocaleDisplayNamesImpl::initialize() {
     LocaleDisplayNamesImpl* nonConstThis = this;
     nonConstThis->locale = langData.getLocale() == Locale::getRoot()
         ? regionData.getLocale()
@@ -427,16 +427,16 @@ LocaleDisplayNamesImpl::initialize(void) {
         pattern = UnicodeString("{0} ({1})", -1, US_INV);
     }
     format.applyPatternMinMaxArguments(pattern, 2, 2, status);
-    if (pattern.indexOf((UChar)0xFF08) >= 0) {
-        formatOpenParen.setTo((UChar)0xFF08);         // fullwidth (
-        formatReplaceOpenParen.setTo((UChar)0xFF3B);  // fullwidth [
-        formatCloseParen.setTo((UChar)0xFF09);        // fullwidth )
-        formatReplaceCloseParen.setTo((UChar)0xFF3D); // fullwidth ]
+    if (pattern.indexOf(static_cast<char16_t>(0xFF08)) >= 0) {
+        formatOpenParen.setTo(static_cast<char16_t>(0xFF08));         // fullwidth (
+        formatReplaceOpenParen.setTo(static_cast<char16_t>(0xFF3B));  // fullwidth [
+        formatCloseParen.setTo(static_cast<char16_t>(0xFF09));        // fullwidth )
+        formatReplaceCloseParen.setTo(static_cast<char16_t>(0xFF3D)); // fullwidth ]
     } else {
-        formatOpenParen.setTo((UChar)0x0028);         // (
-        formatReplaceOpenParen.setTo((UChar)0x005B);  // [
-        formatCloseParen.setTo((UChar)0x0029);        // )
-        formatReplaceCloseParen.setTo((UChar)0x005D); // ]
+        formatOpenParen.setTo(static_cast<char16_t>(0x0028));         // (
+        formatReplaceOpenParen.setTo(static_cast<char16_t>(0x005B));  // [
+        formatCloseParen.setTo(static_cast<char16_t>(0x0029));        // )
+        formatReplaceCloseParen.setTo(static_cast<char16_t>(0x005D)); // ]
     }
 
     UnicodeString ktPattern;
@@ -452,7 +452,7 @@ LocaleDisplayNamesImpl::initialize(void) {
     // Also check whether we will need a break iterator (depends on the data)
     bool needBrkIter = false;
     if (capitalizationContext == UDISPCTX_CAPITALIZATION_FOR_UI_LIST_OR_MENU || capitalizationContext == UDISPCTX_CAPITALIZATION_FOR_STANDALONE) {
-        LocalUResourceBundlePointer resource(ures_open(NULL, locale.getName(), &status));
+        LocalUResourceBundlePointer resource(ures_open(nullptr, locale.getName(), &status));
         if (U_FAILURE(status)) { return; }
         CapitalizationContextSink sink(*this);
         ures_getAllItemsWithFallback(resource.getAlias(), "contextTransforms", sink, status);
@@ -470,7 +470,7 @@ LocaleDisplayNamesImpl::initialize(void) {
         capitalizationBrkIter = BreakIterator::createSentenceInstance(locale, status);
         if (U_FAILURE(status)) {
             delete capitalizationBrkIter;
-            capitalizationBrkIter = NULL;
+            capitalizationBrkIter = nullptr;
         }
     }
 #endif
@@ -496,7 +496,7 @@ UDisplayContext
 LocaleDisplayNamesImpl::getContext(UDisplayContextType type) const {
     switch (type) {
         case UDISPCTX_TYPE_DIALECT_HANDLING:
-            return (UDisplayContext)dialectHandling;
+            return static_cast<UDisplayContext>(dialectHandling);
         case UDISPCTX_TYPE_CAPITALIZATION:
             return capitalizationContext;
         case UDISPCTX_TYPE_DISPLAY_LENGTH:
@@ -506,7 +506,7 @@ LocaleDisplayNamesImpl::getContext(UDisplayContextType type) const {
         default:
             break;
     }
-    return (UDisplayContext)0;
+    return static_cast<UDisplayContext>(0);
 }
 
 UnicodeString&
@@ -514,7 +514,7 @@ LocaleDisplayNamesImpl::adjustForUsageAndContext(CapContextUsage usage,
                                                 UnicodeString& result) const {
 #if !UCONFIG_NO_BREAK_ITERATION
     // check to see whether we need to titlecase result
-    if ( result.length() > 0 && u_islower(result.char32At(0)) && capitalizationBrkIter!= NULL &&
+    if ( result.length() > 0 && u_islower(result.char32At(0)) && capitalizationBrkIter!= nullptr &&
           ( capitalizationContext==UDISPCTX_CAPITALIZATION_FOR_BEGINNING_OF_SENTENCE || fCapitalization[usage] ) ) {
         // note fCapitalization[usage] won't be set unless capitalizationContext is UI_LIST_OR_MENU or STANDALONE
         static UMutex capitalizationBrkIterLock;
@@ -653,7 +653,7 @@ LocaleDisplayNamesImpl::localeDisplayName(const Locale& loc,
         appendWithSep(resultRemainder, temp3);
       } else {
         appendWithSep(resultRemainder, temp)
-          .append((UChar)0x3d /* = */)
+          .append(static_cast<char16_t>(0x3d) /* = */)
           .append(temp2);
       }
     }
@@ -675,7 +675,7 @@ LocaleDisplayNamesImpl::appendWithSep(UnicodeString& buffer, const UnicodeString
     } else {
         const UnicodeString *values[2] = { &buffer, &src };
         UErrorCode status = U_ZERO_ERROR;
-        separatorFormat.formatAndReplace(values, 2, buffer, NULL, 0, status);
+        separatorFormat.formatAndReplace(values, 2, buffer, nullptr, 0, status);
     }
     return buffer;
 }
@@ -697,7 +697,7 @@ LocaleDisplayNamesImpl::localeIdName(const char* localeId,
         }
     }
     langData.getNoFallback("Languages", localeId, result);
-    if (result.isBogus() && uprv_strchr(localeId, '_') == NULL) {
+    if (result.isBogus() && uprv_strchr(localeId, '_') == nullptr) {
         // Canonicalize lang and try again, ICU-20870
         // (only for language codes without script or region)
         Locale canonLocale = Locale::createCanonical(localeId);
@@ -720,7 +720,7 @@ LocaleDisplayNamesImpl::localeIdName(const char* localeId,
 UnicodeString&
 LocaleDisplayNamesImpl::languageDisplayName(const char* lang,
                                             UnicodeString& result) const {
-    if (uprv_strcmp("root", lang) == 0 || uprv_strchr(lang, '_') != NULL) {
+    if (uprv_strcmp("root", lang) == 0 || uprv_strchr(lang, '_') != nullptr) {
         return result = UnicodeString(lang, -1, US_INV);
     }
     if (nameLength == UDISPCTX_LENGTH_SHORT) {
@@ -852,7 +852,7 @@ LocaleDisplayNamesImpl::keyValueDisplayName(const char* key,
         UErrorCode sts = U_ZERO_ERROR;
         UnicodeString ustrValue(value, -1, US_INV);
         int32_t len;
-        const UChar *currencyName = ucurr_getName(ustrValue.getTerminatedBuffer(),
+        const char16_t *currencyName = ucurr_getName(ustrValue.getTerminatedBuffer(),
             locale.getBaseName(), UCURR_LONG_NAME, nullptr /* isChoiceFormat */, &len, &sts);
         if (U_FAILURE(sts)) {
             // Return the value as is on failure
@@ -895,7 +895,7 @@ LocaleDisplayNames::createInstance(const Locale& locale,
 LocaleDisplayNames*
 LocaleDisplayNames::createInstance(const Locale& locale,
                                    UDisplayContext *contexts, int32_t length) {
-    if (contexts == NULL) {
+    if (contexts == nullptr) {
         length = 0;
     }
     return new LocaleDisplayNamesImpl(locale, contexts, length);
@@ -914,7 +914,7 @@ uldn_open(const char * locale,
   if (U_FAILURE(*pErrorCode)) {
     return nullptr;
   }
-  if (locale == NULL) {
+  if (locale == nullptr) {
     locale = uloc_getDefault();
   }
   return (ULocaleDisplayNames *)LocaleDisplayNames::createInstance(Locale(locale), dialectHandling);
@@ -927,7 +927,7 @@ uldn_openForContext(const char * locale,
   if (U_FAILURE(*pErrorCode)) {
     return nullptr;
   }
-  if (locale == NULL) {
+  if (locale == nullptr) {
     locale = uloc_getDefault();
   }
   return (ULocaleDisplayNames *)LocaleDisplayNames::createInstance(Locale(locale), contexts, length);
@@ -944,7 +944,7 @@ uldn_getLocale(const ULocaleDisplayNames *ldn) {
   if (ldn) {
     return ((const LocaleDisplayNames *)ldn)->getLocale().getName();
   }
-  return NULL;
+  return nullptr;
 }
 
 U_CAPI UDialectHandling U_EXPORT2
@@ -968,13 +968,13 @@ uldn_getContext(const ULocaleDisplayNames *ldn,
 U_CAPI int32_t U_EXPORT2
 uldn_localeDisplayName(const ULocaleDisplayNames *ldn,
                        const char *locale,
-                       UChar *result,
+                       char16_t *result,
                        int32_t maxResultSize,
                        UErrorCode *pErrorCode) {
   if (U_FAILURE(*pErrorCode)) {
     return 0;
   }
-  if (ldn == NULL || locale == NULL || (result == NULL && maxResultSize > 0) || maxResultSize < 0) {
+  if (ldn == nullptr || locale == nullptr || (result == nullptr && maxResultSize > 0) || maxResultSize < 0) {
     *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
     return 0;
   }
@@ -990,13 +990,13 @@ uldn_localeDisplayName(const ULocaleDisplayNames *ldn,
 U_CAPI int32_t U_EXPORT2
 uldn_languageDisplayName(const ULocaleDisplayNames *ldn,
                          const char *lang,
-                         UChar *result,
+                         char16_t *result,
                          int32_t maxResultSize,
                          UErrorCode *pErrorCode) {
   if (U_FAILURE(*pErrorCode)) {
     return 0;
   }
-  if (ldn == NULL || lang == NULL || (result == NULL && maxResultSize > 0) || maxResultSize < 0) {
+  if (ldn == nullptr || lang == nullptr || (result == nullptr && maxResultSize > 0) || maxResultSize < 0) {
     *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
     return 0;
   }
@@ -1008,13 +1008,13 @@ uldn_languageDisplayName(const ULocaleDisplayNames *ldn,
 U_CAPI int32_t U_EXPORT2
 uldn_scriptDisplayName(const ULocaleDisplayNames *ldn,
                        const char *script,
-                       UChar *result,
+                       char16_t *result,
                        int32_t maxResultSize,
                        UErrorCode *pErrorCode) {
   if (U_FAILURE(*pErrorCode)) {
     return 0;
   }
-  if (ldn == NULL || script == NULL || (result == NULL && maxResultSize > 0) || maxResultSize < 0) {
+  if (ldn == nullptr || script == nullptr || (result == nullptr && maxResultSize > 0) || maxResultSize < 0) {
     *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
     return 0;
   }
@@ -1026,7 +1026,7 @@ uldn_scriptDisplayName(const ULocaleDisplayNames *ldn,
 U_CAPI int32_t U_EXPORT2
 uldn_scriptCodeDisplayName(const ULocaleDisplayNames *ldn,
                            UScriptCode scriptCode,
-                           UChar *result,
+                           char16_t *result,
                            int32_t maxResultSize,
                            UErrorCode *pErrorCode) {
   return uldn_scriptDisplayName(ldn, uscript_getName(scriptCode), result, maxResultSize, pErrorCode);
@@ -1035,13 +1035,13 @@ uldn_scriptCodeDisplayName(const ULocaleDisplayNames *ldn,
 U_CAPI int32_t U_EXPORT2
 uldn_regionDisplayName(const ULocaleDisplayNames *ldn,
                        const char *region,
-                       UChar *result,
+                       char16_t *result,
                        int32_t maxResultSize,
                        UErrorCode *pErrorCode) {
   if (U_FAILURE(*pErrorCode)) {
     return 0;
   }
-  if (ldn == NULL || region == NULL || (result == NULL && maxResultSize > 0) || maxResultSize < 0) {
+  if (ldn == nullptr || region == nullptr || (result == nullptr && maxResultSize > 0) || maxResultSize < 0) {
     *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
     return 0;
   }
@@ -1053,13 +1053,13 @@ uldn_regionDisplayName(const ULocaleDisplayNames *ldn,
 U_CAPI int32_t U_EXPORT2
 uldn_variantDisplayName(const ULocaleDisplayNames *ldn,
                         const char *variant,
-                        UChar *result,
+                        char16_t *result,
                         int32_t maxResultSize,
                         UErrorCode *pErrorCode) {
   if (U_FAILURE(*pErrorCode)) {
     return 0;
   }
-  if (ldn == NULL || variant == NULL || (result == NULL && maxResultSize > 0) || maxResultSize < 0) {
+  if (ldn == nullptr || variant == nullptr || (result == nullptr && maxResultSize > 0) || maxResultSize < 0) {
     *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
     return 0;
   }
@@ -1071,13 +1071,13 @@ uldn_variantDisplayName(const ULocaleDisplayNames *ldn,
 U_CAPI int32_t U_EXPORT2
 uldn_keyDisplayName(const ULocaleDisplayNames *ldn,
                     const char *key,
-                    UChar *result,
+                    char16_t *result,
                     int32_t maxResultSize,
                     UErrorCode *pErrorCode) {
   if (U_FAILURE(*pErrorCode)) {
     return 0;
   }
-  if (ldn == NULL || key == NULL || (result == NULL && maxResultSize > 0) || maxResultSize < 0) {
+  if (ldn == nullptr || key == nullptr || (result == nullptr && maxResultSize > 0) || maxResultSize < 0) {
     *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
     return 0;
   }
@@ -1090,13 +1090,13 @@ U_CAPI int32_t U_EXPORT2
 uldn_keyValueDisplayName(const ULocaleDisplayNames *ldn,
                          const char *key,
                          const char *value,
-                         UChar *result,
+                         char16_t *result,
                          int32_t maxResultSize,
                          UErrorCode *pErrorCode) {
   if (U_FAILURE(*pErrorCode)) {
     return 0;
   }
-  if (ldn == NULL || key == NULL || value == NULL || (result == NULL && maxResultSize > 0)
+  if (ldn == nullptr || key == nullptr || value == nullptr || (result == nullptr && maxResultSize > 0)
       || maxResultSize < 0) {
     *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
     return 0;

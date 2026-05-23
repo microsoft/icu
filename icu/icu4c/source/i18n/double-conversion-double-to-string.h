@@ -123,7 +123,7 @@ class DoubleToStringConverter {
   //    EMIT_TRAILING_DECIMAL_POINT_IN_EXPONENTIAL flag.
   //
   // Infinity symbol and nan_symbol provide the string representation for these
-  // special values. If the string is NULL and the special value is encountered
+  // special values. If the string is nullptr and the special value is encountered
   // then the conversion functions return false.
   //
   // The exponent_character is used in exponential representations. It is
@@ -454,7 +454,7 @@ class DoubleToStringConverter {
 
   // If the value is a special value (NaN or Infinity) constructs the
   // corresponding string using the configured infinity/nan-symbol.
-  // If either of them is NULL or the value is not special then the
+  // If either of them is nullptr or the value is not special then the
   // function returns false.
   bool HandleSpecialValues(double value, StringBuilder* result_builder) const;
   // Constructs an exponential representation (i.e. 1.234e56).

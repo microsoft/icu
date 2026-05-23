@@ -70,11 +70,11 @@ void AstroTest::init(UErrorCode &status) {
 void AstroTest::close(UErrorCode &/*status*/) {
   if(gc != nullptr) {
     delete gc;
-    gc = NULL;
+    gc = nullptr;
   }
 }
 
-void AstroTest::TestSolarLongitude(void) {
+void AstroTest::TestSolarLongitude() {
   UErrorCode status = U_ZERO_ERROR;
   init(status);
   ASSERT_OK(status);
@@ -101,7 +101,7 @@ void AstroTest::TestSolarLongitude(void) {
 
 
 
-void AstroTest::TestLunarPosition(void) {
+void AstroTest::TestLunarPosition() {
   UErrorCode status = U_ZERO_ERROR;
   init(status);
   ASSERT_OK(status);
@@ -130,7 +130,7 @@ void AstroTest::TestLunarPosition(void) {
 
 
 
-void AstroTest::TestCoordinates(void) {
+void AstroTest::TestCoordinates() {
   UErrorCode status = U_ZERO_ERROR;
   init(status);
   ASSERT_OK(status);
@@ -145,7 +145,7 @@ void AstroTest::TestCoordinates(void) {
 
 
 
-void AstroTest::TestCoverage(void) {
+void AstroTest::TestCoverage() {
   UErrorCode status = U_ZERO_ERROR;
   init(status);
   ASSERT_OK(status);
@@ -245,7 +245,7 @@ void AstroTest::TestBasics() {
 
 }
 
-void AstroTest::TestMoonAge(void){
+void AstroTest::TestMoonAge(){
 	UErrorCode status = U_ZERO_ERROR;
 	init(status);
 	ASSERT_OK(status);

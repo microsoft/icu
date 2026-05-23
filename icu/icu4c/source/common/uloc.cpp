@@ -77,8 +77,8 @@ namespace {
  * This list must be kept in sync with LANGUAGES_3, with corresponding
  * entries matched.
  *
- * This table should be terminated with a NULL entry, followed by a
- * second list, and another NULL entry.  The first list is visible to
+ * This table should be terminated with a nullptr entry, followed by a
+ * second list, and another nullptr entry.  The first list is visible to
  * user code when this array is returned by API.  The second list
  * contains codes we support, but do not expose through user API.
  *
@@ -186,16 +186,16 @@ constexpr const char* LANGUAGES[] = {
     "yao", "yap", "yav", "ybb", "yi",  "yo",  "yrl", "yue",
     "za",  "zap", "zbl", "zea", "zen", "zgh", "zh",  "zu",
     "zun", "zxx", "zza",
-NULL,
+nullptr,
     "in",  "iw",  "ji",  "jw",  "mo",  "sh",  "swc", "tl",  /* obsolete language codes */
-NULL
+nullptr
 };
 
 constexpr const char* DEPRECATED_LANGUAGES[]={
-    "in", "iw", "ji", "jw", "mo", NULL, NULL
+    "in", "iw", "ji", "jw", "mo", nullptr, nullptr
 };
 constexpr const char* REPLACEMENT_LANGUAGES[]={
-    "id", "he", "yi", "jv", "ro", NULL, NULL
+    "id", "he", "yi", "jv", "ro", nullptr, nullptr
 };
 
 /**
@@ -210,8 +210,8 @@ constexpr const char* REPLACEMENT_LANGUAGES[]={
  * Where a 3-letter language code has no 2-letter equivalent, the
  * 3-letter code occupies both LANGUAGES[i] and LANGUAGES_3[i].
  *
- * This table should be terminated with a NULL entry, followed by a
- * second list, and another NULL entry.  The two lists correspond to
+ * This table should be terminated with a nullptr entry, followed by a
+ * second list, and another nullptr entry.  The two lists correspond to
  * the two lists in LANGUAGES.
  */
 /* Generated using org.unicode.cldr.icu.GenerateISO639LanguageTables */
@@ -303,10 +303,10 @@ constexpr const char* LANGUAGES_3[] = {
     "yao", "yap", "yav", "ybb", "yid", "yor", "yrl", "yue",
     "zha", "zap", "zbl", "zea", "zen", "zgh", "zho", "zul",
     "zun", "zxx", "zza",
-NULL,
+nullptr,
 /*  "in",  "iw",  "ji",  "jw",  "mo",  "sh",  "swc", "tl",  */
     "ind", "heb", "yid", "jaw", "mol", "srp", "swc", "tgl",
-NULL
+nullptr
 };
 
 /**
@@ -318,8 +318,8 @@ NULL
  * This list must be kept in sync with COUNTRIES_3, with corresponding
  * entries matched.
  *
- * This table should be terminated with a NULL entry, followed by a
- * second list, and another NULL entry.  The first list is visible to
+ * This table should be terminated with a nullptr entry, followed by a
+ * second list, and another nullptr entry.  The first list is visible to
  * user code when this array is returned by API.  The second list
  * contains codes we support, but do not expose through user API.
  *
@@ -364,17 +364,17 @@ constexpr const char* COUNTRIES[] = {
     "TW",  "TZ",  "UA",  "UG",  "UM",  "US",  "UY",  "UZ",
     "VA",  "VC",  "VE",  "VG",  "VI",  "VN",  "VU",  "WF",
     "WS",  "XK",  "YE",  "YT",  "ZA",  "ZM",  "ZW",
-NULL,
+nullptr,
     "AN",  "BU", "CS", "FX", "RO", "SU", "TP", "YD", "YU", "ZR",   /* obsolete country codes */
-NULL
+nullptr
 };
 
 constexpr const char* DEPRECATED_COUNTRIES[] = {
-    "AN", "BU", "CS", "DD", "DY", "FX", "HV", "NH", "RH", "SU", "TP", "UK", "VD", "YD", "YU", "ZR", NULL, NULL /* deprecated country list */
+    "AN", "BU", "CS", "DD", "DY", "FX", "HV", "NH", "RH", "SU", "TP", "UK", "VD", "YD", "YU", "ZR", nullptr, nullptr /* deprecated country list */
 };
 constexpr const char* REPLACEMENT_COUNTRIES[] = {
 /*  "AN", "BU", "CS", "DD", "DY", "FX", "HV", "NH", "RH", "SU", "TP", "UK", "VD", "YD", "YU", "ZR" */
-    "CW", "MM", "RS", "DE", "BJ", "FR", "BF", "VU", "ZW", "RU", "TL", "GB", "VN", "YE", "RS", "CD", NULL, NULL  /* replacement country codes */
+    "CW", "MM", "RS", "DE", "BJ", "FR", "BF", "VU", "ZW", "RU", "TL", "GB", "VN", "YE", "RS", "CD", nullptr, nullptr  /* replacement country codes */
 };
 
 /**
@@ -386,8 +386,8 @@ constexpr const char* REPLACEMENT_COUNTRIES[] = {
  * COUNTRIES_3[i].  The commented-out lines are copied from COUNTRIES
  * to make eyeballing this baby easier.
  *
- * This table should be terminated with a NULL entry, followed by a
- * second list, and another NULL entry.  The two lists correspond to
+ * This table should be terminated with a nullptr entry, followed by a
+ * second list, and another nullptr entry.  The two lists correspond to
  * the two lists in COUNTRIES.
  */
 constexpr const char* COUNTRIES_3[] = {
@@ -451,10 +451,10 @@ constexpr const char* COUNTRIES_3[] = {
     "VAT", "VCT", "VEN", "VGB", "VIR", "VNM", "VUT", "WLF",
 /*  "WS",  "XK",  "YE",  "YT",  "ZA",  "ZM",  "ZW",          */
     "WSM", "XKK", "YEM", "MYT", "ZAF", "ZMB", "ZWE",
-NULL,
+nullptr,
 /*  "AN",  "BU",  "CS",  "FX",  "RO", "SU",  "TP",  "YD",  "YU",  "ZR" */
     "ANT", "BUR", "SCG", "FXX", "ROM", "SUN", "TMP", "YMD", "YUG", "ZAR",
-NULL
+nullptr
 };
 
 typedef struct CanonicalizationMap {
@@ -542,7 +542,7 @@ locale_getKeywordsStart(std::string_view localeID) {
         }
     }
 #endif
-    return NULL;
+    return nullptr;
 }
 
 namespace {
@@ -1169,7 +1169,7 @@ inline bool _isBCP47Extension(std::string_view p) {
 
 /**
  * Lookup 'key' in the array 'list'.  The array 'list' should contain
- * a NULL entry, followed by more entries, and a second NULL entry.
+ * a nullptr entry, followed by more entries, and a second nullptr entry.
  *
  * The 'list' param should be LANGUAGES, LANGUAGES_3, COUNTRIES, or
  * COUNTRIES_3.
@@ -1179,7 +1179,7 @@ std::optional<int16_t> _findIndex(const char* const* list, const char* key)
     const char* const* anchor = list;
     int32_t pass = 0;
 
-    /* Make two passes through two NULL-terminated arrays at 'list' */
+    /* Make two passes through two nullptr-terminated arrays at 'list' */
     while (pass++ < 2) {
         while (*list) {
             if (uprv_strcmp(key, *list) == 0) {
@@ -1187,7 +1187,7 @@ std::optional<int16_t> _findIndex(const char* const* list, const char* key)
             }
             list++;
         }
-        ++list;     /* skip final NULL *CWB*/
+        ++list;     /* skip final nullptr *CWB*/
     }
     return std::nullopt;
 }
@@ -1682,7 +1682,7 @@ uloc_kw_nextKeyword(UEnumeration* en,
         len = (int32_t)uprv_strlen(((UKeywordsContext *)en->context)->current);
         ((UKeywordsContext *)en->context)->current += len+1;
     } else {
-        result = NULL;
+        result = nullptr;
     }
     if (resultLength) {
         *resultLength = len;
@@ -1700,8 +1700,8 @@ U_CDECL_END
 
 
 static const UEnumeration gKeywordsEnum = {
-    NULL,
-    NULL,
+    nullptr,
+    nullptr,
     uloc_kw_closeKeywords,
     uloc_kw_countKeywords,
     uenum_unextDefault,
@@ -1751,7 +1751,7 @@ uloc_openKeywords(const char* localeID,
         tempBuffer = ulocimp_forLanguageTag(localeID, -1, nullptr, *status);
         tmpLocaleID = U_SUCCESS(*status) && !tempBuffer.isEmpty() ? tempBuffer.data() : localeID;
     } else {
-        if (localeID==NULL) {
+        if (localeID==nullptr) {
             localeID=uloc_getDefault();
         }
         tmpLocaleID=localeID;
@@ -1773,11 +1773,11 @@ uloc_openKeywords(const char* localeID,
     if((tmpLocaleID = locale_getKeywordsStart(tmpLocaleID)) != nullptr) {
         CharString keywords = ulocimp_getKeywords(tmpLocaleID + 1, '@', false, *status);
         if (U_FAILURE(*status)) {
-            return NULL;
+            return nullptr;
         }
         return uloc_openKeywordList(keywords.data(), keywords.length(), status);
     }
-    return NULL;
+    return nullptr;
 }
 
 
@@ -2020,7 +2020,7 @@ ulocimp_getParent(const char* localeID,
         localeID = uloc_getDefault();
 
     lastUnderscore=uprv_strrchr(localeID, '_');
-    if(lastUnderscore!=NULL) {
+    if(lastUnderscore!=nullptr) {
         i = static_cast<int32_t>(lastUnderscore - localeID);
     } else {
         i=0;
@@ -2249,7 +2249,7 @@ uloc_getISO3Language(const char* localeID)
 {
     UErrorCode err = U_ZERO_ERROR;
 
-    if (localeID == NULL)
+    if (localeID == nullptr)
     {
         localeID = uloc_getDefault();
     }
@@ -2265,7 +2265,7 @@ uloc_getISO3Country(const char* localeID)
 {
     UErrorCode err = U_ZERO_ERROR;
 
-    if (localeID == NULL)
+    if (localeID == nullptr)
     {
         localeID = uloc_getDefault();
     }

@@ -131,9 +131,9 @@ BasicTimeZone::hasEquivalentTransitions(const BasicTimeZone& tz, UDate start, UD
 void
 BasicTimeZone::getSimpleRulesNear(UDate date, InitialTimeZoneRule*& initial,
         AnnualTimeZoneRule*& std, AnnualTimeZoneRule*& dst, UErrorCode& status) const {
-    initial = NULL;
-    std = NULL;
-    dst = NULL;
+    initial = nullptr;
+    std = nullptr;
+    dst = nullptr;
     if (U_FAILURE(status)) {
         return;
     }
@@ -368,7 +368,7 @@ BasicTimeZone::getTimeZoneRulesAfter(UDate start, InitialTimeZoneRule*& initial,
 
     // Mark rules which does not need to be processed
     for (i = 0; i < ruleCount; i++) {
-        r = (TimeZoneRule*)orgRules->elementAt(i);
+        r = static_cast<TimeZoneRule*>(orgRules->elementAt(i));
         avail = r->getNextStart(start, res_initial->getRawOffset(), res_initial->getDSTSavings(), false, time);
         done[i] = !avail;
     }
@@ -391,7 +391,7 @@ BasicTimeZone::getTimeZoneRulesAfter(UDate start, InitialTimeZoneRule*& initial,
  
         const TimeZoneRule *toRule = tzt.getTo();
         for (i = 0; i < ruleCount; i++) {
-            r = (TimeZoneRule*)orgRules->elementAt(i);
+            r = static_cast<TimeZoneRule*>(orgRules->elementAt(i));
             if (*r == *toRule) {
                 break;
             }
@@ -406,7 +406,7 @@ BasicTimeZone::getTimeZoneRulesAfter(UDate start, InitialTimeZoneRule*& initial,
         }
         const TimeArrayTimeZoneRule *tar = dynamic_cast<const TimeArrayTimeZoneRule *>(toRule);
         const AnnualTimeZoneRule *ar;
-        if (tar != NULL) {
+        if (tar != nullptr) {
             // Get the previous raw offset and DST savings before the very first start time
             TimeZoneTransition tzt0;
             t = start;
@@ -473,7 +473,7 @@ BasicTimeZone::getTimeZoneRulesAfter(UDate start, InitialTimeZoneRule*& initial,
                     }
                 }
             }
-        } else if ((ar = dynamic_cast<const AnnualTimeZoneRule *>(toRule)) != NULL) {
+        } else if ((ar = dynamic_cast<const AnnualTimeZoneRule *>(toRule)) != nullptr) {
             ar->getFirstStart(tzt.getFrom()->getRawOffset(), tzt.getFrom()->getDSTSavings(), firstStart);
             if (firstStart == tzt.getTime()) {
                 // Just add the rule as is
@@ -530,8 +530,8 @@ BasicTimeZone::getOffsetFromLocal(UDate /*date*/, UTimeZoneLocalOption /*nonExis
 void BasicTimeZone::getOffsetFromLocal(UDate date, int32_t nonExistingTimeOpt, int32_t duplicatedTimeOpt,
                                        int32_t& rawOffset, int32_t& dstOffset,
                                        UErrorCode& status) const {
-    getOffsetFromLocal(date, (UTimeZoneLocalOption)nonExistingTimeOpt,
-                       (UTimeZoneLocalOption)duplicatedTimeOpt, rawOffset, dstOffset, status);
+    getOffsetFromLocal(date, static_cast<UTimeZoneLocalOption>(nonExistingTimeOpt),
+                       static_cast<UTimeZoneLocalOption>(duplicatedTimeOpt), rawOffset, dstOffset, status);
 }
 
 U_NAMESPACE_END

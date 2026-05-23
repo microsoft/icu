@@ -15,33 +15,33 @@ namespace numparse::impl {
 
 class ValidationMatcher : public NumberParseMatcher {
   public:
-    bool match(StringSegment&, ParsedNumber&, UErrorCode&) const U_OVERRIDE {
+    bool match(StringSegment&, ParsedNumber&, UErrorCode&) const override {
         // No-op
         return false;
     }
 
-    bool smokeTest(const StringSegment&) const U_OVERRIDE {
+    bool smokeTest(const StringSegment&) const override {
         // No-op
         return false;
     }
 
-    void postProcess(ParsedNumber& result) const U_OVERRIDE = 0;
+    void postProcess(ParsedNumber& result) const override = 0;
 };
 
 
 class RequireAffixValidator : public ValidationMatcher, public UMemory {
   public:
-    void postProcess(ParsedNumber& result) const U_OVERRIDE;
+    void postProcess(ParsedNumber& result) const override;
 
-    UnicodeString toString() const U_OVERRIDE;
+    UnicodeString toString() const override;
 };
 
 
 class RequireCurrencyValidator : public ValidationMatcher, public UMemory {
   public:
-    void postProcess(ParsedNumber& result) const U_OVERRIDE;
+    void postProcess(ParsedNumber& result) const override;
 
-    UnicodeString toString() const U_OVERRIDE;
+    UnicodeString toString() const override;
 };
 
 
@@ -51,9 +51,9 @@ class RequireDecimalSeparatorValidator : public ValidationMatcher, public UMemor
 
     RequireDecimalSeparatorValidator(bool patternHasDecimalSeparator);
 
-    void postProcess(ParsedNumber& result) const U_OVERRIDE;
+    void postProcess(ParsedNumber& result) const override;
 
-    UnicodeString toString() const U_OVERRIDE;
+    UnicodeString toString() const override;
 
   private:
     bool fPatternHasDecimalSeparator;
@@ -62,9 +62,9 @@ class RequireDecimalSeparatorValidator : public ValidationMatcher, public UMemor
 
 class RequireNumberValidator : public ValidationMatcher, public UMemory {
   public:
-    void postProcess(ParsedNumber& result) const U_OVERRIDE;
+    void postProcess(ParsedNumber& result) const override;
 
-    UnicodeString toString() const U_OVERRIDE;
+    UnicodeString toString() const override;
 };
 
 
@@ -77,9 +77,9 @@ class MultiplierParseHandler : public ValidationMatcher, public UMemory {
 
     MultiplierParseHandler(::icu::number::Scale multiplier);
 
-    void postProcess(ParsedNumber& result) const U_OVERRIDE;
+    void postProcess(ParsedNumber& result) const override;
 
-    UnicodeString toString() const U_OVERRIDE;
+    UnicodeString toString() const override;
 
   private:
     ::icu::number::Scale fMultiplier;

@@ -100,7 +100,7 @@ public:
             return;
         }
         BMPBitHash *bitHash=new BMPBitHash;
-        if(bitHash==NULL || restSet==NULL) {
+        if(bitHash==nullptr || restSet==nullptr) {
             errorCode=U_MEMORY_ALLOCATION_ERROR;
             return;
         }
@@ -161,7 +161,7 @@ public:
         if(bitHash->countKeys()>UPRV_LENGTHOF(shortBits)) {
             bits = static_cast<int64_t*>(uprv_malloc(bitHash->countKeys() * 8));
         }
-        if(bits!=NULL) {
+        if(bits!=nullptr) {
             bitHash->invert(bits);
         } else {
             bits=shortBits;

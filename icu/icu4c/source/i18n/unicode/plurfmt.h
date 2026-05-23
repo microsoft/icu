@@ -461,7 +461,7 @@ public:
     U_I18N_API UnicodeString& format(const Formattable& obj,
                                      UnicodeString& appendTo,
                                      FieldPosition& pos,
-                         UErrorCode& status) const override;
+                                     UErrorCode& status) const override;
 
     /**
      * Returns the pattern from applyPattern() or constructor().
@@ -497,7 +497,7 @@ public:
      */
     U_I18N_API virtual void parseObject(const UnicodeString& source,
                                         Formattable& result,
-                            ParsePosition& parse_pos) const override;
+                                        ParsePosition& parse_pos) const override;
 
     /**
      * ICU "poor man's RTTI", returns a UClassID for this class.
@@ -531,7 +531,7 @@ private:
 
     class PluralSelectorAdapter : public PluralSelector {
       public:
-        PluralSelectorAdapter() : pluralRules(NULL) {
+        PluralSelectorAdapter() : pluralRules(nullptr) {
         }
 
         virtual ~PluralSelectorAdapter();

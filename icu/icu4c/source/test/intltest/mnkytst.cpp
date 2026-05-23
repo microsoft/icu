@@ -114,7 +114,7 @@ void CollationMonkeyTest::TestCollationKey(/* char* par */)
 
     UnicodeString msg;
     UnicodeString addOne(subs);
-    addOne += (UChar32)0xE000;
+    addOne += static_cast<UChar32>(0xE000);
 
     myCollator->getCollationKey(subs, collationKey1, status1);
     myCollator->getCollationKey(addOne, collationKey2, status2);
@@ -180,7 +180,7 @@ CollationMonkeyTest::TestCompare(/* char* par */)
 
     UnicodeString msg;
     UnicodeString addOne(subs);
-    addOne += (UChar32)0xE000;
+    addOne += static_cast<UChar32>(0xE000);
 
     result = myCollator->compare(subs, addOne);
     if (result != -1)
@@ -206,12 +206,12 @@ CollationMonkeyTest::TestCompare(/* char* par */)
     }
 }
 void CollationMonkeyTest::TestRules(/* char* par */){
-    UChar testSourceCases[][10] = {
+    char16_t testSourceCases[][10] = {
     {0x0061, 0x0062, 0x007a, 0},
     {0x0061, 0x0062, 0x007a, 0},
     };
 
-    UChar testTargetCases[][10] = {
+    char16_t testTargetCases[][10] = {
         {0x0061, 0x0062, 0x00e4, 0},
         {0x0061, 0x0062, 0x0061, 0x0308, 0},
     };
@@ -222,7 +222,7 @@ void CollationMonkeyTest::TestRules(/* char* par */){
     Collator *col = Collator::createInstance("en_US", status);
     const UnicodeString baseRules = (dynamic_cast<RuleBasedCollator*>(col))->getRules();
     UnicodeString newRules(" & z < ");
-    newRules.append((UChar)0x00e4);
+    newRules.append(static_cast<char16_t>(0x00e4));
     newRules.insert(0, baseRules);
     RuleBasedCollator *myCollation = new RuleBasedCollator(newRules, status);
     if (U_FAILURE(status)) {
@@ -237,7 +237,7 @@ void CollationMonkeyTest::TestRules(/* char* par */){
     logln("Demo Test 2 : Create a new table collation with rules \"& z < a 0x0308\"");
     newRules.remove();
     newRules.append(" & z < a");
-    newRules.append((UChar)0x0308);
+    newRules.append(static_cast<char16_t>(0x0308));
     newRules.insert(0, baseRules);
     myCollation = new RuleBasedCollator(newRules, status);
     if (U_FAILURE(status)) {

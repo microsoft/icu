@@ -143,9 +143,9 @@ static const int32_t YEARS_IN_CYCLE = 19;
 static icu::CalendarCache *gCache =  nullptr;
 
 U_CDECL_BEGIN
-static UBool calendar_hebrew_cleanup(void) {
+static UBool calendar_hebrew_cleanup() {
     delete gCache;
-    gCache = NULL;
+    gCache = nullptr;
     return true;
 }
 U_CDECL_END
@@ -300,7 +300,7 @@ void HebrewCalendar::add(UCalendarDateFields field, int32_t amount, UErrorCode& 
 */
 void HebrewCalendar::add(EDateFields field, int32_t amount, UErrorCode& status)
 {
-    add((UCalendarDateFields)field, amount, status);
+    add(static_cast<UCalendarDateFields>(field), amount, status);
 }
 
 namespace {
@@ -377,7 +377,7 @@ void HebrewCalendar::roll(UCalendarDateFields field, int32_t amount, UErrorCode&
 }
 
 void HebrewCalendar::roll(EDateFields field, int32_t amount, UErrorCode& status) {
-    roll((UCalendarDateFields)field, amount, status);
+    roll(static_cast<UCalendarDateFields>(field), amount, status);
 }
 
 //-------------------------------------------------------------------------

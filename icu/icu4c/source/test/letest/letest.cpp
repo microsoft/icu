@@ -45,9 +45,9 @@ static void U_CALLCONV ParamTest()
     LEErrorCode status = LE_NO_ERROR;
     SimpleFontInstance *font = new SimpleFontInstance(12, status);
     LayoutEngine *engine = LayoutEngine::layoutEngineFactory(font, arabScriptCode, -1, status);
-    LEGlyphID *glyphs    = NULL;
-    le_int32  *indices   = NULL;
-    float     *positions = NULL;
+    LEGlyphID *glyphs    = nullptr;
+    le_int32  *indices   = nullptr;
+    float     *positions = nullptr;
     le_int32   glyphCount = 0;
 
     glyphCount = engine->getGlyphCount();
@@ -59,10 +59,10 @@ static void U_CALLCONV ParamTest()
     indices   = NEW_ARRAY(le_int32, glyphCount + 10);
     positions = NEW_ARRAY(float, glyphCount + 10);
 
-    engine->getGlyphs(NULL, status);
+    engine->getGlyphs(nullptr, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling getGlyphs(NULL, status) did not return LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling getGlyphs(nullptr, status) did not return LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     status = LE_NO_ERROR;
@@ -73,10 +73,10 @@ static void U_CALLCONV ParamTest()
     }
 
     status = LE_NO_ERROR;
-    engine->getGlyphs(NULL, 0xFF000000L, status);
+    engine->getGlyphs(nullptr, 0xFF000000L, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling getGlyphs(NULL, 0xFF000000L, status) did not return LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling getGlyphs(nullptr, 0xFF000000L, status) did not return LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     status = LE_NO_ERROR;
@@ -87,10 +87,10 @@ static void U_CALLCONV ParamTest()
     }
 
     status = LE_NO_ERROR;
-    engine->getCharIndices(NULL, status);
+    engine->getCharIndices(nullptr, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling getCharIndices(NULL, status) did not return LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling getCharIndices(nullptr, status) did not return LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     status = LE_NO_ERROR;
@@ -101,10 +101,10 @@ static void U_CALLCONV ParamTest()
     }
 
     status = LE_NO_ERROR;
-    engine->getCharIndices(NULL, 1024, status);
+    engine->getCharIndices(nullptr, 1024, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling getCharIndices(NULL, 1024, status) did not return LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling getCharIndices(nullptr, 1024, status) did not return LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     status = LE_NO_ERROR;
@@ -115,10 +115,10 @@ static void U_CALLCONV ParamTest()
     }
 
     status = LE_NO_ERROR;
-    engine->getGlyphPositions(NULL, status);
+    engine->getGlyphPositions(nullptr, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling getGlyphPositions(NULL, status) did not return LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling getGlyphPositions(nullptr, status) did not return LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     status = LE_NO_ERROR;
@@ -133,10 +133,10 @@ static void U_CALLCONV ParamTest()
     DELETE_ARRAY(glyphs);
 
     status = LE_NO_ERROR;
-    glyphCount = engine->layoutChars(NULL, 0, 0, 0, false, 0.0, 0.0, status);
+    glyphCount = engine->layoutChars(nullptr, 0, 0, 0, false, 0.0, 0.0, status);
 
     if (status != LE_ILLEGAL_ARGUMENT_ERROR) {
-        log_err("Calling layoutChars(NULL, 0, 0, 0, false, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
+        log_err("Calling layoutChars(nullptr, 0, 0, 0, false, 0.0, 0.0, status) did not fail w/ LE_ILLEGAL_ARGUMENT_ERROR.\n");
     }
 
     LEUnicode chars[] = {
@@ -203,11 +203,11 @@ bail:
 U_CDECL_END
 
 U_CDECL_BEGIN
-static void U_CALLCONV FactoryTest(void)
+static void U_CALLCONV FactoryTest()
 {
     LEErrorCode status = LE_NO_ERROR;
     SimpleFontInstance *font = new SimpleFontInstance(12, status);
-    LayoutEngine *engine = NULL;
+    LayoutEngine *engine = nullptr;
 
     for(le_int32 scriptCode = 0; scriptCode < scriptCodeCount; scriptCode += 1) {
         status = LE_NO_ERROR;
@@ -225,7 +225,7 @@ static void U_CALLCONV FactoryTest(void)
 U_CDECL_END
 
 U_CDECL_BEGIN
-static void U_CALLCONV AccessTest(void)
+static void U_CALLCONV AccessTest()
 {
     LEErrorCode status = LE_NO_ERROR;
     SimpleFontInstance *font = new SimpleFontInstance(12, status);
@@ -327,7 +327,7 @@ U_CDECL_BEGIN
  * we expect them to be. Really, it would be a good idea to make a whole test suite
  * for ParagraphLayout.
  */
-static void U_CALLCONV GlyphToCharTest(void)
+static void U_CALLCONV GlyphToCharTest()
 {
 #if !UCONFIG_NO_BREAK_ITERATION
     LEErrorCode status = LE_NO_ERROR;
@@ -463,14 +463,14 @@ static void U_CALLCONV GlyphToCharTest(void)
 
     fontRuns.add(font, charCount);
 
-    paragraphLayout = new ParagraphLayout(chars, charCount, &fontRuns, NULL, NULL, NULL, 0, false, status);
+    paragraphLayout = new ParagraphLayout(chars, charCount, &fontRuns, nullptr, nullptr, nullptr, 0, false, status);
 
     if (LE_FAILURE(status)) {
         goto close_font;
     }
 
     paragraphLayout->reflow();
-    while ((line = paragraphLayout->nextLine(lineWidth)) != NULL) {
+    while ((line = paragraphLayout->nextLine(lineWidth)) != nullptr) {
         le_int32 runCount = line->countRuns();
 
         for(le_int32 run = 0; run < runCount; run += 1) {
@@ -555,7 +555,7 @@ static void addAllTests(TestNode **root)
 /* returns the path to icu/source/data/out */
 static const char *ctest_dataOutDir()
 {
-    static const char *dataOutDir = NULL;
+    static const char *dataOutDir = nullptr;
 
     if(dataOutDir) {
         return dataOutDir;
@@ -589,12 +589,12 @@ static const char *ctest_dataOutDir()
         /*   Only Windows should end up here, so looking for '\' is safe.   */
         for (i=1; i<=3; i++) {
             pBackSlash = strrchr(p, U_FILE_SEP_CHAR);
-            if (pBackSlash != NULL) {
+            if (pBackSlash != nullptr) {
                 *pBackSlash = 0;        /* Truncate the string at the '\'   */
             }
         }
 
-        if (pBackSlash != NULL) {
+        if (pBackSlash != nullptr) {
             /* We found and truncated three names from the path.
              *  Now append "source\data" and set the environment
              */
@@ -632,7 +632,7 @@ static void ctest_setICU_DATA() {
     /* No location for the data dir was identifiable.
      *   Add other fallbacks for the test data location here if the need arises
      */
-    if (getenv("ICU_DATA") == NULL) {
+    if (getenv("ICU_DATA") == nullptr) {
         /* If ICU_DATA isn't set, set it to the usual location */
         u_setDataDirectory(ctest_dataOutDir());
     }
@@ -641,14 +641,14 @@ static void ctest_setICU_DATA() {
 int main(int argc, char* argv[])
 {
     int32_t nerrors = 0;
-    TestNode *root = NULL;
+    TestNode *root = nullptr;
     UErrorCode errorCode = U_ZERO_ERROR;
     UDate startTime, endTime;
     int32_t diffTime;
 
     startTime = uprv_getUTCtime();
 
-    if (!initArgs(argc, argv, NULL, NULL)) {
+    if (!initArgs(argc, argv, nullptr, nullptr)) {
         /* Error already displayed. */
         return -1;
     }
@@ -671,7 +671,7 @@ int main(int argc, char* argv[])
     u_cleanup();
     errorCode = U_ZERO_ERROR;
 
-    if (!initArgs(argc, argv, NULL, NULL)) {
+    if (!initArgs(argc, argv, nullptr, nullptr)) {
         /* Error already displayed. */
         return -1;
     }

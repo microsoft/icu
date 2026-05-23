@@ -282,7 +282,7 @@ class RuleCharacterIterator;
  * @author Alan Liu
  * @stable ICU 2.0
  */
-class U_COMMON_API UnicodeSet U_FINAL : public UnicodeFilter {
+class U_COMMON_API UnicodeSet final : public UnicodeFilter {
 private:
     /**
      * Enough for sets with few ranges.
@@ -297,8 +297,8 @@ private:
     int32_t len = 1; // length of list used; 1 <= len <= capacity
     uint8_t fFlags = 0;         // Bit flag (see constants above)
 
-    BMPSet *bmpSet = nullptr; // The set is frozen iff either bmpSet or stringSpan is not NULL.
-    UChar32* buffer = nullptr; // internal buffer, may be NULL
+    BMPSet *bmpSet = nullptr; // The set is frozen iff either bmpSet or stringSpan is not nullptr.
+    UChar32* buffer = nullptr; // internal buffer, may be nullptr
     int32_t bufferCapacity = 0; // capacity of buffer
 
     /**
@@ -333,7 +333,7 @@ public:
      * @see setToBogus()
      * @stable ICU 4.0
      */
-    inline UBool isBogus(void) const;
+    inline UBool isBogus() const;
 
     /**
      * Make this UnicodeSet object invalid.
@@ -434,7 +434,7 @@ public:
      * at most one of USET_CASE_INSENSITIVE, USET_ADD_CASE_MAPPINGS, USET_SIMPLE_CASE_INSENSITIVE.
      * These case options are mutually exclusive.
      * @param symbols a symbol table mapping variable names to values
-     * and stand-in characters to UnicodeSets; may be NULL
+     * and stand-in characters to UnicodeSets; may be nullptr
      * @param status returns <code>U_ILLEGAL_ARGUMENT_ERROR</code> if the pattern
      * contains a syntax error.
      * @internal
@@ -456,7 +456,7 @@ public:
      * at most one of USET_CASE_INSENSITIVE, USET_ADD_CASE_MAPPINGS, USET_SIMPLE_CASE_INSENSITIVE.
      * These case options are mutually exclusive.
      * @param symbols a symbol table mapping variable names to values
-     * and stand-in characters to UnicodeSets; may be NULL
+     * and stand-in characters to UnicodeSets; may be nullptr
      * @param status input-output error code
      * @stable ICU 2.8
      */
@@ -653,7 +653,7 @@ public:
      * at most one of USET_CASE_INSENSITIVE, USET_ADD_CASE_MAPPINGS, USET_SIMPLE_CASE_INSENSITIVE.
      * These case options are mutually exclusive.
      * @param symbols a symbol table mapping variable names to
-     * values and stand-ins to UnicodeSets; may be NULL
+     * values and stand-ins to UnicodeSets; may be nullptr
      * @param status returns <code>U_ILLEGAL_ARGUMENT_ERROR</code> if the pattern
      * contains a syntax error.
      *<em> Empties the set passed before applying the pattern.</em>
@@ -693,7 +693,7 @@ public:
      * at most one of USET_CASE_INSENSITIVE, USET_ADD_CASE_MAPPINGS, USET_SIMPLE_CASE_INSENSITIVE.
      * These case options are mutually exclusive.
      * @param symbols a symbol table mapping variable names to
-     * values and stand-ins to UnicodeSets; may be NULL
+     * values and stand-ins to UnicodeSets; may be nullptr
      * @param status returns <code>U_ILLEGAL_ARGUMENT_ERROR</code> if the pattern
      * contains a syntax error.
      * @return a reference to this
@@ -1611,7 +1611,7 @@ public:
      * bits followed by least significant 16 bits.
      *
      * @param dest pointer to buffer of destCapacity 16-bit integers.
-     * May be NULL only if destCapacity is zero.
+     * May be nullptr only if destCapacity is zero.
      * @param destCapacity size of dest, or zero.  Must not be negative.
      * @param ec error code.  Will be set to U_INDEX_OUTOFBOUNDS_ERROR
      * if n+2*m > 0x7FFF.  Will be set to U_BUFFER_OVERFLOW_ERROR if
@@ -1642,7 +1642,7 @@ public:
      * @return          The class ID for all objects of this class.
      * @stable ICU 2.0
      */
-    static UClassID U_EXPORT2 getStaticClassID(void);
+    static UClassID U_EXPORT2 getStaticClassID();
 
     /**
      * Implement UnicodeFunctor API.
@@ -1652,7 +1652,7 @@ public:
      * different class IDs.
      * @stable ICU 2.4
      */
-    virtual UClassID getDynamicClassID(void) const override;
+    virtual UClassID getDynamicClassID() const override;
 
   private:
 
@@ -1715,7 +1715,7 @@ private:
 
     bool ensureBufferCapacity(int32_t newLen);
 
-    void swapBuffers(void);
+    void swapBuffers();
 
     UBool allocateStrings(UErrorCode &status);
     int32_t stringsSize() const;

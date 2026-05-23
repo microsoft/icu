@@ -1007,8 +1007,8 @@ void CalendarRegressionTest::test4103271()
     UBool fail = false;
     for (int32_t firstDay=1; firstDay<=2; firstDay++) {
         for (int32_t minDays=1; minDays<=7; minDays++) {
-            testCal->setMinimalDaysInFirstWeek((uint8_t)minDays);
-            testCal->setFirstDayOfWeek((UCalendarDaysOfWeek)firstDay);
+            testCal->setMinimalDaysInFirstWeek(static_cast<uint8_t>(minDays));
+            testCal->setFirstDayOfWeek(static_cast<UCalendarDaysOfWeek>(firstDay));
             testDesc = (UnicodeString("Test") + firstDay + minDays);
             logln(testDesc + " => 1st day of week=" +
                                firstDay +
@@ -1047,7 +1047,7 @@ void CalendarRegressionTest::test4103271()
     for (int32_t j=0; j<44; j+=22) {
         logln(UnicodeString("Minimal days in first week = ") + DATA[j] +
                            "  Week starts on Sunday");
-        testCal->setMinimalDaysInFirstWeek((uint8_t)DATA[j]);
+        testCal->setMinimalDaysInFirstWeek(static_cast<uint8_t>(DATA[j]));
         testCal->set(1997, UCAL_DECEMBER, 21);
         for (int32_t i=0; i<21; ++i) {
             int32_t woy = testCal->get(UCAL_WEEK_OF_YEAR,status);
@@ -1569,7 +1569,7 @@ void CalendarRegressionTest::Test13745()
         errln("%s:%d Failure setting INT32_MAX-1 change on calendar: %s\n", __FILE__, __LINE__, u_errorName(status));
         return;
     }
-    assertEquals("getGregorianChange()", (double)INT32_MIN * MILLIS_IN_DAY, cal->getGregorianChange());
+    assertEquals("getGregorianChange()", static_cast<double>(INT32_MIN) * MILLIS_IN_DAY, cal->getGregorianChange());
 
     delete cal;
 }
@@ -1590,7 +1590,7 @@ void CalendarRegressionTest::test4142933()
       return;
     }
     //try {
-    calendar->roll((UCalendarDateFields)-1, true, status);
+    calendar->roll(static_cast<UCalendarDateFields>(-1), true, status);
         if(U_SUCCESS(status))
             errln("Test failed, no exception thrown");
     //}
@@ -1700,9 +1700,9 @@ void CalendarRegressionTest::test4147269()
         // Note: In the bug report, getActualMaximum() was called instead
         // of getMaximum() -- this was an error.  The validation code doesn't
         // use getActualMaximum(), since that's too costly.
-        int32_t max = calendar->getMaximum((UCalendarDateFields)field);
+        int32_t max = calendar->getMaximum(static_cast<UCalendarDateFields>(field));
         int32_t value = max+1;
-        calendar->set((UCalendarDateFields)field, value);
+        calendar->set(static_cast<UCalendarDateFields>(field), value);
         //try {
             calendar->getTime(status); // Force time computation
             // We expect an exception to be thrown. If we fall through
@@ -1914,7 +1914,7 @@ CalendarRegressionTest::Test4166109()
         errln("get(D_O_M) failed");
 
     for(int32_t firstInWeek = UCAL_SUNDAY; firstInWeek <= UCAL_SATURDAY; firstInWeek++) {
-        calendar->setFirstDayOfWeek((UCalendarDaysOfWeek)firstInWeek);
+        calendar->setFirstDayOfWeek(static_cast<UCalendarDaysOfWeek>(firstInWeek));
         int32_t returned = calendar->getActualMaximum(field, status);
         int32_t expected = (31 + ((firstInMonth - firstInWeek + 7)% 7) + 6) / 7;
 
@@ -1998,7 +1998,7 @@ CalendarRegressionTest::Test4167060()
                     errln("getTime() failed");
                 int32_t newYear = calendar->get(field, status);
                 if(U_FAILURE(status))
-                    errln(UnicodeString("get(") + (int32_t)field + ") failed");
+                    errln(UnicodeString("get(") + static_cast<int32_t>(field) + ") failed");
                 calendar->setTime(dateBefore, status); // restore calendar for next use
                 if(U_FAILURE(status))
                     errln("setTime() failed");
@@ -2298,7 +2298,7 @@ void CalendarRegressionTest::TestJ81() {
 /**
  * Test fieldDifference().
  */
-void CalendarRegressionTest::TestJ438(void) {
+void CalendarRegressionTest::TestJ438() {
     UErrorCode ec = U_ZERO_ERROR;
     int32_t DATA[] = {
         2000, UCAL_JANUARY, 20,   2010, UCAL_JUNE, 15,
@@ -2407,7 +2407,7 @@ void CalendarRegressionTest::TestT5555()
     UErrorCode ec = U_ZERO_ERROR;
     Calendar *cal = Calendar::createInstance(ec);
 
-    if (cal == NULL || U_FAILURE(ec)) {
+    if (cal == nullptr || U_FAILURE(ec)) {
         dataerrln("FAIL: Calendar::createInstance(): %s", u_errorName(ec));
         delete cal;
         return;
@@ -2463,7 +2463,7 @@ static const CoptEthCalTestItem coptEthCalTestItems[] = {
     { 1724, 12, 1, UCAL_DATE,  +8, 1725,  0, 4 },
     { 1723, 12, 1, UCAL_DATE,  +8, 1724,  0, 3 }, // 1723 is a leap year
     { 1724,  0, 1, UCAL_DATE,  -1, 1723, 12, 6 }, // 1723 is a leap year
-    { 0, 0, 0, (UCalendarDateFields)0, 0, 0, 0, 0 } // terminator
+    { 0, 0, 0, static_cast<UCalendarDateFields>(0), 0, 0, 0, 0 } // terminator
 };
 
 typedef struct {
@@ -2474,13 +2474,13 @@ typedef struct {
 static const CoptEthCalLocale copEthCalLocales[] = {
     { "en@calendar=coptic",   0    },
     { "en@calendar=ethiopic", 276  },
-    { NULL,                   0    } // terminator
+    { nullptr,                0    } // terminator
 };
 
 void CalendarRegressionTest::TestT6745()
 {
     const CoptEthCalLocale * testLocalePtr;
-    for ( testLocalePtr = copEthCalLocales; testLocalePtr->locale != NULL; ++testLocalePtr) {
+    for ( testLocalePtr = copEthCalLocales; testLocalePtr->locale != nullptr; ++testLocalePtr) {
         UErrorCode status = U_ZERO_ERROR;
         Calendar *cal = Calendar::createInstance(Locale(testLocalePtr->locale), status);
         if ( U_FAILURE(status) ) {
@@ -2519,7 +2519,7 @@ void CalendarRegressionTest::TestT6745()
 void CalendarRegressionTest::TestLeapFieldDifference() {
     UErrorCode ec = U_ZERO_ERROR;
     Calendar* cal = Calendar::createInstance(ec);
-    if (cal == NULL || U_FAILURE(ec)) {
+    if (cal == nullptr || U_FAILURE(ec)) {
         dataerrln("FAIL: Calendar::createInstance(): %s", u_errorName(ec));
         delete cal;
         return;
@@ -2698,22 +2698,22 @@ void CalendarRegressionTest::TestTimeZoneTransitionAdd() {
 
     UnicodeString buf1, buf2;
 
-    const UChar* id;
-    while ((id = tz->unext(NULL, ec)) != NULL && U_SUCCESS(ec)) {
+    const char16_t* id;
+    while ((id = tz->unext(nullptr, ec)) != nullptr && U_SUCCESS(ec)) {
         if (U_FAILURE(ec)) {
             errln("FAIL: StringEnumeration::unext");
             break;
         }
 
         TimeZone *t = TimeZone::createTimeZone(id);
-        if (t == NULL) {
+        if (t == nullptr) {
             errln("FAIL: TimeZone::createTimeZone");
             break;
         }
         dateFormat.setTimeZone(*t);
 
         Calendar *cal = Calendar::createInstance(t, locale, ec);
-        if (cal == NULL || U_FAILURE(ec)) {
+        if (cal == nullptr || U_FAILURE(ec)) {
             errln("FAIL: Calendar::createTimeZone");
             delete cal;
             break;
@@ -2772,7 +2772,7 @@ CalendarRegressionTest::makeDate(int32_t y, int32_t m, int32_t d,
     return result;
 }
 
-void CalendarRegressionTest::TestDeprecates(void)
+void CalendarRegressionTest::TestDeprecates()
 {
     UErrorCode status = U_ZERO_ERROR;
     Calendar *c1 = Calendar::createInstance("ja_JP@calendar=japanese",status);
@@ -2868,7 +2868,7 @@ void CalendarRegressionTest::TestDeprecates(void)
 
 }
 
-void CalendarRegressionTest::TestT8057(void) {
+void CalendarRegressionTest::TestT8057() {
     // Set the calendar to the last day in a leap year
     UErrorCode status = U_ZERO_ERROR;
     GregorianCalendar *cal = dynamic_cast<GregorianCalendar*>(Calendar::createInstance(status));
@@ -2907,7 +2907,7 @@ void CalendarRegressionTest::TestT8057(void) {
 // Test case for ticket#8596.
 // Setting an year followed by getActualMaximum(Calendar.WEEK_OF_YEAR)
 // may result wrong maximum week.
-void CalendarRegressionTest::TestT8596(void) {
+void CalendarRegressionTest::TestT8596() {
     UErrorCode status = U_ZERO_ERROR;
     GregorianCalendar *gc = new GregorianCalendar(*TimeZone::getGMT(), status);
 
@@ -2949,7 +2949,7 @@ void CalendarRegressionTest::TestT8596(void) {
 
 // Test case for ticket 9452
 // Calendar addition fall onto the missing date - 2011-12-30 in Samoa
-void CalendarRegressionTest::TestT9452(void) {
+void CalendarRegressionTest::TestT9452() {
     UErrorCode status = U_ZERO_ERROR;
     GregorianCalendar cal(TimeZone::createTimeZone("Pacific/Apia"), status);
     failure(status, "initializing GregorianCalendar");
@@ -2994,7 +2994,7 @@ void CalendarRegressionTest::TestT9452(void) {
 /**
  * @bug ticket 11632
  */
-void CalendarRegressionTest::TestT11632(void) {
+void CalendarRegressionTest::TestT11632() {
     UErrorCode status = U_ZERO_ERROR;
     GregorianCalendar cal(TimeZone::createTimeZone("Pacific/Apia"), status);
     if(U_FAILURE(status)) {
@@ -3034,7 +3034,7 @@ void CalendarRegressionTest::TestT11632(void) {
 /**
  * @bug ticket 13454
  */
-void CalendarRegressionTest::TestPersianCalOverflow(void) {
+void CalendarRegressionTest::TestPersianCalOverflow() {
     const char* localeID = "bs_Cyrl@calendar=persian";
     UErrorCode status = U_ZERO_ERROR;
     Calendar* cal = Calendar::createInstance(Locale(localeID), status);
@@ -3064,7 +3064,7 @@ void CalendarRegressionTest::TestPersianCalOverflow(void) {
 /**
  * @bug tickets 12661, 13538
  */
-void CalendarRegressionTest::TestIslamicCalOverflow(void) {
+void CalendarRegressionTest::TestIslamicCalOverflow() {
     const char* localeID = "ar@calendar=islamic-civil";
     UErrorCode status = U_ZERO_ERROR;
     Calendar* cal = Calendar::createInstance(Locale(localeID), status);
@@ -3183,7 +3183,7 @@ void CalendarRegressionTest::VerifyGetStayInBound(double time) {
     }
 }
 
-void CalendarRegressionTest::TestUTCWrongAMPM22023(void) {
+void CalendarRegressionTest::TestUTCWrongAMPM22023() {
     VerifyGetStayInBound(-1);
     VerifyGetStayInBound(0);
     VerifyGetStayInBound(-1e-8);
@@ -3211,7 +3211,7 @@ void CalendarRegressionTest::VerifyNoAssertWithSetGregorianChange(const char* ti
     cal->get(UCAL_YEAR, status);
 }
 
-void CalendarRegressionTest::TestAsiaManilaAfterSetGregorianChange22043(void) {
+void CalendarRegressionTest::TestAsiaManilaAfterSetGregorianChange22043() {
     VerifyNoAssertWithSetGregorianChange("Asia/Malina");
     UErrorCode status = U_ZERO_ERROR;
     std::unique_ptr<StringEnumeration> ids(TimeZone::createEnumeration(status));
@@ -3225,7 +3225,7 @@ void CalendarRegressionTest::TestAsiaManilaAfterSetGregorianChange22043(void) {
     }
 }
 
-void CalendarRegressionTest::TestWeekOfYear13548(void) {
+void CalendarRegressionTest::TestWeekOfYear13548() {
     int32_t year = 2000;
     UErrorCode status = U_ZERO_ERROR;
     LocalPointer<Calendar> cal(Calendar::createInstance(status));

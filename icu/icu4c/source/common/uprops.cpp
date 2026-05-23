@@ -100,8 +100,8 @@ void U_CALLCONV ulayout_load(UErrorCode &errorCode) {
         ulayout_isAcceptable, nullptr, &errorCode);
     if (U_FAILURE(errorCode)) { return; }
 
-    const uint8_t *inBytes = (const uint8_t *)udata_getMemory(gLayoutMemory);
-    const int32_t *inIndexes = (const int32_t *)inBytes;
+    const uint8_t* inBytes = static_cast<const uint8_t*>(udata_getMemory(gLayoutMemory));
+    const int32_t* inIndexes = reinterpret_cast<const int32_t*>(inBytes);
     int32_t indexesLength = inIndexes[ULAYOUT_IX_INDEXES_LENGTH];
     if (indexesLength < 12) {
         errorCode = U_INVALID_FORMAT_ERROR;  // Not enough indexes.
@@ -241,11 +241,11 @@ static UBool changesWhenCasefolded(const BinaryProperty &/*prop*/, UChar32 c, UP
     }
     if(c>=0) {
         /* single code point */
-        const UChar *resultString;
+        const char16_t *resultString;
         return ucase_toFullFolding(c, &resultString, U_FOLD_CASE_DEFAULT) >= 0;
     } else {
         /* guess some large but stack-friendly capacity */
-        UChar dest[2*UCASE_MAX_STRING_LENGTH];
+        char16_t dest[2*UCASE_MAX_STRING_LENGTH];
         int32_t destLength;
         destLength=u_strFoldCase(dest, UPRV_LENGTHOF(dest),
                                   nfd.getBuffer(), nfd.length(),
@@ -276,7 +276,7 @@ static UBool changesWhenNFKC_Casefolded(const BinaryProperty &/*prop*/, UChar32 
         ReorderingBuffer buffer(*kcf, dest);
         // Small destCapacity for NFKC_CF(c).
         if(buffer.init(5, errorCode)) {
-            const UChar *srcArray=src.getBuffer();
+            const char16_t *srcArray=src.getBuffer();
             kcf->compose(srcArray, srcArray+src.length(), false,
                           true, buffer, errorCode);
         }
@@ -555,11 +555,11 @@ static int32_t getMaxValueFromShift(const IntProperty &prop, UProperty /*which*/
 }
 
 static int32_t getBiDiClass(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
-    return (int32_t)u_charDirection(c);
+    return static_cast<int32_t>(u_charDirection(c));
 }
 
 static int32_t getBiDiPairedBracketType(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
-    return (int32_t)ubidi_getPairedBracketType(c);
+    return static_cast<int32_t>(ubidi_getPairedBracketType(c));
 }
 
 static int32_t biDiGetMaxValue(const IntProperty &/*prop*/, UProperty which) {
@@ -585,7 +585,7 @@ static int32_t getCombiningClass(const IntProperty &/*prop*/, UChar32 c, UProper
 #endif
 
 static int32_t getGeneralCategory(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
-    return (int32_t)u_charType(c);
+    return static_cast<int32_t>(u_charType(c));
 }
 
 static int32_t getJoiningGroup(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
@@ -603,7 +603,7 @@ static int32_t getNumericType(const IntProperty &/*prop*/, UChar32 c, UProperty 
 
 static int32_t getScript(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
     UErrorCode errorCode=U_ZERO_ERROR;
-    return (int32_t)uscript_getScript(c, &errorCode);
+    return static_cast<int32_t>(uscript_getScript(c, &errorCode));
 }
 
 static int32_t scriptGetMaxValue(const IntProperty &/*prop*/, UProperty /*which*/) {
@@ -733,13 +733,13 @@ static const IntProperty intProps[UCHAR_INT_LIMIT-UCHAR_INT_START]={
     { UPROPS_SRC_PROPSVEC, 0, 0,                            getScript, scriptGetMaxValue },
     { UPROPS_SRC_PROPSVEC, 0, static_cast<int32_t>(U_HST_COUNT) - 1, getHangulSyllableType, getMaxValueFromShift },
     // UCHAR_NFD_QUICK_CHECK: max=1=YES -- never "maybe", only "no" or "yes"
-    { UPROPS_SRC_NFC,   0, (int32_t)UNORM_YES,              getNormQuickCheck, getMaxValueFromShift },
+    { UPROPS_SRC_NFC, 0, static_cast<int32_t>(UNORM_YES), getNormQuickCheck, getMaxValueFromShift },
     // UCHAR_NFKD_QUICK_CHECK: max=1=YES -- never "maybe", only "no" or "yes"
-    { UPROPS_SRC_NFKC,  0, (int32_t)UNORM_YES,              getNormQuickCheck, getMaxValueFromShift },
+    { UPROPS_SRC_NFKC, 0, static_cast<int32_t>(UNORM_YES), getNormQuickCheck, getMaxValueFromShift },
     // UCHAR_NFC_QUICK_CHECK: max=2=MAYBE
-    { UPROPS_SRC_NFC,   0, (int32_t)UNORM_MAYBE,            getNormQuickCheck, getMaxValueFromShift },
+    { UPROPS_SRC_NFC, 0, static_cast<int32_t>(UNORM_MAYBE), getNormQuickCheck, getMaxValueFromShift },
     // UCHAR_NFKC_QUICK_CHECK: max=2=MAYBE
-    { UPROPS_SRC_NFKC,  0, (int32_t)UNORM_MAYBE,            getNormQuickCheck, getMaxValueFromShift },
+    { UPROPS_SRC_NFKC, 0, static_cast<int32_t>(UNORM_MAYBE), getNormQuickCheck, getMaxValueFromShift },
     { UPROPS_SRC_NFC,   0, 0xff,                            getLeadCombiningClass, getMaxValueFromShift },
     { UPROPS_SRC_NFC,   0, 0xff,                            getTrailCombiningClass, getMaxValueFromShift },
     { 2,                UPROPS_GCB_MASK, UPROPS_GCB_SHIFT,  defaultGetValue, defaultGetMaxValue },
@@ -989,11 +989,11 @@ u_getIDTypes(UChar32 c, UIdentifierType *types, int32_t capacity, UErrorCode *pE
 #if !UCONFIG_NO_NORMALIZATION
 
 U_CAPI int32_t U_EXPORT2
-u_getFC_NFKC_Closure(UChar32 c, UChar *dest, int32_t destCapacity, UErrorCode *pErrorCode) {
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+u_getFC_NFKC_Closure(UChar32 c, char16_t *dest, int32_t destCapacity, UErrorCode *pErrorCode) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
-    if(destCapacity<0 || (dest==NULL && destCapacity>0)) {
+    if(destCapacity<0 || (dest==nullptr && destCapacity>0)) {
         *pErrorCode=U_ILLEGAL_ARGUMENT_ERROR;
         return 0;
     }
@@ -1009,7 +1009,7 @@ u_getFC_NFKC_Closure(UChar32 c, UChar *dest, int32_t destCapacity, UErrorCode *p
     }
     // first: b = NFKC(Fold(a))
     UnicodeString folded1String;
-    const UChar *folded1;
+    const char16_t *folded1;
     int32_t folded1Length=ucase_toFullFolding(c, &folded1, U_FOLD_CASE_DEFAULT);
     if(folded1Length<0) {
         const Normalizer2Impl *nfkcImpl=Normalizer2Factory::getImpl(nfkc);

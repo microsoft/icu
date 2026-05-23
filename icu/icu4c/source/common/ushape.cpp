@@ -32,7 +32,7 @@
 /*
  * This implementation is designed for 16-bit Unicode strings.
  * The main assumption is that the Arabic characters and their
- * presentation forms each fit into a single UChar.
+ * presentation forms each fit into a single char16_t.
  * With UTF-8, they occupy 2 or 3 bytes, and more than the ASCII
  * characters.
  */
@@ -79,7 +79,7 @@
 #define DESHAPE_MODE 1
 
 struct uShapeVariables {
-     UChar tailChar;
+     char16_t tailChar;
      uint32_t uShapeLamalefBegin;
      uint32_t uShapeLamalefEnd;
      uint32_t uShapeTashkeelBegin;
@@ -123,7 +123,7 @@ static const uint8_t tashkeelMedial[] = {
     /* FE7F */ 1
 };
 
-static const UChar yehHamzaToYeh[] =
+static const char16_t yehHamzaToYeh[] =
 {
 /* isolated*/ 0xFEEF,
 /* final   */ 0xFEF0
@@ -135,7 +135,7 @@ static const uint8_t IrrelevantPos[] = {
 };
 
 
-static const UChar convertLamAlef[] =
+static const char16_t convertLamAlef[] =
 {
 /*FEF5*/    0x0622,
 /*FEF6*/    0x0622,
@@ -147,7 +147,7 @@ static const UChar convertLamAlef[] =
 /*FEFC*/    0x0627
 };
 
-static const UChar araLink[178]=
+static const char16_t araLink[178]=
 {
   1           + 32 + 256 * 0x11,/*0x0622*/
   1           + 32 + 256 * 0x13,/*0x0623*/
@@ -295,7 +295,7 @@ static const uint8_t presBLink[]=
 /*FEF*/    1,    0,    1,    2,1 + 2,    0,    1,    0,    1,    0,    1,    0,    1,    0,    0,    0
 };
 
-static const UChar convertFBto06[] =
+static const char16_t convertFBto06[] =
 {
 /***********0******1******2******3******4******5******6******7******8******9******A******B******C******D******E******F***/
 /*FB5*/   0x671, 0x671, 0x67B, 0x67B, 0x67B, 0x67B, 0x67E, 0x67E, 0x67E, 0x67E,     0,     0,     0,     0, 0x67A, 0x67A,
@@ -311,7 +311,7 @@ static const UChar convertFBto06[] =
 /*FBF*/       0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0,     0, 0x6CC, 0x6CC, 0x6CC, 0x6CC
 };
 
-static const UChar convertFEto06[] =
+static const char16_t convertFEto06[] =
 {
 /***********0******1******2******3******4******5******6******7******8******9******A******B******C******D******E******F***/
 /*FE7*/   0x64B, 0x64B, 0x64C, 0x64C, 0x64D, 0x64D, 0x64E, 0x64E, 0x64F, 0x64F, 0x650, 0x650, 0x651, 0x651, 0x652, 0x652,
@@ -340,11 +340,11 @@ static const uint8_t shapeTable[4][4][4]=
  * we can safely just work with code units (again, at least UTF-16).
  */
 static void
-_shapeToArabicDigitsWithContext(UChar *s, int32_t length,
-                                UChar digitBase,
+_shapeToArabicDigitsWithContext(char16_t *s, int32_t length,
+                                char16_t digitBase,
                                 UBool isLogical, UBool lastStrongWasAL) {
     int32_t i;
-    UChar c;
+    char16_t c;
 
     digitBase-=0x30;
 
@@ -399,8 +399,8 @@ _shapeToArabicDigitsWithContext(UChar *s, int32_t length,
  *           U_SHAPE_TEXT_DIRECTION_LOGICAL
  */
 static void
-invertBuffer(UChar *buffer, int32_t size, uint32_t /*options*/, int32_t lowlimit, int32_t highlimit) {
-    UChar temp;
+invertBuffer(char16_t *buffer, int32_t size, uint32_t /*options*/, int32_t lowlimit, int32_t highlimit) {
+    char16_t temp;
     int32_t i=0,j=0;
     for(i=lowlimit,j=size-highlimit-1;i<j;i++,j--) {
         temp = buffer[i];
@@ -417,8 +417,8 @@ invertBuffer(UChar *buffer, int32_t size, uint32_t /*options*/, int32_t lowlimit
  *           later it'll be converted into the 0xFExx LamAlefs
  *           in the shaping function.
  */
-static inline UChar
-changeLamAlef(UChar ch) {
+static inline char16_t
+changeLamAlef(char16_t ch) {
     switch(ch) {
     case 0x0622 :
         return 0x065C;
@@ -438,8 +438,8 @@ changeLamAlef(UChar ch) {
  *           Arabic characters have four forms :
  *           Isolated, Initial, Middle and Final Form
  */
-static UChar
-getLink(UChar ch) {
+static char16_t
+getLink(char16_t ch) {
     if(ch >= 0x0622 && ch <= 0x06D3) {
         return(araLink[ch-0x0622]);
     } else if(ch == 0x200D) {
@@ -461,7 +461,7 @@ getLink(UChar ch) {
  *           at each end of the logical buffer
  */
 static void
-countSpaces(UChar *dest, int32_t size, uint32_t /*options*/, int32_t *spacesCountl, int32_t *spacesCountr) {
+countSpaces(char16_t *dest, int32_t size, uint32_t /*options*/, int32_t *spacesCountl, int32_t *spacesCountr) {
     int32_t i = 0;
     int32_t countl = 0,countr = 0;
     while((dest[i] == SPACE_CHAR) && (countl < size)) {
@@ -483,7 +483,7 @@ countSpaces(UChar *dest, int32_t size, uint32_t /*options*/, int32_t *spacesCoun
  *Function : Returns 1 for Tashkeel characters in 06 range else return 0
  */
 static inline int32_t
-isTashkeelChar(UChar ch) {
+isTashkeelChar(char16_t ch) {
     return static_cast<int32_t>(ch >= 0x064B && ch <= 0x0652);
 }
 
@@ -492,7 +492,7 @@ isTashkeelChar(UChar ch) {
  *Function : Returns 1 for Tashkeel characters in FE range else return 0
  */
 static inline int32_t
-isTashkeelCharFE(UChar ch) {
+isTashkeelCharFE(char16_t ch) {
     return static_cast<int32_t>(ch >= 0xFE70 && ch <= 0xFE7F);
 }
 
@@ -501,7 +501,7 @@ isTashkeelCharFE(UChar ch) {
  *Function : Returns 1 for Alef characters else return 0
  */
 static inline int32_t
-isAlefChar(UChar ch) {
+isAlefChar(char16_t ch) {
     return static_cast<int32_t>(ch == 0x0622 || ch == 0x0623 || ch == 0x0625 || ch == 0x0627);
 }
 
@@ -510,7 +510,7 @@ isAlefChar(UChar ch) {
  *Function : Returns 1 for LamAlef characters else return 0
  */
 static inline int32_t
-isLamAlefChar(UChar ch) {
+isLamAlefChar(char16_t ch) {
     return static_cast<int32_t>(ch >= 0xFEF5 && ch <= 0xFEFC);
 }
 
@@ -520,7 +520,7 @@ isLamAlefChar(UChar ch) {
  */
 
 static inline int32_t
-isTailChar(UChar ch) {
+isTailChar(char16_t ch) {
     if(ch == OLD_TAIL_CHAR || ch == NEW_TAIL_CHAR){
             return 1;
     }else{
@@ -535,7 +535,7 @@ isTailChar(UChar ch) {
  */
 
 static inline int32_t
-isSeenTailFamilyChar(UChar ch) {
+isSeenTailFamilyChar(char16_t ch) {
     if(ch >= 0xfeb1 && ch < 0xfebf){
             return tailFamilyIsolatedFinal [ch - 0xFEB1];
     }else{
@@ -549,7 +549,7 @@ isSeenTailFamilyChar(UChar ch) {
  */
 
 static inline int32_t
-isSeenFamilyChar(UChar  ch){
+isSeenFamilyChar(char16_t  ch){
     if(ch >= 0x633 && ch <= 0x636){
         return 1;
     }else {
@@ -564,7 +564,7 @@ isSeenFamilyChar(UChar  ch){
  *           otherwise returns 0
  */
 static inline int32_t
-isAlefMaksouraChar(UChar ch) {
+isAlefMaksouraChar(char16_t ch) {
     return static_cast<int32_t>(ch == 0xFEEF || ch == 0xFEF0 || ch == 0x0649);
 }
 
@@ -574,7 +574,7 @@ isAlefMaksouraChar(UChar ch) {
  *            final is found otherwise returns 0
  */
 static inline int32_t
-isYehHamzaChar(UChar ch) {
+isYehHamzaChar(char16_t ch) {
     if((ch==0xFE89)||(ch==0xFE8A)){
         return 1;
     }else{
@@ -590,7 +590,7 @@ isYehHamzaChar(UChar ch) {
  *           returns 0
  */
 static inline int32_t
-isTashkeelOnTatweelChar(UChar ch){
+isTashkeelOnTatweelChar(char16_t ch){
     if(ch >= 0xfe70 && ch <= 0xfe7f && ch != NEW_TAIL_CHAR && ch != 0xFE75 && ch != SHADDA_TATWEEL_CHAR)
     {
         return tashkeelMedial [ch - 0xFE70];
@@ -609,7 +609,7 @@ isTashkeelOnTatweelChar(UChar ch){
  *           returns 2 otherwise returns 0
  */
 static inline int32_t
-isIsolatedTashkeelChar(UChar ch){
+isIsolatedTashkeelChar(char16_t ch){
     if(ch >= 0xfe70 && ch <= 0xfe7f && ch != NEW_TAIL_CHAR && ch != 0xFE75){
         return (1 - tashkeelMedial [ch - 0xFE70]);
     }else if(ch >= 0xfc5e && ch <= 0xfc63){
@@ -631,7 +631,7 @@ isIsolatedTashkeelChar(UChar ch){
  */
 
 static int32_t
-calculateSize(const UChar *source, int32_t sourceLength,
+calculateSize(const char16_t *source, int32_t sourceLength,
 int32_t destSize,uint32_t options) {
     int32_t i = 0;
 
@@ -688,7 +688,7 @@ int32_t destSize,uint32_t options) {
  *
  */
 static int32_t
-handleTashkeelWithTatweel(UChar *dest, int32_t sourceLength,
+handleTashkeelWithTatweel(char16_t *dest, int32_t sourceLength,
              int32_t /*destSize*/, uint32_t /*options*/,
              UErrorCode * /*pErrorCode*/) {
                  int i;
@@ -726,14 +726,14 @@ handleTashkeelWithTatweel(UChar *dest, int32_t sourceLength,
  */
 
 static int32_t
-handleGeneratedSpaces(UChar *dest, int32_t sourceLength,
+handleGeneratedSpaces(char16_t *dest, int32_t sourceLength,
                     int32_t destSize,
                     uint32_t options,
                     UErrorCode *pErrorCode,struct uShapeVariables shapeVars ) {
 
     int32_t i = 0, j = 0;
     int32_t count = 0;
-    UChar *tempbuffer=NULL;
+    char16_t *tempbuffer=nullptr;
 
     int lamAlefOption = 0;
     int tashkeelOption = 0;
@@ -905,15 +905,15 @@ handleGeneratedSpaces(UChar *dest, int32_t sourceLength,
  */
 
 static int32_t
-expandCompositCharAtBegin(UChar *dest, int32_t sourceLength, int32_t destSize,UErrorCode *pErrorCode) {
+expandCompositCharAtBegin(char16_t *dest, int32_t sourceLength, int32_t destSize,UErrorCode *pErrorCode) {
     int32_t      i = 0,j = 0;
     int32_t      countl = 0;
-    UChar    *tempbuffer=NULL;
+    char16_t *tempbuffer=nullptr;
 
     tempbuffer = static_cast<char16_t*>(uprv_malloc((sourceLength + 1) * U_SIZEOF_UCHAR));
 
-    /* Test for NULL */
-    if(tempbuffer == NULL) {
+    /* Test for nullptr */
+    if(tempbuffer == nullptr) {
         *pErrorCode = U_MEMORY_ALLOCATION_ERROR;
         return 0;
     }
@@ -965,17 +965,17 @@ expandCompositCharAtBegin(UChar *dest, int32_t sourceLength, int32_t destSize,UE
  */
 
 static int32_t
-expandCompositCharAtEnd(UChar *dest, int32_t sourceLength, int32_t destSize,UErrorCode *pErrorCode) {
+expandCompositCharAtEnd(char16_t *dest, int32_t sourceLength, int32_t destSize,UErrorCode *pErrorCode) {
     int32_t      i = 0,j = 0;
 
     int32_t      countr = 0;
     int32_t  inpsize = sourceLength;
 
-    UChar    *tempbuffer=NULL;
+    char16_t *tempbuffer=nullptr;
     tempbuffer = static_cast<char16_t*>(uprv_malloc((sourceLength + 1) * U_SIZEOF_UCHAR));
 
-    /* Test for NULL */
-    if(tempbuffer == NULL) {
+    /* Test for nullptr */
+    if(tempbuffer == nullptr) {
         *pErrorCode = U_MEMORY_ALLOCATION_ERROR;
          return 0;
     }
@@ -1032,12 +1032,12 @@ expandCompositCharAtEnd(UChar *dest, int32_t sourceLength, int32_t destSize,UErr
  */
 
 static int32_t
-expandCompositCharAtNear(UChar *dest, int32_t sourceLength, int32_t destSize,UErrorCode *pErrorCode,
+expandCompositCharAtNear(char16_t *dest, int32_t sourceLength, int32_t destSize,UErrorCode *pErrorCode,
                          int yehHamzaOption, int seenTailOption, int lamAlefOption, struct uShapeVariables shapeVars) {
     int32_t      i = 0;
 
 
-    UChar    lamalefChar, yehhamzaChar;
+    char16_t lamalefChar, yehhamzaChar;
 
     for(i = 0 ;i<=sourceLength-1;i++) {
             if (seenTailOption && isSeenTailFamilyChar(dest[i])) {
@@ -1085,13 +1085,13 @@ expandCompositCharAtNear(UChar *dest, int32_t sourceLength, int32_t destSize,UEr
  */
 
 static int32_t
-expandCompositChar(UChar *dest, int32_t sourceLength,
+expandCompositChar(char16_t *dest, int32_t sourceLength,
               int32_t destSize,uint32_t options,
               UErrorCode *pErrorCode, int shapingMode,struct uShapeVariables shapeVars) {
 
     int32_t      i = 0,j = 0;
 
-    UChar    *tempbuffer=NULL;
+    char16_t *tempbuffer=nullptr;
     int yehHamzaOption = 0;
     int seenTailOption = 0;
     int lamAlefOption = 0;
@@ -1161,8 +1161,8 @@ expandCompositChar(UChar *dest, int32_t sourceLength,
             destSize = calculateSize(dest,sourceLength,destSize,options);
             tempbuffer = static_cast<char16_t*>(uprv_malloc((destSize + 1) * U_SIZEOF_UCHAR));
 
-            /* Test for NULL */
-            if(tempbuffer == NULL) {
+            /* Test for nullptr */
+            if(tempbuffer == nullptr) {
                 *pErrorCode = U_MEMORY_ALLOCATION_ERROR;
                 return 0;
             }
@@ -1198,7 +1198,7 @@ expandCompositChar(UChar *dest, int32_t sourceLength,
  *           arabic Unicode buffer in FExx Range
  */
 static int32_t
-shapeUnicode(UChar *dest, int32_t sourceLength,
+shapeUnicode(char16_t *dest, int32_t sourceLength,
              int32_t destSize,uint32_t options,
              UErrorCode *pErrorCode,
              int tashkeelFlag, struct uShapeVariables shapeVars) {
@@ -1209,8 +1209,8 @@ shapeUnicode(UChar *dest, int32_t sourceLength,
     unsigned int     Shape;
     int32_t          lamalef_found = 0;
     int32_t seenfamFound = 0, yehhamzaFound =0, tashkeelFound  = 0;
-    UChar            prevLink = 0, lastLink = 0, currLink, nextLink = 0;
-    UChar            wLamalef;
+    char16_t         prevLink = 0, lastLink = 0, currLink, nextLink = 0;
+    char16_t         wLamalef;
 
     /*
      * Converts the input buffer from FExx Range into 06xx Range
@@ -1220,9 +1220,9 @@ shapeUnicode(UChar *dest, int32_t sourceLength,
      */
     if ((options & U_SHAPE_PRESERVE_PRESENTATION_MASK)  == U_SHAPE_PRESERVE_PRESENTATION_NOOP) {
         for (i = 0; i < sourceLength; i++) {
-            UChar inputChar  = dest[i];
+            char16_t inputChar  = dest[i];
             if ( (inputChar >= 0xFB50) && (inputChar <= 0xFBFF)) {
-                UChar c = convertFBto06 [ (inputChar - 0xFB50) ];
+                char16_t c = convertFBto06 [ (inputChar - 0xFB50) ];
                 if (c != 0)
                     dest[i] = c;
             } else if ( (inputChar >= 0xFE70) && (inputChar <= 0xFEFC)) {
@@ -1328,7 +1328,7 @@ shapeUnicode(UChar *dest, int32_t sourceLength,
                         /* to ensure the array index is within the range */
                         U_ASSERT(dest[i] >= 0x064Bu
                             && dest[i]-0x064Bu < UPRV_LENGTHOF(IrrelevantPos));
-                        dest[i] =  0xFE70 + IrrelevantPos[(dest[i] - 0x064B)] + static_cast<UChar>(Shape);
+                        dest[i] =  0xFE70 + IrrelevantPos[(dest[i] - 0x064B)] + static_cast<char16_t>(Shape);
                     }
                 }else if ((currLink & APRESENT) > 0) {
                     dest[i] = static_cast<char16_t>(0xFB50 + (currLink >> 8) + Shape);
@@ -1370,7 +1370,7 @@ shapeUnicode(UChar *dest, int32_t sourceLength,
  *           arabic Unicode buffer in 06xx Range
  */
 static int32_t
-deShapeUnicode(UChar *dest, int32_t sourceLength,
+deShapeUnicode(char16_t *dest, int32_t sourceLength,
                int32_t destSize,uint32_t options,
                UErrorCode *pErrorCode, struct uShapeVariables shapeVars) {
     int32_t i = 0;
@@ -1387,9 +1387,9 @@ deShapeUnicode(UChar *dest, int32_t sourceLength,
      */
 
     for(i = 0; i < sourceLength; i++) {
-        UChar  inputChar = dest[i];
+        char16_t  inputChar = dest[i];
         if ( (inputChar >= 0xFB50) && (inputChar <= 0xFBFF)) { /* FBxx Arabic range */
-            UChar c = convertFBto06 [ (inputChar - 0xFB50) ];
+            char16_t c = convertFBto06 [ (inputChar - 0xFB50) ];
             if (c != 0)
                 dest[i] = c;
         } else if( (yehHamzaComposeEnabled == 1) && ((inputChar == HAMZA06_CHAR) || (inputChar == HAMZAFE_CHAR))
@@ -1423,8 +1423,8 @@ deShapeUnicode(UChar *dest, int32_t sourceLength,
  */
 
 U_CAPI int32_t U_EXPORT2
-u_shapeArabic(const UChar *source, int32_t sourceLength,
-              UChar *dest, int32_t destCapacity,
+u_shapeArabic(const char16_t *source, int32_t sourceLength,
+              char16_t *dest, int32_t destCapacity,
               uint32_t options,
               UErrorCode *pErrorCode) {
 
@@ -1432,12 +1432,12 @@ u_shapeArabic(const UChar *source, int32_t sourceLength,
     struct  uShapeVariables shapeVars = { OLD_TAIL_CHAR,U_SHAPE_LAMALEF_BEGIN,U_SHAPE_LAMALEF_END,U_SHAPE_TASHKEEL_BEGIN,U_SHAPE_TASHKEEL_END,0};
 
     /* usual error checking */
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
-    /* make sure that no reserved options values are used; allow dest==NULL only for preflighting */
-    if( source==NULL || sourceLength<-1 || (dest==NULL && destCapacity!=0) || destCapacity<0 ||
+    /* make sure that no reserved options values are used; allow dest==nullptr only for preflighting */
+    if( source==nullptr || sourceLength<-1 || (dest==nullptr && destCapacity!=0) || destCapacity<0 ||
                 (((options&U_SHAPE_TASHKEEL_MASK) > 0) &&
                  ((options&U_SHAPE_LETTERS_SHAPE_TASHKEEL_ISOLATED) == U_SHAPE_LETTERS_SHAPE_TASHKEEL_ISOLATED) ) ||
                 (((options&U_SHAPE_TASHKEEL_MASK) > 0) &&
@@ -1483,7 +1483,7 @@ u_shapeArabic(const UChar *source, int32_t sourceLength,
     }
 
     /* check that source and destination do not overlap */
-    if( dest!=NULL &&
+    if( dest!=nullptr &&
         ((source<=dest && dest<source+sourceLength) ||
          (dest<=source && source<dest+destCapacity))) {
         *pErrorCode=U_ILLEGAL_ARGUMENT_ERROR;
@@ -1498,8 +1498,8 @@ u_shapeArabic(const UChar *source, int32_t sourceLength,
     }
 
     if((options&U_SHAPE_LETTERS_MASK)!=U_SHAPE_LETTERS_NOOP) {
-        UChar buffer[300];
-        UChar *tempbuffer, *tempsource = NULL;
+        char16_t buffer[300];
+        char16_t *tempbuffer, *tempsource = nullptr;
         int32_t outputSize, spacesCountl=0, spacesCountr=0;
 
         if((options&U_SHAPE_AGGREGATE_TASHKEEL_MASK)>0) {
@@ -1512,11 +1512,11 @@ u_shapeArabic(const UChar *source, int32_t sourceLength,
             int i=logical_order?-1:sourceLength;
             int end=logical_order?sourceLength:-1;
             int aggregation_possible = 1;
-            UChar prev = 0;
-            UChar prevLink, currLink = 0;
+            char16_t prev = 0;
+            char16_t prevLink, currLink = 0;
             int newSourceLength = 0;
-            tempsource = (UChar *)uprv_malloc(2*sourceLength*U_SIZEOF_UCHAR);
-            if(tempsource == NULL) {
+            tempsource = (char16_t *)uprv_malloc(2*sourceLength*U_SIZEOF_UCHAR);
+            if(tempsource == nullptr) {
                 *pErrorCode = U_MEMORY_ALLOCATION_ERROR;
                 return 0;
             }
@@ -1550,7 +1550,7 @@ u_shapeArabic(const UChar *source, int32_t sourceLength,
 
         if(outputSize>destCapacity) {
             *pErrorCode=U_BUFFER_OVERFLOW_ERROR;
-                if (tempsource != NULL) uprv_free(tempsource);
+                if (tempsource != nullptr) uprv_free(tempsource);
             return outputSize;
         }
 
@@ -1567,17 +1567,17 @@ u_shapeArabic(const UChar *source, int32_t sourceLength,
             outputSize=UPRV_LENGTHOF(buffer);
             tempbuffer=buffer;
         } else {
-            tempbuffer = (UChar *)uprv_malloc(outputSize*U_SIZEOF_UCHAR);
+            tempbuffer = (char16_t *)uprv_malloc(outputSize*U_SIZEOF_UCHAR);
 
-            /*Test for NULL*/
-            if(tempbuffer == NULL) {
+            /*Test for nullptr*/
+            if(tempbuffer == nullptr) {
                 *pErrorCode = U_MEMORY_ALLOCATION_ERROR;
-                if (tempsource != NULL) uprv_free(tempsource);
+                if (tempsource != nullptr) uprv_free(tempsource);
                 return 0;
             }
         }
         u_memcpy(tempbuffer, source, sourceLength);
-        if (tempsource != NULL){
+        if (tempsource != nullptr){
             uprv_free(tempsource);
         }
 
@@ -1675,7 +1675,7 @@ u_shapeArabic(const UChar *source, int32_t sourceLength,
      * "shape" the digits in-place.
      */
     if((options&U_SHAPE_DIGITS_MASK)!=U_SHAPE_DIGITS_NOOP) {
-        UChar digitBase;
+        char16_t digitBase;
         int32_t i;
 
         /* select the requested digit group */

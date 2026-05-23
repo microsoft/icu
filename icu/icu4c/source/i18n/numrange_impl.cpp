@@ -38,7 +38,7 @@ class NumberRangeDataSink : public ResourceSink {
   public:
     NumberRangeDataSink(NumberRangeData& data) : fData(data) {}
 
-    void put(const char* key, ResourceValue& value, UBool /*noFallback*/, UErrorCode& status) U_OVERRIDE {
+    void put(const char* key, ResourceValue& value, UBool /*noFallback*/, UErrorCode& status) override {
         ResourceTable miscTable = value.getTable(status);
         if (U_FAILURE(status)) { return; }
         for (int i = 0; miscTable.getKeyAndValue(i, key, value); i++) {
@@ -92,7 +92,7 @@ class NumberRangeDataSink : public ResourceSink {
 
 void getNumberRangeData(const char* localeName, const char* nsName, NumberRangeData& data, UErrorCode& status) {
     if (U_FAILURE(status)) { return; }
-    LocalUResourceBundlePointer rb(ures_open(NULL, localeName, &status));
+    LocalUResourceBundlePointer rb(ures_open(nullptr, localeName, &status));
     if (U_FAILURE(status)) { return; }
     NumberRangeDataSink sink(data);
 

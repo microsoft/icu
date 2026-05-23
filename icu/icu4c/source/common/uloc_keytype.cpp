@@ -26,7 +26,7 @@
 #include "uvector.h"
 #include "udataswp.h" /* for InvChar functions */
 
-static UHashtable* gLocExtKeyMap = NULL;
+static UHashtable* gLocExtKeyMap = nullptr;
 static icu::UInitOnce gLocExtKeyMapInitOnce {};
 
 // bit flags for special types
@@ -61,14 +61,14 @@ static icu::MemoryPool<TypeAlias>* gTypeAliasEntries = nullptr;
 U_CDECL_BEGIN
 
 static UBool U_CALLCONV
-uloc_key_type_cleanup(void) {
-    if (gLocExtKeyMap != NULL) {
+uloc_key_type_cleanup() {
+    if (gLocExtKeyMap != nullptr) {
         uhash_close(gLocExtKeyMap);
-        gLocExtKeyMap = NULL;
+        gLocExtKeyMap = nullptr;
     }
 
     delete gLocExtKeyDataEntries;
-    gLocExtKeyDataEntries = NULL;
+    gLocExtKeyDataEntries = nullptr;
 
     delete gLocExtTypeEntries;
     gLocExtTypeEntries = nullptr;
@@ -77,7 +77,7 @@ uloc_key_type_cleanup(void) {
     gTypeAliasEntries = nullptr;
 
     delete gKeyTypeStringPool;
-    gKeyTypeStringPool = NULL;
+    gKeyTypeStringPool = nullptr;
 
     gLocExtKeyMapInitOnce.reset();
     return true;
@@ -94,27 +94,27 @@ initFromResourceBundle(UErrorCode& sts) {
 
     gLocExtKeyMap = uhash_open(uhash_hashIStringView, uhash_compareIStringView, nullptr, &sts);
 
-    LocalUResourceBundlePointer keyTypeDataRes(ures_openDirect(NULL, "keyTypeData", &sts));
-    LocalUResourceBundlePointer keyMapRes(ures_getByKey(keyTypeDataRes.getAlias(), "keyMap", NULL, &sts));
-    LocalUResourceBundlePointer typeMapRes(ures_getByKey(keyTypeDataRes.getAlias(), "typeMap", NULL, &sts));
+    LocalUResourceBundlePointer keyTypeDataRes(ures_openDirect(nullptr, "keyTypeData", &sts));
+    LocalUResourceBundlePointer keyMapRes(ures_getByKey(keyTypeDataRes.getAlias(), "keyMap", nullptr, &sts));
+    LocalUResourceBundlePointer typeMapRes(ures_getByKey(keyTypeDataRes.getAlias(), "typeMap", nullptr, &sts));
 
     if (U_FAILURE(sts)) {
         return;
     }
 
     UErrorCode tmpSts = U_ZERO_ERROR;
-    LocalUResourceBundlePointer typeAliasRes(ures_getByKey(keyTypeDataRes.getAlias(), "typeAlias", NULL, &tmpSts));
+    LocalUResourceBundlePointer typeAliasRes(ures_getByKey(keyTypeDataRes.getAlias(), "typeAlias", nullptr, &tmpSts));
     tmpSts = U_ZERO_ERROR;
-    LocalUResourceBundlePointer bcpTypeAliasRes(ures_getByKey(keyTypeDataRes.getAlias(), "bcpTypeAlias", NULL, &tmpSts));
+    LocalUResourceBundlePointer bcpTypeAliasRes(ures_getByKey(keyTypeDataRes.getAlias(), "bcpTypeAlias", nullptr, &tmpSts));
 
     // initialize pools storing dynamically allocated objects
     gKeyTypeStringPool = new icu::MemoryPool<icu::FixedString>;
-    if (gKeyTypeStringPool == NULL) {
+    if (gKeyTypeStringPool == nullptr) {
         sts = U_MEMORY_ALLOCATION_ERROR;
         return;
     }
     gLocExtKeyDataEntries = new icu::MemoryPool<LocExtKeyData>;
-    if (gLocExtKeyDataEntries == NULL) {
+    if (gLocExtKeyDataEntries == nullptr) {
         sts = U_MEMORY_ALLOCATION_ERROR;
         return;
     }
@@ -147,7 +147,7 @@ initFromResourceBundle(UErrorCode& sts) {
         const char* bcpKeyId = legacyKeyId;
         if (!uBcpKeyId.isEmpty()) {
             icu::FixedString* bcpKeyIdBuf = gKeyTypeStringPool->create();
-            if (bcpKeyIdBuf == NULL) {
+            if (bcpKeyIdBuf == nullptr) {
                 sts = U_MEMORY_ALLOCATION_ERROR;
                 break;
             }
@@ -171,21 +171,21 @@ initFromResourceBundle(UErrorCode& sts) {
 
         if (typeAliasRes.isValid()) {
             tmpSts = U_ZERO_ERROR;
-            typeAliasResByKey.adoptInstead(ures_getByKey(typeAliasRes.getAlias(), legacyKeyId, NULL, &tmpSts));
+            typeAliasResByKey.adoptInstead(ures_getByKey(typeAliasRes.getAlias(), legacyKeyId, nullptr, &tmpSts));
             if (U_FAILURE(tmpSts)) {
                 typeAliasResByKey.orphan();
             }
         }
         if (bcpTypeAliasRes.isValid()) {
             tmpSts = U_ZERO_ERROR;
-            bcpTypeAliasResByKey.adoptInstead(ures_getByKey(bcpTypeAliasRes.getAlias(), bcpKeyId, NULL, &tmpSts));
+            bcpTypeAliasResByKey.adoptInstead(ures_getByKey(bcpTypeAliasRes.getAlias(), bcpKeyId, nullptr, &tmpSts));
             if (U_FAILURE(tmpSts)) {
                 bcpTypeAliasResByKey.orphan();
             }
         }
 
         // look up type map for the key, and walk through the mapping data
-        LocalUResourceBundlePointer typeMapResByKey(ures_getByKey(typeMapRes.getAlias(), legacyKeyId, NULL, &sts));
+        LocalUResourceBundlePointer typeMapResByKey(ures_getByKey(typeMapRes.getAlias(), legacyKeyId, nullptr, &sts));
         if (U_FAILURE(sts)) {
             // We fail here if typeMap does not have an entry corresponding to every entry in keyMap (should
             // not happen for valid keyTypeData), or if ures_getByKeyfails fails for some other reason
@@ -244,7 +244,7 @@ initFromResourceBundle(UErrorCode& sts) {
                 const char* bcpTypeId = legacyTypeId;
                 if (!uBcpTypeId.isEmpty()) {
                     icu::FixedString* bcpTypeIdBuf = gKeyTypeStringPool->create();
-                    if (bcpTypeIdBuf == NULL) {
+                    if (bcpTypeIdBuf == nullptr) {
                         sts = U_MEMORY_ALLOCATION_ERROR;
                         break;
                     }
@@ -260,7 +260,7 @@ initFromResourceBundle(UErrorCode& sts) {
                 // type under the same key. So we use a single
                 // map for lookup.
                 LocExtType* t = gLocExtTypeEntries->create();
-                if (t == NULL) {
+                if (t == nullptr) {
                     sts = U_MEMORY_ALLOCATION_ERROR;
                     break;
                 }
@@ -284,7 +284,7 @@ initFromResourceBundle(UErrorCode& sts) {
                     while (ures_hasNext(typeAliasResByKey.getAlias()) && U_SUCCESS(sts)) {
                         int32_t toLen;
                         typeAliasDataEntry.adoptInstead(ures_getNextResource(typeAliasResByKey.getAlias(), typeAliasDataEntry.orphan(), &sts));
-                        const UChar* to = ures_getString(typeAliasDataEntry.getAlias(), &toLen, &sts);
+                        const char16_t* to = ures_getString(typeAliasDataEntry.getAlias(), &toLen, &sts);
                         if (U_FAILURE(sts)) {
                             break;
                         }
@@ -329,7 +329,7 @@ initFromResourceBundle(UErrorCode& sts) {
                     while (ures_hasNext(bcpTypeAliasResByKey.getAlias()) && U_SUCCESS(sts)) {
                         int32_t toLen;
                         bcpTypeAliasDataEntry.adoptInstead(ures_getNextResource(bcpTypeAliasResByKey.getAlias(), bcpTypeAliasDataEntry.orphan(), &sts));
-                        const UChar* to = ures_getString(bcpTypeAliasDataEntry.getAlias(), &toLen, &sts);
+                        const char16_t* to = ures_getString(bcpTypeAliasDataEntry.getAlias(), &toLen, &sts);
                         if (U_FAILURE(sts)) {
                             break;
                         }
@@ -356,7 +356,7 @@ initFromResourceBundle(UErrorCode& sts) {
         }
 
         LocExtKeyData* keyData = gLocExtKeyDataEntries->create();
-        if (keyData == NULL) {
+        if (keyData == nullptr) {
             sts = U_MEMORY_ALLOCATION_ERROR;
             break;
         }
@@ -447,7 +447,7 @@ ulocimp_toBcpKey(std::string_view key) {
     }
 
     LocExtKeyData* keyData = static_cast<LocExtKeyData*>(uhash_get(gLocExtKeyMap, &key));
-    if (keyData != NULL) {
+    if (keyData != nullptr) {
         return keyData->bcpId;
     }
 
@@ -461,7 +461,7 @@ ulocimp_toLegacyKey(std::string_view key) {
     }
 
     LocExtKeyData* keyData = static_cast<LocExtKeyData*>(uhash_get(gLocExtKeyMap, &key));
-    if (keyData != NULL) {
+    if (keyData != nullptr) {
         return keyData->legacyId;
     }
 

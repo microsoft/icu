@@ -268,14 +268,14 @@ void IntlTestSimpleDateFormatAPI::testAPI(/*char *par*/)
     object.setLenient(false);
     ParsePosition pp(0);
     UDate udDate = object.parse("2007W014", pp);
-    if ((double)udDate == 0.0) {
+    if (static_cast<double>(udDate) == 0.0) {
         errln("ERROR: Parsing failed using 'Y' and 'e'");
     }
 
 // ====== Test ticket 11295 getNumberFormatForField returns wild pointer
-    if (object.getNumberFormatForField('N') != NULL) {
+    if (object.getNumberFormatForField('N') != nullptr) {
         errln("N is not a valid field, "
-              "getNumberFormatForField should return NULL");
+              "getNumberFormatForField should return nullptr");
     }
 }
 

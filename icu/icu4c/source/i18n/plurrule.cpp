@@ -53,24 +53,24 @@ using icu::number::impl::DecNum;
 using icu::number::impl::DecimalQuantity;
 using icu::number::impl::RoundingMode;
 
-static const UChar PLURAL_KEYWORD_OTHER[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,0};
-static const UChar PLURAL_DEFAULT_RULE[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,COLON,SPACE,LOW_N,0};
-static const UChar PK_IN[]={LOW_I,LOW_N,0};
-static const UChar PK_NOT[]={LOW_N,LOW_O,LOW_T,0};
-static const UChar PK_IS[]={LOW_I,LOW_S,0};
-static const UChar PK_MOD[]={LOW_M,LOW_O,LOW_D,0};
-static const UChar PK_AND[]={LOW_A,LOW_N,LOW_D,0};
-static const UChar PK_OR[]={LOW_O,LOW_R,0};
-static const UChar PK_VAR_N[]={LOW_N,0};
-static const UChar PK_VAR_I[]={LOW_I,0};
-static const UChar PK_VAR_F[]={LOW_F,0};
-static const UChar PK_VAR_T[]={LOW_T,0};
-static const UChar PK_VAR_E[]={LOW_E,0};
-static const UChar PK_VAR_C[]={LOW_C,0};
-static const UChar PK_VAR_V[]={LOW_V,0};
-static const UChar PK_WITHIN[]={LOW_W,LOW_I,LOW_T,LOW_H,LOW_I,LOW_N,0};
-static const UChar PK_DECIMAL[]={LOW_D,LOW_E,LOW_C,LOW_I,LOW_M,LOW_A,LOW_L,0};
-static const UChar PK_INTEGER[]={LOW_I,LOW_N,LOW_T,LOW_E,LOW_G,LOW_E,LOW_R,0};
+static const char16_t PLURAL_KEYWORD_OTHER[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,0};
+static const char16_t PLURAL_DEFAULT_RULE[]={LOW_O,LOW_T,LOW_H,LOW_E,LOW_R,COLON,SPACE,LOW_N,0};
+static const char16_t PK_IN[]={LOW_I,LOW_N,0};
+static const char16_t PK_NOT[]={LOW_N,LOW_O,LOW_T,0};
+static const char16_t PK_IS[]={LOW_I,LOW_S,0};
+static const char16_t PK_MOD[]={LOW_M,LOW_O,LOW_D,0};
+static const char16_t PK_AND[]={LOW_A,LOW_N,LOW_D,0};
+static const char16_t PK_OR[]={LOW_O,LOW_R,0};
+static const char16_t PK_VAR_N[]={LOW_N,0};
+static const char16_t PK_VAR_I[]={LOW_I,0};
+static const char16_t PK_VAR_F[]={LOW_F,0};
+static const char16_t PK_VAR_T[]={LOW_T,0};
+static const char16_t PK_VAR_E[]={LOW_E,0};
+static const char16_t PK_VAR_C[]={LOW_C,0};
+static const char16_t PK_VAR_V[]={LOW_V,0};
+static const char16_t PK_WITHIN[]={LOW_W,LOW_I,LOW_T,LOW_H,LOW_I,LOW_N,0};
+static const char16_t PK_DECIMAL[]={LOW_D,LOW_E,LOW_C,LOW_I,LOW_M,LOW_A,LOW_L,0};
+static const char16_t PK_INTEGER[]={LOW_I,LOW_N,LOW_T,LOW_E,LOW_G,LOW_E,LOW_R,0};
 
 UOBJECT_DEFINE_RTTI_IMPLEMENTATION(PluralRules)
 UOBJECT_DEFINE_RTTI_IMPLEMENTATION(PluralKeywordEnumeration)
@@ -850,7 +850,7 @@ PluralRules::getRuleFromResource(const Locale& locale, UPluralType type, UErrorC
     }
     int32_t resLen=0;
     const char *curLocaleName=locale.getBaseName();
-    const UChar* s = ures_getStringByKey(locRes.getAlias(), curLocaleName, &resLen, &errCode);
+    const char16_t* s = ures_getStringByKey(locRes.getAlias(), curLocaleName, &resLen, &errCode);
 
     if (s == nullptr) {
         // Check parent locales.
@@ -1145,7 +1145,7 @@ static UnicodeString tokenString(tokenType tok) {
 
 void
 RuleChain::dumpRules(UnicodeString& result) {
-    UChar digitString[16];
+    char16_t digitString[16];
 
     if ( ruleHeader != nullptr ) {
         result +=  fKeyword;
@@ -1404,7 +1404,7 @@ PluralRuleParser::getNextToken(UErrorCode &status)
         return;
     }
 
-    UChar ch;
+    char16_t ch;
     while (ruleIndex < ruleSrc->length()) {
         ch = ruleSrc->charAt(ruleIndex);
         type = charType(ch);
@@ -1485,7 +1485,7 @@ PluralRuleParser::getNextToken(UErrorCode &status)
 }
 
 tokenType
-PluralRuleParser::charType(UChar ch) {
+PluralRuleParser::charType(char16_t ch) {
     if ((ch>=U_ZERO) && (ch<=U_NINE)) {
         return tNumber;
     }
@@ -1599,7 +1599,7 @@ PluralKeywordEnumeration::PluralKeywordEnumeration(RuleChain *header, UErrorCode
 const UnicodeString*
 PluralKeywordEnumeration::snext(UErrorCode& status) {
     if (U_SUCCESS(status) && pos < fKeywordNames.size()) {
-        return (const UnicodeString*)fKeywordNames.elementAt(pos++);
+        return static_cast<const UnicodeString*>(fKeywordNames.elementAt(pos++));
     }
     return nullptr;
 }
@@ -1783,7 +1783,7 @@ void FixedDecimal::init(double n, int32_t v, int64_t f, int32_t e, int32_t c) {
         intValue = 0;
         _hasIntegerValue = false;
     } else {
-        intValue = (int64_t)source;
+        intValue = static_cast<int64_t>(source);
         _hasIntegerValue = (source == intValue);
     }
 
@@ -1871,13 +1871,13 @@ int64_t FixedDecimal::getFractionalDigits(double n, int32_t v) {
       case 2: return static_cast<int64_t>(fract * 100.0 + 0.5);
       case 3: return static_cast<int64_t>(fract * 1000.0 + 0.5);
       default:
-          double scaled = floor(fract * pow(10.0, (double)v) + 0.5);
+          double scaled = floor(fract * pow(10.0, static_cast<double>(v)) + 0.5);
           if (scaled >= static_cast<double>(U_INT64_MAX)) {
               // Note: a double cannot accurately represent U_INT64_MAX. Casting it to double
               //       will round up to the next representable value, which is U_INT64_MAX + 1.
               return U_INT64_MAX;
           } else {
-              return (int64_t)scaled;
+              return static_cast<int64_t>(scaled);
           }
       }
 }

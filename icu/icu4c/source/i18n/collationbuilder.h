@@ -201,10 +201,10 @@ private:
             (static_cast<int32_t>(tempCE >> 24) & 0x3f);
     }
     static inline int32_t strengthFromTempCE(int64_t tempCE) {
-        return ((int32_t)tempCE >> 8) & 3;
+        return (static_cast<int32_t>(tempCE) >> 8) & 3;
     }
     static inline UBool isTempCE(int64_t ce) {
-        uint32_t sec = (uint32_t)ce >> 24;
+        uint32_t sec = static_cast<uint32_t>(ce) >> 24;
         return 6 <= sec && sec <= 0x45;
     }
 
@@ -242,13 +242,13 @@ private:
     static const int32_t IS_TAILORED = 8;
 
     static inline int64_t nodeFromWeight32(uint32_t weight32) {
-        return (int64_t)weight32 << 32;
+        return static_cast<int64_t>(weight32) << 32;
     }
     static inline int64_t nodeFromWeight16(uint32_t weight16) {
-        return (int64_t)weight16 << 48;
+        return static_cast<int64_t>(weight16) << 48;
     }
     static inline int64_t nodeFromPreviousIndex(int32_t previous) {
-        return (int64_t)previous << 28;
+        return static_cast<int64_t>(previous) << 28;
     }
     static inline int64_t nodeFromNextIndex(int32_t next) {
         return next << 8;
@@ -267,10 +267,10 @@ private:
         return static_cast<int32_t>(node >> 28) & MAX_INDEX;
     }
     static inline int32_t nextIndexFromNode(int64_t node) {
-        return ((int32_t)node >> 8) & MAX_INDEX;
+        return (static_cast<int32_t>(node) >> 8) & MAX_INDEX;
     }
     static inline int32_t strengthFromNode(int64_t node) {
-        return (int32_t)node & 3;
+        return static_cast<int32_t>(node) & 3;
     }
 
     static inline UBool nodeHasBefore2(int64_t node) {

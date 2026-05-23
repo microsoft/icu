@@ -188,7 +188,7 @@ class NumberFormatterApiTest : public IntlTestWithFieldPosition {
         const char *locale;
         const char *unitDisplayCase;
         double value;
-        const UChar *expected;
+        const char16_t *expected;
     };
 
     void runUnitInflectionsTestCases(UnlocalizedNumberFormatter unf,

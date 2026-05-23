@@ -41,7 +41,7 @@ class UnaccentTransliterator : public Transliterator {
     /**
      * Unaccent a single character using normalizer.
      */
-    UChar unaccent(UChar c) const;
+    char16_t unaccent(char16_t c) const;
 
     Normalizer normalizer;
 
@@ -58,7 +58,7 @@ public:
      * @return          The class ID for all objects of this class.
      * @stable ICU 2.0
      */
-    static inline UClassID getStaticClassID(void) { return (UClassID)&fgClassID; };
+    static inline UClassID getStaticClassID() { return (UClassID)&fgClassID; };
 
     /**
      * Returns a unique class ID <b>polymorphically</b>.  This method

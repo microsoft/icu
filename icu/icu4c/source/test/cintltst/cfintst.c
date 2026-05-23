@@ -93,7 +93,7 @@ static void TestTertiary(void)
     ucol_close(myCollation);
 }
 
-static void TestPrimary()
+static void TestPrimary(void)
 {
     
     int32_t i;

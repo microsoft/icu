@@ -59,7 +59,7 @@ UBool ScriptSet::test(UScriptCode script, UErrorCode &status) const {
     if (U_FAILURE(status)) {
         return false;
     }
-    if (script < 0 || (int32_t)script >= SCRIPT_LIMIT) {
+    if (script < 0 || static_cast<int32_t>(script) >= SCRIPT_LIMIT) {
         status = U_ILLEGAL_ARGUMENT_ERROR;
         return false;
     }
@@ -73,7 +73,7 @@ ScriptSet &ScriptSet::set(UScriptCode script, UErrorCode &status) {
     if (U_FAILURE(status)) {
         return *this;
     }
-    if (script < 0 || (int32_t)script >= SCRIPT_LIMIT) {
+    if (script < 0 || static_cast<int32_t>(script) >= SCRIPT_LIMIT) {
         status = U_ILLEGAL_ARGUMENT_ERROR;
         return *this;
     }
@@ -87,7 +87,7 @@ ScriptSet &ScriptSet::reset(UScriptCode script, UErrorCode &status) {
     if (U_FAILURE(status)) {
         return *this;
     }
-    if (script < 0 || (int32_t)script >= SCRIPT_LIMIT) {
+    if (script < 0 || static_cast<int32_t>(script) >= SCRIPT_LIMIT) {
         status = U_ILLEGAL_ARGUMENT_ERROR;
         return *this;
     }
@@ -180,7 +180,7 @@ int32_t ScriptSet::nextSetBit(int32_t fromIndex) const {
     }
     UErrorCode status = U_ZERO_ERROR;
     for (int32_t scriptIndex = fromIndex; scriptIndex < SCRIPT_LIMIT; scriptIndex++) {
-        if (test((UScriptCode)scriptIndex, status)) {
+        if (test(static_cast<UScriptCode>(scriptIndex), status)) {
             return scriptIndex;
         }
     }
@@ -200,7 +200,7 @@ UnicodeString &ScriptSet::displayScripts(UnicodeString &dest) const {
     UBool firstTime = true;
     for (int32_t i = nextSetBit(0); i >= 0; i = nextSetBit(i + 1)) {
         if (!firstTime) {
-            dest.append((UChar)0x20);
+            dest.append(static_cast<char16_t>(0x20));
         }
         firstTime = false;
         const char* scriptName = uscript_getShortName(static_cast<UScriptCode>(i));
@@ -232,7 +232,7 @@ ScriptSet &ScriptSet::parseScripts(const UnicodeString &scriptString, UErrorCode
             if (sc == UCHAR_INVALID_CODE) {
                 status = U_ILLEGAL_ARGUMENT_ERROR;
             } else {
-                this->set((UScriptCode)sc, status);
+                this->set(static_cast<UScriptCode>(sc), status);
             }
             if (U_FAILURE(status)) {
                 return *this;
@@ -255,7 +255,7 @@ void ScriptSet::setScriptExtensions(UChar32 codePoint, UErrorCode& status) {
             codePoint, scripts.getAlias(), scripts.getCapacity(), &internalStatus);
         if (internalStatus == U_BUFFER_OVERFLOW_ERROR) {
             // Need to allocate more space
-            if (scripts.resize(script_count) == NULL) {
+            if (scripts.resize(script_count) == nullptr) {
                 status = U_MEMORY_ALLOCATION_ERROR;
                 return;
             }

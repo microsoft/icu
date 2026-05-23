@@ -197,14 +197,14 @@ CollationCompare::compareUpToQuaternary(CollationIterator &left, CollationIterat
                 int64_t ce;
                 do {
                     ce = left.getCE(leftIndex++);
-                    leftCase = (uint32_t)ce;
+                    leftCase = static_cast<uint32_t>(ce);
                 } while (static_cast<uint32_t>(ce >> 32) == 0 || leftCase == 0);
                 leftLower32 = leftCase;
                 leftCase &= 0xc000;
 
                 do {
                     ce = right.getCE(rightIndex++);
-                    rightCase = (uint32_t)ce;
+                    rightCase = static_cast<uint32_t>(ce);
                 } while (static_cast<uint32_t>(ce >> 32) == 0 || rightCase == 0);
                 rightCase &= 0xc000;
             } else {
@@ -223,13 +223,13 @@ CollationCompare::compareUpToQuaternary(CollationIterator &left, CollationIterat
                 // turning 0.0.ut into 0.0.0.t.
                 // (See LDML Collation, Case Parameters.)
                 do {
-                    leftCase = (uint32_t)left.getCE(leftIndex++);
+                    leftCase = static_cast<uint32_t>(left.getCE(leftIndex++));
                 } while(leftCase <= 0xffff);
                 leftLower32 = leftCase;
                 leftCase &= 0xc000;
 
                 do {
-                    rightCase = (uint32_t)right.getCE(rightIndex++);
+                    rightCase = static_cast<uint32_t>(right.getCE(rightIndex++));
                 } while(rightCase <= 0xffff);
                 rightCase &= 0xc000;
             }
@@ -257,7 +257,7 @@ CollationCompare::compareUpToQuaternary(CollationIterator &left, CollationIterat
     for(;;) {
         uint32_t leftLower32, leftTertiary;
         do {
-            leftLower32 = (uint32_t)left.getCE(leftIndex++);
+            leftLower32 = static_cast<uint32_t>(left.getCE(leftIndex++));
             anyQuaternaries |= leftLower32;
             U_ASSERT((leftLower32 & Collation::ONLY_TERTIARY_MASK) != 0 ||
                      (leftLower32 & 0xc0c0) == 0);
@@ -266,7 +266,7 @@ CollationCompare::compareUpToQuaternary(CollationIterator &left, CollationIterat
 
         uint32_t rightLower32, rightTertiary;
         do {
-            rightLower32 = (uint32_t)right.getCE(rightIndex++);
+            rightLower32 = static_cast<uint32_t>(right.getCE(rightIndex++));
             anyQuaternaries |= rightLower32;
             U_ASSERT((rightLower32 & Collation::ONLY_TERTIARY_MASK) != 0 ||
                      (rightLower32 & 0xc0c0) == 0);
@@ -313,7 +313,7 @@ CollationCompare::compareUpToQuaternary(CollationIterator &left, CollationIterat
         uint32_t leftQuaternary;
         do {
             int64_t ce = left.getCE(leftIndex++);
-            leftQuaternary = (uint32_t)ce & 0xffff;
+            leftQuaternary = static_cast<uint32_t>(ce) & 0xffff;
             if(leftQuaternary <= Collation::NO_CE_WEIGHT16) {
                 // Variable primary or completely ignorable or NO_CE.
                 leftQuaternary = static_cast<uint32_t>(ce >> 32);
@@ -327,7 +327,7 @@ CollationCompare::compareUpToQuaternary(CollationIterator &left, CollationIterat
         uint32_t rightQuaternary;
         do {
             int64_t ce = right.getCE(rightIndex++);
-            rightQuaternary = (uint32_t)ce & 0xffff;
+            rightQuaternary = static_cast<uint32_t>(ce) & 0xffff;
             if(rightQuaternary <= Collation::NO_CE_WEIGHT16) {
                 // Variable primary or completely ignorable or NO_CE.
                 rightQuaternary = static_cast<uint32_t>(ce >> 32);

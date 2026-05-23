@@ -321,7 +321,7 @@ GregorianCalendar::setGregorianChange(UDate date, UErrorCode& status)
     // Normalize the year so BC values are represented as 0 and negative
     // values.
     GregorianCalendar *cal = new GregorianCalendar(getTimeZone(), status);
-    /* test for NULL */
+    /* test for nullptr */
     if (cal == nullptr) {
         status = U_MEMORY_ALLOCATION_ERROR;
         return;
@@ -610,7 +610,7 @@ GregorianCalendar::validateFields() const
         // Ignore DATE and DAY_OF_YEAR which are handled below
         if (field != UCAL_DATE &&
             field != UCAL_DAY_OF_YEAR &&
-            isSet((UCalendarDateFields)field) &&
+            isSet(static_cast<UCalendarDateFields>(field)) &&
             !boundsCheck(internalGet(static_cast<UCalendarDateFields>(field)), static_cast<UCalendarDateFields>(field)))
             return false;
     }
@@ -768,7 +768,7 @@ GregorianCalendar::aggregateStamp(int32_t stamp_a, int32_t stamp_b)
 {
     return (((stamp_a != kUnset && stamp_b != kUnset)
         ? uprv_max(stamp_a, stamp_b)
-        : (int32_t)kUnset));
+        : static_cast<int32_t>(kUnset)));
 }
 
 // -------------------------------------
@@ -1029,12 +1029,12 @@ GregorianCalendar::roll(UCalendarDateFields field, int32_t amount, UErrorCode& s
 */
 int32_t GregorianCalendar::getActualMinimum(EDateFields field) const
 {
-    return getMinimum((UCalendarDateFields)field);
+    return getMinimum(static_cast<UCalendarDateFields>(field));
 }
 
 int32_t GregorianCalendar::getActualMinimum(EDateFields field, UErrorCode& /* status */) const
 {
-    return getMinimum((UCalendarDateFields)field);
+    return getMinimum(static_cast<UCalendarDateFields>(field));
 }
 
 /**
@@ -1228,7 +1228,7 @@ int32_t GregorianCalendar::handleGetExtendedYearFromWeekFields(int32_t yearWoy, 
 */
 int32_t
 GregorianCalendar::internalGetEra() const {
-    return isSet(UCAL_ERA) ? internalGet(UCAL_ERA) : (int32_t)AD;
+    return isSet(UCAL_ERA) ? internalGet(UCAL_ERA) : static_cast<int32_t>(AD);
 }
 
 const char *

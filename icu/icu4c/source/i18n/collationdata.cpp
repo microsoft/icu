@@ -118,7 +118,7 @@ CollationData::getSingleCE(UChar32 c, UErrorCode &errorCode) const {
 uint32_t
 CollationData::getFirstPrimaryForGroup(int32_t script) const {
     int32_t index = getScriptIndex(script);
-    return index == 0 ? 0 : (uint32_t)scriptStarts[index] << 16;
+    return index == 0 ? 0 : static_cast<uint32_t>(scriptStarts[index]) << 16;
 }
 
 uint32_t
@@ -251,7 +251,7 @@ CollationData::makeReorderRanges(const int32_t *reorder, int32_t length,
     for(int32_t i = 0; i < length; ++i) {
         int32_t reorderCode = reorder[i] - UCOL_REORDER_CODE_FIRST;
         if(0 <= reorderCode && reorderCode < MAX_NUM_SPECIAL_REORDER_CODES) {
-            specials |= (uint32_t)1 << reorderCode;
+            specials |= static_cast<uint32_t>(1) << reorderCode;
         }
     }
 
@@ -354,7 +354,7 @@ CollationData::makeReorderRanges(const int32_t *reorder, int32_t length,
             ++i;
         }
         if(offset != 0 || i < scriptStartsLength - 1) {
-            ranges.addElement(((int32_t)scriptStarts[i] << 16) | (offset & 0xffff), errorCode);
+            ranges.addElement((static_cast<int32_t>(scriptStarts[i]) << 16) | (offset & 0xffff), errorCode);
         }
         if(i == scriptStartsLength - 1) { break; }
         offset = nextOffset;

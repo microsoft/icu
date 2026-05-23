@@ -49,7 +49,7 @@ class U_I18N_API Measure: public UObject {
      * unit.  After this call, the caller must not delete the given
      * unit object.
      * @param number a numeric object; amount.isNumeric() must be true
-     * @param adoptedUnit the unit object, which must not be NULL
+     * @param adoptedUnit the unit object, which must not be nullptr
      * @param ec input-output error code. If the amount or the unit
      * is invalid, then this will be set to a failing value.
      * @stable ICU 3.0
@@ -122,7 +122,7 @@ class U_I18N_API Measure: public UObject {
      * @return          The class ID for all objects of this class.
      * @stable ICU 53
      */
-    static UClassID U_EXPORT2 getStaticClassID(void);
+    static UClassID U_EXPORT2 getStaticClassID();
 
     /**
      * Returns a unique class ID POLYMORPHICALLY. Pure virtual override. This
@@ -135,7 +135,7 @@ class U_I18N_API Measure: public UObject {
      *                  other classes have different class IDs.
      * @stable ICU 53
      */
-    virtual UClassID getDynamicClassID(void) const override;
+    virtual UClassID getDynamicClassID() const override;
 
  protected:
     /**

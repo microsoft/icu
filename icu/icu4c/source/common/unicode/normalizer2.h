@@ -92,7 +92,7 @@ public:
 
     /**
      * Returns a Normalizer2 instance for Unicode NFC normalization.
-     * Same as getInstance(NULL, "nfc", UNORM2_COMPOSE, errorCode).
+     * Same as getInstance(nullptr, "nfc", UNORM2_COMPOSE, errorCode).
      * Returns an unmodifiable singleton instance. Do not delete it.
      * @param errorCode Standard ICU error code. Its input value must
      *                  pass the U_SUCCESS() test, or else the function returns
@@ -106,7 +106,7 @@ public:
 
     /**
      * Returns a Normalizer2 instance for Unicode NFD normalization.
-     * Same as getInstance(NULL, "nfc", UNORM2_DECOMPOSE, errorCode).
+     * Same as getInstance(nullptr, "nfc", UNORM2_DECOMPOSE, errorCode).
      * Returns an unmodifiable singleton instance. Do not delete it.
      * @param errorCode Standard ICU error code. Its input value must
      *                  pass the U_SUCCESS() test, or else the function returns
@@ -120,7 +120,7 @@ public:
 
     /**
      * Returns a Normalizer2 instance for Unicode NFKC normalization.
-     * Same as getInstance(NULL, "nfkc", UNORM2_COMPOSE, errorCode).
+     * Same as getInstance(nullptr, "nfkc", UNORM2_COMPOSE, errorCode).
      * Returns an unmodifiable singleton instance. Do not delete it.
      * @param errorCode Standard ICU error code. Its input value must
      *                  pass the U_SUCCESS() test, or else the function returns
@@ -134,7 +134,7 @@ public:
 
     /**
      * Returns a Normalizer2 instance for Unicode NFKD normalization.
-     * Same as getInstance(NULL, "nfkc", UNORM2_DECOMPOSE, errorCode).
+     * Same as getInstance(nullptr, "nfkc", UNORM2_DECOMPOSE, errorCode).
      * Returns an unmodifiable singleton instance. Do not delete it.
      * @param errorCode Standard ICU error code. Its input value must
      *                  pass the U_SUCCESS() test, or else the function returns
@@ -186,12 +186,12 @@ public:
      * and which composes or decomposes text according to the specified mode.
      * Returns an unmodifiable singleton instance. Do not delete it.
      *
-     * Use packageName=NULL for data files that are part of ICU's own data.
+     * Use packageName=nullptr for data files that are part of ICU's own data.
      * Use name="nfc" and UNORM2_COMPOSE/UNORM2_DECOMPOSE for Unicode standard NFC/NFD.
      * Use name="nfkc" and UNORM2_COMPOSE/UNORM2_DECOMPOSE for Unicode standard NFKC/NFKD.
      * Use name="nfkc_cf" and UNORM2_COMPOSE for Unicode standard NFKC_CF=NFKC_Casefold.
      *
-     * @param packageName NULL for ICU built-in data, otherwise application data package name
+     * @param packageName nullptr for ICU built-in data, otherwise application data package name
      * @param name "nfc" or "nfkc" or "nfkc_cf" or "nfkc_scf" or name of custom data file
      * @param mode normalization mode (compose or decompose etc.)
      * @param errorCode Standard ICU error code. Its input value must
@@ -553,7 +553,7 @@ public:
     virtual UnicodeString &
     normalize(const UnicodeString &src,
               UnicodeString &dest,
-              UErrorCode &errorCode) const U_OVERRIDE;
+              UErrorCode &errorCode) const override;
 
     /**
      * Normalizes a UTF-8 string and optionally records how source substrings
@@ -579,7 +579,7 @@ public:
      */
     virtual void
     normalizeUTF8(uint32_t options, StringPiece src, ByteSink &sink,
-                  Edits *edits, UErrorCode &errorCode) const U_OVERRIDE;
+                  Edits *edits, UErrorCode &errorCode) const override;
 
     /**
      * Appends the normalized form of the second string to the first string
@@ -598,7 +598,7 @@ public:
     virtual UnicodeString &
     normalizeSecondAndAppend(UnicodeString &first,
                              const UnicodeString &second,
-                             UErrorCode &errorCode) const U_OVERRIDE;
+                             UErrorCode &errorCode) const override;
     /**
      * Appends the second string to the first string
      * (merging them at the boundary) and returns the first string.
@@ -616,7 +616,7 @@ public:
     virtual UnicodeString &
     append(UnicodeString &first,
            const UnicodeString &second,
-           UErrorCode &errorCode) const U_OVERRIDE;
+           UErrorCode &errorCode) const override;
 
     /**
      * Gets the decomposition mapping of c.
@@ -630,7 +630,7 @@ public:
      * @stable ICU 4.6
      */
     virtual UBool
-    getDecomposition(UChar32 c, UnicodeString &decomposition) const U_OVERRIDE;
+    getDecomposition(UChar32 c, UnicodeString &decomposition) const override;
 
     /**
      * Gets the raw decomposition mapping of c.
@@ -644,7 +644,7 @@ public:
      * @stable ICU 49
      */
     virtual UBool
-    getRawDecomposition(UChar32 c, UnicodeString &decomposition) const U_OVERRIDE;
+    getRawDecomposition(UChar32 c, UnicodeString &decomposition) const override;
 
     /**
      * Performs pairwise composition of a & b and returns the composite if there is one.
@@ -657,7 +657,7 @@ public:
      * @stable ICU 49
      */
     virtual UChar32
-    composePair(UChar32 a, UChar32 b) const U_OVERRIDE;
+    composePair(UChar32 a, UChar32 b) const override;
 
     /**
      * Gets the combining class of c.
@@ -668,7 +668,7 @@ public:
      * @stable ICU 49
      */
     virtual uint8_t
-    getCombiningClass(UChar32 c) const U_OVERRIDE;
+    getCombiningClass(UChar32 c) const override;
 
     /**
      * Tests if the string is normalized.
@@ -682,7 +682,7 @@ public:
      * @stable ICU 4.4
      */
     virtual UBool
-    isNormalized(const UnicodeString &s, UErrorCode &errorCode) const U_OVERRIDE;
+    isNormalized(const UnicodeString &s, UErrorCode &errorCode) const override;
     /**
      * Tests if the UTF-8 string is normalized.
      * Internally, in cases where the quickCheck() method would return "maybe"
@@ -703,7 +703,7 @@ public:
      * @stable ICU 60
      */
     virtual UBool
-    isNormalizedUTF8(StringPiece s, UErrorCode &errorCode) const U_OVERRIDE;
+    isNormalizedUTF8(StringPiece s, UErrorCode &errorCode) const override;
     /**
      * Tests if the string is normalized.
      * For details see the Normalizer2 base class documentation.
@@ -716,7 +716,7 @@ public:
      * @stable ICU 4.4
      */
     virtual UNormalizationCheckResult
-    quickCheck(const UnicodeString &s, UErrorCode &errorCode) const U_OVERRIDE;
+    quickCheck(const UnicodeString &s, UErrorCode &errorCode) const override;
     /**
      * Returns the end of the normalized substring of the input string.
      * For details see the Normalizer2 base class documentation.
@@ -729,7 +729,7 @@ public:
      * @stable ICU 4.4
      */
     virtual int32_t
-    spanQuickCheckYes(const UnicodeString &s, UErrorCode &errorCode) const U_OVERRIDE;
+    spanQuickCheckYes(const UnicodeString &s, UErrorCode &errorCode) const override;
 
     /**
      * Tests if the character always has a normalization boundary before it,
@@ -739,7 +739,7 @@ public:
      * @return true if c has a normalization boundary before it
      * @stable ICU 4.4
      */
-    virtual UBool hasBoundaryBefore(UChar32 c) const U_OVERRIDE;
+    virtual UBool hasBoundaryBefore(UChar32 c) const override;
 
     /**
      * Tests if the character always has a normalization boundary after it,
@@ -749,7 +749,7 @@ public:
      * @return true if c has a normalization boundary after it
      * @stable ICU 4.4
      */
-    virtual UBool hasBoundaryAfter(UChar32 c) const U_OVERRIDE;
+    virtual UBool hasBoundaryAfter(UChar32 c) const override;
 
     /**
      * Tests if the character is normalization-inert.
@@ -758,7 +758,7 @@ public:
      * @return true if c is normalization-inert
      * @stable ICU 4.4
      */
-    virtual UBool isInert(UChar32 c) const U_OVERRIDE;
+    virtual UBool isInert(UChar32 c) const override;
 private:
     UnicodeString &
     normalize(const UnicodeString &src,

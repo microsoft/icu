@@ -56,11 +56,11 @@
 #endif
 
 
-static char* _testDataPath=NULL;
+static char* _testDataPath=nullptr;
 
 // Static list of errors found
 static UnicodeString errorList;
-static void *knownList = NULL; // known issues
+static void *knownList = nullptr; // known issues
 static UBool noKnownIssues = false; // if true, don't emit known issues
 
 //-----------------------------------------------------------------------------
@@ -192,7 +192,7 @@ UnicodeString _toString(const Formattable& f) {
         break;
     case Formattable::kObject: {
         const CurrencyAmount* c = dynamic_cast<const CurrencyAmount*>(f.getObject());
-        if (c != NULL) {
+        if (c != nullptr) {
             s = _toString(c->getNumber()) + " " + UnicodeString(c->getISOCurrency());
         } else {
             s = UnicodeString("Unknown UObject");
@@ -200,7 +200,7 @@ UnicodeString _toString(const Formattable& f) {
         break;
     }
     default:
-        s = UnicodeString("Unknown Formattable type=") + (int32_t)f.getType();
+        s = UnicodeString("Unknown Formattable type=") + static_cast<int32_t>(f.getType());
         break;
     }
     return s;
@@ -211,9 +211,9 @@ UnicodeString _toString(const Formattable& f) {
  * + char* ambiguous. - liu
  */
 UnicodeString toString(const Formattable& f) {
-    UnicodeString s((UChar)91/*[*/);
+    UnicodeString s(static_cast<char16_t>(91)/*[*/);
     s.append(_toString(f));
-    s.append((UChar)0x5d/*]*/);
+    s.append(static_cast<char16_t>(0x5d)/*]*/);
     return s;
 }
 
@@ -255,7 +255,7 @@ UnicodeString operator+(const UnicodeString& left, unsigned short num)
 UnicodeString operator+(const UnicodeString& left, unsigned int num)
 { return left + static_cast<uint64_t>(num); }
 UnicodeString operator+(const UnicodeString& left, float num)
-{ return left + (double)num; }
+{ return left + static_cast<double>(num); }
 
 //------------------
 
@@ -265,7 +265,7 @@ IntlTest::appendHex(uint32_t number,
             int32_t digits,
             UnicodeString& target)
 {
-    static const UChar digitString[] = {
+    static const char16_t digitString[] = {
         0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39,
         0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0
     }; /* "0123456789ABCDEF" */
@@ -379,7 +379,7 @@ IntlTest::prettify(const UnicodeString &source, UBool parseBackslash)
                 // Delete a backslash.
                 int32_t backslashCount = 0;
                 for (int32_t j=target.length()-1; j>=0; --j) {
-                    if (target.charAt(j) == (UChar)92) {
+                    if (target.charAt(j) == static_cast<char16_t>(92)) {
                         ++backslashCount;
                     } else {
                         break;
@@ -420,7 +420,7 @@ IntlTest::prettify(const UnicodeString &source, UBool parseBackslash)
 void IntlTest::setICU_DATA() {
     const char *original_ICU_DATA = getenv("ICU_DATA");
 
-    if (original_ICU_DATA != NULL && *original_ICU_DATA != 0) {
+    if (original_ICU_DATA != nullptr && *original_ICU_DATA != 0) {
         /*  If the user set ICU_DATA, don't second-guess the person. */
         return;
     }
@@ -460,12 +460,12 @@ void IntlTest::setICU_DATA() {
         /*   Only Windows should end up here, so looking for '\' is safe.   */
         for (i=1; i<=3; i++) {
             pBackSlash = strrchr(p, U_FILE_SEP_CHAR);
-            if (pBackSlash != NULL) {
+            if (pBackSlash != nullptr) {
                 *pBackSlash = 0;        /* Truncate the string at the '\'   */
             }
         }
 
-        if (pBackSlash != NULL) {
+        if (pBackSlash != nullptr) {
             /* We found and truncated three names from the path.
              *  Now append "source\data" and set the environment
              */
@@ -492,7 +492,7 @@ void IntlTest::setICU_DATA() {
 static const int32_t indentLevel_offset = 3;
 static const char delim = '/';
 
-IntlTest* IntlTest::gTest = NULL;
+IntlTest* IntlTest::gTest = nullptr;
 
 static int32_t execCount = 0;
 
@@ -508,7 +508,7 @@ void it_logln(std::u16string_view message)
         IntlTest::gTest->logln( message );
 }
 
-void it_logln( void )
+void it_logln()
 {
     if (IntlTest::gTest)
         IntlTest::gTest->logln();
@@ -526,7 +526,7 @@ void it_infoln(std::u16string_view message)
         IntlTest::gTest->infoln( message );
 }
 
-void it_infoln( void )
+void it_infoln()
 {
     if (IntlTest::gTest)
         IntlTest::gTest->infoln();
@@ -581,8 +581,8 @@ void it_dataerrln(const char* message) {
 
 IntlTest::IntlTest()
 {
-    caller = NULL;
-    testPath = NULL;
+    caller = nullptr;
+    testPath = nullptr;
     LL_linestart = true;
     errorCount = 0;
     dataErrorCount = 0;
@@ -690,12 +690,12 @@ int32_t IntlTest::setThreadCount( int32_t count )
     return rval;
 }
 
-int32_t IntlTest::getErrors( void )
+int32_t IntlTest::getErrors()
 {
     return errorCount;
 }
 
-int32_t IntlTest::getDataErrors( void )
+int32_t IntlTest::getDataErrors()
 {
     return dataErrorCount;
 }
@@ -703,12 +703,12 @@ int32_t IntlTest::getDataErrors( void )
 UBool IntlTest::runTest( char* name, char* par, char *baseName )
 {
     UBool rval;
-    char* pos = NULL;
+    char* pos = nullptr;
 
-    char* baseNameBuffer = NULL;
+    char* baseNameBuffer = nullptr;
 
-    if(baseName == NULL) {
-      baseNameBuffer = (char*)malloc(1024);
+    if(baseName == nullptr) {
+      baseNameBuffer = static_cast<char*>(malloc(1024));
       baseName=baseNameBuffer;
       strcpy(baseName, "/");
     }
@@ -719,11 +719,11 @@ UBool IntlTest::runTest( char* name, char* par, char *baseName )
         testPath = pos+1;   // store subpath for calling subtest
         *pos = 0;       // split into two strings
     }else{
-        testPath = NULL;
+        testPath = nullptr;
     }
 
     if (!name || (name[0] == 0) || (strcmp(name, "*") == 0)) {
-      rval = runTestLoop( NULL, par, baseName );
+      rval = runTestLoop( nullptr, par, baseName );
 
     }else if (strcmp( name, "LIST" ) == 0) {
         this->usage();
@@ -735,7 +735,7 @@ UBool IntlTest::runTest( char* name, char* par, char *baseName )
 
     if (pos)
         *pos = delim;  // restore original value at pos
-    if(baseNameBuffer!=NULL) {
+    if(baseNameBuffer!=nullptr) {
       free(baseNameBuffer);
     }
     return rval;
@@ -765,7 +765,7 @@ UBool IntlTest::runTestLoop( char* testname, char* par, char *baseName )
     UBool  rval = false;
     UBool   lastTestFailed;
 
-    if(baseName == NULL) {
+    if(baseName == nullptr) {
       printf("ERROR: baseName can't be null.\n");
       return false;
     } else {
@@ -818,7 +818,7 @@ UBool IntlTest::runTestLoop( char* testname, char* par, char *baseName )
             strcpy(saveBaseLoc,name);
 
 
-            ctest_xml_testcase(baseName, name, secs, (lastErrorCount!=errorCount)?"err":NULL);
+            ctest_xml_testcase(baseName, name, secs, (lastErrorCount!=errorCount)?"err":nullptr);
             
 
             saveBaseLoc[0]=0; /* reset path */
@@ -879,7 +879,7 @@ void IntlTest::logln(std::u16string_view message)
     }
 }
 
-void IntlTest::logln( void )
+void IntlTest::logln()
 {
     if( verbose ) {
         LL_message({}, true );
@@ -903,19 +903,19 @@ void IntlTest::infoln(std::u16string_view message)
   LL_message( message, true );
 }
 
-void IntlTest::infoln( void )
+void IntlTest::infoln()
 {
   LL_message({}, true );
 }
 
-int32_t IntlTest::IncErrorCount( void )
+int32_t IntlTest::IncErrorCount()
 {
     errorCount++;
     if (caller) caller->IncErrorCount();
     return errorCount;
 }
 
-int32_t IntlTest::IncDataErrorCount( void )
+int32_t IntlTest::IncDataErrorCount()
 {
     dataErrorCount++;
     if (caller) caller->IncDataErrorCount();
@@ -989,7 +989,7 @@ void IntlTest::log(const char *fmt, ...)
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     if( verbose ) {
-        log(UnicodeString(buffer, (const char *)NULL));
+        log(UnicodeString(buffer, (const char *)nullptr));
     }
 }
 
@@ -1003,7 +1003,7 @@ void IntlTest::logln(const char *fmt, ...)
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
     if( verbose ) {
-        logln(UnicodeString(buffer, (const char *)NULL));
+        logln(UnicodeString(buffer, (const char *)nullptr));
     }
 }
 
@@ -1016,7 +1016,7 @@ UBool IntlTest::logKnownIssue(const char *ticket, const char *fmt, ...)
     /* snprintf it just to make sure that the information is valid */
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
-    return logKnownIssue(ticket, UnicodeString(buffer, (const char *)NULL));
+    return logKnownIssue(ticket, UnicodeString(buffer, (const char *)nullptr));
 }
 
 UBool IntlTest::logKnownIssue(const char *ticket) {
@@ -1054,7 +1054,7 @@ void IntlTest::info(const char *fmt, ...)
     /* snprintf it just to make sure that the information is valid */
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
-    info(UnicodeString(buffer, (const char *)NULL));
+    info(UnicodeString(buffer, (const char *)nullptr));
 }
 
 void IntlTest::infoln(const char *fmt, ...)
@@ -1066,7 +1066,7 @@ void IntlTest::infoln(const char *fmt, ...)
     /* snprintf it just to make sure that the information is valid */
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
-    infoln(UnicodeString(buffer, (const char *)NULL));
+    infoln(UnicodeString(buffer, (const char *)nullptr));
 }
 
 void IntlTest::err(const char *fmt, ...)
@@ -1077,7 +1077,7 @@ void IntlTest::err(const char *fmt, ...)
     va_start(ap, fmt);
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
-    err(UnicodeString(buffer, (const char *)NULL));
+    err(UnicodeString(buffer, (const char *)nullptr));
 }
 
 void IntlTest::errln(const char *fmt, ...)
@@ -1088,7 +1088,7 @@ void IntlTest::errln(const char *fmt, ...)
     va_start(ap, fmt);
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
-    errln(UnicodeString(buffer, (const char *)NULL));
+    errln(UnicodeString(buffer, (const char *)nullptr));
 }
 
 void IntlTest::dataerrln(const char *fmt, ...)
@@ -1099,7 +1099,7 @@ void IntlTest::dataerrln(const char *fmt, ...)
     va_start(ap, fmt);
     vsnprintf(buffer, sizeof(buffer), fmt, ap);
     va_end(ap);
-    dataerrln(UnicodeString(buffer, (const char *)NULL));
+    dataerrln(UnicodeString(buffer, (const char *)nullptr));
 }
 
 void IntlTest::errcheckln(UErrorCode status, const char *fmt, ...)
@@ -1112,9 +1112,9 @@ void IntlTest::errcheckln(UErrorCode status, const char *fmt, ...)
     va_end(ap);
     
     if (status == U_FILE_ACCESS_ERROR || status == U_MISSING_RESOURCE_ERROR) {
-        dataerrln(UnicodeString(buffer, (const char *)NULL));
+        dataerrln(UnicodeString(buffer, (const char *)nullptr));
     } else {
-        errln(UnicodeString(buffer, (const char *)NULL));
+        errln(UnicodeString(buffer, (const char *)nullptr));
     }
 }
 
@@ -1125,7 +1125,7 @@ void IntlTest::printErrors()
 
 UBool IntlTest::printKnownIssues()
 {
-  if(knownList != NULL) {
+  if(knownList != nullptr) {
     udbg_knownIssue_print(knownList);
     udbg_knownIssue_close(knownList);
     return true;
@@ -1146,7 +1146,7 @@ void IntlTest::LL_message(std::u16string_view message, UBool newline)
 
     // string that starts with a LineFeed character and continues
     // with spaces according to the current indentation
-    static const UChar indentUChars[] = {
+    static const char16_t indentUChars[] = {
         '\n',
         32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
         32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 32,
@@ -1168,7 +1168,7 @@ void IntlTest::LL_message(std::u16string_view message, UBool newline)
     // stream out the indentation string first if necessary
     length = indent.extract(1, indent.length(), buffer, sizeof(buffer));
     if (length > 0) {
-        fwrite(buffer, sizeof(*buffer), length, (FILE *)testoutfp);
+        fwrite(buffer, sizeof(*buffer), length, static_cast<FILE*>(testoutfp));
     }
 
     // replace each LineFeed by the indentation string
@@ -1179,30 +1179,30 @@ void IntlTest::LL_message(std::u16string_view message, UBool newline)
     length = us.extract(0, us.length(), buffer, sizeof(buffer));
     if (length > 0) {
         length = length > 30000 ? 30000 : length;
-        fwrite(buffer, sizeof(*buffer), length, (FILE *)testoutfp);
+        fwrite(buffer, sizeof(*buffer), length, static_cast<FILE*>(testoutfp));
     }
 
     if (newline) {
         char newLine = '\n';
-        fwrite(&newLine, sizeof(newLine), 1, (FILE *)testoutfp);
+        fwrite(&newLine, sizeof(newLine), 1, static_cast<FILE*>(testoutfp));
     }
 
     // A newline usually flushes the buffer, but
     // flush the message just in case of a core dump.
-    fflush((FILE *)testoutfp);
+    fflush(static_cast<FILE*>(testoutfp));
 }
 
 /**
 * Print a usage message for this test class.
 */
-void IntlTest::usage( void )
+void IntlTest::usage()
 {
     UBool save_verbose = setVerbose( true );
     logln("Test names:");
     logln("-----------");
 
     int32_t index = 0;
-    const char* name = NULL;
+    const char* name = nullptr;
     do{
         this->runIndexedTest( index, false, name );
         if (!name) break;
@@ -1248,13 +1248,13 @@ main(int argc, char* argv[])
     UBool name = false;
     UBool leaks = false;
     UBool utf8 = false;
-    const char *summary_file = NULL;
+    const char *summary_file = nullptr;
     UBool warnOnMissingData = false;
     UBool writeGoldenData = false;
     UBool defaultDataFound = false;
     int32_t threadCount = 12;
     UErrorCode errorCode = U_ZERO_ERROR;
-    UConverter *cnv = NULL;
+    UConverter *cnv = nullptr;
     const char *warnOrErr = "Failure";
     UDate startTime, endTime;
     int32_t diffTime;
@@ -1382,7 +1382,7 @@ main(int argc, char* argv[])
 
     {
 	const char *charsetFamily = "Unknown";
-        int32_t voidSize = (int32_t)sizeof(void*);
+        int32_t voidSize = static_cast<int32_t>(sizeof(void*));
         int32_t bits = voidSize * 8;
         if(U_CHARSET_FAMILY==U_ASCII_FAMILY) {
            charsetFamily="ASCII";
@@ -1512,7 +1512,7 @@ main(int argc, char* argv[])
     if (all) {
         major.runTest();
         if (leaks) {
-            major.run_phase2( NULL, NULL );
+            major.run_phase2( nullptr, nullptr );
         }
     }else{
         for (int i = 1; i < argc; ++i) {
@@ -1571,12 +1571,12 @@ main(int argc, char* argv[])
             fprintf(stdout, "\t*WARNING* some data-loading errors were ignored by the -w option.\n");
         }
     }else{
-        fprintf(stdout, "Errors in total: %ld.\n", (long)major.getErrors());
+        fprintf(stdout, "Errors in total: %ld.\n", static_cast<long>(major.getErrors()));
         major.printErrors();
 
-        if(summary_file != NULL) {
+        if(summary_file != nullptr) {
           FILE *summf = fopen(summary_file, "w");
-          if( summf != NULL) {
+          if( summf != nullptr) {
             char buf[10000];
             int32_t length = errorList.extract(0, errorList.length(), buf, sizeof(buf));
             fwrite(buf, sizeof(*buf), length, summf);
@@ -1621,10 +1621,10 @@ main(int argc, char* argv[])
 }
 
 const char* IntlTest::loadTestData(UErrorCode& err){
-    if ( _testDataPath == NULL){
-        const char*      directory=NULL;
-        UResourceBundle* test =NULL;
-        char* tdpath=NULL;
+    if ( _testDataPath == nullptr){
+        const char*      directory=nullptr;
+        UResourceBundle* test =nullptr;
+        char* tdpath=nullptr;
         const char* tdrelativepath;
 
 #if defined (U_TOPBUILDDIR)
@@ -1637,7 +1637,7 @@ const char* IntlTest::loadTestData(UErrorCode& err){
 
         tdpath = static_cast<char*>(malloc(sizeof(char) * ((strlen(directory) * strlen(tdrelativepath)) + 100)));
 
-        if (tdpath == NULL) {
+        if (tdpath == nullptr) {
             err = U_MEMORY_ALLOCATION_ERROR;
             it_dataerrln(UnicodeString("Could not allocate memory for _testDataPath ") + u_errorName(err));
             return "";
@@ -1673,7 +1673,7 @@ const char* IntlTest::getTestDataPath(UErrorCode& err) {
  * Note: this function is parallel with C loadSourceTestData in cintltst.c
  */
 const char *IntlTest::getSourceTestData(UErrorCode& /*err*/) {
-    const char *srcDataDir = NULL;
+    const char *srcDataDir = nullptr;
 #ifdef U_TOPSRCDIR
     srcDataDir = U_TOPSRCDIR U_FILE_SEP_STRING"test" U_FILE_SEP_STRING "testdata" U_FILE_SEP_STRING;
 #else
@@ -1754,7 +1754,7 @@ char *IntlTest::getUnidataPath(char path[]) {
     strcpy(path, pathToDataDirectory());
     strcat(path, "unidata" U_FILE_SEP_STRING "UnicodeData.txt");
     FILE *f = fopen(path, "r");
-    if(f != NULL) {
+    if(f != nullptr) {
         fclose(f);
         *(strchr(path, 0) - kUnicodeDataTxtLength) = 0;  // Remove the basename.
         return path;
@@ -1771,7 +1771,7 @@ char *IntlTest::getUnidataPath(char path[]) {
             it_errln(UnicodeString(
                         "unable to find path to source/data/unidata/ and loadTestData() failed: ") +
                     u_errorName(errorCode));
-            return NULL;
+            return nullptr;
         }
         strcpy(path, testDataPath);
         strcat(path, U_FILE_SEP_STRING ".." U_FILE_SEP_STRING ".."
@@ -1781,21 +1781,21 @@ char *IntlTest::getUnidataPath(char path[]) {
     strcat(path, U_FILE_SEP_STRING);
     strcat(path, "unidata" U_FILE_SEP_STRING "UnicodeData.txt");
     f = fopen(path, "r");
-    if(f != NULL) {
+    if(f != nullptr) {
         fclose(f);
         *(strchr(path, 0) - kUnicodeDataTxtLength) = 0;  // Remove the basename.
         return path;
     }
-    return NULL;
+    return nullptr;
 }
 
-const char* IntlTest::fgDataDir = NULL;
+const char* IntlTest::fgDataDir = nullptr;
 
 /* returns the path to icu/source/data */
 const char *  IntlTest::pathToDataDirectory()
 {
 
-    if(fgDataDir != NULL) {
+    if(fgDataDir != nullptr) {
         return fgDataDir;
     }
 
@@ -1827,12 +1827,12 @@ const char *  IntlTest::pathToDataDirectory()
         /*   Only Windows should end up here, so looking for '\' is safe.   */
         for (i=1; i<=3; i++) {
             pBackSlash = strrchr(p, U_FILE_SEP_CHAR);
-            if (pBackSlash != NULL) {
+            if (pBackSlash != nullptr) {
                 *pBackSlash = 0;        /* Truncate the string at the '\'   */
             }
         }
 
-        if (pBackSlash != NULL) {
+        if (pBackSlash != nullptr) {
             /* We found and truncated three names from the path.
             *  Now append "source\data" and set the environment
             */
@@ -1937,7 +1937,7 @@ void IntlTest::icu_rand::seed(uint32_t seed) {
 }
 
 uint32_t IntlTest::icu_rand::operator() () {
-    fLast = ((uint64_t)fLast * 48271UL) % 2147483647UL;
+    fLast = (static_cast<uint64_t>(fLast) * 48271UL) % 2147483647UL;
     return fLast;
 }
 
@@ -1947,18 +1947,18 @@ uint32_t IntlTest::icu_rand::getSeed() {
 
 
 
-static inline UChar toHex(int32_t i) {
+static inline char16_t toHex(int32_t i) {
     return static_cast<char16_t>(i + (i < 10 ? 0x30 : (0x41 - 10)));
 }
 
 static UnicodeString& escape(std::u16string_view s, UnicodeString& result) {
     for (int32_t i=0; i<static_cast<int32_t>(s.length()); ++i) {
-        UChar c = s[i];
-        if (c <= (UChar)0x7F) {
+        char16_t c = s[i];
+        if (c <= static_cast<char16_t>(0x7F)) {
             result += c;
         } else {
-            result += (UChar)0x5c;
-            result += (UChar)0x75;
+            result += static_cast<char16_t>(0x5c);
+            result += static_cast<char16_t>(0x75);
             result += toHex((c >> 12) & 0xF);
             result += toHex((c >>  8) & 0xF);
             result += toHex((c >>  4) & 0xF);
@@ -1971,7 +1971,7 @@ static UnicodeString& escape(std::u16string_view s, UnicodeString& result) {
 #define VERBOSE_ASSERTIONS
 
 UBool IntlTest::assertTrue(const char* message, UBool condition, UBool quiet, UBool possibleDataError, const char *file, int line) {
-    if (file != NULL) {
+    if (file != nullptr) {
         if (!condition) {
             if (possibleDataError) {
                 dataerrln("%s:%d: FAIL: assertTrue() failed: %s", file, line, message);
@@ -2010,7 +2010,7 @@ UBool IntlTest::assertFalse(const char* message, UBool condition, UBool quiet, U
 }
 
 UBool IntlTest::assertSuccess(const char* message, UErrorCode ec, UBool possibleDataError, const char *file, int line) {
-    if( file==NULL ) {
+    if( file==nullptr ) {
       file = ""; // prevent failure if no file given
     }
     if (U_FAILURE(ec)) {
@@ -2434,10 +2434,10 @@ void IntlTest::setProperty(const char* propline) {
 }
 
 const char* IntlTest::getProperty(const char* prop) {
-    const char* val = NULL;
+    const char* val = nullptr;
     for (int32_t i = 0; i < numProps; i++) {
         int32_t plen = static_cast<int32_t>(uprv_strlen(prop));
-        if ((int32_t)uprv_strlen(proplines[i]) > plen + 1
+        if (static_cast<int32_t>(uprv_strlen(proplines[i])) > plen + 1
                 && proplines[i][plen] == '='
                 && uprv_strncmp(proplines[i], prop, plen) == 0) {
             val = &(proplines[i][plen+1]);
@@ -2450,7 +2450,7 @@ const char* IntlTest::getProperty(const char* prop) {
 //-------------------------------------------------------------------------------
 //
 //    ReadAndConvertFile   Read a text data file, convert it to UChars, and
-//    return the data in one big UChar * buffer, which the caller must delete.
+//    return the data in one big char16_t * buffer, which the caller must delete.
 //
 //    parameters:
 //          fileName:   the name of the file, with no directory part.  The test data directory
@@ -2458,20 +2458,20 @@ const char* IntlTest::getProperty(const char* prop) {
 //          ulen        an out parameter, receives the actual length (in UChars) of the file data.
 //          encoding    The file encoding.  If the file contains a BOM, that will override the encoding
 //                      specified here.  The BOM, if it exists, will be stripped from the returned data.
-//                      Pass NULL for the system default encoding.
+//                      Pass nullptr for the system default encoding.
 //          status
 //    returns:
-//                      The file data, converted to UChar.
+//                      The file data, converted to char16_t.
 //                      The caller must delete this when done with
 //                           delete [] theBuffer;
 //
 //
 //--------------------------------------------------------------------------------
-UChar *IntlTest::ReadAndConvertFile(const char *fileName, int &ulen, const char *encoding, UErrorCode &status) {
-    UChar       *retPtr  = NULL;
-    char        *fileBuf = NULL;
-    UConverter* conv     = NULL;
-    FILE        *f       = NULL;
+char16_t *IntlTest::ReadAndConvertFile(const char *fileName, int &ulen, const char *encoding, UErrorCode &status) {
+    char16_t    *retPtr  = nullptr;
+    char        *fileBuf = nullptr;
+    UConverter* conv     = nullptr;
+    FILE        *f       = nullptr;
 
     ulen = 0;
     if (U_FAILURE(status)) {
@@ -2485,7 +2485,7 @@ UChar *IntlTest::ReadAndConvertFile(const char *fileName, int &ulen, const char 
     if (f == nullptr) {
         dataerrln("Error opening test data file %s\n", fileName);
         status = U_FILE_ACCESS_ERROR;
-        return NULL;
+        return nullptr;
     }
     //
     //  Read it in
@@ -2513,7 +2513,7 @@ UChar *IntlTest::ReadAndConvertFile(const char *fileName, int &ulen, const char 
     fileBufC = fileBuf;
     bomEncoding = ucnv_detectUnicodeSignature(
         fileBuf, fileSize, &signatureLength, &status);
-    if(bomEncoding!=NULL ){
+    if(bomEncoding!=nullptr ){
         fileBufC  += signatureLength;
         fileSize  -= signatureLength;
         encoding = bomEncoding;
@@ -2528,11 +2528,11 @@ UChar *IntlTest::ReadAndConvertFile(const char *fileName, int &ulen, const char 
     }
 
     //
-    // Convert the rules to UChar.
+    // Convert the rules to char16_t.
     //  Preflight first to determine required buffer size.
     //
     ulen = ucnv_toUChars(conv,
-        NULL,           //  dest,
+        nullptr,           //  dest,
         0,              //  destCapacity,
         fileBufC,
         fileSize,
@@ -2541,7 +2541,7 @@ UChar *IntlTest::ReadAndConvertFile(const char *fileName, int &ulen, const char 
         // Buffer Overflow is expected from the preflight operation.
         status = U_ZERO_ERROR;
 
-        retPtr = new UChar[ulen+1];
+        retPtr = new char16_t[ulen+1];
         ucnv_toUChars(conv,
             retPtr,       //  dest,
             ulen+1,

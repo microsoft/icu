@@ -125,7 +125,7 @@ _set_addRange(USet *set, UChar32 start, UChar32 end) {
 }
 
 static void U_CALLCONV
-_set_addString(USet *set, const UChar *str, int32_t length) {
+_set_addString(USet *set, const char16_t *str, int32_t length) {
     reinterpret_cast<UnicodeSet*>(set)->add(UnicodeString(static_cast<UBool>(length < 0), str, length));
 }
 
@@ -136,14 +136,14 @@ _set_addString(USet *set, const UChar *str, int32_t length) {
 // add the result of a full case mapping to the set
 // use str as a temporary string to avoid constructing one
 static inline void
-addCaseMapping(UnicodeSet &set, int32_t result, const UChar *full, UnicodeString &str) {
+addCaseMapping(UnicodeSet &set, int32_t result, const char16_t *full, UnicodeString &str) {
     if(result >= 0) {
         if(result > UCASE_MAX_STRING_LENGTH) {
             // add a single-code point case mapping
             set.add(result);
         } else {
             // add a string case mapping from full with length result
-            str.setTo((UBool)false, full, result);
+            str.setTo(static_cast<UBool>(false), full, result);
             set.add(str);
         }
     }

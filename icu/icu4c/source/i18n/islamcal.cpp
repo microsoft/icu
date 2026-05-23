@@ -57,7 +57,7 @@ static void debug_islamcal_msg(const char *pat, ...)
 static icu::CalendarCache *gMonthCache = nullptr;
 
 U_CDECL_BEGIN
-static UBool calendar_islamic_cleanup(void) {
+static UBool calendar_islamic_cleanup() {
     if (gMonthCache) {
         delete gMonthCache;
         gMonthCache = nullptr;

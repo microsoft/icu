@@ -163,7 +163,7 @@ public:
      * @see getUnknown
      * @stable ICU 2.0
      */
-    static const TimeZone* U_EXPORT2 getGMT(void);
+    static const TimeZone* U_EXPORT2 getGMT();
 
     /**
      * Creates a <code>TimeZone</code> for the given ID.
@@ -171,7 +171,7 @@ public:
      * or a custom ID such as "GMT-8:00".
      * @return the specified <code>TimeZone</code>, or a mutable clone of getUnknown()
      * if the given ID cannot be understood or if the given ID is "Etc/Unknown".
-     * The return result is guaranteed to be non-NULL.
+     * The return result is guaranteed to be non-nullptr.
      * If you require that the specific zone asked for be returned,
      * compare the result with getUnknown() or check the ID of the return result.
      * @stable ICU 2.0
@@ -183,11 +183,11 @@ public:
      * filter conditions.
      * @param zoneType      The system time zone type.
      * @param region        The ISO 3166 two-letter country code or UN M.49
-     *                      three-digit area code. When NULL, no filtering
+     *                      three-digit area code. When nullptr, no filtering
      *                      done by region. 
      * @param rawOffset     An offset from GMT in milliseconds, ignoring
      *                      the effect of daylight savings time, if any.
-     *                      When NULL, no filtering done by zone offset. 
+     *                      When nullptr, no filtering done by zone offset.
      * @param ec            Output param to filled in with a success or
      *                      an error.
      * @return an enumeration object, owned by the caller.
@@ -267,7 +267,7 @@ public:
      * given region.  Some zones are affiliated with no region
      * (e.g., "UTC"); these may also be retrieved, as a group.
      *
-     * @param region The ISO 3166 two-letter country code, or NULL to
+     * @param region The ISO 3166 two-letter country code, or nullptr to
      * retrieve zones not affiliated with any region.
      * @return an enumeration object, owned by the caller
      * @deprecated ICU 70 Use createEnumerationForRegion(const char*,UErrorCode&) instead.
@@ -280,7 +280,7 @@ public:
      * given region.  Some zones are affiliated with no region
      * (e.g., "UTC"); these may also be retrieved, as a group.
      *
-     * @param region The ISO 3166 two-letter country code, or NULL to
+     * @param region The ISO 3166 two-letter country code, or nullptr to
      * retrieve zones not affiliated with any region.
      * @param status Receives the status.
      * @return an enumeration object, owned by the caller
@@ -364,7 +364,7 @@ public:
      * @see getUnknown
      * @stable ICU 2.0
      */
-    static TimeZone* U_EXPORT2 createDefault(void);
+    static TimeZone* U_EXPORT2 createDefault();
 
 #ifndef U_HIDE_INTERNAL_API
     /**
@@ -381,7 +381,7 @@ public:
 
     /**
      * Sets the default time zone (i.e., what's returned by createDefault()) to be the
-     * specified time zone.  If NULL is specified for the time zone, the default time
+     * specified time zone.  If nullptr is specified for the time zone, the default time
      * zone is set to the default host time zone.  This call adopts the TimeZone object
      * passed in; the client is no longer responsible for deleting it.
      *
@@ -642,7 +642,7 @@ public:
      * @return   The TimeZone's raw GMT offset.
      * @stable ICU 2.0
      */
-    virtual int32_t getRawOffset(void) const = 0;
+    virtual int32_t getRawOffset() const = 0;
 
     /**
      * Fills in "ID" with the TimeZone's ID.
@@ -811,7 +811,7 @@ public:
      * 
      * @stable ICU 2.0
      */
-    virtual UBool useDaylightTime(void) const = 0;
+    virtual UBool useDaylightTime() const = 0;
 
 #ifndef U_FORCE_HIDE_DEPRECATED_API
     /**
@@ -855,7 +855,7 @@ public:
      * @return The class ID for all objects of this class.
      * @stable ICU 2.0
      */
-    static UClassID U_EXPORT2 getStaticClassID(void);
+    static UClassID U_EXPORT2 getStaticClassID();
 
     /**
      * Returns a unique class ID POLYMORPHICALLY. This method is to
@@ -868,7 +868,7 @@ public:
      *           same class ID. Objects of other classes have different class IDs.
      * @stable ICU 2.0
      */
-    virtual UClassID getDynamicClassID(void) const override = 0;
+    virtual UClassID getDynamicClassID() const override = 0;
 
     /**
      * Returns the amount of time to be added to local standard time
@@ -941,7 +941,7 @@ protected:
      * Utility function. For internally loading rule data.
      * @param top Top resource bundle for tz data
      * @param ruleid ID of rule to load
-     * @param oldbundle Old bundle to reuse or NULL
+     * @param oldbundle Old bundle to reuse or nullptr
      * @param status Status parameter
      * @return either a new bundle or *oldbundle
      * @internal
@@ -961,7 +961,7 @@ private:
      * for ICU internal implementation and useful for building hashtable using a time zone
      * ID as a key.
      * @param id zone id string
-     * @return the pointer of the ID resource, or NULL.
+     * @return the pointer of the ID resource, or nullptr.
      */
     static const char16_t* findID(const UnicodeString& id);
 
@@ -969,15 +969,15 @@ private:
      * Resolve a link in Olson tzdata.  When the given id is known and it's not a link,
      * the id itself is returned.  When the given id is known and it is a link, then
      * dereferenced zone id is returned.  When the given id is unknown, then it returns
-     * NULL.
+     * nullptr.
      * @param id zone id string
-     * @return the dereferenced zone or NULL
+     * @return the dereferenced zone or nullptr
      */
     static const char16_t* dereferOlsonLink(const UnicodeString& id);
 
     /**
      * Returns the region code associated with the given zone,
-     * or NULL if the zone is not known.
+     * or nullptr if the zone is not known.
      * @param id zone id string
      * @return the region associated with the given zone
      */
@@ -987,7 +987,7 @@ private:
 #ifndef U_HIDE_INTERNAL_API
     /**
      * Returns the region code associated with the given zone,
-     * or NULL if the zone is not known.
+     * or nullptr if the zone is not known.
      * @param id zone id string
      * @param status Status parameter
      * @return the region associated with the given zone

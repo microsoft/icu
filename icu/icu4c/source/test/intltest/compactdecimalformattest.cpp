@@ -260,7 +260,7 @@ private:
     void CheckLocale(
         const Locale& locale, UNumberCompactStyle style,
         const ExpectedResult* expectedResults, int32_t expectedResultLength);
-    void CheckLocaleWithCurrency(const Locale& locale, UNumberCompactStyle style, const UChar* currency,
+    void CheckLocaleWithCurrency(const Locale& locale, UNumberCompactStyle style, const char16_t* currency,
                                  const ExpectedResult* expectedResults, int32_t expectedResultLength);
     void CheckExpectedResult(
         const CompactDecimalFormat* cdf, const ExpectedResult* expectedResult,
@@ -434,7 +434,7 @@ void CompactDecimalFormatTest::TestAPIVariants() {
   actual.remove();
   pos.setBeginIndex(0);
   pos.setEndIndex(0);
-  cdf->format((int32_t)123456, actual, pos);
+  cdf->format(static_cast<int32_t>(123456), actual, pos);
   if (actual != expected || pos.getEndIndex() != 3) {
     errln(UnicodeString("Fail format(int32_t,UnicodeString&,FieldPosition&): Expected: \"") + expected + "\", pos 3; " +
                                                                            "Got: \"" + actual + "\", pos " + pos.getEndIndex());
@@ -444,7 +444,7 @@ void CompactDecimalFormatTest::TestAPIVariants() {
   pos.setBeginIndex(0);
   pos.setEndIndex(0);
   status = U_ZERO_ERROR;
-  cdf->format((int32_t)123456, actual, pos, status);
+  cdf->format(static_cast<int32_t>(123456), actual, pos, status);
   if (actual != expected || pos.getEndIndex() != 3 || status != U_ZERO_ERROR) {
     errln(UnicodeString("Fail format(int32_t,UnicodeString&,FieldPosition&,UErrorCode&): Expected: \"") + expected + "\", pos 3, status U_ZERO_ERROR; " +
                                                               "Got: \"" + actual + "\", pos " + pos.getEndIndex() + ", status " + u_errorName(status));
@@ -454,7 +454,7 @@ void CompactDecimalFormatTest::TestAPIVariants() {
   pos.setBeginIndex(0);
   pos.setEndIndex(0);
   status = U_ZERO_ERROR;
-  cdf->format((int32_t)123456, actual, &posIter, status);
+  cdf->format(static_cast<int32_t>(123456), actual, &posIter, status);
   posIter.next(pos);
   if (actual != expected || pos.getEndIndex() != 3 || status != U_ZERO_ERROR) {
     errln(UnicodeString("Fail format(int32_t,UnicodeString&,FieldPosition&,UErrorCode&): Expected: \"") + expected + "\", first pos 3, status U_ZERO_ERROR; " +
@@ -464,7 +464,7 @@ void CompactDecimalFormatTest::TestAPIVariants() {
   actual.remove();
   pos.setBeginIndex(0);
   pos.setEndIndex(0);
-  cdf->format((int64_t)123456, actual, pos);
+  cdf->format(static_cast<int64_t>(123456), actual, pos);
   if (actual != expected || pos.getEndIndex() != 3) {
     errln(UnicodeString("Fail format(int64_t,UnicodeString&,FieldPosition&): Expected: \"") + expected + "\", pos 3; " +
                                                                            "Got: \"" + actual + "\", pos " + pos.getEndIndex());
@@ -474,7 +474,7 @@ void CompactDecimalFormatTest::TestAPIVariants() {
   pos.setBeginIndex(0);
   pos.setEndIndex(0);
   status = U_ZERO_ERROR;
-  cdf->format((int64_t)123456, actual, pos, status);
+  cdf->format(static_cast<int64_t>(123456), actual, pos, status);
   if (actual != expected || pos.getEndIndex() != 3 || status != U_ZERO_ERROR) {
     errln(UnicodeString("Fail format(int64_t,UnicodeString&,FieldPosition&,UErrorCode&): Expected: \"") + expected + "\", pos 3, status U_ZERO_ERROR; " +
                                                               "Got: \"" + actual + "\", pos " + pos.getEndIndex() + ", status " + u_errorName(status));
@@ -484,7 +484,7 @@ void CompactDecimalFormatTest::TestAPIVariants() {
   pos.setBeginIndex(0);
   pos.setEndIndex(0);
   status = U_ZERO_ERROR;
-  cdf->format((int64_t)123456, actual, &posIter, status);
+  cdf->format(static_cast<int64_t>(123456), actual, &posIter, status);
   posIter.next(pos);
   if (actual != expected || pos.getEndIndex() != 3 || status != U_ZERO_ERROR) {
     errln(UnicodeString("Fail format(int32_t,UnicodeString&,FieldPosition&,UErrorCode&): Expected: \"") + expected + "\", first pos 3, status U_ZERO_ERROR; " +
@@ -526,7 +526,7 @@ void CompactDecimalFormatTest::CheckLocale(const Locale& locale, UNumberCompactS
 }
 
 void CompactDecimalFormatTest::CheckLocaleWithCurrency(const Locale& locale, UNumberCompactStyle style,
-                                                       const UChar* currency,
+                                                       const char16_t* currency,
                                                        const ExpectedResult* expectedResults,
                                                        int32_t expectedResultLength) {
     UErrorCode status = U_ZERO_ERROR;
@@ -561,7 +561,7 @@ CompactDecimalFormat*
 CompactDecimalFormatTest::createCDFInstance(const Locale& locale, UNumberCompactStyle style, UErrorCode& status) {
   CompactDecimalFormat* result = CompactDecimalFormat::createInstance(locale, style, status);
   if (U_FAILURE(status)) {
-    return NULL;
+    return nullptr;
   }
   // All tests are written for two significant digits, so we explicitly set here
   // in case default significant digits change.

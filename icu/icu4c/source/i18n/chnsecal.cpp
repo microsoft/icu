@@ -89,7 +89,7 @@ static const int32_t SYNODIC_GAP = 25;
 
 
 U_CDECL_BEGIN
-static UBool calendar_chinese_cleanup(void) {
+static UBool calendar_chinese_cleanup() {
     if (gWinterSolsticeCache) {
         delete gWinterSolsticeCache;
         gWinterSolsticeCache = nullptr;
@@ -520,7 +520,7 @@ void ChineseCalendar::roll(UCalendarDateFields field, int32_t amount, UErrorCode
 }
 
 void ChineseCalendar::roll(EDateFields field, int32_t amount, UErrorCode& status) {
-    roll((UCalendarDateFields)field, amount, status);
+    roll(static_cast<UCalendarDateFields>(field), amount, status);
 }
 
 
@@ -555,7 +555,7 @@ double daysToMillis(const TimeZone* timeZone, double days, UErrorCode& status) {
         }
         return millis - static_cast<double>(rawOffset + dstOffset);
     }
-    return millis - (double)CHINA_OFFSET;
+    return millis - static_cast<double>(CHINA_OFFSET);
 }
 
 /**
@@ -576,7 +576,7 @@ double millisToDays(const TimeZone* timeZone, double millis, UErrorCode& status)
         }
         return ClockMath::floorDivide(millis + static_cast<double>(rawOffset + dstOffset), kOneDay);
     }
-    return ClockMath::floorDivide(millis + (double)CHINA_OFFSET, kOneDay);
+    return ClockMath::floorDivide(millis + static_cast<double>(CHINA_OFFSET), kOneDay);
 }
 
 //------------------------------------------------------------------

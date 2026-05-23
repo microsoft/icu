@@ -91,7 +91,7 @@ public:
             : trie(d->trie),
               data(d),
               cesIndex(0),
-              skipped(NULL),
+              skipped(nullptr),
               numCpFwd(-1),
               isNumeric(numeric) {}
 
@@ -230,7 +230,7 @@ protected:
      * if a trail surrogate follows the lead surrogate.
      * Otherwise returns any other code unit and does not advance.
      */
-    virtual UChar handleGetTrailSurrogate();
+    virtual char16_t handleGetTrailSurrogate();
 
     /**
      * Called when handleNextCE32() returns with c==0, to see whether it is a NUL terminator.
@@ -278,7 +278,7 @@ private:
 
     uint32_t nextCE32FromContraction(
             const CollationData *d, uint32_t contractionCE32,
-            const UChar *p, uint32_t ce32, UChar32 c,
+            const char16_t *p, uint32_t ce32, UChar32 c,
             UErrorCode &errorCode);
 
     uint32_t nextCE32FromDiscontiguousContraction(

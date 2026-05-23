@@ -61,9 +61,9 @@ static UnicodeString& _formatInput(UnicodeString &appendTo,
         input.extractBetween(pos.start, pos.limit, c);
         input.extractBetween(pos.limit, pos.contextLimit, d);
         input.extractBetween(pos.contextLimit, input.length(), e);
-        appendTo.append(a).append((UChar)123/*{*/).append(b).
-            append((UChar)124/*|*/).append(c).append((UChar)124/*|*/).append(d).
-            append((UChar)125/*}*/).append(e);
+        appendTo.append(a).append((char16_t)123/*{*/).append(b).
+            append((char16_t)124/*|*/).append(c).append((char16_t)124/*|*/).append(d).
+            append((char16_t)125/*}*/).append(e);
     } else {
         appendTo.append("INVALID UTransPosition");
         //appendTo.append((UnicodeString)"INVALID UTransPosition {cs=" +
@@ -78,7 +78,7 @@ static UnicodeString& _formatInput(UnicodeString &appendTo,
 UnicodeString& _appendHex(uint32_t number,
                           int32_t digits,
                           UnicodeString& target) {
-    static const UChar digitString[] = {
+    static const char16_t digitString[] = {
         0x30, 0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38, 0x39,
         0x41, 0x42, 0x43, 0x44, 0x45, 0x46, 0
     };
@@ -115,7 +115,7 @@ inline void _debugOut(const char* msg, TransliterationRule* rule,
     if (rule) {
         UnicodeString r;
         rule->toRule(r, true);
-        buf.append((UChar)32).append(r);
+        buf.append((char16_t)32).append(r);
     }
     buf.append(UnicodeString(" => ", ""));
     UnicodeString* text = (UnicodeString*)&theText;
@@ -193,7 +193,7 @@ TransliterationRuleSet::TransliterationRuleSet(const TransliterationRuleSet& oth
         len = other.ruleVector->size();
         for (i=0; i<len && U_SUCCESS(status); ++i) {
             LocalPointer<TransliterationRule> tempTranslitRule(
-                new TransliterationRule(*(TransliterationRule*)other.ruleVector->elementAt(i)), status);
+                new TransliterationRule(*static_cast<TransliterationRule*>(other.ruleVector->elementAt(i))), status);
             ruleVector->adoptElement(tempTranslitRule.orphan(), status);
         }
     }
@@ -225,7 +225,7 @@ void TransliterationRuleSet::setData(const TransliterationRuleData* d) {
  * Return the maximum context length.
  * @return the length of the longest preceding context.
  */
-int32_t TransliterationRuleSet::getMaximumContextLength(void) const {
+int32_t TransliterationRuleSet::getMaximumContextLength() const {
     return maxContextLength;
 }
 
@@ -296,7 +296,7 @@ void TransliterationRuleSet::freeze(UParseError& parseError,UErrorCode& status) 
      * Be careful not to call malloc(0).
      */
     int16_t* indexValue = static_cast<int16_t*>(uprv_malloc(sizeof(int16_t) * (n > 0 ? n : 1)));
-    /* test for NULL */
+    /* test for nullptr */
     if (indexValue == nullptr) {
         status = U_MEMORY_ALLOCATION_ERROR;
         return;
@@ -318,7 +318,7 @@ void TransliterationRuleSet::freeze(UParseError& parseError,UErrorCode& status) 
                 // matchesIndexValue check.  In practice this happens
                 // rarely, so we seldom treat this code path.
                 TransliterationRule* r = static_cast<TransliterationRule*>(ruleVector->elementAt(j));
-                if (r->matchesIndexValue((uint8_t)x)) {
+                if (r->matchesIndexValue(static_cast<uint8_t>(x))) {
                     v.addElement(r, status);
                 }
             }
@@ -336,11 +336,11 @@ void TransliterationRuleSet::freeze(UParseError& parseError,UErrorCode& status) 
 
     /* You can't do malloc(0)! */
     if (v.size() == 0) {
-        rules = NULL;
+        rules = nullptr;
         return;
     }
     rules = static_cast<TransliterationRule**>(uprv_malloc(v.size() * sizeof(TransliterationRule*)));
-    /* test for NULL */
+    /* test for nullptr */
     if (rules == nullptr) {
         status = U_MEMORY_ALLOCATION_ERROR;
         return;
@@ -417,7 +417,7 @@ UBool TransliterationRuleSet::transliterate(Replaceable& text,
     }
     // No match or partial match from any rule
     pos.start += U16_LENGTH(text.char32At(pos.start));
-    _debugOut("no match", NULL, text, pos);
+    _debugOut("no match", nullptr, text, pos);
     return true;
 }
 

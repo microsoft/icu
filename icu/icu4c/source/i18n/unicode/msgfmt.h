@@ -479,7 +479,7 @@ public:
      * @param aposMode   The new apostrophe mode.
      * @param parseError Struct to receive information on the position
      *                   of an error within the pattern.
-     *                   Can be NULL.
+     *                   Can be nullptr.
      * @param status    Input/output error code.  If the
      *                  pattern cannot be parsed, set to failure code.
      * @stable ICU 4.8
@@ -636,8 +636,8 @@ public:
      * about format numbering.
      *
      * @param count output parameter to receive the size of the array
-     * @return an array of count Format* objects, or NULL if out of
-     * memory.  Any or all of the array elements may be NULL.
+     * @return an array of count Format* objects, or nullptr if out of
+     * memory.  Any or all of the array elements may be nullptr.
      * @stable ICU 2.0
      */
     U_I18N_API virtual const Format** getFormats(int32_t& count) const;
@@ -713,7 +713,7 @@ public:
     U_I18N_API virtual UnicodeString& format(const Formattable& obj,
                                              UnicodeString& appendTo,
                                              FieldPosition& pos,
-                                  UErrorCode& status) const override;
+                                             UErrorCode& status) const override;
 
     /**
      * Formats the given array of arguments into a user-defined argument name
@@ -766,7 +766,7 @@ public:
      * @param status    Input/output error code.  If the
      *                  pattern cannot be parsed, set to failure code.
      * @return an array of parsed arguments.  The caller owns both
-     * the array and its contents. Returns NULL if status is not U_ZERO_ERROR.
+     * the array and its contents. Returns nullptr if status is not U_ZERO_ERROR.
      *
      * @stable ICU 2.0
      */
@@ -788,7 +788,7 @@ public:
      */
     U_I18N_API virtual void parseObject(const UnicodeString& source,
                                         Formattable& result,
-                             ParsePosition& pos) const override;
+                                        ParsePosition& pos) const override;
 
     /**
      * Convert an 'apostrophe-friendly' pattern into a standard
@@ -865,8 +865,8 @@ public:
      * Compares two Format objects. This is used for constructing the hash
      * tables.
      *
-     * @param left pointer to a Format object. Must not be NULL.
-     * @param right pointer to a Format object. Must not be NULL.
+     * @param left pointer to a Format object. Must not be nullptr.
+     * @param right pointer to a Format object. Must not be nullptr.
      *
      * @return whether the two objects are the same
      * @internal
@@ -941,7 +941,7 @@ private:
     PluralSelectorProvider ordinalProvider;
 
     /**
-     * Method to retrieve default formats (or NULL on failure).
+     * Method to retrieve default formats (or nullptr on failure).
      * These are semantically const, but may modify *this.
      */
     const NumberFormat* getDefaultNumberFormat(UErrorCode&) const;
@@ -973,13 +973,13 @@ private:
      * AppendableWrapper, updates the field position.
      *
      * @param msgStart      Index to msgPattern part to start formatting from.
-     * @param plNumber      NULL except when formatting a plural argument sub-message
+     * @param plNumber      nullptr except when formatting a plural argument sub-message
      *                      where a '#' is replaced by the format string for this number.
-     * @param arguments     The formattable objects array. (Must not be NULL.)
-     * @param argumentNames NULL if numbered values are used. Otherwise the same
+     * @param arguments     The formattable objects array. (Must not be nullptr.)
+     * @param argumentNames nullptr if numbered values are used. Otherwise the same
      *                      length as "arguments", and each entry is the name of the
      *                      corresponding argument in "arguments".
-     * @param cnt           The length of arguments (and of argumentNames if that is not NULL).
+     * @param cnt           The length of arguments (and of argumentNames if that is not nullptr).
      * @param appendTo      Output parameter to receive the result.
      *                      The result string is appended to existing contents.
      * @param pos           Field position status.
@@ -1076,8 +1076,8 @@ private:
     void resetPattern();
 
     /**
-     * A DummyFormatter that we use solely to store a NULL value. UHash does
-     * not support storing NULL values.
+     * A DummyFormatter that we use solely to store a nullptr value. UHash does
+     * not support storing nullptr values.
      */
     class DummyFormat : public Format {
     public:

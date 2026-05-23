@@ -68,7 +68,7 @@ UnicodeString CalendarTest::calToStr(const Calendar & cal)
   int i;
   UDate d;
   for(i = 0;i<UCAL_FIELD_COUNT;i++) {
-    out += (UnicodeString("") + fieldName((UCalendarDateFields)i) + "=" +  cal.get((UCalendarDateFields)i, status) + UnicodeString(" "));
+    out += (UnicodeString("") + fieldName(static_cast<UCalendarDateFields>(i)) + "=" + cal.get(static_cast<UCalendarDateFields>(i), status) + UnicodeString(" "));
   }
   out += "[" + UnicodeString(cal.getType()) + "]";
 
@@ -306,7 +306,7 @@ CalendarTest::TestGenericAPI()
     logln("cal->roll(UCAL_SECOND)");
     cal->roll(UCAL_SECOND, static_cast<UBool>(true), status);
     logln(UnicodeString("cal=") + cal->getTime(status) + (calToStr(*cal)));
-    cal->roll(UCAL_SECOND, (int32_t)0, status);
+    cal->roll(UCAL_SECOND, static_cast<int32_t>(0), status);
     logln(UnicodeString("cal=") + cal->getTime(status) + (calToStr(*cal)));
     if (failure(status, "Calendar::roll")) return;
 
@@ -346,7 +346,7 @@ CalendarTest::TestGenericAPI()
 
     for (i=UCAL_SUNDAY; i<=UCAL_SATURDAY; ++i)
     {
-        cal->setFirstDayOfWeek((UCalendarDaysOfWeek)i);
+        cal->setFirstDayOfWeek(static_cast<UCalendarDaysOfWeek>(i));
         if (cal->getFirstDayOfWeek() != i) errln("FAIL: set/getFirstDayOfWeek failed");
         UErrorCode aStatus = U_ZERO_ERROR;
         if (cal->getFirstDayOfWeek(aStatus) != i || U_FAILURE(aStatus)) errln("FAIL: getFirstDayOfWeek(status) failed");
@@ -354,17 +354,17 @@ CalendarTest::TestGenericAPI()
 
     for (i=1; i<=7; ++i)
     {
-        cal->setMinimalDaysInFirstWeek((uint8_t)i);
+        cal->setMinimalDaysInFirstWeek(static_cast<uint8_t>(i));
         if (cal->getMinimalDaysInFirstWeek() != i) errln("FAIL: set/getFirstDayOfWeek failed");
     }
 
     for (i=0; i<UCAL_FIELD_COUNT; ++i)
     {
-        if (cal->getMinimum((UCalendarDateFields)i) > cal->getGreatestMinimum((UCalendarDateFields)i))
+        if (cal->getMinimum(static_cast<UCalendarDateFields>(i)) > cal->getGreatestMinimum(static_cast<UCalendarDateFields>(i)))
             errln(UnicodeString("FAIL: getMinimum larger than getGreatestMinimum for field ") + i);
-        if (cal->getLeastMaximum((UCalendarDateFields)i) > cal->getMaximum((UCalendarDateFields)i))
+        if (cal->getLeastMaximum(static_cast<UCalendarDateFields>(i)) > cal->getMaximum(static_cast<UCalendarDateFields>(i)))
             errln(UnicodeString("FAIL: getLeastMaximum larger than getMaximum for field ") + i);
-        if (cal->getMinimum((UCalendarDateFields)i) >= cal->getMaximum((UCalendarDateFields)i))
+        if (cal->getMinimum(static_cast<UCalendarDateFields>(i)) >= cal->getMaximum(static_cast<UCalendarDateFields>(i)))
             errln(UnicodeString("FAIL: getMinimum not less than getMaximum for field ") + i);
     }
 
@@ -392,13 +392,13 @@ CalendarTest::TestGenericAPI()
             case UCAL_YEAR: case UCAL_MONTH: case UCAL_DATE:
             case UCAL_HOUR_OF_DAY: case UCAL_MINUTE: case UCAL_SECOND:
             case UCAL_EXTENDED_YEAR:
-              if (!cal->isSet((UCalendarDateFields)i)) errln("FAIL: Calendar::isSet F, should be T " + fieldName((UCalendarDateFields)i));
+              if (!cal->isSet(static_cast<UCalendarDateFields>(i))) errln("FAIL: Calendar::isSet F, should be T " + fieldName(static_cast<UCalendarDateFields>(i)));
                 break;
             default:
-              if (cal->isSet((UCalendarDateFields)i)) errln("FAIL: Calendar::isSet = T, should be F  " + fieldName((UCalendarDateFields)i));
+              if (cal->isSet(static_cast<UCalendarDateFields>(i))) errln("FAIL: Calendar::isSet = T, should be F  " + fieldName(static_cast<UCalendarDateFields>(i)));
         }
-        cal->clear((UCalendarDateFields)i);
-        if (cal->isSet((UCalendarDateFields)i)) errln("FAIL: Calendar::clear/isSet failed " + fieldName((UCalendarDateFields)i));
+        cal->clear(static_cast<UCalendarDateFields>(i));
+        if (cal->isSet(static_cast<UCalendarDateFields>(i))) errln("FAIL: Calendar::clear/isSet failed " + fieldName(static_cast<UCalendarDateFields>(i)));
     }
 
     if(cal->getActualMinimum(Calendar::SECOND, status) != 0){
@@ -406,7 +406,7 @@ CalendarTest::TestGenericAPI()
     }
 
     Calendar *cal3 = Calendar::createInstance(status);
-    cal3->roll(Calendar::SECOND, (int32_t)0, status);
+    cal3->roll(Calendar::SECOND, static_cast<int32_t>(0), status);
     if (failure(status, "Calendar::roll(EDateFields, int32_t, UErrorCode)")) return;
 
     delete cal;
@@ -485,7 +485,7 @@ CalendarTest::TestGenericAPI()
         cal->roll(UCAL_HOUR, static_cast<int32_t>(100), status);
         cal->clear(UCAL_HOUR);
 #if !UCONFIG_NO_SERVICE
-        URegistryKey key = cal->registerFactory(NULL, status);
+        URegistryKey key = cal->registerFactory(nullptr, status);
         cal->unregister(key, status);
 #endif
     }
@@ -496,7 +496,7 @@ CalendarTest::TestGenericAPI()
     if (failure(status, "Calendar::createInstance #7")) {
         return;
     } else {
-        cal->roll(Calendar::MONTH, (int32_t)100, status);
+        cal->roll(Calendar::MONTH, static_cast<int32_t>(100), status);
     }
 
     LocalPointer<StringEnumeration> values(
@@ -507,7 +507,7 @@ CalendarTest::TestGenericAPI()
         UBool containsHebrew = false;
         const char *charValue;
         int32_t valueLength;
-        while ((charValue = values->next(&valueLength, status)) != NULL) {
+        while ((charValue = values->next(&valueLength, status)) != nullptr) {
             if (valueLength == 6 && uprv_strcmp(charValue, "hebrew") == 0) {
                 containsHebrew = true;
             }
@@ -519,8 +519,8 @@ CalendarTest::TestGenericAPI()
         values->reset(status);
         containsHebrew = false;
         UnicodeString hebrew = UNICODE_STRING_SIMPLE("hebrew");
-        const UChar *ucharValue;
-        while ((ucharValue = values->unext(&valueLength, status)) != NULL) {
+        const char16_t *ucharValue;
+        while ((ucharValue = values->unext(&valueLength, status)) != nullptr) {
             UnicodeString value(false, ucharValue, valueLength);
             if (value == hebrew) {
                 containsHebrew = true;
@@ -533,7 +533,7 @@ CalendarTest::TestGenericAPI()
         values->reset(status);
         containsHebrew = false;
         const UnicodeString *stringValue;
-        while ((stringValue = values->snext(status)) != NULL) {
+        while ((stringValue = values->snext(status)) != nullptr) {
             if (*stringValue == hebrew) {
                 containsHebrew = true;
             }
@@ -834,11 +834,11 @@ CalendarTest::test4064654(int32_t yr, int32_t mo, int32_t dt, int32_t hr, int32_
     if (U_FAILURE(status)) { errln("Calendar::createInstance failed"); return; }
     cal->setTime(date, status);
     if (U_FAILURE(status)) { errln("Calendar::setTime failed"); return; }
-    int32_t offset = cal->getTimeZone().getOffset((uint8_t)cal->get(UCAL_ERA, status),
+    int32_t offset = cal->getTimeZone().getOffset(static_cast<uint8_t>(cal->get(UCAL_ERA, status)),
                                                   cal->get(UCAL_YEAR, status),
                                                   cal->get(UCAL_MONTH, status),
                                                   cal->get(UCAL_DATE, status),
-                                                  (uint8_t)cal->get(UCAL_DAY_OF_WEEK, status),
+                                                  static_cast<uint8_t>(cal->get(UCAL_DAY_OF_WEEK, status)),
                                                   cal->get(UCAL_MILLISECOND, status), status);
     if (U_FAILURE(status)) { errln("Calendar::get failed"); return; }
     logln("offset for " + dateToString(date, str) + "= " + (offset / 1000 / 60 / 60.0) + "hr");
@@ -1053,7 +1053,7 @@ CalendarTest::check520(Calendar* c,
         c->get(UCAL_MINUTE, status) != min ||
         c->get(UCAL_SECOND, status) != sec ||
         c->get(UCAL_MILLISECOND, status) != ms) {
-        errln(UnicodeString("U_FAILURE for field ") + (int32_t)field +
+        errln(UnicodeString("U_FAILURE for field ") + static_cast<int32_t>(field) +
                 ": Expected y/m/d h:m:s:ms of " +
                 y + "/" + (m + 1) + "/" + d + " " +
               hr + ":" + min + ":" + sec + ":" + ms +
@@ -1282,7 +1282,7 @@ CalendarTest::TestFields060()
     calendar = new GregorianCalendar(year, month, dDate, status);
     if (failure(status, "new GregorianCalendar", true)) return;
     for (int32_t i = 0; i < EXPECTED_FIELDS_length;) {
-        UCalendarDateFields field = (UCalendarDateFields)EXPECTED_FIELDS[i++];
+        UCalendarDateFields field = static_cast<UCalendarDateFields>(EXPECTED_FIELDS[i++]);
         int32_t expected = EXPECTED_FIELDS[i++];
         if (calendar->get(field, status) != expected) {
             errln(UnicodeString("Expected field ") + static_cast<int32_t>(field) + " to have value " + expected +
@@ -1334,9 +1334,9 @@ CalendarTest::TestEpochStartFields()
         c->setTime(d, status);
         if (U_FAILURE(status)) { errln("Calendar::setTime failed"); return; }
         for (int32_t i = 0; i < UCAL_ZONE_OFFSET;++i) {
-            if (c->get((UCalendarDateFields)i, status) != EPOCH_FIELDS[i])
+            if (c->get(static_cast<UCalendarDateFields>(i), status) != EPOCH_FIELDS[i])
                 dataerrln(UnicodeString("Expected field ") + i + " to have value " + EPOCH_FIELDS[i] +
-                      "; saw " + c->get((UCalendarDateFields)i, status) + " instead");
+                      "; saw " + c->get(static_cast<UCalendarDateFields>(i), status) + " instead");
             if (U_FAILURE(status)) { errln("Calendar::get failed"); return; }
         }
         if (c->get(UCAL_ZONE_OFFSET, status) != z->getRawOffset())
@@ -1635,7 +1635,7 @@ CalendarTest::marchByDelta(Calendar* cal, int32_t delta)
     } \
 } UPRV_BLOCK_MACRO_END
 
-void CalendarTest::TestWOY(void) {
+void CalendarTest::TestWOY() {
     /*
       FDW = Mon, MDFW = 4:
          Sun Dec 26 1999, WOY 51
@@ -1989,7 +1989,7 @@ void CalendarTest::TestJD()
 void CalendarTest::TestDebug()
 {
     for(int32_t  t=0;t<=UDBG_ENUM_COUNT;t++) {
-        int32_t count = udbg_enumCount((UDebugEnumType)t);
+        int32_t count = udbg_enumCount(static_cast<UDebugEnumType>(t));
         if(count == -1) {
             logln("enumCount(%d) returned -1", count);
             continue;
@@ -2003,11 +2003,11 @@ void CalendarTest::TestDebug()
                 logln("Testing count+1:");
             }
                   const char* name = udbg_enumName(static_cast<UDebugEnumType>(t), i);
-                  if(name==NULL) {
+                  if(name==nullptr) {
                           if(i==count || t>UDBG_HIGHEST_CONTIGUOUS_ENUM  ) {
                                 logln(" null name - expected.\n");
                           } else {
-                                errln("FAIL: udbg_enumName(%d,%d) returned NULL", t, i);
+                                errln("FAIL: udbg_enumName(%d,%d) returned nullptr", t, i);
                           }
                           name = "(null)";
                   }
@@ -2016,9 +2016,9 @@ void CalendarTest::TestDebug()
             logln("udbg_enumString = " + udbg_enumString(static_cast<UDebugEnumType>(t), i));
         }
         if (udbg_enumExpectedCount(static_cast<UDebugEnumType>(t)) != count && t <= UDBG_HIGHEST_CONTIGUOUS_ENUM) {
-            errln("FAIL: udbg_enumExpectedCount(%d): %d, != UCAL_FIELD_COUNT=%d ", t, udbg_enumExpectedCount((UDebugEnumType)t), count);
+            errln("FAIL: udbg_enumExpectedCount(%d): %d, != UCAL_FIELD_COUNT=%d ", t, udbg_enumExpectedCount(static_cast<UDebugEnumType>(t)), count);
         } else {
-            logln("udbg_ucal_fieldCount: %d, UCAL_FIELD_COUNT=udbg_enumCount %d ", udbg_enumExpectedCount((UDebugEnumType)t), count);
+            logln("udbg_ucal_fieldCount: %d, UCAL_FIELD_COUNT=udbg_enumCount %d ", udbg_enumExpectedCount(static_cast<UDebugEnumType>(t)), count);
         }
     }
 }
@@ -2045,7 +2045,7 @@ const char *CalendarTest::testLocaleID(int32_t i)
   case 12: return "hu_HU@calendar=buddhist";
   case 13: return "hu_HU@calendar=islamic";
   case 14: return "en_US@calendar=japanese";
-  default: return NULL;
+  default: return nullptr;
   }
 }
 
@@ -2054,7 +2054,7 @@ int32_t CalendarTest::testLocaleCount()
   static int32_t gLocaleCount = -1;
   if(gLocaleCount < 0) {
     int32_t i;
-    for(i=0;testLocaleID(i) != NULL;i++) {
+    for(i=0;testLocaleID(i) != nullptr;i++) {
       // do nothing
     }
     gLocaleCount = i;
@@ -2068,7 +2068,7 @@ static UDate doMinDateOfCalendar(Calendar* adopt, UBool &isGregorian, UErrorCode
   adopt->clear();
   adopt->set(UCAL_EXTENDED_YEAR, adopt->getActualMinimum(UCAL_EXTENDED_YEAR, status));
   UDate ret = adopt->getTime(status);
-  isGregorian = dynamic_cast<GregorianCalendar*>(adopt) != NULL;
+  isGregorian = dynamic_cast<GregorianCalendar*>(adopt) != nullptr;
   delete adopt;
   return ret;
 }
@@ -2114,18 +2114,18 @@ void CalendarTest::Test3785()
     UnicodeString exp2 = UNICODE_STRING_SIMPLE("Mon 1 Rajab 1433 AH, 01:47:04");
 
     LocalUDateFormatPointer df(udat_open(UDAT_NONE, UDAT_NONE, "en@calendar=islamic", uzone.getTerminatedBuffer(),
-                                         uzone.length(), NULL, 0, &status));
+                                         uzone.length(), nullptr, 0, &status));
     if (df.isNull() || U_FAILURE(status)) return;
 
-    UChar upattern[64];
+    char16_t upattern[64];
     u_uastrcpy(upattern, "EEE d MMMM y G, HH:mm:ss");
     udat_applyPattern(df.getAlias(), false, upattern, u_strlen(upattern));
 
-    UChar ubuffer[1024];
+    char16_t ubuffer[1024];
     UDate ud0 = 1337557623000.0;
 
     status = U_ZERO_ERROR;
-    udat_format(df.getAlias(), ud0, ubuffer, 1024, NULL, &status);
+    udat_format(df.getAlias(), ud0, ubuffer, 1024, nullptr, &status);
     if (U_FAILURE(status)) {
         errln("Error formatting date 1\n");
         return;
@@ -2139,7 +2139,7 @@ void CalendarTest::Test3785()
     ud0 += 1000.0; // add one second
 
     status = U_ZERO_ERROR;
-    udat_format(df.getAlias(), ud0, ubuffer, 1024, NULL, &status);
+    udat_format(df.getAlias(), ud0, ubuffer, 1024, nullptr, &status);
     if (U_FAILURE(status)) {
         errln("Error formatting date 2\n");
         return;
@@ -2228,7 +2228,7 @@ void CalendarTest::TestISO8601() {
         "en_US@calendar=Iso8601",
         "th_TH@calendar=iso8601",
         "ar_EG@calendar=iso8601",
-        NULL
+        nullptr
     };
 
     int32_t TEST_DATA[][3] = {
@@ -2242,7 +2242,7 @@ void CalendarTest::TestISO8601() {
         {0, 0, 0},
     };
 
-    for (int i = 0; TEST_LOCALES[i] != NULL; i++) {
+    for (int i = 0; TEST_LOCALES[i] != nullptr; i++) {
         UErrorCode status = U_ZERO_ERROR;
         Calendar *cal = Calendar::createInstance(TEST_LOCALES[i], status);
         if (U_FAILURE(status)) {
@@ -2272,7 +2272,7 @@ void CalendarTest::TestISO8601() {
 }
 
 void
-CalendarTest::TestAmbiguousWallTimeAPIs(void) {
+CalendarTest::TestAmbiguousWallTimeAPIs() {
     UErrorCode status = U_ZERO_ERROR;
     Calendar* cal = Calendar::createInstance(status);
     if (U_FAILURE(status)) {
@@ -2430,10 +2430,10 @@ static const RepeatedWallTimeTestData RPDATA[] =
     {"Australia/Lord_Howe", CalFields(2011,4,3,2,0,0),      CalFields(2011,4,2,15,30,0),    CalFields(2011,4,2,15,30,0)},
     {"Australia/Lord_Howe", CalFields(2011,4,3,2,0,1),      CalFields(2011,4,2,15,30,1),    CalFields(2011,4,2,15,30,1)},
 
-    {NULL,                  CalFields(0,0,0,0,0,0),         CalFields(0,0,0,0,0,0),          CalFields(0,0,0,0,0,0)}
+    {nullptr,                  CalFields(0,0,0,0,0,0),         CalFields(0,0,0,0,0,0),          CalFields(0,0,0,0,0,0)}
 };
 
-void CalendarTest::TestRepeatedWallTime(void) {
+void CalendarTest::TestRepeatedWallTime() {
     UErrorCode status = U_ZERO_ERROR;
     GregorianCalendar calGMT((const TimeZone&)*TimeZone::getGMT(), status);
     GregorianCalendar calDefault(status);
@@ -2448,7 +2448,7 @@ void CalendarTest::TestRepeatedWallTime(void) {
     calLast.setRepeatedWallTimeOption(UCAL_WALLTIME_LAST);
     calFirst.setRepeatedWallTimeOption(UCAL_WALLTIME_FIRST);
 
-    for (int32_t i = 0; RPDATA[i].tzid != NULL; i++) {
+    for (int32_t i = 0; RPDATA[i].tzid != nullptr; i++) {
         char buf[32];
         TimeZone *tz = TimeZone::createTimeZone(RPDATA[i].tzid);
 
@@ -2528,11 +2528,11 @@ static SkippedWallTimeTestData SKDATA[] =
     {"Pacific/Apia",        CalFields(2011,12,30,23,59,59), false,  CalFields(2011,12,31,9,59,59),  CalFields(2011,12,30,9,59,59),  CalFields(2011,12,30,10,0,0)},
     {"Pacific/Apia",        CalFields(2011,12,31,0,0,0),    true,   CalFields(2011,12,30,10,0,0),   CalFields(2011,12,30,10,0,0),   CalFields(2011,12,30,10,0,0)},
 
-    {NULL,                  CalFields(0,0,0,0,0,0),         true,   CalFields(0,0,0,0,0,0),         CalFields(0,0,0,0,0,0),         CalFields(0,0,0,0,0,0)}
+    {nullptr,                  CalFields(0,0,0,0,0,0),         true,   CalFields(0,0,0,0,0,0),         CalFields(0,0,0,0,0,0),         CalFields(0,0,0,0,0,0)}
 };
 
 
-void CalendarTest::TestSkippedWallTime(void) {
+void CalendarTest::TestSkippedWallTime() {
     UErrorCode status = U_ZERO_ERROR;
     GregorianCalendar calGMT((const TimeZone&)*TimeZone::getGMT(), status);
     GregorianCalendar calDefault(status);
@@ -2549,7 +2549,7 @@ void CalendarTest::TestSkippedWallTime(void) {
     calFirst.setSkippedWallTimeOption(UCAL_WALLTIME_FIRST);
     calNextAvail.setSkippedWallTimeOption(UCAL_WALLTIME_NEXT_VALID);
 
-    for (int32_t i = 0; SKDATA[i].tzid != NULL; i++) {
+    for (int32_t i = 0; SKDATA[i].tzid != nullptr; i++) {
         UDate d;
         char buf[32];
         TimeZone *tz = TimeZone::createTimeZone(SKDATA[i].tzid);
@@ -2658,7 +2658,7 @@ void CalendarTest::TestSkippedWallTime(void) {
     }
 }
 
-void CalendarTest::TestCloneLocale(void) {
+void CalendarTest::TestCloneLocale() {
   UErrorCode status = U_ZERO_ERROR;
   LocalPointer<Calendar>  cal(Calendar::createInstance(TimeZone::getGMT()->clone(),
                                                        Locale::createFromName("en"), status));
@@ -2673,7 +2673,7 @@ void CalendarTest::TestCloneLocale(void) {
   TEST_CHECK_STATUS;
 }
 
-void CalendarTest::TestTimeZoneInLocale(void) {
+void CalendarTest::TestTimeZoneInLocale() {
     const char *tests[][3]  = {
         { "en-u-tz-usden",                     "America/Denver",             "gregorian" },
         { "es-u-tz-usden",                     "America/Denver",             "gregorian" },
@@ -3448,7 +3448,7 @@ static const GregoUmmAlQuraMap guMappings[] = {
   {    0, 0, 0,      0, 0, 0 }, // terminator
 };
 
-static const UChar zoneSA[] = {0x41,0x73,0x69,0x61,0x2F,0x52,0x69,0x79,0x61,0x64,0x68,0}; // "Asia/Riyadh"
+static const char16_t zoneSA[] = {0x41,0x73,0x69,0x61,0x2F,0x52,0x69,0x79,0x61,0x64,0x68,0}; // "Asia/Riyadh"
 
 void CalendarTest::TestIslamicUmAlQura() {
 
@@ -3490,7 +3490,7 @@ void CalendarTest::TestIslamicUmAlQura() {
         month = tstCal->get(UCAL_MONTH,status);
         year = tstCal->get(UCAL_YEAR,status);
         TEST_CHECK_STATUS;
-        tstCal->roll(UCAL_DAY_OF_MONTH, (UBool)true, status);
+        tstCal->roll(UCAL_DAY_OF_MONTH, static_cast<UBool>(true), status);
         TEST_CHECK_STATUS;
     }
 
@@ -3657,8 +3657,8 @@ void CalendarTest::TestWeekData() {
         // Weekdays and Weekends
         for (int32_t d = UCAL_SUNDAY; d <= UCAL_SATURDAY; d++) {
             status = U_ZERO_ERROR;
-            UCalendarWeekdayType wdt1 = cal1->getDayOfWeekType((UCalendarDaysOfWeek)d, status);
-            UCalendarWeekdayType wdt2 = cal2->getDayOfWeekType((UCalendarDaysOfWeek)d, status);
+            UCalendarWeekdayType wdt1 = cal1->getDayOfWeekType(static_cast<UCalendarDaysOfWeek>(d), status);
+            UCalendarWeekdayType wdt2 = cal2->getDayOfWeekType(static_cast<UCalendarDaysOfWeek>(d), status);
             TEST_CHECK_STATUS;
             TEST_ASSERT(wdt1 == wdt2);
         }
@@ -3811,7 +3811,7 @@ static const TestAddAcrossZoneTransitionData AAZTDATA[] =
     {"Australia/Lord_Howe",     CalFields(2013,10,5,2,15,0,0),      1,      UCAL_WALLTIME_NEXT_VALID,
                                 CalFields(2013,10,6,2,30,0,0)},
 
-    {NULL, CalFields(0,0,0,0,0,0,0), 0, UCAL_WALLTIME_LAST, CalFields(0,0,0,0,0,0,0)}
+    {nullptr, CalFields(0,0,0,0,0,0,0), 0, UCAL_WALLTIME_LAST, CalFields(0,0,0,0,0,0,0)}
 };
 
 void CalendarTest::TestAddAcrossZoneTransition() {

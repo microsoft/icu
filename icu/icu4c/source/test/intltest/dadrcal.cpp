@@ -40,11 +40,11 @@ DataDrivenCalendarTest::~DataDrivenCalendarTest() {
 
 void DataDrivenCalendarTest::runIndexedTest(int32_t index, UBool exec,
         const char* &name, char* /*par */) {
-    if (driver != NULL) {
+    if (driver != nullptr) {
         if (exec) {
             //  logln("Begin ");
         }
-        const DataMap *info= NULL;
+        const DataMap *info= nullptr;
         UErrorCode status= U_ZERO_ERROR;
         TestData *testData = driver->createTestData(index, status);
         if (U_SUCCESS(status)) {
@@ -78,7 +78,7 @@ void DataDrivenCalendarTest::testOps(TestData *testData,
     UDate fromDate = 0; // TODO
     UDate toDate = 0;
     
-    const DataMap *currentCase= NULL;
+    const DataMap *currentCase= nullptr;
     char toCalLoc[256] = "";
 
     // TODO: static strings?
@@ -98,8 +98,8 @@ void DataDrivenCalendarTest::testOps(TestData *testData,
     int n = 0;
     while (testData->nextCase(currentCase, status)) {
         ++n;
-        Calendar *toCalendar= NULL;
-        Calendar *fromCalendar= NULL;
+        Calendar *toCalendar= nullptr;
+        Calendar *fromCalendar= nullptr;
 
         // load parameters
         char theCase[200];
@@ -238,13 +238,13 @@ void DataDrivenCalendarTest::testOps(TestData *testData,
 
         /// perform op
         for (int q=0; q<UCAL_FIELD_COUNT; q++) {
-            if (paramsSet.isSet((UCalendarDateFields)q)) {
+            if (paramsSet.isSet(static_cast<UCalendarDateFields>(q))) {
                 if (operation == kROLL) {
-                    toCalendar->roll((UCalendarDateFields)q,
-                            paramsSet.get((UCalendarDateFields)q), status);
+                    toCalendar->roll(static_cast<UCalendarDateFields>(q),
+                            paramsSet.get(static_cast<UCalendarDateFields>(q)), status);
                 } else if (operation == kADD) {
-                    toCalendar->add((UCalendarDateFields)q,
-                            paramsSet.get((UCalendarDateFields)q), status);
+                    toCalendar->add(static_cast<UCalendarDateFields>(q),
+                            paramsSet.get(static_cast<UCalendarDateFields>(q)), status);
                 } else {
                     errln(caseString+ " FAIL: unknown operation "+ operation);
                 }
@@ -367,7 +367,7 @@ void DataDrivenCalendarTest::testConvert(TestData *testData,
         const DataMap *settings, UBool forward) {
     UErrorCode status = U_ZERO_ERROR;
     LocalPointer<Calendar> toCalendar;
-    const DataMap *currentCase= NULL;
+    const DataMap *currentCase= nullptr;
     char toCalLoc[256] = "";
     char fromCalLoc[256] = "";
     // build to calendar
@@ -443,12 +443,12 @@ void DataDrivenCalendarTest::testConvert(TestData *testData,
 }
 
 void DataDrivenCalendarTest::processTest(TestData *testData) {
-    //Calendar *cal= NULL;
-    //const UChar *arguments= NULL;
+    //Calendar *cal= nullptr;
+    //const char16_t *arguments= nullptr;
     //int32_t argLen = 0;
     char testType[256] = "";
-    const DataMap *settings= NULL;
-    //const UChar *type= NULL;
+    const DataMap *settings= nullptr;
+    //const char16_t *type= nullptr;
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString testSetting;
     int n = 0;

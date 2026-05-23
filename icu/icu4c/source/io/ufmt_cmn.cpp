@@ -38,7 +38,7 @@
 #define UPPERCASE_Z 0x005A
 
 int
-ufmt_digitvalue(UChar c)
+ufmt_digitvalue(char16_t c)
 {
     if( ((c>=DIGIT_0)&&(c<=DIGIT_9)) ||
         ((c>=LOWERCASE_A)&&(c<=LOWERCASE_Z)) ||
@@ -53,7 +53,7 @@ ufmt_digitvalue(UChar c)
 }
 
 UBool
-ufmt_isdigit(UChar     c,
+ufmt_isdigit(char16_t  c,
              int32_t     radix)
 {
     int digitVal = ufmt_digitvalue(c);
@@ -65,7 +65,7 @@ ufmt_isdigit(UChar     c,
 #define TO_LC_DIGIT(a) a <= 9 ? (DIGIT_0 + a) : (0x0057 + a)
 
 void 
-ufmt_64tou(UChar     *buffer, 
+ufmt_64tou(char16_t  *buffer,
           int32_t   *len,
           uint64_t  value, 
           uint8_t  radix,
@@ -74,7 +74,7 @@ ufmt_64tou(UChar     *buffer,
 {
     int32_t  length = 0;
     uint32_t digit;
-    UChar    *left, *right, temp;
+    char16_t *left, *right, temp;
     
     do {
         digit = static_cast<uint32_t>(value % radix);
@@ -102,14 +102,14 @@ ufmt_64tou(UChar     *buffer,
 }
 
 void 
-ufmt_ptou(UChar    *buffer, 
+ufmt_ptou(char16_t *buffer,
           int32_t   *len,
           void      *value, 
           UBool     uselower)
 {
     int32_t i;
     int32_t length = 0;
-    uint8_t *ptrIdx = (uint8_t *)&value;
+    uint8_t* ptrIdx = reinterpret_cast<uint8_t*>(&value);
 
 #if U_IS_BIG_ENDIAN
     for (i = 0; i < (int32_t)sizeof(void *); i++)
@@ -134,11 +134,11 @@ ufmt_ptou(UChar    *buffer,
 }
 
 int64_t
-ufmt_uto64(const UChar     *buffer, 
+ufmt_uto64(const char16_t  *buffer,
           int32_t     *len,
           int8_t     radix)
 {
-    const UChar     *limit;
+    const char16_t  *limit;
     int32_t         count;
     uint64_t        result;
     
@@ -165,7 +165,7 @@ ufmt_uto64(const UChar     *buffer,
 
 #define NIBBLE_PER_BYTE 2
 void *
-ufmt_utop(const UChar     *buffer,
+ufmt_utop(const char16_t  *buffer,
           int32_t     *len)
 {
     int32_t count, resultIdx, incVal, offset;
@@ -178,7 +178,7 @@ ufmt_utop(const UChar     *buffer,
     /* initialize variables */
     count      = 0;
     offset     = 0;
-    result.ptr = NULL;
+    result.ptr = nullptr;
 
     /* Skip the leading zeros */
     while(buffer[count] == DIGIT_0 || u_isspace(buffer[count])) {
@@ -209,7 +209,7 @@ ufmt_utop(const UChar     *buffer,
     *len = count;
     while(--count >= offset) {
         /* Get the first nibble of the byte */
-        uint8_t byte = (uint8_t)ufmt_digitvalue(buffer[count]);
+        uint8_t byte = static_cast<uint8_t>(ufmt_digitvalue(buffer[count]));
 
         if (count > offset) {
             /* Get the second nibble of the byte when available */
@@ -223,11 +223,11 @@ ufmt_utop(const UChar     *buffer,
     return result.ptr;
 }
 
-UChar*
+char16_t*
 ufmt_defaultCPToUnicode(const char *s, int32_t sSize,
-                        UChar *target, int32_t tSize)
+                        char16_t *target, int32_t tSize)
 {
-    UChar *alias;
+    char16_t *alias;
     UErrorCode status = U_ZERO_ERROR;
     UConverter *defConverter = u_getDefaultConverter(&status);
 
@@ -242,7 +242,7 @@ ufmt_defaultCPToUnicode(const char *s, int32_t sSize,
     if (target != nullptr) {
         alias = target;
         ucnv_toUnicode(defConverter, &alias, alias + tSize, &s, s + sSize - 1, 
-            NULL, true, &status);
+            nullptr, true, &status);
         
         
         /* add the null terminator */

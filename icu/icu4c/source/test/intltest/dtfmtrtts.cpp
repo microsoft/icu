@@ -236,10 +236,10 @@ void DateFormatRoundTripTest::test(const Locale& loc)
     int32_t style = 0;
     for(style = DateFormat::FULL; style <= DateFormat::SHORT; ++style) {
         if(TEST_TABLE[itable++]) {
-            logln("Testing style " + UnicodeString(styleName((DateFormat::EStyle)style)));
-            DateFormat *df = DateFormat::createDateInstance((DateFormat::EStyle)style, loc);
-            if(df == NULL) {
-              errln(UnicodeString("Could not DF::createDateInstance ") + UnicodeString(styleName((DateFormat::EStyle)style)) +      " Locale: " + loc.getDisplayName(temp));
+            logln("Testing style " + UnicodeString(styleName(static_cast<DateFormat::EStyle>(style))));
+            DateFormat* df = DateFormat::createDateInstance(static_cast<DateFormat::EStyle>(style), loc);
+            if(df == nullptr) {
+              errln(UnicodeString("Could not DF::createDateInstance ") + UnicodeString(styleName(static_cast<DateFormat::EStyle>(style))) + " Locale: " + loc.getDisplayName(temp));
             } else {
               test(df, loc);
               delete df;
@@ -249,10 +249,10 @@ void DateFormatRoundTripTest::test(const Locale& loc)
     
     for(style = DateFormat::FULL; style <= DateFormat::SHORT; ++style) {
         if (TEST_TABLE[itable++]) {
-            logln("Testing style " + UnicodeString(styleName((DateFormat::EStyle)style)));
-            DateFormat *df = DateFormat::createTimeInstance((DateFormat::EStyle)style, loc);
-            if(df == NULL) {
-              errln(UnicodeString("Could not DF::createTimeInstance ") + UnicodeString(styleName((DateFormat::EStyle)style)) + " Locale: " + loc.getDisplayName(temp));
+            logln("Testing style " + UnicodeString(styleName(static_cast<DateFormat::EStyle>(style))));
+            DateFormat* df = DateFormat::createTimeInstance(static_cast<DateFormat::EStyle>(style), loc);
+            if(df == nullptr) {
+              errln(UnicodeString("Could not DF::createTimeInstance ") + UnicodeString(styleName(static_cast<DateFormat::EStyle>(style))) + " Locale: " + loc.getDisplayName(temp));
             } else {
               test(df, loc, true);
               delete df;
@@ -264,9 +264,9 @@ void DateFormatRoundTripTest::test(const Locale& loc)
         for(int32_t tstyle = DateFormat::FULL; tstyle <= DateFormat::SHORT; ++tstyle) {
             if(TEST_TABLE[itable++]) {
                 logln("Testing dstyle" + UnicodeString(styleName(static_cast<DateFormat::EStyle>(dstyle))) + ", tstyle" + UnicodeString(styleName(static_cast<DateFormat::EStyle>(tstyle))));
-                DateFormat *df = DateFormat::createDateTimeInstance((DateFormat::EStyle)dstyle, (DateFormat::EStyle)tstyle, loc);
-                if(df == NULL) {
-                    dataerrln(UnicodeString("Could not DF::createDateTimeInstance ") + UnicodeString(styleName((DateFormat::EStyle)dstyle)) + ", tstyle" + UnicodeString(styleName((DateFormat::EStyle)tstyle))    + "Locale: " + loc.getDisplayName(temp));
+                DateFormat* df = DateFormat::createDateTimeInstance(static_cast<DateFormat::EStyle>(dstyle), static_cast<DateFormat::EStyle>(tstyle), loc);
+                if(df == nullptr) {
+                    dataerrln(UnicodeString("Could not DF::createDateTimeInstance ") + UnicodeString(styleName(static_cast<DateFormat::EStyle>(dstyle))) + ", tstyle" + UnicodeString(styleName(static_cast<DateFormat::EStyle>(tstyle))) + "Locale: " + loc.getDisplayName(temp));
                 } else {
                     test(df, loc);
                     delete df;
@@ -286,7 +286,7 @@ void DateFormatRoundTripTest::test(DateFormat *fmt, const Locale &origLocale, UB
     
     UBool isGregorian = false;
     UErrorCode minStatus = U_ZERO_ERROR;
-    if(fmt->getCalendar() == NULL) {
+    if(fmt->getCalendar() == nullptr) {
       errln(UnicodeString("DateFormatRoundTripTest::test, DateFormat getCalendar() returns null for ") + origLocale.getName());
       return;
     } 
@@ -543,7 +543,7 @@ int32_t DateFormatRoundTripTest::getField(UDate d, int32_t f) {
     UErrorCode status = U_ZERO_ERROR;
     getFieldCal->setTime(d, status);
     failure(status, "getfieldCal->setTime");
-    int32_t ret = getFieldCal->get((UCalendarDateFields)f, status);
+    int32_t ret = getFieldCal->get(static_cast<UCalendarDateFields>(f), status);
     failure(status, "getfieldCal->get");
     return ret;
 }

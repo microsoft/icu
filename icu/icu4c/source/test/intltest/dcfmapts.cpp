@@ -523,7 +523,7 @@ void IntlTestDecimalFormatAPI::testRounding(/*char *par*/)
     UnicodeString message;
     UnicodeString resultStr;
     for(mode=0;mode < 7;mode++){
-        pat.setRoundingMode((DecimalFormat::ERoundingMode)mode);
+        pat.setRoundingMode(static_cast<DecimalFormat::ERoundingMode>(mode));
         if (pat.getRoundingMode() != static_cast<DecimalFormat::ERoundingMode>(mode)) {
             errln(UnicodeString("SetRoundingMode or GetRoundingMode failed for mode=") + mode);
         }
@@ -584,7 +584,7 @@ void IntlTestDecimalFormatAPI::testRoundingInc(/*char *par*/)
 
     // set rounding mode with zero increment.  Rounding
     // increment should not be set by this operation
-    pat.setRoundingMode((DecimalFormat::ERoundingMode)0);
+    pat.setRoundingMode(static_cast<DecimalFormat::ERoundingMode>(0));
     roundingInc = pat.getRoundingIncrement();
     if (roundingInc != 0.0) {
       errln(UnicodeString("ERROR: Rounding increment not zero after setRoundingMode"));
@@ -991,14 +991,14 @@ void IntlTestDecimalFormatAPI::TestBadFastpath() {
 
     UnicodeString fmt;
     fmt.remove();
-    assertEquals("Format 1234", "1234", df->format((int32_t)1234, fmt));
+    assertEquals("Format 1234", "1234", df->format(static_cast<int32_t>(1234), fmt));
     df->setGroupingUsed(false);
     fmt.remove();
-    assertEquals("Format 1234", "1234", df->format((int32_t)1234, fmt));
+    assertEquals("Format 1234", "1234", df->format(static_cast<int32_t>(1234), fmt));
     df->setGroupingUsed(true);
     df->setGroupingSize(3);
     fmt.remove();
-    assertEquals("Format 1234 w/ grouping", "1,234", df->format((int32_t)1234, fmt));
+    assertEquals("Format 1234 w/ grouping", "1,234", df->format(static_cast<int32_t>(1234), fmt));
 }
 
 void IntlTestDecimalFormatAPI::TestRequiredDecimalPoint() {
@@ -1119,11 +1119,11 @@ void IntlTestDecimalFormatAPI::testErrorCode() {
         assertEquals(WHERE, U_INTERNAL_PROGRAM_ERROR, status);
 
         status = U_INTERNAL_PROGRAM_ERROR;
-        df->format((int32_t)666, dest, nullptr, status);
+        df->format(static_cast<int32_t>(666), dest, nullptr, status);
         assertEquals(WHERE, U_INTERNAL_PROGRAM_ERROR, status);
 
         status = U_INTERNAL_PROGRAM_ERROR;
-        df->format((int64_t)666, dest, nullptr, status);
+        df->format(static_cast<int64_t>(666), dest, nullptr, status);
         assertEquals(WHERE, U_INTERNAL_PROGRAM_ERROR, status);
 
         status = U_INTERNAL_PROGRAM_ERROR;

@@ -41,7 +41,7 @@ namespace {
 
 /**
  * Create a tag string from the supplied parameters.  The lang, script and region
- * parameters may be NULL pointers. If they are, their corresponding length parameters
+ * parameters may be nullptr pointers. If they are, their corresponding length parameters
  * must be less than or equal to 0.
  *
  * If an illegal argument is provided, the function returns the error

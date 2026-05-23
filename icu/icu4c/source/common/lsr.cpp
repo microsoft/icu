@@ -66,7 +66,7 @@ void LSR::deleteOwned() {
     uprv_free(owned);
 }
 
-LSR &LSR::operator=(LSR &&other) U_NOEXCEPT {
+LSR &LSR::operator=(LSR &&other) noexcept {
     this->~LSR();
     language = other.language;
     script = other.script;

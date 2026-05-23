@@ -1331,7 +1331,7 @@ void DateIntervalFormatTest::testContext() {
         const char * skeleton;
         UDisplayContext context;
         const UDate  deltaDate;
-        const UChar* expectResult;
+        const char16_t* expectResult;
     } DateIntervalContextItem;
     static const DateIntervalContextItem testItems[] = {
         { "cs",    "MMMEd",    CAP_NONE,  60.0*_DAY,  u"po 27. 9.\u2009–\u2009pá 26. 11." },
@@ -1366,15 +1366,15 @@ void DateIntervalFormatTest::testContext() {
         fmt->setContext(testItemPtr->context, status);
         if (U_FAILURE(status)) {
             errln("setContext failed for locale %s skeleton %s context %04X: %s",
-                    testItemPtr->locale, testItemPtr->skeleton, (unsigned)testItemPtr->context, u_errorName(status));
+                    testItemPtr->locale, testItemPtr->skeleton, static_cast<unsigned>(testItemPtr->context), u_errorName(status));
         } else {
             UDisplayContext getContext = fmt->getContext(UDISPCTX_TYPE_CAPITALIZATION, status);
             if (U_FAILURE(status)) {
                 errln("getContext failed for locale %s skeleton %s context %04X: %s",
-                        testItemPtr->locale, testItemPtr->skeleton, (unsigned)testItemPtr->context, u_errorName(status));
+                        testItemPtr->locale, testItemPtr->skeleton, static_cast<unsigned>(testItemPtr->context), u_errorName(status));
             } else if (getContext != testItemPtr->context) {
                 errln("getContext failed for locale %s skeleton %s context %04X: got context %04X",
-                        testItemPtr->locale, testItemPtr->skeleton, (unsigned)testItemPtr->context, (unsigned)getContext);
+                        testItemPtr->locale, testItemPtr->skeleton, static_cast<unsigned>(testItemPtr->context), static_cast<unsigned>(getContext));
             }
         }
 
@@ -1385,7 +1385,7 @@ void DateIntervalFormatTest::testContext() {
         fmt->format(&interval, getResult, pos, status);
         if (U_FAILURE(status)) {
             errln("format failed for locale %s skeleton %s context %04X: %s",
-                    testItemPtr->locale, testItemPtr->skeleton, (unsigned)testItemPtr->context, u_errorName(status));
+                    testItemPtr->locale, testItemPtr->skeleton, static_cast<unsigned>(testItemPtr->context), u_errorName(status));
             continue;
         }
         UnicodeString expectResult(true, testItemPtr->expectResult, -1);
@@ -1782,9 +1782,9 @@ void DateIntervalFormatTest::testTicket11985() {
 // Ticket 11669 - thread safety of DateIntervalFormat::format(). This test failed before
 //                the implementation was fixed.
 
-static const DateIntervalFormat *gIntervalFormatter = NULL;      // The Formatter to be used concurrently by test threads.
-static const DateInterval *gInterval = NULL;                     // The date interval to be formatted concurrently.
-static const UnicodeString *gExpectedResult = NULL;
+static const DateIntervalFormat *gIntervalFormatter = nullptr;      // The Formatter to be used concurrently by test threads.
+static const DateInterval *gInterval = nullptr;                     // The date interval to be formatted concurrently.
+static const UnicodeString *gExpectedResult = nullptr;
 
 void DateIntervalFormatTest::threadFunc11669(int32_t threadNum) {
     (void)threadNum;
@@ -1834,9 +1834,9 @@ void DateIntervalFormatTest::testTicket11669() {
     threads.start();
     threads.join();
 
-    gInterval = NULL;             // Don't leave dangling pointers lying around. Not strictly necessary.
-    gIntervalFormatter = NULL;
-    gExpectedResult = NULL;
+    gInterval = nullptr;             // Don't leave dangling pointers lying around. Not strictly necessary.
+    gIntervalFormatter = nullptr;
+    gExpectedResult = nullptr;
 }
 
 

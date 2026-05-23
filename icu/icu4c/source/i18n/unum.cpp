@@ -41,16 +41,16 @@ U_NAMESPACE_USE
 
 U_CAPI UNumberFormat* U_EXPORT2
 unum_open(  UNumberFormatStyle    style,
-            const    UChar*    pattern,
+            const    char16_t*    pattern,
             int32_t            patternLength,
             const    char*     locale,
             UParseError*       parseErr,
             UErrorCode*        status) {
     if(U_FAILURE(*status)) {
-        return NULL;
+        return nullptr;
     }
 
-    NumberFormat *retVal = NULL;
+    NumberFormat *retVal = nullptr;
 
     switch(style) {
     case UNUM_DECIMAL:
@@ -70,22 +70,22 @@ unum_open(  UNumberFormatStyle    style,
         /* UnicodeString can handle the case when patternLength = -1. */
         const UnicodeString pat(pattern, patternLength);
 
-        if(parseErr==NULL){
+        if(parseErr==nullptr){
             parseErr = &tErr;
         }
 
         DecimalFormatSymbols *syms = new DecimalFormatSymbols(Locale(locale), *status);
-        if(syms == NULL) {
+        if(syms == nullptr) {
             *status = U_MEMORY_ALLOCATION_ERROR;
-            return NULL;
+            return nullptr;
         }
         if (U_FAILURE(*status)) {
             delete syms;
-            return NULL;
+            return nullptr;
         }
 
         retVal = new DecimalFormat(pat, syms, *parseErr, *status);
-        if(retVal == NULL) {
+        if(retVal == nullptr) {
             delete syms;
         }
     } break;
@@ -96,7 +96,7 @@ unum_open(  UNumberFormatStyle    style,
         /* UnicodeString can handle the case when patternLength = -1. */
         const UnicodeString pat(pattern, patternLength);
         
-        if(parseErr==NULL){
+        if(parseErr==nullptr){
             parseErr = &tErr;
         }
         
@@ -141,16 +141,16 @@ unum_open(  UNumberFormatStyle    style,
 
     default:
         *status = U_UNSUPPORTED_ERROR;
-        return NULL;
+        return nullptr;
     }
 
-    if(retVal == NULL && U_SUCCESS(*status)) {
+    if(retVal == nullptr && U_SUCCESS(*status)) {
         *status = U_MEMORY_ALLOCATION_ERROR;
     }
 
-    if (U_FAILURE(*status) && retVal != NULL) {
+    if (U_FAILURE(*status) && retVal != nullptr) {
         delete retVal;
-        retVal = NULL;
+        retVal = nullptr;
     }
 
     return reinterpret_cast<UNumberFormat *>(retVal);
@@ -172,11 +172,11 @@ unum_clone(const UNumberFormat *fmt,
     Format* res = nullptr;
     const NumberFormat* nf = reinterpret_cast<const NumberFormat*>(fmt);
     const DecimalFormat* df = dynamic_cast<const DecimalFormat*>(nf);
-    if (df != NULL) {
+    if (df != nullptr) {
         res = df->clone();
     } else {
         const RuleBasedNumberFormat* rbnf = dynamic_cast<const RuleBasedNumberFormat*>(nf);
-        U_ASSERT(rbnf != NULL);
+        U_ASSERT(rbnf != nullptr);
         res = rbnf->clone();
     }
 
@@ -191,7 +191,7 @@ unum_clone(const UNumberFormat *fmt,
 U_CAPI int32_t U_EXPORT2
 unum_format(    const    UNumberFormat*    fmt,
         int32_t           number,
-        UChar*            result,
+        char16_t*            result,
         int32_t           resultLength,
         UFieldPosition    *pos,
         UErrorCode*       status)
@@ -202,7 +202,7 @@ unum_format(    const    UNumberFormat*    fmt,
 U_CAPI int32_t U_EXPORT2
 unum_formatInt64(const UNumberFormat* fmt,
         int64_t         number,
-        UChar*          result,
+        char16_t*          result,
         int32_t         resultLength,
         UFieldPosition *pos,
         UErrorCode*     status)
@@ -211,8 +211,8 @@ unum_formatInt64(const UNumberFormat* fmt,
         return -1;
     
     UnicodeString res;
-    if(!(result==NULL && resultLength==0)) {
-        // NULL destination for pure preflighting: empty dummy string
+    if(!(result==nullptr && resultLength==0)) {
+        // nullptr destination for pure preflighting: empty dummy string
         // otherwise, alias the destination buffer
         res.setTo(result, 0, resultLength);
     }
@@ -235,7 +235,7 @@ unum_formatInt64(const UNumberFormat* fmt,
 U_CAPI int32_t U_EXPORT2
 unum_formatDouble(    const    UNumberFormat*  fmt,
             double          number,
-            UChar*          result,
+            char16_t*          result,
             int32_t         resultLength,
             UFieldPosition  *pos, /* 0 if ignore */
             UErrorCode*     status)
@@ -244,8 +244,8 @@ unum_formatDouble(    const    UNumberFormat*  fmt,
   if(U_FAILURE(*status)) return -1;
 
   UnicodeString res;
-  if(!(result==NULL && resultLength==0)) {
-    // NULL destination for pure preflighting: empty dummy string
+  if(!(result==nullptr && resultLength==0)) {
+    // nullptr destination for pure preflighting: empty dummy string
     // otherwise, alias the destination buffer
     res.setTo(result, 0, resultLength);
   }
@@ -268,7 +268,7 @@ unum_formatDouble(    const    UNumberFormat*  fmt,
 U_CAPI int32_t U_EXPORT2
 unum_formatDoubleForFields(const UNumberFormat* format,
                            double number,
-                           UChar* result,
+                           char16_t* result,
                            int32_t resultLength,
                            UFieldPositionIterator* fpositer,
                            UErrorCode* status)
@@ -276,14 +276,14 @@ unum_formatDoubleForFields(const UNumberFormat* format,
     if (U_FAILURE(*status))
         return -1;
 
-    if (result == NULL ? resultLength != 0 : resultLength < 0) {
+    if (result == nullptr ? resultLength != 0 : resultLength < 0) {
         *status = U_ILLEGAL_ARGUMENT_ERROR;
         return -1;
     }
 
     UnicodeString res;
-    if (result != NULL) {
-        // NULL destination for pure preflighting: empty dummy string
+    if (result != nullptr) {
+        // nullptr destination for pure preflighting: empty dummy string
         // otherwise, alias the destination buffer
         res.setTo(result, 0, resultLength);
     }
@@ -297,7 +297,7 @@ U_CAPI int32_t U_EXPORT2
 unum_formatDecimal(const    UNumberFormat*  fmt,
             const char *    number,
             int32_t         length,
-            UChar*          result,
+            char16_t*          result,
             int32_t         resultLength,
             UFieldPosition  *pos, /* 0 if ignore */
             UErrorCode*     status) {
@@ -305,7 +305,7 @@ unum_formatDecimal(const    UNumberFormat*  fmt,
     if(U_FAILURE(*status)) {
         return -1;
     }
-    if ((result == NULL && resultLength != 0) || resultLength < 0) {
+    if ((result == nullptr && resultLength != 0) || resultLength < 0) {
         *status = U_ILLEGAL_ARGUMENT_ERROR;
         return -1;
     }
@@ -340,16 +340,16 @@ unum_formatDecimal(const    UNumberFormat*  fmt,
 U_CAPI int32_t U_EXPORT2 
 unum_formatDoubleCurrency(const UNumberFormat* fmt,
                           double number,
-                          UChar* currency,
-                          UChar* result,
+                          char16_t* currency,
+                          char16_t* result,
                           int32_t resultLength,
                           UFieldPosition* pos, /* ignored if 0 */
                           UErrorCode* status) {
     if (U_FAILURE(*status)) return -1;
 
     UnicodeString res;
-    if (!(result==NULL && resultLength==0)) {
-        // NULL destination for pure preflighting: empty dummy string
+    if (!(result==nullptr && resultLength==0)) {
+        // nullptr destination for pure preflighting: empty dummy string
         // otherwise, alias the destination buffer
         res.setTo(result, 0, resultLength);
     }
@@ -360,7 +360,7 @@ unum_formatDoubleCurrency(const UNumberFormat* fmt,
     }
     CurrencyAmount *tempCurrAmnt = new CurrencyAmount(number, currency, *status);
     // Check for null pointer.
-    if (tempCurrAmnt == NULL) {
+    if (tempCurrAmnt == nullptr) {
         *status = U_MEMORY_ALLOCATION_ERROR;
         return -1;
     }
@@ -378,7 +378,7 @@ unum_formatDoubleCurrency(const UNumberFormat* fmt,
 static void
 parseRes(Formattable& res,
          const   UNumberFormat*  fmt,
-         const   UChar*          text,
+         const   char16_t*          text,
          int32_t         textLength,
          int32_t         *parsePos /* 0 = start */,
          UErrorCode      *status)
@@ -406,7 +406,7 @@ parseRes(Formattable& res,
 
 U_CAPI int32_t U_EXPORT2
 unum_parse(    const   UNumberFormat*  fmt,
-        const   UChar*          text,
+        const   char16_t*          text,
         int32_t         textLength,
         int32_t         *parsePos /* 0 = start */,
         UErrorCode      *status)
@@ -418,7 +418,7 @@ unum_parse(    const   UNumberFormat*  fmt,
 
 U_CAPI int64_t U_EXPORT2
 unum_parseInt64(    const   UNumberFormat*  fmt,
-        const   UChar*          text,
+        const   char16_t*          text,
         int32_t         textLength,
         int32_t         *parsePos /* 0 = start */,
         UErrorCode      *status)
@@ -430,7 +430,7 @@ unum_parseInt64(    const   UNumberFormat*  fmt,
 
 U_CAPI double U_EXPORT2
 unum_parseDouble(    const   UNumberFormat*  fmt,
-            const   UChar*          text,
+            const   char16_t*          text,
             int32_t         textLength,
             int32_t         *parsePos /* 0 = start */,
             UErrorCode      *status)
@@ -442,7 +442,7 @@ unum_parseDouble(    const   UNumberFormat*  fmt,
 
 U_CAPI int32_t U_EXPORT2
 unum_parseDecimal(const UNumberFormat*  fmt,
-            const UChar*    text,
+            const char16_t*    text,
             int32_t         textLength,
             int32_t         *parsePos /* 0 = start */,
             char            *outBuf,
@@ -452,7 +452,7 @@ unum_parseDecimal(const UNumberFormat*  fmt,
     if (U_FAILURE(*status)) {
         return -1;
     }
-    if ((outBuf == NULL && outBufLength != 0) || outBufLength < 0) {
+    if ((outBuf == nullptr && outBufLength != 0) || outBufLength < 0) {
         *status = U_ILLEGAL_ARGUMENT_ERROR;
         return -1;
     }
@@ -475,10 +475,10 @@ unum_parseDecimal(const UNumberFormat*  fmt,
 
 U_CAPI double U_EXPORT2
 unum_parseDoubleCurrency(const UNumberFormat* fmt,
-                         const UChar* text,
+                         const char16_t* text,
                          int32_t textLength,
                          int32_t* parsePos, /* 0 = start */
-                         UChar* currency,
+                         char16_t* currency,
                          UErrorCode* status) {
     double doubleVal = 0.0;
     currency[0] = 0;
@@ -487,17 +487,17 @@ unum_parseDoubleCurrency(const UNumberFormat* fmt,
     }
     const UnicodeString src(textLength == -1, text, textLength);
     ParsePosition pp;
-    if (parsePos != NULL) {
+    if (parsePos != nullptr) {
         pp.setIndex(*parsePos);
     }
     *status = U_PARSE_ERROR; // assume failure, reset if succeed
     LocalPointer<CurrencyAmount> currAmt(((const NumberFormat*)fmt)->parseCurrency(src, pp));
     if (pp.getErrorIndex() != -1) {
-        if (parsePos != NULL) {
+        if (parsePos != nullptr) {
             *parsePos = pp.getErrorIndex();
         }
     } else {
-        if (parsePos != NULL) {
+        if (parsePos != nullptr) {
             *parsePos = pp.getIndex();
         }
         if (pp.getIndex() > 0) {
@@ -526,7 +526,7 @@ unum_hasAttribute(const UNumberFormat*          fmt,
           UNumberFormatAttribute  attr)
 {
     const NumberFormat* nf = reinterpret_cast<const NumberFormat*>(fmt);
-    bool isDecimalFormat = dynamic_cast<const DecimalFormat*>(nf) != NULL;
+    bool isDecimalFormat = dynamic_cast<const DecimalFormat*>(nf) != nullptr;
     
     switch (attr) {
         case UNUM_LENIENT_PARSE:
@@ -578,7 +578,7 @@ unum_getAttribute(const UNumberFormat*          fmt,
 
     // The remaining attributes are only supported for DecimalFormat
     const DecimalFormat* df = dynamic_cast<const DecimalFormat*>(nf);
-    if (df != NULL) {
+    if (df != nullptr) {
         UErrorCode ignoredStatus = U_ZERO_ERROR;
         return df->getAttribute(attr, ignoredStatus);
     }
@@ -623,7 +623,7 @@ unum_setAttribute(    UNumberFormat*          fmt,
 
     // The remaining attributes are only supported for DecimalFormat
     DecimalFormat* df = dynamic_cast<DecimalFormat*>(nf);
-    if (df != NULL) {
+    if (df != nullptr) {
         UErrorCode ignoredStatus = U_ZERO_ERROR;
         df->setAttribute(attr, newValue, ignoredStatus);
     }
@@ -635,7 +635,7 @@ unum_getDoubleAttribute(const UNumberFormat*          fmt,
 {
     const NumberFormat* nf = reinterpret_cast<const NumberFormat*>(fmt);
     const DecimalFormat* df = dynamic_cast<const DecimalFormat*>(nf);
-    if (df != NULL &&  attr == UNUM_ROUNDING_INCREMENT) {
+    if (df != nullptr &&  attr == UNUM_ROUNDING_INCREMENT) {
         return df->getRoundingIncrement();
     } else {
         return -1.0;
@@ -649,7 +649,7 @@ unum_setDoubleAttribute(    UNumberFormat*          fmt,
 {
     NumberFormat* nf = reinterpret_cast<NumberFormat*>(fmt);
     DecimalFormat* df = dynamic_cast<DecimalFormat*>(nf);
-    if (df != NULL && attr == UNUM_ROUNDING_INCREMENT) {   
+    if (df != nullptr && attr == UNUM_ROUNDING_INCREMENT) {   
         df->setRoundingIncrement(newValue);
     }
 }
@@ -657,7 +657,7 @@ unum_setDoubleAttribute(    UNumberFormat*          fmt,
 U_CAPI int32_t U_EXPORT2
 unum_getTextAttribute(const UNumberFormat*  fmt,
             UNumberFormatTextAttribute      tag,
-            UChar*                          result,
+            char16_t*                          result,
             int32_t                         resultLength,
             UErrorCode*                     status)
 {
@@ -665,8 +665,8 @@ unum_getTextAttribute(const UNumberFormat*  fmt,
         return -1;
 
     UnicodeString res;
-    if(!(result==NULL && resultLength==0)) {
-        // NULL destination for pure preflighting: empty dummy string
+    if(!(result==nullptr && resultLength==0)) {
+        // nullptr destination for pure preflighting: empty dummy string
         // otherwise, alias the destination buffer
         res.setTo(result, 0, resultLength);
     }
@@ -712,7 +712,7 @@ unum_getTextAttribute(const UNumberFormat*  fmt,
             int32_t count = rbnf->getNumberOfRuleSetNames();
             for (int i = 0; i < count; ++i) {
                 res += rbnf->getRuleSetName(i);
-                res += (UChar)0x003b; // semicolon
+                res += (char16_t)0x003b; // semicolon
             }
         } else {
             *status = U_UNSUPPORTED_ERROR;
@@ -729,7 +729,7 @@ unum_getTextAttribute(const UNumberFormat*  fmt,
 U_CAPI void U_EXPORT2
 unum_setTextAttribute(    UNumberFormat*                    fmt,
             UNumberFormatTextAttribute      tag,
-            const    UChar*                            newValue,
+            const    char16_t*                            newValue,
             int32_t                            newValueLength,
             UErrorCode                        *status)
 {
@@ -739,7 +739,7 @@ unum_setTextAttribute(    UNumberFormat*                    fmt,
     UnicodeString val(newValue, newValueLength);
     NumberFormat* nf = reinterpret_cast<NumberFormat*>(fmt);
     DecimalFormat* df = dynamic_cast<DecimalFormat*>(nf);
-    if (df != NULL) {
+    if (df != nullptr) {
       switch(tag) {
       case UNUM_POSITIVE_PREFIX:
         df->setPositivePrefix(val);
@@ -771,7 +771,7 @@ unum_setTextAttribute(    UNumberFormat*                    fmt,
       }
     } else {
       RuleBasedNumberFormat* rbnf = dynamic_cast<RuleBasedNumberFormat*>(nf);
-      U_ASSERT(rbnf != NULL);
+      U_ASSERT(rbnf != nullptr);
       if (tag == UNUM_DEFAULT_RULESET) {
         rbnf->setDefaultRuleSet(val, *status);
       } else {
@@ -783,7 +783,7 @@ unum_setTextAttribute(    UNumberFormat*                    fmt,
 U_CAPI int32_t U_EXPORT2
 unum_toPattern(    const    UNumberFormat*          fmt,
         UBool                  isPatternLocalized,
-        UChar*                  result,
+        char16_t*                  result,
         int32_t                 resultLength,
         UErrorCode*             status)
 {
@@ -791,8 +791,8 @@ unum_toPattern(    const    UNumberFormat*          fmt,
         return -1;
     
     UnicodeString pat;
-    if(!(result==NULL && resultLength==0)) {
-        // NULL destination for pure preflighting: empty dummy string
+    if(!(result==nullptr && resultLength==0)) {
+        // nullptr destination for pure preflighting: empty dummy string
         // otherwise, alias the destination buffer
         pat.setTo(result, 0, resultLength);
     }
@@ -816,19 +816,19 @@ unum_toPattern(    const    UNumberFormat*          fmt,
 U_CAPI int32_t U_EXPORT2
 unum_getSymbol(const UNumberFormat *fmt,
                UNumberFormatSymbol symbol,
-               UChar *buffer,
+               char16_t *buffer,
                int32_t size,
                UErrorCode *status) UPRV_NO_SANITIZE_UNDEFINED {
     if(status==nullptr || U_FAILURE(*status)) {
         return 0;
     }
-    if(fmt==NULL || symbol< 0 || symbol>=UNUM_FORMAT_SYMBOL_COUNT) {
+    if(fmt==nullptr || symbol< 0 || symbol>=UNUM_FORMAT_SYMBOL_COUNT) {
         *status=U_ILLEGAL_ARGUMENT_ERROR;
         return 0;
     }
     const NumberFormat *nf = reinterpret_cast<const NumberFormat *>(fmt);
     const DecimalFormat *dcf = dynamic_cast<const DecimalFormat *>(nf);
-    if (dcf == NULL) {
+    if (dcf == nullptr) {
       *status = U_UNSUPPORTED_ERROR;
       return 0;
     }
@@ -842,19 +842,19 @@ unum_getSymbol(const UNumberFormat *fmt,
 U_CAPI void U_EXPORT2
 unum_setSymbol(UNumberFormat *fmt,
                UNumberFormatSymbol symbol,
-               const UChar *value,
+               const char16_t *value,
                int32_t length,
                UErrorCode *status) UPRV_NO_SANITIZE_UNDEFINED {
     if(status==nullptr || U_FAILURE(*status)) {
         return;
     }
-    if(fmt==NULL || symbol< 0 || symbol>=UNUM_FORMAT_SYMBOL_COUNT || value==NULL || length<-1) {
+    if(fmt==nullptr || symbol< 0 || symbol>=UNUM_FORMAT_SYMBOL_COUNT || value==nullptr || length<-1) {
         *status=U_ILLEGAL_ARGUMENT_ERROR;
         return;
     }
     NumberFormat *nf = reinterpret_cast<NumberFormat *>(fmt);
     DecimalFormat *dcf = dynamic_cast<DecimalFormat *>(nf);
-    if (dcf == NULL) {
+    if (dcf == nullptr) {
       *status = U_UNSUPPORTED_ERROR;
       return;
     }
@@ -868,7 +868,7 @@ unum_setSymbol(UNumberFormat *fmt,
 U_CAPI void U_EXPORT2
 unum_applyPattern(  UNumberFormat  *fmt,
                     UBool          localized,
-                    const UChar    *pattern,
+                    const char16_t *pattern,
                     int32_t        patternLength,
                     UParseError    *parseError,
                     UErrorCode*    status)
@@ -876,21 +876,21 @@ unum_applyPattern(  UNumberFormat  *fmt,
     UErrorCode tStatus = U_ZERO_ERROR;
     UParseError tParseError;
     
-    if(parseError == NULL){
+    if(parseError == nullptr){
         parseError = &tParseError;
     }
     
-    if(status==NULL){
+    if(status==nullptr){
         status = &tStatus;
     }
     
     int32_t len = (patternLength == -1 ? u_strlen(pattern) : patternLength);
-    const UnicodeString pat((UChar*)pattern, len, len);
+    const UnicodeString pat((char16_t*)pattern, len, len);
 
     // Verify if the object passed is a DecimalFormat object
     NumberFormat* nf = reinterpret_cast<NumberFormat*>(fmt);
     DecimalFormat* df = dynamic_cast<DecimalFormat*>(nf);
-    if (df != NULL) {
+    if (df != nullptr) {
       if(localized) {
         df->applyLocalizedPattern(pat,*parseError, *status);
       } else {
@@ -907,11 +907,11 @@ unum_getLocaleByType(const UNumberFormat *fmt,
                      ULocDataLocaleType type,
                      UErrorCode* status)
 {
-    if (fmt == NULL) {
+    if (fmt == nullptr) {
         if (U_SUCCESS(*status)) {
             *status = U_ILLEGAL_ARGUMENT_ERROR;
         }
-        return NULL;
+        return nullptr;
     }
     return ((const Format*)fmt)->getLocaleID(type, *status);
 }
@@ -937,23 +937,23 @@ unum_getContext(const UNumberFormat *fmt, UDisplayContextType type, UErrorCode* 
 U_CAPI UFormattable * U_EXPORT2
 unum_parseToUFormattable(const UNumberFormat* fmt,
                          UFormattable *result,
-                         const UChar* text,
+                         const char16_t* text,
                          int32_t textLength,
                          int32_t* parsePos, /* 0 = start */
                          UErrorCode* status) {
-  UFormattable *newFormattable = NULL;
+  UFormattable *newFormattable = nullptr;
   if (U_FAILURE(*status)) return result;
-  if (fmt == NULL || (text==NULL && textLength!=0)) {
+  if (fmt == nullptr || (text==nullptr && textLength!=0)) {
     *status = U_ILLEGAL_ARGUMENT_ERROR;
     return result;
   }
-  if (result == NULL) { // allocate if not allocated.
+  if (result == nullptr) { // allocate if not allocated.
     newFormattable = result = ufmt_open(status);
   }
   parseRes(*(Formattable::fromUFormattable(result)), fmt, text, textLength, parsePos, status);
-  if (U_FAILURE(*status) && newFormattable != NULL) {
+  if (U_FAILURE(*status) && newFormattable != nullptr) {
     ufmt_close(newFormattable);
-    result = NULL; // deallocate if there was a parse error
+    result = nullptr; // deallocate if there was a parse error
   }
   return result;
 }
@@ -961,15 +961,15 @@ unum_parseToUFormattable(const UNumberFormat* fmt,
 U_CAPI int32_t U_EXPORT2
 unum_formatUFormattable(const UNumberFormat* fmt,
                         const UFormattable *number,
-                        UChar *result,
+                        char16_t *result,
                         int32_t resultLength,
                         UFieldPosition *pos, /* ignored if 0 */
                         UErrorCode *status) {
     if (U_FAILURE(*status)) {
       return 0;
     }
-    if (fmt == NULL || number==NULL ||
-        (result==NULL ? resultLength!=0 : resultLength<0)) {
+    if (fmt == nullptr || number==nullptr ||
+        (result==nullptr ? resultLength!=0 : resultLength<0)) {
       *status = U_ILLEGAL_ARGUMENT_ERROR;
       return 0;
     }

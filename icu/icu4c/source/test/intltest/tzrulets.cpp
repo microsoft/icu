@@ -86,7 +86,7 @@ TestZIDEnumeration::TestZIDEnumeration(UBool all)
         tzenum = TimeZone::createEnumeration(status);
         len = tzenum->count(status);
     } else {
-        tzenum = NULL;
+        tzenum = nullptr;
         len = UPRV_LENGTHOF(TESTZIDS);
     }
 }
@@ -97,18 +97,18 @@ TestZIDEnumeration::~TestZIDEnumeration() {
 
 const UnicodeString*
 TestZIDEnumeration::snext(UErrorCode& status) {
-    if (tzenum != NULL) {
+    if (tzenum != nullptr) {
         return tzenum->snext(status);
     } else if (U_SUCCESS(status) && idx < len) {
         unistr = UnicodeString(TESTZIDS[idx++], "");
         return &unistr;
     }
-    return NULL;
+    return nullptr;
 }
 
 void
 TestZIDEnumeration::reset(UErrorCode& status) {
-    if (tzenum != NULL) {
+    if (tzenum != nullptr) {
         tzenum->reset(status);
     } else {
         idx = 0;
@@ -148,7 +148,7 @@ void TimeZoneRuleTest::runIndexedTest( int32_t index, UBool exec, const char* &n
  * Compare SimpleTimeZone with equivalent RBTZ
  */
 void
-TimeZoneRuleTest::TestSimpleRuleBasedTimeZone(void) {
+TimeZoneRuleTest::TestSimpleRuleBasedTimeZone() {
     UErrorCode status = U_ZERO_ERROR;
     SimpleTimeZone stz(-1*HOUR, "TestSTZ",
         UCAL_SEPTEMBER, -30, -UCAL_SATURDAY, 1*HOUR, SimpleTimeZone::WALL_TIME,
@@ -422,7 +422,7 @@ TimeZoneRuleTest::TestSimpleRuleBasedTimeZone(void) {
  * equivalent rules in a certain time range
  */
 void
-TimeZoneRuleTest::TestHistoricalRuleBasedTimeZone(void) {
+TimeZoneRuleTest::TestHistoricalRuleBasedTimeZone() {
     UErrorCode status = U_ZERO_ERROR;
 
     // Compare to America/New_York with equivalent RBTZ
@@ -595,7 +595,7 @@ TimeZoneRuleTest::TestHistoricalRuleBasedTimeZone(void) {
  * are actual time transitions.
  */
 void
-TimeZoneRuleTest::TestOlsonTransition(void) {
+TimeZoneRuleTest::TestOlsonTransition() {
 
     const int32_t TESTYEARS[][2] = {
         {1895, 1905}, // including int32 minimum second
@@ -608,7 +608,7 @@ TimeZoneRuleTest::TestOlsonTransition(void) {
     TestZIDEnumeration tzenum(!quick);
     while (true) {
         const UnicodeString *tzid = tzenum.snext(status);
-        if (tzid == NULL) {
+        if (tzid == nullptr) {
             break;
         }
         if (U_FAILURE(status)) {
@@ -630,7 +630,7 @@ TimeZoneRuleTest::TestOlsonTransition(void) {
  * transitions.
  */
 void
-TimeZoneRuleTest::TestRBTZTransition(void) {
+TimeZoneRuleTest::TestRBTZTransition() {
     const int32_t STARTYEARS[] = {
         1900,
         1960,
@@ -643,7 +643,7 @@ TimeZoneRuleTest::TestRBTZTransition(void) {
     TestZIDEnumeration tzenum(!quick);
     while (true) {
         const UnicodeString *tzid = tzenum.snext(status);
-        if (tzid == NULL) {
+        if (tzid == nullptr) {
             break;
         }
         if (U_FAILURE(status)) {
@@ -695,7 +695,7 @@ TimeZoneRuleTest::TestRBTZTransition(void) {
 }
 
 void
-TimeZoneRuleTest::TestHasEquivalentTransitions(void) {
+TimeZoneRuleTest::TestHasEquivalentTransitions() {
     // America/New_York and America/Indiana/Indianapolis are equivalent
     // since 2006
     UErrorCode status = U_ZERO_ERROR;
@@ -772,7 +772,7 @@ TimeZoneRuleTest::TestHasEquivalentTransitions(void) {
  * VTimeZone from the VTIMEZONE data, then compare transitions
  */
 void
-TimeZoneRuleTest::TestVTimeZoneRoundTrip(void) {
+TimeZoneRuleTest::TestVTimeZoneRoundTrip() {
     UDate startTime = getUTCMillis(1850, UCAL_JANUARY, 1);
     UDate endTime = getUTCMillis(2050, UCAL_JANUARY, 1);
 
@@ -780,7 +780,7 @@ TimeZoneRuleTest::TestVTimeZoneRoundTrip(void) {
     TestZIDEnumeration tzenum(!quick);
     while (true) {
         const UnicodeString *tzid = tzenum.snext(status);
-        if (tzid == NULL) {
+        if (tzid == nullptr) {
             break;
         }
         if (U_FAILURE(status)) {
@@ -791,7 +791,7 @@ TimeZoneRuleTest::TestVTimeZoneRoundTrip(void) {
         VTimeZone *vtz_org = VTimeZone::createVTimeZoneByID(*tzid);
         vtz_org->setTZURL("http://source.icu-project.org/timezone");
         vtz_org->setLastModified(Calendar::getNow());
-        VTimeZone *vtz_new = NULL;
+        VTimeZone *vtz_new = nullptr;
         UnicodeString vtzdata;
         // Write out VTIMEZONE data
         vtz_org->write(vtzdata, status);
@@ -852,9 +852,9 @@ TimeZoneRuleTest::TestVTimeZoneRoundTrip(void) {
                     }
                 }
             }
-            if (vtz_new != NULL) {
+            if (vtz_new != nullptr) {
                 delete vtz_new;
-                vtz_new = NULL;
+                vtz_new = nullptr;
             }
         }
         delete tz;
@@ -867,7 +867,7 @@ TimeZoneRuleTest::TestVTimeZoneRoundTrip(void) {
  * create a new VTimeZone from the VTIMEZONE data, then compare transitions
  */
 void
-TimeZoneRuleTest::TestVTimeZoneRoundTripPartial(void) {
+TimeZoneRuleTest::TestVTimeZoneRoundTripPartial() {
     const int32_t STARTYEARS[] = {
         1900,
         1950,
@@ -880,7 +880,7 @@ TimeZoneRuleTest::TestVTimeZoneRoundTripPartial(void) {
     TestZIDEnumeration tzenum(!quick);
     while (true) {
         const UnicodeString *tzid = tzenum.snext(status);
-        if (tzid == NULL) {
+        if (tzid == nullptr) {
             break;
         }
         if (U_FAILURE(status)) {
@@ -889,7 +889,7 @@ TimeZoneRuleTest::TestVTimeZoneRoundTripPartial(void) {
         }
         BasicTimeZone *tz = dynamic_cast<BasicTimeZone*>(TimeZone::createTimeZone(*tzid));
         VTimeZone *vtz_org = VTimeZone::createVTimeZoneByID(*tzid);
-        VTimeZone *vtz_new = NULL;
+        VTimeZone *vtz_new = nullptr;
         UnicodeString vtzdata;
 
         for (int32_t i = 0; STARTYEARS[i] != 0; i++) {
@@ -944,9 +944,9 @@ TimeZoneRuleTest::TestVTimeZoneRoundTripPartial(void) {
                     }
                 }
             }
-            if (vtz_new != NULL) {
+            if (vtz_new != nullptr) {
                 delete vtz_new;
-                vtz_new = NULL;
+                vtz_new = nullptr;
             }
         }
         delete tz;
@@ -960,7 +960,7 @@ TimeZoneRuleTest::TestVTimeZoneRoundTripPartial(void) {
  * and DST savings are same in these two time zones.
  */
 void
-TimeZoneRuleTest::TestVTimeZoneSimpleWrite(void) {
+TimeZoneRuleTest::TestVTimeZoneSimpleWrite() {
     const int32_t TESTDATES[][3] = {
         {2006,  UCAL_JANUARY,   1},
         {2006,  UCAL_MARCH,     15},
@@ -976,7 +976,7 @@ TimeZoneRuleTest::TestVTimeZoneSimpleWrite(void) {
     TestZIDEnumeration tzenum(!quick);
     while (true) {
         const UnicodeString *tzid = tzenum.snext(status);
-        if (tzid == NULL) {
+        if (tzid == nullptr) {
             break;
         }
         if (U_FAILURE(status)) {
@@ -984,7 +984,7 @@ TimeZoneRuleTest::TestVTimeZoneSimpleWrite(void) {
             break;
         }
         VTimeZone *vtz_org = VTimeZone::createVTimeZoneByID(*tzid);
-        VTimeZone *vtz_new = NULL;
+        VTimeZone *vtz_new = nullptr;
         UnicodeString vtzdata;
 
         for (int32_t i = 0; TESTDATES[i][0] != 0; i++) {
@@ -1016,9 +1016,9 @@ TimeZoneRuleTest::TestVTimeZoneSimpleWrite(void) {
                     }
                 }
             }
-            if (vtz_new != NULL) {
+            if (vtz_new != nullptr) {
                 delete vtz_new;
-                vtz_new = NULL;
+                vtz_new = nullptr;
             }
         }
         delete vtz_org;
@@ -1030,7 +1030,7 @@ TimeZoneRuleTest::TestVTimeZoneSimpleWrite(void) {
  * LAST-MODIFIED, create a new VTimeZone from the VTIMEZONE data to see if the headers are preserved.
  */
 void
-TimeZoneRuleTest::TestVTimeZoneHeaderProps(void) {
+TimeZoneRuleTest::TestVTimeZoneHeaderProps() {
     const UnicodeString TESTURL1("http://source.icu-project.org");
     const UnicodeString TESTURL2("http://www.ibm.com");
 
@@ -1045,7 +1045,7 @@ TimeZoneRuleTest::TestVTimeZoneHeaderProps(void) {
     // Roundtrip conversion
     UnicodeString vtzdata;
     vtz->write(vtzdata, status);
-    VTimeZone *newvtz1 = NULL;
+    VTimeZone *newvtz1 = nullptr;
     if (U_FAILURE(status)) {
         errln("FAIL: error returned while writing VTIMEZONE data 1");
         return;
@@ -1101,7 +1101,7 @@ TimeZoneRuleTest::TestVTimeZoneHeaderProps(void) {
  * the expected format.
  */
 void
-TimeZoneRuleTest::TestGetSimpleRules(void) {
+TimeZoneRuleTest::TestGetSimpleRules() {
     UDate testTimes[] = {
         getUTCMillis(1970, UCAL_JANUARY, 1),
         getUTCMillis(2000, UCAL_MARCH, 31),
@@ -1116,7 +1116,7 @@ TimeZoneRuleTest::TestGetSimpleRules(void) {
     for (int32_t i = 0; i < numTimes ; i++) {
         while (true) {
             const UnicodeString *tzid = tzenum.snext(status);
-            if (tzid == NULL) {
+            if (tzid == nullptr) {
                 break;
             }
             if (U_FAILURE(status)) {
@@ -1124,21 +1124,21 @@ TimeZoneRuleTest::TestGetSimpleRules(void) {
                 break;
             }
             BasicTimeZone *tz = dynamic_cast<BasicTimeZone*>(TimeZone::createTimeZone(*tzid));
-            initial = NULL;
-            std = dst = NULL;
+            initial = nullptr;
+            std = dst = nullptr;
             tz->getSimpleRulesNear(testTimes[i], initial, std, dst, status);
             if (U_FAILURE(status)) {
                 errln("FAIL: getSimpleRules failed.");
                 break;
             }
-            if (initial == NULL) {
-                errln("FAIL: initial rule must not be NULL");
+            if (initial == nullptr) {
+                errln("FAIL: initial rule must not be nullptr");
                 break;
-            } else if (!((std == NULL && dst == NULL) || (std != NULL && dst != NULL))) {
+            } else if (!((std == nullptr && dst == nullptr) || (std != nullptr && dst != nullptr))) {
                 errln("FAIL: invalid std/dst pair.");
                 break;
             }
-            if (std != NULL) {
+            if (std != nullptr) {
                 const DateTimeRule *dtr = std->getRule();
                 if (dtr->getDateRuleType() != DateTimeRule::DOW) {
                     errln("FAIL: simple std rull must use DateTimeRule::DOW as date rule.");
@@ -1160,7 +1160,7 @@ TimeZoneRuleTest::TestGetSimpleRules(void) {
             }
             // Create an RBTZ from the rules and compare the offsets at the date
             RuleBasedTimeZone *rbtz = new RuleBasedTimeZone(*tzid, initial);
-            if (std != NULL) {
+            if (std != nullptr) {
                 rbtz->addTransitionRule(std, status);
                 if (U_FAILURE(status)) {
                     errln("FAIL: couldn't add std rule.");
@@ -1197,7 +1197,7 @@ TimeZoneRuleTest::TestGetSimpleRules(void) {
  * API coverage tests for TimeZoneRule 
  */
 void
-TimeZoneRuleTest::TestTimeZoneRuleCoverage(void) {
+TimeZoneRuleTest::TestTimeZoneRuleCoverage() {
     UDate time1 = getUTCMillis(2005, UCAL_JULY, 4);
     UDate time2 = getUTCMillis(2015, UCAL_JULY, 4);
     UDate time3 = getUTCMillis(1950, UCAL_JULY, 4);
@@ -1508,7 +1508,7 @@ TimeZoneRuleTest::TestTimeZoneRuleCoverage(void) {
  * API coverage test for BasicTimeZone APIs in SimpleTimeZone
  */
 void
-TimeZoneRuleTest::TestSimpleTimeZoneCoverage(void) {
+TimeZoneRuleTest::TestSimpleTimeZoneCoverage() {
     UDate time1 = getUTCMillis(1990, UCAL_JUNE, 1);
     UDate time2 = getUTCMillis(2000, UCAL_JUNE, 1);
 
@@ -1516,7 +1516,7 @@ TimeZoneRuleTest::TestSimpleTimeZoneCoverage(void) {
     UBool avail1, avail2;
     UErrorCode status = U_ZERO_ERROR;
     const TimeZoneRule *trrules[2];
-    const InitialTimeZoneRule *ir = NULL;
+    const InitialTimeZoneRule *ir = nullptr;
     int32_t numTzRules;
 
     // BasicTimeZone API implementation in SimpleTimeZone
@@ -1546,7 +1546,7 @@ TimeZoneRuleTest::TestSimpleTimeZoneCoverage(void) {
     if (numTzRules != 0) {
         errln("FAIL: Incorrect transition rule count");
     }
-    if (ir == NULL || ir->getRawOffset() != stz1->getRawOffset()) {
+    if (ir == nullptr || ir->getRawOffset() != stz1->getRawOffset()) {
         errln("FAIL: Bad initial time zone rule");
     }
 
@@ -1575,8 +1575,8 @@ TimeZoneRuleTest::TestSimpleTimeZoneCoverage(void) {
     }
 
     numTzRules = 2;
-    trrules[0] = NULL;
-    trrules[1] = NULL;
+    trrules[0] = nullptr;
+    trrules[1] = nullptr;
     stz1->getTimeZoneRules(ir, trrules, numTzRules, status);
     if (U_FAILURE(status)) {
         errln("FAIL: getTimeZoneRules failed");
@@ -1584,13 +1584,13 @@ TimeZoneRuleTest::TestSimpleTimeZoneCoverage(void) {
     if (numTzRules != 2) {
         errln("FAIL: Incorrect transition rule count");
     }
-    if (ir == NULL || ir->getRawOffset() != stz1->getRawOffset()) {
+    if (ir == nullptr || ir->getRawOffset() != stz1->getRawOffset()) {
         errln("FAIL: Bad initial time zone rule");
     }
-    if (trrules[0] == NULL || trrules[0]->getRawOffset() != stz1->getRawOffset()) {
+    if (trrules[0] == nullptr || trrules[0]->getRawOffset() != stz1->getRawOffset()) {
         errln("FAIL: Bad transition rule 0");
     }
-    if (trrules[1] == NULL || trrules[1]->getRawOffset() != stz1->getRawOffset()) {
+    if (trrules[1] == nullptr || trrules[1]->getRawOffset() != stz1->getRawOffset()) {
         errln("FAIL: Bad transition rule 1");
     }
 
@@ -1612,7 +1612,7 @@ TimeZoneRuleTest::TestSimpleTimeZoneCoverage(void) {
  * API coverage test for VTimeZone
  */
 void
-TimeZoneRuleTest::TestVTimeZoneCoverage(void) {
+TimeZoneRuleTest::TestVTimeZoneCoverage() {
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString TZID("Europe/Moscow");
 
@@ -1769,7 +1769,7 @@ TimeZoneRuleTest::TestVTimeZoneCoverage(void) {
     // Creation from BasicTimeZone
     //
     status = U_ZERO_ERROR;
-    VTimeZone *vtzFromBasic = NULL;
+    VTimeZone *vtzFromBasic = nullptr;
     SimpleTimeZone *simpleTZ = new SimpleTimeZone(28800000, "Asia/Singapore");
     simpleTZ->setStartYear(1970);
     simpleTZ->setStartRule(0,  // month
@@ -1782,7 +1782,7 @@ TimeZoneRuleTest::TestVTimeZoneCoverage(void) {
         goto end_basic_tz_test;
     }
     vtzFromBasic = VTimeZone::createVTimeZoneFromBasicTimeZone(*simpleTZ, status);
-    if (U_FAILURE(status) || vtzFromBasic == NULL) {
+    if (U_FAILURE(status) || vtzFromBasic == nullptr) {
         dataerrln("File %s, line %d, failed with status = %s", __FILE__, __LINE__, u_errorName(status));
         goto end_basic_tz_test;
     }
@@ -1820,13 +1820,13 @@ end_basic_tz_test:
 
 
 void
-TimeZoneRuleTest::TestVTimeZoneParse(void) {
+TimeZoneRuleTest::TestVTimeZoneParse() {
     UErrorCode status = U_ZERO_ERROR;
 
     // Trying to create VTimeZone from empty data
     UnicodeString emptyData;
     VTimeZone *empty = VTimeZone::createVTimeZone(emptyData, status);
-    if (U_SUCCESS(status) || empty != NULL) {
+    if (U_SUCCESS(status) || empty != nullptr) {
         delete empty;
         errln("FAIL: Non-null VTimeZone is returned for empty VTIMEZONE data");
     }
@@ -1834,7 +1834,7 @@ TimeZoneRuleTest::TestVTimeZoneParse(void) {
 
     // Create VTimeZone for Asia/Tokyo
     UnicodeString asiaTokyoID("Asia/Tokyo");
-    static const UChar asiaTokyo[] = {
+    static const char16_t asiaTokyo[] = {
         /* "BEGIN:VTIMEZONE\x0D\x0A" */
         0x42,0x45,0x47,0x49,0x4E,0x3A,0x56,0x54,0x49,0x4D,0x45,0x5A,0x4F,0x4E,0x45,0x0D,0x0A,
         /* "TZID:Asia\x0D\x0A" */
@@ -1860,7 +1860,7 @@ TimeZoneRuleTest::TestVTimeZoneParse(void) {
         0
     };
     VTimeZone *tokyo = VTimeZone::createVTimeZone(asiaTokyo, status);
-    if (U_FAILURE(status) || tokyo == NULL) {
+    if (U_FAILURE(status) || tokyo == nullptr) {
         errln("FAIL: Failed to create a VTimeZone tokyo");
     } else {
         // Check ID
@@ -1882,7 +1882,7 @@ TimeZoneRuleTest::TestVTimeZoneParse(void) {
     delete tokyo;
 
         // Create VTimeZone from VTIMEZONE data
-    static const UChar fooData[] = {
+    static const char16_t fooData[] = {
         /* "BEGIN:VCALENDAR\x0D\x0A" */
         0x42,0x45,0x47,0x49,0x4E,0x3A,0x56,0x43,0x41,0x4C,0x45,0x4E,0x44,0x41,0x52,0x0D,0x0A,
         /* "BEGIN:VTIMEZONE\x0D\x0A" */
@@ -1925,7 +1925,7 @@ TimeZoneRuleTest::TestVTimeZoneParse(void) {
     };
 
     VTimeZone *foo = VTimeZone::createVTimeZone(fooData, status);
-    if (U_FAILURE(status) || foo == NULL) {
+    if (U_FAILURE(status) || foo == nullptr) {
         errln("FAIL: Failed to create a VTimeZone foo");
     } else {
         // Write VTIMEZONE data
@@ -1940,9 +1940,9 @@ TimeZoneRuleTest::TestVTimeZoneParse(void) {
 }
 
 void
-TimeZoneRuleTest::TestT6216(void) {
+TimeZoneRuleTest::TestT6216() {
     // Test case in #6216
-    static const UChar tokyoTZ[] = {
+    static const char16_t tokyoTZ[] = {
         /* "BEGIN:VCALENDAR\r\n" */
         0x42,0x45,0x47,0x49,0x4e,0x3a,0x56,0x43,0x41,0x4c,0x45,0x4e,0x44,0x41,0x52,0x0d,0x0a,
         /* "VERSION:2.0\r\n" */
@@ -1974,7 +1974,7 @@ TimeZoneRuleTest::TestT6216(void) {
         0
     };
     // Single final rule, overlapping with another
-    static const UChar finalOverlap[] = {
+    static const char16_t finalOverlap[] = {
         /* "BEGIN:VCALENDAR\r\n" */
         0x42,0x45,0x47,0x49,0x4e,0x3a,0x56,0x43,0x41,0x4c,0x45,0x4e,0x44,0x41,0x52,0x0d,0x0a,
         /* "BEGIN:VTIMEZONE\r\n" */
@@ -2016,7 +2016,7 @@ TimeZoneRuleTest::TestT6216(void) {
         0
     };
     // Single final rule, no overlapping with another
-    static const UChar finalNonOverlap[] = {
+    static const char16_t finalNonOverlap[] = {
         /* "BEGIN:VCALENDAR\r\n" */
         0x42,0x45,0x47,0x49,0x4e,0x3a,0x56,0x43,0x41,0x4c,0x45,0x4e,0x44,0x41,0x52,0x0d,0x0a,
         /* "BEGIN:VTIMEZONE\r\n" */
@@ -2146,7 +2146,7 @@ TimeZoneRuleTest::TestT6216(void) {
 }
 
 void
-TimeZoneRuleTest::TestT6669(void) {
+TimeZoneRuleTest::TestT6669() {
     UErrorCode status = U_ZERO_ERROR;
     SimpleTimeZone stz(0, "CustomID", UCAL_JANUARY, 1, UCAL_SUNDAY, 0, UCAL_JULY, 1, UCAL_SUNDAY, 0, status);
     if (U_FAILURE(status)) {
@@ -2177,11 +2177,11 @@ TimeZoneRuleTest::TestT6669(void) {
 }
 
 void
-TimeZoneRuleTest::TestVTimeZoneWrapper(void) {
+TimeZoneRuleTest::TestVTimeZoneWrapper() {
 #if 0
     // local variables
     UBool b;
-    UChar * data = NULL;
+    char16_t * data = nullptr;
     int32_t length = 0;
     int32_t i;
     UDate result;
@@ -2189,7 +2189,7 @@ TimeZoneRuleTest::TestVTimeZoneWrapper(void) {
     UErrorCode status;
 
     const char *name = "Test Initial";
-    UChar uname[20];
+    char16_t uname[20];
 
     UClassID cid1;
     UClassID cid2;
@@ -2252,9 +2252,9 @@ TimeZoneRuleTest::TestVTimeZoneWrapper(void) {
     cid2 = ztrans_getDynamicClassID(zt2);
 
     // test vzone
-    v1 = vzone_openID((UChar*)"America/Chicago", sizeof("America/Chicago"));
+    v1 = vzone_openID((char16_t*)"America/Chicago", sizeof("America/Chicago"));
     v2 = vzone_clone(v1);
-    //v2 = vzone_openData(const UChar* vtzdata, int32_t vtzdataLength, UErrorCode& status);
+    //v2 = vzone_openData(const char16_t* vtzdata, int32_t vtzdataLength, UErrorCode& status);
 
     // test equality
     b = vzone_equals(v1, v2);
@@ -2591,7 +2591,7 @@ static UBool hasEquivalentTransitions(/*const*/ BasicTimeZone& tz1, /*const*/Bas
             return false;
         }
         double delta = tr1.getTime() >= tr2.getTime() ? tr1.getTime() - tr2.getTime() : tr2.getTime() - tr1.getTime();
-        if (delta > (double)maxTransitionTimeDelta) {
+        if (delta > static_cast<double>(maxTransitionTimeDelta)) {
             return false;
         }
         if (ignoreDstAmount) {
@@ -2615,7 +2615,7 @@ static UBool hasEquivalentTransitions(/*const*/ BasicTimeZone& tz1, /*const*/Bas
 // Test case for ticket#8943
 // RuleBasedTimeZone#getOffsets throws NPE
 void
-TimeZoneRuleTest::TestT8943(void) {
+TimeZoneRuleTest::TestT8943() {
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString id("Ekaterinburg Time");
     UnicodeString stdName("Ekaterinburg Standard Time");

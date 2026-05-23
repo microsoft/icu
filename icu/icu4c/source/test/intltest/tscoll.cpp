@@ -91,7 +91,7 @@ void IntlTestCollator::runIndexedTest( int32_t index, UBool exec, const char* &n
 }
 
 UCollationResult 
-IntlTestCollator::compareUsingPartials(UCollator *coll, const UChar source[], int32_t sLen, const UChar target[], int32_t tLen, int32_t pieceSize, UErrorCode &status) {
+IntlTestCollator::compareUsingPartials(UCollator *coll, const char16_t source[], int32_t sLen, const char16_t target[], int32_t tLen, int32_t pieceSize, UErrorCode &status) {
   int32_t partialSKResult = 0;
   uint8_t sBuf[512], tBuf[512];
   UCharIterator sIter, tIter;
@@ -146,9 +146,9 @@ IntlTestCollator::doTestVariant(Collator* col, const UnicodeString &source, cons
     UColAttributeValue norm = ucol_getAttribute(myCollation, UCOL_NORMALIZATION_MODE, &status);
 
     int32_t sLen = source.length(), tLen = target.length();
-    const UChar* src = source.getBuffer();
-    const UChar* trg = target.getBuffer();
-    UCollationResult compareResultIter = (UCollationResult)result;
+    const char16_t* src = source.getBuffer();
+    const char16_t* trg = target.getBuffer();
+    UCollationResult compareResultIter = static_cast<UCollationResult>(result);
 
     {
       UCharIterator sIter, tIter;
@@ -169,7 +169,7 @@ IntlTestCollator::doTestVariant(Collator* col, const UnicodeString &source, cons
       } else {
         u_strToUTF8(utf8Target, 256, &utf8TargetLen, trg, tLen, &status);
         if(U_SUCCESS(status)) { /* probably buffer is not big enough */
-          UCollationResult compareResultUTF8 = (UCollationResult)result, compareResultUTF8Norm = (UCollationResult)result;
+          UCollationResult compareResultUTF8 = static_cast<UCollationResult>(result), compareResultUTF8Norm = static_cast<UCollationResult>(result);
           UCharIterator sIter, tIter;
           /*log_verbose("Strings converted to UTF-8:%s, %s\n", aescstrdup(source,-1), aescstrdup(target,-1));*/
           uiter_setUTF8(&sIter, utf8Source, utf8SourceLen);
@@ -207,7 +207,7 @@ IntlTestCollator::doTestVariant(Collator* col, const UnicodeString &source, cons
       int32_t i = 0;
       log("partial sortkey test piecesize=");
       for(i = 0; i < partialSizesSize; i++) {
-        UCollationResult partialSKResult = (UCollationResult)result, partialNormalizedSKResult = (UCollationResult)result;
+        UCollationResult partialSKResult = static_cast<UCollationResult>(result), partialNormalizedSKResult = static_cast<UCollationResult>(result);
         log("%i ", partialSizes[i]);
 
         partialSKResult = compareUsingPartials(myCollation, src, sLen, trg, tLen, partialSizes[i], status);
@@ -238,7 +238,7 @@ IntlTestCollator::doTestVariant(Collator* col, const UnicodeString &source, cons
 }
 
 void
-IntlTestCollator::doTest(Collator* col, const UChar *source, const UChar *target, Collator::EComparisonResult result) {
+IntlTestCollator::doTest(Collator* col, const char16_t *source, const char16_t *target, Collator::EComparisonResult result) {
   doTest(col, UnicodeString(source), UnicodeString(target), result);
 }
 
@@ -357,7 +357,7 @@ IntlTestCollator::appendCompareResult(Collator::EComparisonResult result,
     {
         UnicodeString huh = "?";
 
-        target += (huh + (int32_t)result);
+        target += (huh + static_cast<int32_t>(result));
     }
 
     return target;

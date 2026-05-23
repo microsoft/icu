@@ -99,7 +99,7 @@ public:
      * Decomposes c, which must be a Hangul syllable, into buffer
      * and returns the length of the decomposition (2 or 3).
      */
-    static inline int32_t decompose(UChar32 c, UChar buffer[3]) {
+    static inline int32_t decompose(UChar32 c, char16_t buffer[3]) {
         c-=HANGUL_BASE;
         UChar32 c2=c%JAMO_T_COUNT;
         c/=JAMO_T_COUNT;
@@ -117,7 +117,7 @@ public:
      * Decomposes c, which must be a Hangul syllable, into buffer.
      * This is the raw, not recursive, decomposition. Its length is always 2.
      */
-    static inline void getRawDecomposition(UChar32 c, UChar buffer[2]) {
+    static inline void getRawDecomposition(UChar32 c, char16_t buffer[2]) {
         UChar32 orig=c;
         c-=HANGUL_BASE;
         UChar32 c2=c%JAMO_T_COUNT;
@@ -141,7 +141,7 @@ public:
     /** Constructs only; init() should be called. */
     ReorderingBuffer(const Normalizer2Impl &ni, UnicodeString &dest) :
         impl(ni), str(dest),
-        start(NULL), reorderStart(NULL), limit(NULL),
+        start(nullptr), reorderStart(nullptr), limit(nullptr),
         remainingCapacity(0), lastCC(0) {}
     /** Constructs, removes the string contents, and initializes for a small initial capacity. */
     ReorderingBuffer(const Normalizer2Impl &ni, UnicodeString &dest, UErrorCode &errorCode);
@@ -154,22 +154,22 @@ public:
 
     UBool isEmpty() const { return start==limit; }
     int32_t length() const { return static_cast<int32_t>(limit - start); }
-    UChar *getStart() { return start; }
-    UChar *getLimit() { return limit; }
+    char16_t *getStart() { return start; }
+    char16_t *getLimit() { return limit; }
     uint8_t getLastCC() const { return lastCC; }
 
-    UBool equals(const UChar *start, const UChar *limit) const;
+    UBool equals(const char16_t *start, const char16_t *limit) const;
     UBool equals(const uint8_t *otherStart, const uint8_t *otherLimit) const;
 
     UBool append(UChar32 c, uint8_t cc, UErrorCode &errorCode) {
         return (c<=0xffff) ?
-            appendBMP((UChar)c, cc, errorCode) :
+            appendBMP(static_cast<char16_t>(c), cc, errorCode) :
             appendSupplementary(c, cc, errorCode);
     }
-    UBool append(const UChar *s, int32_t length, UBool isNFD,
+    UBool append(const char16_t *s, int32_t length, UBool isNFD,
                  uint8_t leadCC, uint8_t trailCC,
                  UErrorCode &errorCode);
-    UBool appendBMP(UChar c, uint8_t cc, UErrorCode &errorCode) {
+    UBool appendBMP(char16_t c, uint8_t cc, UErrorCode &errorCode) {
         if(remainingCapacity==0 && !resize(1, errorCode)) {
             return false;
         }
@@ -186,10 +186,10 @@ public:
         return true;
     }
     UBool appendZeroCC(UChar32 c, UErrorCode &errorCode);
-    UBool appendZeroCC(const UChar *s, const UChar *sLimit, UErrorCode &errorCode);
+    UBool appendZeroCC(const char16_t *s, const char16_t *sLimit, UErrorCode &errorCode);
     void remove();
     void removeSuffix(int32_t suffixLength);
-    void setReorderingLimit(UChar *newLimit) {
+    void setReorderingLimit(char16_t *newLimit) {
         remainingCapacity += static_cast<int32_t>(limit - newLimit);
         reorderStart=limit=newLimit;
         lastCC=0;
@@ -213,7 +213,7 @@ private:
 
     UBool appendSupplementary(UChar32 c, uint8_t cc, UErrorCode &errorCode);
     void insert(UChar32 c, uint8_t cc);
-    static void writeCodePoint(UChar *p, UChar32 c) {
+    static void writeCodePoint(char16_t *p, UChar32 c) {
         if(c<=0xffff) {
             *p = static_cast<char16_t>(c);
         } else {
@@ -225,7 +225,7 @@ private:
 
     const Normalizer2Impl &impl;
     UnicodeString &str;
-    UChar *start, *reorderStart, *limit;
+    char16_t *start, *reorderStart, *limit;
     int32_t remainingCapacity;
     uint8_t lastCC;
 
@@ -234,7 +234,7 @@ private:
     void skipPrevious();  // Requires start<codePointStart.
     uint8_t previousCC();  // Returns 0 if there is no previous character.
 
-    UChar *codePointStart, *codePointLimit;
+    char16_t *codePointStart, *codePointLimit;
 };
 
 /**
@@ -337,7 +337,7 @@ public:
         if(c<minDecompNoCP || !singleLeadMightHaveNonZeroFCD16(c)) {
             return 0;
         }
-        UChar c2;
+        char16_t c2;
         if(U16_IS_LEAD(c) && s!=limit && U16_IS_TRAIL(c2=*s)) {
             c=U16_GET_SUPPLEMENTARY(c, c2);
             ++s;
@@ -360,7 +360,7 @@ public:
                 return 0;
             }
         } else {
-            UChar c2;
+            char16_t c2;
             if(start<s && U16_IS_LEAD(c2=*(s-1))) {
                 c=U16_GET_SUPPLEMENTARY(c2, c);
                 --s;
@@ -649,7 +649,7 @@ public:
             return static_cast<uint8_t>(*getDataForYesOrNo(norm16) >> 8); // tccc from yesNo
         }
     }
-    uint8_t getPreviousTrailCC(const UChar *start, const UChar *p) const;
+    uint8_t getPreviousTrailCC(const char16_t *start, const char16_t *p) const;
     uint8_t getPreviousTrailCC(const uint8_t *start, const uint8_t *p) const;
 
     // Requires algorithmic-NoNo.
@@ -697,14 +697,14 @@ public:
                 getCompositionsListForComposite(norm16);
     }
 
-    const UChar *copyLowPrefixFromNulTerminated(const UChar *src,
+    const char16_t *copyLowPrefixFromNulTerminated(const char16_t *src,
                                                 UChar32 minNeedDataCP,
                                                 ReorderingBuffer *buffer,
                                                 UErrorCode &errorCode) const;
 
     enum StopAt { STOP_AT_LIMIT, STOP_AT_DECOMP_BOUNDARY, STOP_AT_COMP_BOUNDARY };
 
-    const UChar *decomposeShort(const UChar *src, const UChar *limit,
+    const char16_t *decomposeShort(const char16_t *src, const char16_t *limit,
                                 UBool stopAtCompBoundary, UBool onlyContiguous,
                                 ReorderingBuffer &buffer, UErrorCode &errorCode) const;
     UBool decompose(UChar32 c, uint16_t norm16,
@@ -725,9 +725,9 @@ public:
     UBool norm16HasCompBoundaryBefore(uint16_t norm16) const  {
         return norm16 < minNoNoCompNoMaybeCC || isAlgorithmicNoNo(norm16);
     }
-    UBool hasCompBoundaryBefore(const UChar *src, const UChar *limit) const;
+    UBool hasCompBoundaryBefore(const char16_t *src, const char16_t *limit) const;
     UBool hasCompBoundaryBefore(const uint8_t *src, const uint8_t *limit) const;
-    UBool hasCompBoundaryAfter(const UChar *start, const UChar *p,
+    UBool hasCompBoundaryAfter(const char16_t *start, const char16_t *p,
                                UBool onlyContiguous) const;
     UBool hasCompBoundaryAfter(const uint8_t *start, const uint8_t *p,
                                UBool onlyContiguous) const;
@@ -746,8 +746,8 @@ public:
     const char16_t *findNextCompBoundary(const char16_t *p, const char16_t *limit,
                                          UBool onlyContiguous) const;
 
-    const UChar *findPreviousFCDBoundary(const UChar *start, const UChar *p) const;
-    const UChar *findNextFCDBoundary(const UChar *p, const UChar *limit) const;
+    const char16_t *findPreviousFCDBoundary(const char16_t *start, const char16_t *p) const;
+    const char16_t *findNextFCDBoundary(const char16_t *p, const char16_t *limit) const;
 
     void makeCanonIterDataFromNorm16(UChar32 start, UChar32 end, const uint16_t norm16,
                                      CanonIterData &newData, UErrorCode &errorCode) const;
@@ -758,9 +758,9 @@ public:
     // UVersionInfo dataVersion;
 
     // BMP code point thresholds for quick check loops looking at single UTF-16 code units.
-    UChar minDecompNoCP;
-    UChar minCompNoMaybeCP;
-    UChar minLcccCP;
+    char16_t minDecompNoCP;
+    char16_t minCompNoMaybeCP;
+    char16_t minLcccCP;
 
     // Norm16 value thresholds for quick check combinations and types of extra data.
     uint16_t minYesNo;

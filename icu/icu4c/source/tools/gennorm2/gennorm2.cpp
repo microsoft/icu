@@ -149,7 +149,7 @@ main(int argc, char* argv[]) {
         "gennorm2 writes a dummy binary data file "
         "because UCONFIG_NO_NORMALIZATION is set, \n"
         "see icu/source/common/unicode/uconfig.h\n");
-    udata_createDummy(NULL, NULL, options[OUTPUT_FILENAME].value, errorCode);
+    udata_createDummy(nullptr, nullptr, options[OUTPUT_FILENAME].value, errorCode);
     // Should not return an error since this is the expected behaviour if UCONFIG_NO_NORMALIZATION is on.
     // return U_UNSUPPORTED_ERROR;
     return 0;
@@ -282,7 +282,7 @@ void parseFile(std::ifstream &f, Normalizer2DataBuilder &builder) {
                 exit(U_PARSE_ERROR);
             }
             for (UChar32 c = static_cast<UChar32>(startCP); c <= static_cast<UChar32>(endCP); ++c) {
-                builder.setCC(c, (uint8_t)value);
+                builder.setCC(c, static_cast<uint8_t>(value));
             }
             continue;
         }
@@ -297,8 +297,8 @@ void parseFile(std::ifstream &f, Normalizer2DataBuilder &builder) {
             continue;
         }
         if(*delimiter=='=' || *delimiter=='>') {
-            UChar uchars[Normalizer2Impl::MAPPING_LENGTH_MASK];
-            int32_t length=u_parseString(delimiter+1, uchars, UPRV_LENGTHOF(uchars), NULL, errorCode);
+            char16_t uchars[Normalizer2Impl::MAPPING_LENGTH_MASK];
+            int32_t length=u_parseString(delimiter+1, uchars, UPRV_LENGTHOF(uchars), nullptr, errorCode);
             if(errorCode.isFailure()) {
                 fprintf(stderr, "gennorm2 error: parsing mapping string from %s\n", line);
                 exit(errorCode.reset());
@@ -311,7 +311,7 @@ void parseFile(std::ifstream &f, Normalizer2DataBuilder &builder) {
                             line);
                     exit(U_PARSE_ERROR);
                 }
-                builder.setRoundTripMapping((UChar32)startCP, mapping);
+                builder.setRoundTripMapping(static_cast<UChar32>(startCP), mapping);
             } else {
                 for (UChar32 c = static_cast<UChar32>(startCP); c <= static_cast<UChar32>(endCP); ++c) {
                     builder.setOneWayMapping(c, mapping);

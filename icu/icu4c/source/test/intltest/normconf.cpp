@@ -75,12 +75,12 @@ NormalizerConformanceTest::openNormalizationTestFile(const char *filename) {
 
     // look inside ICU_DATA first
     folder=pathToDataDirectory();
-    if(folder!=NULL) {
+    if(folder!=nullptr) {
         strcpy(unidataPath, folder);
         strcat(unidataPath, "unidata" U_FILE_SEP_STRING);
         strcat(unidataPath, filename);
         input=T_FileStream_open(unidataPath, "rb");
-        if(input!=NULL) {
+        if(input!=nullptr) {
             return input;
         }
     }
@@ -95,7 +95,7 @@ NormalizerConformanceTest::openNormalizationTestFile(const char *filename) {
                      U_FILE_SEP_STRING "data" U_FILE_SEP_STRING "unidata" U_FILE_SEP_STRING);
         strcat(unidataPath, filename);
         input=T_FileStream_open(unidataPath, "rb");
-        if(input!=NULL) {
+        if(input!=nullptr) {
             return input;
         }
     }
@@ -108,7 +108,7 @@ NormalizerConformanceTest::openNormalizationTestFile(const char *filename) {
         strcat(unidataPath, U_FILE_SEP_STRING);
         strcat(unidataPath, filename);
         input=T_FileStream_open(unidataPath, "rb");
-        if(input!=NULL) {
+        if(input!=nullptr) {
             return input;
         }
     }
@@ -121,7 +121,7 @@ NormalizerConformanceTest::openNormalizationTestFile(const char *filename) {
         strcat(unidataPath, U_FILE_SEP_STRING ".." U_FILE_SEP_STRING ".." U_FILE_SEP_STRING);
         strcat(unidataPath, filename);
         input=T_FileStream_open(unidataPath, "rb");
-        if(input!=NULL) {
+        if(input!=nullptr) {
             return input;
         }
     }
@@ -131,20 +131,20 @@ NormalizerConformanceTest::openNormalizationTestFile(const char *filename) {
     strcpy(unidataPath, U_TOPSRCDIR U_FILE_SEP_STRING "data" U_FILE_SEP_STRING "unidata" U_FILE_SEP_STRING);
     strcat(unidataPath, filename);
     input=T_FileStream_open(unidataPath, "rb");
-    if(input!=NULL) {
+    if(input!=nullptr) {
         return input;
     }
 
     strcpy(unidataPath, U_TOPSRCDIR U_FILE_SEP_STRING "test" U_FILE_SEP_STRING "testdata" U_FILE_SEP_STRING);
     strcat(unidataPath, filename);
     input=T_FileStream_open(unidataPath, "rb");
-    if(input!=NULL) {
+    if(input!=nullptr) {
         return input;
     }
 #endif
 
     dataerrln("Failed to open %s", filename);
-    return NULL;
+    return nullptr;
 }
 
 /**
@@ -168,7 +168,7 @@ void NormalizerConformanceTest::TestConformance(FileStream *input, int32_t optio
     int32_t failCount = 0;
     UChar32 c;
 
-    if(input==NULL) {
+    if(input==nullptr) {
         return;
     }
 
@@ -178,7 +178,7 @@ void NormalizerConformanceTest::TestConformance(FileStream *input, int32_t optio
     int32_t count, countMoreCases = UPRV_LENGTHOF(moreCases);
     for (count = 1;;++count) {
         if (!T_FileStream_eof(input)) {
-            T_FileStream_readLine(input, lineBuf, (int32_t)sizeof(lineBuf));
+            T_FileStream_readLine(input, lineBuf, static_cast<int32_t>(sizeof(lineBuf)));
         } else {
             // once NormalizationTest.txt is finished, use moreCases[]
             if(count > countMoreCases) {
@@ -256,7 +256,7 @@ void NormalizerConformanceTest::TestConformance(FileStream *input, int32_t optio
         }
 
         fields[0]=fields[1]=fields[2]=fields[3]=fields[4].setTo(c);
-        snprintf(lineBuf, sizeof(lineBuf), "not mentioned code point U+%04lx", (long)c);
+        snprintf(lineBuf, sizeof(lineBuf), "not mentioned code point U+%04lx", static_cast<long>(c));
 
         if (checkConformance(fields, lineBuf, options, status)) {
             ++passCount;
@@ -599,7 +599,7 @@ UBool NormalizerConformanceTest::assertEqual(const char *op, const char *op2,
 UBool NormalizerConformanceTest::hexsplit(const char *s, char delimiter,
                                           UnicodeString output[], int32_t outputLength) {
     const char *t = s;
-    char *end = NULL;
+    char *end = nullptr;
     UChar32 c;
     int32_t i;
     for (i=0; i<outputLength; ++i) {
@@ -611,10 +611,10 @@ UBool NormalizerConformanceTest::hexsplit(const char *s, char delimiter,
         // read a sequence of code points
         output[i].remove();
         for(;;) {
-            c = (UChar32)uprv_strtoul(t, &end, 16);
+            c = static_cast<UChar32>(uprv_strtoul(t, &end, 16));
 
             if (const_cast<char*>(t) == end ||
-                (uint32_t)c > 0x10ffff ||
+                static_cast<uint32_t>(c) > 0x10ffff ||
                 (*end != ' ' && *end != '\t' && *end != delimiter)
             ) {
                 errln(UnicodeString("Bad field ", "") + (i + 1) + " in " + UnicodeString(s, ""));
@@ -650,7 +650,7 @@ UBool NormalizerConformanceTest::hexsplit(const char *s, char delimiter,
 // Specific tests for debugging.  These are generally failures taken from
 // the conformance file, but culled out to make debugging easier.
 
-void NormalizerConformanceTest::TestCase6(void) {
+void NormalizerConformanceTest::TestCase6() {
     _testOneLine("0385;0385;00A8 0301;0020 0308 0301;0020 0308 0301;");
 }
 
