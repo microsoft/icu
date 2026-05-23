@@ -76,7 +76,7 @@ u_vfscanf(UFILE        *f,
     /* convert from the default codepage to Unicode */
     if (size >= MAX_UCHAR_BUFFER_SIZE(patBuffer)) {
         pattern = (UChar *)uprv_malloc(size * sizeof(UChar));
-        if(pattern == 0) {
+        if (pattern == nullptr) {
             return 0;
         }
     }

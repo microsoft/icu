@@ -270,7 +270,7 @@ static UBool U_CALLCONV
 isCnvAcceptable(void * /*context*/,
                 const char * /*type*/, const char * /*name*/,
                 const UDataInfo *pInfo) {
-    return (UBool)(
+    return
         pInfo->size>=20 &&
         pInfo->isBigEndian==U_IS_BIG_ENDIAN &&
         pInfo->charsetFamily==U_CHARSET_FAMILY &&
@@ -279,7 +279,7 @@ isCnvAcceptable(void * /*context*/,
         pInfo->dataFormat[1]==0x6e &&
         pInfo->dataFormat[2]==0x76 &&
         pInfo->dataFormat[3]==0x74 &&
-        pInfo->formatVersion[0]==6);  /* Everything will be version 6 */
+        pInfo->formatVersion[0]==6;  /* Everything will be version 6 */
 }
 
 /**
@@ -290,16 +290,15 @@ ucnv_data_unFlattenClone(UConverterLoadArgs *pArgs, UDataMemory *pData, UErrorCo
 {
     /* UDataInfo info; -- necessary only if some converters have different formatVersion */
     const uint8_t *raw = (const uint8_t *)udata_getMemory(pData);
-    const UConverterStaticData *source = (const UConverterStaticData *) raw;
+    const UConverterStaticData* source = reinterpret_cast<const UConverterStaticData*>(raw);
     UConverterSharedData *data;
     UConverterType type = (UConverterType)source->conversionType;
 
     if(U_FAILURE(*status))
         return NULL;
 
-    if( (uint16_t)type >= UCNV_NUMBER_OF_SUPPORTED_CONVERTER_TYPES ||
-        type < UCNV_SBCS ||
-        converterData[type] == NULL ||
+    if (static_cast<uint16_t>(type) >= UCNV_NUMBER_OF_SUPPORTED_CONVERTER_TYPES ||
+        converterData[type] == nullptr ||
         !converterData[type]->isReferenceCounted ||
         converterData[type]->referenceCounter != 1 ||
         source->structSize != sizeof(UConverterStaticData))
@@ -398,7 +397,7 @@ getAlgorithmicTypeFromName(const char *realName)
     lastMid = UINT32_MAX;
 
     for (;;) {
-        mid = (uint32_t)((start + limit) / 2);
+        mid = (start + limit) / 2;
         if (lastMid == mid) {   /* Have we moved? */
             break;  /* We haven't moved, and it wasn't found. */
         }
@@ -683,8 +682,8 @@ parseConverterOptions(const char *inName,
             if(c==0) {
                 pArgs->options=(pPieces->options&=~UCNV_OPTION_VERSION);
                 return;
-            } else if((uint8_t)(c-'0')<10) {
-                pArgs->options=pPieces->options=(pPieces->options&~UCNV_OPTION_VERSION)|(uint32_t)(c-'0');
+            } else if (static_cast<uint8_t>(c - '0') < 10) {
+                pArgs->options = pPieces->options = (pPieces->options & ~UCNV_OPTION_VERSION) | static_cast<uint32_t>(c - '0');
                 ++inName;
             }
         } else if(uprv_strncmp(inName, "swaplfnl", 8)==0) {
@@ -1113,7 +1112,7 @@ static void U_CALLCONV initAvailableConvertersList(UErrorCode &errCode) {
     }
 
     /* We can't have more than "*converterTable" converters to open */
-    gAvailableConverters = (const char **) uprv_malloc(allConverterCount * sizeof(char*));
+    gAvailableConverters = static_cast<const char**>(uprv_malloc(allConverterCount * sizeof(char*)));
     if (!gAvailableConverters) {
         errCode = U_MEMORY_ALLOCATION_ERROR;
         return;
@@ -1377,7 +1376,7 @@ ucnv_swap(const UDataSwapper *ds,
     }
 
     inBytes=(const uint8_t *)inData+headerSize;
-    outBytes=(uint8_t *)outData+headerSize;
+    outBytes=(outData == nullptr) ? nullptr : (uint8_t *)outData+headerSize;
 
     /* read the initial UConverterStaticData structure after the UDataInfo header */
     inStaticData=(const UConverterStaticData *)inBytes;
@@ -1417,7 +1416,7 @@ ucnv_swap(const UDataSwapper *ds,
     }
 
     inBytes+=staticDataSize;
-    outBytes+=staticDataSize;
+    if (outBytes != nullptr) outBytes+=staticDataSize;
     if(length>=0) {
         length-=(int32_t)staticDataSize;
     }
@@ -1441,7 +1440,7 @@ ucnv_swap(const UDataSwapper *ds,
                    MBCS_OPT_UNKNOWN_INCOMPATIBLE_MASK)==0
         ) {
             mbcsHeaderLength=mbcsHeader.options&MBCS_OPT_LENGTH_MASK;
-            noFromU=(UBool)((mbcsHeader.options&MBCS_OPT_NO_FROM_U)!=0);
+            noFromU = (mbcsHeader.options & MBCS_OPT_NO_FROM_U) != 0;
         } else {
             udata_printError(ds, "ucnv_swap(): unsupported _MBCSHeader.version %d.%d\n",
                              inMBCSHeader->version[0], inMBCSHeader->version[1]);

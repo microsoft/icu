@@ -152,7 +152,7 @@ NFRuleSet::NFRuleSet(RuleBasedNumberFormat *_owner, UnicodeString* descriptions,
 
     UnicodeString& description = descriptions[index]; // !!! make sure index is valid
 
-    if (description.length() == 0) {
+    if (description.isEmpty()) {
         // throw new IllegalArgumentException("Empty rule set description");
         status = U_PARSE_ERROR;
         return;
@@ -164,9 +164,11 @@ NFRuleSet::NFRuleSet(RuleBasedNumberFormat *_owner, UnicodeString* descriptions,
     // and delete it from the description
     if (description.charAt(0) == gPercent) {
         int32_t pos = description.indexOf(gColon);
-        if (pos == -1) {
+        // if there are no name or the name is "%".
+        if (pos < 2) {
             // throw new IllegalArgumentException("Rule set name doesn't end in colon");
             status = U_PARSE_ERROR;
+            return;
         } else {
             name.setTo(description, 0, pos);
             while (pos < description.length() && PatternProps::isWhiteSpace(description.charAt(++pos))) {
@@ -177,16 +179,17 @@ NFRuleSet::NFRuleSet(RuleBasedNumberFormat *_owner, UnicodeString* descriptions,
         name.setTo(UNICODE_STRING_SIMPLE("%default"));
     }
 
-    if (description.length() == 0) {
+    if (description.isEmpty()) {
         // throw new IllegalArgumentException("Empty rule set description");
         status = U_PARSE_ERROR;
+        return;
     }
 
     fIsPublic = name.indexOf(gPercentPercent, 2, 0) != 0;
 
-    if ( name.endsWith(gNoparse,8) ) {
+    if (name.endsWith(gNoparse, 8)) {
         fIsParseable = false;
-        name.truncate(name.length()-8); // remove the @noparse from the name
+        name.truncate(name.length() - 8); // remove the @noparse from the name
     }
 
     // all of the other members of NFRuleSet are initialized
@@ -220,6 +223,9 @@ NFRuleSet::parseRules(UnicodeString& description, UErrorCode& status)
         }
         currentDescription.setTo(description, oldP, p - oldP);
         NFRule::makeRules(currentDescription, this, rules.last(), owner, rules, status);
+        if (U_FAILURE(status)) {
+            return;
+        }
         oldP = p + 1;
     }
 
@@ -244,6 +250,9 @@ NFRuleSet::parseRules(UnicodeString& description, UErrorCode& status)
             // same as the preceding rule's base value in fraction
             // rule sets)
             rule->setBaseValue(defaultBaseValue, status);
+            if (U_FAILURE(status)) {
+                return;
+            }
         }
         else {
             // if it's a regular rule that already knows its base value,
@@ -267,27 +276,35 @@ NFRuleSet::parseRules(UnicodeString& description, UErrorCode& status)
  * @param rule The rule to set.
  */
 void NFRuleSet::setNonNumericalRule(NFRule *rule) {
-    int64_t baseValue = rule->getBaseValue();
-    if (baseValue == NFRule::kNegativeNumberRule) {
-        delete nonNumericalRules[NEGATIVE_RULE_INDEX];
-        nonNumericalRules[NEGATIVE_RULE_INDEX] = rule;
-    }
-    else if (baseValue == NFRule::kImproperFractionRule) {
-        setBestFractionRule(IMPROPER_FRACTION_RULE_INDEX, rule, true);
-    }
-    else if (baseValue == NFRule::kProperFractionRule) {
-        setBestFractionRule(PROPER_FRACTION_RULE_INDEX, rule, true);
-    }
-    else if (baseValue == NFRule::kDefaultRule) {
-        setBestFractionRule(DEFAULT_RULE_INDEX, rule, true);
-    }
-    else if (baseValue == NFRule::kInfinityRule) {
-        delete nonNumericalRules[INFINITY_RULE_INDEX];
-        nonNumericalRules[INFINITY_RULE_INDEX] = rule;
-    }
-    else if (baseValue == NFRule::kNaNRule) {
-        delete nonNumericalRules[NAN_RULE_INDEX];
-        nonNumericalRules[NAN_RULE_INDEX] = rule;
+    switch (rule->getBaseValue()) {
+        case NFRule::kNegativeNumberRule:
+            delete nonNumericalRules[NEGATIVE_RULE_INDEX];
+            nonNumericalRules[NEGATIVE_RULE_INDEX] = rule;
+            return;
+        case NFRule::kImproperFractionRule:
+            setBestFractionRule(IMPROPER_FRACTION_RULE_INDEX, rule, true);
+            return;
+        case NFRule::kProperFractionRule:
+            setBestFractionRule(PROPER_FRACTION_RULE_INDEX, rule, true);
+            return;
+        case NFRule::kDefaultRule:
+            setBestFractionRule(DEFAULT_RULE_INDEX, rule, true);
+            return;
+        case NFRule::kInfinityRule:
+            delete nonNumericalRules[INFINITY_RULE_INDEX];
+            nonNumericalRules[INFINITY_RULE_INDEX] = rule;
+            return;
+        case NFRule::kNaNRule:
+            delete nonNumericalRules[NAN_RULE_INDEX];
+            nonNumericalRules[NAN_RULE_INDEX] = rule;
+            return;
+        case NFRule::kNoBase:
+        case NFRule::kOtherRule:
+        default:
+            // If we do not remember the rule inside the object.
+            // delete it here to prevent memory leak.
+            delete rule;
+            return;
     }
 }
 
@@ -632,9 +649,9 @@ NFRuleSet::findFractionRuleSetRule(double number) const
     // the numerator of the fraction is anything else (this lets us
     // do things like "one third"/"two thirds" without having to define
     // a whole bunch of extra rule sets)
-    if ((unsigned)(winner + 1) < rules.size() &&
+    if (static_cast<unsigned>(winner + 1) < rules.size() &&
         rules[winner + 1]->getBaseValue() == rules[winner]->getBaseValue()) {
-        double n = ((double)rules[winner]->getBaseValue()) * number;
+        double n = static_cast<double>(rules[winner]->getBaseValue()) * number;
         if (n < 0.5 || n >= 2) {
             ++winner;
         }
@@ -681,13 +698,19 @@ static void dumpUS(FILE* f, const UnicodeString& us) {
 #endif
 
 UBool
-NFRuleSet::parse(const UnicodeString& text, ParsePosition& pos, double upperBound, uint32_t nonNumericalExecutedRuleMask, Formattable& result) const
+NFRuleSet::parse(const UnicodeString& text, ParsePosition& pos, double upperBound, uint32_t nonNumericalExecutedRuleMask, int32_t recursionCount, Formattable& result) const
 {
     // try matching each rule in the rule set against the text being
     // parsed.  Whichever one matches the most characters is the one
     // that determines the value we return.
 
     result.setLong(0);
+
+    // dump out if we've reached the recursion limit
+    if (recursionCount >= RECURSION_LIMIT) {
+        // stop recursion
+        return false;
+    }
 
     // dump out if there's no text to parse
     if (text.length() == 0) {
@@ -712,7 +735,7 @@ NFRuleSet::parse(const UnicodeString& text, ParsePosition& pos, double upperBoun
             nonNumericalExecutedRuleMask |= 1 << i;
 
             Formattable tempResult;
-            UBool success = nonNumericalRules[i]->doParse(text, workingPos, 0, upperBound, nonNumericalExecutedRuleMask, tempResult);
+            UBool success = nonNumericalRules[i]->doParse(text, workingPos, 0, upperBound, nonNumericalExecutedRuleMask, recursionCount + 1, tempResult);
             if (success && (workingPos.getIndex() > highWaterMark.getIndex())) {
                 result = tempResult;
                 highWaterMark = workingPos;
@@ -751,7 +774,7 @@ NFRuleSet::parse(const UnicodeString& text, ParsePosition& pos, double upperBoun
                 continue;
             }
             Formattable tempResult;
-            UBool success = rules[i]->doParse(text, workingPos, fIsFractionRuleSet, upperBound, nonNumericalExecutedRuleMask, tempResult);
+            UBool success = rules[i]->doParse(text, workingPos, fIsFractionRuleSet, upperBound, nonNumericalExecutedRuleMask, recursionCount + 1, tempResult);
             if (success && workingPos.getIndex() > highWaterMark.getIndex()) {
                 result = tempResult;
                 highWaterMark = workingPos;
@@ -1005,8 +1028,8 @@ uint32_t util64_tou(int64_t w, UChar* buf, uint32_t len, uint32_t radix, UBool r
     while (len && (w != 0)) {
         int64_t n = w / base;
         int64_t m = n * base;
-        int32_t d = (int32_t)(w-m);
-        *p++ = (UChar)(raw ? d : asciiDigits[d]);
+        int32_t d = static_cast<int32_t>(w - m);
+        *p++ = static_cast<char16_t>(raw ? d : asciiDigits[d]);
         w = n;
         --len;
     }
@@ -1014,7 +1037,7 @@ uint32_t util64_tou(int64_t w, UChar* buf, uint32_t len, uint32_t radix, UBool r
         *p = 0; // null terminate if room for caller convenience
     }
 
-    len = (uint32_t)(p - buf);
+    len = static_cast<uint32_t>(p - buf);
     if (*buf == kUMinus) {
         ++buf;
     }

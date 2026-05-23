@@ -17,7 +17,7 @@ const char UnaccentTransliterator::fgClassID = 0;
  */
 UnaccentTransliterator::UnaccentTransliterator() :
     normalizer("", UNORM_NFD),
-    Transliterator("Unaccent", 0) {
+    Transliterator("Unaccent", nullptr) {
 }
 
 /**
@@ -38,7 +38,7 @@ UChar UnaccentTransliterator::unaccent(UChar c) const {
     if (U_FAILURE(status)) {
         return c;
     }
-    return (UChar) t->normalizer.next();
+    return static_cast<char16_t>(t->normalizer.next());
 }
 
 /**

@@ -279,9 +279,9 @@ UnicodeSet* TransliteratorIDParser::parseGlobalFilter(const UnicodeString& id, i
         UErrorCode ec = U_ZERO_ERROR;
         filter = new UnicodeSet(id, ppos, USET_IGNORE_SPACE, NULL, ec);
         /* test for NULL */
-        if (filter == 0) {
+        if (filter == nullptr) {
             pos = start;
-            return 0;
+            return nullptr;
         }
         if (U_FAILURE(ec)) {
             delete filter;
@@ -413,7 +413,7 @@ UBool TransliteratorIDParser::parseCompoundID(const UnicodeString& id, int32_t d
 
     // Construct canonical ID
     for (i=0; i<list.size(); ++i) {
-        SingleID* single = (SingleID*) list.elementAt(i);
+        SingleID* single = static_cast<SingleID*>(list.elementAt(i));
         canonID.append(single->canonID);
         if (i != (list.size()-1)) {
             canonID.append(ID_DELIM);
@@ -489,7 +489,7 @@ void TransliteratorIDParser::instantiateList(UVector& list,
             break;
         }
 
-        SingleID* single = (SingleID*) list.elementAt(i);
+        SingleID* single = static_cast<SingleID*>(list.elementAt(i));
         if (single->basicID.length() != 0) {
             t = single->createInstance();
             if (t == NULL) {
@@ -522,7 +522,7 @@ void TransliteratorIDParser::instantiateList(UVector& list,
         list.setDeleter(_deleteTransliteratorTrIDPars);
 
         while (tlist.size() > 0) {
-            t = (Transliterator*) tlist.orphanElementAt(0);
+            t = static_cast<Transliterator*>(tlist.orphanElementAt(0));
             list.adoptElement(t, ec);
             if (U_FAILURE(ec)) {
                 list.removeAllElements();
@@ -862,7 +862,7 @@ TransliteratorIDParser::specsToSpecialInverse(const Specs& specs, UErrorCode &st
     UnicodeString* inverseTarget;
 
     umtx_lock(&LOCK);
-    inverseTarget = (UnicodeString*) SPECIAL_INVERSES->get(specs.target);
+    inverseTarget = static_cast<UnicodeString*>(SPECIAL_INVERSES->get(specs.target));
     umtx_unlock(&LOCK);
 
     if (inverseTarget != NULL) {

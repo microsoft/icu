@@ -45,10 +45,10 @@ constexpr uint8_t MIXED = 1;
 constexpr uint8_t SAME_AS = 2;
 
 /** Start with allocation of 16k data entries. */
-constexpr int32_t INITIAL_DATA_LENGTH = ((int32_t)1 << 14);
+constexpr int32_t INITIAL_DATA_LENGTH = static_cast<int32_t>(1) << 14;
 
 /** Grow about 8x each time. */
-constexpr int32_t MEDIUM_DATA_LENGTH = ((int32_t)1 << 17);
+constexpr int32_t MEDIUM_DATA_LENGTH = static_cast<int32_t>(1) << 17;
 
 /**
  * Maximum length of the build-time data array.

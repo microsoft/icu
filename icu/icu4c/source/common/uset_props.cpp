@@ -36,9 +36,9 @@ uset_openPattern(const UChar* pattern, int32_t patternLength,
     UnicodeString pat(patternLength==-1, pattern, patternLength);
     UnicodeSet* set = new UnicodeSet(pat, *ec);
     /* test for NULL */
-    if(set == 0) {
+    if (set == nullptr) {
         *ec = U_MEMORY_ALLOCATION_ERROR;
-        return 0;
+        return nullptr;
     }
 
     if (U_FAILURE(*ec)) {
@@ -56,9 +56,9 @@ uset_openPatternOptions(const UChar* pattern, int32_t patternLength,
     UnicodeString pat(patternLength==-1, pattern, patternLength);
     UnicodeSet* set = new UnicodeSet(pat, options, NULL, *ec);
     /* test for NULL */
-    if(set == 0) {
+    if (set == nullptr) {
         *ec = U_MEMORY_ALLOCATION_ERROR;
-        return 0;
+        return nullptr;
     }
 
     if (U_FAILURE(*ec)) {
@@ -82,7 +82,7 @@ uset_applyPattern(USet *set,
     }
 
     // check only the set paramenter
-    // if pattern is NULL or null terminate
+    // if pattern is nullptr or NUL terminated
     // UnicodeString constructor takes care of it
     if(set == NULL){
         *status = U_ILLEGAL_ARGUMENT_ERROR;

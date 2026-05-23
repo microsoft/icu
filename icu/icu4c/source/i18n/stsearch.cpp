@@ -211,9 +211,10 @@ bool StringSearch::operator==(const SearchIterator &that) const
         return true;
     }
     if (SearchIterator::operator ==(that)) {
-        StringSearch &thatsrch = (StringSearch &)that;
-        return (this->m_pattern_ == thatsrch.m_pattern_ &&
-                this->m_strsrch_->collator == thatsrch.m_strsrch_->collator);
+        const StringSearch *thatsrch = dynamic_cast<const StringSearch *>(&that);
+        if (thatsrch == nullptr) return false;
+        return (this->m_pattern_ == thatsrch->m_pattern_ &&
+                this->m_strsrch_->collator == thatsrch->m_strsrch_->collator);
     }
     return false;
 }
@@ -290,9 +291,9 @@ StringSearch * StringSearch::safeClone() const
                                             m_breakiterator_,
                                             status);
     /* test for NULL */
-    if (result == 0) {
+    if (result == nullptr) {
         status = U_MEMORY_ALLOCATION_ERROR;
-        return 0;
+        return nullptr;
     }
     result->setOffset(getOffset(), status);
     result->setMatchStart(m_strsrch_->search->matchedIndex);

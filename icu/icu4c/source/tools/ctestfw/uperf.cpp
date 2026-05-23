@@ -189,16 +189,20 @@ void UPerfTest::init(UOption addOptions[], int32_t addOptionsCount,
     int32_t len = 0;
     if(fileName!=NULL){
         //pre-flight
-        ucbuf_resolveFileName(sourceDir, fileName, NULL, &len, &status);
-        resolvedFileName = (char*) uprv_malloc(len);
-        if(resolvedFileName==NULL){
+        UErrorCode bufferStatus = U_ZERO_ERROR;
+        ucbuf_resolveFileName(sourceDir, fileName, nullptr, &len, &bufferStatus);
+        resolvedFileName = static_cast<char*>(uprv_malloc(len));
+        if(resolvedFileName==nullptr){
             status= U_MEMORY_ALLOCATION_ERROR;
             return;
         }
-        if(status == U_BUFFER_OVERFLOW_ERROR){
-            status = U_ZERO_ERROR;
+        if(bufferStatus == U_BUFFER_OVERFLOW_ERROR){
+            bufferStatus = U_ZERO_ERROR;
         }
-        ucbuf_resolveFileName(sourceDir, fileName, resolvedFileName, &len, &status);
+        ucbuf_resolveFileName(sourceDir, fileName, resolvedFileName, &len, &bufferStatus);
+        if (U_FAILURE(bufferStatus)) {
+            status = bufferStatus;
+        }
         ucharBuf = ucbuf_open(resolvedFileName,&encoding,true,false,&status);
 
         if(U_FAILURE(status)){
@@ -253,7 +257,7 @@ const UChar* UPerfTest::getBuffer(int32_t& len, UErrorCode& status){
         return NULL;
     }
     len = ucbuf_size(ucharBuf);
-    buffer =  (UChar*) uprv_malloc(U_SIZEOF_UCHAR * (len+1));
+    buffer = static_cast<char16_t*>(uprv_malloc(U_SIZEOF_UCHAR * (len + 1)));
     u_strncpy(buffer,ucbuf_getBuffer(ucharBuf,&bufferLen,&status),len);
     buffer[len]=0;
     len = bufferLen;
@@ -268,7 +272,7 @@ UBool UPerfTest::run(){
     // Test only the specified function
     for (int i = 1; i < _remainingArgc; ++i) {
         if (_argv[i][0] != '-') {
-            char* name = (char*) _argv[i];
+            char* name = const_cast<char*>(_argv[i]);
             if(verbose==true){
                 //fprintf(stdout, "\n=== Handling test: %s: ===\n", name);
                 //fprintf(stdout, "\n%s:\n", name);
@@ -359,7 +363,7 @@ UBool UPerfTest::runTestLoop( char* testname, char* par )
         if (!testname) {
             run_this_test = true;
         }else{
-            run_this_test = (UBool) (strcmp( name, testname ) == 0);
+            run_this_test = static_cast<UBool>(strcmp(name, testname) == 0);
         }
         if (run_this_test) {
             UPerfFunction* testFunction = this->runIndexedTest( index, true, name, par );
@@ -378,20 +382,20 @@ UBool UPerfTest::runTestLoop( char* testname, char* par )
                 n = time;
                 // Run for specified duration in seconds
                 if(verbose==true){
-                    fprintf(stdout,"= %s calibrating %i seconds \n", name, (int)n);
+                    fprintf(stdout, "= %s calibrating %i seconds \n", name, static_cast<int>(n));
                 }
 
                 //n *=  1000; // s => ms
                 //System.out.println("# " + meth.getName() + " " + n + " sec");
                 int32_t failsafe = 1; // last resort for very fast methods
                 t = 0;
-                while (t < (int)(n * 0.9)) { // 90% is close enough
+                while (t < static_cast<int>(n * 0.9)) { // 90% is close enough
                     if (loops == 0 || t == 0) {
                         loops = failsafe;
                         failsafe *= 10;
                     } else {
                         //System.out.println("# " + meth.getName() + " x " + loops + " = " + t);
-                        loops = (int)((double)n / t * loops + 0.5);
+                        loops = static_cast<int>(static_cast<double>(n) / t * loops + 0.5);
                         if (loops == 0) {
                             fprintf(stderr,"Unable to converge on desired duration");
                             return false;
@@ -446,15 +450,15 @@ UBool UPerfTest::runTestLoop( char* testname, char* par )
                 }
                 else if(events == -1) {
                     fprintf(stdout, "%%= %s avg: %.4g loops: %i avg/op: %.4g ns\n",
-                            name, avg_t, (int)loops, (avg_t*1E9)/(loops*ops));
+                            name, avg_t, static_cast<int>(loops), (avg_t * 1E9) / (loops * ops));
                     fprintf(stdout, "_= %s min: %.4g loops: %i min/op: %.4g ns\n",
-                            name, min_t, (int)loops, (min_t*1E9)/(loops*ops));
+                            name, min_t, static_cast<int>(loops), (min_t * 1E9) / (loops * ops));
                 }
                 else {
                     fprintf(stdout, "%%= %s avg: %.4g loops: %i avg/op: %.4g ns avg/event: %.4g ns\n",
-                            name, avg_t, (int)loops, (avg_t*1E9)/(loops*ops), (avg_t*1E9)/(loops*events));
+                            name, avg_t, static_cast<int>(loops), (avg_t * 1E9) / (loops * ops), (avg_t * 1E9) / (loops * events));
                     fprintf(stdout, "_= %s min: %.4g loops: %i min/op: %.4g ns min/event: %.4g ns\n",
-                            name, min_t, (int)loops, (min_t*1E9)/(loops*ops), (min_t*1E9)/(loops*events));
+                            name, min_t, static_cast<int>(loops), (min_t * 1E9) / (loops * ops), (min_t * 1E9) / (loops * events));
                 }
             }
             else if(U_SUCCESS(status)) {
@@ -518,10 +522,8 @@ UBool UPerfTest::callTest( UPerfTest& testToBeCalled, char* par )
 }
 
 UPerfTest::~UPerfTest(){
-    if(lines!=NULL){
-        delete[] lines;
-    }
-    if(buffer!=NULL){
+    delete[] lines;
+    if(buffer!=nullptr){
         uprv_free(buffer);
     }
     if(resolvedFileName!=NULL){

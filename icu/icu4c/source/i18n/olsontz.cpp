@@ -181,7 +181,7 @@ OlsonTimeZone::OlsonTimeZone(const UResourceBundle* top,
         if (U_SUCCESS(ec) && (len < 2 || len > 0x7FFE || (len & 1) != 0)) {
             ec = U_INVALID_FORMAT_ERROR;
         }
-        typeCount = (int16_t) len >> 1;
+        typeCount = static_cast<int16_t>(len) >> 1;
 
         // Type map data must be of the same size as the transition count
         typeMapData =  NULL;
@@ -214,10 +214,10 @@ OlsonTimeZone::OlsonTimeZone(const UResourceBundle* top,
                         emptyStr,
                         (int8_t)ruleData[0], (int8_t)ruleData[1], (int8_t)ruleData[2],
                         ruleData[3] * U_MILLIS_PER_SECOND,
-                        (SimpleTimeZone::TimeMode) ruleData[4],
+                        static_cast<SimpleTimeZone::TimeMode>(ruleData[4]),
                         (int8_t)ruleData[5], (int8_t)ruleData[6], (int8_t)ruleData[7],
                         ruleData[8] * U_MILLIS_PER_SECOND,
-                        (SimpleTimeZone::TimeMode) ruleData[9],
+                        static_cast<SimpleTimeZone::TimeMode>(ruleData[9]),
                         ruleData[10] * U_MILLIS_PER_SECOND, ec);
                     if (finalZone == NULL) {
                         ec = U_MEMORY_ALLOCATION_ERROR;
@@ -266,7 +266,7 @@ OlsonTimeZone::OlsonTimeZone(const UResourceBundle* top,
  * Copy constructor
  */
 OlsonTimeZone::OlsonTimeZone(const OlsonTimeZone& other) :
-    BasicTimeZone(other), finalZone(0) {
+    BasicTimeZone(other), finalZone(nullptr) {
     *this = other;
 }
 
@@ -290,7 +290,7 @@ OlsonTimeZone& OlsonTimeZone::operator=(const OlsonTimeZone& other) {
     typeMapData = other.typeMapData;
 
     delete finalZone;
-    finalZone = (other.finalZone != 0) ? other.finalZone->clone() : 0;
+    finalZone = other.finalZone != nullptr ? other.finalZone->clone() : nullptr;
 
     finalStartYear = other.finalStartYear;
     finalStartMillis = other.finalStartMillis;
@@ -379,7 +379,7 @@ int32_t OlsonTimeZone::getOffset(uint8_t era, int32_t year, int32_t month,
     }
 
     // Compute local epoch millis from input fields
-    UDate date = (UDate)(Grego::fieldsToDay(year, month, dom) * U_MILLIS_PER_DAY + millis);
+    UDate date = static_cast<UDate>(Grego::fieldsToDay(year, month, dom) * U_MILLIS_PER_DAY + millis);
     int32_t rawoff, dstoff;
     getHistoricalOffset(date, true, kDaylight, kStandard, rawoff, dstoff);
     return rawoff + dstoff;
@@ -436,11 +436,11 @@ int32_t OlsonTimeZone::getRawOffset() const {
 
 #if defined U_DEBUG_TZ
 void printTime(double ms) {
-            int32_t year, month, dom, dow;
-            double millis=0;
-            double days = ClockMath::floorDivide(((double)ms), (double)U_MILLIS_PER_DAY, millis);
-            
-            Grego::dayToFields(days, year, month, dom, dow);
+            int32_t year;
+            int8_t month, dom, dow;
+            int32_t millis=0;
+            UErrorCode status = U_ZERO_ERROR;
+            Grego::timeToFields(ms, year, month, dom, dow, millis, status);
             U_DEBUG_TZ_MSG(("   getHistoricalOffset:  time %.1f (%04d.%02d.%02d+%.1fh)\n", ms,
                             year, month+1, dom, (millis/kOneHour)));
     }
@@ -451,8 +451,8 @@ OlsonTimeZone::transitionTimeInSeconds(int16_t transIdx) const {
     U_ASSERT(transIdx >= 0 && transIdx < transitionCount()); 
 
     if (transIdx < transitionCountPre32) {
-        return (((int64_t)((uint32_t)transitionTimesPre32[transIdx << 1])) << 32)
-            | ((int64_t)((uint32_t)transitionTimesPre32[(transIdx << 1) + 1]));
+        return (static_cast<int64_t>(static_cast<uint32_t>(transitionTimesPre32[transIdx << 1])) << 32)
+            | static_cast<int64_t>(static_cast<uint32_t>(transitionTimesPre32[(transIdx << 1) + 1]));
     }
 
     transIdx -= transitionCountPre32;
@@ -461,8 +461,8 @@ OlsonTimeZone::transitionTimeInSeconds(int16_t transIdx) const {
     }
 
     transIdx -= transitionCount32;
-    return (((int64_t)((uint32_t)transitionTimesPost32[transIdx << 1])) << 32)
-        | ((int64_t)((uint32_t)transitionTimesPost32[(transIdx << 1) + 1]));
+    return (static_cast<int64_t>(static_cast<uint32_t>(transitionTimesPost32[transIdx << 1])) << 32)
+        | static_cast<int64_t>(static_cast<uint32_t>(transitionTimesPost32[(transIdx << 1) + 1]));
 }
 
 // Maximum absolute offset in seconds (86400 seconds = 1 day)
@@ -568,8 +568,10 @@ UBool OlsonTimeZone::useDaylightTime() const {
         return finalZone->useDaylightTime();
     }
 
-    int32_t year, month, dom, dow, doy, mid;
-    Grego::timeToFields(current, year, month, dom, dow, doy, mid);
+    UErrorCode status = U_ZERO_ERROR;
+    int32_t year = Grego::timeToYear(current, status);
+    U_ASSERT(U_SUCCESS(status));
+    if (U_FAILURE(status)) return false; // If error, just return false.
 
     // Find start of this year, and start of next year
     double start = Grego::fieldsToDay(year, 0, 1) * SECONDS_PER_DAY;
@@ -663,20 +665,12 @@ OlsonTimeZone::clearTransitionRules(void) {
 }
 
 void
-OlsonTimeZone::deleteTransitionRules(void) {
-    if (initialRule != NULL) {
-        delete initialRule;
-    }
-    if (firstTZTransition != NULL) {
-        delete firstTZTransition;
-    }
-    if (firstFinalTZTransition != NULL) {
-        delete firstFinalTZTransition;
-    }
-    if (finalZoneWithStartYear != NULL) {
-        delete finalZoneWithStartYear;
-    }
-    if (historicRules != NULL) {
+OlsonTimeZone::deleteTransitionRules() {
+    delete initialRule;
+    delete firstTZTransition;
+    delete firstFinalTZTransition;
+    delete finalZoneWithStartYear;
+    if (historicRules != nullptr) {
         for (int i = 0; i < historicRuleCount; i++) {
             if (historicRules[i] != NULL) {
                 delete historicRules[i];
@@ -744,7 +738,7 @@ OlsonTimeZone::initTransitionRules(UErrorCode& status) {
             // Actually no transitions...
         } else {
             // Build historic rule array
-            UDate* times = (UDate*)uprv_malloc(sizeof(UDate)*transCount); /* large enough to store all transition times */
+            UDate* times = static_cast<UDate*>(uprv_malloc(sizeof(UDate) * transCount)); /* large enough to store all transition times */
             if (times == NULL) {
                 status = U_MEMORY_ALLOCATION_ERROR;
                 deleteTransitionRules();
@@ -768,7 +762,7 @@ OlsonTimeZone::initTransitionRules(UErrorCode& status) {
                     dst = typeOffsets[(typeIdx << 1) + 1] * U_MILLIS_PER_SECOND;
                     if (historicRules == NULL) {
                         historicRuleCount = typeCount;
-                        historicRules = (TimeArrayTimeZoneRule**)uprv_malloc(sizeof(TimeArrayTimeZoneRule*)*historicRuleCount);
+                        historicRules = static_cast<TimeArrayTimeZoneRule**>(uprv_malloc(sizeof(TimeArrayTimeZoneRule*) * historicRuleCount));
                         if (historicRules == NULL) {
                             status = U_MEMORY_ALLOCATION_ERROR;
                             deleteTransitionRules();
@@ -922,7 +916,7 @@ OlsonTimeZone::getNextTransition(UDate base, UBool inclusive, TimeZoneTransition
             // Create a TimeZoneTransition
             TimeZoneRule *to = historicRules[typeMapData[ttidx + 1]];
             TimeZoneRule *from = historicRules[typeMapData[ttidx]];
-            UDate startTime = (UDate)transitionTime(ttidx+1);
+            UDate startTime = static_cast<UDate>(transitionTime(ttidx + 1));
 
             // The transitions loaded from zoneinfo.res may contain non-transition data
             UnicodeString fromName, toName;

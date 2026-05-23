@@ -104,7 +104,7 @@ EmojiProps::load(UErrorCode &errorCode) {
         offset = inIndexes[i];
         nextOffset = inIndexes[i + 1];
         // Set/leave nullptr if there is no UCharsTrie.
-        const UChar *p = nextOffset > offset ? (const UChar *)(inBytes + offset) : nullptr;
+        const char16_t* p = nextOffset > offset ? reinterpret_cast<const char16_t*>(inBytes + offset) : nullptr;
         stringTries[getStringTrieIndex(i)] = p;
     }
 }

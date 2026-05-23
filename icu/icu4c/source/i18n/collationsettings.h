@@ -178,7 +178,7 @@ struct U_I18N_API CollationSettings : public SharedObject {
     void setMaxVariable(int32_t value, int32_t defaultOptions, UErrorCode &errorCode);
 
     MaxVariable getMaxVariable() const {
-        return (MaxVariable)((options & MAX_VARIABLE_MASK) >> MAX_VARIABLE_SHIFT);
+        return static_cast<MaxVariable>((options & MAX_VARIABLE_MASK) >> MAX_VARIABLE_SHIFT);
     }
 
     /**

@@ -98,7 +98,7 @@ UBool SimpleFormatter::applyPatternMinMaxArguments(
         } else if (!inQuote && c == OPEN_BRACE) {
             if (textLength > 0) {
                 compiledPattern.setCharAt(compiledPattern.length() - textLength - 1,
-                                          (UChar)(ARG_NUM_LIMIT + textLength));
+                                          static_cast<char16_t>(ARG_NUM_LIMIT + textLength));
                 textLength = 0;
             }
             int32_t argNumber;
@@ -144,7 +144,7 @@ UBool SimpleFormatter::applyPatternMinMaxArguments(
     }
     if (textLength > 0) {
         compiledPattern.setCharAt(compiledPattern.length() - textLength - 1,
-                                  (UChar)(ARG_NUM_LIMIT + textLength));
+                                  static_cast<char16_t>(ARG_NUM_LIMIT + textLength));
     }
     int32_t argCount = maxArg + 1;
     if (argCount < min || max < argCount) {

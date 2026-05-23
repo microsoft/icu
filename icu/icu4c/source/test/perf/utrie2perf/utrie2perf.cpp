@@ -62,7 +62,7 @@ public:
                 // Preflight the UTF-8 length and allocate utf8.
                 u_strToUTF8(NULL, 0, &utf8Length, buffer, bufferLen, &status);
                 if(status==U_BUFFER_OVERFLOW_ERROR) {
-                    utf8=(char *)malloc(utf8Length);
+                    utf8 = static_cast<char*>(malloc(utf8Length));
                     if(utf8!=NULL) {
                         status=U_ZERO_ERROR;
                         u_strToUTF8(utf8, utf8Length, NULL, buffer, bufferLen, &status);
@@ -75,13 +75,13 @@ public:
                     printf("code points:%ld  len16:%ld  len8:%ld  "
                            "B/cp:%.3g\n",
                            (long)countInputCodePoints, (long)bufferLen, (long)utf8Length,
-                           (double)utf8Length/countInputCodePoints);
+                           static_cast<double>(utf8Length) / countInputCodePoints);
                 }
             }
         }
     }
 
-    virtual UPerfFunction* runIndexedTest(int32_t index, UBool exec, const char* &name, char* par = NULL);
+    UPerfFunction* runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
 
     const UChar *getBuffer() const { return buffer; }
     int32_t getBufferLen() const { return bufferLen; }
@@ -103,7 +103,7 @@ public:
 
     // virtual void call(UErrorCode* pErrorCode) { ... }
 
-    virtual long getOperationsPerIteration() {
+    long getOperationsPerIteration() override {
         // Number of code points tested.
         return testcase.countInputCodePoints;
     }
@@ -121,7 +121,7 @@ public:
     static UPerfFunction* get(const UTrie2PerfTest &testcase) {
         return new CheckFCD(testcase);
     }
-    virtual void call(UErrorCode* pErrorCode) {
+    void call(UErrorCode* pErrorCode) override {
         UErrorCode errorCode=U_ZERO_ERROR;
         qcResult=unorm_quickCheck(testcase.getBuffer(), testcase.getBufferLen(),
                                   UNORM_FCD, &errorCode);
@@ -189,7 +189,7 @@ public:
     static UPerfFunction* get(const UTrie2PerfTest &testcase) {
         return new ToNFC(testcase);
     }
-    virtual void call(UErrorCode* pErrorCode) {
+    void call(UErrorCode* pErrorCode) override {
         UErrorCode errorCode=U_ZERO_ERROR;
         int32_t destLength=unorm_normalize(testcase.getBuffer(), testcase.getBufferLen(),
                                            UNORM_NFC, 0,
@@ -213,7 +213,7 @@ public:
     static UPerfFunction* get(const UTrie2PerfTest &testcase) {
         return new GetBiDiClass(testcase);
     }
-    virtual void call(UErrorCode* pErrorCode) {
+    void call(UErrorCode* pErrorCode) override {
         const UChar *buffer=testcase.getBuffer();
         int32_t length=testcase.getBufferLen();
         UChar32 c;
@@ -221,7 +221,7 @@ public:
         uint32_t bitSet=0;
         for(i=0; i<length;) {
             U16_NEXT(buffer, i, length, c);
-            bitSet|=(uint32_t)1<<u_charDirection(c);
+            bitSet |= static_cast<uint32_t>(1) << u_charDirection(c);
         }
         if(length>0 && bitSet==0) {
             fprintf(stderr, "error: GetBiDiClass() did not collect bits\n");

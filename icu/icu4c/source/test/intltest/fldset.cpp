@@ -47,7 +47,7 @@ UnicodeString FieldsSet::diffFrom(const FieldsSet& other, UErrorCode& status) co
     UnicodeString str;
     if(!isSameType(other)) {
         status = U_ILLEGAL_ARGUMENT_ERROR;
-        return UnicodeString("U_ILLEGAL_ARGUMENT_ERROR: FieldsSet of a different type!");
+        return {"U_ILLEGAL_ARGUMENT_ERROR: FieldsSet of a different type!"};
     }
     for (int i=0; i<fieldCount(); i++) {
         if (isSet((UCalendarDateFields)i)) {
@@ -210,7 +210,7 @@ void FieldsSet::parseValueDefault(const FieldsSet* inheritFrom, int32_t field, c
     int32_t value = -1;
     if(substr.length()==0) { // inherit requested
         // inherit
-        if((inheritFrom == NULL) || !inheritFrom->isSet((UCalendarDateFields)field)) {
+        if ((inheritFrom == nullptr) || !inheritFrom->isSet(static_cast<UCalendarDateFields>(field))) {
             // couldn't inherit from field 
             it_errln(UnicodeString("Parse Failed: Couldn't inherit field ") + field + UnicodeString(" [") + UnicodeString(udbg_enumName(fEnum, field)) + UnicodeString("]"));
             status = U_ILLEGAL_ARGUMENT_ERROR;

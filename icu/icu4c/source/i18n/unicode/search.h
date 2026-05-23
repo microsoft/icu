@@ -180,7 +180,7 @@ public:
      * @stable ICU 2.0
      */
     int32_t getMatchedLength(void) const;
-    
+
     /**
      * Returns the text that was matched by the most recent call to 
      * <tt>first</tt>, <tt>next</tt>, <tt>previous</tt>, or <tt>last</tt>.

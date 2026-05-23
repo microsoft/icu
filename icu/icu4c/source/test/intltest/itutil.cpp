@@ -33,11 +33,12 @@
 #include "uvectest.h" 
 #include "aliastst.h"
 #include "usettest.h"
-#if U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY
-    #include "uprefstest.h"
-#endif
 
 extern IntlTest *createBytesTrieTest();
+#if !UCONFIG_NO_COLLATION
+extern IntlTest *createUColHeaderOnlyTest();
+#endif
+extern IntlTest *createUSetHeaderOnlyTest();
 extern IntlTest *createLocaleMatcherTest();
 static IntlTest *createLocalPointerTest();
 extern IntlTest *createUCharsTrieTest();
@@ -49,11 +50,16 @@ extern IntlTest *createPluralMapTest();
 #if !UCONFIG_NO_FORMATTING
 extern IntlTest *createStaticUnicodeSetsTest();
 #endif
+static IntlTest *createUHashTest();
+extern IntlTest *createUTFIteratorTest();
+extern IntlTest *createUTFStringTest();
+extern IntlTest *createIntlTestTest();
 
 void IntlTestUtilities::runIndexedTest( int32_t index, UBool exec, const char* &name, char* par )
 {
     if (exec) logln("TestSuite Utilities: ");
     TESTCASE_AUTO_BEGIN;
+    TESTCASE_AUTO_CREATE_CLASS(IntlTestTest);
     TESTCASE_AUTO_CLASS(MultithreadTest);
     TESTCASE_AUTO_CLASS(StringTest);
     TESTCASE_AUTO_CLASS(UnicodeStringTest);
@@ -70,9 +76,6 @@ void IntlTestUtilities::runIndexedTest( int32_t index, UBool exec, const char* &
     TESTCASE_AUTO_CLASS(LocaleAliasTest);
     TESTCASE_AUTO_CLASS(UnicodeSetTest);
     TESTCASE_AUTO_CLASS(ErrorCodeTest);
-#if U_PLATFORM_USES_ONLY_WIN32_API && UCONFIG_USE_WINDOWS_PREFERENCES_LIBRARY
-    TESTCASE_AUTO_CLASS(UPrefsTest); 
-#endif
     TESTCASE_AUTO_CREATE_CLASS(LocalPointerTest);
     TESTCASE_AUTO_CREATE_CLASS(BytesTrieTest);
     TESTCASE_AUTO_CREATE_CLASS(UCharsTrieTest);
@@ -86,6 +89,13 @@ void IntlTestUtilities::runIndexedTest( int32_t index, UBool exec, const char* &
 #endif
     TESTCASE_AUTO_CLASS(LocaleBuilderTest);
     TESTCASE_AUTO_CREATE_CLASS(LocaleMatcherTest);
+    TESTCASE_AUTO_CREATE_CLASS(UHashTest);
+#if !UCONFIG_NO_COLLATION
+    TESTCASE_AUTO_CREATE_CLASS(UColHeaderOnlyTest);
+#endif
+    TESTCASE_AUTO_CREATE_CLASS(USetHeaderOnlyTest);
+    TESTCASE_AUTO_CREATE_CLASS(UTFIteratorTest);
+    TESTCASE_AUTO_CREATE_CLASS(UTFStringTest);
     TESTCASE_AUTO_END;
 }
 
@@ -99,8 +109,8 @@ void ErrorCodeTest::runIndexedTest(int32_t index, UBool exec, const char* &name,
     }
 }
 
-static void RefPlusOne(UErrorCode &code) { code=(UErrorCode)(code+1); }
-static void PtrPlusTwo(UErrorCode *code) { *code=(UErrorCode)(*code+2); }
+static void RefPlusOne(UErrorCode &code) { code = static_cast<UErrorCode>(code + 1); }
+static void PtrPlusTwo(UErrorCode *code) { *code = static_cast<UErrorCode>(*code + 2); }
 
 void ErrorCodeTest::TestErrorCode() {
     ErrorCode errorCode;
@@ -208,19 +218,19 @@ void ErrorCodeTest::TestSubclass() {
 
 class IcuTestErrorCodeTestHelper : public IntlTest {
   public:
-    void errln( const UnicodeString &message ) U_OVERRIDE {
+    void errln(std::u16string_view message) override {
         test->assertFalse("Already saw an error", seenError);
         seenError = true;
-        test->assertEquals("Message for Error", expectedErrln, message);
+        test->assertEquals("Message for Error", std::u16string_view{expectedErrln}, message);
         if (expectedDataErr) {
             test->errln("Got non-data error, but expected data error");
         }
     }
 
-    void dataerrln( const UnicodeString &message ) U_OVERRIDE {
+    void dataerrln(std::u16string_view message) override {
         test->assertFalse("Already saw an error", seenError);
         seenError = true;
-        test->assertEquals("Message for Error", expectedErrln, message);
+        test->assertEquals("Message for Error", std::u16string_view{expectedErrln}, message);
         if (!expectedDataErr) {
             test->errln("Got data error, but expected non-data error");
         }
@@ -910,4 +920,46 @@ void EnumSetTest::TestEnumSet() {
     assertFalse(WHERE, flags.get(THING1));
     assertFalse(WHERE, flags.get(THING2));
     assertFalse(WHERE, flags.get(THING3));
+}
+
+/** UHashTest **/
+#include "uhash.h"
+#include <string_view>
+
+class UHashTest : public IntlTest {
+public:
+    UHashTest() = default;
+    virtual void runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
+    void TestStringView();
+};
+
+static IntlTest* createUHashTest() {
+    return new UHashTest();
+}
+
+void UHashTest::runIndexedTest(int32_t index, UBool exec, const char*& name, char*  /*par*/) {
+    TESTCASE_AUTO_BEGIN;
+    TESTCASE_AUTO(TestStringView);
+    TESTCASE_AUTO_END;
+}
+
+void UHashTest::TestStringView() {
+    IcuTestErrorCode status(*this, "TestStringView");
+    LocalUHashtablePointer table(
+        uhash_open(uhash_hashIStringView, uhash_compareIStringView, nullptr, status));
+    if (status.errIfFailureAndReset("uhash_open") ||
+        !assertTrue("uhash_open", table.isValid())) {
+        return;
+    }
+
+    std::string_view key("aaa");
+    std::string_view value("bbb");
+
+    uhash_put(table.getAlias(), &key, &value, status);
+    if (status.errIfFailureAndReset("uhash_put")) return;
+
+    std::string_view lookup("AAA");
+
+    auto* result = static_cast<std::string_view*>(uhash_get(table.getAlias(), &lookup));
+    assertTrue("uhash_get", result == &value);
 }

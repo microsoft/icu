@@ -764,7 +764,7 @@ static void TestTertiary()
     myCollation = 0;
 }
 
-static void TestPrimary( )
+static void TestPrimary(void)
 {
     int32_t len,i;
     UCollator *myCollation;

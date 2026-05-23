@@ -158,9 +158,9 @@ CollationSettings::setReordering(const CollationData &data,
     int32_t firstSplitByteRangeIndex = -1;
     for(int32_t i = 0; i < rangesLength; ++i) {
         uint32_t pair = ranges[i];
-        int32_t limit1 = (int32_t)(pair >> 24);
+        int32_t limit1 = static_cast<int32_t>(pair >> 24);
         while(b < limit1) {
-            table[b] = (uint8_t)(b + pair);
+            table[b] = static_cast<uint8_t>(b + pair);
             ++b;
         }
         // Check the second byte of the limit.

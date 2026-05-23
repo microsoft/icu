@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 de{
     Countries{
         001{"Welt"}
@@ -85,6 +85,7 @@ de{
         CN{"China"}
         CO{"Kolumbien"}
         CP{"Clipperton-Insel"}
+        CQ{"Sark"}
         CR{"Costa Rica"}
         CU{"Kuba"}
         CV{"Cabo Verde"}
@@ -93,14 +94,17 @@ de{
         CY{"Zypern"}
         CZ{"Tschechien"}
         DE{"Deutschland"}
+        DG{"Diego Garcia"}
         DJ{"Dschibuti"}
         DK{"Dänemark"}
         DM{"Dominica"}
         DO{"Dominikanische Republik"}
         DZ{"Algerien"}
+        EA{"Ceuta und Melilla"}
         EC{"Ecuador"}
         EE{"Estland"}
         EG{"Ägypten"}
+        EH{"Westsahara"}
         ER{"Eritrea"}
         ES{"Spanien"}
         ET{"Äthiopien"}
@@ -137,6 +141,7 @@ de{
         HR{"Kroatien"}
         HT{"Haiti"}
         HU{"Ungarn"}
+        IC{"Kanarische Inseln"}
         ID{"Indonesien"}
         IE{"Irland"}
         IL{"Israel"}
@@ -219,7 +224,7 @@ de{
         PM{"St. Pierre und Miquelon"}
         PN{"Pitcairninseln"}
         PR{"Puerto Rico"}
-        PS{"Palästinensische Behörde"}
+        PS{"Palästinensische Autonomiegebiete"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -284,6 +289,8 @@ de{
         VU{"Vanuatu"}
         WF{"Wallis und Futuna"}
         WS{"Samoa"}
+        XA{"Pseudo-Akzente"}
+        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +298,26 @@ de{
         ZM{"Sambia"}
         ZW{"Simbabwe"}
         ZZ{"Unbekannte Region"}
+    }
+    Countries%chagos{
+        IO{"Chagos-Archipel"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hongkong"}
+        MO{"Macau"}
+        PS{"Palästina"}
+        UN{"UN"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Kongo (Demokratische Republik)"}
+        CG{"Kongo (Republik)"}
+        CI{"Elfenbeinküste"}
+        CZ{"Tschechische Republik"}
+        FK{"Falklandinseln (Malwinen)"}
+        NZ{"Aotearoa (Neuseeland)"}
+        SZ{"Swasiland"}
+        TL{"Osttimor"}
     }
 }

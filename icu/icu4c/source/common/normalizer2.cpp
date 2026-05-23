@@ -380,8 +380,8 @@ normalizeSecondAndAppend(const UNormalizer2 *norm2,
     firstLength=firstString.length();  // In case it was -1.
     // secondLength==0: Nothing to do, and n2wi->normalizeAndAppend(NULL, NULL, buffer, ...) would crash.
     if(secondLength!=0) {
-        const Normalizer2 *n2=(const Normalizer2 *)norm2;
-        const Normalizer2WithImpl *n2wi=dynamic_cast<const Normalizer2WithImpl *>(n2);
+        const Normalizer2* n2 = reinterpret_cast<const Normalizer2*>(norm2);
+        const Normalizer2WithImpl* n2wi = dynamic_cast<const Normalizer2WithImpl*>(n2);
         if(n2wi!=NULL) {
             // Avoid duplicate argument checking and support NUL-terminated src.
             UnicodeString safeMiddle;

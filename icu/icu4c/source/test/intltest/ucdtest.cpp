@@ -12,13 +12,19 @@
 #include "unicode/putil.h"
 #include "unicode/uscript.h"
 #include "unicode/uset.h"
+#include "charstr.h"
 #include "cstring.h"
 #include "hash.h"
 #include "patternprops.h"
+#include "ppucd.h"
 #include "normalizer2impl.h"
 #include "testutil.h"
 #include "uparse.h"
 #include "ucdtest.h"
+#include "uprops.h"
+#include "usettest.h"
+
+#include <iostream>
 
 static const char *ignorePropNames[]={
     "FC_NFKC",
@@ -77,6 +83,13 @@ void UnicodeTest::runIndexedTest( int32_t index, UBool exec, const char* &name, 
     TESTCASE_AUTO(TestBinaryCharacterProperties);
     TESTCASE_AUTO(TestIntCharacterProperties);
 #endif
+    TESTCASE_AUTO(TestPropertyNames);
+    TESTCASE_AUTO(TestIDSUnaryOperator);
+    TESTCASE_AUTO(TestIDCompatMath);
+    TESTCASE_AUTO(TestPropertiesUsingPpucd);
+    TESTCASE_AUTO(TestIDStatus);
+    TESTCASE_AUTO(TestIDType);
+    TESTCASE_AUTO(TestScriptExtensionsCodePoints);
     TESTCASE_AUTO_END;
 }
 
@@ -480,9 +493,9 @@ void UnicodeTest::TestScriptMetadata() {
             UScriptCode charScript = getCharScript(sc);
             assertEquals("script(sample(script))",
                          (int32_t)charScript, (int32_t)uscript_getScript(firstChar, errorCode));
-            assertEquals("RTL vs. set", (UBool)rtl.contains(firstChar), (UBool)uscript_isRightToLeft(sc));
-            assertEquals("cased vs. set", (UBool)cased.contains(firstChar), (UBool)uscript_isCased(sc));
-            assertEquals("encoded, has characters", (UBool)(sc == charScript), (UBool)(!scriptSet.isEmpty()));
+            assertEquals("RTL vs. set", rtl.contains(firstChar), uscript_isRightToLeft(sc));
+            assertEquals("cased vs. set", cased.contains(firstChar), uscript_isCased(sc));
+            assertEquals("encoded, has characters", sc == charScript, !scriptSet.isEmpty());
             if(uscript_isRightToLeft(sc)) {
                 rtl.removeAll(scriptSet);
             }
@@ -750,9 +763,9 @@ void UnicodeTest::TestIndicSyllabicCategory() {
 void UnicodeTest::TestVerticalOrientation() {
     IcuTestErrorCode errorCode(*this, "TestVerticalOrientation()");
     UnicodeSet r(u"[:vo=R:]", errorCode);
-    assertTrue("mostly R", 0xc0000 <= r.size() && r.size() <= 0xd0000);
+    assertTrue("mostly R", 0xb0000 <= r.size() && r.size() <= 0xd0000);
     UnicodeSet u(u"[:vo=U:]", errorCode);
-    assertTrue("much U", 0x40000 <= u.size() && u.size() <= 0x50000);
+    assertTrue("much U", 0x40000 <= u.size() && u.size() <= 0x60000);
     UnicodeSet tu(u"[:vo=Tu:]", errorCode);
     assertTrue("some Tu", 147 <= tu.size() && tu.size() <= 300);
     assertEquals("U+0E01: Rotated", U_VO_ROTATED,
@@ -869,4 +882,484 @@ void UnicodeTest::TestIntCharacterProperties() {
             u_getIntPropertyValue(0x61, (UProperty)prop), ucpmap_get(map, 0x61));
     }
 #endif
+}
+
+namespace {
+
+const char *getPropName(UProperty property, int32_t nameChoice) UPRV_NO_SANITIZE_UNDEFINED {
+    const char* name = u_getPropertyName(property, static_cast<UPropertyNameChoice>(nameChoice));
+    return name != nullptr ? name : "null";
+}
+
+const char *getValueName(UProperty property, int32_t value, int32_t nameChoice)
+        UPRV_NO_SANITIZE_UNDEFINED {
+    const char* name = u_getPropertyValueName(property, value, static_cast<UPropertyNameChoice>(nameChoice));
+    return name != nullptr ? name : "null";
+}
+
+}  // namespace
+
+void UnicodeTest::TestPropertyNames() {
+    IcuTestErrorCode errorCode(*this, "TestPropertyNames()");
+    // Test names of certain properties & values.
+    // The UPropertyNameChoice is really an integer with only a couple of named constants.
+    UProperty prop = UCHAR_WHITE_SPACE;
+    constexpr int32_t SHORT = U_SHORT_PROPERTY_NAME;
+    constexpr int32_t LONG = U_LONG_PROPERTY_NAME;
+    assertEquals("White_Space: index -1", "null", getPropName(prop, -1));
+    assertEquals("White_Space: short", "WSpace", getPropName(prop, SHORT));
+    assertEquals("White_Space: long", "White_Space", getPropName(prop, LONG));
+    assertEquals("White_Space: index 2", "space", getPropName(prop, 2));
+    assertEquals("White_Space: index 3", "null", getPropName(prop, 3));
+
+    prop = UCHAR_SIMPLE_CASE_FOLDING;
+    assertEquals("Simple_Case_Folding: index -1", "null", getPropName(prop, -1));
+    assertEquals("Simple_Case_Folding: short", "scf", getPropName(prop, SHORT));
+    assertEquals("Simple_Case_Folding: long", "Simple_Case_Folding", getPropName(prop, LONG));
+    assertEquals("Simple_Case_Folding: index 2", "sfc", getPropName(prop, 2));
+    assertEquals("Simple_Case_Folding: index 3", "null", getPropName(prop, 3));
+
+    prop = UCHAR_CASED;
+    assertEquals("Cased=Y: index -1", "null", getValueName(prop, 1, -1));
+    assertEquals("Cased=Y: short", "Y", getValueName(prop, 1, SHORT));
+    assertEquals("Cased=Y: long", "Yes", getValueName(prop, 1, LONG));
+    assertEquals("Cased=Y: index 2", "T", getValueName(prop, 1, 2));
+    assertEquals("Cased=Y: index 3", "True", getValueName(prop, 1, 3));
+    assertEquals("Cased=Y: index 4", "null", getValueName(prop, 1, 4));
+
+    prop = UCHAR_DECOMPOSITION_TYPE;
+    int32_t value = U_DT_NOBREAK;
+    assertEquals("dt=Nb: index -1", "null", getValueName(prop, value, -1));
+    assertEquals("dt=Nb: short", "Nb", getValueName(prop, value, SHORT));
+    assertEquals("dt=Nb: long", "Nobreak", getValueName(prop, value, LONG));
+    assertEquals("dt=Nb: index 2", "nb", getValueName(prop, value, 2));
+    assertEquals("dt=Nb: index 3", "null", getValueName(prop, value, 3));
+
+    // Canonical_Combining_Class:
+    // The UCD inserts the numeric values in the second filed of its PropertyValueAliases.txt lines.
+    // In ICU, we don't treat these as names,
+    // they are just the numeric values returned by u_getCombiningClass().
+    // We return the real short and long names for the usual choice constants.
+    prop = UCHAR_CANONICAL_COMBINING_CLASS;
+    assertEquals("ccc=230: index -1", "null", getValueName(prop, 230, -1));
+    assertEquals("ccc=230: short", "A", getValueName(prop, 230, SHORT));
+    assertEquals("ccc=230: long", "Above", getValueName(prop, 230, LONG));
+    assertEquals("ccc=230: index 2", "null", getValueName(prop, 230, 2));
+
+    prop = UCHAR_GENERAL_CATEGORY;
+    value = U_DECIMAL_DIGIT_NUMBER;
+    assertEquals("gc=Nd: index -1", "null", getValueName(prop, value, -1));
+    assertEquals("gc=Nd: short", "Nd", getValueName(prop, value, SHORT));
+    assertEquals("gc=Nd: long", "Decimal_Number", getValueName(prop, value, LONG));
+    assertEquals("gc=Nd: index 2", "digit", getValueName(prop, value, 2));
+    assertEquals("gc=Nd: index 3", "null", getValueName(prop, value, 3));
+
+    prop = UCHAR_GENERAL_CATEGORY_MASK;
+    value = U_GC_P_MASK;
+    assertEquals("gc=P mask: index -1", "null", getValueName(prop, value, -1));
+    assertEquals("gc=P mask: short", "P", getValueName(prop, value, SHORT));
+    assertEquals("gc=P mask: long", "Punctuation", getValueName(prop, value, LONG));
+    assertEquals("gc=P mask: index 2", "punct", getValueName(prop, value, 2));
+    assertEquals("gc=P mask: index 3", "null", getValueName(prop, value, 3));
+}
+
+void UnicodeTest::TestIDSUnaryOperator() {
+    IcuTestErrorCode errorCode(*this, "TestIDSUnaryOperator()");
+    // New in Unicode 15.1 for just two characters.
+    assertFalse("U+2FFC IDSU", u_hasBinaryProperty(0x2ffc, UCHAR_IDS_UNARY_OPERATOR));
+    assertFalse("U+2FFD IDSU", u_hasBinaryProperty(0x2ffd, UCHAR_IDS_UNARY_OPERATOR));
+    assertTrue("U+2FFE IDSU", u_hasBinaryProperty(0x2ffe, UCHAR_IDS_UNARY_OPERATOR));
+    assertTrue("U+2FFF IDSU", u_hasBinaryProperty(0x2fff, UCHAR_IDS_UNARY_OPERATOR));
+    assertFalse("U+3000 IDSU", u_hasBinaryProperty(0x3000, UCHAR_IDS_UNARY_OPERATOR));
+    assertFalse("U+3001 IDSU", u_hasBinaryProperty(0x3001, UCHAR_IDS_UNARY_OPERATOR));
+
+    // Property name works and gets the correct set.
+    UnicodeSet idsu(u"[:IDS_Unary_Operator:]", errorCode);
+    assertEquals("IDSU set number of characters", 2, idsu.size());
+    assertFalse("idsu.contains(U+2FFD)", idsu.contains(0x2ffd));
+    assertTrue("idsu.contains(U+2FFE)", idsu.contains(0x2ffe));
+    assertTrue("idsu.contains(U+2FFF)", idsu.contains(0x2fff));
+    assertFalse("idsu.contains(U+3000)", idsu.contains(0x3000));
+}
+
+namespace {
+
+bool isMathStart(UChar32 c) {
+    return u_hasBinaryProperty(c, UCHAR_ID_COMPAT_MATH_START);
+}
+
+bool isMathContinue(UChar32 c) {
+    return u_hasBinaryProperty(c, UCHAR_ID_COMPAT_MATH_CONTINUE);
+}
+
+}  // namespace
+
+void UnicodeTest::TestIDCompatMath() {
+    IcuTestErrorCode errorCode(*this, "TestIDCompatMath()");
+    assertFalse("U+00B1 UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0xb1));
+    assertTrue("U+00B2 UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0xb2));
+    assertTrue("U+00B3 UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0xb3));
+    assertFalse("U+00B4 UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0xb4));
+    assertFalse("U+207F UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0x207f));
+    assertTrue("U+2080 UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0x2080));
+    assertTrue("U+208E UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0x208e));
+    assertFalse("U+208F UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0x208f));
+    assertFalse("U+2201 UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0x2201));
+    assertTrue("U+2202 UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0x2202));
+    assertTrue("U+1D6C1 UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0x1D6C1));
+    assertTrue("U+1D7C3 UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0x1D7C3));
+    assertFalse("U+1D7C4 UCHAR_ID_COMPAT_MATH_CONTINUE", isMathContinue(0x1D7C4));
+
+    assertFalse("U+00B2 UCHAR_ID_COMPAT_MATH_START", isMathStart(0xb2));
+    assertFalse("U+2080 UCHAR_ID_COMPAT_MATH_START", isMathStart(0x2080));
+    assertFalse("U+2201 UCHAR_ID_COMPAT_MATH_START", isMathStart(0x2201));
+    assertTrue("U+2202 UCHAR_ID_COMPAT_MATH_START", isMathStart(0x2202));
+    assertTrue("U+1D6C1 UCHAR_ID_COMPAT_MATH_START", isMathStart(0x1D6C1));
+    assertTrue("U+1D7C3 UCHAR_ID_COMPAT_MATH_START", isMathStart(0x1D7C3));
+    assertFalse("U+1D7C4 UCHAR_ID_COMPAT_MATH_START", isMathStart(0x1D7C4));
+
+    // Property names work and get the correct sets.
+    UnicodeSet idcmStart(u"[:ID_Compat_Math_Start:]", errorCode);
+    UnicodeSet idcmContinue(u"[:ID_Compat_Math_Continue:]", errorCode);
+    assertEquals("ID_Compat_Math_Start set number of characters", 13, idcmStart.size());
+    assertEquals("ID_Compat_Math_Continue set number of characters", 43, idcmContinue.size());
+    assertTrue("ID_Compat_Math_Start is a subset of ID_Compat_Math_Continue",
+               idcmContinue.containsAll(idcmStart));
+    assertFalse("idcmContinue.contains(U+207F)", idcmContinue.contains(0x207f));
+    assertTrue("idcmContinue.contains(U+2080)", idcmContinue.contains(0x2080));
+    assertTrue("idcmContinue.contains(U+208E)", idcmContinue.contains(0x208e));
+    assertFalse("idcmContinue.contains(U+208F)", idcmContinue.contains(0x208f));
+    assertFalse("idcmStart.contains(U+2201)", idcmStart.contains(0x2201));
+    assertTrue("idcmStart.contains(U+2202)", idcmStart.contains(0x2202));
+    assertTrue("idcmStart.contains(U+1D7C3)", idcmStart.contains(0x1D7C3));
+    assertFalse("idcmStart.contains(U+1D7C4)", idcmStart.contains(0x1D7C4));
+}
+
+U_NAMESPACE_BEGIN
+
+class BuiltInPropertyNames : public PropertyNames {
+public:
+    ~BuiltInPropertyNames() override {}
+
+    int32_t getPropertyEnum(const char *name) const override {
+        return u_getPropertyEnum(name);
+    }
+
+    int32_t getPropertyValueEnum(int32_t property, const char *name) const override {
+        return u_getPropertyValueEnum(static_cast<UProperty>(property), name);
+    }
+};
+
+U_NAMESPACE_END
+
+void UnicodeTest::TestPropertiesUsingPpucd() {
+    IcuTestErrorCode errorCode(*this, "TestPropertiesUsingPpucd()");
+
+    // Initialize PPUCD parsing object using file in repo and using
+    // property names present in built-in data in ICU
+    char buffer[500];
+    // get path to `source/data/unidata/` including trailing `/`
+    char *unidataPath = getUnidataPath(buffer);
+    if(unidataPath == nullptr) {
+        errln("exiting early because unable to open ppucd.txt from ICU source tree");
+        return;
+    }
+    CharString ppucdPath(unidataPath, errorCode);
+    ppucdPath.appendPathPart("ppucd.txt", errorCode);    
+    PreparsedUCD ppucd(ppucdPath.data(), errorCode);
+    if(errorCode.isFailure()) {
+        errln("unable to open %s - %s\n",
+            ppucdPath.data(), errorCode.errorName());
+        return;
+    }
+    BuiltInPropertyNames builtInPropNames;
+    ppucd.setPropertyNames(&builtInPropNames);
+
+    // Define which properties we want to compare
+    struct TestProp {
+        const UProperty prop;
+        const int32_t value = 1;  // binary "Yes"
+        UnicodeSet set;
+
+        TestProp(UProperty binaryProp) : prop(binaryProp) {}
+        TestProp(UProperty intProp, int32_t v) : prop(intProp), value(v) {}
+        bool isBinary() const { return prop < UCHAR_BINARY_LIMIT; }
+    };
+    TestProp propsUnderTest[] = {
+        { UCHAR_IDS_UNARY_OPERATOR },
+        { UCHAR_ID_COMPAT_MATH_START },
+        { UCHAR_ID_COMPAT_MATH_CONTINUE },
+#if !UCONFIG_NO_NORMALIZATION
+        { UCHAR_NFD_QUICK_CHECK, UNORM_NO },
+        { UCHAR_NFKD_QUICK_CHECK, UNORM_NO },
+        { UCHAR_NFC_QUICK_CHECK, UNORM_NO },
+        { UCHAR_NFKC_QUICK_CHECK, UNORM_NO },
+        { UCHAR_NFC_QUICK_CHECK, UNORM_MAYBE },
+        { UCHAR_NFKC_QUICK_CHECK, UNORM_MAYBE },
+#endif  // !UCONFIG_NO_NORMALIZATION
+        { UCHAR_INDIC_CONJUNCT_BREAK, U_INCB_NONE },
+        { UCHAR_INDIC_CONJUNCT_BREAK, U_INCB_CONSONANT },
+        { UCHAR_INDIC_CONJUNCT_BREAK, U_INCB_EXTEND },
+        { UCHAR_INDIC_CONJUNCT_BREAK, U_INCB_LINKER },
+        { UCHAR_MODIFIER_COMBINING_MARK },
+    };
+
+    // Iterate through PPUCD file, accumulating each line's data into each UnicodeSet per property
+    PreparsedUCD::LineType lineType;
+    UnicodeSet newValues;
+    while((lineType=ppucd.readLine(errorCode))!=PreparsedUCD::NO_LINE && errorCode.isSuccess()) {
+        if(ppucd.lineHasPropertyValues()) {
+            const UniProps *lineProps=ppucd.getProps(newValues, errorCode);
+
+            for (auto &tp : propsUnderTest) {
+                if (!newValues.contains(tp.prop)) {
+                    continue;
+                }
+                bool match = tp.isBinary() ?
+                    lineProps->binProps[tp.prop] :
+                    lineProps->getIntProp(tp.prop) == tp.value;
+                if (match) {
+                    tp.set.add(lineProps->start, lineProps->end);
+                } else {
+                    tp.set.remove(lineProps->start, lineProps->end);
+                }
+            }
+        }
+    }
+
+    if(errorCode.isFailure()) {
+        errln("exiting early due to parsing error");
+        return;
+    }
+
+    // Assert that the PPUCD data and the ICU data are equivalent for all properties
+    for (auto &tp : propsUnderTest) {
+        UnicodeSet icuPropSet;
+        icuPropSet.applyIntPropertyValue(tp.prop, tp.value, errorCode);
+        std::string msg =
+            std::string()
+            + "ICU & PPUCD versions of "
+            + u_getPropertyName(tp.prop, U_LONG_PROPERTY_NAME);
+        if (!tp.isBinary()) {
+            msg = msg + "=" + u_getPropertyValueName(tp.prop, tp.value, U_LONG_PROPERTY_NAME);
+        }
+        UnicodeSetTest::checkEqual(*this, tp.set, icuPropSet, msg.c_str());
+    }
+}
+
+namespace {
+
+int32_t getIDStatus(UChar32 c) {
+    return u_getIntPropertyValue(c, UCHAR_IDENTIFIER_STATUS);
+}
+
+}  // namespace
+
+void UnicodeTest::TestIDStatus() {
+    IcuTestErrorCode errorCode(*this, "TestIDStatus()");
+    assertEquals("ID_Status(slash)=Restricted", U_ID_STATUS_RESTRICTED, getIDStatus(0x2F));
+    assertEquals("ID_Status(digit 0)=Allowed", U_ID_STATUS_ALLOWED, getIDStatus(0x30));
+    assertEquals("ID_Status(colon)=Allowed", U_ID_STATUS_ALLOWED, getIDStatus(0x3A));
+    assertEquals("ID_Status(semicolon)=Restricted", U_ID_STATUS_RESTRICTED, getIDStatus(0x3B));
+    assertEquals("ID_Status(Greek small alpha)=Allowed", U_ID_STATUS_ALLOWED, getIDStatus(0x03B1));
+    assertEquals("ID_Status(Greek small archaic koppa)=Restricted", U_ID_STATUS_RESTRICTED, getIDStatus(0x03D9));
+    assertEquals("ID_Status(Hangul syllable)=Allowed", U_ID_STATUS_ALLOWED, getIDStatus(0xAC00));
+    assertEquals("ID_Status(surrogate)=Restricted", U_ID_STATUS_RESTRICTED, getIDStatus(0xD800));
+    assertEquals("ID_Status(Arabic tail fragment)=Restricted", U_ID_STATUS_RESTRICTED, getIDStatus(0xFE73));
+    assertEquals("ID_Status(Hentaigana ko-3)=Restricted", U_ID_STATUS_RESTRICTED, getIDStatus(0x1B03A));
+    assertEquals("ID_Status(Katakana ko)=Allowed", U_ID_STATUS_ALLOWED, getIDStatus(0x30B3));
+    assertEquals("ID_Status(U+29D98)=Allowed", U_ID_STATUS_ALLOWED, getIDStatus(0x29D98));
+    assertEquals("ID_Status(U+10FFFF)=Restricted", U_ID_STATUS_RESTRICTED, getIDStatus(0x10FFFF));
+
+    // Property names work and get the correct sets.
+    UnicodeSet idStatus(u"[:Identifier_Status=Allowed:]", errorCode);
+    // Unicode 15.1: 112778 Allowed characters; normally grows over time
+    // Unicode 17: Only 33791 Allowed characters after making
+    // most Unified_Ideograph characters Uncommon_Use and revisiting others as well.
+    assertTrue("Allowed number of characters", idStatus.size() >= 33791);
+    assertFalse("Allowed.contains(slash)", idStatus.contains(0x2F));
+    assertTrue("Allowed.contains(digit 0)", idStatus.contains(0x30));
+    assertTrue("Allowed.contains(colon)", idStatus.contains(0x3A));
+    assertFalse("Allowed.contains(semicolon)", idStatus.contains(0x3B));
+    assertTrue("Allowed.contains(Greek small alpha)", idStatus.contains(0x03B1));
+    assertFalse("Allowed.contains(Greek small archaic koppa)", idStatus.contains(0x03D9));
+    assertTrue("Allowed.contains(Hangul syllable)", idStatus.contains(0xAC00));
+    assertFalse("Allowed.contains(surrogate)", idStatus.contains(0xD800));
+    assertFalse("Allowed.contains(Arabic tail fragment)", idStatus.contains(0xFE73));
+    assertFalse("Allowed.contains(Hentaigana ko-3)", idStatus.contains(0x1B03A));
+    assertTrue("Allowed.contains(Katakana ko)", idStatus.contains(0x30B3));
+    assertTrue("Allowed.contains(U+29D98)", idStatus.contains(0x29D98));
+    assertFalse("Allowed.contains(U+10FFFF)", idStatus.contains(0x10FFFF));
+}
+
+namespace {
+
+UnicodeString getIDTypes(UChar32 c) {
+    UErrorCode errorCode = U_ZERO_ERROR;
+    UIdentifierType types[10];
+    int32_t length = u_getIDTypes(c, types, UPRV_LENGTHOF(types), &errorCode);
+    if (U_FAILURE(errorCode)) {
+        return UnicodeString(u_errorName(errorCode), -1, US_INV);
+    }
+    // The order of values is undefined, but for simplicity we assume the order
+    // that the current implementation yields. Otherwise we would have to sort the values.
+    uint32_t typeBits = 0;
+    UnicodeString result;
+    for (int32_t i = 0; i < length; ++i) {
+        if (i != 0) {
+            result.append(u' ');
+        }
+        auto t = types[i];
+        typeBits |= 1UL << t;
+        const char *s = u_getPropertyValueName(UCHAR_IDENTIFIER_TYPE, t, U_LONG_PROPERTY_NAME);
+        if (s != nullptr) {
+            result.append(UnicodeString(s, -1, US_INV));
+        } else {
+            result.append(u"???");
+        }
+    }
+    // Check that u_hasIDType() agrees.
+    // Includes undefined behavior with t > largest enum constant.
+    for (int32_t i = 0; i < 16; ++i) {
+        UIdentifierType t = static_cast<UIdentifierType>(i);
+        bool expected = (typeBits & (1UL << i)) != 0;
+        bool actual = u_hasIDType(c, t);
+        if (actual != expected) {
+            result.append(u" != u_hasIDType() ");
+            result = result + i;
+            break;
+        }
+    }
+    return result;
+}
+
+}  // namespace
+
+void UnicodeTest::TestIDType() {
+    IcuTestErrorCode errorCode(*this, "TestIDType()");
+    // Note: Types other than Recommended and Inclusion may well change over time.
+    assertEquals("ID_Type(slash)", u"Not_XID", getIDTypes(0x2F));
+    assertEquals("ID_Type(digit 0)", u"Recommended", getIDTypes(0x30));
+    assertEquals("ID_Type(colon)", u"Inclusion", getIDTypes(0x3A));
+    assertEquals("ID_Type(semicolon)", u"Not_XID", getIDTypes(0x3B));
+    assertEquals("ID_Type(Greek small alpha)", u"Recommended", getIDTypes(0x03B1));
+    assertEquals("ID_Type(Greek small archaic koppa)", u"Obsolete", getIDTypes(0x03D9));
+    assertEquals("ID_Type(Hangul syllable)", u"Recommended", getIDTypes(0xAC00));
+    assertEquals("ID_Type(surrogate)", u"Not_Character", getIDTypes(0xD800));
+    assertEquals("ID_Type(Arabic tail fragment)", u"Technical", getIDTypes(0xFE73));
+    assertEquals("ID_Type(Linear B syllable)", u"Exclusion", getIDTypes(0x10000));
+    assertEquals("ID_Type(Hentaigana ko-3)", u"Obsolete", getIDTypes(0x1B03A));
+    assertEquals("ID_Type(Katakana ko)", u"Recommended", getIDTypes(0x30B3));
+    assertEquals("ID_Type(U+29D98)", u"Recommended", getIDTypes(0x29D98));
+    assertEquals("ID_Type(U+10FFFF)", u"Not_Character", getIDTypes(0x10FFFF));
+
+    assertEquals("ID_Type(CYRILLIC THOUSANDS SIGN)", u"Not_XID Obsolete", getIDTypes(0x0482));
+    assertEquals("ID_Type(SYRIAC FEMININE DOT)", u"Technical Limited_Use", getIDTypes(0x0740));
+    assertEquals("ID_Type(NKO LETTER JONA JA)", u"Obsolete Limited_Use", getIDTypes(0x07E8));
+    assertEquals("ID_Type(SYRIAC END OF PARAGRAPH)", u"Not_XID Limited_Use", getIDTypes(0x0700));
+    assertEquals("ID_Type(MUSICAL SYMBOL KIEVAN C CLEF)", u"Not_XID Technical Uncommon_Use", getIDTypes(0x1D1DE));
+    assertEquals("ID_Type(MRO LETTER TA)", u"Exclusion Uncommon_Use", getIDTypes(0x16A40));
+    assertEquals("ID_Type(GREEK MUSICAL LEIMMA)", u"Not_XID Obsolete", getIDTypes(0x1D245));
+
+    // error handling
+    UIdentifierType types[2];
+    UErrorCode failure = U_ZERO_ERROR;
+    u_getIDTypes(0, types, -1, &failure);
+    assertEquals("u_getIDTypes(capacity<0)", U_ILLEGAL_ARGUMENT_ERROR, failure);
+
+    failure = U_ZERO_ERROR;
+    u_getIDTypes(0, nullptr, 1, &failure);
+    assertEquals("u_getIDTypes(nullptr)", U_ILLEGAL_ARGUMENT_ERROR, failure);
+
+    failure = U_ZERO_ERROR;
+    int32_t length = u_getIDTypes(0x30, types, 0, &failure);
+    assertEquals("u_getIDTypes(digit 0, capacity 0) overflow", U_BUFFER_OVERFLOW_ERROR, failure);
+    assertEquals("u_getIDTypes(digit 0, capacity 0) length", 1, length);
+
+    failure = U_ZERO_ERROR;
+    length = u_getIDTypes(0x1D1DE, types, 0, &failure);
+    assertEquals("u_getIDTypes(Kievan C clef, capacity 2) overflow", U_BUFFER_OVERFLOW_ERROR, failure);
+    assertEquals("u_getIDTypes(Kievan C clef, capacity 2) length", 3, length);
+
+    // Property names work and get the correct sets.
+    UnicodeSet rec(u"[:Identifier_Type=Recommended:]", errorCode);
+    UnicodeSet incl(u"[:Identifier_Type=Inclusion:]", errorCode);
+    UnicodeSet limited(u"[:Identifier_Type=Limited_Use:]", errorCode);
+    UnicodeSet uncommon(u"[:Identifier_Type=Uncommon_Use:]", errorCode);
+    UnicodeSet notChar(u"[:Identifier_Type=Not_Character:]", errorCode);
+    // Unicode 15.1 set sizes; normally grows over time except Not_Character shrinks
+    // Unicode 17: Only 33773 Recommended characters after making
+    // most Unified_Ideograph characters Uncommon_Use and revisiting others as well.
+    assertTrue("Recommended number of characters", rec.size() >= 33773);
+    assertTrue("Inclusion number of characters", incl.size() >= 17);
+    assertTrue("Limited_Use number of characters", limited.size() >= 5268);
+    assertTrue("Uncommon_Use number of characters", uncommon.size() >= 398);
+    assertTrue("Not_Character number of characters",
+               800000 <= notChar.size() && notChar.size() <= 964293);
+    assertFalse("Recommended.contains(slash)", rec.contains(0x2F));
+    assertTrue("Recommended.contains(digit 0)", rec.contains(0x30));
+    assertTrue("Inclusion.contains(colon)", incl.contains(0x3A));
+    assertTrue("Recommended.contains(U+29D98)", rec.contains(0x29D98));
+    assertTrue("Limited_Use.contains(SYRIAC FEMININE DOT)", limited.contains(0x0740));
+    assertTrue("Limited_Use.contains(NKO LETTER JONA JA)", limited.contains(0x7E8));
+    assertTrue("Not_Character.contains(surrogate)", notChar.contains(0xd800));
+    assertTrue("Not_Character.contains(U+10FFFF)", notChar.contains(0x10FFFF));
+    assertTrue("Uncommon_Use.contains(MUSICAL SYMBOL KIEVAN C CLEF)", uncommon.contains(0x1D1DE));
+
+    // More mutually exclusive types, including some otherwise combinable ones.
+    UnicodeSet dep(u"[:Identifier_Type=Deprecated:]", errorCode);
+    UnicodeSet di(u"[:Identifier_Type=Default_Ignorable:]", errorCode);
+    UnicodeSet notNFKC(u"[:Identifier_Type=Not_NFKC:]", errorCode);
+    UnicodeSet excl(u"[:Identifier_Type=Exclusion:]", errorCode);
+    UnicodeSet allExclusive;
+    allExclusive.addAll(rec).addAll(incl).addAll(limited).addAll(excl).
+        addAll(notNFKC).addAll(di).addAll(dep).addAll(notChar);
+    assertEquals("num chars in mutually exclusive types",
+                rec.size() + incl.size() + limited.size() + excl.size() +
+                    notNFKC.size() + di.size() + dep.size() + notChar.size(),
+                allExclusive.size());
+}
+
+namespace {
+
+void U_CALLCONV
+set_add(USet *set, UChar32 c) {
+    UnicodeSet::fromUSet(set)->add(c);
+}
+
+void U_CALLCONV
+set_addRange(USet *set, UChar32 start, UChar32 end) {
+    UnicodeSet::fromUSet(set)->add(start, end);
+}
+
+}
+
+void UnicodeTest::TestScriptExtensionsCodePoints() {
+    IcuTestErrorCode errorCode(*this, "TestScriptExtensionsCodePoints()");
+    UnicodeSet scxCPs;
+    USetAdder sa = {
+        scxCPs.toUSet(),
+        set_add,
+        set_addRange,
+        nullptr, // don't need addString,
+        nullptr, // don't need remove()
+        nullptr // don't need removeRange()
+    };
+    uprv_addScriptExtensionsCodePoints(&sa, errorCode);
+    assertSuccess("uprv_addScriptExtensionsCodePoints", errorCode);
+
+    UnicodeSet mostAssigned(u"[[^[:C:][:Unified_Ideograph:]][:Cf:]]", errorCode);
+    assertSuccess("mostAssigned", errorCode);
+
+    UnicodeSet expected;
+    UScriptCode scripts[100];
+    for (auto c : mostAssigned.codePoints()) {
+        int32_t length = uscript_getScriptExtensions(c, scripts, UPRV_LENGTHOF(scripts), errorCode);
+        if (length != 1 || uscript_getScript(c, errorCode) != scripts[0]) {
+            expected.add(c);
+        }
+    }
+    assertSuccess("collect expected", errorCode);
+
+    assertTrue("scxCPs == expected", scxCPs == expected);
 }

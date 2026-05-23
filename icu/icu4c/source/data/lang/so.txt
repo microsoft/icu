@@ -1,16 +1,19 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 so{
     Keys{
         calendar{"Habeentiris"}
         cf{"Habka Lacagta"}
         collation{"Kala Soocidda Dalabka"}
         currency{"Lacagta"}
+        em{"Soo bandhiga Imoji"}
         hc{"Wareegga Saacadda (12 ilaa 24)"}
         lb{"Habka Jebinta Xariiqda"}
+        lw{"Bar Dhamaadyada Khadadka ee gudaha Erayada"}
         ms{"Nidaamka Cabbiraadda"}
         numbers{"Tirooyinka"}
+        ss{"Bar Dhamaadka Jumlada Kadib Xarfo Soo Gaabinta"}
     }
     Languages{
         ab{"U dhashay Abkhazia"}
@@ -28,6 +31,7 @@ so{
         ann{"Obolo"}
         anp{"U dhashay Anp"}
         ar{"Carabi"}
+        ar_001{"Carabiga rasmiga ah"}
         arn{"Mapuche"}
         arp{"U dhashay Arap"}
         ars{"Najdi Arabic"}
@@ -40,16 +44,19 @@ so{
         ay{"U dhashay Aymar"}
         az{"Asarbayjan"}
         ba{"Bashkir"}
+        bal{"Baluchi"}
         ban{"U dhashay Baline"}
         bas{"Basaa"}
         be{"Beleruusiyaan"}
         bem{"Bemba"}
         bez{"Bena"}
         bg{"Bulgeeriyaan"}
-        bho{"U dhashay Bhohp"}
+        bgc{"Haryanvi"}
+        bho{"Bhojpuri"}
         bi{"U dhashay Bislam"}
         bin{"U dhashay Bin"}
         bla{"Siksiká"}
+        blo{"Anii"}
         bm{"Bambaara"}
         bn{"Bangladesh"}
         bo{"Tibeetaan"}
@@ -90,6 +97,8 @@ so{
         dar{"Dargwa"}
         dav{"Taiita"}
         de{"Jarmal"}
+        de_AT{"Jarmal Awsteeriya"}
+        de_CH{"Iswiiska Sare ee Jarmal"}
         dgr{"Dogrib"}
         dje{"Sarma"}
         doi{"Dogri"}
@@ -105,12 +114,20 @@ so{
         eka{"Ekajuk"}
         el{"Giriik"}
         en{"Ingiriisi"}
+        en_AU{"Ingiriis Austaraaliyaan"}
+        en_CA{"Ingiriis Kanadiyaan"}
+        en_GB{"Ingiriis Biritish"}
+        en_US{"Ingiriis Maraykan"}
         eo{"Isberaanto"}
         es{"Isbaanish"}
+        es_419{"Isbaanishka Laatiin Ameerika"}
+        es_ES{"Isbaanish Yurub"}
+        es_MX{"Isbaanishka Mexico"}
         et{"Istooniyaan"}
         eu{"Basquu"}
         ewo{"Eewondho"}
         fa{"Faarisi"}
+        fa_AF{"Faarsi"}
         ff{"Fuulah"}
         fi{"Finishka"}
         fil{"Filibiino"}
@@ -118,6 +135,8 @@ so{
         fo{"Farowsi"}
         fon{"Fon"}
         fr{"Faransiis"}
+        fr_CA{"Faransiiska Kanada"}
+        fr_CH{"Faransiis (Iswiiserlaand)"}
         frc{"Faransiiska Cajun"}
         frr{"Northern Frisian"}
         fur{"Firiyuuliyaan"}
@@ -141,6 +160,7 @@ so{
         hax{"Southern Haida"}
         he{"Cibraani"}
         hi{"Hindi"}
+        hi_Latn{"Hindi (Latin)"}
         hil{"Hiligaynon"}
         hmn{"Hamong"}
         hr{"Koro’eeshiyaan"}
@@ -155,6 +175,7 @@ so{
         iba{"Iban"}
         ibb{"Ibibio"}
         id{"Indunusiyaan"}
+        ie{"Interlingue"}
         ig{"Igbo"}
         ii{"Sijuwan Yi"}
         ikt{"Western Canadian Inuktitut"}
@@ -207,6 +228,7 @@ so{
         kv{"Komi"}
         kw{"Kornish"}
         kwk{"Kwakʼwala"}
+        kxv{"Kufi"}
         ky{"Kirgiis"}
         la{"Laatiin"}
         lad{"Ladino"}
@@ -215,8 +237,10 @@ so{
         lez{"Lezghian"}
         lg{"Gandha"}
         li{"Limburgish"}
+        lij{"Liguuriyaan"}
         lil{"Lillooet"}
         lkt{"Laakoota"}
+        lmo{"Lombard"}
         ln{"Lingala"}
         lo{"Lao"}
         lou{"Louisiana Creole"}
@@ -233,7 +257,7 @@ so{
         lv{"Laatfiyaan"}
         mad{"Madurese"}
         mag{"Magahi"}
-        mai{"Dadka Maithili"}
+        mai{"Maithili"}
         mak{"Makasar"}
         mas{"Masaay"}
         mdf{"Moksha"}
@@ -241,7 +265,7 @@ so{
         mer{"Meeru"}
         mfe{"Moorisayn"}
         mg{"Malagaasi"}
-        mgh{"Makhuwa"}
+        mgh{"Luuqadda Makhuwa-Meetto"}
         mgo{"Meetaa"}
         mh{"Marshallese"}
         mi{"Maaoori"}
@@ -258,7 +282,7 @@ so{
         ms{"Malaay"}
         mt{"Maltiis"}
         mua{"Miyundhaang"}
-        mul{"Luuqado kala duwan"}
+        mul{"Luuqaddo badan"}
         mus{"Muscogee"}
         mwl{"Mirandese"}
         my{"Burmese"}
@@ -276,6 +300,7 @@ so{
         nia{"Nias"}
         niu{"Niuean"}
         nl{"Holandays"}
+        nl_BE{"Af faleemi"}
         nmg{"Kuwaasiyo"}
         nn{"Nawriijiga Nynorsk"}
         nnh{"Ingiyembuun"}
@@ -306,10 +331,13 @@ so{
         pis{"Pijin"}
         pl{"Boolish"}
         pqm{"Maliseet-Passamaquoddy"}
-        prg{"Brashiyaanki Hore"}
+        prg{"Brashiyaan"}
         ps{"Bashtuu"}
         pt{"Boortaqiis"}
-        qu{"Quwejuwa"}
+        pt_BR{"Boortaqiiska Baraasiil"}
+        pt_PT{"Boortaqiiska Yurub"}
+        qu{"Quechua"}
+        raj{"Rajasthani"}
         rap{"Rapanui"}
         rar{"Rarotongan"}
         rhg{"Rohingya"}
@@ -323,7 +351,7 @@ so{
         rwk{"Raawa"}
         sa{"Sanskrit"}
         sad{"Sandawe"}
-        sah{"Saaqa"}
+        sah{"Yakut"}
         saq{"Sambuuru"}
         sat{"Santali"}
         sba{"Ngambay"}
@@ -338,7 +366,7 @@ so{
         sg{"Sango"}
         shi{"Shilha"}
         shn{"Shan"}
-        si{"Sinhaleys"}
+        si{"Sinhala"}
         sk{"Isloofaak"}
         sl{"Islofeeniyaan"}
         slh{"Southern Lushootseed"}
@@ -359,7 +387,8 @@ so{
         sv{"Iswiidhish"}
         sw{"Sawaaxili"}
         swb{"Comorian"}
-        syr{"Syria"}
+        syr{"Af-Siriyak"}
+        szl{"Sileshiyaan"}
         ta{"Tamiil"}
         tce{"Southern Tutchone"}
         te{"Teluugu"}
@@ -399,7 +428,9 @@ so{
         uz{"Usbakis"}
         vai{"Faayi"}
         ve{"Venda"}
+        vec{"Dadka Fenaays"}
         vi{"Fiitnaamays"}
+        vmw{"Af-Makhuwa"}
         vo{"Folabuuk"}
         vun{"Fuunjo"}
         wa{"Walloon"}
@@ -409,7 +440,8 @@ so{
         wo{"Woolof"}
         wuu{"Wu Chinese"}
         xal{"Kalmyk"}
-        xh{"Hoosta"}
+        xh{"Xhosa"}
+        xnr{"Kangri"}
         xog{"Sooga"}
         yav{"Yaangbeen"}
         ybb{"Yemba"}
@@ -417,12 +449,37 @@ so{
         yo{"Yoruuba"}
         yrl{"Nheengatu"}
         yue{"Kantoneese"}
+        za{"Zhuang"}
         zgh{"Morokaanka Tamasayt Rasmiga"}
-        zh{"Shiinaha Mandarin"}
+        zh{"Shinees"}
+        zh_Hans{"Shiinaha Rasmiga ah"}
+        zh_Hant{"Af-Shiineeska Qadiimiga ah"}
         zu{"Zuulu"}
         zun{"Zuni"}
         zxx{"Luuqad Looma Hayo"}
         zza{"Zaza"}
+    }
+    Languages%core{
+        ku{"Kurdish"}
+    }
+    Languages%extension{
+        ku{"Kurmanji"}
+    }
+    Languages%long{
+        zh_Hans{"Shiineeska Mandarin ee Rasmiga ah"}
+        zh_Hant{"Af-Shiineeska Mandarin ee Qadiimiga ah"}
+    }
+    Languages%menu{
+        yue{"Shiinays, Cantonese"}
+        zh{"Af-Shiineeska Mandarin"}
+    }
+    Languages%short{
+        en_GB{"Ingiriiska Boqortooyada Midooday"}
+        en_US{"Ingiriiska Maraykanka"}
+    }
+    Languages%variant{
+        ckb{"Kurdi, Sorani"}
+        hi_Latn{"Hinglish"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -547,7 +604,7 @@ so{
         Prti{"Qoraalka Parthian"}
         Qaag{"Qoraalka Sawgiga"}
         Rjng{"Dadka Rejan"}
-        Rohg{"Hanifi Rohingya"}
+        Rohg{"Hanifi"}
         Runr{"Dadka Rejang"}
         Samr{"Dadka Samaritan"}
         Sarb{"Crabiyaankii Hore ee Wuqooyi"}
@@ -612,29 +669,47 @@ so{
             hebrew{"Habeentiriska yuhuudda"}
             indian{"Habeentiris Qarameedka Hindiya"}
             islamic{"Habeentiriska islaamka"}
-            islamic-civil{"Taariikhda Islaamiga (tabular, civil epoch)"}
-            islamic-rgsa{"Habeentiriska Islaamka (Sacuudiga, aragtida)"}
-            islamic-tbla{"Taariikhda Islaamiga (tabular, astronomical epoch)"}
+            islamic-civil{"Taariikhda Islaamiga (shax ahaan, waayo madaniyeed)"}
+            islamic-tbla{"Taariikhda Islaamiga (shax ahaan, waayo xiddigeed)"}
             islamic-umalqura{"Taariikhda Islaamiga(Umm al-Qura)"}
             iso8601{"Habeentiriska ISO-8601"}
             japanese{"Habeentiriska jabbaanka"}
             persian{"Habeentiriska Baarshiyaanka"}
+            roc{"Habeentiriska Minguwo"}
+        }
+        calendar%core{
+            buddhist{"Qof Buddhi ah"}
+            chinese{"Shinees"}
+            coptic{"Coptic"}
+            dangi{"Dangi"}
+            ethiopic{"Ethiopic"}
+            ethiopic-amete-alem{"Ethiopic Amete Alem"}
+            gregorian{"Gregorian"}
+            hebrew{"Hebrew"}
+            islamic{"Taariikhda Islaamiga"}
+            islamic-civil{"Taariikhda Islaamiga (shax ahaan, taariikh madaniyeed jaan go’an)"}
+            islamic-tbla{"Taariikh Islaamiyeed (shax ahaan, waayo xiddigeed)"}
+            islamic-umalqura{"Taariikhda Islaamiga (Umm al-Qura)"}
+            japanese{"Jabaniis"}
+            persian{"U dhashay Faariis"}
+            roc{"Minguo"}
         }
         cf{
             account{"Habka Xisaabinta Lacagta"}
             standard{"Habka Heerka Lacagta"}
         }
+        cf%core{
+            account{"Xisaabaadka"}
+            standard{"Heerka"}
+        }
         collation{
-            big5han{"Isku hagaajinta Shiineeskii Hore - Big5"}
             compat{"Iswaafajinta Isku hajintii hore"}
             dictionary{"Isku hagaajinta Qaamuuska"}
             ducet{"Lambar Sireedka Caalamiga ee Kala Soocidda Dalabka"}
             emoji{"Isku hagaajinta Emojiga"}
             eor{"Xeerarka Dalabka Yurub"}
-            gb2312han{"Isku hagaajinta Farta shiineeska"}
             phonebook{"Isku hagaajinta foonbuuga"}
             pinyin{"Isku hagaajinta Pinyin"}
-            reformed{"Isku hagaajinta Reformed"}
             search{"Raadinta Guud"}
             searchjl{"Raadinta Shibanaha Hangul"}
             standard{"Amarka Kala Soocidda Caadiga ah"}
@@ -643,21 +718,53 @@ so{
             unihan{"Isku hagaajinta Farta Radical-Stroke"}
             zhuyin{"Isku hagaajinta Farta Zhuyin"}
         }
+        collation%core{
+            ducet{"Lambar Sireedka Caalamiga ee Asaliga ah"}
+            search{"Raadi"}
+            standard{"Caadiga"}
+        }
+        em%core{
+            default{"Asaliga"}
+            emoji{"Imoji"}
+            text{"Qoraal"}
+        }
         hc{
             h11{"12 Saac ee Nidaamka Saacadda (0–12)"}
             h12{"12 Saac ee Nidaamka Saacadda (1–12)"}
             h23{"24 Saac ee Nidaamka Saacadda (0–23)"}
             h24{"24 Saac ee Nidaamka Saacadda (1–24)"}
         }
+        hc%core{
+            h11{"12 (0–11)"}
+            h12{"12 (1–12)"}
+            h23{"24 (0–23)"}
+            h24{"24 (1–24)"}
+        }
         lb{
             loose{"Habka Jabinta Xariiqda Dabacsan"}
             normal{"Habka Jabinta Xariiqda Caadiga ah"}
             strict{"Habka Jabinta Xariiqda Adag"}
         }
+        lb%core{
+            loose{"Dabacsan"}
+            normal{"Caadi ah"}
+            strict{"Adag"}
+        }
+        lw%core{
+            breakall{"Jebi dhamaan"}
+            keepall{"Heyso dhamaan"}
+            normal{"Caadi ah"}
+            phrase{"Weedho ahaan ku heyso"}
+        }
         ms{
             metric{"Nidaamka Metric"}
             uksystem{"Nidaamka Cabbirka Imperial-ka"}
             ussystem{"Nidaamka Cabbirka ee US"}
+        }
+        ms%core{
+            metric{"Cabbir"}
+            uksystem{"UK"}
+            ussystem{"Mareykanka"}
         }
         numbers{
             ahom{"Godadka Ahom"}
@@ -740,6 +847,10 @@ so{
             wara{"Godadka Warang Citi"}
             wcho{"Godadka Wancho"}
         }
+        ss%core{
+            none{"Dami"}
+            standard{"Daar"}
+        }
     }
     Variants{
         1606NICT{"Fransiiskii dhexe ee ugu dambeeyay ilaa 1606"}
@@ -795,6 +906,8 @@ so{
         compatibility{"{0} — waafaqsanaanta"}
         enclosed{"{0}— xiran"}
         extended{"{0}— dheereyey"}
+        facing-left{"{0} bidix u jeeda"}
+        facing-right{"{0} midig u jeeda"}
         historic{"{0}—taariikhi ah"}
         miscellaneous{"{0}— qaar kale"}
         other{"{0}—kale"}

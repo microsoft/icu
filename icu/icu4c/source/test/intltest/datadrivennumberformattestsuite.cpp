@@ -170,14 +170,13 @@ void DataDrivenNumberFormatTestSuite::showLineInfo() {
 }
 
 void DataDrivenNumberFormatTestSuite::showError(const char *message) {
-    errln("line %d: %s", (int) fFileLineNumber, message);
+    errln("line %d: %s", static_cast<int>(fFileLineNumber), message);
     showLineInfo();
 }
 
 void DataDrivenNumberFormatTestSuite::showFailure(const UnicodeString &message) {
-    UChar lineStr[20];
-    uprv_itou(
-            lineStr, UPRV_LENGTHOF(lineStr), (uint32_t) fFileLineNumber, 10, 1);
+    char16_t lineStr[20];
+    uprv_itou(lineStr, UPRV_LENGTHOF(lineStr), static_cast<uint32_t>(fFileLineNumber), 10, 1);
     UnicodeString fullMessage("line ");
     dataerrln(fullMessage.append(lineStr).append(": ")
             .append(prettify(message)));

@@ -263,7 +263,7 @@ ConversionTest::TestFromUnicode() {
                 s=testCase->getString("callback", errorCode);
                 cc.setSub=0; // default: no subchar
 
-                if((index=s.indexOf((UChar)0))>0) {
+                if ((index = s.indexOf(static_cast<char16_t>(0))) > 0) {
                     // read NUL-separated subchar first, if any
                     // copy the subchar from Latin-1 characters
                     // start after the NUL
@@ -271,13 +271,13 @@ ConversionTest::TestFromUnicode() {
                     length=index+1;
                     p+=length;
                     length=s.length()-length;
-                    if(length<=0 || length>=(int32_t)sizeof(cc.subchar)) {
+                    if (length <= 0 || length >= static_cast<int32_t>(sizeof(cc.subchar))) {
                         errorCode=U_ILLEGAL_ARGUMENT_ERROR;
                     } else {
                         int32_t j;
 
                         for(j=0; j<length; ++j) {
-                            cc.subchar[j]=(char)p[j];
+                            cc.subchar[j] = static_cast<char>(p[j]);
                         }
                         // NUL-terminate the subchar
                         cc.subchar[j]=0;
@@ -286,7 +286,7 @@ ConversionTest::TestFromUnicode() {
 
                     // remove the NUL and subchar from s
                     s.truncate(index);
-                } else if((index=s.indexOf((UChar)0x3d))>0) /* '=' */ {
+                } else if ((index = s.indexOf(static_cast<char16_t>(0x3d))) > 0) /* '=' */ {
                     // read a substitution string, separated by an equal sign
                     p=s.getBuffer()+index+1;
                     length=s.length()-(index+1);
@@ -482,7 +482,7 @@ getUnicodeSetCallback(const void *context,
                       UConverterCallbackReason reason,
                       UErrorCode *pErrorCode) {
     if(reason<=UCNV_IRREGULAR) {
-        ((UnicodeSet *)context)->remove(codePoint);  // the converter cannot convert this code point
+        static_cast<UnicodeSet *>(const_cast<void*>(context))->remove(codePoint);  // the converter cannot convert this code point
         *pErrorCode=U_ZERO_ERROR;                    // skip
     }  // else ignore the reset, close and clone calls.
 }
@@ -509,26 +509,26 @@ ConversionTest::TestGetUnicodeSet2() {
     UChar c2;
     // low BMP
     for(c=0; c<=0xd7ff; ++c) {
-        *s++=(UChar)c;
+        *s++ = static_cast<char16_t>(c);
     }
     // trail surrogates
     for(c=0xdc00; c<=0xdfff; ++c) {
-        *s++=(UChar)c;
+        *s++ = static_cast<char16_t>(c);
     }
     // lead surrogates
     // (after trails so that there is not even one surrogate pair in between)
     for(c=0xd800; c<=0xdbff; ++c) {
-        *s++=(UChar)c;
+        *s++ = static_cast<char16_t>(c);
     }
     // high BMP
     for(c=0xe000; c<=0xffff; ++c) {
-        *s++=(UChar)c;
+        *s++ = static_cast<char16_t>(c);
     }
     // supplementary code points = surrogate pairs
     if(cpLimit==0x110000) {
         for(c=0xd800; c<=0xdbff; ++c) {
             for(c2=0xdc00; c2<=0xdfff; ++c2) {
-                *s++=(UChar)c;
+                *s++ = static_cast<char16_t>(c);
                 *s++=c2;
             }
         }
@@ -568,7 +568,7 @@ ConversionTest::TestGetUnicodeSet2() {
             continue;
         }
         UConverterUnicodeSet which;
-        for(which=UCNV_ROUNDTRIP_SET; which<UCNV_SET_COUNT; which=(UConverterUnicodeSet)((int)which+1)) {
+        for (which = UCNV_ROUNDTRIP_SET; which < UCNV_SET_COUNT; which = static_cast<UConverterUnicodeSet>(static_cast<int>(which) + 1)) {
             if(which==UCNV_ROUNDTRIP_AND_FALLBACK_SET) {
                 ucnv_setFallback(cnv.getAlias(), true);
             }
@@ -577,7 +577,7 @@ ConversionTest::TestGetUnicodeSet2() {
             UBool flush;
             do {
                 char *t=buffer;
-                flush=(UBool)(s==s0+s0Length);
+                flush = static_cast<UBool>(s == s0 + s0Length);
                 ucnv_fromUnicode(cnv.getAlias(), &t, buffer+sizeof(buffer), (const UChar **)&s, s0+s0Length, NULL, flush, &errorCode);
                 if(U_FAILURE(errorCode)) {
                     if(errorCode==U_BUFFER_OVERFLOW_ERROR) {
@@ -742,7 +742,7 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
                    buffer16, &pivotSource, &pivotTarget, pivotLimit,
                    false, false, errorCode);
     assertEquals("overflow", U_BUFFER_OVERFLOW_ERROR, errorCode.reset());
-    length = (int32_t)(target - result);
+    length = static_cast<int32_t>(target - result);
     assertEquals("number of bytes written", 2, length);
     assertEquals("next byte not clobbered", 5, result[2]);
 
@@ -753,7 +753,7 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
                    false, true, errorCode);
 
     assertSuccess("UTF-8->UTF-8", errorCode);
-    length = (int32_t)(target - result);
+    length = static_cast<int32_t>(target - result);
     assertEquals("3 bytes", 3, length);
     if (length == 3) {
         assertTrue("result same as input", memcmp(text, result, length) == 0);
@@ -775,7 +775,7 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
                    buffer16, &pivotSource, &pivotTarget, pivotLimit,
                    false, false, errorCode);
     assertEquals("text2 overflow", U_BUFFER_OVERFLOW_ERROR, errorCode.reset());
-    length = (int32_t)(target - result);
+    length = static_cast<int32_t>(target - result);
     assertEquals("text2 number of bytes written", 3, length);
     assertEquals("text2 next byte not clobbered", 5, result[3]);
 
@@ -786,7 +786,7 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
                    false, true, errorCode);
 
     assertSuccess("text2 UTF-8->UTF-8", errorCode);
-    length = (int32_t)(target - result);
+    length = static_cast<int32_t>(target - result);
     assertEquals("text2 5 bytes", 5, length);
     if (length == 5) {
         assertTrue("text2 result same as input", memcmp(text2, result, length) == 0);
@@ -812,11 +812,11 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
                    buffer16, &pivotSource, &pivotTarget, pivotLimit,
                    false, true, errorCode);
     assertEquals("illFormed truncated", U_TRUNCATED_CHAR_FOUND, errorCode.reset());
-    length = (int32_t)(target - result);
+    length = static_cast<int32_t>(target - result);
     assertEquals("illFormed number of bytes written", 0, length);
     errorLength = UPRV_LENGTHOF(errorBytes);
     ucnv_getInvalidChars(cnv1.getAlias(), errorBytes, &errorLength, errorCode);
-    assertEquals("illFormed truncated errorLength", 2, (int32_t)errorLength);
+    assertEquals("illFormed truncated errorLength", 2, errorLength);
     if (errorLength == 2) {
         assertEquals("illFormed truncated errorBytes", 0xf191, 
                      ((int32_t)(uint8_t)errorBytes[0] << 8) | (uint8_t)errorBytes[1]);
@@ -829,11 +829,11 @@ ConversionTest::TestUTF8ToUTF8Overflow() {
                    false, true, errorCode);
 
     assertEquals("illFormed trail byte", U_ILLEGAL_CHAR_FOUND, errorCode.reset());
-    length = (int32_t)(target - result);
+    length = static_cast<int32_t>(target - result);
     assertEquals("illFormed trail byte number of bytes written", 0, length);
     errorLength = UPRV_LENGTHOF(errorBytes);
     ucnv_getInvalidChars(cnv1.getAlias(), errorBytes, &errorLength, errorCode);
-    assertEquals("illFormed trail byte errorLength", 1, (int32_t)errorLength);
+    assertEquals("illFormed trail byte errorLength", 1, errorLength);
     if (errorLength == 1) {
         assertEquals("illFormed trail byte errorBytes", 0x93, (int32_t)(uint8_t)errorBytes[0]);
     }
@@ -877,7 +877,7 @@ ConversionTest::TestUTF8ToUTF8Streaming() {
         buffer16, &pivotSource, &pivotTarget, pivotLimit,
         false, false, errorCode);
 
-    length = (int32_t)(target - result);
+    length = static_cast<int32_t>(target - result);
     targetLen -= length;
     assertEquals("First chunk -1 doesn't match converted length", chunk1 - 1, length);
 
@@ -890,7 +890,7 @@ ConversionTest::TestUTF8ToUTF8Streaming() {
         buffer16, &pivotSource, &pivotTarget, pivotLimit,
         false, true, errorCode);
 
-    length = (int32_t)(target - result - length);
+    length = static_cast<int32_t>(target - result - length);
     targetLen -= length;
     assertEquals("Second chunk + 2 doesn't  match converted length", chunk2 + 1, length);
 
@@ -918,7 +918,7 @@ ConversionTest::cnv_open(const char *name, UErrorCode &errorCode) {
 
 static inline char
 hexDigit(uint8_t digit) {
-    return digit<=9 ? (char)('0'+digit) : (char)('a'-10+digit);
+    return digit <= 9 ? static_cast<char>('0' + digit) : static_cast<char>('a' - 10 + digit);
 }
 
 static char *
@@ -928,16 +928,16 @@ printBytes(const uint8_t *bytes, int32_t length, char *out) {
     if(length>0) {
         b=*bytes++;
         --length;
-        *out++=hexDigit((uint8_t)(b>>4));
-        *out++=hexDigit((uint8_t)(b&0xf));
+        *out++ = hexDigit(static_cast<uint8_t>(b >> 4));
+        *out++ = hexDigit(static_cast<uint8_t>(b & 0xf));
     }
 
     while(length>0) {
         b=*bytes++;
         --length;
         *out++=' ';
-        *out++=hexDigit((uint8_t)(b>>4));
-        *out++=hexDigit((uint8_t)(b&0xf));
+        *out++ = hexDigit(static_cast<uint8_t>(b >> 4));
+        *out++ = hexDigit(static_cast<uint8_t>(b & 0xf));
     }
     *out++=0;
     return out;
@@ -958,12 +958,12 @@ printUnicode(const UChar *unicode, int32_t length, char *out) {
             *out++='1';
         }
         if(c>=0x10000) {
-            *out++=hexDigit((uint8_t)((c>>16)&0xf));
+            *out++ = hexDigit(static_cast<uint8_t>((c >> 16) & 0xf));
         }
-        *out++=hexDigit((uint8_t)((c>>12)&0xf));
-        *out++=hexDigit((uint8_t)((c>>8)&0xf));
-        *out++=hexDigit((uint8_t)((c>>4)&0xf));
-        *out++=hexDigit((uint8_t)(c&0xf));
+        *out++ = hexDigit(static_cast<uint8_t>((c >> 12) & 0xf));
+        *out++ = hexDigit(static_cast<uint8_t>((c >> 8) & 0xf));
+        *out++ = hexDigit(static_cast<uint8_t>((c >> 4) & 0xf));
+        *out++ = hexDigit(static_cast<uint8_t>(c & 0xf));
     }
     *out++=0;
     return out;
@@ -989,10 +989,10 @@ printOffsets(const int32_t *offsets, int32_t length, char *out) {
             *out++='x';
         } else if(o<0) {
             *out++='-';
-            *out++=(char)('0'-o);
+            *out++ = static_cast<char>('0' - o);
         } else if(o<=99) {
-            *out++=(d=o/10)==0 ? ' ' : (char)('0'+d);
-            *out++=(char)('0'+o%10);
+            *out++ = (d = o / 10) == 0 ? ' ' : static_cast<char>('0' + d);
+            *out++ = static_cast<char>('0' + o % 10);
         } else /* o>99 */ {
             *out++='x';
             *out++='x';
@@ -1014,7 +1014,7 @@ stepToUnicode(ConversionCase &cc, UConverter *cnv,
     UChar *target, *targetLimit, *resultLimit;
     UBool flush;
 
-    source=(const char *)cc.bytes;
+    source = reinterpret_cast<const char*>(cc.bytes);
     target=result;
     bytesLimit=source+cc.bytesLength;
     resultLimit=result+resultCapacity;
@@ -1085,7 +1085,7 @@ stepToUnicode(ConversionCase &cc, UConverter *cnv,
 
                 // the partial conversion succeeded, set a new limit and continue
                 sourceLimit=(bytesLimit-source)>=step ? source+step : bytesLimit;
-                flush=(UBool)(cc.finalFlush && sourceLimit==bytesLimit);
+                flush = static_cast<UBool>(cc.finalFlush && sourceLimit == bytesLimit);
             }
         }
     } else /* step<0 */ {
@@ -1126,7 +1126,7 @@ stepToUnicode(ConversionCase &cc, UConverter *cnv,
                     break;
                 }
                 if(c<=0xffff) {
-                    *target++=(UChar)c;
+                    *target++ = static_cast<char16_t>(c);
                 } else {
                     *target++=U16_LEAD(c);
                     if(target==resultLimit) {
@@ -1158,7 +1158,7 @@ stepToUnicode(ConversionCase &cc, UConverter *cnv,
                 ucnv_toUnicode(cnv,
                     &target, targetLimit,
                     &source, sourceLimit,
-                    NULL, (UBool)(sourceLimit==bytesLimit), pErrorCode);
+                    nullptr, static_cast<UBool>(sourceLimit == bytesLimit), pErrorCode);
 
                 // check pointers and errors
                 if(*pErrorCode==U_BUFFER_OVERFLOW_ERROR) {
@@ -1191,7 +1191,7 @@ stepToUnicode(ConversionCase &cc, UConverter *cnv,
         }
     }
 
-    return (int32_t)(target-result);
+    return static_cast<int32_t>(target - result);
 }
 
 UBool
@@ -1379,11 +1379,11 @@ ConversionTest::checkToUnicode(ConversionCase &cc, UConverter *cnv, const char *
         s=printOffsets(cc.offsets, cc.unicodeLength, offsetsString=s);
         s=printOffsets(resultOffsets, resultLength, resultOffsetsString=s);
         s=printBytes(cc.invalidChars, cc.invalidLength, invalidCharsString=s);
-        s=printBytes((uint8_t *)resultInvalidChars, resultInvalidLength, resultInvalidCharsString=s);
+        s = printBytes(reinterpret_cast<uint8_t*>(resultInvalidChars), resultInvalidLength, resultInvalidCharsString = s);
 
-        if((s-buffer)>(int32_t)sizeof(buffer)) {
+        if (s - buffer > static_cast<int32_t>(sizeof(buffer))) {
             errln("toUnicode[%d](%s cb=\"%s\" fb=%d flush=%d %s) fatal error: checkToUnicode() test output buffer overflow writing %d chars\n",
-                    cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, name, (int)(s-buffer));
+                    cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, name, static_cast<int>(s - buffer));
             exit(1);
         }
 
@@ -1509,11 +1509,11 @@ stepFromUTF8(ConversionCase &cc,
 
             // the partial conversion succeeded, set a new limit and continue
             sourceLimit=(utf8Limit-source)>=step ? source+step : utf8Limit;
-            flush=(UBool)(cc.finalFlush && sourceLimit==utf8Limit);
+            flush = static_cast<UBool>(cc.finalFlush && sourceLimit == utf8Limit);
         }
     }
 
-    return (int32_t)(target-result);
+    return static_cast<int32_t>(target - result);
 }
 
 static int32_t
@@ -1596,11 +1596,11 @@ stepFromUnicode(ConversionCase &cc, UConverter *cnv,
 
             // the partial conversion succeeded, set a new limit and continue
             sourceLimit=(unicodeLimit-source)>=step ? source+step : unicodeLimit;
-            flush=(UBool)(cc.finalFlush && sourceLimit==unicodeLimit);
+            flush = static_cast<UBool>(cc.finalFlush && sourceLimit == unicodeLimit);
         }
     }
 
-    return (int32_t)(target-result);
+    return static_cast<int32_t>(target - result);
 }
 
 UBool
@@ -1637,7 +1637,7 @@ ConversionTest::FromUnicodeCase(ConversionCase &cc, UConverterFromUCallback call
     int32_t length;
 
     if(cc.setSub>0) {
-        length=(int32_t)strlen(cc.subchar);
+        length = static_cast<int32_t>(strlen(cc.subchar));
         ucnv_setSubstChars(cnv, cc.subchar, (int8_t)length, &errorCode);
         if(U_FAILURE(errorCode)) {
             errln("fromUnicode[%d](%s cb=\"%s\" fb=%d flush=%d) ucnv_setSubstChars() failed - %s",
@@ -1836,9 +1836,9 @@ ConversionTest::checkFromUnicode(ConversionCase &cc, UConverter *cnv, const char
         s=printUnicode(cc.invalidUChars, cc.invalidLength, invalidCharsString=s);
         s=printUnicode(resultInvalidUChars, resultInvalidLength, resultInvalidUCharsString=s);
 
-        if((s-buffer)>(int32_t)sizeof(buffer)) {
+        if (s - buffer > static_cast<int32_t>(sizeof(buffer))) {
             errln("fromUnicode[%d](%s cb=\"%s\" fb=%d flush=%d %s) fatal error: checkFromUnicode() test output buffer overflow writing %d chars\n",
-                    cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, name, (int)(s-buffer));
+                    cc.caseNr, cc.charset, cc.cbopt, cc.fallbacks, cc.finalFlush, name, static_cast<int>(s - buffer));
             exit(1);
         }
 

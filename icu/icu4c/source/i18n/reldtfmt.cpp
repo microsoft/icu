@@ -57,7 +57,7 @@ RelativeDateFormat::RelativeDateFormat(const RelativeDateFormat& other) :
         fCombinedFormat = new SimpleFormatter(*other.fCombinedFormat);
     }
     if (fDatesLen > 0) {
-        fDates = (URelativeString*) uprv_malloc(sizeof(fDates[0])*(size_t)fDatesLen);
+        fDates = static_cast<URelativeString*>(uprv_malloc(sizeof(fDates[0]) * static_cast<size_t>(fDatesLen)));
         uprv_memcpy(fDates, other.fDates, sizeof(fDates[0])*(size_t)fDatesLen);
     }
 #if !UCONFIG_NO_BREAK_ITERATION
@@ -78,13 +78,21 @@ RelativeDateFormat::RelativeDateFormat( UDateFormatStyle timeStyle, UDateFormatS
     if(U_FAILURE(status) ) {
         return;
     }
+    if (dateStyle != UDAT_FULL_RELATIVE &&
+        dateStyle != UDAT_LONG_RELATIVE &&
+        dateStyle != UDAT_MEDIUM_RELATIVE &&
+        dateStyle != UDAT_SHORT_RELATIVE &&
+        dateStyle != UDAT_RELATIVE) {
+        status = U_ILLEGAL_ARGUMENT_ERROR;
+        return;
+    }
 
     if (timeStyle < UDAT_NONE || timeStyle > UDAT_SHORT) {
         // don't support other time styles (e.g. relative styles), for now
         status = U_ILLEGAL_ARGUMENT_ERROR;
         return;
     }
-    UDateFormatStyle baseDateStyle = (dateStyle > UDAT_SHORT)? (UDateFormatStyle)(dateStyle & ~UDAT_RELATIVE): dateStyle;
+    UDateFormatStyle baseDateStyle = (dateStyle > UDAT_SHORT) ? static_cast<UDateFormatStyle>(dateStyle & ~UDAT_RELATIVE) : dateStyle;
     DateFormat * df;
     // Get fDateTimeFormatter from either date or time style (does not matter, we will override the pattern).
     // We do need to get separate patterns for the date & time styles.
@@ -495,7 +503,7 @@ struct RelDateFmtDataSink : public ResourceSink {
 
         // Put in the proper spot, but don't override existing data.
         n = offset + UDAT_DIRECTION_THIS; // Converts to index in UDAT_R
-        if (n < fDatesLen && fDatesPtr[n].string == NULL) {
+        if (0 <= n && n < fDatesLen && fDatesPtr[n].string == nullptr) {
           // Not found and n is an empty slot.
           fDatesPtr[n].offset = offset;
           fDatesPtr[n].string = value.getString(len, errorCode);
@@ -544,7 +552,7 @@ void RelativeDateFormat::loadDates(UErrorCode &status) {
 
     // Data loading for relative names, e.g., "yesterday", "today", "tomorrow".
     fDatesLen = UDAT_DIRECTION_COUNT; // Maximum defined by data.
-    fDates = (URelativeString*) uprv_malloc(sizeof(fDates[0])*fDatesLen);
+    fDates = static_cast<URelativeString*>(uprv_malloc(sizeof(fDates[0]) * fDatesLen));
 
     RelDateFmtDataSink sink(fDates, fDatesLen);
     ures_getAllItemsWithFallback(rb, "fields/day/relative", sink, status);

@@ -338,9 +338,10 @@ void UObjectTest::testIDs()
 #if !UCONFIG_NO_NORMALIZATION
     UnicodeString emptyString;
     TESTCLASSID_CTOR(Normalizer, (emptyString, UNORM_NONE));
-    const Normalizer2 *noNormalizer2 = NULL;
+    const Normalizer2* nfc_singleton = Normalizer2::getNFCInstance(status);
     UnicodeSet emptySet;
-    TESTCLASSID_NONE_CTOR(FilteredNormalizer2, (*noNormalizer2, emptySet));
+    TESTCLASSID_NONE_CTOR(FilteredNormalizer2, (*nfc_singleton, emptySet));
+
     TESTCLASSID_FACTORY(CanonicalIterator, new CanonicalIterator(UnicodeString("abc"), status));
 #endif
 #if !UCONFIG_NO_IDNA
@@ -506,12 +507,12 @@ void UObjectTest::testIDs()
 
 void UObjectTest::testUMemory() {
     // additional tests for code coverage
-#if U_OVERRIDE_CXX_ALLOCATION && U_HAVE_PLACEMENT_NEW
+#if U_OVERRIDE_CXX_ALLOCATION
     alignas(UnicodeString) char bytes[sizeof(UnicodeString)];
     UnicodeString *p;
     enum { len=20 };
 
-    p=new(bytes) UnicodeString(len, (UChar32)U'€', len);
+    p = new (bytes) UnicodeString(len, static_cast<UChar32>(U'€'), len);
     if((void *)p!=(void *)bytes) {
         errln("placement new did not place the object at the expected address");
     }

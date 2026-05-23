@@ -41,7 +41,7 @@ U_CDECL_END
 U_NAMESPACE_BEGIN
 
 RBBISymbolTable::RBBISymbolTable(RBBIRuleScanner *rs, const UnicodeString &rules, UErrorCode &status)
-    :fRules(rules), fRuleScanner(rs), ffffString(UChar(0xffff))
+    : fRules(rules), fRuleScanner(rs), ffffString(static_cast<char16_t>(0xffff))
 {
     fHashTable       = NULL;
     fCachedSetLookup = NULL;
@@ -122,7 +122,7 @@ const UnicodeFunctor *RBBISymbolTable::lookupMatcher(UChar32 ch) const
     RBBISymbolTable *This = (RBBISymbolTable *)this;   // cast off const
     if (ch == 0xffff) {
         retVal = fCachedSetLookup;
-        This->fCachedSetLookup = 0;
+        This->fCachedSetLookup = nullptr;
     }
     return retVal;
 }

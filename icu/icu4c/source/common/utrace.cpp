@@ -117,9 +117,9 @@ static void outputChar(char c, char *outBuf, int32_t *outIx, int32_t capacity, i
         outBuf[*outIx] = c;
     }
     if (c != 0) {
-        /* Nulls only appear as end-of-string terminators.  Move them to the output
+        /* NULs only appear as end-of-string terminators.  Move them to the output
          *  buffer, but do not update the length of the buffer, so that any
-         *  following output will overwrite the null. */
+         *  following output will overwrite the NUL. */
         (*outIx)++;
     }
 }
@@ -205,7 +205,7 @@ utrace_vformat(char *outBuf, int32_t capacity, int32_t indent, const char *fmt, 
             /* Literal character, not part of a %sequence.  Just copy it to the output. */
             outputChar(fmtC, outBuf, &outIx, capacity, indent);
             if (fmtC == 0) {
-                /* We hit the null that terminates the format string.
+                /* We hit the NUL that terminates the format string.
                  * This is the normal (and only) exit from the loop that
                  * interprets the format
                  */
@@ -225,15 +225,15 @@ utrace_vformat(char *outBuf, int32_t capacity, int32_t indent, const char *fmt, 
             break;
 
         case 's':
-            /* char * string, null terminated.  */
+            /* char * string, NUL terminated.  */
             ptrArg = va_arg(args, char *);
             outputString((const char *)ptrArg, outBuf, &outIx, capacity, indent);
             break;
 
         case 'S':
-            /* UChar * string, with length, len==-1 for null terminated. */
+            /* char16_t * string, with length, len==-1 for NUL terminated. */
             ptrArg = va_arg(args, char *);             /* Ptr    */
-            intArg =(int32_t)va_arg(args, int32_t);    /* Length */
+            intArg = va_arg(args, int32_t);            /* Length */
             outputUString((const UChar *)ptrArg, intArg, outBuf, &outIx, capacity, indent);
             break;
 
@@ -269,7 +269,7 @@ utrace_vformat(char *outBuf, int32_t capacity, int32_t indent, const char *fmt, 
 
         case 0:
             /* Single '%' at end of fmt string.  Output as literal '%'.   
-             * Back up index into format string so that the terminating null will be
+             * Back up index into format string so that the terminating NUL will be
              * re-fetched in the outer loop, causing it to terminate.
              */
             outputChar('%', outBuf, &outIx, capacity, indent);
@@ -298,7 +298,7 @@ utrace_vformat(char *outBuf, int32_t capacity, int32_t indent, const char *fmt, 
                 i32Ptr = (int32_t *)i8Ptr;
                 i64Ptr = (int64_t *)i8Ptr;
                 ptrPtr = (void **)i8Ptr;
-                vectorLen =(int32_t)va_arg(args, int32_t);
+                vectorLen = va_arg(args, int32_t);
                 if (ptrPtr == NULL) {
                     outputString("*NULL* ", outBuf, &outIx, capacity, indent);
                 } else {
@@ -323,20 +323,20 @@ utrace_vformat(char *outBuf, int32_t capacity, int32_t indent, const char *fmt, 
                         case 'p':
                             charsToOutput = 0;
                             outputPtrBytes(*ptrPtr, outBuf, &outIx, capacity);
-                            longArg = *ptrPtr==NULL? 0: 1;    /* test for null terminated array. */
+                            longArg = *ptrPtr==nullptr? 0: 1;    /* test for nullptr terminated array. */
                             ptrPtr++;
                             break;
                         case 'c':
                             charsToOutput = 0;
                             outputChar(*i8Ptr, outBuf, &outIx, capacity, indent);
-                            longArg = *i8Ptr;    /* for test for null terminated array. */
+                            longArg = *i8Ptr;    /* for test for nullptr terminated array. */
                             i8Ptr++;
                             break;
                         case 's':
                             charsToOutput = 0;
                             outputString((const char *)*ptrPtr, outBuf, &outIx, capacity, indent);
                             outputChar('\n', outBuf, &outIx, capacity, indent);
-                            longArg = *ptrPtr==NULL? 0: 1;   /* for test for null term. array. */
+                            longArg = *ptrPtr==nullptr? 0: 1;   /* for test for nullptr term. array. */
                             ptrPtr++;
                             break;
 
@@ -344,7 +344,7 @@ utrace_vformat(char *outBuf, int32_t capacity, int32_t indent, const char *fmt, 
                             charsToOutput = 0;
                             outputUString((const UChar *)*ptrPtr, -1, outBuf, &outIx, capacity, indent);
                             outputChar('\n', outBuf, &outIx, capacity, indent);
-                            longArg = *ptrPtr==NULL? 0: 1;   /* for test for null term. array. */
+                            longArg = *ptrPtr==nullptr? 0: 1;   /* for test for nullptr term. array. */
                             ptrPtr++;
                             break;
 
@@ -374,8 +374,8 @@ utrace_vformat(char *outBuf, int32_t capacity, int32_t indent, const char *fmt, 
              outputChar(fmtC, outBuf, &outIx, capacity, indent);
         }
     }
-    outputChar(0, outBuf, &outIx, capacity, indent);  /* Make sure that output is null terminated   */
-    return outIx + 1;     /* outIx + 1 because outIx does not increment when outputting final null. */
+    outputChar(0, outBuf, &outIx, capacity, indent);  /* Make sure that output is NUL terminated   */
+    return outIx + 1;     /* outIx + 1 because outIx does not increment when outputting final NUL. */
 }
 
 

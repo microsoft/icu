@@ -93,7 +93,7 @@ public:
         }
     }
 
-    virtual UPerfFunction* runIndexedTest(int32_t index, UBool exec, const char* &name, char* par = NULL);
+    UPerfFunction* runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
 
     const UChar *getBuffer() const { return buffer; }
     int32_t getBufferLen() const { return bufferLen; }
@@ -139,7 +139,7 @@ public:
         }
     }
     // virtual void call(UErrorCode* pErrorCode) { ... }
-    virtual long getOperationsPerIteration(){
+    long getOperationsPerIteration() override {
         return countInputCodePoints;
     }
 
@@ -164,7 +164,7 @@ public:
             return NULL;
         }
     }
-    virtual void call(UErrorCode* pErrorCode){
+    void call(UErrorCode* pErrorCode) override {
         const UChar *pIn, *pInLimit;
         UChar *pOut, *pOutLimit;
         char *pInter, *pInterLimit;
@@ -189,7 +189,7 @@ public:
             /* convert a block of [pIn..pInLimit[ to the encoding in intermediate[] */
             pInter=intermediate;
             ucnv_fromUnicode(cnv, &pInter, pInterLimit, &pIn, pInLimit, NULL, true, pErrorCode);
-            encodedLength+=(int32_t)(pInter-intermediate);
+            encodedLength += static_cast<int32_t>(pInter - intermediate);
 
             if(*pErrorCode==U_BUFFER_OVERFLOW_ERROR) {
                 /* make sure that we convert once more to really flush */
@@ -231,7 +231,7 @@ public:
             return NULL;
         }
     }
-    virtual void call(UErrorCode* pErrorCode){
+    void call(UErrorCode* pErrorCode) override {
         const UChar *pIn, *pInLimit;
         char *pInter, *pInterLimit;
 
@@ -248,7 +248,7 @@ public:
         for(;;) {
             pInter=intermediate;
             ucnv_fromUnicode(cnv, &pInter, pInterLimit, &pIn, pInLimit, NULL, true, pErrorCode);
-            encodedLength+=(int32_t)(pInter-intermediate);
+            encodedLength += static_cast<int32_t>(pInter - intermediate);
 
             if(*pErrorCode==U_BUFFER_OVERFLOW_ERROR) {
                 /* make sure that we convert once more to really flush */
@@ -284,7 +284,7 @@ public:
     ~FromUTF8() {
         ucnv_close(utf8Cnv);
     }
-    virtual void call(UErrorCode* pErrorCode){
+    void call(UErrorCode* pErrorCode) override {
         const char *pIn, *pInLimit;
         char *pInter, *pInterLimit;
         UChar *pivotSource, *pivotTarget, *pivotLimit;
@@ -310,7 +310,7 @@ public:
                            &pIn, pInLimit,
                            pivot, &pivotSource, &pivotTarget, pivotLimit,
                            false, true, pErrorCode);
-            encodedLength+=(int32_t)(pInter-intermediate);
+            encodedLength += static_cast<int32_t>(pInter - intermediate);
 
             if(*pErrorCode==U_BUFFER_OVERFLOW_ERROR) {
                 /* make sure that we convert once more to really flush */

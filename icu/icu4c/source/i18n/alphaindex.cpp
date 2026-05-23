@@ -379,13 +379,13 @@ const UnicodeString &fixLabel(const UnicodeString &current, UnicodeString &temp)
     UChar rest = current.charAt(BASE_LENGTH);
     if (0x2800 < rest && rest <= 0x28FF) { // stroke count
         int32_t count = rest-0x2800;
-        temp.setTo((UChar)(0x30 + count % 10));
+        temp.setTo(static_cast<char16_t>(0x30 + count % 10));
         if (count >= 10) {
             count /= 10;
-            temp.insert(0, (UChar)(0x30 + count % 10));
+            temp.insert(0, static_cast<char16_t>(0x30 + count % 10));
             if (count >= 10) {
                 count /= 10;
-                temp.insert(0, (UChar)(0x30 + count));
+                temp.insert(0, static_cast<char16_t>(0x30 + count));
             }
         }
         return temp.append((UChar)0x5283);
@@ -402,7 +402,7 @@ UBool hasMultiplePrimaryWeights(
     UBool seenPrimary = false;
     for (int32_t i = 0; i < ces.size(); ++i) {
         int64_t ce = ces.elementAti(i);
-        uint32_t p = (uint32_t)(ce >> 32);
+        uint32_t p = static_cast<uint32_t>(ce >> 32);
         if (p > variableTop) {
             // not primary ignorable
             if (seenPrimary) {

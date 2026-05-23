@@ -63,9 +63,8 @@ UOBJECT_DEFINE_RTTI_IMPLEMENTATION(RuleBasedBreakIterator)
  * tables object that is passed in as a parameter.
  */
 RuleBasedBreakIterator::RuleBasedBreakIterator(RBBIDataHeader* data, UErrorCode &status)
- : fSCharIter(UnicodeString())
+ : RuleBasedBreakIterator(&status)
 {
-    init(status);
     fData = new RBBIDataWrapper(data, status); // status checked in constructor
     if (U_FAILURE(status)) {return;}
     if(fData == nullptr) {
@@ -102,9 +101,8 @@ RuleBasedBreakIterator::RuleBasedBreakIterator(UDataMemory* udm, UBool isPhraseB
 RuleBasedBreakIterator::RuleBasedBreakIterator(const uint8_t *compiledRules,
                        uint32_t       ruleLength,
                        UErrorCode     &status)
- : fSCharIter(UnicodeString())
+ : RuleBasedBreakIterator(&status)
 {
-    init(status);
     if (U_FAILURE(status)) {
         return;
     }
@@ -141,9 +139,8 @@ RuleBasedBreakIterator::RuleBasedBreakIterator(const uint8_t *compiledRules,
 //
 //-------------------------------------------------------------------------------
 RuleBasedBreakIterator::RuleBasedBreakIterator(UDataMemory* udm, UErrorCode &status)
- : fSCharIter(UnicodeString())
+ : RuleBasedBreakIterator(&status)
 {
-    init(status);
     fData = new RBBIDataWrapper(udm, status); // status checked in constructor
     if (U_FAILURE(status)) {return;}
     if(fData == nullptr) {
@@ -170,9 +167,8 @@ RuleBasedBreakIterator::RuleBasedBreakIterator(UDataMemory* udm, UErrorCode &sta
 RuleBasedBreakIterator::RuleBasedBreakIterator( const UnicodeString  &rules,
                                                 UParseError          &parseError,
                                                 UErrorCode           &status)
- : fSCharIter(UnicodeString())
+ : RuleBasedBreakIterator(&status)
 {
-    init(status);
     if (U_FAILURE(status)) {return;}
     RuleBasedBreakIterator *bi = (RuleBasedBreakIterator *)
         RBBIRuleBuilder::createRuleBasedBreakIterator(rules, &parseError, status);
@@ -194,10 +190,39 @@ RuleBasedBreakIterator::RuleBasedBreakIterator( const UnicodeString  &rules,
 //                           of rules.
 //-------------------------------------------------------------------------------
 RuleBasedBreakIterator::RuleBasedBreakIterator()
- : fSCharIter(UnicodeString())
+ : RuleBasedBreakIterator(nullptr)
 {
-    UErrorCode status = U_ZERO_ERROR;
-    init(status);
+}
+
+/**
+ * Simple Constructor with an error code.
+ * Handles common initialization for all other constructors.
+ */
+RuleBasedBreakIterator::RuleBasedBreakIterator(UErrorCode *status) {
+    UErrorCode ec = U_ZERO_ERROR;
+    if (status == nullptr) {
+        status = &ec;
+    }
+    utext_openUChars(&fText, nullptr, 0, status);
+    LocalPointer<DictionaryCache> lpDictionaryCache(new DictionaryCache(this, *status), *status);
+    LocalPointer<BreakCache> lpBreakCache(new BreakCache(this, *status), *status);
+    if (U_FAILURE(*status)) {
+        fErrorCode = *status;
+        return;
+    }
+    fDictionaryCache = lpDictionaryCache.orphan();
+    fBreakCache = lpBreakCache.orphan();
+
+#ifdef RBBI_DEBUG
+    static UBool debugInitDone = false;
+    if (debugInitDone == false) {
+        char *debugEnv = getenv("U_RBBIDEBUG");
+        if (debugEnv && uprv_strstr(debugEnv, "trace")) {
+            gTrace = true;
+        }
+        debugInitDone = true;
+    }
+#endif
 }
 
 
@@ -208,11 +233,8 @@ RuleBasedBreakIterator::RuleBasedBreakIterator()
 //
 //-------------------------------------------------------------------------------
 RuleBasedBreakIterator::RuleBasedBreakIterator(const RuleBasedBreakIterator& other)
-: BreakIterator(other),
-  fSCharIter(UnicodeString())
+: RuleBasedBreakIterator()
 {
-    UErrorCode status = U_ZERO_ERROR;
-    this->init(status);
     *this = other;
 }
 
@@ -315,58 +337,6 @@ RuleBasedBreakIterator::operator=(const RuleBasedBreakIterator& that) {
     return *this;
 }
 
-
-
-//-----------------------------------------------------------------------------
-//
-//    init()      Shared initialization routine.   Used by all the constructors.
-//                Initializes all fields, leaving the object in a consistent state.
-//
-//-----------------------------------------------------------------------------
-void RuleBasedBreakIterator::init(UErrorCode &status) {
-    fCharIter             = nullptr;
-    fData                 = nullptr;
-    fPosition             = 0;
-    fRuleStatusIndex      = 0;
-    fDone                 = false;
-    fDictionaryCharCount  = 0;
-    fLanguageBreakEngines = nullptr;
-    fUnhandledBreakEngine = nullptr;
-    fBreakCache           = nullptr;
-    fDictionaryCache      = nullptr;
-    fLookAheadMatches     = nullptr;
-    fIsPhraseBreaking     = false;
-
-    // Note: IBM xlC is unable to assign or initialize member fText from UTEXT_INITIALIZER.
-    // fText                 = UTEXT_INITIALIZER;
-    static const UText initializedUText = UTEXT_INITIALIZER;
-    uprv_memcpy(&fText, &initializedUText, sizeof(UText));
-
-   if (U_FAILURE(status)) {
-        return;
-    }
-
-    utext_openUChars(&fText, NULL, 0, &status);
-    fDictionaryCache = new DictionaryCache(this, status);
-    fBreakCache      = new BreakCache(this, status);
-    if (U_SUCCESS(status) && (fDictionaryCache == NULL || fBreakCache == NULL)) {
-        status = U_MEMORY_ALLOCATION_ERROR;
-    }
-
-#ifdef RBBI_DEBUG
-    static UBool debugInitDone = false;
-    if (debugInitDone == false) {
-        char *debugEnv = getenv("U_RBBIDEBUG");
-        if (debugEnv && uprv_strstr(debugEnv, "trace")) {
-            gTrace = true;
-        }
-        debugInitDone = true;
-    }
-#endif
-}
-
-
-
 //-----------------------------------------------------------------------------
 //
 //    clone - Returns a newly-constructed RuleBasedBreakIterator with the same
@@ -396,7 +366,7 @@ RuleBasedBreakIterator::operator==(const BreakIterator& that) const {
     // and does not implement an equality function that would otherwise be
     // checked at this point.
 
-    const RuleBasedBreakIterator& that2 = (const RuleBasedBreakIterator&) that;
+    const RuleBasedBreakIterator& that2 = static_cast<const RuleBasedBreakIterator&>(that);
 
     if (!utext_equals(&fText, &that2.fText)) {
         // The two break iterators are operating on different text,
@@ -447,7 +417,7 @@ void RuleBasedBreakIterator::setText(UText *ut, UErrorCode &status) {
     //   Return one over an empty string instead - this is the closest
     //   we can come to signaling a failure.
     //   (GetText() is obsolete, this failure is sort of OK)
-    fSCharIter.setText(UnicodeString());
+    fSCharIter.setText(u"", 0);
 
     if (fCharIter != &fSCharIter) {
         // existing fCharIter was adopted from the outside.  Delete it now.
@@ -520,7 +490,7 @@ RuleBasedBreakIterator::setText(const UnicodeString& newText) {
     //   Needed in case someone calls getText().
     //  Can not, unfortunately, do this lazily on the (probably never)
     //  call to getText(), because getText is const.
-    fSCharIter.setText(newText);
+    fSCharIter.setText(newText.getBuffer(), newText.length());
 
     if (fCharIter != &fSCharIter) {
         // old fCharIter was adopted from the outside.  Delete it.
@@ -1155,6 +1125,7 @@ static icu::UStack *gLanguageBreakFactories = nullptr;
 static const icu::UnicodeString *gEmptyString = nullptr;
 static icu::UInitOnce gLanguageBreakFactoriesInitOnce {};
 static icu::UInitOnce gRBBIInitOnce {};
+static icu::ICULanguageBreakFactory *gICULanguageBreakFactory = nullptr;
 
 /**
  * Release all static memory held by breakiterator.
@@ -1183,37 +1154,41 @@ static void U_CALLCONV rbbiInit() {
     ucln_common_registerCleanup(UCLN_COMMON_RBBI, rbbi_cleanup);
 }
 
-static void U_CALLCONV initLanguageFactories() {
-    UErrorCode status = U_ZERO_ERROR;
-    U_ASSERT(gLanguageBreakFactories == NULL);
-    gLanguageBreakFactories = new UStack(_deleteFactory, NULL, status);
-    if (gLanguageBreakFactories != NULL && U_SUCCESS(status)) {
-        ICULanguageBreakFactory *builtIn = new ICULanguageBreakFactory(status);
-        gLanguageBreakFactories->push(builtIn, status);
+static void U_CALLCONV initLanguageFactories(UErrorCode& status) {
+    U_ASSERT(gLanguageBreakFactories == nullptr);
+    gLanguageBreakFactories = new UStack(_deleteFactory, nullptr, status);
+    if (gLanguageBreakFactories != nullptr && U_SUCCESS(status)) {
+        LocalPointer<ICULanguageBreakFactory> factory(new ICULanguageBreakFactory(status), status);
+        if (U_SUCCESS(status)) {
+            gICULanguageBreakFactory = factory.orphan();
+            gLanguageBreakFactories->push(gICULanguageBreakFactory, status);
 #ifdef U_LOCAL_SERVICE_HOOK
-        LanguageBreakFactory *extra = (LanguageBreakFactory *)uprv_svc_hook("languageBreakFactory", &status);
+            LanguageBreakFactory *extra = (LanguageBreakFactory *)uprv_svc_hook("languageBreakFactory", &status);
         if (extra != NULL) {
-            gLanguageBreakFactories->push(extra, status);
-        }
+                gLanguageBreakFactories->push(extra, status);
+            }
 #endif
+        }
     }
     ucln_common_registerCleanup(UCLN_COMMON_RBBI, rbbi_cleanup);
 }
 
+void ensureLanguageFactories(UErrorCode& status) {
+    umtx_initOnce(gLanguageBreakFactoriesInitOnce, &initLanguageFactories, status);
+}
 
 static const LanguageBreakEngine*
-getLanguageBreakEngineFromFactory(UChar32 c)
+getLanguageBreakEngineFromFactory(UChar32 c, const char* locale)
 {
-    umtx_initOnce(gLanguageBreakFactoriesInitOnce, &initLanguageFactories);
-    if (gLanguageBreakFactories == NULL) {
-        return NULL;
-    }
+    UErrorCode status = U_ZERO_ERROR;
+    ensureLanguageFactories(status);
+    if (U_FAILURE(status)) return nullptr;
 
     int32_t i = gLanguageBreakFactories->size();
     const LanguageBreakEngine *lbe = NULL;
     while (--i >= 0) {
-        LanguageBreakFactory *factory = (LanguageBreakFactory *)(gLanguageBreakFactories->elementAt(i));
-        lbe = factory->getEngineFor(c);
+        LanguageBreakFactory* factory = static_cast<LanguageBreakFactory*>(gLanguageBreakFactories->elementAt(i));
+        lbe = factory->getEngineFor(c, locale);
         if (lbe != NULL) {
             break;
         }
@@ -1229,7 +1204,7 @@ getLanguageBreakEngineFromFactory(UChar32 c)
 //
 //-------------------------------------------------------------------------------
 const LanguageBreakEngine *
-RuleBasedBreakIterator::getLanguageBreakEngine(UChar32 c) {
+RuleBasedBreakIterator::getLanguageBreakEngine(UChar32 c, const char* locale) {
     const LanguageBreakEngine *lbe = NULL;
     UErrorCode status = U_ZERO_ERROR;
 
@@ -1237,22 +1212,22 @@ RuleBasedBreakIterator::getLanguageBreakEngine(UChar32 c) {
         fLanguageBreakEngines = new UStack(status);
         if (fLanguageBreakEngines == NULL || U_FAILURE(status)) {
             delete fLanguageBreakEngines;
-            fLanguageBreakEngines = 0;
+            fLanguageBreakEngines = nullptr;
             return NULL;
         }
     }
 
     int32_t i = fLanguageBreakEngines->size();
     while (--i >= 0) {
-        lbe = (const LanguageBreakEngine *)(fLanguageBreakEngines->elementAt(i));
-        if (lbe->handles(c)) {
+        lbe = static_cast<const LanguageBreakEngine*>(fLanguageBreakEngines->elementAt(i));
+        if (lbe->handles(c, locale)) {
             return lbe;
         }
     }
 
     // No existing dictionary took the character. See if a factory wants to
     // give us a new LanguageBreakEngine for this character.
-    lbe = getLanguageBreakEngineFromFactory(c);
+    lbe = getLanguageBreakEngineFromFactory(c, locale);
 
     // If we got one, use it and push it on our stack.
     if (lbe != NULL) {
@@ -1277,7 +1252,7 @@ RuleBasedBreakIterator::getLanguageBreakEngine(UChar32 c) {
         U_ASSERT(!fLanguageBreakEngines->hasDeleter());
         if (U_FAILURE(status)) {
             delete fUnhandledBreakEngine;
-            fUnhandledBreakEngine = 0;
+            fUnhandledBreakEngine = nullptr;
             return NULL;
         }
     }
@@ -1288,6 +1263,18 @@ RuleBasedBreakIterator::getLanguageBreakEngine(UChar32 c) {
 
     return fUnhandledBreakEngine;
 }
+
+#ifndef U_HIDE_DRAFT_API
+void U_EXPORT2 RuleBasedBreakIterator::registerExternalBreakEngine(
+                  ExternalBreakEngine* toAdopt, UErrorCode& status) {
+    LocalPointer<ExternalBreakEngine> engine(toAdopt, status);
+    if (U_FAILURE(status)) return;
+    ensureLanguageFactories(status);
+    if (U_FAILURE(status)) return;
+    gICULanguageBreakFactory->addExternalEngine(engine.orphan(), status);
+}
+#endif  /* U_HIDE_DRAFT_API */
+
 
 void RuleBasedBreakIterator::dumpCache() {
     fBreakCache->dumpCache();

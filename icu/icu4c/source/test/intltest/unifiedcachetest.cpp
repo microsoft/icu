@@ -34,7 +34,7 @@ U_NAMESPACE_BEGIN
 template<> U_EXPORT
 const UCTItem *LocaleCacheKey<UCTItem>::createObject(
         const void *context, UErrorCode &status) const {
-    const UnifiedCache *cacheContext = (const UnifiedCache *) context;
+    const UnifiedCache *cacheContext = static_cast<const UnifiedCache *>(context);
     if (uprv_strcmp(fLoc.getName(), "zh") == 0) {
         status = U_MISSING_RESOURCE_ERROR;
         return NULL;
@@ -69,7 +69,8 @@ class UnifiedCacheTest : public IntlTest {
 public:
     UnifiedCacheTest() {
     }
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=0) override;
+    void runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
+
 private:
     void TestEvictionPolicy();
     void TestBounded();

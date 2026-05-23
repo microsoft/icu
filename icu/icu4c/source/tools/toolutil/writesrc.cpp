@@ -19,8 +19,17 @@
 */
 
 #include <stdio.h>
-#include <inttypes.h>
 #include <time.h>
+
+// The C99 standard suggested that C++ implementations not define PRId64 etc. constants
+// unless this macro is defined.
+// See the Notes at https://en.cppreference.com/w/cpp/types/integer .
+// Similar to defining __STDC_LIMIT_MACROS in unicode/ptypes.h .
+#ifndef __STDC_FORMAT_MACROS
+#   define __STDC_FORMAT_MACROS
+#endif
+#include <cinttypes>
+
 #include "unicode/utypes.h"
 #include "unicode/putil.h"
 #include "unicode/ucptrie.h"
@@ -127,7 +136,7 @@ usrc_writeFileNameGeneratedBy(
 
     time(&t);
     lt=localtime(&t);
-    if(generator==NULL) {
+    if(generator==nullptr && lt!=nullptr) {
         strftime(buffer, sizeof(buffer), "%Y-%m-%d", lt);
         fprintf(f, pattern, prefix, prefix, filename, prefix, prefix, buffer);
     } else {
@@ -153,6 +162,7 @@ usrc_writeArray(FILE *f,
     p32=NULL;
     p64=NULL;
     switch(width) {
+    case 1:
     case 8:
         p8=(const uint8_t *)p;
         break;
@@ -183,6 +193,7 @@ usrc_writeArray(FILE *f,
             }
         }
         switch(width) {
+        case 1:
         case 8:
             value=p8[i];
             break;
@@ -199,7 +210,11 @@ usrc_writeArray(FILE *f,
             value=0; /* unreachable */
             break;
         }
-        fprintf(f, value<=9 ? "%" PRId64 : "0x%" PRIx64, value);
+        if (width == 1) {
+            fprintf(f, value ? "true" : "false");
+        } else {
+            fprintf(f, value<=9 ? "%" PRId64 : "0x%" PRIx64, value);
+        }
     }
     if(postfix!=NULL) {
         fputs(postfix, f);

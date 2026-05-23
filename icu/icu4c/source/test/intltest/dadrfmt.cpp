@@ -159,7 +159,7 @@ void DataDrivenFormatTest::testConvertDate(TestData *testData,
         DateFormat *format = NULL;
         
         // Process: 'locale'
-        locale.extract(0, locale.length(), calLoc, (const char*)0); // default codepage.  Invariant codepage doesn't have '@'!
+        locale.extract(0, locale.length(), calLoc, (const char*)nullptr); // default codepage.  Invariant codepage doesn't have '@'!
         Locale loc(calLoc);
         if(spec.startsWith(kPATTERN)) {
             pattern = UnicodeString(spec,kPATTERN.length());
@@ -174,8 +174,10 @@ void DataDrivenFormatTest::testConvertDate(TestData *testData,
                 errln("case %d: could not parse spec as style fields: %s", n, u_errorName(status));
                 continue;
             }
-            format = DateFormat::createDateTimeInstance((DateFormat::EStyle)styleSet.getDateStyle(), (DateFormat::EStyle)styleSet.getTimeStyle(), loc);
-            if(format == NULL ) {
+            format = DateFormat::createDateTimeInstance(
+                static_cast<DateFormat::EStyle>(styleSet.getDateStyle()),
+                static_cast<DateFormat::EStyle>(styleSet.getTimeStyle()), loc);
+            if(format == nullptr ) {
                 errln("case %d: could not create SimpleDateFormat from styles.", n);
                 continue;
             }
@@ -305,7 +307,7 @@ void DataDrivenFormatTest::testConvertDate(TestData *testData,
 //                diffSet.clear();
                 if (!fromSet.matches(cal, diffSet, status)) {
                     UnicodeString diffs = diffSet.diffFrom(fromSet, status);
-                    errln((UnicodeString)"FAIL: "+caseString
+                    errln(UnicodeString("FAIL: ") + caseString
                             +", Differences: '"+ diffs
                             +"', status: "+ u_errorName(status));
                 } else if (U_FAILURE(status)) {

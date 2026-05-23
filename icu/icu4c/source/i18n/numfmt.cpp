@@ -887,10 +887,11 @@ public:
     virtual UObject* create(const ICUServiceKey& key, const ICUService* service, UErrorCode& status) const override
     {
         if (handlesKey(key, status)) {
-            const LocaleKey& lkey = (const LocaleKey&)key;
+            const LocaleKey* lkey = dynamic_cast<const LocaleKey*>(&key);
+            U_ASSERT(lkey != nullptr);
             Locale loc;
-            lkey.canonicalLocale(loc);
-            int32_t kind = lkey.kind();
+            lkey->canonicalLocale(loc);
+            int32_t kind = lkey->kind();
 
             UObject* result = _delegate->createFormat(loc, (UNumberFormatStyle)kind);
             if (result == NULL) {
@@ -913,7 +914,7 @@ protected:
             if (!_ids) {
                 int32_t count = 0;
                 const UnicodeString * const idlist = _delegate->getSupportedIDs(count, status);
-                ((NFFactory*)this)->_ids = new Hashtable(status); /* cast away const */
+                const_cast<NFFactory*>(this)->_ids = new Hashtable(status); /* cast away const */
                 if (_ids) {
                     for (int i = 0; i < count; ++i) {
                         _ids->put(idlist[i], (void*)this, status);
@@ -948,10 +949,11 @@ public:
     }
 
     virtual UObject* handleDefault(const ICUServiceKey& key, UnicodeString* /* actualID */, UErrorCode& status) const override {
-        LocaleKey& lkey = (LocaleKey&)key;
-        int32_t kind = lkey.kind();
+        const LocaleKey* lkey = dynamic_cast<const LocaleKey*>(&key);
+        U_ASSERT(lkey != nullptr);
+        int32_t kind = lkey->kind();
         Locale loc;
-        lkey.currentLocale(loc);
+        lkey->currentLocale(loc);
         return NumberFormat::makeInstance(loc, (UNumberFormatStyle)kind, status);
     }
 
@@ -1214,7 +1216,7 @@ void NumberFormat::setContext(UDisplayContext value, UErrorCode& status)
 {
     if (U_FAILURE(status))
         return;
-    if ( (UDisplayContextType)((uint32_t)value >> 8) == UDISPCTX_TYPE_CAPITALIZATION ) {
+    if (static_cast<UDisplayContextType>(static_cast<uint32_t>(value) >> 8) == UDISPCTX_TYPE_CAPITALIZATION) {
         fCapitalizationContext = value;
     } else {
         status = U_ILLEGAL_ARGUMENT_ERROR;

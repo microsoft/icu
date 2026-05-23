@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 sr_Latn_ME{
     calendar{
         generic{
@@ -44,17 +44,6 @@ sr_Latn_ME{
                         "subota",
                     }
                 }
-                stand-alone{
-                    wide{
-                        "nedjelja",
-                        "ponedeljak",
-                        "utorak",
-                        "srijeda",
-                        "četvrtak",
-                        "petak",
-                        "subota",
-                    }
-                }
             }
             dayPeriod{
                 format{
@@ -76,10 +65,6 @@ sr_Latn_ME{
                     }
                 }
                 stand-alone{
-                    abbreviated{
-                        am{"prije podne"}
-                        pm{"po podne"}
-                    }
                     narrow{
                         am{"a"}
                         pm{"p"}
@@ -92,28 +77,11 @@ sr_Latn_ME{
             }
             eras{
                 wide{
-                    "prije nove ere",
-                    "nove ere",
+                    0{"prije nove ere"}
                 }
             }
             monthNames{
                 format{
-                    abbreviated{
-                        "jan",
-                        "feb",
-                        "mart",
-                        "apr",
-                        "maj",
-                        "jun",
-                        "jul",
-                        "avg",
-                        "sept",
-                        "okt",
-                        "nov",
-                        "dec",
-                    }
-                }
-                stand-alone{
                     abbreviated{
                         "jan",
                         "feb",

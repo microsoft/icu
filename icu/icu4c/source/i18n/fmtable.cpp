@@ -26,9 +26,9 @@
 #include "unicode/measure.h"
 #include "unicode/curramt.h"
 #include "unicode/uformattable.h"
-#include "charstr.h"
 #include "cmemory.h"
 #include "cstring.h"
+#include "fixedstring.h"
 #include "fmtableimp.h"
 #include "number_decimalquantity.h"
 
@@ -56,7 +56,7 @@ using number::impl::DecimalQuantity;
 // Return true if *a == *b.
 static inline UBool objectEquals(const UObject* a, const UObject* b) {
     // LATER: return *a == *b;
-    return *((const Measure*) a) == *((const Measure*) b);
+    return *((const Measure*) a) == *b;
 }
 
 // Return a clone of *a.
@@ -258,16 +258,11 @@ Formattable::operator=(const Formattable& source)
             break;
         }
 
-        UErrorCode status = U_ZERO_ERROR;
-        if (source.fDecimalQuantity != NULL) {
+        if (source.fDecimalQuantity != nullptr) {
           fDecimalQuantity = new DecimalQuantity(*source.fDecimalQuantity);
         }
-        if (source.fDecimalStr != NULL) {
-            fDecimalStr = new CharString(*source.fDecimalStr, status);
-            if (U_FAILURE(status)) {
-                delete fDecimalStr;
-                fDecimalStr = NULL;
-            }
+        if (source.fDecimalStr != nullptr) {
+            fDecimalStr = new FixedString(*source.fDecimalStr);
         }
     }
     return *this;
@@ -698,18 +693,18 @@ StringPiece Formattable::getDecimalNumber(UErrorCode &status) {
         return "";
     }
     if (fDecimalStr != NULL) {
-      return fDecimalStr->toStringPiece();
+      return fDecimalStr->data();
     }
 
-    CharString *decimalStr = internalGetCharString(status);
+    FixedString* decimalStr = internalGetFixedString(status);
     if(decimalStr == NULL) {
       return ""; // getDecimalNumber returns "" for error cases
     } else {
-      return decimalStr->toStringPiece();
+      return decimalStr->data();
     }
 }
 
-CharString *Formattable::internalGetCharString(UErrorCode &status) {
+FixedString *Formattable::internalGetFixedString(UErrorCode &status) {
     if(fDecimalStr == NULL) {
       if (fDecimalQuantity == NULL) {
         // No decimal number for the formattable yet.  Which means the value was
@@ -724,7 +719,7 @@ CharString *Formattable::internalGetCharString(UErrorCode &status) {
         fDecimalQuantity = dq.orphan();
       }
 
-      fDecimalStr = new CharString();
+      fDecimalStr = new FixedString();
       if (fDecimalStr == NULL) {
         status = U_MEMORY_ALLOCATION_ERROR;
         return NULL;
@@ -733,16 +728,20 @@ CharString *Formattable::internalGetCharString(UErrorCode &status) {
       // DecimalQuantity::toScientificString(). The biggest difference is that uprv_decNumberToString does
       // not print scientific notation for magnitudes greater than -5 and smaller than some amount (+5?).
       if (fDecimalQuantity->isInfinite()) {
-        fDecimalStr->append("Infinity", status);
+        *fDecimalStr = "Infinity";
       } else if (fDecimalQuantity->isNaN()) {
-        fDecimalStr->append("NaN", status);
+        *fDecimalStr = "NaN";
       } else if (fDecimalQuantity->isZeroish()) {
-        fDecimalStr->append("0", -1, status);
+        *fDecimalStr = "0";
       } else if (fType==kLong || fType==kInt64 || // use toPlainString for integer types
                   (fDecimalQuantity->getMagnitude() != INT32_MIN && std::abs(fDecimalQuantity->getMagnitude()) < 5)) {
-        fDecimalStr->appendInvariantChars(fDecimalQuantity->toPlainString(), status);
+        copyInvariantChars(fDecimalQuantity->toPlainString(), *fDecimalStr, status);
       } else {
-        fDecimalStr->appendInvariantChars(fDecimalQuantity->toScientificString(), status);
+        copyInvariantChars(fDecimalQuantity->toScientificString(), *fDecimalStr, status);
+      }
+      if (U_SUCCESS(status) && fDecimalStr->isEmpty()) {
+        status = U_MEMORY_ALLOCATION_ERROR;
+        return nullptr;
       }
     }
     return fDecimalStr;
@@ -775,9 +774,7 @@ Formattable::populateDecimalQuantity(number::impl::DecimalQuantity& output, UErr
 // ---------------------------------------
 void
 Formattable::adoptDecimalQuantity(DecimalQuantity *dq) {
-    if (fDecimalQuantity != NULL) {
-        delete fDecimalQuantity;
-    }
+    delete fDecimalQuantity;
     fDecimalQuantity = dq;
     if (dq == NULL) { // allow adoptDigitList(NULL) to clear
         return;
@@ -1016,7 +1013,7 @@ ufmt_getDecNumChars(UFormattable *fmt, int32_t *len, UErrorCode *status) {
     return "";
   }
   Formattable *obj = Formattable::fromUFormattable(fmt);
-  CharString *charString = obj->internalGetCharString(*status);
+  FixedString *charString = obj->internalGetFixedString(*status);
   if(U_FAILURE(*status)) {
     return "";
   }
@@ -1025,7 +1022,7 @@ ufmt_getDecNumChars(UFormattable *fmt, int32_t *len, UErrorCode *status) {
     return "";
   } else {
     if(len!=NULL) {
-      *len = charString->length();
+      *len = static_cast<int32_t>(uprv_strlen(charString->data()));
     }
     return charString->data();
   }

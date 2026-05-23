@@ -68,13 +68,7 @@ class DangiCalendar : public ChineseCalendar {
    */
   virtual DangiCalendar* clone() const override;
 
-  //----------------------------------------------------------------------
-  // Internal methods & astronomical calculations
-  //----------------------------------------------------------------------
-
  private:
-
-  const TimeZone* getDangiCalZoneAstroCalc(UErrorCode &status) const;
 
   // UObject stuff
  public: 
@@ -106,6 +100,8 @@ class DangiCalendar : public ChineseCalendar {
    */
   const char * getType() const override;
 
+ protected:
+  virtual Setting getSetting(UErrorCode& status) const override;
 
  private:
  

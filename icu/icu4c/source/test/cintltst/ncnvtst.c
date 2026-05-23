@@ -79,6 +79,7 @@ static void TestFlushInternalBuffer(void);  /*for improved code coverage in ucnv
 static void TestResetBehaviour(void);
 static void TestTruncated(void);
 static void TestUnicodeSet(void);
+static void TestISO2022Crash(void);
 
 static void TestWithBufferSize(int32_t osize, int32_t isize);
 
@@ -137,6 +138,7 @@ void addExtraTests(TestNode** root)
      addTest(root, &TestRegressionUTF32,            "tsconv/ncnvtst/TestRegressionUTF32");
      addTest(root, &TestTruncated,                  "tsconv/ncnvtst/TestTruncated");
      addTest(root, &TestUnicodeSet,                 "tsconv/ncnvtst/TestUnicodeSet");
+     addTest(root, &TestISO2022Crash,               "tsconv/ncnvtst/TestISO2022Crash");
 }
 
 /*test surrogate behaviour*/
@@ -1027,8 +1029,8 @@ static UBool convertFromU( const UChar *source, int sourceLen,  const uint8_t *e
     targetLimit=targ+MAX_LENGTH;
     offs=offsetBuffer;
     ucnv_fromUnicode (conv,
-                  (char **)&targ,
-                  (const char *)targetLimit,
+                  &targ,
+                  targetLimit,
                   &src,
                   sourceLimit,
                   expectOffsets ? offs : NULL,
@@ -1125,7 +1127,7 @@ static UBool convertToU( const uint8_t *source, int sourceLen, const UChar *expe
     ucnv_toUnicode (conv,
                 &targ,
                 targetLimit,
-                (const char **)&src,
+                &src,
                 (const char *)sourceLimit,
                 expectOffsets ? offs : NULL,
                 doFlush,
@@ -1259,8 +1261,8 @@ static UBool testConvertFromU( const UChar *source, int sourceLen,  const uint8_
         if(gInBufferSize ==999 && gOutBufferSize==999)
             doFlush = false;
         ucnv_fromUnicode (conv,
-                  (char **)&targ,
-                  (const char *)end,
+                  &targ,
+                  end,
                   &src,
                   sourceLimit,
                   offs,
@@ -1434,8 +1436,8 @@ static UBool testConvertToU( const uint8_t *source, int sourcelen, const UChar *
         ucnv_toUnicode (conv,
                 &targ,
                 end,
-                (const char **)&src,
-                (const char *)srcLimit,
+                &src,
+                srcLimit,
                 offs,
                 doFlush, /* flush if we're at the end of the source data */
                 &status);
@@ -2060,4 +2062,33 @@ TestUnicodeSet() {
     }
 
     uset_close(set);
+}
+
+// Test for https://unicode-org.atlassian.net/browse/ICU-23165
+static void TestISO2022Crash(void) {
+    static const char offendingText[] = {
+        0x6d, 0x1b, 0x24, 0x29, 0x45, 0x65, 0x6c, 0x3a,
+        0x6c, 0x2e, 0x27, 0x41, 0x41, 0x0e, 0x41, 0x6c,
+    };
+    UErrorCode   err = U_ZERO_ERROR;
+    UConverter * cnv = ucnv_open("ISO_2022,locale=zh,version=2", &err);
+    if (U_FAILURE(err)) {
+        log_data_err("Unable to open ISO-2022-CN converter: %s\n", u_errorName(err));
+        return;
+    }
+    ucnv_setToUCallBack(cnv, UCNV_TO_U_CALLBACK_ESCAPE, NULL, NULL, NULL, &err);
+    if (U_FAILURE(err)) {
+        log_data_err("Unable to setToUCallBack for ISO-2022-CN converter: %s\n", u_errorName(err));
+        ucnv_close(cnv);
+        return;
+    }
+    {
+        UChar         toUChars[100];
+        UChar *       toUCharsPtr = toUChars;
+        const UChar * toUCharsLimit = toUCharsPtr + 100;
+        const char *  inCharsPtr = offendingText;
+        const char *  inCharsLimit = offendingText + sizeof(offendingText);
+        ucnv_toUnicode(cnv, &toUCharsPtr, toUCharsLimit, &inCharsPtr, inCharsLimit, NULL, true, &err);
+    }
+    ucnv_close(cnv);
 }

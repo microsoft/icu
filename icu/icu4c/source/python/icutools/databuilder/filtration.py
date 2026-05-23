@@ -37,6 +37,10 @@ class Filter(object):
             return ExclusionFilter()
         elif filter_type == "union":
             return UnionFilter(json_data, io)
+        elif filter_type == "intersection":
+            return IntersectionFilter(json_data, io)
+        elif filter_type == "complement":
+            return ComplementFilter(json_data, io)
         elif filter_type == "locale":
             return LocaleFilter(json_data, io)
         else:
@@ -161,6 +165,32 @@ class UnionFilter(Filter):
         return False
 
 
+class IntersectionFilter(Filter):
+    def __init__(self, json_data, io):
+        # Collect the sub-filters.
+        self.sub_filters = []
+        for filter_json in json_data["intersectionOf"]:
+            self.sub_filters.append(Filter.create_from_json(filter_json, io))
+
+    def match(self, file):
+        """Match iff all of the sub-filters match."""
+        for filter in self.sub_filters:
+            if not filter.match(file):
+                return False
+        return True
+
+
+class ComplementFilter(Filter):
+    def __init__(self, json_data, io):
+        # There is only one sub-filter.
+        filter_json = json_data["complementOf"]
+        self.sub_filter = Filter.create_from_json(filter_json, io)
+
+    def match(self, file):
+        """Match iff the sub-filter does not match."""
+        return not self.sub_filter.match(file)
+
+
 LANGUAGE_SCRIPT_REGEX = re.compile(r"^([a-z]{2,3})_[A-Z][a-z]{3}$")
 LANGUAGE_ONLY_REGEX = re.compile(r"^[a-z]{2,3}$")
 
@@ -273,8 +303,8 @@ def _preprocess_file_filters(requests, config, io):
     default_filter_json = "exclude" if config.strategy == "additive" else "include"
     for category in all_categories:
         filter_json = default_filter_json
-        # Special default for category "brkitr_lstm" as "exclude" for now.
-        if "brkitr_lstm" == category:
+        # Special default for category "brkitr_lstm" and "brkitr_adaboost" as "exclude" for now.
+        if "brkitr_lstm" == category or "brkitr_adaboost" == category:
             filter_json = "exclude"
         # Figure out the correct filter to create for now.
         if "featureFilters" in json_data and category in json_data["featureFilters"]:

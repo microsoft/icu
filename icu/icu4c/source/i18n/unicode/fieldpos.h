@@ -209,7 +209,7 @@ public:
      * @stable ICU 2.0
      */
     int32_t getEndIndex(void) const { return fEndIndex; }
- 
+
     /**
      * Set the field.
      * @param f    the new value of the field.

@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 pl{
     Countries{
         001{"świat"}
@@ -85,6 +85,7 @@ pl{
         CN{"Chiny"}
         CO{"Kolumbia"}
         CP{"Wyspa Clippertona"}
+        CQ{"Sark"}
         CR{"Kostaryka"}
         CU{"Kuba"}
         CV{"Republika Zielonego Przylądka"}
@@ -93,14 +94,17 @@ pl{
         CY{"Cypr"}
         CZ{"Czechy"}
         DE{"Niemcy"}
+        DG{"Diego Garcia"}
         DJ{"Dżibuti"}
         DK{"Dania"}
         DM{"Dominika"}
         DO{"Dominikana"}
         DZ{"Algieria"}
+        EA{"Ceuta i Melilla"}
         EC{"Ekwador"}
         EE{"Estonia"}
         EG{"Egipt"}
+        EH{"Sahara Zachodnia"}
         ER{"Erytrea"}
         ES{"Hiszpania"}
         ET{"Etiopia"}
@@ -137,6 +141,7 @@ pl{
         HR{"Chorwacja"}
         HT{"Haiti"}
         HU{"Węgry"}
+        IC{"Wyspy Kanaryjskie"}
         ID{"Indonezja"}
         IE{"Irlandia"}
         IL{"Izrael"}
@@ -219,7 +224,7 @@ pl{
         PM{"Saint-Pierre i Miquelon"}
         PN{"Pitcairn"}
         PR{"Portoryko"}
-        PS{"Autonomia Palestyńska"}
+        PS{"Terytoria Palestyńskie"}
         PT{"Portugalia"}
         PW{"Palau"}
         PY{"Paragwaj"}
@@ -284,6 +289,8 @@ pl{
         VU{"Vanuatu"}
         WF{"Wallis i Futuna"}
         WS{"Samoa"}
+        XA{"Pseudoakcenty"}
+        XB{"Pseudodwukierunkowe"}
         XK{"Kosowo"}
         YE{"Jemen"}
         YT{"Majotta"}
@@ -291,5 +298,25 @@ pl{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Nieznany region"}
+    }
+    Countries%chagos{
+        IO{"Archipelag Czagos"}
+    }
+    Countries%short{
+        GB{"Wlk. Bryt."}
+        HK{"Hongkong"}
+        MO{"Makau"}
+        PS{"Palestyna"}
+        UN{"ONZ"}
+        US{"USA"}
+    }
+    Countries%variant{
+        CD{"Kongo (DRK)"}
+        CG{"Republika Konga"}
+        CI{"Wybrzeże Kości Słoniowej"}
+        CZ{"Republika Czeska"}
+        FK{"Falklandy (Malwiny)"}
+        SZ{"Suazi"}
+        TL{"Timor-Leste"}
     }
 }

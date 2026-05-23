@@ -66,6 +66,8 @@ void DateIntervalFormatTest::runIndexedTest( int32_t index, UBool exec, const ch
     TESTCASE_AUTO(testTicket21222ROCEraDiff);
     TESTCASE_AUTO(testTicket21222JapaneseEraDiff);
     TESTCASE_AUTO(testTicket21939);
+    TESTCASE_AUTO(testTicket20710_FieldIdentity);
+    TESTCASE_AUTO(testTicket20710_IntervalIdentity);
     TESTCASE_AUTO_END;
 }
 
@@ -327,7 +329,7 @@ void DateIntervalFormatTest::testAPI() {
     Formattable fmttable;
     status = U_ZERO_ERROR;
     // TODO: why do I need cast?
-    ((Format*)dtitvfmt)->parseObject(res, fmttable, status);
+    (dynamic_cast<Format*>(dtitvfmt))->parseObject(res, fmttable, status);
     if ( status != U_INVALID_FORMAT_ERROR ) {
         dataerrln("ERROR: parse should set U_INVALID_FORMAT_ERROR - exiting");
         return;
@@ -419,7 +421,7 @@ void DateIntervalFormatTest::testFormat() {
     const char* DATA[] = {
         "GGGGG y MM dd HH:mm:ss", // pattern for from_data/to_data
         // test root
-        "root", "CE 2007 11 10 10:10:10", "CE 2007 12 10 10:10:10", "yM", "2007-11 \\u2013 2007-12",
+        "root", "CE 2007 11 10 10:10:10", "CE 2007 12 10 10:10:10", "yM", "2007-11\\u2009\\u2013\\u20092007-12",
 
         // test 'H' and 'h', using availableFormat in fallback
         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 10 15:10:10", "Hms", "10:10:10\\u2009\\u2013\\u200915:10:10",
@@ -494,7 +496,7 @@ void DateIntervalFormatTest::testFormat() {
 
         "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EddMMy", "Wed, 10/10/2007\\u2009\\u2013\\u2009Fri, 10/10/2008",
 
-        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmm", "10/10/2007, 10:10 AM\\u2009\\u2013\\u200910/10/2008, 10:10 AM",
+        "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmm", "10/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM",
 
         "en", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "hhmmzz", "10/10/2007, 10:10\\u202FAM PDT\\u2009\\u2013\\u200910/10/2008, 10:10\\u202FAM PDT",
 
@@ -631,7 +633,7 @@ void DateIntervalFormatTest::testFormat() {
 
         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EddMMy", "Sat, 11/10/2007\\u2009\\u2013\\u2009Tue, 11/20/2007",
 
-        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmm", "11/10/2007, 10:10 AM\\u2009\\u2013\\u200911/20/2007, 10:10 AM",
+        "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmm", "11/10/2007, 10:10\\u202FAM\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM",
 
         "en", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hhmmzz", "11/10/2007, 10:10\\u202FAM PST\\u2009\\u2013\\u200911/20/2007, 10:10\\u202FAM PST",
 
@@ -819,7 +821,7 @@ void DateIntervalFormatTest::testFormat() {
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "EEddMMyyyy", "Wed, 01/10/2007",
 
 
-        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmm", "10:10 AM",
+        "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmm", "10:10\\u202FAM",
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "HHmm", "10:10",
 
         "en", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hhmmzz", "10:10\\u202FAM PST",
@@ -832,15 +834,15 @@ void DateIntervalFormatTest::testFormat() {
         "zh", "CE 2007 10 10 10:10:10", "CE 2008 10 10 10:10:10", "EEEEdMMMMy", "2007\\u5e7410\\u670810\\u65e5\\u661f\\u671f\\u4e09\\u81f32008\\u5e7410\\u670810\\u65e5\\u661f\\u671f\\u4e94",
 
 
-        "zh", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMMMy", "2007\\u5e7410\\u670810\\u65e5\\u81f311\\u670810\\u65e5",
+        "zh", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dMMMMy", "2007\\u5E74\\u5341\\u670810\\u65E5\\u2009\\u2013\\u2009\\u5341\\u4E00\\u670810\\u65E5",
 
 
-        "zh", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMMMy", "2007\\u5e7410\\u6708\\u81f311\\u6708",
+        "zh", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "MMMMy", "2007\\u5e7410\\u6708 \\u2013 11\\u6708",
 
 
-        "zh", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hmv", "2007/10/10 \\u6D1B\\u6749\\u77F6\\u65F6\\u95F4 \\u4E0A\\u534810:10 \\u2013 2007/11/10 \\u6D1B\\u6749\\u77F6\\u65F6\\u95F4 \\u4E0A\\u534810:10",
+        "zh", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hmv", "2007/10/10 \\u6D1B\\u6749\\u77F6\\u65F6\\u95F4\\u4E0A\\u534810:10 \\u2013 2007/11/10 \\u6D1B\\u6749\\u77F6\\u65F6\\u95F4\\u4E0A\\u534810:10",
 
-        "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMMMy", "2007\\u5e7411\\u670810\\u65e5\\u661f\\u671f\\u516d\\u81f320\\u65e5\\u661f\\u671f\\u4e8c",
+        "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMMMy", "2007\\u5E74\\u5341\\u4E00\\u670810\\u65E5\\u661F\\u671F\\u516D\\u2009\\u2013\\u2009\\u5341\\u4E00\\u670820\\u65E5\\u661F\\u671F\\u4E8C",
 
 
         "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMM", "11\\u670810\\u65e5\\u81f320\\u65e5",
@@ -855,7 +857,7 @@ void DateIntervalFormatTest::testFormat() {
 
         "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dM", "11/10 \\u2013 11/20",
 
-        "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "My", "2007\\u5E7411\\u6708",
+        "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "My", "2007/11",
 
         "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdM", "11/10\\u5468\\u516d\\u81f311/20\\u5468\\u4e8c",
 
@@ -867,7 +869,7 @@ void DateIntervalFormatTest::testFormat() {
         "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "MMM", "11\\u6708", // (fixed expected result per ticket:6626: and others)
 
 
-        "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hmz", "2007/11/10 GMT-8 \\u4e0a\\u534810:10 \\u2013 2007/11/20 GMT-8 \\u4e0a\\u534810:10",
+        "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "hmz", "2007/11/10 GMT-8\\u4e0a\\u534810:10 \\u2013 2007/11/20 GMT-8\\u4e0a\\u534810:10",
 
         "zh", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "h", "2007/11/10 \\u4e0a\\u534810\\u65f6 \\u2013 2007/11/20 \\u4e0a\\u534810\\u65f6",
 
@@ -876,15 +878,15 @@ void DateIntervalFormatTest::testFormat() {
         "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hm", "\\u4e0a\\u534810:00\\u81f3\\u4e0b\\u53482:10",
 
 
-        "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hmz", "GMT-8 \\u4e0a\\u534810:00\\u81f3\\u4e0b\\u53482:10",
+        "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hmz", "GMT-8\\u4e0a\\u534810:00\\u81f3\\u4e0b\\u53482:10",
 
         "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "h", "\\u4e0a\\u534810\\u65F6\\u81f3\\u4e0b\\u53482\\u65f6",
 
-        "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hv", "\\u6D1B\\u6749\\u77F6\\u65F6\\u95F4 \\u4E0A\\u534810\\u65F6\\u81F3\\u4E0B\\u53482\\u65F6",
+        "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "hv", "\\u6D1B\\u6749\\u77F6\\u65F6\\u95F4\\u4E0A\\u534810\\u65F6\\u81F3\\u4E0B\\u53482\\u65F6",
 
         "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hm", "\\u4e0a\\u534810:00\\u81f310:20",
 
-        "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hmv", "\\u6D1B\\u6749\\u77F6\\u65F6\\u95F4 \\u4E0A\\u534810:00\\u81F310:20",
+        "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hmv", "\\u6D1B\\u6749\\u77F6\\u65F6\\u95F4\\u4E0A\\u534810:00\\u81F310:20",
 
         "zh", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hz", "GMT-8\\u4e0a\\u534810\\u65f6",
 
@@ -928,12 +930,12 @@ void DateIntervalFormatTest::testFormat() {
         "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "EEEEdMMM", "Mittwoch, 10. Okt.\\u2009\\u2013\\u2009Samstag, 10. Nov.",
 
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dM", "10.10. \\u2013 10.11.",
+        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "dM", "10.10.\\u2009\\u2013\\u200910.11.",
 
         "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "My", "10/2007\\u2009\\u2013\\u200911/2007",
 
 
-        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "d", "10.10. \\u2013 10.11.",
+        "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "d", "10.10.\\u2009\\u2013\\u200910.11.",
 
         "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "y", "2007",
 
@@ -944,16 +946,16 @@ void DateIntervalFormatTest::testFormat() {
         "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "hms", "10.10.2007, 10:10:10\\u202FAM\\u2009\\u2013\\u200910.11.2007, 10:10:10\\u202FAM",
         "de", "CE 2007 10 10 10:10:10", "CE 2007 11 10 10:10:10", "Hms", "10.10.2007, 10:10:10\\u2009\\u2013\\u200910.11.2007, 10:10:10",
 
-        "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMMy", "Samstag, 10. \\u2013 Dienstag, 20. Nov. 2007",
+        "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMMy", "Samstag, 10.\\u2009\\u2013\\u2009Dienstag, 20. Nov. 2007",
 
         "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dMMMy", "10.\\u201320. Nov. 2007",
 
 
         "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "MMMy", "Nov. 2007",
 
-        "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMM", "Samstag, 10. \\u2013 Dienstag, 20. Nov.",
+        "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EEEEdMMM", "Samstag, 10.\\u2009\\u2013\\u2009Dienstag, 20. Nov.",
 
-        "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdMy", "Sa., 10. \\u2013 Di., 20.11.2007",
+        "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "EdMy", "Sa., 10.\\u2009\\u2013\\u2009Di., 20.11.2007",
 
 
         "de", "CE 2007 11 10 10:10:10", "CE 2007 11 20 10:10:10", "dM", "10.\\u201320.11.",
@@ -977,9 +979,7 @@ void DateIntervalFormatTest::testFormat() {
 
         "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "EEEEdMMM", "Mittwoch, 10. Jan.",
 
-        /* Following is an important test, because the 'h' in 'Uhr' is interpreted as a pattern
-           if not escaped properly. */
-        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "h", "10 Uhr AM\\u2009\\u2013\\u20092 Uhr PM",
+        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "h", "10\\u202FAM\\u2009\\u2013\\u20092\\u202FPM",
         "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 14:10:10", "H", "10\\u201314 Uhr",
 
         "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "EEEEdMMM", "Mittwoch, 10. Jan.",
@@ -989,11 +989,11 @@ void DateIntervalFormatTest::testFormat() {
 
         "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hmz", "10:00\\u201310:20\\u202FAM GMT-8",
 
-        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "h", "10 Uhr AM",
+        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "h", "10\\u202FAM",
         "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "H", "10 Uhr",
 
 
-        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hz", "10 Uhr AM GMT-8",
+        "de", "CE 2007 01 10 10:00:10", "CE 2007 01 10 10:20:10", "hz", "10\\u202FAM GMT-8",
 
         "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "EEEEdMMMy", "Mittwoch, 10. Jan. 2007",
 
@@ -1003,9 +1003,9 @@ void DateIntervalFormatTest::testFormat() {
         "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hmz", "10:10\\u202FAM GMT-8",
 
 
-        "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hv", "10 Uhr AM Los Angeles (Ortszeit)",
+        "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hv", "10\\u202FAM Los Angeles (Ortszeit)",
 
-        "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hz", "10 Uhr AM GMT-8",
+        "de", "CE 2007 01 10 10:10:10", "CE 2007 01 10 10:10:20", "hz", "10\\u202FAM GMT-8",
 
         // Thai (default calendar buddhist)
 
@@ -1017,14 +1017,14 @@ void DateIntervalFormatTest::testFormat() {
         "th", "BE 2550 10 10 10:10:10", "BE 2551 10 10 10:10:10", "MMMy", "\\u0E15.\\u0E04. 2550 \\u2013 \\u0E15.\\u0E04. 2551",
 
 
-        "th", "BE 2550 10 10 10:10:10", "BE 2551 10 10 10:10:10", "EdMy", "\\u0E1E. 10/10/2550 \\u2013 \\u0E28. 10/10/2551",
+        "th", "BE 2550 10 10 10:10:10", "BE 2551 10 10 10:10:10", "EdMy", "\\u0E1E\\u0E38\\u0E18 10/10/2550 \\u2013 \\u0E28\\u0E38\\u0E01\\u0E23\\u0E4C 10/10/2551",
 
         "th", "BE 2550 10 10 10:10:10", "BE 2551 10 10 10:10:10", "dMy", "10/10/2550 \\u2013 10/10/2551",
 
 
         "th", "BE 2550 10 10 10:10:10", "BE 2551 10 10 10:10:10", "My", "10/2550 \\u2013 10/2551",
 
-        "th", "BE 2550 10 10 10:10:10", "BE 2551 10 10 10:10:10", "EdM", "\\u0E1E. 10/10/2550 \\u2013 \\u0E28. 10/10/2551",
+        "th", "BE 2550 10 10 10:10:10", "BE 2551 10 10 10:10:10", "EdM", "\\u0E1E\\u0E38\\u0E18 10/10/2550 \\u2013 \\u0E28\\u0E38\\u0E01\\u0E23\\u0E4C 10/10/2551",
 
 
         "th", "BE 2550 10 10 10:10:10", "BE 2551 10 10 10:10:10", "y", "2550\\u20132551",
@@ -1060,12 +1060,12 @@ void DateIntervalFormatTest::testFormat() {
         "en-u-ca-japanese", "S 64 01 05 09:00:00", "H 1 01 15 09:00:00",  "GyMMMd", "Jan 5, 64 Sh\\u014Dwa\\u2009\\u2013\\u2009Jan 15, 1 Heisei",
 
         "en-u-ca-japanese", "S 64 01 05 09:00:00", "H 1 01 15 09:00:00",  "GGGGGyMd", "1/5/64 S\\u2009\\u2013\\u20091/15/1 H",
- 
+
         "en-u-ca-japanese", "H 31 04 15 09:00:00", JP_ERA_2019_NARROW " 1 05 15 09:00:00",  "GyMMMd", "Apr 15, 31 Heisei\\u2009\\u2013\\u2009May 15, 1 " JP_ERA_2019_ROOT,
 
         "en-u-ca-japanese", "H 31 04 15 09:00:00", JP_ERA_2019_NARROW " 1 05 15 09:00:00",  "GGGGGyMd", "4/15/31 H\\u2009\\u2013\\u20095/15/1 " JP_ERA_2019_NARROW,
- 
- 
+
+
         "ja-u-ca-japanese", "H 31 03 15 09:00:00", "H 31 04 15 09:00:00", "GyMMMd", "\\u5E73\\u621031\\u5E743\\u670815\\u65E5\\uFF5E4\\u670815\\u65E5",
 
         "ja-u-ca-japanese", "H 31 03 15 09:00:00", "H 31 04 15 09:00:00", "GGGGGyMd", "H31/03/15\\uFF5E31/04/15",
@@ -1090,7 +1090,7 @@ void DateIntervalFormatTest::testHourMetacharacters() {
     // Note that from_data/to_data are specified using era names from root, for the calendar specified by locale.
     const char* DATA[] = {
         "GGGGG y MM dd HH:mm:ss", // pattern for from_data/to_data
-        
+
         // This test is for tickets ICU-21154, ICU-21155, and ICU-21156 and is intended to verify
         // that all of the special skeleton characters for hours and day periods work as expected
         // with date intervals:
@@ -1106,7 +1106,7 @@ void DateIntervalFormatTest::testHourMetacharacters() {
         // baseline (h and H)
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12\\u2009\\u2013\\u20091\\u202FAM",
         "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "HH", "00\\u201301 Uhr",
-        
+
         // k and K (ICU-21154 and ICU-21156)
         // (should behave the same as h and H if not overridden in locale ID)
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "12\\u2009\\u2013\\u20091\\u202FAM",
@@ -1121,17 +1121,17 @@ void DateIntervalFormatTest::testHourMetacharacters() {
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "kk", "00\\u2009\\u2013\\u200901",
         "en-u-hc-h11", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "HH", "00\\u2009\\u2013\\u200901",
         "en-u-hc-h11", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "kk", "00\\u2009\\u2013\\u200901",
-        "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12\\u2009\\u2013\\u20091 Uhr AM",
-        "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "12\\u2009\\u2013\\u20091 Uhr AM",
-        "de-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12\\u2009\\u2013\\u20091 Uhr AM",
-        "de-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "12\\u2009\\u2013\\u20091 Uhr AM",
+        "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12\\u2009\\u2013\\u20091\\u202FAM",
+        "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "12\\u2009\\u2013\\u20091\\u202FAM",
+        "de-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12\\u2009\\u2013\\u20091\\u202FAM",
+        "de-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "12\\u2009\\u2013\\u20091\\u202FAM",
 
         // different lengths of the 'a' field
         "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "ha", "10\\u202FAM\\u2009\\u2013\\u20091\\u202FPM",
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "ha", "12\\u2009\\u2013\\u20091\\u202FAM",
         "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 12:00:00", "haaaaa", "10\\u202Fa\\u2009\\u2013\\u200912\\u202Fp",
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "haaaaa", "12\\u2009\\u2013\\u20091\\u202Fa",
-        
+
         // j (ICU-21155)
         "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jj", "10\\u202FAM\\u2009\\u2013\\u20091\\u202FPM",
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "12\\u2009\\u2013\\u20091\\u202FAM",
@@ -1141,20 +1141,20 @@ void DateIntervalFormatTest::testHourMetacharacters() {
         "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "00\\u201301 Uhr",
         "de", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jjjjj", "10\\u201313 Uhr",
         "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jjjjj", "00\\u201301 Uhr",
-        
+
         // b and B
         "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 12:00:00", "hb", "10\\u202FAM\\u2009\\u2013\\u200912\\u202Fnoon",
         "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 12:00:00", "hbbbbb", "10\\u202Fa\\u2009\\u2013\\u200912\\u202Fn",
         "en", "CE 2010 09 27 13:00:00", "CE 2010 09 27 14:00:00", "hb", "1\\u2009\\u2013\\u20092\\u202FPM",
         "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "hB", "10 in the morning\\u2009\\u2013\\u20091 in the afternoon",
-        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hB", "12\\u2009\\u2013\\u20091 at night",
-        
+        "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hB", "12\\u2009\\u2013\\u20091 in the morning",
+
         // J
         "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "J", "10\\u2009\\u2013\\u20091",
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "J", "12\\u2009\\u2013\\u20091",
         "de", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "J", "10\\u201313 Uhr",
         "de", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "J", "00\\u201301 Uhr",
-        
+
         // C
         // (for English and German, C should do the same thing as j)
         "en", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CC", "10\\u202FAM\\u2009\\u2013\\u20091\\u202FPM",
@@ -1172,8 +1172,8 @@ void DateIntervalFormatTest::testHourMetacharacters() {
         "zh_HK", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hB", "\\u51CC\\u666812\\u20131\\u6642",
         "zh_HK", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CC", "\\u4E0A\\u534810\\u6642\\u81F3\\u4E0B\\u53481\\u6642",
         "zh_HK", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "CC", "\\u4E0A\\u534812\\u6642\\u81F31\\u6642",
-        "hi_IN", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jj", "10 am \\u2013 1 pm",
-        "hi_IN", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "12\\u20131 am",
+        "hi_IN", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "jj", "10\\u202Fam\\u2009\\u2013\\u20091\\u202Fpm",
+        "hi_IN", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "12\\u20131\\u202Fam",
         "hi_IN", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "hB", "\\u0938\\u0941\\u092C\\u0939 10 \\u2013 \\u0926\\u094B\\u092A\\u0939\\u0930 1",
         "hi_IN", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hB", "\\u0930\\u093E\\u0924 12\\u20131",
         "hi_IN", "CE 2010 09 27 10:00:00", "CE 2010 09 27 13:00:00", "CC", "\\u0938\\u0941\\u092C\\u0939 10 \\u2013 \\u0926\\u094B\\u092A\\u0939\\u0930 1",
@@ -1186,8 +1186,8 @@ void DateIntervalFormatTest::testHourMetacharacters() {
         "en-gb-u-hc-h24", "CE 2010 09 27 00:00:00", "CE 2010 09 27 13:00:00", "kk", "24\\u201313",
 
         // regression test for ICU-21343
-        "de", "CE 2010 09 27 01:00:00", "CE 2010 09 27 10:00:00", "KK", "1\\u2009\\u2013\\u200910 Uhr AM",
-        
+        "de", "CE 2010 09 27 01:00:00", "CE 2010 09 27 10:00:00", "KK", "1\\u2009\\u2013\\u200910\\u202FAM",
+
         // regression test for ICU-21154 (single-date ranges should use the same hour cycle as multi-date ranges)
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 00:00:00", "hh", "12\\u202FAM",
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "hh", "12\\u2009\\u2013\\u20091\\u202FAM",
@@ -1195,7 +1195,7 @@ void DateIntervalFormatTest::testHourMetacharacters() {
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "KK", "12\\u2009\\u2013\\u20091\\u202FAM", // (this was producing "0 - 1\\u202FAM" before)
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 00:00:00", "jj", "12\\u202FAM",
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "jj", "12\\u2009\\u2013\\u20091\\u202FAM",
-        
+
         // regression test for ICU-21984 (multiple day-period characters in date-interval patterns)
         "en", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "MMMdhhmma", "Sep 27, 12:00\\u2009\\u2013\\u20091:00\\u202FAM",
         "sq", "CE 2010 09 27 00:00:00", "CE 2010 09 27 01:00:00", "Bhm", "12:00\\u2009\\u2013\\u20091:00 e nat\\u00EBs",
@@ -1222,7 +1222,7 @@ void DateIntervalFormatTest::expect(const char** data, int32_t data_length) {
             return;
         }
         const char* calType = defCal->getType();
- 
+
         Locale refLoc("root");
         if (calType) {
             refLoc.setKeywordValue("calendar", calType, ec);
@@ -1244,17 +1244,17 @@ void DateIntervalFormatTest::expect(const char** data, int32_t data_length) {
 
         const UnicodeString& oneSkeleton(ctou(data[i++]));
 
-        DateIntervalFormat* dtitvfmt = DateIntervalFormat::createInstance(oneSkeleton, loc, ec);
+        LocalPointer<DateIntervalFormat> dtitvfmt(DateIntervalFormat::createInstance(oneSkeleton, loc, ec));
         if (!assertSuccess("createInstance(skeleton) in expect", ec)) return;
         FieldPosition pos(FieldPosition::DONT_CARE);
         dtitvfmt->format(&dtitv, str.remove(), pos, ec);
         if (!assertSuccess("format in expect", ec)) return;
-        assertEquals((UnicodeString)"\"" + locName + "\\" + oneSkeleton + "\\" + ctou(datestr) + "\\" + ctou(datestr_2) + "\"", ctou(data[i++]), str);
+
+        assertEquals(UnicodeString("\"") + locName + "\\" + oneSkeleton + "\\" + ctou(datestr) + "\\" + ctou(datestr_2) + "\"", ctou(data[i++]), str);
 
         logln("interval date:" + str + "\"" + locName + "\", "
                  + "\"" + datestr + "\", "
               + "\"" + datestr_2 + "\", " + oneSkeleton);
-        delete dtitvfmt;
     }
 }
 
@@ -1334,18 +1334,18 @@ void DateIntervalFormatTest::testContext() {
         const UChar* expectResult;
     } DateIntervalContextItem;
     static const DateIntervalContextItem testItems[] = {
-        { "cs",    "MMMEd",    CAP_NONE,  60.0*_DAY,  u"po 27. 9. – pá 26. 11." },
+        { "cs",    "MMMEd",    CAP_NONE,  60.0*_DAY,  u"po 27. 9.\u2009–\u2009pá 26. 11." },
         { "cs",    "yMMMM",    CAP_NONE,  60.0*_DAY,  u"září–listopad 2010" },
         { "cs",    "yMMMM",    CAP_NONE,  1.0*_DAY,   u"září 2010" },
 #if !UCONFIG_NO_BREAK_ITERATION
-        { "cs",    "MMMEd",    CAP_BEGIN, 60.0*_DAY,  u"Po 27. 9. – pá 26. 11." },
+        { "cs",    "MMMEd",    CAP_BEGIN, 60.0*_DAY,  u"Po 27. 9.\u2009–\u2009pá 26. 11." },
         { "cs",    "yMMMM",    CAP_BEGIN, 60.0*_DAY,  u"Září–listopad 2010" },
         { "cs",    "yMMMM",    CAP_BEGIN, 1.0*_DAY,   u"Září 2010" },
-        { "cs",    "MMMEd",    CAP_LIST,  60.0*_DAY,  u"Po 27. 9. – pá 26. 11." },
+        { "cs",    "MMMEd",    CAP_LIST,  60.0*_DAY,  u"Po 27. 9.\u2009–\u2009pá 26. 11." },
         { "cs",    "yMMMM",    CAP_LIST,  60.0*_DAY,  u"Září–listopad 2010" },
         { "cs",    "yMMMM",    CAP_LIST,  1.0*_DAY,   u"Září 2010" },
 #endif
-        { "cs",    "MMMEd",    CAP_ALONE, 60.0*_DAY,  u"po 27. 9. – pá 26. 11." },
+        { "cs",    "MMMEd",    CAP_ALONE, 60.0*_DAY,  u"po 27. 9.\u2009–\u2009pá 26. 11." },
         { "cs",    "yMMMM",    CAP_ALONE, 60.0*_DAY,  u"září–listopad 2010" },
         { "cs",    "yMMMM",    CAP_ALONE, 1.0*_DAY,   u"září 2010" },
         { nullptr, nullptr,    CAP_NONE,  0,          nullptr }
@@ -1533,7 +1533,7 @@ void DateIntervalFormatTest::expectUserDII(const char** data,
         FieldPosition pos(FieldPosition::DONT_CARE);
         dtitvfmt->format(&dtitv, str.remove(), pos, ec);
         if (!assertSuccess("format in expectUserDII", ec)) return;
-        assertEquals((UnicodeString)"\"" + locName + "\\" + datestr + "\\" + datestr_2 + "\"", ctou(data[i++]), str);
+        assertEquals(UnicodeString("\"") + locName + "\\" + datestr + "\\" + datestr_2 + "\"", ctou(data[i++]), str);
 #ifdef DTIFMTTS_DEBUG
         char result[1000];
         char mesg[1000];
@@ -1753,7 +1753,7 @@ void DateIntervalFormatTest::testTicket11583_2() {
     if (!assertSuccess("Error create format object", status)) {
         return;
     }
-    DateInterval interval((UDate) 1232364615000.0, (UDate) 1328787015000.0);
+    DateInterval interval(static_cast<UDate>(1232364615000.0), static_cast<UDate>(1328787015000.0));
     UnicodeString appendTo;
     FieldPosition fpos(FieldPosition::DONT_CARE);
     UnicodeString expected("ene de 2009\\u2009\\u2013\\u2009feb de 2012");
@@ -1775,7 +1775,7 @@ void DateIntervalFormatTest::testTicket11985() {
         return;
     }
     UnicodeString pattern;
-    static_cast<const SimpleDateFormat*>(fmt->getDateFormat())->toPattern(pattern);
+    dynamic_cast<const SimpleDateFormat*>(fmt->getDateFormat())->toPattern(pattern);
     assertEquals("Format pattern", u"h:mm\u202Fa", pattern);
 }
 
@@ -1855,7 +1855,7 @@ void DateIntervalFormatTest::testTicket12065() {
         errln("%s:%d DateIntervalFormat and clone are not equal.", __FILE__, __LINE__);
         return;
     }
-    DateInterval interval((UDate) 1232364615000.0, (UDate) 1328787015000.0);
+    DateInterval interval(static_cast<UDate>(1232364615000.0), static_cast<UDate>(1328787015000.0));
     UnicodeString appendTo;
     FieldPosition fpos(FieldPosition::DONT_CARE);
     formatter->format(&interval, appendTo, fpos, status);
@@ -2142,7 +2142,7 @@ void DateIntervalFormatTest::testTicket20707() {
         {u"12\u202FAM", u"00", u"00", u"12\u202FAM", u"12\u202FAM", u"0 (hour: 12)", u"12\u202FAM"},
         {u"12\u202FAM", u"00", u"00", u"12\u202FAM", u"12\u202FAM", u"0 (hour: 12)", u"12\u202FAM"},
         // Hour-cycle: K
-        {u"0 am", u"00", u"00", u"0 am", u"0 am", u"0 (\u0918\u0902\u091F\u093E: 00)", u"\u0930\u093E\u0924 0"}
+        {u"0\u202Fam", u"00", u"00", u"0\u202Fam", u"0\u202Fam", u"0 (\u0918\u0902\u091F\u093E: 00)", u"\u0930\u093E\u0924 0"}
     };
 
     int32_t i = 0;
@@ -2156,10 +2156,11 @@ void DateIntervalFormatTest::testTicket20707() {
             FieldPosition fposition;
             UnicodeString result;
             LocalPointer<Calendar> calendar(Calendar::createInstance(TimeZone::createTimeZone(timeZone), status));
-            calendar->setTime(UDate(1563235200000), status);
+            calendar->setTime(static_cast<UDate>(1563235200000), status);
             dtifmt->format(*calendar, *calendar, result, fposition, status);
 
-            assertEquals("Formatted result", expected[i][j++], result);
+            const char* localeID = locale.getName();
+            assertEquals(localeID, expected[i][j++], result);
         }
         i++;
     }
@@ -2292,20 +2293,20 @@ void DateIntervalFormatTest::testTicket21222ROCEraDiff() {
 
     formatted = roc->formatToValue(bothAfterMG, status);
     assertEquals("roc calendar - both dates in MG Era",
-                 u"民國1/1/2 上午6時\u2009\u2013\u2009民國2/1/2 上午6時",
+                 u"民國1/1/2\u2009上午6時\u2009\u2013\u2009民國2/1/2\u2009上午6時",
                  formatted.toString(status));
     getCategoryAndField(formatted, expectedCategory,
                         expectedField, status);
 
     formatted = roc->formatToValue(beforeAfterMG, status);
     assertEquals("roc calendar - prior MG Era and in MG Era",
-                 u"民國前1/1/2 上午6時\u2009\u2013\u2009民國2/1/2 上午6時",
+                 u"民國前1/1/2\u2009上午6時\u2009\u2013\u2009民國2/1/2\u2009上午6時",
                  formatted.toString(status));
     verifyCategoryAndField(formatted, expectedCategory, expectedField, status);
 
     formatted = roc->formatToValue(bothBeforeMG, status);
     assertEquals("roc calendar - both dates prior MG Era",
-                 u"民國前2/1/2 上午6時\u2009\u2013\u2009民國前1/1/2 上午6時",
+                 u"民國前2/1/2\u2009上午6時\u2009\u2013\u2009民國前1/1/2\u2009上午6時",
                  formatted.toString(status));
     verifyCategoryAndField(formatted, expectedCategory, expectedField, status);
 }
@@ -2376,14 +2377,104 @@ void DateIntervalFormatTest::testTicket21222JapaneseEraDiff() {
 void DateIntervalFormatTest::testTicket21939() {
     IcuTestErrorCode err(*this, "testTicket21939");
     LocalPointer<DateIntervalFormat> dif(DateIntervalFormat::createInstance(u"rMdhm", Locale::forLanguageTag("en-u-ca-chinese", err), err));
-    
+
     if (assertSuccess("Error creating DateIntervalFormat", err)) {
         const DateFormat* df = dif->getDateFormat();
         const SimpleDateFormat* sdf = dynamic_cast<const SimpleDateFormat*>(df);
         UnicodeString pattern;
-        /*MSFT-CHange: Replace NNBSP with ascii space*/
-        assertEquals("Wrong pattern", u"M/d/r, h:mm a", sdf->toPattern(pattern));
+        assertEquals("Wrong pattern", u"M/d/r, h:mm\u202Fa", sdf->toPattern(pattern));
     }
+
+    // additional tests for the related ICU-22202
+    dif.adoptInstead(DateIntervalFormat::createInstance(u"Lh", Locale::getEnglish(), err));
+    if (assertSuccess("Error creating DateIntervalFormat", err)) {
+        const DateFormat* df = dif->getDateFormat();
+        const SimpleDateFormat* sdf = dynamic_cast<const SimpleDateFormat*>(df);
+        UnicodeString pattern;
+        assertEquals("Wrong pattern", u"L, h\u202Fa", sdf->toPattern(pattern));
+    }
+    dif.adoptInstead(DateIntervalFormat::createInstance(u"UH", Locale::forLanguageTag("en-u-ca-chinese", err), err));
+    if (assertSuccess("Error creating DateIntervalFormat", err)) {
+        const DateFormat* df = dif->getDateFormat();
+        const SimpleDateFormat* sdf = dynamic_cast<const SimpleDateFormat*>(df);
+        UnicodeString pattern;
+        assertEquals("Wrong pattern", u"r(U), HH", sdf->toPattern(pattern));
+    }
+}
+
+void DateIntervalFormatTest::testTicket20710_FieldIdentity() {
+    IcuTestErrorCode status(*this, "testTicket20710_FieldIdentity");
+    LocalPointer<DateIntervalFormat> dtifmt(DateIntervalFormat::createInstance("eeeeMMMddyyhhmma", "de-CH", status));
+    LocalPointer<Calendar> calendar1(Calendar::createInstance(TimeZone::createTimeZone(u"CET"), status));
+    calendar1->setTime(static_cast<UDate>(1563235200000), status);
+    LocalPointer<Calendar> calendar2(Calendar::createInstance(TimeZone::createTimeZone(u"CET"), status));
+    calendar2->setTime(static_cast<UDate>(1564235200000), status);
+
+    {
+        auto fv = dtifmt->formatToValue(*calendar1, *calendar2, status);
+        ConstrainedFieldPosition cfp;
+        cfp.constrainCategory(UFIELD_CATEGORY_DATE_INTERVAL_SPAN);
+        assertTrue("Span field should be in non-identity formats", fv.nextPosition(cfp, status));
+    }
+    {
+        auto fv = dtifmt->formatToValue(*calendar1, *calendar1, status);
+        ConstrainedFieldPosition cfp;
+        cfp.constrainCategory(UFIELD_CATEGORY_DATE_INTERVAL_SPAN);
+        assertFalse("Span field should not be in identity formats", fv.nextPosition(cfp, status));
+    }
+}
+
+void DateIntervalFormatTest::testTicket20710_IntervalIdentity() {
+    IcuTestErrorCode status(*this, "testTicket20710_IntervalIdentity");
+
+    const char16_t timeZone[] = u"PST";
+    int32_t count = 0;
+    const Locale* locales = Locale::getAvailableLocales(count);
+    const UnicodeString skeletons[] = {
+        u"EEEEMMMMdyhmmssazzzz",
+        u"EEEEMMMMdyhhmmssazzzz",
+        u"EEEEMMMMddyyyyhhmmssvvvva",
+        u"EEEEMMMMddhmszza",
+        u"EEMMMMddyyhhzza",
+        u"eeeeMMMddyyhhmma",
+        u"MMddyyyyhhmmazzzz",
+        u"hhmmazzzz",
+        u"hmmssazzzz",
+        u"hhmmsszzzz",
+        u"MMddyyyyhhmmzzzz"
+    };
+
+    Locale quickLocales[] = {
+        {"en"}, {"es"}, {"sr"}, {"zh"}
+    };
+    if (quick) {
+        locales = quickLocales;
+        count = UPRV_LENGTHOF(quickLocales);
+    }
+
+    for (int32_t i = 0; i < count; i++) {
+        const Locale locale = locales[i];
+        LocalPointer<DateTimePatternGenerator> gen(DateTimePatternGenerator::createInstance(locale, status));
+        LocalPointer<Calendar> calendar(Calendar::createInstance(TimeZone::createTimeZone(timeZone), status));
+        calendar->setTime(static_cast<UDate>(1563235200000), status);
+        for (auto skeleton : skeletons) {
+            LocalPointer<DateIntervalFormat> dtifmt(DateIntervalFormat::createInstance(skeleton, locale, status));
+
+            FieldPosition fposition;
+            UnicodeString resultIntervalFormat;
+            dtifmt->format(*calendar, *calendar, resultIntervalFormat, fposition, status);
+
+            UnicodeString pattern = gen->getBestPattern(skeleton, status);
+            SimpleDateFormat dateFormat(pattern, locale, status);
+
+            FieldPositionIterator fpositer;
+            UnicodeString resultDateFormat;
+
+            dateFormat.format(*calendar, resultDateFormat, &fpositer, status);
+            assertEquals("DateIntervalFormat should fall back to DateFormat in the identity format", resultDateFormat, resultIntervalFormat);
+        }
+    }
+
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

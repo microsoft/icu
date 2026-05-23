@@ -163,7 +163,7 @@ main(int argc,
     }
     if(options[FORMAT_VERSION].doesOccur) {
         const char *s = options[FORMAT_VERSION].value;
-        if(uprv_strlen(s) != 1 || (s[0] < '1' && '3' < s[0])) {
+        if(uprv_strlen(s) != 1 || (s[0] < '1' || '3' < s[0])) {
             fprintf(stderr, "%s: unsupported --formatVersion %s\n", argv[0], s);
             illegalArg = true;
         } else if(s[0] == '1' &&
@@ -416,7 +416,7 @@ main(int argc,
             fprintf(stderr, "invalid format of pool bundle file %s\n", poolFileName.data());
             return U_INVALID_FORMAT_ERROR;
         }
-        const int32_t *pRoot = (const int32_t *)(
+        const int32_t* pRoot = reinterpret_cast<const int32_t*>(
                 (const char *)header + header->dataHeader.headerSize);
         poolBundle.fIndexes = pRoot + 1;
         indexLength = poolBundle.fIndexes[URES_INDEX_LENGTH] & 0xff;
@@ -426,7 +426,7 @@ main(int argc,
         }
         int32_t keysBottom = 1 + indexLength;
         int32_t keysTop = poolBundle.fIndexes[URES_INDEX_KEYS_TOP];
-        poolBundle.fKeys = (const char *)(pRoot + keysBottom);
+        poolBundle.fKeys = reinterpret_cast<const char*>(pRoot + keysBottom);
         poolBundle.fKeysLength = (keysTop - keysBottom) * 4;
         poolBundle.fChecksum = poolBundle.fIndexes[URES_INDEX_POOL_CHECKSUM];
 
@@ -449,7 +449,7 @@ main(int argc,
             }
             // The PseudoListResource constructor call did not allocate further memory.
             assert(U_SUCCESS(status));
-            const UChar *p = (const UChar *)(pRoot + keysTop);
+            const char16_t* p = reinterpret_cast<const char16_t*>(pRoot + keysTop);
             int32_t remaining = stringUnitsLength;
             do {
                 int32_t first = *p;
@@ -622,7 +622,7 @@ processFile(const char *filename, const char *cp,
              * This is very important when the resource file includes
              * another file, like UCARules.txt or thaidict.brk.
              */
-            int32_t filenameSize = (int32_t)(filenameBegin - filename + 1);
+            int32_t filenameSize = static_cast<int32_t>(filenameBegin - filename + 1);
             inputDirBuf.append(filename, filenameSize, status);
 
             inputDir = inputDirBuf.data();
@@ -779,28 +779,28 @@ make_res_filename(const char *filename,
 
 
     if (U_FAILURE(status)) {
-        return 0;
+        return nullptr;
     }
 
     if(packageName != NULL)
     {
-        pkgLen = (int32_t)(1 + uprv_strlen(packageName));
+        pkgLen = static_cast<int32_t>(1 + uprv_strlen(packageName));
     }
 
     /* setup */
-    basename = dirname = resName = 0;
+    basename = dirname = resName = nullptr;
 
     /* determine basename, and compiled file names */
-    basename = (char*) uprv_malloc(sizeof(char) * (uprv_strlen(filename) + 1));
-    if(basename == 0) {
+    basename = static_cast<char*>(uprv_malloc(sizeof(char) * (uprv_strlen(filename) + 1)));
+    if (basename == nullptr) {
         status = U_MEMORY_ALLOCATION_ERROR;
         goto finish;
     }
 
     get_basename(basename, filename);
 
-    dirname = (char*) uprv_malloc(sizeof(char) * (uprv_strlen(filename) + 1));
-    if(dirname == 0) {
+    dirname = static_cast<char*>(uprv_malloc(sizeof(char) * (uprv_strlen(filename) + 1)));
+    if (dirname == nullptr) {
         status = U_MEMORY_ALLOCATION_ERROR;
         goto finish;
     }
@@ -809,11 +809,11 @@ make_res_filename(const char *filename,
 
     if (outputDir == NULL) {
         /* output in same dir as .txt */
-        resName = (char*) uprv_malloc(sizeof(char) * (uprv_strlen(dirname)
+        resName = static_cast<char*>(uprv_malloc(sizeof(char) * (uprv_strlen(dirname)
                                       + pkgLen
                                       + uprv_strlen(basename)
-                                      + uprv_strlen(RES_SUFFIX) + 8));
-        if(resName == 0) {
+                                      + uprv_strlen(RES_SUFFIX) + 8)));
+        if (resName == nullptr) {
             status = U_MEMORY_ALLOCATION_ERROR;
             goto finish;
         }
@@ -832,7 +832,7 @@ make_res_filename(const char *filename,
         int32_t dirlen      = (int32_t)uprv_strlen(outputDir);
         int32_t basenamelen = (int32_t)uprv_strlen(basename);
 
-        resName = (char*) uprv_malloc(sizeof(char) * (dirlen + pkgLen + basenamelen + 8));
+        resName = static_cast<char*>(uprv_malloc(sizeof(char) * (dirlen + pkgLen + basenamelen + 8)));
 
         if (resName == NULL) {
             status = U_MEMORY_ALLOCATION_ERROR;

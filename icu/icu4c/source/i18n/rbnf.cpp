@@ -583,11 +583,11 @@ void LocDataParser::parseError(const char* EXPLANATION_ARG)
     if (limit > e) {
         limit = e;
     }
-    u_strncpy(pe.preContext, start, (int32_t)(p-start));
+    u_strncpy(pe.preContext, start, static_cast<int32_t>(p - start));
     pe.preContext[p-start] = 0;
-    u_strncpy(pe.postContext, p, (int32_t)(limit-p));
+    u_strncpy(pe.postContext, p, static_cast<int32_t>(limit - p));
     pe.postContext[limit-p] = 0;
-    pe.offset = (int32_t)(p - data);
+    pe.offset = static_cast<int32_t>(p - data);
     
 #ifdef RBNF_DEBUG
     fprintf(stderr, "%s at or near character %ld: ", EXPLANATION_ARG, p-data);
@@ -647,7 +647,7 @@ StringLocalizationInfo::create(const UnicodeString& info, UParseError& perror, U
 }
 
 StringLocalizationInfo::~StringLocalizationInfo() {
-    for (UChar*** p = (UChar***)data; *p; ++p) {
+    for (char16_t*** p = data; *p; ++p) {
         // remaining data is simply pointer into our unicode string data.
         if (*p) uprv_free(*p);
     }
@@ -1037,7 +1037,7 @@ RuleBasedNumberFormat::getNumberOfRuleSetDisplayNameLocales(void) const {
 Locale 
 RuleBasedNumberFormat::getRuleSetDisplayNameLocale(int32_t index, UErrorCode& status) const {
     if (U_FAILURE(status)) {
-        return Locale("");
+        return {""};
     }
     if (localizations && index >= 0 && index < localizations->getNumberOfDisplayLocales()) {
         UnicodeString name(true, localizations->getLocaleName(index), -1);
@@ -1048,7 +1048,7 @@ RuleBasedNumberFormat::getRuleSetDisplayNameLocale(int32_t index, UErrorCode& st
             bp = (char *)uprv_malloc(cap);
             if (bp == NULL) {
                 status = U_MEMORY_ALLOCATION_ERROR;
-                return Locale("");
+                return {""};
             }
         }
         name.extract(0, name.length(), bp, cap, UnicodeString::kInvariant);
@@ -1362,7 +1362,7 @@ RuleBasedNumberFormat::parse(const UnicodeString& text,
             ParsePosition working_pp(0);
             Formattable working_result;
 
-            rp->parse(workingText, working_pp, kMaxDouble, 0, working_result);
+            rp->parse(workingText, working_pp, kMaxDouble, 0, 0, working_result);
             if (working_pp.getIndex() > high_pp.getIndex()) {
                 high_pp = working_pp;
                 high_result = working_result;
@@ -1555,9 +1555,9 @@ RuleBasedNumberFormat::init(const UnicodeString& rules, LocalizationInfo* locali
     ++numRuleSets;
 
     // our rule list is an array of the appropriate size
-    fRuleSets = (NFRuleSet **)uprv_malloc((numRuleSets + 1) * sizeof(NFRuleSet *));
+    fRuleSets = static_cast<NFRuleSet**>(uprv_malloc((numRuleSets + 1) * sizeof(NFRuleSet*)));
     /* test for NULL */
-    if (fRuleSets == 0) {
+    if (fRuleSets == nullptr) {
         status = U_MEMORY_ALLOCATION_ERROR;
         return;
     }
@@ -1568,12 +1568,12 @@ RuleBasedNumberFormat::init(const UnicodeString& rules, LocalizationInfo* locali
 
     // divide up the descriptions into individual rule-set descriptions
     // and store them in a temporary array.  At each step, we also
-    // new up a rule set, but all this does is initialize its name
+    // create a rule set, but all this does is initialize its name
     // and remove it from its description.  We can't actually parse
     // the rest of the descriptions and finish initializing everything
     // because we have to know the names and locations of all the rule
     // sets before we can actually set everything up
-    if(!numRuleSets) {
+    if (!numRuleSets) {
         status = U_ILLEGAL_ARGUMENT_ERROR;
         return;
     }
@@ -1592,6 +1592,8 @@ RuleBasedNumberFormat::init(const UnicodeString& rules, LocalizationInfo* locali
             fRuleSets[curRuleSet] = new NFRuleSet(this, ruleSetDescriptions, curRuleSet, status);
             if (fRuleSets[curRuleSet] == nullptr) {
                 status = U_MEMORY_ALLOCATION_ERROR;
+            }
+            if (U_FAILURE(status)) {
                 return;
             }
             ++curRuleSet;
@@ -1601,6 +1603,8 @@ RuleBasedNumberFormat::init(const UnicodeString& rules, LocalizationInfo* locali
         fRuleSets[curRuleSet] = new NFRuleSet(this, ruleSetDescriptions, curRuleSet, status);
         if (fRuleSets[curRuleSet] == nullptr) {
             status = U_MEMORY_ALLOCATION_ERROR;
+        }
+        if (U_FAILURE(status)) {
             return;
         }
     }
@@ -1616,12 +1620,15 @@ RuleBasedNumberFormat::init(const UnicodeString& rules, LocalizationInfo* locali
     // last public rule set, no matter what the localization data says.
     initDefaultRuleSet();
 
-    // finally, we can go back through the temporary descriptions
-    // list and finish setting up the substructure (and we throw
-    // away the temporary descriptions as we go)
+    // Now that we know all the rule names, we can go back through
+    // the temporary descriptions list and finish setting up the substructure
+    // (and we throw away the temporary descriptions as we go)
     {
         for (int i = 0; i < numRuleSets; i++) {
             fRuleSets[i]->parseRules(ruleSetDescriptions[i], status);
+            if (U_FAILURE(status)) {
+                return;
+            }
         }
     }
 
@@ -1640,6 +1647,9 @@ RuleBasedNumberFormat::init(const UnicodeString& rules, LocalizationInfo* locali
             NFRuleSet* rs = findRuleSet(name, status);
             if (rs == NULL) {
                 break; // error
+            }
+            if (U_FAILURE(status)) {
+                return;
             }
             if (i == 0) {
                 defaultRuleSet = rs;
@@ -1706,10 +1716,13 @@ RuleBasedNumberFormat::stripWhitespace(UnicodeString& description)
     UnicodeString result;
 
     int start = 0;
-    while (start != -1 && start < description.length()) {
-        // seek to the first non-whitespace character...
+    UChar ch;
+    while (start < description.length()) {
+        // Seek to the first non-whitespace character...
+        // If the first non-whitespace character is semicolon, skip it and continue
         while (start < description.length()
-            && PatternProps::isWhiteSpace(description.charAt(start))) {
+            && (PatternProps::isWhiteSpace(ch = description.charAt(start)) || ch == gSemiColon))
+        {
             ++start;
         }
 
@@ -1720,20 +1733,16 @@ RuleBasedNumberFormat::stripWhitespace(UnicodeString& description)
             // or if we don't find a semicolon, just copy the rest of
             // the string into the result
             result.append(description, start, description.length() - start);
-            start = -1;
+            break;
         }
         else if (p < description.length()) {
             result.append(description, start, p + 1 - start);
             start = p + 1;
         }
-
-        // when we get here, we've seeked off the end of the string, and
+        // when we get here from the else, we've seeked off the end of the string, and
         // we terminate the loop (we continue until *start* is -1 rather
         // than until *p* is -1, because otherwise we'd miss the last
         // rule in the description)
-        else {
-            start = -1;
-        }
     }
 
     description.setTo(result);
@@ -1829,7 +1838,7 @@ RuleBasedNumberFormat::getCollator() const
             if (U_SUCCESS(status)) {
                 newCollator->setAttribute(UCOL_DECOMPOSITION_MODE, UCOL_ON, status);
                 // cast away const
-                ((RuleBasedNumberFormat*)this)->collator = newCollator;
+                const_cast<RuleBasedNumberFormat*>(this)->collator = newCollator;
             } else {
                 delete newCollator;
             }
@@ -1919,14 +1928,11 @@ RuleBasedNumberFormat::getDefaultNaNRule() const
 void
 RuleBasedNumberFormat::adoptDecimalFormatSymbols(DecimalFormatSymbols* symbolsToAdopt)
 {
-    if (symbolsToAdopt == NULL) {
-        return; // do not allow caller to set decimalFormatSymbols to NULL
+    if (symbolsToAdopt == nullptr) {
+        return; // do not allow caller to set decimalFormatSymbols to nullptr
     }
 
-    if (decimalFormatSymbols != NULL) {
-        delete decimalFormatSymbols;
-    }
-
+    delete decimalFormatSymbols;
     decimalFormatSymbols = symbolsToAdopt;
 
     {

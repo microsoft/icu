@@ -34,11 +34,10 @@
 
 U_NAMESPACE_BEGIN
 
-class CharString;
-namespace number {
-namespace impl {
+class FixedString;
+
+namespace number::impl {
 class DecimalQuantity;
-}
 }
 
 /**
@@ -566,7 +565,7 @@ public:
     void            adoptObject(UObject* objectToAdopt);
 
     /**
-     * Sets the the numeric value from a decimal number string, and changes
+     * Sets the numeric value from a decimal number string, and changes
      * the type to to a numeric type appropriate for the number.
      * The syntax of the number is a "numeric string"
      * as defined in the Decimal Arithmetic Specification, available at
@@ -666,12 +665,12 @@ public:
     void adoptDecimalQuantity(number::impl::DecimalQuantity *dq);
 
     /**
-     * Internal function to return the CharString pointer.
+     * Internal function to return the FixedString pointer.
      * @param status error code
-     * @return pointer to the CharString - may become invalid if the object is modified
+     * @return pointer to the FixedString - may become invalid if the object is modified
      * @internal
      */
-    CharString *internalGetCharString(UErrorCode &status);
+    FixedString *internalGetFixedString(UErrorCode &status);
 
 #endif  /* U_HIDE_INTERNAL_API */
 
@@ -701,7 +700,7 @@ private:
         }               fArrayAndCount;
     } fValue;
 
-    CharString           *fDecimalStr;
+    FixedString* fDecimalStr;
 
     number::impl::DecimalQuantity *fDecimalQuantity;
 

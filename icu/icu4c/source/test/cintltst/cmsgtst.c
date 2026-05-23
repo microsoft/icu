@@ -44,8 +44,7 @@ static const char* const txt_testResultStrings[] = {
     "Quotes ', {, a 1 {0}",
     "Quotes ', {, a 1 {0}",
     "You deposited 1 times an amount of $3,456.00 on 1/12/70",
-    /*MSFT-Change: Replace NNBSP with ascii space*/
-    "{2,time,full}, for 3,456, 1 is 5:46:40 AM Pacific Standard Time and full date is Monday, January 12, 1970",
+    "{2,time,full}, for 3,456, 1 is 5:46:40\\u202FAM Pacific Standard Time and full date is Monday, January 12, 1970",
     "{1,number,percent} for 1 is 345,600%"
 };
 
@@ -232,7 +231,7 @@ static void MessageFormatTest( void )
                         austrdup(result), austrdup(testResultStrings[i]) );
                 }
 
-#if (U_PLATFORM == U_PF_LINUX) /* add platforms here .. */
+#if (U_PLATFORM == U_PF_LINUX || U_PLATFORM == U_PF_QNX) /* add platforms here .. */
                 log_verbose("Skipping potentially crashing test for mismatched varargs.\n");
 #else
                 log_verbose("Note: the next is a platform dependent test. If it crashes, add an exclusion for your platform near %s:%d\n", __FILE__, __LINE__); 

@@ -18,7 +18,7 @@
 #include "cmemory.h"
 
 CollationEnglishTest::CollationEnglishTest()
-: myCollation(0)
+: myCollation(nullptr)
 {
     UErrorCode status = U_ZERO_ERROR;
     myCollation = Collator::createInstance(Locale::getEnglish(), status);
@@ -234,12 +234,12 @@ static const UChar testAcute[][CollationEnglishTest::MAX_TOKEN_LEN] = {
 
 static const UChar testMore[][CollationEnglishTest::MAX_TOKEN_LEN] = {
     {(UChar)0x0061 /* 'a' */, (UChar)0x0065 /* 'e' */, 0},
-    { 0x00E6, 0},
-    { 0x00C6, 0},
+    {0x00E6, 0},
+    {0x00C6, 0},
     {(UChar)0x0061 /* 'a' */, (UChar)0x0066 /* 'f' */, 0},
     {(UChar)0x006F /* 'o' */, (UChar)0x0065 /* 'e' */, 0},
-    { 0x0153, 0},
-    { 0x0152, 0},
+    {0x0153, 0},
+    {0x0152, 0},
     {(UChar)0x006F /* 'o' */, (UChar)0x0066 /* 'f' */, 0},
 };
 

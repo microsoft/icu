@@ -258,7 +258,7 @@ CollationData::makeReorderRanges(const int32_t *reorder, int32_t length,
     // Start the reordering with the special low reorder codes that do not occur in the input.
     for(int32_t i = 0; i < MAX_NUM_SPECIAL_REORDER_CODES; ++i) {
         int32_t index = scriptsIndex[numScripts + i];
-        if(index != 0 && (specials & ((uint32_t)1 << i)) == 0) {
+        if (index != 0 && (specials & (static_cast<uint32_t>(1) << i)) == 0) {
             lowStart = addLowScriptRange(table, index, lowStart);
         }
     }
@@ -367,7 +367,7 @@ CollationData::addLowScriptRange(uint8_t table[], int32_t index, int32_t lowStar
     if((start & 0xff) < (lowStart & 0xff)) {
         lowStart += 0x100;
     }
-    table[index] = (uint8_t)(lowStart >> 8);
+    table[index] = static_cast<uint8_t>(lowStart >> 8);
     int32_t limit = scriptStarts[index + 1];
     lowStart = ((lowStart & 0xff00) + ((limit & 0xff00) - (start & 0xff00))) | (limit & 0xff);
     return lowStart;
@@ -381,7 +381,7 @@ CollationData::addHighScriptRange(uint8_t table[], int32_t index, int32_t highLi
     }
     int32_t start = scriptStarts[index];
     highLimit = ((highLimit & 0xff00) - ((limit & 0xff00) - (start & 0xff00))) | (start & 0xff);
-    table[index] = (uint8_t)(highLimit >> 8);
+    table[index] = static_cast<uint8_t>(highLimit >> 8);
     return highLimit;
 }
 

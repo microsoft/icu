@@ -39,7 +39,7 @@ static const char * formattableTypeName(Formattable::Type t)
 void IntlTestNumberFormat::runIndexedTest( int32_t index, UBool exec, const char* &name, char* /*par*/ )
 {
 
-    if (exec) logln((UnicodeString)"TestSuite NumberFormat");
+    if (exec) logln(UnicodeString("TestSuite NumberFormat"));
     switch (index) {
         case 0: name = "createInstance"; 
             if (exec)
@@ -80,26 +80,26 @@ IntlTestNumberFormat::testLocale(/* char* par, */const Locale& locale, const Uni
     
     fLocale = locale;
     name = "Number test";
-    logln((UnicodeString)name + " (" + localeName + ")");
+    logln(UnicodeString(name) + " (" + localeName + ")");
     fStatus = U_ZERO_ERROR;
     fFormat = NumberFormat::createInstance(locale, fStatus);
     testFormat(/* par */);
 
     name = "Currency test";
-    logln((UnicodeString)name + " (" + localeName + ")");
+    logln(UnicodeString(name) + " (" + localeName + ")");
     fStatus = U_ZERO_ERROR;
     fFormat = NumberFormat::createCurrencyInstance(locale, fStatus);
     testFormat(/* par */);
 
     name = "Percent test";
-    logln((UnicodeString)name + " (" + localeName + ")");
+    logln(UnicodeString(name) + " (" + localeName + ")");
     fStatus = U_ZERO_ERROR;
     fFormat = NumberFormat::createPercentInstance(locale, fStatus);
     testFormat(/* par */);
 	
     if (uprv_strcmp(locale.getName(), "en_US_POSIX") != 0) {
         name = "Scientific test";
-        logln((UnicodeString)name + " (" + localeName + ")");
+        logln(UnicodeString(name) + " (" + localeName + ")");
         fStatus = U_ZERO_ERROR;
         fFormat = NumberFormat::createScientificInstance(locale, fStatus);
         testFormat(/* par */);
@@ -117,7 +117,7 @@ double IntlTestNumberFormat::randDouble()
     do {
         for (i=0; i < sizeof(double); ++i)
         {
-            poke[i] = (char)(rand() & 0xFF);
+            poke[i] = static_cast<char>(rand() & 0xFF);
         }
     } while (uprv_isNaN(d) || uprv_isInfinite(d)
         || !((-DBL_MAX < d && d < DBL_MAX) || (d < -DBL_MIN && DBL_MIN < d)));
@@ -138,7 +138,7 @@ uint32_t IntlTestNumberFormat::randLong()
     char* poke = (char*)&d;
     for (i=0; i < sizeof(uint32_t); ++i)
     {
-        poke[i] = (char)(rand() & 0xFF);
+        poke[i] = static_cast<char>(rand() & 0xFF);
     }
     return d;
 }
@@ -161,25 +161,25 @@ IntlTestNumberFormat::testFormat(/* char* par */)
 {
     if (U_FAILURE(fStatus))
     { 
-        dataerrln((UnicodeString)"**** FAIL: createXxxInstance failed. - " + u_errorName(fStatus));
-        if (fFormat != 0)
+        dataerrln(UnicodeString("**** FAIL: createXxxInstance failed. - ") + u_errorName(fStatus));
+        if (fFormat != nullptr)
             errln("**** FAIL: Non-null format returned by createXxxInstance upon failure.");
         delete fFormat;
-        fFormat = 0;
+        fFormat = nullptr;
         return;
     }
-                    
-    if (fFormat == 0)
+
+    if (fFormat == nullptr)
     {
-        errln((UnicodeString)"**** FAIL: Null format returned by createXxxInstance.");
+        errln(UnicodeString("**** FAIL: Null format returned by createXxxInstance."));
         return;
     }
 
     UnicodeString str;
 
     // Assume it's a DecimalFormat and get some info
-    DecimalFormat *s = (DecimalFormat*)fFormat;
-    logln((UnicodeString)"  Pattern " + s->toPattern(str));
+    DecimalFormat *s = dynamic_cast<DecimalFormat*>(fFormat);
+    logln(UnicodeString("  Pattern ") + s->toPattern(str));
 
 #if U_PF_OS390 <= U_PLATFORM && U_PLATFORM <= U_PF_OS400
     tryIt(-2.02147304840132e-68);
@@ -354,7 +354,7 @@ IntlTestNumberFormat::tryIt(double aNumber)
     {
         for (int32_t k=0; k<=i; ++k)
         {
-            logln((UnicodeString)"" + k + ": " + number[k].getDouble() + " F> " +
+            logln(UnicodeString("") + k + ": " + number[k].getDouble() + " F> " +
                   prettify(string[k]) + " P> ");
         }
         errln(errMsg);
@@ -400,7 +400,7 @@ void IntlTestNumberFormat::testAvailableLocales(/* char* par */)
 {
     int32_t count = 0;
     const Locale* locales = NumberFormat::getAvailableLocales(count);
-    logln((UnicodeString)"" + count + " available locales");
+    logln(UnicodeString("") + count + " available locales");
     if (locales && count)
     {
         UnicodeString name;
@@ -414,7 +414,7 @@ void IntlTestNumberFormat::testAvailableLocales(/* char* par */)
         logln(all);
     }
     else
-        dataerrln((UnicodeString)"**** FAIL: Zero available locales or null array pointer");
+        dataerrln(UnicodeString("**** FAIL: Zero available locales or null array pointer"));
 }
 
 void IntlTestNumberFormat::monsterTest(/* char* par */)

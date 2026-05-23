@@ -31,7 +31,7 @@
 
 CollationMonkeyTest::CollationMonkeyTest()
 : source("-abcdefghijklmnopqrstuvwxyz#&^$@", ""),
-  myCollator(0)
+  myCollator(nullptr)
 {
     UErrorCode status = U_ZERO_ERROR;
     myCollator = Collator::createInstance("en_US", status);
@@ -54,7 +54,7 @@ CollationMonkeyTest::report(UnicodeString& s, UnicodeString& t, int32_t result, 
         msg += " and ";
         msg += t;
         msg += " round trip comparison failed";
-        msg += (UnicodeString) " (result " + result + ", reverse Result " + revResult + ")"; 
+        msg += UnicodeString(" (result ") + result + ", reverse Result " + revResult + ")";
 
         errln(msg);
     }
@@ -78,7 +78,7 @@ void CollationMonkeyTest::TestCollationKey(/* char* par */)
         return;
     }
 
-    srand( (unsigned)time( NULL ) );
+    srand(static_cast<unsigned>(time(nullptr)));
     int32_t s = checkValue(rand() % source.length());
     int32_t t = checkValue(rand() % source.length());
     int32_t slen = checkValue((rand() - source.length()) % source.length());
@@ -153,7 +153,7 @@ CollationMonkeyTest::TestCompare(/* char* par */)
     /* Seed the random-number generator with current time so that
      * the numbers will be different every time we run.
      */
-    srand( (unsigned)time( NULL ) );
+    srand(static_cast<unsigned>(time(nullptr)));
     int32_t s = checkValue(rand() % source.length());
     int32_t t = checkValue(rand() % source.length());
     int32_t slen = checkValue((rand() - source.length()) % source.length());
@@ -220,7 +220,7 @@ void CollationMonkeyTest::TestRules(/* char* par */){
     logln("Demo Test 1 : Create a new table collation with rules \"& z < 0x00e4\"");
     UErrorCode status = U_ZERO_ERROR;
     Collator *col = Collator::createInstance("en_US", status);
-    const UnicodeString baseRules = ((RuleBasedCollator*)col)->getRules();
+    const UnicodeString baseRules = (dynamic_cast<RuleBasedCollator*>(col))->getRules();
     UnicodeString newRules(" & z < ");
     newRules.append((UChar)0x00e4);
     newRules.insert(0, baseRules);

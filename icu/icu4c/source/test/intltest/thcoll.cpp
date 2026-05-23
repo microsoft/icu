@@ -45,7 +45,7 @@ CollationThaiTest::CollationThaiTest() {
         //coll->setStrength(Collator::TERTIARY);
     } else {
         delete coll;
-        coll = 0;
+        coll = nullptr;
     }
 }
 
@@ -78,7 +78,7 @@ void CollationThaiTest::runIndexedTest(int32_t index, UBool exec, const char* &n
  * using regular and iterative comparison.
  */
 void CollationThaiTest::TestNamesList(void) {
-    if (coll == 0) {
+    if (coll == nullptr) {
         errln("Error: could not construct Thai collator");
         return;
     }
@@ -104,7 +104,7 @@ void CollationThaiTest::TestNamesList(void) {
         ++wordCount;
         if (wordCount <= 8) {
             UnicodeString str;
-            logln((UnicodeString)"Word " + wordCount + ": " + IntlTest::prettify(word, str));
+            logln(UnicodeString("Word ") + wordCount + ": " + IntlTest::prettify(word, str));
         }
 
         if (lastWord.length() > 0) {
@@ -116,7 +116,7 @@ void CollationThaiTest::TestNamesList(void) {
 
     assertSuccess("readLine", ec);
 
-    logln((UnicodeString)"Words checked: " + wordCount);
+    logln(UnicodeString("Words checked: ") + wordCount);
 }
 
 /**
@@ -125,7 +125,7 @@ void CollationThaiTest::TestNamesList(void) {
  * preceding the following line.
  */
 void CollationThaiTest::TestDictionary(void) {
-    if (coll == 0) {
+    if (coll == nullptr) {
         errln("Error: could not construct Thai collator");
         return;
     }
@@ -151,7 +151,7 @@ void CollationThaiTest::TestDictionary(void) {
         ++wordCount;
         if (wordCount <= 8) {
             UnicodeString str;
-            logln((UnicodeString)"Word " + wordCount + ": " + IntlTest::prettify(word, str));
+            logln(UnicodeString("Word ") + wordCount + ": " + IntlTest::prettify(word, str));
         }
 
         if (lastWord.length() > 0) {
@@ -173,7 +173,7 @@ void CollationThaiTest::TestDictionary(void) {
                     coll->getCollationKey(lastWord, k1, status);
                     coll->getCollationKey(word, k2, status);
                     if (U_FAILURE(status)) {
-                        errln((UnicodeString)"Fail: getCollationKey returned " + u_errorName(status));
+                        errln(UnicodeString("Fail: getCollationKey returned ") + u_errorName(status));
                         return;
                     }
                     msg.append("key1: ").append(prettify(k1, str)).append("\n");
@@ -189,14 +189,14 @@ void CollationThaiTest::TestDictionary(void) {
 
     if (failed != 0) {
         if (failed > MAX_FAILURES_TO_SHOW) {
-            errln((UnicodeString)"Too many failures; only the first " +
+            errln(UnicodeString("Too many failures; only the first ") +
                   MAX_FAILURES_TO_SHOW + " failures were shown");
         }
-        errln((UnicodeString)"Summary: " + failed + " of " + (riwords.getLineNumber() - 1) +
+        errln(UnicodeString("Summary: ") + failed + " of " + (riwords.getLineNumber() - 1) +
               " comparisons failed");
     }
 
-    logln((UnicodeString)"Words checked: " + wordCount);
+    logln(UnicodeString("Words checked: ") + wordCount);
 }
 
 /**
@@ -244,7 +244,7 @@ void CollationThaiTest::TestCornerCases(void) {
     };
     const int32_t TESTS_length = UPRV_LENGTHOF(TESTS);
 
-    if (coll == 0) {
+    if (coll == nullptr) {
         errln("Error: could not construct Thai collator");
         return;
     }
@@ -268,7 +268,7 @@ void CollationThaiTest::compareArray(Collator& c, const char* tests[],
           expect = Collator::EQUAL;
         } else {
             // expect = Integer.decode(tests[i+1]).intValue();
-            errln((UnicodeString)"Error: unknown operator " + tests[i+1]);
+            errln(UnicodeString("Error: unknown operator ") + tests[i + 1]);
             return;
         }
 
@@ -377,7 +377,7 @@ void CollationThaiTest::TestInvalidThai(void) {
     return;
   }
 
-  CollationElementIterator* c = ((RuleBasedCollator *)coll)->createCollationElementIterator( iteratorText );
+  CollationElementIterator* c = (dynamic_cast<RuleBasedCollator*>(coll))->createCollationElementIterator( iteratorText );
 
   for(i = 0; i < UPRV_LENGTHOF(tests); i++) {
     len = u_unescape(tests[i], strings[i], 20);

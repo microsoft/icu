@@ -22,13 +22,7 @@
 
 #define STRING_STORE_SIZE 200000
 
-// MSFT-Change: In the Windows OS ICU build, we only have one data package, and we use a versionless name in filename.
-#if defined(ICU_DATA_DIR_WINDOWS)
-#  define COMMON_DATA_NAME "icudtl"
-#else
-#  define COMMON_DATA_NAME U_ICUDATA_NAME
-#endif
-
+#define COMMON_DATA_NAME U_ICUDATA_NAME
 #define DATA_TYPE "dat"
 
 /* ICU package data file format (.dat files) ------------------------------- ***
@@ -366,7 +360,7 @@ createCommonDataFile(const char *destDir, const char *name, const char *entrypoi
 
         snprintf(
             buffer, sizeof(buffer),
-            "U_EXPORT struct {\n"
+            "U_EXPORT const struct {\n"
             "    uint16_t headerSize;\n"
             "    uint8_t magic1, magic2;\n"
             "    UDataInfo info;\n"
@@ -420,7 +414,7 @@ addFile(const char *filename, const char *name, const char *source, UBool source
       fileMax += CHUNK_FILE_COUNT;
       files = (File *)uprv_realloc(files, fileMax*sizeof(files[0])); /* note: never freed. */
       if(files==NULL) {
-        fprintf(stderr, "pkgdata/gencmn: Could not allocate %u bytes for %d files\n", (unsigned int)(fileMax*sizeof(files[0])), fileCount);
+        fprintf(stderr, "pkgdata/gencmn: Could not allocate %u bytes for %d files\n", static_cast<unsigned int>(fileMax * sizeof(files[0])), fileCount);
         exit(U_MEMORY_ALLOCATION_ERROR);
       }
     }
@@ -434,7 +428,7 @@ addFile(const char *filename, const char *name, const char *source, UBool source
         }
         fullPath = pathToFullPath(filename, source);
         /* store the pathname */
-        length = (uint32_t)(uprv_strlen(filename) + 1 + uprv_strlen(name) + 1);
+        length = static_cast<uint32_t>(uprv_strlen(filename) + 1 + uprv_strlen(name) + 1);
         s=allocString(length);
         uprv_strcpy(s, name);
         uprv_strcat(s, U_TREE_ENTRY_SEP_STRING);
@@ -477,7 +471,7 @@ addFile(const char *filename, const char *name, const char *source, UBool source
         char *t;
         /* get and store the basename */
         /* need to include the package name */
-        length = (uint32_t)(uprv_strlen(filename) + 1 + uprv_strlen(name) + 1);
+        length = static_cast<uint32_t>(uprv_strlen(filename) + 1 + uprv_strlen(name) + 1);
         s=allocString(length);
         uprv_strcpy(s, name);
         uprv_strcat(s, U_TREE_ENTRY_SEP_STRING);
@@ -521,7 +515,7 @@ pathToFullPath(const char *path, const char *source) {
     char *fullPath;
     int32_t n;
 
-    length = (uint32_t)(uprv_strlen(path) + 1);
+    length = static_cast<uint32_t>(uprv_strlen(path) + 1);
     newLength = (length + 1 + (int32_t)uprv_strlen(source));
     fullPath = (char *)uprv_malloc(newLength);
     if(source != NULL) {

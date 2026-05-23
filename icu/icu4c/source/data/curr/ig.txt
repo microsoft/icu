@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 ig{
     Currencies{
         AED{
@@ -437,7 +437,7 @@ ig{
         }
         PHP{
             "₱",
-            "Ego piso obodo Philippine",
+            "Ego Piso obodo Philippine",
         }
         PKR{
             "PKR",
@@ -499,9 +499,13 @@ ig{
             "SHP",
             "Ego Pound obodo St Helena",
         }
+        SLE{
+            "SLE",
+            "Ego Leone obodo Sierra Leone",
+        }
         SLL{
             "SLL",
-            "Ego Leone obodo Sierra Leone",
+            "Ego Leone obodo Sierra Leone (1964—2022)",
         }
         SOS{
             "SOS",
@@ -607,6 +611,10 @@ ig{
             "EC$",
             "Ego Dollar obodo East Carribbean",
         }
+        XCG{
+            "Cg.",
+            "Ego Guilder Caribbean",
+        }
         XOF{
             "F CFA",
             "Ego CFA Franc obodo West Africa",
@@ -631,6 +639,10 @@ ig{
             "ZMW",
             "Ego Kwacha Obodo Zambia",
         }
+        ZWG{
+            "ZWG",
+            "Ego Ọlaọcha Zimbabwe",
+        }
     }
     CurrencyPlurals{
         AED{
@@ -651,9 +663,6 @@ ig{
         BND{
             other{"Ego dollars obodo Brunei"}
         }
-        BRL{
-            other{"Real Brazil"}
-        }
         BWP{
             other{"Ego pulas obodo Bostwana"}
         }
@@ -665,9 +674,6 @@ ig{
         }
         CDF{
             other{"Ego francs mba Congo"}
-        }
-        CNY{
-            other{"Yuan China"}
         }
         CRC{
             other{"Ego colóns obodo Costa Rica"}
@@ -690,29 +696,17 @@ ig{
         FJD{
             other{"Ego dollars obodo Fijian"}
         }
-        GBP{
-            other{"Pound British"}
-        }
         HRK{
             other{"Ego kunas obodo Croatia"}
         }
-        INR{
-            other{"Rupee India"}
-        }
         IQD{
             other{"Ego dinars obodo Iraq"}
-        }
-        JPY{
-            other{"Yen Japan"}
         }
         KYD{
             other{"Ego dollars obodo Cayman Islands"}
         }
         LBP{
             other{"Ego Pound Obodo Lebanon"}
-        }
-        LSL{
-            other{"Ego loti obodo Lesotho"}
         }
         MDL{
             other{"Ego leu mba Moldova"}
@@ -741,17 +735,11 @@ ig{
         RON{
             other{"Ego leu Obodo Romania"}
         }
-        RUB{
-            other{"Ruble Russia"}
-        }
         SBD{
             other{"Ego dollars obodo Solomon Islands"}
         }
         SCR{
             other{"Ego rupees obodo Seychelles"}
-        }
-        SRD{
-            other{"Dollar Surinamese"}
         }
         SSP{
             other{"Ego pounds mba ọdịda anyanwụ Sudan"}
@@ -780,6 +768,9 @@ ig{
         XAF{
             other{"Ego francs mba etiti Africa"}
         }
+        XCG{
+            other{"Ego Guilder Caribbean"}
+        }
         XOF{
             other{"Ego CFA francs mba ọdịda anyanwụ Afrịka"}
         }
@@ -794,6 +785,9 @@ ig{
         }
         ZMW{
             other{"Ego kwachas obodo Zambia"}
+        }
+        ZWG{
+            other{"Ego Ọlaọcha Zimbabwe"}
         }
     }
 }

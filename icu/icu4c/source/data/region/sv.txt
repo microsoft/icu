@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 sv{
     Countries{
         001{"världen"}
@@ -15,7 +15,7 @@ sv{
         017{"Centralafrika"}
         018{"södra Afrika"}
         019{"Nord- och Sydamerika"}
-        021{"Norra Amerika"}
+        021{"norra Amerika"}
         029{"Karibien"}
         030{"Östasien"}
         034{"Sydasien"}
@@ -32,7 +32,7 @@ sv{
         151{"Östeuropa"}
         154{"Nordeuropa"}
         155{"Västeuropa"}
-        202{"Subsahariska Afrika"}
+        202{"subsahariska Afrika"}
         419{"Latinamerika"}
         AC{"Ascension"}
         AD{"Andorra"}
@@ -70,7 +70,7 @@ sv{
         BT{"Bhutan"}
         BV{"Bouvetön"}
         BW{"Botswana"}
-        BY{"Vitryssland"}
+        BY{"Belarus"}
         BZ{"Belize"}
         CA{"Kanada"}
         CC{"Kokosöarna"}
@@ -78,13 +78,14 @@ sv{
         CF{"Centralafrikanska republiken"}
         CG{"Kongo-Brazzaville"}
         CH{"Schweiz"}
-        CI{"Côte d’Ivoire"}
+        CI{"Elfenbenskusten"}
         CK{"Cooköarna"}
         CL{"Chile"}
         CM{"Kamerun"}
         CN{"Kina"}
         CO{"Colombia"}
         CP{"Clippertonön"}
+        CQ{"Sark"}
         CR{"Costa Rica"}
         CU{"Kuba"}
         CV{"Kap Verde"}
@@ -93,14 +94,17 @@ sv{
         CY{"Cypern"}
         CZ{"Tjeckien"}
         DE{"Tyskland"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Danmark"}
         DM{"Dominica"}
         DO{"Dominikanska republiken"}
         DZ{"Algeriet"}
+        EA{"Ceuta och Melilla"}
         EC{"Ecuador"}
         EE{"Estland"}
         EG{"Egypten"}
+        EH{"Västsahara"}
         ER{"Eritrea"}
         ES{"Spanien"}
         ET{"Etiopien"}
@@ -137,6 +141,7 @@ sv{
         HR{"Kroatien"}
         HT{"Haiti"}
         HU{"Ungern"}
+        IC{"Kanarieöarna"}
         ID{"Indonesien"}
         IE{"Irland"}
         IL{"Israel"}
@@ -219,7 +224,7 @@ sv{
         PM{"S:t Pierre och Miquelon"}
         PN{"Pitcairnöarna"}
         PR{"Puerto Rico"}
-        PS{"Palestinska myndigheten"}
+        PS{"Palestinska territorierna"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -284,6 +289,8 @@ sv{
         VU{"Vanuatu"}
         WF{"Wallis- och Futunaöarna"}
         WS{"Samoa"}
+        XA{"fejkade accenter (för test)"}
+        XB{"fejkad bidi (för test)"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -291,5 +298,21 @@ sv{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"okänd region"}
+    }
+    Countries%chagos{
+        IO{"Chagosöarna"}
+    }
+    Countries%short{
+        HK{"Hongkong"}
+        MO{"Macao"}
+        PS{"Palestina"}
+        UN{"FN"}
+    }
+    Countries%variant{
+        CD{"Demokratiska republiken Kongo"}
+        CG{"Republiken Kongo"}
+        CI{"Côte d’Ivoire"}
+        NZ{"Aotearoa Nya Zeeland"}
+        TL{"Timor-Leste"}
     }
 }

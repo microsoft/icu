@@ -32,8 +32,11 @@ public:
 
     void TestExemplar(void);
 
-    void TestGetSize(void);
-    void TestGetLocaleByType(void);
+    void TestGetSize();
+    void TestGetLocaleByType();
+    
+    void TestPersonUnits();
+    void TestZuluFields();
 
 private:
     /**

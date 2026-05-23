@@ -99,7 +99,7 @@ static const char *gNumberElementKeys[DecimalFormatSymbols::kFormatSymbolCount] 
 // Initializes this with the decimal format symbols in the default locale.
 
 DecimalFormatSymbols::DecimalFormatSymbols(UErrorCode& status)
-        : UObject(), locale(), currPattern(NULL) {
+        : UObject(), locale() {
     initialize(locale, status, true);
 }
 
@@ -107,18 +107,20 @@ DecimalFormatSymbols::DecimalFormatSymbols(UErrorCode& status)
 // Initializes this with the decimal format symbols in the desired locale.
 
 DecimalFormatSymbols::DecimalFormatSymbols(const Locale& loc, UErrorCode& status)
-        : UObject(), locale(loc), currPattern(NULL) {
+        : UObject(), locale(loc) {
     initialize(locale, status);
 }
 
 DecimalFormatSymbols::DecimalFormatSymbols(const Locale& loc, const NumberingSystem& ns, UErrorCode& status)
-        : UObject(), locale(loc), currPattern(NULL) {
+        : UObject(), locale(loc) {
     initialize(locale, status, false, &ns);
 }
 
 DecimalFormatSymbols::DecimalFormatSymbols()
-        : UObject(), locale(Locale::getRoot()), currPattern(NULL) {
-    *validLocale = *actualLocale = 0;
+    : UObject(),
+      locale(Locale::getRoot()),
+      actualLocale(Locale::getRoot()),
+      validLocale(Locale::getRoot()) {
     initialize();
 }
 
@@ -154,21 +156,22 @@ DecimalFormatSymbols&
 DecimalFormatSymbols::operator=(const DecimalFormatSymbols& rhs)
 {
     if (this != &rhs) {
-        for(int32_t i = 0; i < (int32_t)kFormatSymbolCount; ++i) {
+        for (int32_t i = 0; i < static_cast<int32_t>(kFormatSymbolCount); ++i) {
             // fastCopyFrom is safe, see docs on fSymbols
             fSymbols[(ENumberFormatSymbol)i].fastCopyFrom(rhs.fSymbols[(ENumberFormatSymbol)i]);
         }
-        for(int32_t i = 0; i < (int32_t)UNUM_CURRENCY_SPACING_COUNT; ++i) {
+        for (int32_t i = 0; i < static_cast<int32_t>(UNUM_CURRENCY_SPACING_COUNT); ++i) {
             currencySpcBeforeSym[i].fastCopyFrom(rhs.currencySpcBeforeSym[i]);
             currencySpcAfterSym[i].fastCopyFrom(rhs.currencySpcAfterSym[i]);
         }
         locale = rhs.locale;
-        uprv_strcpy(validLocale, rhs.validLocale);
-        uprv_strcpy(actualLocale, rhs.actualLocale);
+        actualLocale = rhs.actualLocale;
+        validLocale = rhs.validLocale;
         fIsCustomCurrencySymbol = rhs.fIsCustomCurrencySymbol; 
         fIsCustomIntlCurrencySymbol = rhs.fIsCustomIntlCurrencySymbol; 
         fCodePointZero = rhs.fCodePointZero;
         currPattern = rhs.currPattern;
+        uprv_strcpy(nsName, rhs.nsName);
     }
     return *this;
 }
@@ -187,12 +190,12 @@ DecimalFormatSymbols::operator==(const DecimalFormatSymbols& that) const
     if (fIsCustomIntlCurrencySymbol != that.fIsCustomIntlCurrencySymbol) { 
         return false;
     } 
-    for(int32_t i = 0; i < (int32_t)kFormatSymbolCount; ++i) {
-        if(fSymbols[(ENumberFormatSymbol)i] != that.fSymbols[(ENumberFormatSymbol)i]) {
+    for (int32_t i = 0; i < static_cast<int32_t>(kFormatSymbolCount); ++i) {
+        if (fSymbols[static_cast<ENumberFormatSymbol>(i)] != that.fSymbols[static_cast<ENumberFormatSymbol>(i)]) {
             return false;
         }
     }
-    for(int32_t i = 0; i < (int32_t)UNUM_CURRENCY_SPACING_COUNT; ++i) {
+    for (int32_t i = 0; i < static_cast<int32_t>(UNUM_CURRENCY_SPACING_COUNT); ++i) {
         if(currencySpcBeforeSym[i] != that.currencySpcBeforeSym[i]) {
             return false;
         }
@@ -202,8 +205,8 @@ DecimalFormatSymbols::operator==(const DecimalFormatSymbols& that) const
     }
     // No need to check fCodePointZero since it is based on fSymbols
     return locale == that.locale &&
-        uprv_strcmp(validLocale, that.validLocale) == 0 &&
-        uprv_strcmp(actualLocale, that.actualLocale) == 0;
+           actualLocale == that.actualLocale &&
+           validLocale == that.validLocale;
 }
 
 // -------------------------------------
@@ -241,7 +244,7 @@ struct DecFmtSymDataSink : public ResourceSink {
                     if (!seenSymbol[i]) {
                         seenSymbol[i] = true;
                         dfs.setSymbol(
-                            (DecimalFormatSymbols::ENumberFormatSymbol) i,
+                            static_cast<DecimalFormatSymbols::ENumberFormatSymbol>(i),
                             value.getUnicodeString(errorCode));
                         if (U_FAILURE(errorCode)) { return; }
                     }
@@ -329,11 +332,13 @@ struct CurrencySpacingSink : public ResourceSink {
         // both beforeCurrency and afterCurrency were found in CLDR.
         static const char* defaults[] = { "[:letter:]", "[:digit:]", " " };
         if (!hasBeforeCurrency || !hasAfterCurrency) {
-            for (UBool beforeCurrency = 0; beforeCurrency <= true; beforeCurrency++) {
-                for (int32_t pattern = 0; pattern < UNUM_CURRENCY_SPACING_COUNT; pattern++) {
-                    dfs.setPatternForCurrencySpacing((UCurrencySpacing)pattern,
-                        beforeCurrency, UnicodeString(defaults[pattern], -1, US_INV));
-                }
+            for (int32_t pattern = 0; pattern < UNUM_CURRENCY_SPACING_COUNT; pattern++) {
+                dfs.setPatternForCurrencySpacing(static_cast<UCurrencySpacing>(pattern),
+                    false, UnicodeString(defaults[pattern], -1, US_INV));
+            }
+            for (int32_t pattern = 0; pattern < UNUM_CURRENCY_SPACING_COUNT; pattern++) {
+                dfs.setPatternForCurrencySpacing(static_cast<UCurrencySpacing>(pattern),
+                    true, UnicodeString(defaults[pattern], -1, US_INV));
             }
         }
     }
@@ -350,7 +355,6 @@ DecimalFormatSymbols::initialize(const Locale& loc, UErrorCode& status,
     UBool useLastResortData, const NumberingSystem* ns)
 {
     if (U_FAILURE(status)) { return; }
-    *validLocale = *actualLocale = 0;
 
     // First initialize all the symbols to the fallbacks for anything we can't find
     initialize();
@@ -381,6 +385,7 @@ DecimalFormatSymbols::initialize(const Locale& loc, UErrorCode& status,
     } else {
         nsName = gLatn;
     }
+    uprv_strcpy(this->nsName, nsName);
 
     // Open resource bundles
     const char* locStr = loc.getName();
@@ -398,14 +403,10 @@ DecimalFormatSymbols::initialize(const Locale& loc, UErrorCode& status,
 
     // Set locale IDs
     // TODO: Is there a way to do this without depending on the resource bundle instance?
-    U_LOCALE_BASED(locBased, *this);
-    locBased.setLocaleIDs(
-        ures_getLocaleByType(
-            numberElementsRes.getAlias(),
-            ULOC_VALID_LOCALE, &status),
-        ures_getLocaleByType(
-            numberElementsRes.getAlias(),
-            ULOC_ACTUAL_LOCALE, &status));
+    actualLocale = Locale(
+        ures_getLocaleByType(numberElementsRes.getAlias(), ULOC_ACTUAL_LOCALE, &status));
+    validLocale = Locale(
+        ures_getLocaleByType(numberElementsRes.getAlias(), ULOC_VALID_LOCALE, &status));
 
     // Now load the rest of the data from the data sink.
     // Start with loading this nsName if it is not Latin.
@@ -515,7 +516,7 @@ DecimalFormatSymbols::initialize() {
     fCodePointZero = 0x30;
     U_ASSERT(fCodePointZero == fSymbols[kZeroDigitSymbol].char32At(0));
     currPattern = nullptr;
-
+    nsName[0] = 0;
 }
 
 void DecimalFormatSymbols::setCurrency(const UChar* currency, UErrorCode& status) {
@@ -564,8 +565,7 @@ void DecimalFormatSymbols::setCurrency(const UChar* currency, UErrorCode& status
 
 Locale
 DecimalFormatSymbols::getLocale(ULocDataLocaleType type, UErrorCode& status) const {
-    U_LOCALE_BASED(locBased, *this);
-    return locBased.getLocale(type, status);
+    return LocaleBased::getLocale(validLocale, actualLocale, type, status);
 }
 
 const UnicodeString&

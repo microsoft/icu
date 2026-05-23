@@ -1,9 +1,9 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 br{
     Countries{
-        001{"Bed"}
+        001{"bed"}
         002{"Afrika"}
         003{"Norzhamerika"}
         005{"Suamerika"}
@@ -36,9 +36,9 @@ br{
         419{"Amerika Latin"}
         AC{"Enez Ascension"}
         AD{"Andorra"}
-        AE{"Emirelezhioù Arab Unanet"}
+        AE{"Emirelezhioù-Arab-Unanet"}
         AF{"Afghanistan"}
-        AG{"Antigua ha Barbuda"}
+        AG{"Antigua-ha-Barbuda"}
         AI{"Anguilla"}
         AL{"Albania"}
         AM{"Armenia"}
@@ -51,7 +51,7 @@ br{
         AW{"Aruba"}
         AX{"Inizi Åland"}
         AZ{"Azerbaidjan"}
-        BA{"Bosnia ha Herzegovina"}
+        BA{"Bosnia-ha-Herzegovina"}
         BB{"Barbados"}
         BD{"Bangladesh"}
         BE{"Belgia"}
@@ -60,8 +60,8 @@ br{
         BH{"Bahrein"}
         BI{"Burundi"}
         BJ{"Benin"}
-        BL{"Saint Barthélemy"}
-        BM{"Bermuda"}
+        BL{"Sant-Bertele"}
+        BM{"Bermudez"}
         BN{"Brunei"}
         BO{"Bolivia"}
         BQ{"Karib Nederlandat"}
@@ -78,13 +78,14 @@ br{
         CF{"Republik Kreizafrikan"}
         CG{"Kongo - Brazzaville"}
         CH{"Suis"}
-        CI{"Aod an Olifant"}
+        CI{"Aod-an-Olifant"}
         CK{"Inizi Cook"}
         CL{"Chile"}
         CM{"Kameroun"}
         CN{"Sina"}
         CO{"Kolombia"}
         CP{"Enez Clipperton"}
+        CQ{"Sark"}
         CR{"Costa Rica"}
         CU{"Kuba"}
         CV{"Kab-Glas"}
@@ -93,19 +94,22 @@ br{
         CY{"Kiprenez"}
         CZ{"Tchekia"}
         DE{"Alamagn"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Danmark"}
         DM{"Dominica"}
         DO{"Republik Dominikan"}
         DZ{"Aljeria"}
+        EA{"Ceuta ha Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egipt"}
+        EH{"Sahara ar Cʼhornôg"}
         ER{"Eritrea"}
         ES{"Spagn"}
         ET{"Etiopia"}
         EU{"Unaniezh Europa"}
-        EZ{"takad an euro"}
+        EZ{"Takad an euro"}
         FI{"Finland"}
         FJ{"Fidji"}
         FK{"Inizi Falkland"}
@@ -124,7 +128,7 @@ br{
         GM{"Gambia"}
         GN{"Ginea"}
         GP{"Gwadeloup"}
-        GQ{"Ginea ar Cʼheheder"}
+        GQ{"Ginea-ar-Cʼheheder"}
         GR{"Gres"}
         GS{"Inizi Georgia ar Su hag Inizi Sandwich ar Su"}
         GT{"Guatemala"}
@@ -132,15 +136,16 @@ br{
         GW{"Ginea-Bissau"}
         GY{"Guyana"}
         HK{"Hong Kong RMD Sina"}
-        HM{"Inizi Heard ha McDonald"}
+        HM{"Inizi Heard-ha-McDonald"}
         HN{"Honduras"}
         HR{"Kroatia"}
         HT{"Haiti"}
         HU{"Hungaria"}
+        IC{"Inizi Kanariez"}
         ID{"Indonezia"}
         IE{"Iwerzhon"}
         IL{"Israel"}
-        IM{"Enez Vanav"}
+        IM{"Enez-Vanav"}
         IN{"India"}
         IO{"Tiriad breizhveurat Meurvor Indez"}
         IQ{"Iraq"}
@@ -156,9 +161,9 @@ br{
         KH{"Kambodja"}
         KI{"Kiribati"}
         KM{"Komorez"}
-        KN{"Saint Kitts ha Nevis"}
-        KP{"Korea an Norzh"}
-        KR{"Korea ar Su"}
+        KN{"Saint Kitts-ha-Nevis"}
+        KP{"Norzhkorea"}
+        KR{"Sukorea"}
         KW{"Koweit"}
         KY{"Inizi Cayman"}
         KZ{"Kazakstan"}
@@ -177,14 +182,14 @@ br{
         MC{"Monaco"}
         MD{"Moldova"}
         ME{"Montenegro"}
-        MF{"Saint Martin"}
+        MF{"Sant-Martin"}
         MG{"Madagaskar"}
         MH{"Inizi Marshall"}
         MK{"Makedonia an Norzh"}
         ML{"Mali"}
         MM{"Myanmar (Birmania)"}
         MN{"Mongolia"}
-        MO{"Macau RMD Sina"}
+        MO{"Makao RMD Sina"}
         MP{"Inizi Mariana an Norzh"}
         MQ{"Martinik"}
         MR{"Maouritania"}
@@ -197,7 +202,7 @@ br{
         MY{"Malaysia"}
         MZ{"Mozambik"}
         NA{"Namibia"}
-        NC{"Kaledonia Nevez"}
+        NC{"Kaledonia-Nevez"}
         NE{"Niger"}
         NF{"Enez Norfolk"}
         NG{"Nigeria"}
@@ -219,7 +224,7 @@ br{
         PM{"Sant-Pêr-ha-Mikelon"}
         PN{"Enez Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Autorité palestinienne"}
+        PS{"Tiriadoù Palestina"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -235,7 +240,7 @@ br{
         SC{"Sechelez"}
         SD{"Soudan"}
         SE{"Sveden"}
-        SG{"Singapour"}
+        SG{"Singapoura"}
         SH{"Saint-Helena"}
         SI{"Slovenia"}
         SJ{"Svalbard"}
@@ -245,14 +250,14 @@ br{
         SN{"Senegal"}
         SO{"Somalia"}
         SR{"Surinam"}
-        SS{"Susoudan"}
-        ST{"São Tomé ha Príncipe"}
+        SS{"Soudan ar Su"}
+        ST{"São-Tomé-ha-Príncipe"}
         SV{"Salvador"}
         SX{"Sint Maarten"}
         SY{"Siria"}
         SZ{"Eswatini"}
         TA{"Tristan da Cunha"}
-        TC{"Inizi Turks ha Caicos"}
+        TC{"Inizi Turks-ha-Caicos"}
         TD{"Tchad"}
         TF{"Douaroù aostral Frañs"}
         TG{"Togo"}
@@ -264,7 +269,7 @@ br{
         TN{"Tunizia"}
         TO{"Tonga"}
         TR{"Turkia"}
-        TT{"Trinidad ha Tobago"}
+        TT{"Trinidad-ha-Tobago"}
         TV{"Tuvalu"}
         TW{"Taiwan"}
         TZ{"Tanzania"}
@@ -276,14 +281,16 @@ br{
         UY{"Uruguay"}
         UZ{"Ouzbekistan"}
         VA{"Vatikan"}
-        VC{"Sant Visant hag ar Grenadinez"}
+        VC{"Sant-Visant hag ar Grenadinez"}
         VE{"Venezuela"}
         VG{"Inizi Gwercʼh Breizh-Veur"}
         VI{"Inizi Gwercʼh ar Stadoù-Unanet"}
         VN{"Viêt Nam"}
         VU{"Vanuatu"}
-        WF{"Wallis ha Futuna"}
+        WF{"Wallis-ha-Futuna"}
         WS{"Samoa"}
+        XA{"Falstiredoù"}
+        XB{"Falsdaoudu"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -291,5 +298,25 @@ br{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Rannved dianav"}
+    }
+    Countries%chagos{
+        IO{"Enezeg Chagos"}
+    }
+    Countries%short{
+        GB{"RU"}
+        HK{"Hong Kong"}
+        MO{"Makao"}
+        PS{"Palestina"}
+        US{"SU"}
+    }
+    Countries%variant{
+        CD{"Kongo (RDK)"}
+        CG{"Kongo (Republik)"}
+        CI{"Aod Olifant"}
+        CZ{"Republik Tchek"}
+        FK{"Inizi Falkland (Inizi Maloù)"}
+        NZ{"Aotearoa Zeland-Nevez"}
+        SZ{"Swaziland"}
+        TL{"Timor ar Reter"}
     }
 }

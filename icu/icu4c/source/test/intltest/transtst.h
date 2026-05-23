@@ -324,7 +324,7 @@ private:
     /** 
      * Check that casing handles surrogates.
      */
-    void TestSurrogateCasing (void);
+    void TestSurrogateCasing();
 
     void TestFunction(void);
 
@@ -381,24 +381,24 @@ private:
     void expect(const UnicodeString& rules,
                 const UnicodeString& source,
                 const UnicodeString& expectedResult,
-                UTransPosition *pos=0);
+                UTransPosition* pos = nullptr);
 
     void expect(const UnicodeString& id,
                 const UnicodeString& rules,
                 const UnicodeString& source,
                 const UnicodeString& expectedResult,
-                UTransPosition *pos=0);
+                UTransPosition* pos = nullptr);
 
     void expect(const Transliterator& t,
                 const UnicodeString& source,
                 const UnicodeString& expectedResult,
                 const Transliterator& reverseTransliterator);
-    
+
     void expect(const Transliterator& t,
                 const UnicodeString& source,
                 const UnicodeString& expectedResult,
-                UTransPosition *pos=0);
-    
+                UTransPosition* pos = nullptr);
+
     void expectAux(const UnicodeString& tag,
                    const UnicodeString& source,
                    const UnicodeString& result,

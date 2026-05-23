@@ -351,7 +351,7 @@ UCharsTrieBuilder::write(int32_t unit) {
     int32_t newLength=ucharsLength+1;
     if(ensureCapacity(newLength)) {
         ucharsLength=newLength;
-        uchars[ucharsCapacity-ucharsLength]=(UChar)unit;
+        uchars[ucharsCapacity - ucharsLength] = static_cast<char16_t>(unit);
     }
     return ucharsLength;
 }
@@ -379,19 +379,19 @@ UCharsTrieBuilder::writeValueAndFinal(int32_t i, UBool isFinal) {
     UChar intUnits[3];
     int32_t length;
     if(i<0 || i>UCharsTrie::kMaxTwoUnitValue) {
-        intUnits[0]=(UChar)(UCharsTrie::kThreeUnitValueLead);
-        intUnits[1]=(UChar)((uint32_t)i>>16);
-        intUnits[2]=(UChar)i;
+        intUnits[0] = static_cast<char16_t>(UCharsTrie::kThreeUnitValueLead);
+        intUnits[1] = static_cast<char16_t>(static_cast<uint32_t>(i) >> 16);
+        intUnits[2] = static_cast<char16_t>(i);
         length=3;
     // } else if(i<=UCharsTrie::kMaxOneUnitValue) {
     //     intUnits[0]=(UChar)(i);
     //     length=1;
     } else {
-        intUnits[0]=(UChar)(UCharsTrie::kMinTwoUnitValueLead+(i>>16));
-        intUnits[1]=(UChar)i;
+        intUnits[0] = static_cast<char16_t>(UCharsTrie::kMinTwoUnitValueLead + (i >> 16));
+        intUnits[1] = static_cast<char16_t>(i);
         length=2;
     }
-    intUnits[0]=(UChar)(intUnits[0]|(isFinal<<15));
+    intUnits[0] = static_cast<char16_t>(intUnits[0] | (isFinal << 15));
     return write(intUnits, length);
 }
 
@@ -403,19 +403,19 @@ UCharsTrieBuilder::writeValueAndType(UBool hasValue, int32_t value, int32_t node
     UChar intUnits[3];
     int32_t length;
     if(value<0 || value>UCharsTrie::kMaxTwoUnitNodeValue) {
-        intUnits[0]=(UChar)(UCharsTrie::kThreeUnitNodeValueLead);
-        intUnits[1]=(UChar)((uint32_t)value>>16);
-        intUnits[2]=(UChar)value;
+        intUnits[0] = static_cast<char16_t>(UCharsTrie::kThreeUnitNodeValueLead);
+        intUnits[1] = static_cast<char16_t>(static_cast<uint32_t>(value) >> 16);
+        intUnits[2] = static_cast<char16_t>(value);
         length=3;
     } else if(value<=UCharsTrie::kMaxOneUnitNodeValue) {
-        intUnits[0]=(UChar)((value+1)<<6);
+        intUnits[0] = static_cast<char16_t>((value + 1) << 6);
         length=1;
     } else {
-        intUnits[0]=(UChar)(UCharsTrie::kMinTwoUnitNodeValueLead+((value>>10)&0x7fc0));
-        intUnits[1]=(UChar)value;
+        intUnits[0] = static_cast<char16_t>(UCharsTrie::kMinTwoUnitNodeValueLead + ((value >> 10) & 0x7fc0));
+        intUnits[1] = static_cast<char16_t>(value);
         length=2;
     }
-    intUnits[0]|=(UChar)node;
+    intUnits[0] |= static_cast<char16_t>(node);
     return write(intUnits, length);
 }
 
@@ -429,14 +429,14 @@ UCharsTrieBuilder::writeDeltaTo(int32_t jumpTarget) {
     UChar intUnits[3];
     int32_t length;
     if(i<=UCharsTrie::kMaxTwoUnitDelta) {
-        intUnits[0]=(UChar)(UCharsTrie::kMinTwoUnitDeltaLead+(i>>16));
+        intUnits[0] = static_cast<char16_t>(UCharsTrie::kMinTwoUnitDeltaLead + (i >> 16));
         length=1;
     } else {
-        intUnits[0]=(UChar)(UCharsTrie::kThreeUnitDeltaLead);
-        intUnits[1]=(UChar)(i>>16);
+        intUnits[0] = static_cast<char16_t>(UCharsTrie::kThreeUnitDeltaLead);
+        intUnits[1] = static_cast<char16_t>(i >> 16);
         length=2;
     }
-    intUnits[length++]=(UChar)i;
+    intUnits[length++] = static_cast<char16_t>(i);
     return write(intUnits, length);
 }
 

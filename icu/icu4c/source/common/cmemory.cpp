@@ -15,8 +15,8 @@
 *                     If you have a need to replace ICU allocation, this is the
 *                     place to do it.
 *
-*                     Note that uprv_malloc(0) returns a non-NULL pointer, and
-*                     that a subsequent free of that pointer value is a NOP.
+*                     Note that uprv_malloc(0) returns a non-nullptr pointer,
+*                     and that a subsequent free of that pointer value is a NOP.
 *
 ******************************************************************************
 */

@@ -149,7 +149,7 @@ int32_t StringReplacer::replace(Replaceable& text,
             text.copy(start-len, start, tempStart);
             destStart += len;
         } else {
-            UnicodeString str((UChar) 0xFFFF);
+            UnicodeString str(static_cast<char16_t>(0xFFFF));
             text.handleReplaceBetween(tempStart, tempStart, str);
             destStart++;
         }

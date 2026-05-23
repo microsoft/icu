@@ -118,7 +118,6 @@
 #define U_OBSOLETE U_CAPI
 /** Obsolete/same as U_CAPI; was used to declare a function as an internal ICU C API  */
 #define U_INTERNAL U_CAPI
-
 //IGNORE_WINDOWS_HEADERS_START
 // MSFT-Change: These are C++ only constructs. The Windows OS SDK version of ICU only exposes
 // the flat C APIs.
@@ -145,7 +144,28 @@
 #define U_FINAL final
 #endif
 
-//IGNORE_WINDOWS_HEADERS_END
+
+/**
+ * \def U_FORCE_INLINE
+ * Forces function inlining on compilers that are known to support it.
+ * Place this before specifiers like "static" and "explicit".
+ *
+ * This does not replace the "inline" keyword which suspends the One Definition Rule (ODR)
+ * in addition to optionally serving as an inlining hint to the compiler.
+ *
+ * @internal
+ */
+#ifdef U_FORCE_INLINE
+    // already defined
+#elif defined(U_IN_DOXYGEN)
+#  define U_FORCE_INLINE inline
+#elif (defined(__clang__) && __clang__) || U_GCC_MAJOR_MINOR != 0
+#  define U_FORCE_INLINE [[gnu::always_inline]]
+#elif defined(U_REAL_MSVC)
+#  define U_FORCE_INLINE __forceinline
+#else
+#  define U_FORCE_INLINE inline
+#endif
 
 // Before ICU 65, function-like, multi-statement ICU macros were just defined as
 // series of statements wrapped in { } blocks and the caller could choose to
@@ -354,7 +374,7 @@ typedef int8_t UBool;
 
 /* UChar and UChar32 definitions -------------------------------------------- */
 
-/** Number of bytes in a UChar. @stable ICU 2.0 */
+/** Number of bytes in a UChar (always 2). @stable ICU 2.0 */
 #define U_SIZEOF_UCHAR 2
 
 /**
@@ -362,11 +382,7 @@ typedef int8_t UBool;
  * If 1, then char16_t is a typedef and not a real type (yet)
  * @internal
  */
-#if (U_PLATFORM == U_PF_AIX) && defined(__cplusplus) &&(U_CPLUSPLUS_VERSION < 11)
-// for AIX, uchar.h needs to be included
-# include <uchar.h>
-# define U_CHAR16_IS_TYPEDEF 1
-#elif defined(_MSC_VER) && (_MSC_VER < 1900)
+#if defined(_MSC_VER) && (_MSC_VER < 1900)
 // Versions of Visual Studio/MSVC below 2015 do not support char16_t as a real type,
 // and instead use a typedef.  https://msdn.microsoft.com/library/bb531344.aspx
 # define U_CHAR16_IS_TYPEDEF 1
@@ -402,22 +418,14 @@ typedef int8_t UBool;
 #if 1
     // #if 1 is normal. UChar defaults to char16_t in C++.
     // For configuration testing of UChar=uint16_t temporarily change this to #if 0.
-    // The intltest Makefile #defines UCHAR_TYPE=char16_t,
-    // so we only #define it to uint16_t if it is undefined so far.
-#elif !defined(UCHAR_TYPE)
+#else
 #   define UCHAR_TYPE uint16_t
 #endif
 
-#if defined(U_COMBINED_IMPLEMENTATION) || defined(U_COMMON_IMPLEMENTATION) || \
-        defined(U_I18N_IMPLEMENTATION) || defined(U_IO_IMPLEMENTATION)
-    // Inside the ICU library code, never configurable.
-    typedef char16_t UChar;
-#elif defined(UCHAR_TYPE)
-    typedef UCHAR_TYPE UChar;
-#elif (U_CPLUSPLUS_VERSION >= 11)
+#if defined(U_ALL_IMPLEMENTATION) || !defined(UCHAR_TYPE)
     typedef char16_t UChar;
 #else
-    typedef uint16_t UChar;
+    typedef UCHAR_TYPE UChar;
 #endif
 
 /**

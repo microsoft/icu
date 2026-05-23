@@ -60,7 +60,7 @@ static const char *moreCases[]={
 void NormalizerConformanceTest::compare(const UnicodeString& s1, const UnicodeString& s2){
     UErrorCode status=U_ZERO_ERROR;
      // TODO: Re-enable this tests after UTC fixes UAX 21
-    if(s1.indexOf((UChar32)0x0345)>=0)return;
+    if (s1.indexOf(static_cast<UChar32>(0x0345)) >= 0) return;
     if(Normalizer::compare(s1,s2,U_FOLD_CASE_DEFAULT,status)!=0){
         errln("Normalizer::compare() failed for s1: " + prettify(s1) + " s2: " +prettify(s2));
     }
@@ -205,7 +205,7 @@ void NormalizerConformanceTest::TestConformance(FileStream *input, int32_t optio
 
         // Parse out the fields
         if (!hexsplit(lineBuf, ';', fields, FIELD_COUNT)) {
-            errln((UnicodeString)"Unable to parse line " + count);
+            errln(UnicodeString("Unable to parse line ") + count);
             break; // Syntax error
         }
 
@@ -273,10 +273,10 @@ void NormalizerConformanceTest::TestConformance(FileStream *input, int32_t optio
     }
 
     if (failCount != 0) {
-        dataerrln((UnicodeString)"Total: " + failCount + " lines/code points failed, " +
+        dataerrln(UnicodeString("Total: ") + failCount + " lines/code points failed, " +
               passCount + " lines/code points passed");
     } else {
-        logln((UnicodeString)"Total: " + passCount + " lines/code points passed");
+        logln(UnicodeString("Total: ") + passCount + " lines/code points passed");
     }
 }
 
@@ -511,13 +511,14 @@ UBool NormalizerConformanceTest::checkNorm(UNormalizationMode mode, int32_t opti
 
     // Do the Edits cover the entire input & output?
     UBool pass = true;
-    pass &= assertEquals("edits.hasChanges()", (UBool)(s8 != out8), edits.hasChanges());
+    pass &= assertEquals("edits.hasChanges()", s8 != out8, edits.hasChanges());
     pass &= assertEquals("edits.lengthDelta()",
-                         (int32_t)(out8.length() - s8.length()), edits.lengthDelta());
+                         static_cast<int64_t>(out8.length()) - static_cast<int64_t>(s8.length()),
+                         edits.lengthDelta());
     Edits::Iterator iter = edits.getCoarseIterator();
     while (iter.next(errorCode)) {}
-    pass &= assertEquals("edits source length", static_cast<int32_t>(s8.length()), iter.sourceIndex());
-    pass &= assertEquals("edits destination length", static_cast<int32_t>(out8.length()), iter.destinationIndex());
+    pass &= assertEquals("edits source length", s8.length(), iter.sourceIndex());
+    pass &= assertEquals("edits destination length", out8.length(), iter.destinationIndex());
     return pass;
 }
 
@@ -612,7 +613,7 @@ UBool NormalizerConformanceTest::hexsplit(const char *s, char delimiter,
         for(;;) {
             c = (UChar32)uprv_strtoul(t, &end, 16);
 
-            if( (char *)t == end ||
+            if (const_cast<char*>(t) == end ||
                 (uint32_t)c > 0x10ffff ||
                 (*end != ' ' && *end != '\t' && *end != delimiter)
             ) {
@@ -657,7 +658,7 @@ void NormalizerConformanceTest::_testOneLine(const char *line) {
   UErrorCode status = U_ZERO_ERROR;
     UnicodeString fields[FIELD_COUNT];
     if (!hexsplit(line, ';', fields, FIELD_COUNT)) {
-        errln((UnicodeString)"Unable to parse line " + line);
+        errln(UnicodeString("Unable to parse line ") + line);
     } else {
         checkConformance(fields, line, 0, status);
     }

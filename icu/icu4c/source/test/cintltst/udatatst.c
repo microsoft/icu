@@ -46,6 +46,7 @@
 #include "ucol_imp.h"
 #include "ucol_swp.h"
 #include "ucnv_bld.h"
+#include "udataswp.h"
 #include "sprpimpl.h"
 #include "rbbidata.h"
 
@@ -1138,18 +1139,7 @@ static void TestICUDataName()
     switch(U_CHARSET_FAMILY)
     {
     case U_ASCII_FAMILY:
-          switch((int)U_IS_BIG_ENDIAN)
-          {
-          case 1:
-                typeChar = 'b';
-                break;
-          case 0:
-                typeChar = 'l';
-                break;
-          default:
-                log_err("Expected 1 or 0 for U_IS_BIG_ENDIAN, got %d!\n", (int)U_IS_BIG_ENDIAN);
-                /* return; */
-          }
+          typeChar = U_IS_BIG_ENDIAN ? 'b' : 'l';
           break;
     case U_EBCDIC_FAMILY:
         typeChar = 'e';
@@ -1333,7 +1323,7 @@ static const struct {
     /* EUC-TW (3-byte) conversion table file without extension */
     {"ibm-964_P110-1999",        "cnv", ucnv_swap},
     /* GB 18030 (4-byte) conversion table file without extension */
-    {"gb18030",                  "cnv", ucnv_swap},
+    {"gb18030-2022",             "cnv", ucnv_swap},
     /* MBCS conversion table file with extension */
     {"*test4x",                  "cnv", ucnv_swap},
     /*
@@ -1685,7 +1675,7 @@ TestSwapData() {
         log_err("udata_openSwapperForInputData should have returned NULL with bad argument\n", name);
     }
     errorCode=U_ZERO_ERROR;
-    memset(buffer, 0, 2*SWAP_BUFFER_SIZE);
+    memset(buffer, 0, sizeof(2*SWAP_BUFFER_SIZE));
     ds=udata_openSwapperForInputData(buffer, 2*SWAP_BUFFER_SIZE,
                          !U_IS_BIG_ENDIAN, U_ASCII_FAMILY,
                          &errorCode);

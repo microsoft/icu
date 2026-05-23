@@ -375,12 +375,12 @@ StringTrieBuilder::registerFinalValue(int32_t value, UErrorCode &errorCode) {
 
 int32_t
 StringTrieBuilder::hashNode(const void *node) {
-    return ((const Node *)node)->hashCode();
+    return static_cast<const Node*>(node)->hashCode();
 }
 
 UBool
 StringTrieBuilder::equalNodes(const void *left, const void *right) {
-    return *(const Node *)left==*(const Node *)right;
+    return *static_cast<const Node*>(left) == *static_cast<const Node*>(right);
 }
 
 bool

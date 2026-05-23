@@ -164,7 +164,7 @@ RegexPattern &RegexPattern::operator = (const RegexPattern &other) {
 //--------------------------------------------------------------------------
 void RegexPattern::init() {
     fFlags            = 0;
-    fCompiledPat      = 0;
+    fCompiledPat      = nullptr;
     fLiteralText.remove();
     fSets             = NULL;
     fSets8            = NULL;
@@ -232,10 +232,8 @@ void RegexPattern::zap() {
     int i;
     for (i=1; i<fSets->size(); i++) {
         UnicodeSet *s;
-        s = (UnicodeSet *)fSets->elementAt(i);
-        if (s != NULL) {
-            delete s;
-        }
+        s = static_cast<UnicodeSet*>(fSets->elementAt(i));
+        delete s;
     }
     delete fSets;
     fSets = NULL;
@@ -579,7 +577,7 @@ UnicodeString RegexPattern::pattern() const {
     if (fPatternString != NULL) {
         return *fPatternString;
     } else if (fPattern == NULL) {
-        return UnicodeString();
+        return {};
     } else {
         UErrorCode status = U_ZERO_ERROR;
         int64_t nativeLen = utext_nativeLength(fPattern);

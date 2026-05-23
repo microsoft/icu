@@ -61,7 +61,7 @@ UBool UnicodeSetIterator::next() {
 
     if (nextString >= stringCount) return false;
     codepoint = (UChar32)IS_STRING; // signal that value is actually a string
-    string = (const UnicodeString*) set->strings->elementAt(nextString++);
+    string = static_cast<const UnicodeString*>(set->strings_->elementAt(nextString++));
     return true;
 }
 
@@ -94,7 +94,7 @@ UBool UnicodeSetIterator::nextRange() {
 
     if (nextString >= stringCount) return false;
     codepoint = (UChar32)IS_STRING; // signal that value is actually a string
-    string = (const UnicodeString*) set->strings->elementAt(nextString++);
+    string = static_cast<const UnicodeString*>(set->strings_->elementAt(nextString++));
     return true;
 }
 
@@ -135,12 +135,12 @@ void UnicodeSetIterator::loadRange(int32_t iRange) {
 
 
 const UnicodeString& UnicodeSetIterator::getString()  {
-    if (string==NULL && codepoint!=(UChar32)IS_STRING) {
+    if (string == nullptr && codepoint != static_cast<UChar32>(IS_STRING)) {
        if (cpString == NULL) {
           cpString = new UnicodeString();
        }
        if (cpString != NULL) {
-          cpString->setTo((UChar32)codepoint);
+          cpString->setTo(codepoint);
        }
        string = cpString;
     }

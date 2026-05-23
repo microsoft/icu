@@ -81,7 +81,10 @@ void  RBBITableBuilder::buildForwardTable() {
     // Walk through the tree, replacing any references to $variables with a copy of the
     //   parse tree for the substitution expression.
     //
-    fTree = fTree->flattenVariables();
+    fTree = fTree->flattenVariables(*fStatus, 0);
+    if (U_FAILURE(*fStatus)) {
+        return;
+    }
 #ifdef RBBI_DEBUG
     if (fRB->fDebugEnv && uprv_strstr(fRB->fDebugEnv, "ftree")) {
         RBBIDebugPuts("\nParse tree after flattening variable references.");
@@ -96,13 +99,22 @@ void  RBBITableBuilder::buildForwardTable() {
     //   {bof} fake character.
     // 
     if (fRB->fSetBuilder->sawBOF()) {
-        RBBINode *bofTop    = new RBBINode(RBBINode::opCat);
-        RBBINode *bofLeaf   = new RBBINode(RBBINode::leafChar);
-        // Delete and exit if memory allocation failed.
-        if (bofTop == NULL || bofLeaf == NULL) {
+        RBBINode *bofTop    = new RBBINode(RBBINode::opCat, *fStatus);
+        if (bofTop == nullptr) {
             *fStatus = U_MEMORY_ALLOCATION_ERROR;
+        }
+        if (U_FAILURE(*fStatus)) {
             delete bofTop;
+            return;
+        }
+        RBBINode *bofLeaf   = new RBBINode(RBBINode::leafChar, *fStatus);
+        // Delete and exit if memory allocation failed.
+        if (bofLeaf == nullptr) {
+            *fStatus = U_MEMORY_ALLOCATION_ERROR;
+        }
+        if (U_FAILURE(*fStatus)) {
             delete bofLeaf;
+            delete bofTop;
             return;
         }
         bofTop->fLeftChild  = bofLeaf;
@@ -117,18 +129,23 @@ void  RBBITableBuilder::buildForwardTable() {
     //   Appears as a cat-node, left child being the original tree,
     //   right child being the end marker.
     //
-    RBBINode *cn = new RBBINode(RBBINode::opCat);
+    RBBINode *cn = new RBBINode(RBBINode::opCat, *fStatus);
     // Exit if memory allocation failed.
     if (cn == NULL) {
         *fStatus = U_MEMORY_ALLOCATION_ERROR;
+    }
+    if (U_FAILURE(*fStatus)) {
+        delete cn;
         return;
     }
     cn->fLeftChild = fTree;
     fTree->fParent = cn;
-    RBBINode *endMarkerNode = cn->fRightChild = new RBBINode(RBBINode::endMark);
+    RBBINode *endMarkerNode = cn->fRightChild = new RBBINode(RBBINode::endMark, *fStatus);
     // Delete and exit if memory allocation failed.
     if (cn->fRightChild == NULL) {
         *fStatus = U_MEMORY_ALLOCATION_ERROR;
+    }
+    if (U_FAILURE(*fStatus)) {
         delete cn;
         return;
     }
@@ -139,7 +156,7 @@ void  RBBITableBuilder::buildForwardTable() {
     //  Replace all references to UnicodeSets with the tree for the equivalent
     //      expression.
     //
-    fTree->flattenSets();
+    fTree->flattenSets(*fStatus, 0);
 #ifdef RBBI_DEBUG
     if (fRB->fDebugEnv && uprv_strstr(fRB->fDebugEnv, "stree")) {
         RBBIDebugPuts("\nParse tree after flattening Unicode Set references.");
@@ -358,7 +375,7 @@ void RBBITableBuilder::calcFollowPos(RBBINode *n) {
 
         UVector *LastPosOfLeftChild = n->fLeftChild->fLastPosSet;
 
-        for (ix=0; ix<(uint32_t)LastPosOfLeftChild->size(); ix++) {
+        for (ix = 0; ix < static_cast<uint32_t>(LastPosOfLeftChild->size()); ix++) {
             i = (RBBINode *)LastPosOfLeftChild->elementAt(ix);
             setAdd(i->fFollowPos, n->fRightChild->fFirstPosSet);
         }
@@ -370,7 +387,7 @@ void RBBITableBuilder::calcFollowPos(RBBINode *n) {
         RBBINode   *i;  // again, n and i are the names from Aho's description.
         uint32_t    ix;
 
-        for (ix=0; ix<(uint32_t)n->fLastPosSet->size(); ix++) {
+        for (ix = 0; ix < static_cast<uint32_t>(n->fLastPosSet->size()); ix++) {
             i = (RBBINode *)n->fLastPosSet->elementAt(ix);
             setAdd(i->fFollowPos, n->fFirstPosSet);
         }
@@ -457,21 +474,6 @@ void RBBITableBuilder::calcChainedFollowPos(RBBINode *tree, RBBINode *endMarkNod
         }
 
         // We've got a node that can end a match.
-
-        // !!LBCMNoChain implementation:  If this node's val correspond to
-        // the Line Break $CM char class, don't chain from it.
-        // TODO:  Remove this. !!LBCMNoChain is deprecated, and is not used
-        //        by any of the standard ICU rules.
-        if (fRB->fLBCMNoChain) {
-            UChar32 c = this->fRB->fSetBuilder->getFirstChar(endNode->fVal);
-            if (c != -1) {
-                // c == -1 occurs with sets containing only the {eof} marker string.
-                ULineBreak cLBProp = (ULineBreak)u_getIntPropertyValue(c, UCHAR_LINE_BREAK);
-                if (cLBProp == U_LB_COMBINING_MARK) {
-                    continue;
-                }
-            }
-        }
 
         // Now iterate over the nodes that can start a match, looking for ones
         //   with the same char class as our ending node.
@@ -1403,7 +1405,7 @@ void RBBITableBuilder::exportTable(void *where) {
 
     for (state=0; state<table->fNumStates; state++) {
         RBBIStateDescriptor *sd = (RBBIStateDescriptor *)fDStates->elementAt(state);
-        RBBIStateTableRow   *row = (RBBIStateTableRow *)(table->fTableData + state*table->fRowLen);
+        RBBIStateTableRow* row = reinterpret_cast<RBBIStateTableRow*>(table->fTableData + state * table->fRowLen);
         if (use8BitsForTable()) {
             U_ASSERT (sd->fAccepting <= 255);
             U_ASSERT (sd->fLookAhead <= 255);
@@ -1440,7 +1442,7 @@ void RBBITableBuilder::buildSafeReverseTable(UErrorCode &status) {
     // 1. Identify pairs of character classes that are "safe." Safe means that boundaries
     // following the pair do not depend on context or state before the pair. To test
     // whether a pair is safe, run it through the main forward state table, starting
-    // from each state. If the the final state is the same, no matter what the starting state,
+    // from each state. If the final state is the same, no matter what the starting state,
     // the pair is safe.
     //
     // 2. Build a state table that recognizes the safe pairs. It's similar to their
@@ -1617,7 +1619,7 @@ void RBBITableBuilder::exportSafeTable(void *where) {
 
     for (state=0; state<table->fNumStates; state++) {
         UnicodeString *rowString = (UnicodeString *)fSafeTable->elementAt(state);
-        RBBIStateTableRow   *row = (RBBIStateTableRow *)(table->fTableData + state*table->fRowLen);
+        RBBIStateTableRow* row = reinterpret_cast<RBBIStateTableRow*>(table->fTableData + state * table->fRowLen);
         if (use8BitsForSafeTable()) {
             RBBIStateTableRow8 *r8 = (RBBIStateTableRow8*)row;
             r8->fAccepting = 0;

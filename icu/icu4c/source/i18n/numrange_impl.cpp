@@ -160,6 +160,8 @@ void NumberRangeFormatterImpl::format(UFormattedNumberRangeData& data, bool equa
         return;
     }
 
+    DecimalQuantity quantityBackup(data.quantity1);
+
     MicroProps micros1;
     MicroProps micros2;
     formatterImpl1.preProcess(data.quantity1, micros1, status);
@@ -216,7 +218,7 @@ void NumberRangeFormatterImpl::format(UFormattedNumberRangeData& data, bool equa
                         UNUM_IDENTITY_RESULT_EQUAL_BEFORE_ROUNDING):
         case identity2d(UNUM_IDENTITY_FALLBACK_APPROXIMATELY_OR_SINGLE_VALUE,
                         UNUM_IDENTITY_RESULT_EQUAL_AFTER_ROUNDING):
-            formatApproximately(data, micros1, micros2, status);
+            formatApproximately(data, quantityBackup, micros1, micros2, status);
             break;
 
         case identity2d(UNUM_IDENTITY_FALLBACK_APPROXIMATELY_OR_SINGLE_VALUE,
@@ -239,7 +241,7 @@ void NumberRangeFormatterImpl::formatSingleValue(UFormattedNumberRangeData& data
                                                  UErrorCode& status) const {
     if (U_FAILURE(status)) { return; }
     if (fSameFormatters) {
-        int32_t length = NumberFormatterImpl::writeNumber(micros1, data.quantity1, data.getStringRef(), 0, status);
+        int32_t length = NumberFormatterImpl::writeNumber(micros1.simple, data.quantity1, data.getStringRef(), 0, status);
         NumberFormatterImpl::writeAffixes(micros1, data.getStringRef(), 0, length, status);
     } else {
         formatRange(data, micros1, micros2, status);
@@ -248,15 +250,15 @@ void NumberRangeFormatterImpl::formatSingleValue(UFormattedNumberRangeData& data
 
 
 void NumberRangeFormatterImpl::formatApproximately (UFormattedNumberRangeData& data,
+                                                    DecimalQuantity quantity,
                                                     MicroProps& micros1, MicroProps& micros2,
                                                     UErrorCode& status) const {
     if (U_FAILURE(status)) { return; }
     if (fSameFormatters) {
         // Re-format using the approximately formatter:
         MicroProps microsAppx;
-        data.quantity1.resetExponent();
-        fApproximatelyFormatter.preProcess(data.quantity1, microsAppx, status);
-        int32_t length = NumberFormatterImpl::writeNumber(microsAppx, data.quantity1, data.getStringRef(), 0, status);
+        fApproximatelyFormatter.preProcess(quantity, microsAppx, status);
+        int32_t length = NumberFormatterImpl::writeNumber(microsAppx.simple, quantity, data.getStringRef(), 0, status);
         length += microsAppx.modInner->apply(data.getStringRef(), 0, length, status);
         length += microsAppx.modMiddle->apply(data.getStringRef(), 0, length, status);
         microsAppx.modOuter->apply(data.getStringRef(), 0, length, status);
@@ -384,10 +386,10 @@ void NumberRangeFormatterImpl::formatRange(UFormattedNumberRangeData& data,
         }
     }
 
-    length1 += NumberFormatterImpl::writeNumber(micros1, data.quantity1, string, UPRV_INDEX_0, status);
+    length1 += NumberFormatterImpl::writeNumber(micros1.simple, data.quantity1, string, UPRV_INDEX_0, status);
     // ICU-21684: Write the second number to a temp string to avoid repeated insert operations
     FormattedStringBuilder tempString;
-    NumberFormatterImpl::writeNumber(micros2, data.quantity2, tempString, 0, status);
+    NumberFormatterImpl::writeNumber(micros2.simple, data.quantity2, tempString, 0, status);
     length2 += string.insert(UPRV_INDEX_2, tempString, status);
 
     // TODO: Support padding?

@@ -115,7 +115,7 @@ BytesTrie::Iterator::next(UErrorCode &errorCode) {
         pos=bytes_+stack_->elementAti(stackSize-2);
         stack_->setSize(stackSize-2);
         str_->truncate(length&0xffff);
-        length=(int32_t)((uint32_t)length>>16);
+        length = static_cast<int32_t>(static_cast<uint32_t>(length) >> 16);
         if(length>1) {
             pos=branchNext(pos, length, errorCode);
             if(pos==NULL) {
@@ -134,7 +134,7 @@ BytesTrie::Iterator::next(UErrorCode &errorCode) {
         int32_t node=*pos++;
         if(node>=kMinValueLead) {
             // Deliver value for the byte sequence so far.
-            UBool isFinal=(UBool)(node&kValueIsFinal);
+            UBool isFinal = static_cast<UBool>(node & kValueIsFinal);
             value_=readValue(pos, node>>1);
             if(isFinal || (maxLength_>0 && str_->length()==maxLength_)) {
                 pos_=NULL;
@@ -186,7 +186,7 @@ BytesTrie::Iterator::branchNext(const uint8_t *pos, int32_t length, UErrorCode &
     while(length>kMaxBranchLinearSubNodeLength) {
         ++pos;  // ignore the comparison byte
         // Push state for the greater-or-equal edge.
-        stack_->addElement((int32_t)(skipDelta(pos)-bytes_), errorCode);
+        stack_->addElement(static_cast<int32_t>(skipDelta(pos) - bytes_), errorCode);
         stack_->addElement(((length-(length>>1))<<16)|str_->length(), errorCode);
         // Follow the less-than edge.
         length>>=1;
@@ -196,10 +196,10 @@ BytesTrie::Iterator::branchNext(const uint8_t *pos, int32_t length, UErrorCode &
     // Read the first (key, value) pair.
     uint8_t trieByte=*pos++;
     int32_t node=*pos++;
-    UBool isFinal=(UBool)(node&kValueIsFinal);
+    UBool isFinal = static_cast<UBool>(node & kValueIsFinal);
     int32_t value=readValue(pos, node>>1);
     pos=skipValue(pos, node);
-    stack_->addElement((int32_t)(pos-bytes_), errorCode);
+    stack_->addElement(static_cast<int32_t>(pos - bytes_), errorCode);
     stack_->addElement(((length-1)<<16)|str_->length(), errorCode);
     str_->append((char)trieByte, errorCode);
     if(isFinal) {

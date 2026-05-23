@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 ja{
     zoneStrings{
         "Africa:Abidjan"{
@@ -258,6 +258,9 @@ ja{
         "America:Chihuahua"{
             ec{"チワワ"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"シウダー・フアレス"}
+        }
         "America:Coral_Harbour"{
             ec{"アティコカン"}
         }
@@ -266,6 +269,9 @@ ja{
         }
         "America:Costa_Rica"{
             ec{"コスタリカ"}
+        }
+        "America:Coyhaique"{
+            ec{"コジャイケ"}
         }
         "America:Creston"{
             ec{"クレストン"}
@@ -462,9 +468,6 @@ ja{
         "America:New_York"{
             ec{"ニューヨーク"}
         }
-        "America:Nipigon"{
-            ec{"ニピゴン"}
-        }
         "America:Nome"{
             ec{"ノーム"}
         }
@@ -485,9 +488,6 @@ ja{
         }
         "America:Panama"{
             ec{"パナマ"}
-        }
-        "America:Pangnirtung"{
-            ec{"パンナータング"}
         }
         "America:Paramaribo"{
             ec{"パラマリボ"}
@@ -510,9 +510,6 @@ ja{
         "America:Punta_Arenas"{
             ec{"プンタアレナス"}
         }
-        "America:Rainy_River"{
-            ec{"レイニーリバー"}
-        }
         "America:Rankin_Inlet"{
             ec{"ランキンインレット"}
         }
@@ -527,9 +524,6 @@ ja{
         }
         "America:Rio_Branco"{
             ec{"リオブランコ"}
-        }
-        "America:Santa_Isabel"{
-            ec{"サンタイサベル"}
         }
         "America:Santarem"{
             ec{"サンタレム"}
@@ -576,9 +570,6 @@ ja{
         "America:Thule"{
             ec{"チューレ"}
         }
-        "America:Thunder_Bay"{
-            ec{"サンダーベイ"}
-        }
         "America:Tijuana"{
             ec{"ティフアナ"}
         }
@@ -599,9 +590,6 @@ ja{
         }
         "America:Yakutat"{
             ec{"ヤクタット"}
-        }
-        "America:Yellowknife"{
-            ec{"イエローナイフ"}
         }
         "Antarctica:Casey"{
             ec{"ケーシー基地"}
@@ -692,9 +680,6 @@ ja{
         }
         "Asia:Chita"{
             ec{"チタ"}
-        }
-        "Asia:Choibalsan"{
-            ec{"チョイバルサン"}
         }
         "Asia:Colombo"{
             ec{"コロンボ"}
@@ -867,6 +852,9 @@ ja{
         "Asia:Ulaanbaatar"{
             ec{"ウランバートル"}
         }
+        "Asia:Urumqi"{
+            ec{"ウルムチ"}
+        }
         "Asia:Ust-Nera"{
             ec{"ウスチネラ"}
         }
@@ -923,9 +911,6 @@ ja{
         }
         "Australia:Broken_Hill"{
             ec{"ブロークンヒル"}
-        }
-        "Australia:Currie"{
-            ec{"カリー"}
         }
         "Australia:Darwin"{
             ec{"ダーウィン"}
@@ -1109,9 +1094,6 @@ ja{
         "Europe:Ulyanovsk"{
             ec{"ウリヤノフスク"}
         }
-        "Europe:Uzhgorod"{
-            ec{"ウージュホロド"}
-        }
         "Europe:Vaduz"{
             ec{"ファドゥーツ"}
         }
@@ -1132,9 +1114,6 @@ ja{
         }
         "Europe:Zagreb"{
             ec{"ザグレブ"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"ザポリージャ"}
         }
         "Europe:Zurich"{
             ec{"チューリッヒ"}
@@ -1191,7 +1170,7 @@ ja{
             ec{"エフェテ島"}
         }
         "Pacific:Enderbury"{
-            ec{"エンダーベリー島"}
+            ec{"カントン島"}
         }
         "Pacific:Fakaofo"{
             ec{"ファカオフォ"}
@@ -1216,12 +1195,6 @@ ja{
         }
         "Pacific:Honolulu"{
             ec{"ホノルル"}
-        }
-        "Pacific:Johnston"{
-            ec{"ジョンストン島"}
-        }
-        "Pacific:Kanton"{
-            ec{"カントン島"}
         }
         "Pacific:Kiritimati"{
             ec{"キリスィマスィ島"}
@@ -1310,9 +1283,7 @@ ja{
             ls{"南アフリカ標準時"}
         }
         "meta:Africa_Western"{
-            ld{"西アフリカ夏時間"}
-            lg{"西アフリカ時間"}
-            ls{"西アフリカ標準時"}
+            ls{"西アフリカ時間"}
         }
         "meta:Alaska"{
             ld{"アラスカ夏時間"}
@@ -1330,24 +1301,24 @@ ja{
             ls{"アマゾン標準時"}
         }
         "meta:America_Central"{
-            ld{"アメリカ中部夏時間"}
-            lg{"アメリカ中部時間"}
-            ls{"アメリカ中部標準時"}
+            ld{"米国中部夏時間"}
+            lg{"米国中部時間"}
+            ls{"米国中部標準時"}
         }
         "meta:America_Eastern"{
-            ld{"アメリカ東部夏時間"}
-            lg{"アメリカ東部時間"}
-            ls{"アメリカ東部標準時"}
+            ld{"米国東部夏時間"}
+            lg{"米国東部時間"}
+            ls{"米国東部標準時"}
         }
         "meta:America_Mountain"{
-            ld{"アメリカ山地夏時間"}
-            lg{"アメリカ山地時間"}
-            ls{"アメリカ山地標準時"}
+            ld{"米国山岳夏時間"}
+            lg{"米国山岳部時間"}
+            ls{"米国山岳標準時"}
         }
         "meta:America_Pacific"{
-            ld{"アメリカ太平洋夏時間"}
-            lg{"アメリカ太平洋時間"}
-            ls{"アメリカ太平洋標準時"}
+            ld{"米国太平洋夏時間"}
+            lg{"米国太平洋時間"}
+            ls{"米国太平洋標準時"}
         }
         "meta:Anadyr"{
             ld{"アナディリ夏時間"}
@@ -1355,9 +1326,9 @@ ja{
             ls{"アナディリ標準時"}
         }
         "meta:Apia"{
-            ld{"アピア夏時間"}
-            lg{"アピア時間"}
-            ls{"アピア標準時"}
+            ld{"サモア夏時間"}
+            lg{"サモア時間"}
+            ls{"サモア標準時"}
         }
         "meta:Aqtau"{
             ld{"アクタウ夏時間"}
@@ -1441,7 +1412,7 @@ ja{
             ls{"ブラジリア標準時"}
         }
         "meta:Brunei"{
-            ls{"ブルネイ・ダルサラーム時間"}
+            ls{"ブルネイ時間"}
         }
         "meta:Cape_Verde"{
             ld{"カーボベルデ夏時間"}
@@ -1468,11 +1439,6 @@ ja{
             ld{"中国夏時間"}
             lg{"中国時間"}
             ls{"中国標準時"}
-        }
-        "meta:Choibalsan"{
-            ld{"チョイバルサン夏時間"}
-            lg{"チョイバルサン時間"}
-            ls{"チョイバルサン標準時"}
         }
         "meta:Christmas"{
             ls{"クリスマス島時間"}
@@ -1582,6 +1548,9 @@ ja{
         "meta:Guyana"{
             ls{"ガイアナ時間"}
         }
+        "meta:Hawaii"{
+            ls{"ハワイ・アリューシャン標準時"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"ハワイ・アリューシャン夏時間"}
             lg{"ハワイ・アリューシャン時間"}
@@ -1643,6 +1612,9 @@ ja{
             lg{"ペトロパブロフスク・カムチャツキー時間"}
             ls{"ペトロパブロフスク・カムチャツキー標準時"}
         }
+        "meta:Kazakhstan"{
+            ls{"カザフスタン時間"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"東カザフスタン時間"}
         }
@@ -1681,9 +1653,6 @@ ja{
             lg{"マカオ時間"}
             ls{"マカオ標準時"}
         }
-        "meta:Macquarie"{
-            ls{"マッコーリー島時間"}
-        }
         "meta:Magadan"{
             ld{"マガダン夏時間"}
             lg{"マガダン時間"}
@@ -1708,11 +1677,6 @@ ja{
         }
         "meta:Mawson"{
             ls{"モーソン基地時間"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"メキシコ北西部夏時間"}
-            lg{"メキシコ北西部時間"}
-            ls{"メキシコ北西部標準時"}
         }
         "meta:Mexico_Pacific"{
             ld{"メキシコ太平洋夏時間"}
@@ -1817,10 +1781,10 @@ ja{
             ls{"ピトケアン時間"}
         }
         "meta:Ponape"{
-            ls{"ポナペ時間"}
+            ls{"ポンペイ時間"}
         }
         "meta:Pyongyang"{
-            ls{"平壌時間"}
+            ls{"北朝鮮時間"}
         }
         "meta:Qyzylorda"{
             ld{"クズロルダ夏時間"}
@@ -1844,9 +1808,9 @@ ja{
             ls{"サマラ標準時"}
         }
         "meta:Samoa"{
-            ld{"サモア夏時間"}
-            lg{"サモア時間"}
-            ls{"サモア標準時"}
+            ld{"米領サモア夏時間"}
+            lg{"米領サモア時間"}
+            ls{"米領サモア標準時"}
         }
         "meta:Seychelles"{
             ls{"セーシェル時間"}
@@ -1870,9 +1834,9 @@ ja{
             ls{"タヒチ時間"}
         }
         "meta:Taipei"{
-            ld{"台北夏時間"}
-            lg{"台北時間"}
-            ls{"台北標準時"}
+            ld{"台湾夏時間"}
+            lg{"台湾時間"}
+            ls{"台湾標準時"}
         }
         "meta:Tajikistan"{
             ls{"タジキスタン時間"}
@@ -1887,6 +1851,11 @@ ja{
         }
         "meta:Truk"{
             ls{"チューク時間"}
+        }
+        "meta:Turkey"{
+            ld{"トルコ夏時間"}
+            lg{"トルコ時間"}
+            ls{"トルコ標準時"}
         }
         "meta:Turkmenistan"{
             ld{"トルクメニスタン夏時間"}
@@ -1947,9 +1916,6 @@ ja{
             ls{"ユーコン時間"}
         }
         fallbackFormat{"{1}（{0}）"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
         regionFormat{"{0}時間"}
         regionFormatDaylight{"{0}夏時間"}
         regionFormatStandard{"{0}標準時"}

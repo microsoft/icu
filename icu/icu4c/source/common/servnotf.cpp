@@ -56,7 +56,7 @@ ICUNotifier::addListener(const EventListener* l, UErrorCode& status)
                 listeners = lpListeners.orphan();
             } else {
                 for (int i = 0, e = listeners->size(); i < e; ++i) {
-                    const EventListener* el = (const EventListener*)(listeners->elementAt(i));
+                    const EventListener* el = static_cast<const EventListener*>(listeners->elementAt(i));
                     if (l == el) {
                         return;
                     }

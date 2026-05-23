@@ -69,6 +69,8 @@ void PluralRulesTest::runIndexedTest( int32_t index, UBool exec, const char* &na
     TESTCASE_AUTO(testFixedDecimal);
     TESTCASE_AUTO(testSelectTrailingZeros);
     TESTCASE_AUTO(testLocaleExtension);
+    TESTCASE_AUTO(testDoubleEqualSign);
+    TESTCASE_AUTO(test22638LongNumberValue);
     TESTCASE_AUTO_END;
 }
 
@@ -241,8 +243,8 @@ void PluralRulesTest::testAPI(/*char *par*/)
         dataerrln("ERROR: Could not create PluralRules for testing fractions - exiting");
         return;
     }
-    double fData[] =     {-101, -100, -1,     -0.0,  0,     0.1,  1,     1.999,  2.0,   100,   100.001 };
-    bool isKeywordA[] = {true, false, false, false, false, true, false,  true,   false, false, true };
+    double fData[] =     {-101, -100, -1,     -0.0,  0,     0.1,  1,     1.999,  2.0,   100,   100.001, 1.39e188 };
+    bool isKeywordA[] = {true, false, false, false, false, true, false,  true,   false, false, true, true };
     for (int32_t i=0; i<UPRV_LENGTHOF(fData); i++) {
         if ((newRules->select(fData[i])== KEYWORD_A) != isKeywordA[i]) {
              errln("File %s, Line %d, ERROR: plural rules for decimal fractions test failed!\n"
@@ -1065,6 +1067,16 @@ PluralRulesTest::testDoubleValue() {
 }
 
 void
+PluralRulesTest::test22638LongNumberValue() {
+    IcuTestErrorCode errorCode(*this, "test22638LongNumberValue");
+    LocalPointer<PluralRules> pr(PluralRules::createRules(
+        u"g:c%4422322222232222222222232222222322222223222222232222222322222223"
+        u"2222222322222232222222322222223222232222222222222322222223222222",
+        errorCode));
+    errorCode.expectErrorAndReset(U_UNEXPECTED_TOKEN);
+}
+
+void
 PluralRulesTest::testLongValue() {
     IcuTestErrorCode errorCode(*this, "testLongValue");
 
@@ -1536,7 +1548,6 @@ void PluralRulesTest::testParseErrors() {
             errln("file %s, line %d, expected NULL. Rules: \"%s\"", __FILE__, __LINE__, rules);
         }
     }
-    return;
 }
 
 
@@ -1636,6 +1647,16 @@ void PluralRulesTest::compareLocaleResults(const char* loc1, const char* loc2, c
             errln("PluralRules.select(%d) does not return the same values for %s, %s, %s\n", value, loc1, loc2, loc3);
         }
     }
+}
+
+void PluralRulesTest::testDoubleEqualSign() {
+    IcuTestErrorCode errorCode(*this, "testDoubleEqualSign");
+
+    // ICU-22626
+    // Two '=' in the rul should not leak.
+    LocalPointer<PluralRules> rules(
+        PluralRules::createRules(u"e:c=2=", errorCode), errorCode);
+    errorCode.expectErrorAndReset(U_UNEXPECTED_TOKEN);
 }
 
 void PluralRulesTest::testLocaleExtension() {

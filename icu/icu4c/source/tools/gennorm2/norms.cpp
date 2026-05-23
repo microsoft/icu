@@ -86,8 +86,8 @@ Norms::~Norms() {
 }
 
 Norm *Norms::allocNorm() {
-    Norm *p=(Norm *)utm_alloc(normMem);
-    norms=(Norm *)utm_getStart(normMem);  // in case it got reallocated
+    Norm* p = static_cast<Norm*>(utm_alloc(normMem));
+    norms = static_cast<Norm*>(utm_getStart(normMem)); // in case it got reallocated
     return p;
 }
 
@@ -119,7 +119,7 @@ Norm *Norms::createNorm(UChar32 c) {
         /* allocate Norm */
         Norm *p=allocNorm();
         IcuToolErrorCode errorCode("gennorm2/createNorm()");
-        umutablecptrie_set(normTrie, c, (uint32_t)(p - norms), errorCode);
+        umutablecptrie_set(normTrie, c, static_cast<uint32_t>(p - norms), errorCode);
         return p;
     }
 }
@@ -245,6 +245,14 @@ void Decomposer::rangeHandler(UChar32 start, UChar32 end, Norm &norm) {
             exit(U_INVALID_FORMAT_ERROR);
         }
         const Norm &cNorm=norms.getNormRef(c);
+        if(norm.mappingType==Norm::ROUND_TRIP && prev==0 &&
+                !norm.combinesBack && cNorm.combinesBack) {
+            // If a two-way mapping starts with an NFC_QC=Maybe character,
+            // then mark the composite as NFC_QC=Maybe as well,
+            // so that we trigger decomposition and recomposition.
+            norm.combinesBack=true;
+            didDecompose|=true;
+        }
         if(cNorm.hasMapping()) {
             if(norm.mappingType==Norm::ROUND_TRIP) {
                 if(prev==0) {

@@ -636,7 +636,7 @@ void BytesTrieTest::TestDelta() {
         const uint8_t *start = (const uint8_t *)intBytes0;
         const uint8_t *pos = BytesTrie::jumpByDelta(start);
         assertEquals(UnicodeString(u"roundtrip for delta ") + delta,
-                     delta, (int32_t)(pos - start) - length0);
+                     delta, static_cast<size_t>(pos - start) - length0);
     }
 }
 
@@ -961,7 +961,7 @@ void BytesTrieTest::checkIterator(BytesTrie::Iterator &iter,
             break;
         }
         UBool hasNext=iter.next(errorCode);
-        if(errorCode.errIfFailureAndReset("trie iterator next() for item %d: %s", (int)i, data[i].s)) {
+        if (errorCode.errIfFailureAndReset("trie iterator next() for item %d: %s", static_cast<int>(i), data[i].s)) {
             break;
         }
         if(!hasNext) {

@@ -209,7 +209,7 @@ public:
      */
     int32_t getRuleMillisInDay(void) const;
 
-private:
+  private:
     int32_t fMonth;
     int32_t fDayOfMonth;
     int32_t fDayOfWeek;

@@ -59,10 +59,10 @@ U_NAMESPACE_BEGIN
 
 namespace {
 
-static const UChar *rootRules = NULL;
-static int32_t rootRulesLength = 0;
-static UResourceBundle *rootBundle = NULL;
-static UInitOnce gInitOnceUcolRes {};
+const char16_t* rootRules = nullptr;
+int32_t rootRulesLength = 0;
+UResourceBundle* rootBundle = nullptr;
+UInitOnce gInitOnceUcolRes{};
 
 }  // namespace
 
@@ -174,10 +174,20 @@ CollationLoader::CollationLoader(const CollationCacheEntry *re, const Locale &re
     defaultType[0] = 0;
     if(U_FAILURE(errorCode)) { return; }
 
+    if (locale.isBogus()) {
+        errorCode = U_ILLEGAL_ARGUMENT_ERROR;
+        return;
+    }
     // Canonicalize the locale ID: Ignore all irrelevant keywords.
     const char *baseName = locale.getBaseName();
     if(uprv_strcmp(locale.getName(), baseName) != 0) {
         locale = Locale(baseName);
+        // Due to ICU-22416, we may have bogus locale constructed from
+        // a string of getBaseName().
+        if (locale.isBogus()) {
+            errorCode = U_ILLEGAL_ARGUMENT_ERROR;
+            return;
+        }
 
         // Fetch the collation type from the locale ID.
         int32_t typeLength = requested.getKeywordValue("collation",
@@ -390,7 +400,7 @@ CollationLoader::loadFromData(UErrorCode &errorCode) {
     LocalUResourceBundlePointer binary(ures_getByKey(data, "%%CollationBin", NULL, &errorCode));
     // Note: U_MISSING_RESOURCE_ERROR --> The old code built from rules if available
     // but that created undesirable dependencies.
-    int32_t length;
+    int32_t length = 0;
     const uint8_t *inBytes = ures_getBinary(binary.getAlias(), &length, &errorCode);
     CollationDataReader::read(rootEntry->tailoring, inBytes, length, *t, errorCode);
     // Note: U_COLLATOR_VERSION_MISMATCH --> The old code built from rules if available

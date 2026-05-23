@@ -149,14 +149,9 @@ PluralFormat::PluralFormat(const PluralFormat& other)
 void
 PluralFormat::copyObjects(const PluralFormat& other) {
     UErrorCode status = U_ZERO_ERROR;
-    if (numberFormat != NULL) {
-        delete numberFormat;
-    }
-    if (pluralRulesWrapper.pluralRules != NULL) {
-        delete pluralRulesWrapper.pluralRules;
-    }
-
-    if (other.numberFormat == NULL) {
+    delete numberFormat;
+    delete pluralRulesWrapper.pluralRules;
+    if (other.numberFormat == nullptr) {
         numberFormat = NumberFormat::createInstance(locale, status);
     } else {
         numberFormat = other.numberFormat->clone();
@@ -247,7 +242,7 @@ PluralFormat::format(double number,
                      UnicodeString& appendTo,
                      FieldPosition& pos,
                      UErrorCode& status) const {
-    return format(Formattable(number), (double)number, appendTo, pos, status);
+    return format(Formattable(number), number, appendTo, pos, status);
 }
 
 UnicodeString&

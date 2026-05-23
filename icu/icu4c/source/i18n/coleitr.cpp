@@ -127,7 +127,7 @@ int32_t CollationElementIterator::next(UErrorCode& status)
     int64_t ce = iter_->nextCE(status);
     if (ce == Collation::NO_CE) { return NULLORDER; }
     // Turn the 64-bit CE into two old-style 32-bit CEs, without quaternary bits.
-    uint32_t p = (uint32_t)(ce >> 32);
+    uint32_t p = static_cast<uint32_t>(ce >> 32);
     uint32_t lower32 = (uint32_t)ce;
     uint32_t firstHalf = getFirstHalf(p, lower32);
     uint32_t secondHalf = getSecondHalf(p, lower32);
@@ -199,7 +199,7 @@ int32_t CollationElementIterator::previous(UErrorCode& status)
     int64_t ce = iter_->previousCE(*offsets_, status);
     if (ce == Collation::NO_CE) { return NULLORDER; }
     // Turn the 64-bit CE into two old-style 32-bit CEs, without quaternary bits.
-    uint32_t p = (uint32_t)(ce >> 32);
+    uint32_t p = static_cast<uint32_t>(ce >> 32);
     uint32_t lower32 = (uint32_t)ce;
     uint32_t firstHalf = getFirstHalf(p, lower32);
     uint32_t secondHalf = getSecondHalf(p, lower32);
@@ -410,7 +410,7 @@ public:
         }
         // last "half" of the last CE
         int64_t ce = ces[length - 1];
-        uint32_t p = (uint32_t)(ce >> 32);
+        uint32_t p = static_cast<uint32_t>(ce >> 32);
         uint32_t lower32 = (uint32_t)ce;
         uint32_t lastHalf = getSecondHalf(p, lower32);
         if (lastHalf == 0) {

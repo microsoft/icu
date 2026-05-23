@@ -53,11 +53,11 @@ BasicNormalizerTest::TestNormalizerAPI() {
         errln("error in Normalizer(Normalizer(CharacterIterator)).clone()->next().hashCode()==copy.hashCode()");
     }
     delete clone;
-    clone=0;
+    clone = nullptr;
 
     // test compose() and decompose()
     UnicodeString tel, nfkc, nfkd;
-    tel=UnicodeString(1, (UChar32)0x2121, 10);
+    tel = UnicodeString(1, static_cast<UChar32>(0x2121), 10);
     tel.insert(1, (UChar)0x301);
 
     UErrorCode errorCode=U_ZERO_ERROR;

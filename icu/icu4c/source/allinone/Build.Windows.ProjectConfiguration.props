@@ -90,10 +90,15 @@
       <!-- We always want to treat wchar_t as a "real" C++ type, instead of a typedef. -->
       <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <!-- Set the source encoding and runtime encoding to UTF-8 by default. -->
-      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
+      <!-- Set the source encoding and runtime encoding to UTF-8 by default.
+           Treat C4715 (not all control paths return a value) as an error.-->
+      <AdditionalOptions>/utf-8 /we4715 %(AdditionalOptions)</AdditionalOptions>
       <!-- Enable parallel compilation for faster builds. -->
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <!-- Set the C/C++ versions supported. -->
+      <LanguageStandard Condition="'$(OverrideLanguageStandard)'==''">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(OverrideLanguageStandard)'!=''">$(OverrideLanguageStandard)</LanguageStandard>
+      <LanguageStandard_C>stdc11</LanguageStandard_C>
     </ClCompile>
     <ResourceCompile>
       <Culture>0x0409</Culture>
@@ -109,12 +114,10 @@
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </Midl>
     <ClCompile>
-      <PreprocessorDefinitions>NDEBUG;U_ENABLE_DYLOAD=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <WholeProgramOptimization>true</WholeProgramOptimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
-      <AdditionalOptions>/Zi %(AdditionalOptions)</AdditionalOptions>
-      <ControlFlowGuard>Guard</ControlFlowGuard>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -122,7 +125,6 @@
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <LinkTimeCodeGeneration>UseLinkTimeCodeGeneration</LinkTimeCodeGeneration>
-      <AdditionalOptions>/guard:cf /profile /opt:ref /opt:icf %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
   <!-- Options that are common to all 'Debug' configurations for *all* projects. -->

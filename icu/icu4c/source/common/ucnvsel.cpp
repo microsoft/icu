@@ -377,7 +377,7 @@ ucnvsel_swap(const UDataSwapper *ds,
   }
 
   /* check data format and format version */
-  const UDataInfo *pInfo = (const UDataInfo *)((const char *)inData + 4);
+  const UDataInfo* pInfo = reinterpret_cast<const UDataInfo*>(static_cast<const char*>(inData) + 4);
   if(!(
     pInfo->dataFormat[0] == 0x43 &&  /* dataFormat="CSel" */
     pInfo->dataFormat[1] == 0x53 &&
@@ -725,7 +725,7 @@ static UEnumeration *selectForMask(const UConverterSelector* sel,
     int16_t k = 0;
     for (j = 0 ; j < columns; j++) {
       uint32_t v = mask[j];
-      for (i = 0 ; i < 32 && k < static_cast<int16_t>(sel->encodingsCount); i++, k++) {
+      for (i = 0 ; i < 32 && k < sel->encodingsCount; i++, k++) {
         if ((v & 1) != 0) {
           result->index[result->length++] = k;
         }
