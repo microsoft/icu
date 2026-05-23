@@ -118,32 +118,6 @@
 #define U_OBSOLETE U_CAPI
 /** Obsolete/same as U_CAPI; was used to declare a function as an internal ICU C API  */
 #define U_INTERNAL U_CAPI
-//IGNORE_WINDOWS_HEADERS_START
-// MSFT-Change: These are C++ only constructs. The Windows OS SDK version of ICU only exposes
-// the flat C APIs.
-
-/**
- * \def U_OVERRIDE
- * Defined to the C++11 "override" keyword if available.
- * Denotes a class or member which is an override of the base class.
- * May result in an error if it applied to something not an override.
- * @internal
- */
-#ifndef U_OVERRIDE
-#define U_OVERRIDE override
-#endif
-
-/**
- * \def U_FINAL
- * Defined to the C++11 "final" keyword if available.
- * Denotes a class or member which may not be overridden in subclasses.
- * May result in an error if subclasses attempt to override.
- * @internal
- */
-#if !defined(U_FINAL) || defined(U_IN_DOXYGEN)
-#define U_FINAL final
-#endif
-
 
 /**
  * \def U_FORCE_INLINE

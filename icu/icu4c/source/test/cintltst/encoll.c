@@ -305,7 +305,7 @@ static void TestTertiary(void)
     ucol_close(myCollation);
 }
 
-static void TestPrimary()
+static void TestPrimary(void)
 {
     
     int32_t i;
@@ -324,7 +324,7 @@ static void TestPrimary()
     ucol_close(myCollation);
 }
 
-static void TestSecondary()
+static void TestSecondary(void)
 {
     UCollationResult expected=UCOL_EQUAL;
     int32_t i,j, testAcuteSize;

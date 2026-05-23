@@ -242,7 +242,7 @@ int64_t readcoded(ifstream& file, int64_t minv=numeric_limits<int64_t>::min(),
                                int64_t maxv=numeric_limits<int64_t>::max()) {
     unsigned char buf[4]; // must be UNSIGNED
     int64_t val=0;
-    file.read((char*)buf, 4);
+    file.read(reinterpret_cast<char*>(buf), 4);
     for(int32_t i=0,shift=24;i<4;++i,shift-=8) {
         val |= buf[i] << shift;
     }
@@ -260,9 +260,9 @@ int64_t readcoded64(ifstream& file, int64_t minv=numeric_limits<int64_t>::min(),
                                int64_t maxv=numeric_limits<int64_t>::max()) {
     unsigned char buf[8]; // must be UNSIGNED
     int64_t val=0;
-    file.read((char*)buf, 8);
+    file.read(reinterpret_cast<char*>(buf), 8);
     for(int32_t i=0,shift=56;i<8;++i,shift-=8) {
-        val |= (int64_t)buf[i] << shift;
+        val |= static_cast<int64_t>(buf[i]) << shift;
     }
     if (val < minv || val > maxv) {
         ostringstream os;
@@ -279,7 +279,7 @@ bool readbool(ifstream& file) {
     file.read(&c, 1);
     if (c!=0 && c!=1) {
         ostringstream os;
-        os << "boolean value out-of-range: " << (int32_t)c;
+        os << "boolean value out-of-range: " << static_cast<int32_t>(c);
         throw out_of_range(os.str());
     }
     return (c!=0);
@@ -313,7 +313,7 @@ void readzoneinfo(ifstream& file, ZoneInfo& info, bool is64bitData) {
 
     // Read reserved bytes.  The first of these will be a version byte.
     file.read(buf, 15);
-    if (*(ICUZoneinfoVersion*)&buf != TZ_ICU_VERSION) {
+    if (*reinterpret_cast<ICUZoneinfoVersion*>(&buf) != TZ_ICU_VERSION) {
         throw invalid_argument("File version mismatch");
     }
 
@@ -350,7 +350,7 @@ void readzoneinfo(ifstream& file, ZoneInfo& info, bool is64bitData) {
     // Read transition types
     for (i=0; i<timecnt; ++i) {
         unsigned char c;
-        file.read((char*) &c, 1);
+        file.read(reinterpret_cast<char*>(&c), 1);
         int32_t t = static_cast<int32_t>(c);
         if (t < 0 || t >= typecnt) {
             ostringstream os;
@@ -406,7 +406,7 @@ void readzoneinfo(ifstream& file, ZoneInfo& info, bool is64bitData) {
         type.isdst = readbool(file);
 
         unsigned char c;
-        file.read((char*) &c, 1);
+        file.read(reinterpret_cast<char*>(&c), 1);
         type.abbr = static_cast<int32_t>(c);
 
         if (type.isdst != (type.dstoffset != 0)) {
@@ -650,7 +650,7 @@ void scandir(string dir, string prefix="") {
     vector<string> subdirs;
     vector<string> subfiles;
 
-    if ((dp = opendir(dir.c_str())) == NULL) {
+    if ((dp = opendir(dir.c_str())) == nullptr) {
         cerr << "Error: Invalid directory: " << dir << endl;
         exit(1);
     }
@@ -659,7 +659,7 @@ void scandir(string dir, string prefix="") {
         exit(1);
     }
     chdir(dir.c_str());
-    while ((dir_entry = readdir(dp)) != NULL) {
+    while ((dir_entry = readdir(dp)) != nullptr) {
         string name = dir_entry->d_name;
         string path = dir + "/" + name;
         lstat(dir_entry->d_name,&stat_info);

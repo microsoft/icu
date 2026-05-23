@@ -64,7 +64,7 @@ void addUNumberFormatterTest(TestNode** root) {
 
 #define CAPACITY 30
 
-static void TestSkeletonFormatToString() {
+static void TestSkeletonFormatToString(void) {
     UErrorCode ec = U_ZERO_ERROR;
     UChar buffer[CAPACITY];
     UFormattedNumber* result = NULL;
@@ -105,7 +105,7 @@ static void TestSkeletonFormatToString() {
 }
 
 
-static void TestSkeletonFormatToFields() {
+static void TestSkeletonFormatToFields(void) {
     UErrorCode ec = U_ZERO_ERROR;
     UFieldPositionIterator* ufpositer = NULL;
 
@@ -189,7 +189,7 @@ static void TestSkeletonFormatToFields() {
 }
 
 
-static void TestExampleCode() {
+static void TestExampleCode(void) {
     // This is the example code given in unumberformatter.h.
 
     // Setup:
@@ -307,7 +307,7 @@ static void TestFormattedValue(void) {
 }
 
 
-static void TestSkeletonParseError() {
+static void TestSkeletonParseError(void) {
     UErrorCode ec = U_ZERO_ERROR;
     UNumberFormatter* uformatter;
     UParseError perror;
@@ -332,7 +332,7 @@ static void TestSkeletonParseError() {
 }
 
 
-static void TestToDecimalNumber() {
+static void TestToDecimalNumber(void) {
     UErrorCode ec = U_ZERO_ERROR;
     UNumberFormatter* uformatter = unumf_openForSkeletonAndLocale(
         u"currency/USD",
@@ -360,7 +360,7 @@ static void TestToDecimalNumber() {
 }
 
 
-static void TestPerUnitInArabic() {
+static void TestPerUnitInArabic(void) {
     const char* simpleMeasureUnits[] = {
         "area-acre",
         "digital-bit",
@@ -450,7 +450,7 @@ static void TestPerUnitInArabic() {
 }
 
 
-static void Test21674_State() {
+static void Test21674_State(void) {
     UErrorCode status = U_ZERO_ERROR;
     UNumberFormatter* nf = NULL;
     UFormattedNumber* result = NULL;

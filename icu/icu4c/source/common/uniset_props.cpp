@@ -70,9 +70,9 @@ static icu::UInitOnce uni32InitOnce {};
 /**
  * Cleanup function for UnicodeSet
  */
-static UBool U_CALLCONV uset_cleanup(void) {
+static UBool U_CALLCONV uset_cleanup() {
     delete uni32Singleton;
-    uni32Singleton = NULL;
+    uni32Singleton = nullptr;
     uni32InitOnce.reset();
     return true;
 }
@@ -85,9 +85,9 @@ namespace {
 
 // Cache some sets for other services -------------------------------------- ***
 void U_CALLCONV createUni32Set(UErrorCode &errorCode) {
-    U_ASSERT(uni32Singleton == NULL);
+    U_ASSERT(uni32Singleton == nullptr);
     uni32Singleton = new UnicodeSet(UnicodeString(u"[:age=3.2:]"), errorCode);
-    if(uni32Singleton==NULL) {
+    if(uni32Singleton==nullptr) {
         errorCode=U_MEMORY_ALLOCATION_ERROR;
     } else {
         uni32Singleton->freeze();
@@ -111,7 +111,7 @@ uniset_getUnicode32Instance(UErrorCode &errorCode) {
 
 inline UBool
 isPerlOpen(const UnicodeString &pattern, int32_t pos) {
-    UChar c;
+    char16_t c;
     return pattern.charAt(pos)==u'\\' && ((c=pattern.charAt(pos+1))==u'p' || c==u'P');
 }
 
@@ -165,10 +165,10 @@ UnicodeSet::UnicodeSet(const UnicodeString& pattern,
 UnicodeSet& UnicodeSet::applyPattern(const UnicodeString& pattern,
                                      UErrorCode& status) {
     // Equivalent to
-    //   return applyPattern(pattern, USET_IGNORE_SPACE, NULL, status);
+    //   return applyPattern(pattern, USET_IGNORE_SPACE, nullptr, status);
     // but without dependency on closeOver().
     ParsePosition pos(0);
-    applyPatternIgnoreSpace(pattern, pos, NULL, status);
+    applyPatternIgnoreSpace(pattern, pos, nullptr, status);
     if (U_FAILURE(status)) return *this;
 
     int32_t i = pos.getIndex();
@@ -196,7 +196,7 @@ UnicodeSet::applyPatternIgnoreSpace(const UnicodeString& pattern,
     // _applyPattern calls add() etc., which set pat to empty.
     UnicodeString rebuiltPat;
     RuleCharacterIterator chars(pattern, symbols, pos);
-    applyPattern(chars, symbols, rebuiltPat, USET_IGNORE_SPACE, NULL, 0, status);
+    applyPattern(chars, symbols, rebuiltPat, USET_IGNORE_SPACE, nullptr, 0, status);
     if (U_FAILURE(status)) return;
     if (chars.inVariable()) {
         // syntaxError(chars, "Extra chars in variable value");
@@ -212,7 +212,7 @@ UnicodeSet::applyPatternIgnoreSpace(const UnicodeString& pattern,
  */
 UBool UnicodeSet::resemblesPattern(const UnicodeString& pattern, int32_t pos) {
     return ((pos+1) < pattern.length() &&
-            pattern.charAt(pos) == (UChar)91/*[*/) ||
+            pattern.charAt(pos) == static_cast<char16_t>(91)/*[*/) ||
         resemblesPropertyPattern(pattern, pos);
 }
 
@@ -290,7 +290,7 @@ void UnicodeSet::applyPattern(RuleCharacterIterator& chars,
     // lastItem: 0=none, 1=char, 2=set
     int8_t lastItem = 0, mode = 0;
     UChar32 lastChar = 0;
-    UChar op = 0;
+    char16_t op = 0;
 
     UBool invert = false;
 
@@ -359,7 +359,7 @@ void UnicodeSet::applyPattern(RuleCharacterIterator& chars,
                 const UnicodeFunctor *m = symbols->lookupMatcher(c);
                 if (m != nullptr) {
                     const UnicodeSet *ms = dynamic_cast<const UnicodeSet *>(m);
-                    if (ms == NULL) {
+                    if (ms == nullptr) {
                         ec = U_MALFORMED_SET;
                         return;
                     }
@@ -661,11 +661,11 @@ void UnicodeSet::applyPattern(RuleCharacterIterator& chars,
 namespace {
 
 UBool numericValueFilter(UChar32 ch, void* context) {
-    return u_getNumericValue(ch) == *(double*)context;
+    return u_getNumericValue(ch) == *static_cast<double*>(context);
 }
 
 UBool generalCategoryMaskFilter(UChar32 ch, void* context) {
-    int32_t value = *(int32_t*)context;
+    int32_t value = *static_cast<int32_t*>(context);
     return (U_GET_GC_MASK((UChar32) ch) & value) != 0;
 }
 
@@ -673,7 +673,7 @@ UBool versionFilter(UChar32 ch, void* context) {
     static const UVersionInfo none = { 0, 0, 0, 0 };
     UVersionInfo v;
     u_charAge(ch, v);
-    UVersionInfo* version = (UVersionInfo*)context;
+    UVersionInfo* version = static_cast<UVersionInfo*>(context);
     return uprv_memcmp(&v, &none, sizeof(v)) > 0 && uprv_memcmp(&v, version, sizeof(v)) <= 0;
 }
 
@@ -787,7 +787,7 @@ UnicodeSet::applyIntPropertyValue(UProperty prop, int32_t value, UErrorCode& ec)
         applyFilter(generalCategoryMaskFilter, &value, inclusions, ec);
     } else if (prop == UCHAR_SCRIPT_EXTENSIONS) {
         const UnicodeSet* inclusions = CharacterProperties::getInclusionsForProperty(prop, ec);
-        UScriptCode script = (UScriptCode)value;
+        UScriptCode script = static_cast<UScriptCode>(value);
         applyFilter(scriptExtensionsFilter, &script, inclusions, ec);
     } else if (prop == UCHAR_IDENTIFIER_TYPE) {
         const UnicodeSet* inclusions = CharacterProperties::getInclusionsForProperty(prop, ec);
@@ -865,7 +865,7 @@ UnicodeSet::applyPropertyAlias(const UnicodeString& prop,
                     // We catch NaN here because comparing it with both 0 and 255 will be false
                     // (as are all comparisons with NaN).
                     if (*end != 0 || !(0 <= val && val <= 255) ||
-                            (v = (int32_t)val) != val) {
+                            (v = static_cast<int32_t>(val)) != val) {
                         // non-integral value or outside 0..255, or trailing junk
                         FAIL(ec);
                     }
@@ -1059,7 +1059,7 @@ UnicodeSet& UnicodeSet::applyPropertyPattern(const UnicodeString& pattern,
             invert = true;
         }
     } else if (isPerlOpen(pattern, pos) || isNameOpen(pattern, pos)) {
-        UChar c = pattern.charAt(pos+1);
+        char16_t c = pattern.charAt(pos+1);
         invert = (c == u'P');
         isName = (c == u'N');
         pos += 2;

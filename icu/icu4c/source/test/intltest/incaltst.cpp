@@ -36,7 +36,7 @@ static UnicodeString escape( const UnicodeString&src)
   UnicodeString dst;
     dst.remove();
     for (int32_t i = 0; i < src.length(); ++i) {
-        UChar c = src[i];
+        char16_t c = src[i];
         if(c < 0x0080) 
             dst += c;
         else {
@@ -125,7 +125,7 @@ void IntlCalendarTest::runIndexedTest( int32_t index, UBool exec, const char* &n
 void
 IntlCalendarTest::TestTypes()
 {
-  Calendar *c = NULL;
+  Calendar *c = nullptr;
   UErrorCode status = U_ZERO_ERROR;
   int j;
   const char *locs [40] = { "en_US_VALLEYGIRL",     
@@ -140,7 +140,7 @@ IntlCalendarTest::TestTypes()
                             "th",       // th's default region is TH and buddhist is used as default for TH
                             "en_TH",    // Default calendar for any locales with region TH is buddhist
                             "en-TH-u-ca-gregory",
-                            NULL };
+                            nullptr };
   const char *types[40] = { "gregorian", 
                             "japanese",
                             "gregorian",
@@ -153,7 +153,7 @@ IntlCalendarTest::TestTypes()
                             "buddhist",           
                             "buddhist",           
                             "gregorian",
-                            NULL };
+                            nullptr };
 
   for(j=0;locs[j];j++) {
     logln(UnicodeString("Creating calendar of locale ")  + locs[j]);
@@ -1515,7 +1515,7 @@ void IntlCalendarTest::checkConsistency(const char* locale) {
         // Third, we verify the set function can round trip the time back.
         r->clear();
         for (int32_t f = 0; f < UCAL_FIELD_COUNT; f++) {
-            UCalendarDateFields ut = (UCalendarDateFields)f;
+            UCalendarDateFields ut = static_cast<UCalendarDateFields>(f);
             r->set(ut, base->get(ut, status));
         }
         UDate result = r->getTime(status);

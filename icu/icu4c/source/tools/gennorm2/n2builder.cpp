@@ -76,7 +76,7 @@ public:
         if(rangeIndex<UPRV_LENGTHOF(ranges)) {
             return ranges+rangeIndex++;
         } else {
-            return NULL;
+            return nullptr;
         }
     }
 private:
@@ -123,7 +123,7 @@ Normalizer2DataBuilder::setUnicodeVersion(const char *v) {
 }
 
 Norm *Normalizer2DataBuilder::checkNormForMapping(Norm *p, UChar32 c) {
-    if(p!=NULL) {
+    if(p!=nullptr) {
         if(p->mappingType!=Norm::NONE) {
             if( overrideHandling==OVERRIDE_NONE ||
                 (overrideHandling==OVERRIDE_PREVIOUS && p->mappingPhase==phase)
@@ -131,11 +131,11 @@ Norm *Normalizer2DataBuilder::checkNormForMapping(Norm *p, UChar32 c) {
                 fprintf(stderr,
                         "error in gennorm2 phase %d: "
                         "not permitted to override mapping for U+%04lX from phase %d\n",
-                        (int)phase, (long)c, (int)p->mappingPhase);
+                        static_cast<int>(phase), static_cast<long>(c), static_cast<int>(p->mappingPhase));
                 exit(U_INVALID_FORMAT_ERROR);
             }
             delete p->mapping;
-            p->mapping=NULL;
+            p->mapping=nullptr;
         }
         p->mappingPhase=phase;
     }
@@ -154,7 +154,7 @@ void Normalizer2DataBuilder::setCC(UChar32 c, uint8_t cc) {
 
 static UBool isWellFormed(const UnicodeString &s) {
     UErrorCode errorCode=U_ZERO_ERROR;
-    u_strToUTF8(NULL, 0, NULL, toUCharPtr(s.getBuffer()), s.length(), &errorCode);
+    u_strToUTF8(nullptr, 0, nullptr, toUCharPtr(s.getBuffer()), s.length(), &errorCode);
     return U_SUCCESS(errorCode) || errorCode==U_BUFFER_OVERFLOW_ERROR;
 }
 
@@ -163,7 +163,7 @@ void Normalizer2DataBuilder::setOneWayMapping(UChar32 c, const UnicodeString &m)
         fprintf(stderr,
                 "error in gennorm2 phase %d: "
                 "illegal one-way mapping from U+%04lX to malformed string\n",
-                (int)phase, (long)c);
+                static_cast<int>(phase), static_cast<long>(c));
         exit(U_INVALID_FORMAT_ERROR);
     }
     Norm *p=checkNormForMapping(norms.createNorm(c), c);
@@ -178,14 +178,14 @@ void Normalizer2DataBuilder::setRoundTripMapping(UChar32 c, const UnicodeString 
         fprintf(stderr,
                 "error in gennorm2 phase %d: "
                 "illegal round-trip mapping from surrogate code point U+%04lX\n",
-                (int)phase, (long)c);
+                static_cast<int>(phase), static_cast<long>(c));
         exit(U_INVALID_FORMAT_ERROR);
     }
     if(!isWellFormed(m)) {
         fprintf(stderr,
                 "error in gennorm2 phase %d: "
                 "illegal round-trip mapping from U+%04lX to malformed string\n",
-                (int)phase, (long)c);
+                static_cast<int>(phase), static_cast<long>(c));
         exit(U_INVALID_FORMAT_ERROR);
     }
     int32_t numCP=u_countChar32(toUCharPtr(m.getBuffer()), m.length());
@@ -193,7 +193,7 @@ void Normalizer2DataBuilder::setRoundTripMapping(UChar32 c, const UnicodeString 
         fprintf(stderr,
                 "error in gennorm2 phase %d: "
                 "illegal round-trip mapping from U+%04lX to %d!=2 code points\n",
-                (int)phase, (long)c, (int)numCP);
+                static_cast<int>(phase), static_cast<long>(c), static_cast<int>(numCP));
         exit(U_INVALID_FORMAT_ERROR);
     }
     Norm *p=checkNormForMapping(norms.createNorm(c), c);
@@ -429,7 +429,7 @@ class Norm16Writer : public Norms::Enumerator {
 public:
     Norm16Writer(UMutableCPTrie *trie, Norms &n, Normalizer2DataBuilder &b) :
             Norms::Enumerator(n), builder(b), norm16Trie(trie) {}
-    void rangeHandler(UChar32 start, UChar32 end, Norm &norm) U_OVERRIDE {
+    void rangeHandler(UChar32 start, UChar32 end, Norm &norm) override {
         builder.writeNorm16(norm16Trie, start, end, norm);
     }
     Normalizer2DataBuilder &builder;
@@ -512,7 +512,7 @@ void Normalizer2DataBuilder::writeNorm16(UMutableCPTrie *norm16Trie, UChar32 sta
         norm16|=Normalizer2Impl::HAS_COMP_BOUNDARY_AFTER;
     }
     IcuToolErrorCode errorCode("gennorm2/writeNorm16()");
-    umutablecptrie_setRange(norm16Trie, start, end, (uint32_t)norm16, errorCode);
+    umutablecptrie_setRange(norm16Trie, start, end, static_cast<uint32_t>(norm16), errorCode);
 
     // Set the minimum code points for real data lookups in the quick check loops.
     UBool isDecompNo=
@@ -534,13 +534,13 @@ void Normalizer2DataBuilder::setHangulData(UMutableCPTrie *norm16Trie) {
     HangulIterator hi;
     const HangulIterator::Range *range;
     // Check that none of the Hangul/Jamo code points have data.
-    while((range=hi.nextRange())!=NULL) {
+    while((range=hi.nextRange())!=nullptr) {
         for(UChar32 c=range->start; c<=range->end; ++c) {
             if(umutablecptrie_get(norm16Trie, c)>Normalizer2Impl::INERT) {
                 fprintf(stderr,
                         "gennorm2 error: "
                         "illegal mapping/composition/ccc data for Hangul or Jamo U+%04lX\n",
-                        (long)c);
+                        static_cast<long>(c));
                 exit(U_INVALID_FORMAT_ERROR);
             }
         }
@@ -639,7 +639,7 @@ LocalUCPTriePointer Normalizer2DataBuilder::processData() {
 
     // Pad the extraData to even length for 4-byte alignment of following data.
     if(extraData.length()&1) {
-        extraData.append((UChar)0);
+        extraData.append(static_cast<char16_t>(0));
     }
 
     int32_t minNoNoDelta=getMinNoNoDelta();
@@ -689,7 +689,7 @@ LocalUCPTriePointer Normalizer2DataBuilder::processData() {
     if (value != Normalizer2Impl::INERT || end < 0xdfff) {
         fprintf(stderr,
                 "gennorm2 error: not all surrogate code points are inert: U+d800..U+%04x=%lx\n",
-                (int)end, (long)value);
+                static_cast<int>(end), static_cast<long>(value));
         exit(U_INTERNAL_PROGRAM_ERROR);
     }
     uint32_t maxNorm16 = 0;
@@ -716,11 +716,11 @@ LocalUCPTriePointer Normalizer2DataBuilder::processData() {
         UChar32 leadEnd = start | 0x3ff;
         if (leadEnd <= end) {
             // End of the supplementary block for a lead surrogate.
-            if (maxNorm16 >= (uint32_t)indexes[Normalizer2Impl::IX_LIMIT_NO_NO]) {
+            if (maxNorm16 >= static_cast<uint32_t>(indexes[Normalizer2Impl::IX_LIMIT_NO_NO])) {
                 // Set noNo ("worst" value) if it got into "less-bad" maybeYes or ccc!=0.
                 // Otherwise it might end up at something like JAMO_VT which stays in
                 // the inner decomposition quick check loop.
-                maxNorm16 = (uint32_t)indexes[Normalizer2Impl::IX_LIMIT_NO_NO];
+                maxNorm16 = static_cast<uint32_t>(indexes[Normalizer2Impl::IX_LIMIT_NO_NO]);
             }
             maxNorm16 =
                 (maxNorm16 & ~Normalizer2Impl::HAS_COMP_BOUNDARY_AFTER)|
@@ -830,8 +830,8 @@ void Normalizer2DataBuilder::writeBinaryFile(const char *filename) {
 
     IcuToolErrorCode errorCode("gennorm2/writeBinaryFile()");
     UNewDataMemory *pData=
-        udata_create(NULL, NULL, filename, &dataInfo,
-                     haveCopyright ? U_COPYRIGHT_STRING : NULL, errorCode);
+        udata_create(nullptr, nullptr, filename, &dataInfo,
+                     haveCopyright ? U_COPYRIGHT_STRING : nullptr, errorCode);
     if(errorCode.isFailure()) {
         fprintf(stderr, "gennorm2 error: unable to create the output file %s - %s\n",
                 filename, errorCode.errorName());
@@ -849,7 +849,7 @@ void Normalizer2DataBuilder::writeBinaryFile(const char *filename) {
     int32_t totalSize=indexes[Normalizer2Impl::IX_TOTAL_SIZE];
     if(writtenSize!=totalSize) {
         fprintf(stderr, "gennorm2 error: written size %ld != calculated size %ld\n",
-            (long)writtenSize, (long)totalSize);
+            static_cast<long>(writtenSize), static_cast<long>(totalSize));
         exit(U_INTERNAL_PROGRAM_ERROR);
     }
 }
@@ -863,14 +863,14 @@ Normalizer2DataBuilder::writeCSourceFile(const char *filename) {
     CharString path(filename, static_cast<int32_t>(basename - filename), errorCode);
     CharString dataName(basename, errorCode);
     const char *extension=strrchr(basename, '.');
-    if(extension!=NULL) {
+    if(extension!=nullptr) {
         dataName.truncate(static_cast<int32_t>(extension - basename));
     }
     const char *name=dataName.data();
     errorCode.assertSuccess();
 
     FILE *f=usrc_create(path.data(), basename, 2016, "icu/source/tools/gennorm2/n2builder.cpp");
-    if(f==NULL) {
+    if(f==nullptr) {
         fprintf(stderr, "gennorm2/writeCSourceFile() error: unable to create the output file %s\n",
                 filename);
         exit(U_FILE_ACCESS_ERROR);
@@ -914,10 +914,10 @@ void writeMapping(FILE *f, const UnicodeString *m) {
     if(m != nullptr && !m->isEmpty()) {
         int32_t i = 0;
         UChar32 c = m->char32At(i);
-        fprintf(f, "%04lX", (long)c);
+        fprintf(f, "%04lX", static_cast<long>(c));
         while((i += U16_LENGTH(c)) < m->length()) {
             c = m->char32At(i);
-            fprintf(f, " %04lX", (long)c);
+            fprintf(f, " %04lX", static_cast<long>(c));
         }
     }
     fputs("\n", f);
@@ -965,9 +965,9 @@ Normalizer2DataBuilder::writeDataFile(const char *filename, bool writeRemoved) c
         } else {
             if(prevCC != 0) {
                 if(start == end) {
-                    fprintf(f, "%04lX:%d\n", (long)start, (int)prevCC);
+                    fprintf(f, "%04lX:%d\n", static_cast<long>(start), static_cast<int>(prevCC));
                 } else {
-                    fprintf(f, "%04lX..%04lX:%d\n", (long)start, (long)end, (int)prevCC);
+                    fprintf(f, "%04lX..%04lX:%d\n", static_cast<long>(start), static_cast<long>(end), static_cast<int>(prevCC));
                 }
                 didWrite = true;
             }
@@ -1014,9 +1014,9 @@ Normalizer2DataBuilder::writeDataFile(const char *filename, bool writeRemoved) c
         } else {
             if(writeRemoved ? prevType != Norm::NONE : prevType > Norm::REMOVED) {
                 if(start == end) {
-                    fprintf(f, "%04lX%c", (long)start, typeChars[prevType]);
+                    fprintf(f, "%04lX%c", static_cast<long>(start), typeChars[prevType]);
                 } else {
-                    fprintf(f, "%04lX..%04lX%c", (long)start, (long)end, typeChars[prevType]);
+                    fprintf(f, "%04lX..%04lX%c", static_cast<long>(start), static_cast<long>(end), typeChars[prevType]);
                 }
                 writeMapping(f, prevMapping);
             }

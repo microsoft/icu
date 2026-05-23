@@ -544,7 +544,7 @@ public:
      * @param date The date.
      * @param name Receives the display name.
      * @param timeType the output argument for receiving the time type (standard/daylight/unknown)
-     * used for the display name, or NULL if the information is not necessary.
+     * used for the display name, or nullptr if the information is not necessary.
      * @return A reference to the result
      * @see #UTimeZoneFormatStyle
      * @see #UTimeZoneFormatTimeType
@@ -609,7 +609,7 @@ public:
      * @param pos The position.
      * @param parseOptions The parse options represented by bitwise flags of UTimeZoneFormatParseOption.
      * @param timeType The output argument for receiving the time type (standard/daylight/unknown),
-     * or NULL if the information is not necessary.
+     * or nullptr if the information is not necessary.
      * @return A <code>TimeZone</code>, or null if the input could not be parsed.
      * @see UTimeZoneFormatStyle
      * @see UTimeZoneFormatParseOption
@@ -630,7 +630,7 @@ public:
      * @param style The format style
      * @param pos The position.
      * @param timeType The output argument for receiving the time type (standard/daylight/unknown),
-     * or NULL if the information is not necessary.
+     * or nullptr if the information is not necessary.
      * @return A <code>TimeZone</code>, or null if the input could not be parsed.
      * @see UTimeZoneFormatStyle
      * @see UTimeZoneFormatParseOption
@@ -670,7 +670,7 @@ public:
      * @param parse_pos The position to start parsing at. Upon return this param is set to the position after the
      *                  last character successfully parsed. If the source is not parsed successfully, this param
      *                  will remain unchanged.
-     * @return A newly created Formattable* object, or NULL on failure.  The caller owns this and should
+     * @return A newly created Formattable* object, or nullptr on failure.  The caller owns this and should
      *                 delete it when done.
      * @stable ICU 50
      */
@@ -809,7 +809,7 @@ private:
      * @param required the required set of fields, such as FIELDS_HM
      * @param status U_ILLEGAL_ARGUMENT is set when the specified pattern does not contain
      *               pattern letters for the required fields.
-     * @return A list of GMTOffsetField objects, or NULL on error.
+     * @return A list of GMTOffsetField objects, or nullptr on error.
      */
     static UVector* parseOffsetPattern(const UnicodeString& pattern, OffsetFields required, UErrorCode& status);
 
@@ -882,7 +882,7 @@ private:
      *      time zone string.
      */
     int32_t parseOffsetISO8601(const UnicodeString& text, ParsePosition& pos, UBool extendedOnly,
-        UBool* hasDigitOffset = NULL) const;
+        UBool* hasDigitOffset = nullptr) const;
 
     /**
      * Appends localized digits to the buffer.

@@ -35,15 +35,15 @@
 U_NAMESPACE_BEGIN
 
 NFRule::NFRule(const RuleBasedNumberFormat* _rbnf, const UnicodeString &_ruleText, UErrorCode &status)
-  : baseValue((int32_t)0)
+  : baseValue(static_cast<int32_t>(0))
   , radix(10)
   , exponent(0)
   , decimalPoint(0)
   , fRuleText(_ruleText)
-  , sub1(NULL)
-  , sub2(NULL)
+  , sub1(nullptr)
+  , sub2(nullptr)
   , formatter(_rbnf)
-  , rulePatternFormat(NULL)
+  , rulePatternFormat(nullptr)
 {
     if (!fRuleText.isEmpty()) {
         parseRuleDescriptor(fRuleText, status);
@@ -54,12 +54,12 @@ NFRule::~NFRule()
 {
     if (sub1 != sub2) {
         delete sub2;
-        sub2 = NULL;
+        sub2 = nullptr;
     }
     delete sub1;
-    sub1 = NULL;
+    sub1 = nullptr;
     delete rulePatternFormat;
-    rulePatternFormat = NULL;
+    rulePatternFormat = nullptr;
 }
 
 static const char16_t gLeftBracket = 0x005b;
@@ -102,7 +102,7 @@ static const char16_t gGreaterGreaterGreater[] =   {0x3E, 0x3E, 0x3E, 0}; /* ">>
 static const char16_t * const RULE_PREFIXES[] = {
     gLessLess, gLessPercent, gLessHash, gLessZero,
     gGreaterGreater, gGreaterPercent,gGreaterHash, gGreaterZero,
-    gEqualPercent, gEqualHash, gEqualZero, NULL
+    gEqualPercent, gEqualHash, gEqualZero, nullptr
 };
 
 void
@@ -305,8 +305,8 @@ NFRule::parseRuleDescriptor(UnicodeString& description, UErrorCode& status)
         // for one of the special rules.  If it does, set the base
         // value to the correct identifier value
         int descriptorLength = descriptor.length();
-        UChar firstChar = descriptor.charAt(0);
-        UChar lastChar = descriptor.charAt(descriptorLength - 1);
+        char16_t firstChar = descriptor.charAt(0);
+        char16_t lastChar = descriptor.charAt(descriptorLength - 1);
         if (firstChar >= gZero && firstChar <= gNine && lastChar != gX) {
             // if the rule descriptor begins with a digit, it's a descriptor
             // for a normal rule
@@ -314,7 +314,7 @@ NFRule::parseRuleDescriptor(UnicodeString& description, UErrorCode& status)
             // just build up the value as we encounter the digits.
             int64_t val = 0;
             p = 0;
-            UChar c = gSpace;
+            char16_t c = gSpace;
 
             // begin parsing the descriptor: copy digits
             // into "tempValue", skip periods, commas, and spaces,
@@ -382,7 +382,7 @@ NFRule::parseRuleDescriptor(UnicodeString& description, UErrorCode& status)
 
                 // tempValue now contain's the rule's radix.  Set it
                 // accordingly, and recalculate the rule's exponent
-                radix = (int32_t)val;
+                radix = static_cast<int32_t>(val);
                 if (radix == 0) {
                     // throw new IllegalArgumentException("Rule can't have radix of 0");
                     status = U_PARSE_ERROR;
@@ -467,9 +467,9 @@ NFRule::extractSubstitutions(const NFRuleSet* ruleSet,
     }
     fRuleText = ruleText;
     sub1 = extractSubstitution(ruleSet, predecessor, status);
-    if (sub1 == NULL) {
+    if (sub1 == nullptr) {
         // Small optimization. There is no need to create a redundant NullSubstitution.
-        sub2 = NULL;
+        sub2 = nullptr;
     }
     else {
         sub2 = extractSubstitution(ruleSet, predecessor, status);
@@ -516,7 +516,7 @@ NFRule::extractSubstitution(const NFRuleSet* ruleSet,
                             const NFRule* predecessor,
                             UErrorCode& status)
 {
-    NFSubstitution* result = NULL;
+    NFSubstitution* result = nullptr;
 
     // search the rule's rule text for the first two characters of
     // a substitution token
@@ -526,7 +526,7 @@ NFRule::extractSubstitution(const NFRuleSet* ruleSet,
     // if we didn't find one, create a null substitution positioned
     // at the end of the rule text
     if (subStart == -1) {
-        return NULL;
+        return nullptr;
     }
 
     // special-case the ">>>" token, since searching for the > at the
@@ -537,7 +537,7 @@ NFRule::extractSubstitution(const NFRuleSet* ruleSet,
         // otherwise the substitution token ends with the same character
         // it began with
     } else {
-        UChar c = fRuleText.charAt(subStart);
+        char16_t c = fRuleText.charAt(subStart);
         subEnd = fRuleText.indexOf(c, subStart + 1);
         // special case for '<%foo<<'
         if (c == gLessThan && subEnd != -1 && subEnd < fRuleText.length() - 1 && fRuleText.charAt(subEnd+1) == c) {
@@ -553,7 +553,7 @@ NFRule::extractSubstitution(const NFRuleSet* ruleSet,
     // unmatched token character), create a null substitution positioned
     // at the end of the rule
     if (subEnd == -1) {
-        return NULL;
+        return nullptr;
     }
 
     // if we get here, we have a real substitution token (or at least
@@ -596,10 +596,10 @@ NFRule::setBaseValue(int64_t newBaseValue, UErrorCode& status)
         // description didn't specify a base value.  This means it
         // has substitutions, and some substitutions hold on to copies
         // of the rule's divisor.  Fix their copies of the divisor.
-        if (sub1 != NULL) {
+        if (sub1 != nullptr) {
             sub1->setDivisor(radix, exponent, status);
         }
-        if (sub2 != NULL) {
+        if (sub2 != nullptr) {
             sub2->setDivisor(radix, exponent, status);
         }
 
@@ -698,7 +698,7 @@ NFRule::operator==(const NFRule& rhs) const
 */
 static void util_append64(UnicodeString& result, int64_t n)
 {
-    UChar buffer[256];
+    char16_t buffer[256];
     int32_t len = util64_tou(n, buffer, sizeof(buffer));
     UnicodeString temp(buffer, len);
     result.append(temp);
@@ -738,7 +738,7 @@ NFRule::_appendRuleText(UnicodeString& result) const
     // if the rule text begins with a space, write an apostrophe
     // (whitespace after the rule descriptor is ignored; the
     // apostrophe is used to make the whitespace significant)
-    if (fRuleText.charAt(0) == gSpace && (sub1 == NULL || sub1->getPos() != 0)) {
+    if (fRuleText.charAt(0) == gSpace && (sub1 == nullptr || sub1->getPos() != 0)) {
         result.append(gTick);
     }
 
@@ -748,11 +748,11 @@ NFRule::_appendRuleText(UnicodeString& result) const
     ruleTextCopy.setTo(fRuleText);
 
     UnicodeString temp;
-    if (sub2 != NULL) {
+    if (sub2 != nullptr) {
         sub2->toString(temp);
         ruleTextCopy.insert(sub2->getPos(), temp);
     }
-    if (sub1 != NULL) {
+    if (sub1 != nullptr) {
         sub1->toString(temp);
         ruleTextCopy.insert(sub1->getPos(), temp);
     }
@@ -819,10 +819,10 @@ NFRule::doFormat(int64_t number, UnicodeString& toInsertInto, int32_t pos, int32
         lengthOffset = fRuleText.length() - (toInsertInto.length() - initialLength);
     }
 
-    if (sub2 != NULL) {
+    if (sub2 != nullptr) {
         sub2->doSubstitution(number, toInsertInto, pos - (sub2->getPos() > pluralRuleStart ? lengthOffset : 0), recursionCount, status);
     }
-    if (sub1 != NULL) {
+    if (sub1 != nullptr) {
         sub1->doSubstitution(number, toInsertInto, pos - (sub1->getPos() > pluralRuleStart ? lengthOffset : 0), recursionCount, status);
     }
 }
@@ -873,10 +873,10 @@ NFRule::doFormat(double number, UnicodeString& toInsertInto, int32_t pos, int32_
         lengthOffset = fRuleText.length() - (toInsertInto.length() - initialLength);
     }
 
-    if (sub2 != NULL) {
+    if (sub2 != nullptr) {
         sub2->doSubstitution(number, toInsertInto, pos - (sub2->getPos() > pluralRuleStart ? lengthOffset : 0), recursionCount, status);
     }
-    if (sub1 != NULL) {
+    if (sub1 != nullptr) {
         sub1->doSubstitution(number, toInsertInto, pos - (sub1->getPos() > pluralRuleStart ? lengthOffset : 0), recursionCount, status);
     }
 }
@@ -908,7 +908,7 @@ NFRule::shouldRollBack(int64_t number) const
     // a modulus substitution, its base value isn't an even multiple
     // of 100, and the value we're trying to format _is_ an even
     // multiple of 100.  This is called the "rollback rule."
-    if ((sub1 != NULL && sub1->isModulusSubstitution()) || (sub2 != NULL && sub2->isModulusSubstitution())) {
+    if ((sub1 != nullptr && sub1->isModulusSubstitution()) || (sub2 != nullptr && sub2->isModulusSubstitution())) {
         int64_t re = util64_pow(radix, exponent);
         return (number % re) == 0 && (baseValue % re) != 0;
     }
@@ -943,7 +943,7 @@ NFRule::shouldRollBack(int64_t number) const
 static void dumpUS(FILE* f, const UnicodeString& us) {
   int len = us.length();
   char* buf = (char *)uprv_malloc((len+1)*sizeof(char)); //new char[len+1];
-  if (buf != NULL) {
+  if (buf != nullptr) {
 	  us.extract(0, len, buf);
 	  buf[len] = 0;
 	  fprintf(f, "%s", buf);
@@ -965,8 +965,8 @@ NFRule::doParse(const UnicodeString& text,
     ParsePosition pp;
     UnicodeString workText(text);
 
-    int32_t sub1Pos = sub1 != NULL ? sub1->getPos() : fRuleText.length();
-    int32_t sub2Pos = sub2 != NULL ? sub2->getPos() : fRuleText.length();
+    int32_t sub1Pos = sub1 != nullptr ? sub1->getPos() : fRuleText.length();
+    int32_t sub2Pos = sub2 != nullptr ? sub2->getPos() : fRuleText.length();
 
     // check to see whether the text before the first substitution
     // matches the text at the beginning of the string being
@@ -1068,7 +1068,7 @@ NFRule::doParse(const UnicodeString& text,
         // null substitution), pp is now pointing at the first unmatched
         // character.  Take note of that, and try matchToDelimiter()
         // on the input text again
-        if (pp.getIndex() != 0 || sub1 == NULL) {
+        if (pp.getIndex() != 0 || sub1 == nullptr) {
             start = pp.getIndex();
 
             UnicodeString workText2;
@@ -1089,7 +1089,7 @@ NFRule::doParse(const UnicodeString& text,
             // if we got a successful match on this second
             // matchToDelimiter() call, update the high-water mark
             // and result (if necessary)
-            if (pp2.getIndex() != 0 || sub2 == NULL) {
+            if (pp2.getIndex() != 0 || sub2 == nullptr) {
                 if (prefixLength + pp.getIndex() + pp2.getIndex() > highWaterMark) {
                     highWaterMark = prefixLength + pp.getIndex() + pp2.getIndex();
                     result = partialResult;
@@ -1137,7 +1137,7 @@ NFRule::doParse(const UnicodeString& text,
     // we have to account for it here.  By definition, if the matching
     // rule in a fraction rule set has no substitutions, its numerator
     // is 1, and so the result is the reciprocal of its base value.
-    if (isFractionRule && highWaterMark > 0 && sub1 == NULL) {
+    if (isFractionRule && highWaterMark > 0 && sub1 == nullptr) {
         result = 1 / result;
     }
 
@@ -1296,7 +1296,7 @@ NFRule::matchToDelimiter(const UnicodeString& text,
         // for "delimiter".  Instead, just use "sub" to parse as much of
         // "text" as possible.
     }
-    else if (sub == NULL) {
+    else if (sub == nullptr) {
         return _baseValue;
     }
     else {
@@ -1371,7 +1371,7 @@ NFRule::prefixLength(const UnicodeString& str, const UnicodeString& prefix, UErr
         // the CollationElementIterator protocol.  Hopefully, this
         // will change someday.)
         const RuleBasedCollator* collator = formatter->getCollator();
-        if (collator == NULL) {
+        if (collator == nullptr) {
             status = U_MEMORY_ALLOCATION_ERROR;
             return 0;
         }
@@ -1650,7 +1650,7 @@ NFRule::allIgnorable(const UnicodeString& str, UErrorCode& status) const
     // element is 0 (ignorable) at the primary level
     if (formatter->isLenient()) {
         const RuleBasedCollator* collator = formatter->getCollator();
-        if (collator == NULL) {
+        if (collator == nullptr) {
             status = U_MEMORY_ALLOCATION_ERROR;
             return false;
         }
@@ -1680,10 +1680,10 @@ NFRule::allIgnorable(const UnicodeString& str, UErrorCode& status) const
 
 void
 NFRule::setDecimalFormatSymbols(const DecimalFormatSymbols& newSymbols, UErrorCode& status) {
-    if (sub1 != NULL) {
+    if (sub1 != nullptr) {
         sub1->setDecimalFormatSymbols(newSymbols, status);
     }
-    if (sub2 != NULL) {
+    if (sub2 != nullptr) {
         sub2->setDecimalFormatSymbols(newSymbols, status);
     }
 }

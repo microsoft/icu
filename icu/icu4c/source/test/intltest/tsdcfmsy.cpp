@@ -124,15 +124,15 @@ void IntlTestDecimalFormatSymbols::testSymbols(/* char *par */)
 
     // Test get currency spacing before the currency.
     status = U_ZERO_ERROR;
-    for (int32_t i = 0; i < (int32_t)UNUM_CURRENCY_SPACING_COUNT; i++) {
+    for (int32_t i = 0; i < static_cast<int32_t>(UNUM_CURRENCY_SPACING_COUNT); i++) {
         UnicodeString enCurrencyPattern = en.getPatternForCurrencySpacing(
-             (UCurrencySpacing)i, true, status);
+             static_cast<UCurrencySpacing>(i), true, status);
         if(U_FAILURE(status)) {
             errln("Error: cannot get CurrencyMatch for locale:en");
             status = U_ZERO_ERROR;
         }
         UnicodeString frCurrencyPattern = fr.getPatternForCurrencySpacing(
-             (UCurrencySpacing)i, true, status);
+             static_cast<UCurrencySpacing>(i), true, status);
         if(U_FAILURE(status)) {
             errln("Error: cannot get CurrencyMatch for locale:fr");
         }
@@ -144,13 +144,13 @@ void IntlTestDecimalFormatSymbols::testSymbols(/* char *par */)
     status = U_ZERO_ERROR;
     for (int32_t i = 0; i < UNUM_CURRENCY_SPACING_COUNT; i++) {
         UnicodeString enCurrencyPattern = en.getPatternForCurrencySpacing(
-            (UCurrencySpacing)i, false, status);
+            static_cast<UCurrencySpacing>(i), false, status);
         if(U_FAILURE(status)) {
             errln("Error: cannot get CurrencyMatch for locale:en");
             status = U_ZERO_ERROR;
         }
         UnicodeString frCurrencyPattern = fr.getPatternForCurrencySpacing(
-             (UCurrencySpacing)i, false, status);
+             static_cast<UCurrencySpacing>(i), false, status);
         if(U_FAILURE(status)) {
             errln("Error: cannot get CurrencyMatch for locale:fr");
         }
@@ -192,7 +192,7 @@ void IntlTestDecimalFormatSymbols::testSymbols(/* char *par */)
     for (i = 0; i < static_cast<int>(DecimalFormatSymbols::kFormatSymbolCount); ++i) {
         if (foo.getSymbol(static_cast<DecimalFormatSymbols::ENumberFormatSymbol>(i)) != UnicodeString(static_cast<UChar32>(0x10330 + i))) {
             errln("get/setSymbol did not roundtrip, got " +
-                  foo.getSymbol((DecimalFormatSymbols::ENumberFormatSymbol)i) +
+                  foo.getSymbol(static_cast<DecimalFormatSymbols::ENumberFormatSymbol>(i)) +
                   ", expected " +
                   UnicodeString(static_cast<UChar32>(0x10330 + i)));
         }
@@ -238,11 +238,11 @@ void IntlTestDecimalFormatSymbols::testLastResortData() {
                  "", lastResort->getSymbol(DecimalFormatSymbols::kMonetaryGroupingSeparatorSymbol));
     lastResort->setSymbol(DecimalFormatSymbols::kMonetaryGroupingSeparatorSymbol, ",");
     assertEquals("last-resort NaN",
-                 UnicodeString((UChar)0xfffd), lastResort->getSymbol(DecimalFormatSymbols::kNaNSymbol));
+                 UnicodeString(static_cast<char16_t>(0xfffd)), lastResort->getSymbol(DecimalFormatSymbols::kNaNSymbol));
     lastResort->setSymbol(DecimalFormatSymbols::kNaNSymbol, "NaN");
     // Check that now all of the symbols match root.
     for(int32_t i = 0; i < DecimalFormatSymbols::kFormatSymbolCount; ++i) {
-        DecimalFormatSymbols::ENumberFormatSymbol e = (DecimalFormatSymbols::ENumberFormatSymbol)i;
+        DecimalFormatSymbols::ENumberFormatSymbol e = static_cast<DecimalFormatSymbols::ENumberFormatSymbol>(i);
         assertEquals("last-resort symbol vs. root", root.getSymbol(e), lastResort->getSymbol(e));
     }
     // Also, the CurrencySpacing patterns are empty in the last resort instance,
@@ -253,9 +253,9 @@ void IntlTestDecimalFormatSymbols::testLastResortData() {
 void IntlTestDecimalFormatSymbols::testDigitSymbols() {
     // This test does more in ICU4J than in ICU4C right now.
     // In ICU4C, it is basically just a test for codePointZero and getConstDigitSymbol.
-    UChar defZero = u'0';
+    char16_t defZero = u'0';
     UChar32 osmanyaZero = U'\U000104A0';
-    static const UChar* osmanyaDigitStrings[] = {
+    static const char16_t* osmanyaDigitStrings[] = {
         u"\U000104A0", u"\U000104A1", u"\U000104A2", u"\U000104A3", u"\U000104A4",
         u"\U000104A5", u"\U000104A6", u"\U000104A7", u"\U000104A8", u"\U000104A9"
     };

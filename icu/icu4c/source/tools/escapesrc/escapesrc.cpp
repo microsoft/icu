@@ -285,7 +285,7 @@ bool fixAt(std::string &linestr, size_t pos) {
         U8_NEXT(s, i, length, c);
       }
       if(c<0) {
-        fprintf(stderr, "Illegal utf-8 sequence at Column: %d\n", (int)old_pos);
+        fprintf(stderr, "Illegal utf-8 sequence at Column: %d\n", static_cast<int>(old_pos));
         fprintf(stderr, "Line: >>%s<<\n", linestr.c_str());
         return true;
       }

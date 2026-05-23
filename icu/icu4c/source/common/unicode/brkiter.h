@@ -161,7 +161,7 @@ public:
       *  access the text without impacting any break iterator operations,
       *  but the underlying text itself must not be altered.
       *
-      * @param fillIn A UText to be filled in.  If NULL, a new UText will be
+      * @param fillIn A UText to be filled in.  If nullptr, a new UText will be
       *           allocated to hold the result.
       * @param status receives any error codes.
       * @return   The current UText for this break iterator.  If an input
@@ -219,7 +219,7 @@ public:
          * boundaries have been returned.
          * @stable ICU 2.0
          */
-        DONE = (int32_t)-1
+        DONE = static_cast<int32_t>(-1)
     };
 
     /**
@@ -504,7 +504,7 @@ public:
      *
      * Thread safe client-buffer-based cloning operation
      *    Do NOT call delete on a safeclone, since 'new' is not used to create it.
-     * @param stackBuffer user allocated space for the new clone. If NULL new memory will be allocated.
+     * @param stackBuffer user allocated space for the new clone. If nullptr new memory will be allocated.
      * If buffer is not large enough, new memory will be allocated.
      * @param BufferSize reference to size of allocated space.
      * If BufferSize == 0, a sufficient size for use in cloning will

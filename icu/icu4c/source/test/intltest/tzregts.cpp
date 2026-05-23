@@ -116,7 +116,7 @@ UDate TimeZoneRegressionTest::findTransitionStepwise(const SimpleTimeZone& tz, U
             return min;
         }
         if (failure(status, "SimpleTimeZone::inDaylightTime")) return 0;
-        min += (UDate)24*60*60*1000; // one day
+        min += static_cast<UDate>(24) * 60 * 60 * 1000; // one day
     }
     return 0;
 }
@@ -389,12 +389,12 @@ TimeZoneRegressionTest::checkCalendar314(GregorianCalendar *testCal, TimeZone *t
         dow = UCAL_SUNDAY + ((dow - UCAL_SUNDAY + 1) % 7);
     }
 
-    tzOffset = testTZ->getOffset((uint8_t)testCal->get(UCAL_ERA, status), 
+    tzOffset = testTZ->getOffset(static_cast<uint8_t>(testCal->get(UCAL_ERA, status)),
                                 testCal->get(UCAL_YEAR, status), 
                                 testCal->get(UCAL_MONTH, status), 
                                 date, 
-                                (uint8_t)dow, 
-                                (int32_t)millis,
+                                static_cast<uint8_t>(dow),
+                                static_cast<int32_t>(millis),
                                 status); 
     tzRawOffset = testTZ->getRawOffset(); 
     tzOffsetFloat = static_cast<float>(tzOffset) / static_cast<float>(3600000);
@@ -490,7 +490,7 @@ void TimeZoneRegressionTest:: Test4126678()
         cal->get(UCAL_DST_OFFSET, status);
 
     failure(status, "cal->get");
-    int32_t offset = tz->getOffset((uint8_t)era, year, month, day, (uint8_t)dayOfWeek, millis, status);
+    int32_t offset = tz->getOffset(static_cast<uint8_t>(era), year, month, day, static_cast<uint8_t>(dayOfWeek), millis, status);
     int32_t raw_offset = tz->getRawOffset();
 
     if (offset == raw_offset)
@@ -674,8 +674,8 @@ void TimeZoneRegressionTest:: Test4154542()
         // {sfb} need to look into ctor problems! (UErrorCode vs. dst signature confusion)
         status = U_ZERO_ERROR;
             SimpleTimeZone *temp = new SimpleTimeZone(0, "Z",
-                    (int8_t)month, (int8_t)day, (int8_t)dayOfWeek, time,
-                    (int8_t)GOOD_MONTH, (int8_t)GOOD_DAY, (int8_t)GOOD_DAY_OF_WEEK, 
+                    static_cast<int8_t>(month), static_cast<int8_t>(day), static_cast<int8_t>(dayOfWeek), time,
+                    static_cast<int8_t>(GOOD_MONTH), static_cast<int8_t>(GOOD_DAY), static_cast<int8_t>(GOOD_DAY_OF_WEEK),
                     GOOD_TIME,status);
         if (temp == nullptr) {
             errln("Fail: failed to create SimpleTimeZone %s", u_errorName(status));
@@ -696,7 +696,7 @@ void TimeZoneRegressionTest:: Test4154542()
         //try {
         status = U_ZERO_ERROR;
             temp = new SimpleTimeZone(0, "Z",
-                    (int8_t)GOOD_MONTH, (int8_t)GOOD_DAY, (int8_t)GOOD_DAY_OF_WEEK, 
+                    static_cast<int8_t>(GOOD_MONTH), static_cast<int8_t>(GOOD_DAY), static_cast<int8_t>(GOOD_DAY_OF_WEEK),
                     GOOD_TIME,
                     static_cast<int8_t>(month), static_cast<int8_t>(day), static_cast<int8_t>(dayOfWeek), time, status);
         if (temp == nullptr) {
@@ -1158,7 +1158,7 @@ TimeZoneRegressionTest::TestJDK12API()
  * SimpleTimeZone allows invalid DOM values.
  */
 void TimeZoneRegressionTest::Test4184229() {
-    SimpleTimeZone* zone = NULL;
+    SimpleTimeZone* zone = nullptr;
     UErrorCode status = U_ZERO_ERROR;
     zone = new SimpleTimeZone(0, "A", 0, -1, 0, 0, 0, 0, 0, 0, status);
     if(U_SUCCESS(status)){

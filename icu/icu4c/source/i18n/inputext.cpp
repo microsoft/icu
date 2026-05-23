@@ -34,7 +34,7 @@ InputText::InputText(UErrorCode &status)
       fRawInput(nullptr),
       fRawLength(0)
 {
-    if (fInputBytes == NULL || fByteStats == NULL) {
+    if (fInputBytes == nullptr || fByteStats == nullptr) {
         status = U_MEMORY_ALLOCATION_ERROR;
     }
 }
@@ -58,7 +58,7 @@ void InputText::setDeclaredEncoding(const char* encoding, int32_t len)
 {
     if(encoding) {
         if (len == -1) {
-            len = (int32_t)uprv_strlen(encoding);
+            len = static_cast<int32_t>(uprv_strlen(encoding));
         }
 
         len += 1;     // to make place for the \0 at the end.
@@ -70,7 +70,7 @@ void InputText::setDeclaredEncoding(const char* encoding, int32_t len)
 
 UBool InputText::isSet() const 
 {
-    return fRawInput != NULL;
+    return fRawInput != nullptr;
 }
 
 /**
@@ -98,7 +98,7 @@ void InputText::MungeInput(UBool fStripTags) {
         for (srci = 0; srci < fRawLength && dsti < BUFFER_SIZE; srci += 1) {
             b = fRawInput[srci];
 
-            if (b == (uint8_t)0x3C) { /* Check for the ASCII '<' */
+            if (b == static_cast<uint8_t>(0x3C)) { /* Check for the ASCII '<' */
                 if (inMarkup) {
                     badTags += 1;
                 }
@@ -111,7 +111,7 @@ void InputText::MungeInput(UBool fStripTags) {
                 fInputBytes[dsti++] = b;
             }
 
-            if (b == (uint8_t)0x3E) { /* Check for the ASCII '>' */
+            if (b == static_cast<uint8_t>(0x3E)) { /* Check for the ASCII '>' */
                 inMarkup = false;
             }
         }

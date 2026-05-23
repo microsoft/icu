@@ -655,7 +655,7 @@ public:
      * rule sets.  Each of these is one longer than the initial array,
      * with the first String being the ULocale ID, and the remaining
      * Strings being the localizations of the rule set names, in the
-     * same order as the initial array.  Arrays are NULL-terminated.
+     * same order as the initial array.  Arrays are nullptr-terminated.
      * @param rules A description of the formatter's desired behavior.
      * See the class documentation for a complete explanation of the description
      * syntax.
@@ -703,7 +703,7 @@ public:
      * rule sets.  Each of these is one longer than the initial array,
      * with the first String being the ULocale ID, and the remaining
      * Strings being the localizations of the rule set names, in the
-     * same order as the initial array.  Arrays are NULL-terminated.
+     * same order as the initial array.  Arrays are nullptr-terminated.
      * @param rules A description of the formatter's desired behavior.
      * See the class documentation for a complete explanation of the description
      * syntax.
@@ -867,7 +867,7 @@ public:
    */
   U_I18N_API virtual UnicodeString& format(int32_t number,
                                            UnicodeString& toAppendTo,
-                                FieldPosition& pos) const override;
+                                           FieldPosition& pos) const override;
 
   /**
    * Formats the specified 64-bit number using the default ruleset.
@@ -879,7 +879,7 @@ public:
    */
   U_I18N_API virtual UnicodeString& format(int64_t number,
                                            UnicodeString& toAppendTo,
-                                FieldPosition& pos) const override;
+                                           FieldPosition& pos) const override;
   /**
    * Formats the specified number using the default ruleset.
    * @param number The number to format.
@@ -890,7 +890,7 @@ public:
    */
   U_I18N_API virtual UnicodeString& format(double number,
                                            UnicodeString& toAppendTo,
-                                FieldPosition& pos) const override;
+                                           FieldPosition& pos) const override;
 
   /**
    * Formats the specified number using the named ruleset.
@@ -983,7 +983,7 @@ public:
    */
   U_I18N_API virtual void parse(const UnicodeString& text,
                                 Formattable& result,
-                     ParsePosition& parsePosition) const override;
+                                ParsePosition& parsePosition) const override;
 
 #if !UCONFIG_NO_COLLATION
 
@@ -1116,7 +1116,7 @@ public:
 private:
     RuleBasedNumberFormat() = delete; // default constructor not implemented
 
-    // this will ref the localizations if they are not NULL
+    // this will ref the localizations if they are not nullptr
     // caller must deref to get adoption
     RuleBasedNumberFormat(const UnicodeString& description, LocalizationInfo* localizations,
               const Locale& locale, UParseError& perror, UErrorCode& status);
@@ -1173,7 +1173,7 @@ private:
 #if !UCONFIG_NO_COLLATION
 
 inline UBool
-RuleBasedNumberFormat::isLenient(void) const {
+RuleBasedNumberFormat::isLenient() const {
     return lenient;
 }
 

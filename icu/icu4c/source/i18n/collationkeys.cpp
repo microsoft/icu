@@ -28,7 +28,7 @@ SortKeyByteSink::~SortKeyByteSink() {}
 
 void
 SortKeyByteSink::Append(const char *bytes, int32_t n) {
-    if (n <= 0 || bytes == NULL) {
+    if (n <= 0 || bytes == nullptr) {
         return;
     }
     if (ignore_ > 0) {
@@ -63,7 +63,7 @@ SortKeyByteSink::GetAppendBuffer(int32_t min_capacity,
                                  int32_t *result_capacity) {
     if (min_capacity < 1 || scratch_capacity < min_capacity) {
         *result_capacity = 0;
-        return NULL;
+        return nullptr;
     }
     if (ignore_ > 0) {
         // Do not write ignored bytes right at the end of the buffer.
@@ -126,7 +126,7 @@ private:
 
 void SortKeyLevel::appendByte(uint32_t b) {
     if(len < buffer.getCapacity() || ensureCapacity(1)) {
-        buffer[len++] = (uint8_t)b;
+        buffer[len++] = static_cast<uint8_t>(b);
     }
 }
 
@@ -134,7 +134,7 @@ void
 SortKeyLevel::appendWeight16(uint32_t w) {
     U_ASSERT((w & 0xffff) != 0);
     uint8_t b0 = static_cast<uint8_t>(w >> 8);
-    uint8_t b1 = (uint8_t)w;
+    uint8_t b1 = static_cast<uint8_t>(w);
     int32_t appendLength = (b1 == 0) ? 1 : 2;
     if((len + appendLength) <= buffer.getCapacity() || ensureCapacity(appendLength)) {
         buffer[len++] = b0;
@@ -172,7 +172,7 @@ void
 SortKeyLevel::appendReverseWeight16(uint32_t w) {
     U_ASSERT((w & 0xffff) != 0);
     uint8_t b0 = static_cast<uint8_t>(w >> 8);
-    uint8_t b1 = (uint8_t)w;
+    uint8_t b1 = static_cast<uint8_t>(w);
     int32_t appendLength = (b1 == 0) ? 1 : 2;
     if((len + appendLength) <= buffer.getCapacity() || ensureCapacity(appendLength)) {
         if(b1 == 0) {
@@ -197,7 +197,7 @@ UBool SortKeyLevel::ensureCapacity(int32_t appendCapacity) {
     if (newCapacity < 200) {
         newCapacity = 200;
     }
-    if(buffer.resize(newCapacity, len)==NULL) {
+    if(buffer.resize(newCapacity, len)==nullptr) {
         return ok = false;
     }
     return true;
@@ -243,7 +243,7 @@ CollationKeys::writeSortKeyUpToQuaternary(CollationIterator &iter,
         levels |= Collation::CASE_LEVEL_FLAG;
     }
     // Minus the levels below minLevel.
-    levels &= ~(((uint32_t)1 << minLevel) - 1);
+    levels &= ~((static_cast<uint32_t>(1) << minLevel) - 1);
     if(levels == 0) { return; }
 
     uint32_t variableTop;
@@ -352,7 +352,7 @@ CollationKeys::writeSortKeyUpToQuaternary(CollationIterator &iter,
             }
         }
 
-        uint32_t lower32 = (uint32_t)ce;
+        uint32_t lower32 = static_cast<uint32_t>(ce);
         if(lower32 == 0) { continue; }  // completely ignorable, no secondary/case/tertiary/quaternary
 
         if((levels & Collation::SECONDARY_LEVEL_FLAG) != 0) {

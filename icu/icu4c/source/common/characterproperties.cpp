@@ -67,7 +67,7 @@ _set_addRange(USet *set, UChar32 start, UChar32 end) {
 }
 
 void U_CALLCONV
-_set_addString(USet *set, const UChar *str, int32_t length) {
+_set_addString(USet *set, const char16_t *str, int32_t length) {
     reinterpret_cast<UnicodeSet*>(set)->add(icu::UnicodeString(static_cast<UBool>(length < 0), str, length));
 }
 
@@ -103,7 +103,7 @@ void U_CALLCONV initInclusion(UPropertySource src, UErrorCode &errorCode) {
         return;
     }
     USetAdder sa = {
-        (USet *)incl.getAlias(),
+        reinterpret_cast<USet*>(incl.getAlias()),
         _set_add,
         _set_addRange,
         _set_addString,
@@ -293,7 +293,7 @@ UnicodeSet *makeSet(UProperty property, UErrorCode &errorCode) {
         const icu::EmojiProps *ep = icu::EmojiProps::getSingleton(errorCode);
         if (U_FAILURE(errorCode)) { return nullptr; }
         USetAdder sa = {
-            (USet *)set.getAlias(),
+            reinterpret_cast<USet*>(set.getAlias()),
             _set_add,
             _set_addRange,
             _set_addString,

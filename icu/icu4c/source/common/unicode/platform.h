@@ -482,26 +482,6 @@
     // C++98 or C++03
 #   define U_CPLUSPLUS_VERSION 1
 #endif
-#if (U_PLATFORM == U_PF_AIX || U_PLATFORM == U_PF_OS390) && defined(__cplusplus) &&(U_CPLUSPLUS_VERSION < 11)
-// add in std::nullptr_t
-namespace std {
-  typedef decltype(nullptr) nullptr_t;
-};
-#endif
-
-/**
- * \def U_NOEXCEPT
- * "noexcept" if supported, otherwise empty.
- * Some code, especially STL containers, uses move semantics of objects only
- * if the move constructor and the move operator are declared as not throwing exceptions.
- * @internal
- */
-#ifdef U_NOEXCEPT
-    /* Use the predefined value. */
-#else
-#   define U_NOEXCEPT noexcept
-#endif
-
 
 /**
  * \def U_FALLTHROUGH

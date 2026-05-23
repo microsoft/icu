@@ -36,7 +36,7 @@ extern "C" U_EXPORT const ICU_Data_Header U_ICUDATA_ENTRY_POINT alignas(16) = {
 #endif
 
         U_CHARSET_FAMILY,
-        sizeof(UChar),   
+        sizeof(char16_t),
         0,               /* reserved      */
         {0x54, 0x6f, 0x43, 0x50},   /* data format identifier: "ToCP" */
         {1, 0, 0, 0},   /* format version major, minor, milli, micro */

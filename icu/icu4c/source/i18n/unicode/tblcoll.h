@@ -193,7 +193,7 @@ public:
     *  @param length size of the image. If negative, the API will try to
     *                figure out the length of the image
     *  @param base Base collator, for lookup of untailored characters.
-    *              Must be the root collator, must not be NULL.
+    *              Must be the root collator, must not be nullptr.
     *              The base is required to be present through the lifetime of the collator.
     *  @param status for catching errors
     *  @return newly created collator
@@ -275,7 +275,7 @@ public:
     **/
     U_I18N_API virtual UCollationResult compare(const UnicodeString& source,
                                                 const UnicodeString& target,
-                                     UErrorCode &status) const override;
+                                                UErrorCode& status) const override;
 
     /**
     * Does the same thing as compare but limits the comparison to a specified
@@ -293,7 +293,7 @@ public:
     U_I18N_API virtual UCollationResult compare(const UnicodeString& source,
                                                 const UnicodeString& target,
                                                 int32_t length,
-                                     UErrorCode &status) const override;
+                                                UErrorCode& status) const override;
 
     /**
     * The comparison function compares the character data stored in two
@@ -312,8 +312,8 @@ public:
     * @stable ICU 2.6
     */
     U_I18N_API virtual UCollationResult compare(const char16_t* source, int32_t sourceLength,
-                                     const char16_t* target, int32_t targetLength,
-                                     UErrorCode &status) const override;
+                                                const char16_t* target, int32_t targetLength,
+                                                UErrorCode& status) const override;
 
     /**
      * Compares two strings using the Collator.
@@ -328,7 +328,7 @@ public:
      */
     U_I18N_API virtual UCollationResult compare(UCharIterator& sIter,
                                                 UCharIterator& tIter,
-                                     UErrorCode &status) const override;
+                                                UErrorCode& status) const override;
 
     /**
      * Compares two UTF-8 strings using the Collator.
@@ -345,7 +345,7 @@ public:
      */
     U_I18N_API virtual UCollationResult compareUTF8(const StringPiece& source,
                                                     const StringPiece& target,
-                                         UErrorCode &status) const override;
+                                                    UErrorCode& status) const override;
 
     /**
      * Transforms the string into a series of characters
@@ -363,7 +363,7 @@ public:
      */
     U_I18N_API virtual CollationKey& getCollationKey(const UnicodeString& source,
                                                      CollationKey& key,
-                                          UErrorCode& status) const override;
+                                                     UErrorCode& status) const override;
 
     /**
      * Transforms a specified region of the string into a series of characters
@@ -383,7 +383,7 @@ public:
     U_I18N_API virtual CollationKey& getCollationKey(const char16_t* source,
                                                      int32_t sourceLength,
                                                      CollationKey& key,
-                                          UErrorCode& status) const override;
+                                                     UErrorCode& status) const override;
 
     /**
      * Generates the hash code for the rule-based collation object.
@@ -523,7 +523,7 @@ public:
      * @stable ICU 2.2
      */
     U_I18N_API virtual UColAttributeValue getAttribute(UColAttribute attr,
-                                            UErrorCode &status) const override;
+                                                       UErrorCode& status) const override;
 
     /**
      * Sets the variable top to the top of the specified reordering group.
@@ -630,7 +630,7 @@ public:
      * For more details, see the ICU User Guide.
      *
      * @param source string to be processed.
-     * @param result buffer to store result in. If NULL, number of bytes needed
+     * @param result buffer to store result in. If nullptr, number of bytes needed
      *        will be returned.
      * @param resultLength length of the result buffer. If if not enough the
      *        buffer will be filled to capacity.
@@ -650,7 +650,7 @@ public:
      * @param source string to be processed.
      * @param sourceLength length of string to be processed. If -1, the string
      *        is 0 terminated and length will be decided by the function.
-     * @param result buffer to store result in. If NULL, number of bytes needed
+     * @param result buffer to store result in. If nullptr, number of bytes needed
      *        will be returned.
      * @param resultLength length of the result buffer. If if not enough the
      *        buffer will be filled to capacity.
@@ -665,7 +665,7 @@ public:
     /**
      * Retrieves the reordering codes for this collator.
      * @param dest The array to fill with the script ordering.
-     * @param destCapacity The length of dest. If it is 0, then dest may be NULL and the function
+     * @param destCapacity The length of dest. If it is 0, then dest may be nullptr and the function
      *  will only return the length of the result without writing any codes (pre-flighting).
      * @param status A reference to an error code value, which must not indicate
      * a failure before the function call.
@@ -677,11 +677,11 @@ public:
      */
     U_I18N_API virtual int32_t getReorderCodes(int32_t* dest,
                                                int32_t destCapacity,
-                                     UErrorCode& status) const override;
+                                               UErrorCode& status) const override;
 
     /**
      * Sets the ordering of scripts for this collator.
-     * @param reorderCodes An array of script codes in the new order. This can be NULL if the
+     * @param reorderCodes An array of script codes in the new order. This can be nullptr if the
      * length is also set to 0. An empty array will clear any reordering codes on the collator.
      * @param reorderCodesLength The length of reorderCodes.
      * @param status error code
@@ -692,7 +692,7 @@ public:
      */
     U_I18N_API virtual void setReorderCodes(const int32_t* reorderCodes,
                                             int32_t reorderCodesLength,
-                                  UErrorCode& status) override;
+                                            UErrorCode& status) override;
 
     /**
      * Implements ucol_strcollUTF8().
@@ -714,7 +714,7 @@ public:
      *  This is internal, and intended to be used with delegate converters.
      *
      *  @param locale a locale that will appear as a collators locale in the resulting
-     *                short string definition. If NULL, the locale will be harvested
+     *                short string definition. If nullptr, the locale will be harvested
      *                from the collator.
      *  @param buffer space to hold the resulting string
      *  @param capacity capacity of the buffer
@@ -728,7 +728,7 @@ public:
     U_I18N_API virtual int32_t internalGetShortDefinitionString(const char* locale,
                                                                 char* buffer,
                                                                 int32_t capacity,
-                                                     UErrorCode &status) const override;
+                                                                UErrorCode& status) const override;
 
     /**
      * Implements ucol_nextSortKeyPart().
@@ -762,8 +762,8 @@ public:
      * characters and strings that map to multiple collation elements (expansions).
      * If addPrefixes is true, then contractions that are expressed as
      * prefix/pre-context rules are included.
-     * @param contractions if not NULL, the set to hold the contractions
-     * @param expansions if not NULL, the set to hold the expansions
+     * @param contractions if not nullptr, the set to hold the contractions
+     * @param expansions if not nullptr, the set to hold the expansions
      * @param addPrefixes include prefix contextual mappings
      * @param errorCode in/out ICU error code
      * @internal
@@ -854,10 +854,10 @@ private:
     const CollationSettings &getDefaultSettings() const;
 
     void setAttributeDefault(int32_t attribute) {
-        explicitlySetAttributes &= ~((uint32_t)1 << attribute);
+        explicitlySetAttributes &= ~(static_cast<uint32_t>(1) << attribute);
     }
     void setAttributeExplicitly(int32_t attribute) {
-        explicitlySetAttributes |= (uint32_t)1 << attribute;
+        explicitlySetAttributes |= static_cast<uint32_t>(1) << attribute;
     }
     UBool attributeHasBeenSetExplicitly(int32_t attribute) const {
         // assert(0 <= attribute < ATTR_LIMIT);

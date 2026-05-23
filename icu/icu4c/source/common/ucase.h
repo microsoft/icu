@@ -146,7 +146,7 @@ private:
     FullCaseFoldingIterator(const FullCaseFoldingIterator &) = delete;  // no copy
     FullCaseFoldingIterator &operator=(const FullCaseFoldingIterator &) = delete;  // no assignment
 
-    const UChar *unfold;
+    const char16_t *unfold;
     int32_t unfoldRows;
     int32_t unfoldRowWidth;
     int32_t unfoldStringWidth;
@@ -163,9 +163,9 @@ private:
 namespace LatinCase {
 
 /** Case mapping/folding data for code points up to U+017F. */
-constexpr UChar LIMIT = 0x180;
+constexpr char16_t LIMIT = 0x180;
 /** U+017F case-folds and uppercases crossing the ASCII boundary. */
-constexpr UChar LONG_S = 0x17f;
+constexpr char16_t LONG_S = 0x17f;
 /** Exception: Complex mapping, or too-large delta. */
 constexpr int8_t EXC = -0x80;
 
@@ -357,7 +357,7 @@ enum {
 /* definitions for 16-bit case properties word ------------------------------ */
 
 U_CFUNC const UTrie2 * U_EXPORT2
-ucase_getTrie();
+ucase_getTrie(void);
 
 /* 2-bit constants for types of cased characters */
 #define UCASE_TYPE_MASK     3

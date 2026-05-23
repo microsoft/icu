@@ -77,7 +77,7 @@ public:
         }
     }
 
-    void contains(void){
+    void contains(){
         int32_t temp = 0;
         us.clear();
         for (UChar32 cp=0; cp<0x110000; ++cp) {
@@ -87,7 +87,7 @@ public:
         }
     }
 
-    void iterator(void){
+    void iterator(){
         int32_t temp = 0;
         UnicodeSetIterator uit(us);
         while (uit.next()) {
@@ -123,7 +123,7 @@ public:
                 if (exec) return new CmdPattern(PAT[2])  ; break;
             default: name = ""; break;
         }
-        return NULL;
+        return nullptr;
     }
 };
 

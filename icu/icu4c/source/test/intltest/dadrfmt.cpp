@@ -42,11 +42,11 @@ DataDrivenFormatTest::~DataDrivenFormatTest() {
 
 void DataDrivenFormatTest::runIndexedTest(int32_t index, UBool exec,
         const char* &name, char* /*par */) {
-    if (driver != NULL) {
+    if (driver != nullptr) {
         if (exec) {
             //  logln("Begin ");
         }
-        const DataMap *info= NULL;
+        const DataMap *info= nullptr;
         UErrorCode status= U_ZERO_ERROR;
         TestData *testData = driver->createTestData(index, status);
         if (U_SUCCESS(status)) {
@@ -108,7 +108,7 @@ void DataDrivenFormatTest::testConvertDate(TestData *testData,
         return;
     }
 
-    const DataMap *currentCase= NULL;
+    const DataMap *currentCase= nullptr;
     // Start the processing
     int n = 0;
     while (testData->nextCase(currentCase, status)) {
@@ -156,7 +156,7 @@ void DataDrivenFormatTest::testConvertDate(TestData *testData,
             continue;
         }
                 
-        DateFormat *format = NULL;
+        DateFormat *format = nullptr;
         
         // Process: 'locale'
         locale.extract(0, locale.length(), calLoc, (const char*)nullptr); // default codepage.  Invariant codepage doesn't have '@'!
@@ -214,14 +214,14 @@ void DataDrivenFormatTest::testConvertDate(TestData *testData,
             cal->clear();
             cal->setTime(now, status);
             for (int q=0; q<UCAL_FIELD_COUNT; q++) {
-                if (fromSet.isSet((UCalendarDateFields)q)) {
+                if (fromSet.isSet(static_cast<UCalendarDateFields>(q))) {
                     //int32_t oldv = cal->get((UCalendarDateFields)q, status);
                     if (q == UCAL_DATE) {
-                        cal->add((UCalendarDateFields)q,
-                                    fromSet.get((UCalendarDateFields)q), status);
+                        cal->add(static_cast<UCalendarDateFields>(q),
+                                 fromSet.get(static_cast<UCalendarDateFields>(q)), status);
                     } else {
-                        cal->set((UCalendarDateFields)q,
-                                    fromSet.get((UCalendarDateFields)q));
+                        cal->set(static_cast<UCalendarDateFields>(q),
+                                 fromSet.get(static_cast<UCalendarDateFields>(q)));
                     }
                     //int32_t newv = cal->get((UCalendarDateFields)q, status);
                 }
@@ -329,12 +329,12 @@ void DataDrivenFormatTest::testConvertDate(TestData *testData,
 }
 
 void DataDrivenFormatTest::processTest(TestData *testData) {
-    //Format *cal= NULL;
-    //const UChar *arguments= NULL;
+    //Format *cal= nullptr;
+    //const char16_t *arguments= nullptr;
     //int32_t argLen = 0;
     char testType[256] = "";
-    const DataMap *settings= NULL;
-    //const UChar *type= NULL;
+    const DataMap *settings= nullptr;
+    //const char16_t *type= nullptr;
     UErrorCode status = U_ZERO_ERROR;
     UnicodeString testSetting;
     int n = 0;

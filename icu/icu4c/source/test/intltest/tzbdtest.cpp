@@ -211,9 +211,9 @@ TimeZoneBoundaryTest::verifyDST(UDate d, TimeZone* time_zone, UBool expUseDaylig
     GregorianCalendar *gc = new GregorianCalendar(time_zone->clone(), status);
     gc->setTime(d, status);
     if (failure(status, "GregorianCalendar::setTime")) return;
-    int32_t offset = time_zone->getOffset((uint8_t)gc->get(UCAL_ERA, status),
+    int32_t offset = time_zone->getOffset(static_cast<uint8_t>(gc->get(UCAL_ERA, status)),
         gc->get(UCAL_YEAR, status), gc->get(UCAL_MONTH, status),
-        gc->get(UCAL_DATE, status), (uint8_t)gc->get(UCAL_DAY_OF_WEEK, status),
+        gc->get(UCAL_DATE, status), static_cast<uint8_t>(gc->get(UCAL_DAY_OF_WEEK, status)),
         ((gc->get(UCAL_HOUR_OF_DAY, status) * 60 + gc->get(UCAL_MINUTE, status)) * 60 + gc->get(UCAL_SECOND, status)) * 1000 + gc->get(UCAL_MILLISECOND, status),
         status);
     if (failure(status, "GregorianCalendar::get")) return;
@@ -300,7 +300,7 @@ TimeZoneBoundaryTest::TestBoundaries()
     TimeZone* save = TimeZone::createDefault();
     TimeZone::setDefault(*pst);
    
-    if (tempcal != NULL) { 
+    if (tempcal != nullptr) { 
         // DST changeover for PST is 4/6/1997 at 2 hours past midnight
         // at 238978.0 epoch hours.
         tempcal->clear();

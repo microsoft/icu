@@ -28,7 +28,7 @@ static void usage(const char *prog) {
 }
 #endif
 
-void runTests(void);
+void runTests();
 
 #ifndef ITERATIONS
 #define ITERATIONS 5
@@ -38,17 +38,17 @@ void runTests(void);
 #define TEST_LOCALE "en_US"
 #endif
 
-FILE *out = NULL;
+FILE *out = nullptr;
 UErrorCode setupStatus = U_ZERO_ERROR;
-const char *outName = NULL;
+const char *outName = nullptr;
 int listmode = 0;
-const char *testName = NULL;
-const char *progname = NULL;
+const char *testName = nullptr;
+const char *progname = nullptr;
 int errflg = 0;
 int testhit = 0;
 
 int testMatch(const char *aName) {
-  if(testName==NULL) return 1;
+  if(testName==nullptr) return 1;
   int len = strlen(testName);
   if(testName[len-1]=='*') {
     return strncmp(testName,aName,len-1);
@@ -101,16 +101,16 @@ int main(int argc, char * const * argv){
   }
 #endif
 
-    if(listmode && outName != NULL ) {
+    if(listmode && outName != nullptr ) {
       fprintf(stderr, "Warning: no output when list mode\n");
-      outName=NULL;
+      outName=nullptr;
     }
 
-  if(outName != NULL) {
+  if(outName != nullptr) {
 
 
     out=fopen(outName,"w");
-    if(out==NULL) {
+    if(out==nullptr) {
       fprintf(stderr,"Err: can't open %s for writing.\n", outName);
       return 1;
     } else {
@@ -123,7 +123,7 @@ int main(int argc, char * const * argv){
     fprintf(stderr, "# (no output)\n");
   }
 
-  if(listmode && testName!=NULL) {
+  if(listmode && testName!=nullptr) {
     fprintf(stderr, "ERR: no -l mode when specific test with -t\n");
     usage(progname);
     return 1;
@@ -133,7 +133,7 @@ int main(int argc, char * const * argv){
   runTests();
 
 
-  if(out!=NULL) {
+  if(out!=nullptr) {
 #ifndef SKIP_INFO
     udbg_writeIcuInfo(out);
 #endif
@@ -197,7 +197,7 @@ public:
 void runTestOn(HowExpensiveTest &t) {
   if(U_FAILURE(setupStatus)) return; // silently
   const char *tn = t.getName();
-  if(testName!=NULL && testMatch(tn)) return; // skipped.
+  if(testName!=nullptr && testMatch(tn)) return; // skipped.
   if(listmode) {
     fprintf(stderr, "%s:%d:\t%s\n", t.fFile, t.fLine, t.getName());
     testhit++;
@@ -206,7 +206,7 @@ void runTestOn(HowExpensiveTest &t) {
     fprintf(stderr, "%s:%d: Running: %s\n", t.fFile, t.fLine, t.getName());
     testhit++;
   }
-  double sieveTime = uprv_getSieveTime(NULL);
+  double sieveTime = uprv_getSieveTime(nullptr);
   double st;
   double me;
 
@@ -224,7 +224,7 @@ void runTestOn(HowExpensiveTest &t) {
 
   printf("%s\t%.9f\t%.9f +/- %.9f,  @ %d iter\n", t.getName(),stn,st,me,iter);
 
-  if(out!=NULL) {
+  if(out!=nullptr) {
     fprintf(out, "   <test name=\"%s\" standardizedTime=\"%f\" realDuration=\"%f\" marginOfError=\"%f\" iterations=\"%d\" />\n",
             tn,stn,st,me,iter);
     fflush(out);
@@ -239,7 +239,7 @@ public:
   SieveTest():HowExpensiveTest("SieveTest",__FILE__,__LINE__){}
   int32_t run() override { return 0; } // dummy
   int32_t runTest(double *subTime) override {
-    *subTime = uprv_getSieveTime(NULL);
+    *subTime = uprv_getSieveTime(nullptr);
     return U_LOTS_OF_TIMES;
   }
   int32_t runTests(double* subTime, double* marginOfError) override {
@@ -265,7 +265,7 @@ private:
   UNumberFormat *fFmt;
   UnicodeString fPat;
   UnicodeString fString;
-  const UChar *fStr;
+  const char16_t *fStr;
   int32_t fLen;
   const char *fFile;
   int fLine;
@@ -305,7 +305,7 @@ public:
   void warmup() override {
     fFmt = initFmt();
     if(U_SUCCESS(setupStatus)) {
-      double trial = unum_parseDouble(fFmt,fStr,fLen, NULL, &setupStatus);
+      double trial = unum_parseDouble(fFmt,fStr,fLen, nullptr, &setupStatus);
       if(U_SUCCESS(setupStatus) && trial!=fExpect) {
         setupStatus = U_INTERNAL_PROGRAM_ERROR;
         printf("%s:%d: warmup() %s got %.8f expected %.8f\n",
@@ -392,7 +392,7 @@ private:
   UNumberFormat *fFmt;
   UnicodeString fPat;
   UnicodeString fString;
-  const UChar *fStr;
+  const char16_t *fStr;
   int32_t fLen;
   const char *fFile;
   int fLine;
@@ -431,15 +431,15 @@ public:
   }
   void warmup() override {
     fFmt = initFmt();
-    UChar buf[100];
+    char16_t buf[100];
     if(U_SUCCESS(setupStatus)) {
-      int32_t trial = unum_formatDouble(fFmt,fExpect, buf, 100, NULL, &setupStatus);
+      int32_t trial = unum_formatDouble(fFmt,fExpect, buf, 100, nullptr, &setupStatus);
       if(!U_SUCCESS(setupStatus)
          || trial!=fLen
          ||trial<=0
          || u_strncmp(fStr,buf,trial)  ) {
         char strBuf[200];
-        u_strToUTF8(strBuf,200,NULL,buf,trial+1,&setupStatus);
+        u_strToUTF8(strBuf,200,nullptr,buf,trial+1,&setupStatus);
         printf("%s:%d: warmup() %s got %s expected %s, err %s\n",
                fFile,fLine,getName(),strBuf,fCStr, u_errorName(setupStatus));
         setupStatus = U_INTERNAL_PROGRAM_ERROR;
@@ -449,10 +449,10 @@ public:
   int32_t run() override {
     int32_t trial;
     int i;
-    UChar buf[100];
+    char16_t buf[100];
     if(U_SUCCESS(setupStatus)) {
       for(i=0;i<U_LOTS_OF_TIMES;i++){
-        trial = unum_formatDouble(fFmt,fExpect, buf, 100, NULL, &setupStatus);
+        trial = unum_formatDouble(fFmt,fExpect, buf, 100, nullptr, &setupStatus);
       }
     }
     return i;
@@ -477,7 +477,7 @@ private:
   UNumberFormat *fFmt;
   UnicodeString fPat;
   UnicodeString fString;
-  const UChar *fStr;
+  const char16_t *fStr;
   int32_t fLen;
   const char *fFile;
   int fLine;
@@ -499,7 +499,7 @@ protected:
     case kApplyPattern:
       {
         UNumberFormat *fmt = unum_open(UNUM_DECIMAL, nullptr, -1, TEST_LOCALE, nullptr, &setupStatus);
-        unum_applyPattern(fmt, false, fPat.getTerminatedBuffer(), -1, NULL, &setupStatus);
+        unum_applyPattern(fmt, false, fPat.getTerminatedBuffer(), -1, nullptr, &setupStatus);
         return fmt;
       }
     case kGroupOff:
@@ -511,7 +511,7 @@ protected:
     case kApplyGroupOff:
       {
         UNumberFormat *fmt = unum_open(UNUM_DECIMAL, nullptr, -1, TEST_LOCALE, nullptr, &setupStatus);
-        unum_applyPattern(fmt, false, fPat.getTerminatedBuffer(), -1, NULL, &setupStatus);
+        unum_applyPattern(fmt, false, fPat.getTerminatedBuffer(), -1, nullptr, &setupStatus);
         unum_setAttribute(fmt, UNUM_GROUPING_USED, UNUM_NO);
         return fmt;
       }
@@ -555,15 +555,15 @@ public:
   }
   void warmup() override {
     fFmt = initFmt();
-    UChar buf[100];
+    char16_t buf[100];
     if(U_SUCCESS(setupStatus)) {
-      int32_t trial = unum_formatInt64(fFmt,fExpect, buf, 100, NULL, &setupStatus);
+      int32_t trial = unum_formatInt64(fFmt,fExpect, buf, 100, nullptr, &setupStatus);
       if(!U_SUCCESS(setupStatus)
          || trial!=fLen
          ||trial<=0
          || u_strncmp(fStr,buf,trial)  ) {
         char strBuf[200];
-        u_strToUTF8(strBuf,200,NULL,buf,trial+1,&setupStatus);
+        u_strToUTF8(strBuf,200,nullptr,buf,trial+1,&setupStatus);
         printf("%s:%d: warmup() %s got %s (len %d) expected %s (len %d), err %s\n",
                fFile,fLine,getName(),strBuf,trial,fCStr,fLen, u_errorName(setupStatus));
         setupStatus = U_INTERNAL_PROGRAM_ERROR;
@@ -573,10 +573,10 @@ public:
   int32_t run() override {
     int32_t trial;
     int i;
-    UChar buf[100];
+    char16_t buf[100];
     if(U_SUCCESS(setupStatus)) {
       for(i=0;i<U_LOTS_OF_TIMES;i++){
-        trial = unum_formatInt64(fFmt,fExpect, buf, 100, NULL, &setupStatus);
+        trial = unum_formatInt64(fFmt,fExpect, buf, 100, nullptr, &setupStatus);
       }
     }
     return i;
@@ -604,7 +604,7 @@ private:
   UNumberFormat *fFmt;
   UnicodeString fPat;
   UnicodeString fString;
-  const UChar *fStr;
+  const char16_t *fStr;
   int32_t fLen;
   const char *fFile;
   int fLine;
@@ -654,7 +654,7 @@ public:
          || fString!=buf
          ) {
         char strBuf[200];
-        u_strToUTF8(strBuf,200,NULL,buf.getTerminatedBuffer(),buf.length()+1,&setupStatus);
+        u_strToUTF8(strBuf,200,nullptr,buf.getTerminatedBuffer(),buf.length()+1,&setupStatus);
         printf("%s:%d: warmup() %s got %s (len %d) expected %s (len %d), err %s\n",
                fFile,fLine,getName(),strBuf,buf.length(),fCStr,fLen, u_errorName(setupStatus));
         setupStatus = U_INTERNAL_PROGRAM_ERROR;
@@ -682,11 +682,11 @@ public:
 #define DO_NumFmtStringPieceTest(p,n,x) { NumFmtStringPieceTest t(p,n,x,__FILE__,__LINE__); runTestOn(t); }
 
 // TODO: move, scope.
-static UChar pattern[] = { 0x23 }; // '#'
-static UChar strdot[] = { '2', '.', '0', 0 };
-static UChar strspc[] = { '2', ' ', 0 };
-static UChar strgrp[] = {'2',',','2','2','2', 0 };
-static UChar strbeng[] = {0x09E8,0x09E8,0x09E8,0x09E8, 0 };
+static char16_t pattern[] = { 0x23 }; // '#'
+static char16_t strdot[] = { '2', '.', '0', 0 };
+static char16_t strspc[] = { '2', ' ', 0 };
+static char16_t strgrp[] = {'2',',','2','2','2', 0 };
+static char16_t strbeng[] = {0x09E8,0x09E8,0x09E8,0x09E8, 0 };
 
 UNumberFormat *NumParseTest_fmt;
 
@@ -699,21 +699,21 @@ QuickTest(NumParseTestgrp,{    static char16_t pattern[] = { 0x23 };    NumParse
 
 QuickTest(NumParseTestbeng,{    static char16_t pattern[] = { 0x23 };    NumParseTest_fmt = unum_open(UNUM_PATTERN_DECIMAL,         pattern,                    1,                    TEST_LOCALE,                    0,                    &setupStatus);  },{    int32_t i;    for(i=0;i<U_LOTS_OF_TIMES;i++) {      unum_parse(NumParseTest_fmt,strbeng,-1,nullptr,&setupStatus);    }    return i;  },{unum_close(NumParseTest_fmt);})
 
-UDateFormat *DateFormatTest_fmt = NULL;
+UDateFormat *DateFormatTest_fmt = nullptr;
 UDate sometime = 100000000.0;
-UChar onekbuf[1024];
+char16_t onekbuf[1024];
 const int32_t onekbuf_len = UPRV_LENGTHOF(onekbuf);
 
 
 QuickTest(DateFormatTestBasic, \
           { \
-            DateFormatTest_fmt = udat_open(UDAT_DEFAULT, UDAT_DEFAULT, NULL, NULL, -1, NULL, -1, &setupStatus); \
+            DateFormatTest_fmt = udat_open(UDAT_DEFAULT, UDAT_DEFAULT, nullptr, nullptr, -1, nullptr, -1, &setupStatus); \
           }, \
           { \
             int i; \
             for(i=0;i<U_LOTS_OF_TIMES;i++)  \
             { \
-              udat_format(DateFormatTest_fmt, sometime, onekbuf, onekbuf_len, NULL, &setupStatus); \
+              udat_format(DateFormatTest_fmt, sometime, onekbuf, onekbuf_len, nullptr, &setupStatus); \
             } \
             return i; \
           }, \
@@ -728,17 +728,17 @@ QuickTest(NullTest,{},{int j=U_LOTS_OF_TIMES;while(--j);return U_LOTS_OF_TIMES;}
 #if 0
 #include <time.h>
 
-QuickTest(RandomTest,{},{timespec ts; ts.tv_sec=rand()%4; int j=U_LOTS_OF_TIMES;while(--j) { ts.tv_nsec=100000+(rand()%10000)*1000000; nanosleep(&ts,NULL); return j;} return U_LOTS_OF_TIMES;},{})
+QuickTest(RandomTest,{},{timespec ts; ts.tv_sec=rand()%4; int j=U_LOTS_OF_TIMES;while(--j) { ts.tv_nsec=100000+(rand()%10000)*1000000; nanosleep(&ts,nullptr); return j;} return U_LOTS_OF_TIMES;},{})
 #endif
 
 OpenCloseTest(pattern,unum,open,{},(UNUM_PATTERN_DECIMAL,pattern,1,TEST_LOCALE,0,&setupStatus),{})
-OpenCloseTest(default,unum,open,{},(UNUM_DEFAULT,NULL,-1,TEST_LOCALE,0,&setupStatus),{})
+OpenCloseTest(default,unum,open,{},(UNUM_DEFAULT,nullptr,-1,TEST_LOCALE,0,&setupStatus),{})
 #if !UCONFIG_NO_CONVERSION
 #include "unicode/ucnv.h"
 OpenCloseTest(gb18030,ucnv,open,{},("gb18030",&setupStatus),{})
 #endif
 #include "unicode/ures.h"
-OpenCloseTest(root,ures,open,{},(NULL,"root",&setupStatus),{})
+OpenCloseTest(root,ures,open,{},(nullptr,"root",&setupStatus),{})
 
 void runTests() {
   {

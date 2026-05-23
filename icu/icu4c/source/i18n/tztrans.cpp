@@ -25,16 +25,16 @@ TimeZoneTransition::TimeZoneTransition(UDate time, const TimeZoneRule& from, con
 }
 
 TimeZoneTransition::TimeZoneTransition()
-: UObject(), fTime(0), fFrom(NULL), fTo(NULL) {
+: UObject(), fTime(0), fFrom(nullptr), fTo(nullptr) {
 }
 
 TimeZoneTransition::TimeZoneTransition(const TimeZoneTransition& source)
-: UObject(), fTime(source.fTime), fFrom(NULL), fTo(NULL) {
-      if (source.fFrom != NULL) {
+: UObject(), fTime(source.fTime), fFrom(nullptr), fTo(nullptr) {
+      if (source.fFrom != nullptr) {
           fFrom = source.fFrom->clone();
       }
 
-      if (source.fTo != NULL) {
+      if (source.fTo != nullptr) {
           fTo = source.fTo->clone();
       }
 }
@@ -45,7 +45,7 @@ TimeZoneTransition::~TimeZoneTransition() {
 }
 
 TimeZoneTransition*
-TimeZoneTransition::clone(void) const {
+TimeZoneTransition::clone() const {
     return new TimeZoneTransition(*this);
 }
 
@@ -70,10 +70,10 @@ TimeZoneTransition::operator==(const TimeZoneTransition& that) const {
     if (fTime != that.fTime) {
         return false;
     }
-    if ((fFrom == NULL && that.fFrom == NULL)
-        || (fFrom != NULL && that.fFrom != NULL && *fFrom == *(that.fFrom))) {
-        if ((fTo == NULL && that.fTo == NULL)
-            || (fTo != NULL && that.fTo != NULL && *fTo == *(that.fTo))) {
+    if ((fFrom == nullptr && that.fFrom == nullptr)
+        || (fFrom != nullptr && that.fFrom != nullptr && *fFrom == *(that.fFrom))) {
+        if ((fTo == nullptr && that.fTo == nullptr)
+            || (fTo != nullptr && that.fTo != nullptr && *fTo == *(that.fTo))) {
             return true;
         }
     }
@@ -115,17 +115,17 @@ TimeZoneTransition::adoptTo(TimeZoneRule* to) {
 }
 
 UDate
-TimeZoneTransition::getTime(void) const {
+TimeZoneTransition::getTime() const {
     return fTime;
 }
 
 const TimeZoneRule*
-TimeZoneTransition::getTo(void) const {
+TimeZoneTransition::getTo() const {
     return fTo;
 }
 
 const TimeZoneRule*
-TimeZoneTransition::getFrom(void) const {
+TimeZoneTransition::getFrom() const {
     return fFrom;
 }
 

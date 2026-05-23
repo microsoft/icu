@@ -39,20 +39,20 @@ U_NAMESPACE_USE
 //
 // Static Objects used by the spoof impl, their thread safe initialization and their cleanup.
 //
-static UnicodeSet *gInclusionSet = NULL;
-static UnicodeSet *gRecommendedSet = NULL;
-static const Normalizer2 *gNfdNormalizer = NULL;
+static UnicodeSet *gInclusionSet = nullptr;
+static UnicodeSet *gRecommendedSet = nullptr;
+static const Normalizer2 *gNfdNormalizer = nullptr;
 static UInitOnce gSpoofInitStaticsOnce {};
 
 namespace {
 
 UBool U_CALLCONV
-uspoof_cleanup(void) {
+uspoof_cleanup() {
     delete gInclusionSet;
-    gInclusionSet = NULL;
+    gInclusionSet = nullptr;
     delete gRecommendedSet;
-    gRecommendedSet = NULL;
-    gNfdNormalizer = NULL;
+    gRecommendedSet = nullptr;
+    gNfdNormalizer = nullptr;
     gSpoofInitStaticsOnce.reset();
     return true;
 }
@@ -93,16 +93,16 @@ U_CAPI USpoofChecker * U_EXPORT2
 uspoof_open(UErrorCode *status) {
     umtx_initOnce(gSpoofInitStaticsOnce, &initializeStatics, *status);
     if (U_FAILURE(*status)) {
-        return NULL;
+        return nullptr;
     }
     SpoofImpl *si = new SpoofImpl(*status);
-    if (si == NULL) {
+    if (si == nullptr) {
         *status = U_MEMORY_ALLOCATION_ERROR;
-        return NULL;
+        return nullptr;
     }
     if (U_FAILURE(*status)) {
         delete si;
-        return NULL;
+        return nullptr;
     }
     return si->asUSpoofChecker();
 }
@@ -112,44 +112,44 @@ U_CAPI USpoofChecker * U_EXPORT2
 uspoof_openFromSerialized(const void *data, int32_t length, int32_t *pActualLength,
                           UErrorCode *status) {
     if (U_FAILURE(*status)) {
-        return NULL;
+        return nullptr;
     }
 
-    if (data == NULL) {
+    if (data == nullptr) {
         *status = U_ILLEGAL_ARGUMENT_ERROR;
-        return NULL;
+        return nullptr;
     }
 
     umtx_initOnce(gSpoofInitStaticsOnce, &initializeStatics, *status);
     if (U_FAILURE(*status))
     {
-        return NULL;
+        return nullptr;
     }
 
     SpoofData *sd = new SpoofData(data, length, *status);
-    if (sd == NULL) {
+    if (sd == nullptr) {
         *status = U_MEMORY_ALLOCATION_ERROR;
-        return NULL;
+        return nullptr;
     }
 
     if (U_FAILURE(*status)) {
         delete sd;
-        return NULL;
+        return nullptr;
     }
 
     SpoofImpl *si = new SpoofImpl(sd, *status);
-    if (si == NULL) {
+    if (si == nullptr) {
         *status = U_MEMORY_ALLOCATION_ERROR;
         delete sd; // explicit delete as the destructor for si won't be called.
-        return NULL;
+        return nullptr;
     }
 
     if (U_FAILURE(*status)) {
         delete si; // no delete for sd, as the si destructor will delete it.
-        return NULL;
+        return nullptr;
     }
 
-    if (pActualLength != NULL) {
+    if (pActualLength != nullptr) {
         *pActualLength = sd->size();
     }
     return si->asUSpoofChecker();
@@ -159,17 +159,17 @@ uspoof_openFromSerialized(const void *data, int32_t length, int32_t *pActualLeng
 U_CAPI USpoofChecker * U_EXPORT2
 uspoof_clone(const USpoofChecker *sc, UErrorCode *status) {
     const SpoofImpl *src = SpoofImpl::validateThis(sc, *status);
-    if (src == NULL) {
-        return NULL;
+    if (src == nullptr) {
+        return nullptr;
     }
     SpoofImpl *result = new SpoofImpl(*src, *status);   // copy constructor
-    if (result == NULL) {
+    if (result == nullptr) {
         *status = U_MEMORY_ALLOCATION_ERROR;
-        return NULL;
+        return nullptr;
     }
     if (U_FAILURE(*status)) {
         delete result;
-        result = NULL;
+        result = nullptr;
     }
     return result->asUSpoofChecker();
 }
@@ -186,7 +186,7 @@ uspoof_close(USpoofChecker *sc) {
 U_CAPI void U_EXPORT2
 uspoof_setChecks(USpoofChecker *sc, int32_t checks, UErrorCode *status) {
     SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
-    if (This == NULL) {
+    if (This == nullptr) {
         return;
     }
 
@@ -204,7 +204,7 @@ uspoof_setChecks(USpoofChecker *sc, int32_t checks, UErrorCode *status) {
 U_CAPI int32_t U_EXPORT2
 uspoof_getChecks(const USpoofChecker *sc, UErrorCode *status) {
     const SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
-    if (This == NULL) {
+    if (This == nullptr) {
         return 0;
     }
     return This->fChecks;
@@ -214,7 +214,7 @@ U_CAPI void U_EXPORT2
 uspoof_setRestrictionLevel(USpoofChecker *sc, URestrictionLevel restrictionLevel) {
     UErrorCode status = U_ZERO_ERROR;
     SpoofImpl *This = SpoofImpl::validateThis(sc, status);
-    if (This != NULL) {
+    if (This != nullptr) {
         This->fRestrictionLevel = restrictionLevel;
         This->fChecks |= USPOOF_RESTRICTION_LEVEL;
     }
@@ -224,7 +224,7 @@ U_CAPI URestrictionLevel U_EXPORT2
 uspoof_getRestrictionLevel(const USpoofChecker *sc) {
     UErrorCode status = U_ZERO_ERROR;
     const SpoofImpl *This = SpoofImpl::validateThis(sc, status);
-    if (This == NULL) {
+    if (This == nullptr) {
         return USPOOF_UNRESTRICTIVE;
     }
     return This->fRestrictionLevel;
@@ -233,7 +233,7 @@ uspoof_getRestrictionLevel(const USpoofChecker *sc) {
 U_CAPI void U_EXPORT2
 uspoof_setAllowedLocales(USpoofChecker *sc, const char *localesList, UErrorCode *status) {
     SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
-    if (This == NULL) {
+    if (This == nullptr) {
         return;
     }
     This->setAllowedLocales(localesList, *status);
@@ -242,8 +242,8 @@ uspoof_setAllowedLocales(USpoofChecker *sc, const char *localesList, UErrorCode 
 U_CAPI const char * U_EXPORT2
 uspoof_getAllowedLocales(USpoofChecker *sc, UErrorCode *status) {
     SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
-    if (This == NULL) {
-        return NULL;
+    if (This == nullptr) {
+        return nullptr;
     }
     return This->getAllowedLocales(*status);
 }
@@ -258,8 +258,8 @@ uspoof_getAllowedChars(const USpoofChecker *sc, UErrorCode *status) {
 U_CAPI const UnicodeSet * U_EXPORT2
 uspoof_getAllowedUnicodeSet(const USpoofChecker *sc, UErrorCode *status) {
     const SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
-    if (This == NULL) {
-        return NULL;
+    if (This == nullptr) {
+        return nullptr;
     }
     return This->fAllowedCharsSet;
 }
@@ -275,7 +275,7 @@ uspoof_setAllowedChars(USpoofChecker *sc, const USet *chars, UErrorCode *status)
 U_CAPI void U_EXPORT2
 uspoof_setAllowedUnicodeSet(USpoofChecker *sc, const UnicodeSet *chars, UErrorCode *status) {
     SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
-    if (This == NULL) {
+    if (This == nullptr) {
         return;
     }
     if (chars->isBogus()) {
@@ -283,7 +283,7 @@ uspoof_setAllowedUnicodeSet(USpoofChecker *sc, const UnicodeSet *chars, UErrorCo
         return;
     }
     UnicodeSet *clonedSet = chars->clone();
-    if (clonedSet == NULL || clonedSet->isBogus()) {
+    if (clonedSet == nullptr || clonedSet->isBogus()) {
         *status = U_MEMORY_ALLOCATION_ERROR;
         return;
     }
@@ -296,28 +296,28 @@ uspoof_setAllowedUnicodeSet(USpoofChecker *sc, const UnicodeSet *chars, UErrorCo
 
 U_CAPI int32_t U_EXPORT2
 uspoof_check(const USpoofChecker *sc,
-             const UChar *id, int32_t length,
+             const char16_t *id, int32_t length,
              int32_t *position,
              UErrorCode *status) {
 
     // Backwards compatibility:
-    if (position != NULL) {
+    if (position != nullptr) {
         *position = 0;
     }
 
     // Delegate to uspoof_check2
-    return uspoof_check2(sc, id, length, NULL, status);
+    return uspoof_check2(sc, id, length, nullptr, status);
 }
 
 
 U_CAPI int32_t U_EXPORT2
 uspoof_check2(const USpoofChecker *sc,
-    const UChar* id, int32_t length,
+    const char16_t* id, int32_t length,
     USpoofCheckResult* checkResult,
     UErrorCode *status) {
 
     const SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
-    if (This == NULL) {
+    if (This == nullptr) {
         return 0;
     }
     if (length < -1) {
@@ -337,12 +337,12 @@ uspoof_checkUTF8(const USpoofChecker *sc,
                  UErrorCode *status) {
 
     // Backwards compatibility:
-    if (position != NULL) {
+    if (position != nullptr) {
         *position = 0;
     }
 
     // Delegate to uspoof_check2
-    return uspoof_check2UTF8(sc, id, length, NULL, status);
+    return uspoof_check2UTF8(sc, id, length, nullptr, status);
 }
 
 
@@ -363,8 +363,8 @@ uspoof_check2UTF8(const USpoofChecker *sc,
 
 U_CAPI int32_t U_EXPORT2
 uspoof_areConfusable(const USpoofChecker *sc,
-                     const UChar *id1, int32_t length1,
-                     const UChar *id2, int32_t length2,
+                     const char16_t *id1, int32_t length1,
+                     const char16_t *id2, int32_t length2,
                      UErrorCode *status) {
     SpoofImpl::validateThis(sc, *status);
     if (U_FAILURE(*status)) {
@@ -558,19 +558,19 @@ uspoof_checkUnicodeString(const USpoofChecker *sc,
                           UErrorCode *status) {
 
     // Backwards compatibility:
-    if (position != NULL) {
+    if (position != nullptr) {
         *position = 0;
     }
 
     // Delegate to uspoof_check2
-    return uspoof_check2UnicodeString(sc, id, NULL, status);
+    return uspoof_check2UnicodeString(sc, id, nullptr, status);
 }
 
 namespace {
 
 int32_t checkImpl(const SpoofImpl* This, const UnicodeString& id, CheckResult* checkResult, UErrorCode* status) {
-    U_ASSERT(This != NULL);
-    U_ASSERT(checkResult != NULL);
+    U_ASSERT(This != nullptr);
+    U_ASSERT(checkResult != nullptr);
     checkResult->clear();
     int32_t result = 0;
 
@@ -668,13 +668,13 @@ uspoof_check2UnicodeString(const USpoofChecker *sc,
                           USpoofCheckResult* checkResult,
                           UErrorCode *status) {
     const SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
-    if (This == NULL) {
+    if (This == nullptr) {
         return false;
     }
 
-    if (checkResult != NULL) {
+    if (checkResult != nullptr) {
         CheckResult* ThisCheckResult = CheckResult::validateThis(checkResult, *status);
-        if (ThisCheckResult == NULL) {
+        if (ThisCheckResult == nullptr) {
             return false;
         }
         return checkImpl(This, id, ThisCheckResult, status);
@@ -689,15 +689,15 @@ uspoof_check2UnicodeString(const USpoofChecker *sc,
 U_CAPI int32_t U_EXPORT2
 uspoof_getSkeleton(const USpoofChecker *sc,
                    uint32_t type,
-                   const UChar *id,  int32_t length,
-                   UChar *dest, int32_t destCapacity,
+                   const char16_t *id,  int32_t length,
+                   char16_t *dest, int32_t destCapacity,
                    UErrorCode *status) {
 
     SpoofImpl::validateThis(sc, *status);
     if (U_FAILURE(*status)) {
         return 0;
     }
-    if (length<-1 || destCapacity<0 || (destCapacity==0 && dest!=NULL)) {
+    if (length<-1 || destCapacity<0 || (destCapacity==0 && dest!=nullptr)) {
         *status = U_ILLEGAL_ARGUMENT_ERROR;
         return 0;
     }
@@ -803,7 +803,7 @@ U_CAPI int32_t U_EXPORT2 uspoof_getSkeletonUTF8(const USpoofChecker *sc, uint32_
     if (U_FAILURE(*status)) {
         return 0;
     }
-    if (length<-1 || destCapacity<0 || (destCapacity==0 && dest!=NULL)) {
+    if (length<-1 || destCapacity<0 || (destCapacity==0 && dest!=nullptr)) {
         *status = U_ILLEGAL_ARGUMENT_ERROR;
         return 0;
     }
@@ -846,7 +846,7 @@ U_CAPI int32_t U_EXPORT2 uspoof_getBidiSkeletonUTF8(const USpoofChecker *sc, UBi
 U_CAPI int32_t U_EXPORT2
 uspoof_serialize(USpoofChecker *sc,void *buf, int32_t capacity, UErrorCode *status) {
     SpoofImpl *This = SpoofImpl::validateThis(sc, *status);
-    if (This == NULL) {
+    if (This == nullptr) {
         U_ASSERT(U_FAILURE(*status));
         return 0;
     }
@@ -885,9 +885,9 @@ uspoof_getRecommendedUnicodeSet(UErrorCode *status) {
 U_CAPI USpoofCheckResult* U_EXPORT2
 uspoof_openCheckResult(UErrorCode *status) {
     CheckResult* checkResult = new CheckResult();
-    if (checkResult == NULL) {
+    if (checkResult == nullptr) {
         *status = U_MEMORY_ALLOCATION_ERROR;
-        return NULL;
+        return nullptr;
     }
     return checkResult->asUSpoofCheckResult();
 }
@@ -916,7 +916,7 @@ uspoof_getCheckResultRestrictionLevel(const USpoofCheckResult *checkResult, UErr
 U_CAPI const USet* U_EXPORT2
 uspoof_getCheckResultNumerics(const USpoofCheckResult *checkResult, UErrorCode *status) {
     const CheckResult* This = CheckResult::validateThis(checkResult, *status);
-    if (U_FAILURE(*status)) { return NULL; }
+    if (U_FAILURE(*status)) { return nullptr; }
     return This->fNumerics.toUSet();
 }
 

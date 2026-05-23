@@ -33,7 +33,7 @@ static icu::TimeZone *gAstronomerTimeZone = nullptr;
 static icu::UInitOnce gAstronomerTimeZoneInitOnce {};
 
 U_CDECL_BEGIN
-static UBool calendar_dangi_cleanup(void) {
+static UBool calendar_dangi_cleanup() {
     if (gWinterSolsticeCache) {
         delete gWinterSolsticeCache;
         gWinterSolsticeCache = nullptr;

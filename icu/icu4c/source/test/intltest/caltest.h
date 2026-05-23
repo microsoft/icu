@@ -25,12 +25,12 @@ public:
      * This test confirms the correct behavior of add when incrementing
      * through subsequent days.
      */
-    virtual void TestRog(void);
+    virtual void TestRog();
     /**
      * Test the handling of the day of the week, checking for correctness and
      * for correct minimum and maximum values.
      */
-    virtual void TestDOW943(void);
+    virtual void TestDOW943();
     /**
      * test subroutine use by TestDOW943
      */
@@ -38,21 +38,21 @@ public:
     /**
      * Confirm that cloned Calendar objects do not inadvertently share substructures.
      */
-    virtual void TestClonesUnique908(void);
+    virtual void TestClonesUnique908();
     /**
      * Confirm that the Gregorian cutoff value works as advertised.
      */
-    virtual void TestGregorianChange768(void);
+    virtual void TestGregorianChange768();
     /**
      * Confirm the functioning of the field disambiguation algorithm.
      */
-    virtual void TestDisambiguation765(void);
+    virtual void TestDisambiguation765();
     /**
      * Test various API methods for API completeness.
      */
-    virtual void TestGenericAPI(void); // New to C++ -- needs to be back ported to Java
+    virtual void TestGenericAPI(); // New to C++ -- needs to be back ported to Java
 
-    virtual void TestWOY(void);
+    virtual void TestWOY();
 
     virtual void TestDebug();
 
@@ -72,7 +72,7 @@ public:
     /**
      * Confirm that the offset between local time and GMT behaves as expected.
      */
-    virtual void TestGMTvsLocal4064654(void);
+    virtual void TestGMTvsLocal4064654();
 
 public: // package
     /**
@@ -85,15 +85,15 @@ public:
      * The operations of adding and setting should not exhibit pathological
      * dependence on the order of operations.  This test checks for this.
      */
-    virtual void TestAddSetOrder621(void);
+    virtual void TestAddSetOrder621();
     /**
      * Confirm that adding to various fields works.
      */
-    virtual void TestAdd520(void);
+    virtual void TestAdd520();
     /**
      * Execute and test adding and rolling in GregorianCalendar extensively.
      */
-    virtual void TestAddRollExtensive(void);
+    virtual void TestAddRollExtensive();
 
 public: // package
     // internal utility routine for checking date
@@ -110,7 +110,7 @@ public:
      * Test that setting of fields works.  In particular, make sure that all instances
      * of GregorianCalendar don't share a static instance of the fields array.
      */
-    virtual void TestFieldSet4781(void);
+    virtual void TestFieldSet4781();
 /*    virtual void TestSerialize337();
 
 public: // package
@@ -123,13 +123,13 @@ public:
      * Verify that the seconds of a Calendar can be zeroed out through the
      * expected sequence of operations.
      */
-    virtual void TestSecondsZero121(void);
+    virtual void TestSecondsZero121();
     /**
      * Verify that a specific sequence of adding and setting works as expected;
      * it should not vary depending on when and whether the get method is
      * called.
      */
-    virtual void TestAddSetGet0610(void);
+    virtual void TestAddSetGet0610();
 
 public: // package
     // internal routine for checking date
@@ -139,7 +139,7 @@ public:
     /**
      * Verify that various fields on a known date are set correctly.
      */
-    virtual void TestFields060(void);
+    virtual void TestFields060();
 
 public: // package
     static int32_t EXPECTED_FIELDS[];
@@ -150,7 +150,7 @@ public:
      * Verify that various fields on a known date are set correctly.  In this
      * case, the start of the epoch (January 1 1970).
      */
-    virtual void TestEpochStartFields(void);
+    virtual void TestEpochStartFields();
 
 public: // package
     static int32_t EPOCH_FIELDS[];
@@ -160,11 +160,11 @@ public:
      * Test that the days of the week progress properly when add is called repeatedly
      * for increments of 24 days.
      */
-    virtual void TestDOWProgression(void);
+    virtual void TestDOWProgression();
     /**
      * Test newly added fields - DOW_LOCAL and YEAR_WOY
      */
-    virtual void TestDOW_LOCALandYEAR_WOY(void);
+    virtual void TestDOW_LOCALandYEAR_WOY();
     // test subroutine used by TestDOW_LOCALandYEAR_WOY
     virtual void doYEAR_WOYLoop(Calendar *cal,
         SimpleDateFormat *sdf, int32_t times, UErrorCode& status);
@@ -173,8 +173,8 @@ public:
         int times, UCalendarDateFields field, UCalendarDateFields field2,
         UErrorCode& errorCode);
 
-    void TestYWOY(void);
-    void TestJD(void);
+    void TestYWOY();
+    void TestJD();
 
     void yearAddTest(Calendar& cal, UErrorCode& status);
 
@@ -220,33 +220,33 @@ public: // package
 
   // internal - for other test use
  public:
-    void Test6703(void);
-    void Test3785(void);
-    void Test1624(void);
-    void TestIslamicUmAlQura(void);
-    void TestIslamicTabularDates(void);
+    void Test6703();
+    void Test3785();
+    void Test1624();
+    void TestIslamicUmAlQura();
+    void TestIslamicTabularDates();
 
     /**
      * Test the time stamp array recalculation during heavy Calendar usage
      */
-    void TestTimeStamp(void);
+    void TestTimeStamp();
     /**
      * Test the ISO8601 calendar type
      */
-    void TestISO8601(void);
+    void TestISO8601();
 
     /**
      * Test cases for [set|get][Repeated|Skipped]WallTimeOption
      */
-    void TestAmbiguousWallTimeAPIs(void);
-    void TestRepeatedWallTime(void);
-    void TestSkippedWallTime(void);
+    void TestAmbiguousWallTimeAPIs();
+    void TestRepeatedWallTime();
+    void TestSkippedWallTime();
 
-    void TestCloneLocale(void);
+    void TestCloneLocale();
 
-    void TestTimeZoneInLocale(void);
+    void TestTimeZoneInLocale();
 
-    void TestHebrewMonthValidation(void);
+    void TestHebrewMonthValidation();
 
     /*
      * utility methods for TestIslamicUmAlQura

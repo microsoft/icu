@@ -100,7 +100,7 @@ private:
 struct U_I18N_API_CLASS CollationCacheEntry : public SharedObject {
     U_I18N_API CollationCacheEntry(const Locale &loc, const CollationTailoring *t)
             : validLocale(loc), tailoring(t) {
-        if(t != NULL) {
+        if(t != nullptr) {
             t->addRef();
         }
     }

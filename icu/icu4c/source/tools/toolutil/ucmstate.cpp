@@ -77,7 +77,7 @@ parseState(const char *s, int32_t state[256], uint32_t *pFlags) {
         }
     } else if(*s==0) {
         /* empty state row: all-illegal */
-        return NULL;
+        return nullptr;
     }
 
     for(;;) {
@@ -179,7 +179,7 @@ parseState(const char *s, int32_t state[256], uint32_t *pFlags) {
         if(*s==',') {
             ++s;
         } else {
-            return *s==0 ? NULL : s;
+            return *s==0 ? nullptr : s;
         }
     }
 }
@@ -195,7 +195,7 @@ ucm_addState(UCMStates *states, const char *s) {
 
     error=parseState(s, states->stateTable[states->countStates],
                        &states->stateFlags[states->countStates]);
-    if(error!=NULL) {
+    if(error!=nullptr) {
         fprintf(stderr, "ucm error: parse error in state definition at '%s'\n", error);
         exit(U_INVALID_TABLE_FORMAT);
     }
@@ -695,7 +695,7 @@ compactToUnicode2(UCMStates *states,
         return;
     }
     if(verbose) {
-        printf("compacting toUnicode data saves %ld bytes\n", (long)savings);
+        printf("compacting toUnicode data saves %ld bytes\n", static_cast<long>(savings));
     }
     if(states->countStates>=MBCS_MAX_STATE_COUNT) {
         fprintf(stderr, "cannot compact toUnicode because the maximum number of states is reached\n");
@@ -704,7 +704,7 @@ compactToUnicode2(UCMStates *states,
 
     /* make a copy of the state table */
     oldStateTable = static_cast<int32_t(*)[256]>(uprv_malloc(states->countStates * 1024));
-    if(oldStateTable==NULL) {
+    if(oldStateTable==nullptr) {
         fprintf(stderr, "cannot compact toUnicode: out of memory\n");
         return;
     }
@@ -747,17 +747,17 @@ compactToUnicode2(UCMStates *states,
     /* allocate a new, smaller code units array */
     oldUnicodeCodeUnits=*pUnicodeCodeUnits;
     if(sum==0) {
-        *pUnicodeCodeUnits=NULL;
-        if(oldUnicodeCodeUnits!=NULL) {
+        *pUnicodeCodeUnits=nullptr;
+        if(oldUnicodeCodeUnits!=nullptr) {
             uprv_free(oldUnicodeCodeUnits);
         }
         uprv_free(oldStateTable);
         return;
     }
     *pUnicodeCodeUnits = static_cast<uint16_t*>(uprv_malloc(sum * sizeof(uint16_t)));
-    if(*pUnicodeCodeUnits==NULL) {
+    if(*pUnicodeCodeUnits==nullptr) {
         fprintf(stderr, "cannot compact toUnicode: out of memory allocating %ld 16-bit code units\n",
-            (long)sum);
+            static_cast<long>(sum));
         /* revert to the old state table */
         *pUnicodeCodeUnits=oldUnicodeCodeUnits;
         --states->countStates;
@@ -911,7 +911,7 @@ compactToUnicodeHelper(UCMStates *states,
                         state, 0, 0);
             if(savings>0) {
                 printf("    all-unassigned sequences from initial state %ld use %ld bytes\n",
-                    (long)state, (long)savings);
+                    static_cast<long>(state), static_cast<long>(savings));
             }
         }
     }
@@ -968,7 +968,7 @@ ucm_optimizeStates(UCMStates *states,
         errorCode=U_ZERO_ERROR; /* nothing bad will happen... */
         uprv_sortArray(toUFallbacks, countToUFallbacks,
                        sizeof(_MBCSToUFallback),
-                       compareFallbacks, NULL, false, &errorCode);
+                       compareFallbacks, nullptr, false, &errorCode);
     }
 }
 

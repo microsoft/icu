@@ -257,7 +257,7 @@ class UnicodeStringAppendable;  // unicode/appendable.h
  *   target object, e.g., calling str.append(str), an extra copy may take place
  *   to ensure safety.
  * - If primitive string pointer values (e.g., const char16_t * or char *)
- *   for input strings are NULL, then those input string parameters are treated
+ *   for input strings are nullptr, then those input string parameters are treated
  *   as if they pointed to an empty string.
  *   However, this is *not* the case for char * parameters for charset names
  *   or other IDs.
@@ -1595,7 +1595,7 @@ public:
    *
    * @param start offset of first character which will be copied
    * @param startLength the number of characters to extract
-   * @param target the target buffer for extraction, can be NULL
+   * @param target the target buffer for extraction, can be nullptr
    *               if targetLength is 0
    * @param targetCapacity the length of the target buffer
    * @param inv Signature-distinguishing parameter, use US_INV.
@@ -1624,7 +1624,7 @@ public:
    * @param startLength the number of characters to extract
    * @param target the target buffer for extraction
    * @param targetLength the length of the target buffer
-   * If `target` is NULL, then the number of bytes required for
+   * If `target` is nullptr, then the number of bytes required for
    * `target` is returned.
    * @return the output string length, not including the terminating NUL
    * @stable ICU 2.0
@@ -1657,7 +1657,7 @@ public:
    * If `codepage` is an empty string (`""`),
    * then a simple conversion is performed on the codepage-invariant
    * subset ("invariant characters") of the platform encoding. See utypes.h.
-   * If `target` is NULL, then the number of bytes required for
+   * If `target` is nullptr, then the number of bytes required for
    * `target` is returned. It is assumed that the target is big enough
    * to fit all of the characters.
    * @return the output string length, not including the terminating NUL
@@ -1692,7 +1692,7 @@ public:
    * If `codepage` is an empty string (`""`),
    * then a simple conversion is performed on the codepage-invariant
    * subset ("invariant characters") of the platform encoding. See utypes.h.
-   * If `target` is NULL, then the number of bytes required for
+   * If `target` is nullptr, then the number of bytes required for
    * `target` is returned.
    * @return the output string length, not including the terminating NUL
    * @stable ICU 2.0
@@ -1710,10 +1710,10 @@ public:
    * This function avoids the overhead of opening and closing a converter if
    * multiple strings are extracted.
    *
-   * @param dest destination string buffer, can be NULL if destCapacity==0
+   * @param dest destination string buffer, can be nullptr if destCapacity==0
    * @param destCapacity the number of chars available at dest
    * @param cnv the converter object to be used (ucnv_resetFromUnicode() will be called),
-   *        or NULL for the default converter
+   *        or nullptr for the default converter
    * @param errorCode normal ICU error code
    * @return the length of the output string, not counting the terminating NUL;
    *         if the length is greater than destCapacity, then the string will not fit
@@ -1812,7 +1812,7 @@ public:
    * Unpaired surrogates are replaced with U+FFFD.
    * Calls u_strToUTF32WithSub().
    *
-   * @param utf32 destination string buffer, can be NULL if capacity==0
+   * @param utf32 destination string buffer, can be nullptr if capacity==0
    * @param capacity the number of UChar32s available at utf32
    * @param errorCode Standard ICU error code. Its input value must
    *                  pass the U_SUCCESS() test, or else the function returns
@@ -1834,7 +1834,7 @@ public:
    * @see countChar32
    * @stable ICU 2.0
    */
-  inline int32_t length(void) const;
+  inline int32_t length() const;
 
   /**
    * Count Unicode code points in the length char16_t code units of the string.
@@ -1883,7 +1883,7 @@ public:
    * @return true if this string contains 0 characters, false otherwise.
    * @stable ICU 2.0
    */
-  inline UBool isEmpty(void) const;
+  inline UBool isEmpty() const;
 
   /**
    * Return the capacity of the internal buffer of the UnicodeString object.
@@ -1894,7 +1894,7 @@ public:
    * @see getBuffer
    * @stable ICU 2.0
    */
-  inline int32_t getCapacity(void) const;
+  inline int32_t getCapacity() const;
 
   /* Other operations */
 
@@ -1903,14 +1903,14 @@ public:
    * @return The hash code of this UnicodeString.
    * @stable ICU 2.0
    */
-  inline int32_t hashCode(void) const;
+  inline int32_t hashCode() const;
 
   /**
    * Determine if this object contains a valid string.
    * A bogus string has no value. It is different from an empty string,
    * although in both cases isEmpty() returns true and length() returns 0.
    * setToBogus() and isBogus() can be used to indicate that no string value is available.
-   * For a bogus string, getBuffer() and getTerminatedBuffer() return NULL, and
+   * For a bogus string, getBuffer() and getTerminatedBuffer() return nullptr, and
    * length() returns 0.
    *
    * @return true if the string is bogus/invalid, false otherwise
@@ -2032,14 +2032,14 @@ public:
    * @return *this
    * @stable ICU 56
    */
-  UnicodeString &operator=(UnicodeString &&src) U_NOEXCEPT;
+  UnicodeString &operator=(UnicodeString &&src) noexcept;
 
   /**
    * Swap strings.
    * @param other other string
    * @stable ICU 56
    */
-  void swap(UnicodeString &other) U_NOEXCEPT;
+  void swap(UnicodeString &other) noexcept;
 
   /**
    * Non-member UnicodeString swap function.
@@ -2048,7 +2048,7 @@ public:
    * @stable ICU 56
    */
   friend inline void U_EXPORT2
-  swap(UnicodeString &s1, UnicodeString &s2) U_NOEXCEPT {
+  swap(UnicodeString &s1, UnicodeString &s2) noexcept {
     s1.swap(s2);
   }
 
@@ -2198,7 +2198,7 @@ public:
    *
    * A bogus string has no value. It is different from an empty string.
    * It can be used to indicate that no string value is available.
-   * getBuffer() and getTerminatedBuffer() return NULL, and
+   * getBuffer() and getTerminatedBuffer() return nullptr, and
    * length() returns 0.
    *
    * This utility function is used throughout the UnicodeString
@@ -2723,7 +2723,7 @@ public:
    * @stable ICU 2.0
    */
   inline UnicodeString& remove(int32_t start,
-                               int32_t length = (int32_t)INT32_MAX);
+                               int32_t length = static_cast<int32_t>(INT32_MAX));
 
   /**
    * Remove the characters in the range
@@ -2734,7 +2734,7 @@ public:
    * @stable ICU 2.0
    */
   inline UnicodeString& removeBetween(int32_t start,
-                                      int32_t limit = (int32_t)INT32_MAX);
+                                      int32_t limit = static_cast<int32_t>(INT32_MAX));
 
   /**
    * Retain only the characters in the range
@@ -2799,7 +2799,7 @@ public:
    * @return a reference to this
    * @stable ICU 2.0
    */
-  inline UnicodeString& reverse(void);
+  inline UnicodeString& reverse();
 
   /**
    * Reverse the range [`start`, `start + length`) in
@@ -2818,7 +2818,7 @@ public:
    * @return A reference to this.
    * @stable ICU 2.0
    */
-  UnicodeString& toUpper(void);
+  UnicodeString& toUpper();
 
   /**
    * Convert the characters in this to UPPER CASE following the conventions of
@@ -2835,7 +2835,7 @@ public:
    * @return A reference to this.
    * @stable ICU 2.0
    */
-  UnicodeString& toLower(void);
+  UnicodeString& toLower();
 
   /**
    * Convert the characters in this to lower case following the conventions of
@@ -3527,7 +3527,7 @@ public:
    * @param src input codepage string
    * @param srcLength length of the input string, can be -1 for NUL-terminated strings
    * @param cnv converter object (ucnv_resetToUnicode() will be called),
-   *        can be NULL for the default converter
+   *        can be nullptr for the default converter
    * @param errorCode normal ICU error code
    * @stable ICU 2.0
    */
@@ -3597,7 +3597,7 @@ public:
    * @param src source string
    * @stable ICU 56
    */
-  UnicodeString(UnicodeString &&src) U_NOEXCEPT;
+  UnicodeString(UnicodeString &&src) noexcept;
 
   /**
    * 'Substring' constructor from tail of source string.
@@ -3620,7 +3620,7 @@ public:
    * Clone this object, an instance of a subclass of Replaceable.
    * Clones can be used concurrently in multiple threads.
    * If a subclass does not implement clone(), or if an error occurs,
-   * then NULL is returned.
+   * then nullptr is returned.
    * The caller must delete the clone.
    *
    * @return a clone of this object
@@ -3706,7 +3706,7 @@ public:
    * Illegal input is replaced with U+FFFD. Otherwise, errors result in a bogus string.
    * Calls u_strFromUTF32WithSub().
    *
-   * @param utf32 UTF-32 input string. Must not be NULL.
+   * @param utf32 UTF-32 input string. Must not be nullptr.
    * @param length Length of the input string, or -1 if NUL-terminated.
    * @return A UnicodeString with equivalent UTF-16 contents.
    * @see toUTF32
@@ -3939,12 +3939,12 @@ private:
                int32_t length);
 
   // calculate hash code
-  int32_t doHashCode(void) const;
+  int32_t doHashCode() const;
 
   // get pointer to start of array
   // these do not check for kOpenGetBuffer, unlike the public getBuffer() function
-  inline char16_t* getArrayStart(void);
-  inline const char16_t* getArrayStart(void) const;
+  inline char16_t* getArrayStart();
+  inline const char16_t* getArrayStart() const;
 
   inline UBool hasShortLength() const;
   inline int32_t getShortLength() const;
@@ -3971,7 +3971,7 @@ private:
   UBool allocate(int32_t capacity);
 
   // release the array if owned
-  void releaseArray(void);
+  void releaseArray();
 
   // turn a bogus string into an empty one
   void unBogus();
@@ -3980,7 +3980,7 @@ private:
   UnicodeString &copyFrom(const UnicodeString &src, UBool fastCopy=false);
 
   // Copies just the fields without memory management.
-  void copyFieldsFrom(UnicodeString &src, UBool setSrcToBogus) U_NOEXCEPT;
+  void copyFieldsFrom(UnicodeString &src, UBool setSrcToBogus) noexcept;
 
   // Pin start and limit to acceptable values.
   inline void pinIndex(int32_t& start) const;
@@ -4051,9 +4051,9 @@ private:
           UStringCaseMapper *stringCaseMapper);
 
   // ref counting
-  void addRef(void);
-  int32_t removeRef(void);
-  int32_t refCount(void) const;
+  void addRef();
+  int32_t removeRef();
+  int32_t refCount() const;
 
   // constants
   enum {
@@ -4068,7 +4068,7 @@ private:
     kEmptyHashCode=1, // hash code for empty string
 
     // bit flag values for fLengthAndFlags
-    kIsBogus=1,         // this string is bogus, i.e., not valid or NULL
+    kIsBogus=1,         // this string is bogus, i.e., not valid or nullptr
     kUsingStackBuffer=2,// using fUnion.fStackFields instead of fUnion.fFields
     kRefCounted=4,      // there is a refCount field before the characters in fArray
     kBufferIsReadonly=8,// do not write to this buffer
@@ -4324,7 +4324,7 @@ UnicodeString::doCompare(int32_t start,
               int32_t srcLength) const
 {
   if(srcText.isBogus()) {
-    return (int8_t)!isBogus(); // 0 if both are bogus, 1 otherwise
+    return static_cast<int8_t>(!isBogus()); // 0 if both are bogus, 1 otherwise
   } else {
     srcText.pinIndices(srcStart, srcLength);
     return doCompare(start, thisLength, srcText.getArrayStart(), srcStart, srcLength);
@@ -4431,7 +4431,7 @@ UnicodeString::doCompareCodePointOrder(int32_t start,
                                        int32_t srcLength) const
 {
   if(srcText.isBogus()) {
-    return (int8_t)!isBogus(); // 0 if both are bogus, 1 otherwise
+    return static_cast<int8_t>(!isBogus()); // 0 if both are bogus, 1 otherwise
   } else {
     srcText.pinIndices(srcStart, srcLength);
     return doCompareCodePointOrder(start, thisLength, srcText.getArrayStart(), srcStart, srcLength);
@@ -4493,7 +4493,7 @@ UnicodeString::doCaseCompare(int32_t start,
                              uint32_t options) const
 {
   if(srcText.isBogus()) {
-    return (int8_t)!isBogus(); // 0 if both are bogus, 1 otherwise
+    return static_cast<int8_t>(!isBogus()); // 0 if both are bogus, 1 otherwise
   } else {
     srcText.pinIndices(srcStart, srcLength);
     return doCaseCompare(start, thisLength, srcText.getArrayStart(), srcStart, srcLength, options);
@@ -5111,18 +5111,18 @@ UnicodeString::remove(int32_t start,
         // remove(guaranteed everything) of a bogus string makes the string empty and non-bogus
         return remove();
     }
-    return doReplace(start, _length, NULL, 0, 0);
+    return doReplace(start, _length, nullptr, 0, 0);
 }
 
 inline UnicodeString&
 UnicodeString::removeBetween(int32_t start,
                 int32_t limit)
-{ return doReplace(start, limit - start, NULL, 0, 0); }
+{ return doReplace(start, limit - start, nullptr, 0, 0); }
 
 inline UnicodeString &
 UnicodeString::retainBetween(int32_t start, int32_t limit) {
   truncate(limit);
-  return doReplace(0, start, NULL, 0, 0);
+  return doReplace(0, start, nullptr, 0, 0);
 }
 
 inline UBool

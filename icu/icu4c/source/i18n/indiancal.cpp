@@ -277,11 +277,11 @@ void IndianCalendar::handleComputeFields(int32_t julianDay, UErrorCode& /* statu
     } else {
         mday = yday - leapMonth;
         if (mday < (31 * 5)) {
-            IndianMonth = (int32_t)uprv_floor(mday / 31) + 1;
+            IndianMonth = static_cast<int32_t>(uprv_floor(mday / 31)) + 1;
             IndianDayOfMonth = (mday % 31) + 1;
         } else {
             mday -= 31 * 5;
-            IndianMonth = (int32_t)uprv_floor(mday / 30) + 6;
+            IndianMonth = static_cast<int32_t>(uprv_floor(mday / 30)) + 6;
             IndianDayOfMonth = (mday % 30) + 1;
         }
    }

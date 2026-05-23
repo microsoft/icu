@@ -80,7 +80,7 @@ upname_swap(const UDataSwapper *ds,
             UErrorCode *pErrorCode) {
     /* udata_swapDataHeader checks the arguments */
     int32_t headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
@@ -111,7 +111,7 @@ upname_swap(const UDataSwapper *ds,
         // formatVersion 2 initially has indexes[8], 32 bytes.
         if(length<32) {
             udata_printError(ds, "upname_swap(): too few bytes (%d after header) for pnames.icu\n",
-                             (int)length);
+                             static_cast<int>(length));
             *pErrorCode=U_INDEX_OUTOFBOUNDS_ERROR;
             return 0;
         }
@@ -123,7 +123,7 @@ upname_swap(const UDataSwapper *ds,
         if(length<totalSize) {
             udata_printError(ds, "upname_swap(): too few bytes (%d after header, should be %d) "
                              "for pnames.icu\n",
-                             (int)length, (int)totalSize);
+                             static_cast<int>(length), static_cast<int>(totalSize));
             *pErrorCode=U_INDEX_OUTOFBOUNDS_ERROR;
             return 0;
         }
@@ -171,7 +171,7 @@ uprops_swap(const UDataSwapper *ds,
 
     /* udata_swapDataHeader checks the arguments */
     headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
@@ -264,7 +264,7 @@ uprops_swap(const UDataSwapper *ds,
 
         /*
          * swap the UChars
-         * U  const UChar uchars[2*(i3-i2)];
+         * U  const char16_t uchars[2*(i3-i2)];
          */
         ds->swapArray16(ds,
             inData32+dataIndexes[UPROPS_EXCEPTIONS_TOP_INDEX],
@@ -332,7 +332,7 @@ ucase_swap(const UDataSwapper *ds,
 
     /* udata_swapDataHeader checks the arguments */
     headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
@@ -434,7 +434,7 @@ ubidi_swap(const UDataSwapper *ds,
 
     /* udata_swapDataHeader checks the arguments */
     headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
@@ -544,7 +544,7 @@ unorm_swap(const UDataSwapper *ds,
 
     /* udata_swapDataHeader checks the arguments */
     headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
@@ -680,10 +680,10 @@ ulayout_swap(const UDataSwapper *ds,
         return 0;
     }
 
-    const uint8_t *inBytes = (const uint8_t *)inData + headerSize;
-    uint8_t *outBytes = (uint8_t *)outData + headerSize;
+    const uint8_t* inBytes = static_cast<const uint8_t*>(inData) + headerSize;
+    uint8_t* outBytes = static_cast<uint8_t*>(outData) + headerSize;
 
-    const int32_t *inIndexes = (const int32_t *)inBytes;
+    const int32_t* inIndexes = reinterpret_cast<const int32_t*>(inBytes);
 
     if (length >= 0) {
         length -= headerSize;
@@ -780,10 +780,10 @@ uemoji_swap(const UDataSwapper *ds,
         return 0;
     }
 
-    const uint8_t *inBytes = (const uint8_t *)inData + headerSize;
-    uint8_t *outBytes = (uint8_t *)outData + headerSize;
+    const uint8_t* inBytes = static_cast<const uint8_t*>(inData) + headerSize;
+    uint8_t* outBytes = static_cast<uint8_t*>(outData) + headerSize;
 
-    const int32_t *inIndexes = (const int32_t *)inBytes;
+    const int32_t* inIndexes = reinterpret_cast<const int32_t*>(inBytes);
 
     if (length >= 0) {
         length -= headerSize;
@@ -874,8 +874,8 @@ test_swap(const UDataSwapper *ds,
 
     /* udata_swapDataHeader checks the arguments */
     headerSize=udata_swapDataHeader(ds, inData, length, outData, pErrorCode);
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
-        udata_printError(ds, "test_swap(): data header swap failed %s\n", pErrorCode != NULL ? u_errorName(*pErrorCode) : "pErrorCode is NULL");
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
+        udata_printError(ds, "test_swap(): data header swap failed %s\n", pErrorCode != nullptr ? u_errorName(*pErrorCode) : "pErrorCode is nullptr");
         return 0;
     }
 
@@ -980,7 +980,7 @@ udata_swap(const UDataSwapper *ds,
     const UDataInfo *pInfo;
     int32_t i, swappedLength;
 
-    if(pErrorCode==NULL || U_FAILURE(*pErrorCode)) {
+    if(pErrorCode==nullptr || U_FAILURE(*pErrorCode)) {
         return 0;
     }
 
@@ -991,7 +991,7 @@ udata_swap(const UDataSwapper *ds,
      * information. Otherwise we would have to pass some of the information
      * and not be able to use the UDataSwapFn signature.
      */
-    udata_swapDataHeader(ds, inData, -1, NULL, pErrorCode);
+    udata_swapDataHeader(ds, inData, -1, nullptr, pErrorCode);
 
     /*
      * If we wanted udata_swap() to also handle non-loadable data like a UTrie,
@@ -1005,7 +1005,7 @@ udata_swap(const UDataSwapper *ds,
 
     {
         /* convert the data format from ASCII to Unicode to the system charset */
-        UChar u[4]={
+        char16_t u[4]={
              pInfo->dataFormat[0], pInfo->dataFormat[1],
              pInfo->dataFormat[2], pInfo->dataFormat[3]
         };

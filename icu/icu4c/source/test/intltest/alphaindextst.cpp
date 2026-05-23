@@ -9,7 +9,7 @@
 //   file:  alphaindextst.cpp
 //          Alphabetic Index Tests.
 //
-//   Note: please... no character literals cast to UChars.. use (UChar)0xZZZZ
+//   Note: please... no character literals cast to UChars.. use (char16_t)0xZZZZ
 
 #include <stdio.h>  // for snprintf
 
@@ -34,9 +34,9 @@ namespace {
 UnicodeString joinLabelsAndAppend(AlphabeticIndex::ImmutableIndex &index, UnicodeString &dest) {
     int32_t oldLength = dest.length();
     const AlphabeticIndex::Bucket *bucket;
-    for (int32_t i = 0; (bucket = index.getBucket(i)) != NULL; ++i) {
+    for (int32_t i = 0; (bucket = index.getBucket(i)) != nullptr; ++i) {
         if (dest.length() > oldLength) {
-            dest.append((UChar)0x3A);  // ':'
+            dest.append(static_cast<char16_t>(0x3A)); // ':'
         }
         dest.append(bucket->getLabel());
     }
@@ -127,7 +127,7 @@ void AlphabeticIndexTest::APITest() {
     index.adoptInstead(new AlphabeticIndex(Locale::getEnglish(), status));
     TEST_CHECK_STATUS;
     UnicodeSet additions;
-    additions.add((UChar32)0x410).add((UChar32)0x415);   // A couple of Cyrillic letters
+    additions.add(static_cast<UChar32>(0x410)).add(static_cast<UChar32>(0x415)); // A couple of Cyrillic letters
     index->addLabels(additions, status);
     TEST_CHECK_STATUS;
     lc = index->getBucketCount(status);
@@ -161,7 +161,7 @@ void AlphabeticIndexTest::APITest() {
     const RuleBasedCollator &indexCol = index->getCollator();
     TEST_ASSERT(*germanCol == indexCol);
 
-    UnicodeString ELLIPSIS;  ELLIPSIS.append((UChar32)0x2026);
+    UnicodeString ELLIPSIS;  ELLIPSIS.append(static_cast<UChar32>(0x2026));
     UnicodeString s = index->getUnderflowLabel();
     TEST_ASSERT(ELLIPSIS == s);
     s = index->getOverflowLabel();
@@ -233,10 +233,10 @@ void AlphabeticIndexTest::APITest() {
         TEST_CHECK_STATUS;
     }
 
-    index->addRecord(adam, NULL, status);
-    index->addRecord(baker, NULL, status);
-    index->addRecord(charlie, NULL, status);
-    index->addRecord(chad, NULL, status);
+    index->addRecord(adam, nullptr, status);
+    index->addRecord(baker, nullptr, status);
+    index->addRecord(charlie, nullptr, status);
+    index->addRecord(chad, nullptr, status);
     TEST_CHECK_STATUS;
     int itemCount = 0;
     index->resetBucketIterator(status);
@@ -386,7 +386,7 @@ void AlphabeticIndexTest::ManyLocalesTest() {
             // std::string ss;
             // std::cout << ":" << label.toUTF8String(ss);
             const AlphabeticIndex::Bucket *bucket = immIndex->getBucket(bucketIndex);
-            TEST_ASSERT(bucket != NULL);
+            TEST_ASSERT(bucket != nullptr);
             assertEquals("bucket label vs. immutable: locale=" + UnicodeString(localeName) +
                          " index=" + bucketIndex,
                          label, bucket->getLabel());
@@ -398,8 +398,8 @@ void AlphabeticIndexTest::ManyLocalesTest() {
         // std::cout << ":" << std::endl;
 
         TEST_ASSERT(immIndex->getBucketCount() == bucketIndex);
-        TEST_ASSERT(immIndex->getBucket(-1) == NULL);
-        TEST_ASSERT(immIndex->getBucket(bucketIndex) == NULL);
+        TEST_ASSERT(immIndex->getBucket(-1) == nullptr);
+        TEST_ASSERT(immIndex->getBucket(bucketIndex) == nullptr);
     }
 }
 
@@ -432,7 +432,7 @@ static const char *pinyinTestData[] = {
         "x", "\\u5915", "\\u5438", "\\u6bbe", //
         "y", "\\u4e2b", "\\u82bd", "\\u8574", //
         "z", "\\u5e00", "\\u707d", "\\u5c0a",
-        NULL
+        nullptr
     };
 
 void AlphabeticIndexTest::HackPinyinTest() {
@@ -442,7 +442,7 @@ void AlphabeticIndexTest::HackPinyinTest() {
 
     UnicodeString names[UPRV_LENGTHOF(pinyinTestData)];
     int32_t  nameCount;
-    for (nameCount=0; pinyinTestData[nameCount] != NULL; nameCount++) {
+    for (nameCount=0; pinyinTestData[nameCount] != nullptr; nameCount++) {
         names[nameCount] = UnicodeString(pinyinTestData[nameCount], -1, UnicodeString::kInvariant).unescape();
         aindex.addRecord(names[nameCount], &names[nameCount], status);
         TEST_CHECK_STATUS; 
@@ -571,16 +571,16 @@ void AlphabeticIndexTest::TestHaniFirst() {
     assertEquals("getBucketCount()", 1, index.getBucketCount(status));   // ... (underflow only)
     index.addLabels(Locale::getEnglish(), status);
     assertEquals("getBucketCount()", 28, index.getBucketCount(status));  // ... A-Z ...
-    int32_t bucketIndex = index.getBucketIndex(UnicodeString((UChar)0x897f), status);
+    int32_t bucketIndex = index.getBucketIndex(UnicodeString(static_cast<char16_t>(0x897f)), status);
     assertEquals("getBucketIndex(U+897F)", 0, bucketIndex);  // underflow bucket
     bucketIndex = index.getBucketIndex("i", status);
     assertEquals("getBucketIndex(i)", 9, bucketIndex);
-    bucketIndex = index.getBucketIndex(UnicodeString((UChar)0x03B1), status);
+    bucketIndex = index.getBucketIndex(UnicodeString(static_cast<char16_t>(0x03B1)), status);
     assertEquals("getBucketIndex(Greek alpha)", 27, bucketIndex);
     // U+50005 is an unassigned code point which sorts at the end, independent of the Hani group.
-    bucketIndex = index.getBucketIndex(UnicodeString((UChar32)0x50005), status);
+    bucketIndex = index.getBucketIndex(UnicodeString(static_cast<UChar32>(0x50005)), status);
     assertEquals("getBucketIndex(U+50005)", 27, bucketIndex);
-    bucketIndex = index.getBucketIndex(UnicodeString((UChar)0xFFFF), status);
+    bucketIndex = index.getBucketIndex(UnicodeString(static_cast<char16_t>(0xFFFF)), status);
     assertEquals("getBucketIndex(U+FFFF)", 27, bucketIndex);
 }
 
@@ -600,16 +600,16 @@ void AlphabeticIndexTest::TestPinyinFirst() {
     assertEquals("getBucketCount()", 28, index.getBucketCount(status));   // ... A-Z ...
     index.addLabels(Locale::getChinese(), status);
     assertEquals("getBucketCount()", 28, index.getBucketCount(status));  // ... A-Z ...
-    int32_t bucketIndex = index.getBucketIndex(UnicodeString((UChar)0x897f), status);
+    int32_t bucketIndex = index.getBucketIndex(UnicodeString(static_cast<char16_t>(0x897f)), status);
     assertEquals("getBucketIndex(U+897F)", u'X' - u'A' + 1, bucketIndex);
     bucketIndex = index.getBucketIndex("i", status);
     assertEquals("getBucketIndex(i)", 9, bucketIndex);
-    bucketIndex = index.getBucketIndex(UnicodeString((UChar)0x03B1), status);
+    bucketIndex = index.getBucketIndex(UnicodeString(static_cast<char16_t>(0x03B1)), status);
     assertEquals("getBucketIndex(Greek alpha)", 27, bucketIndex);
     // U+50005 is an unassigned code point which sorts at the end, independent of the Hani group.
-    bucketIndex = index.getBucketIndex(UnicodeString((UChar32)0x50005), status);
+    bucketIndex = index.getBucketIndex(UnicodeString(static_cast<UChar32>(0x50005)), status);
     assertEquals("getBucketIndex(U+50005)", 27, bucketIndex);
-    bucketIndex = index.getBucketIndex(UnicodeString((UChar)0xFFFF), status);
+    bucketIndex = index.getBucketIndex(UnicodeString(static_cast<char16_t>(0xFFFF)), status);
     assertEquals("getBucketIndex(U+FFFF)", 27, bucketIndex);
 }
 
@@ -663,9 +663,9 @@ void AlphabeticIndexTest::TestNoLabels() {
     TEST_CHECK_STATUS;
     AlphabeticIndex index(coll.orphan(), status);
     TEST_CHECK_STATUS;
-    index.addRecord(UnicodeString((UChar)0x897f), NULL, status);
-    index.addRecord("i", NULL, status);
-    index.addRecord(UnicodeString((UChar)0x03B1), NULL, status);
+    index.addRecord(UnicodeString(static_cast<char16_t>(0x897f)), nullptr, status);
+    index.addRecord("i", nullptr, status);
+    index.addRecord(UnicodeString(static_cast<char16_t>(0x03B1)), nullptr, status);
     assertEquals("getBucketCount()", 1, index.getBucketCount(status));  // ...
     TEST_ASSERT(index.nextBucket(status));
     assertEquals("underflow label type", U_ALPHAINDEX_UNDERFLOW, index.getBucketLabelType());
@@ -675,16 +675,16 @@ void AlphabeticIndexTest::TestNoLabels() {
 void AlphabeticIndexTest::TestChineseZhuyin() {
     UErrorCode status = U_ZERO_ERROR;
     char loc[100];
-    uloc_forLanguageTag("zh-u-co-zhuyin", loc, UPRV_LENGTHOF(loc), NULL, &status);
+    uloc_forLanguageTag("zh-u-co-zhuyin", loc, UPRV_LENGTHOF(loc), nullptr, &status);
     AlphabeticIndex index(loc, status);
     LocalPointer<AlphabeticIndex::ImmutableIndex> immIndex(index.buildImmutableIndex(status));
     TEST_CHECK_STATUS; 
     assertEquals("getBucketCount()", 38, immIndex->getBucketCount());
-    assertEquals("label 1", UnicodeString((UChar)0x3105), immIndex->getBucket(1)->getLabel());
-    assertEquals("label 2", UnicodeString((UChar)0x3106), immIndex->getBucket(2)->getLabel());
-    assertEquals("label 3", UnicodeString((UChar)0x3107), immIndex->getBucket(3)->getLabel());
-    assertEquals("label 4", UnicodeString((UChar)0x3108), immIndex->getBucket(4)->getLabel());
-    assertEquals("label 5", UnicodeString((UChar)0x3109), immIndex->getBucket(5)->getLabel());
+    assertEquals("label 1", UnicodeString(static_cast<char16_t>(0x3105)), immIndex->getBucket(1)->getLabel());
+    assertEquals("label 2", UnicodeString(static_cast<char16_t>(0x3106)), immIndex->getBucket(2)->getLabel());
+    assertEquals("label 3", UnicodeString(static_cast<char16_t>(0x3107)), immIndex->getBucket(3)->getLabel());
+    assertEquals("label 4", UnicodeString(static_cast<char16_t>(0x3108)), immIndex->getBucket(4)->getLabel());
+    assertEquals("label 5", UnicodeString(static_cast<char16_t>(0x3109)), immIndex->getBucket(5)->getLabel());
 }
 
 void AlphabeticIndexTest::TestJapaneseKanji() {
@@ -698,7 +698,7 @@ void AlphabeticIndexTest::TestJapaneseKanji() {
     int32_t overflowIndex = immIndex->getBucketCount() - 1;
     for(int32_t i = 0; i < UPRV_LENGTHOF(kanji); ++i) {
         char msg[40];
-        snprintf(msg, sizeof(msg), "kanji[%d]=U+%04lX in overflow bucket", (int)i, (long)kanji[i]);
+        snprintf(msg, sizeof(msg), "kanji[%d]=U+%04lX in overflow bucket", static_cast<int>(i), static_cast<long>(kanji[i]));
         assertEquals(msg, overflowIndex, immIndex->getBucketIndex(UnicodeString(kanji[i]), status));
         TEST_CHECK_STATUS;
     }

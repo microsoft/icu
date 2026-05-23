@@ -39,7 +39,7 @@ public:
     static void cleanUp() {
         if (fgTestDataPath) {
             free(fgTestDataPath);
-            fgTestDataPath = NULL;
+            fgTestDataPath = nullptr;
         }
     }
     virtual void errln(std::u16string_view message) override {
@@ -66,10 +66,10 @@ public:
         log_data_err(buffer);
     }
 
-    static const char * pathToDataDirectory(void)
+    static const char * pathToDataDirectory()
     {
 
-        if(fgDataDir != NULL) {
+        if(fgDataDir != nullptr) {
             return fgDataDir;
         }
 
@@ -101,12 +101,12 @@ public:
             /*   Only Windows should end up here, so looking for '\' is safe.   */
             for (i=1; i<=3; i++) {
                 pBackSlash = strrchr(p, U_FILE_SEP_CHAR);
-                if (pBackSlash != NULL) {
+                if (pBackSlash != nullptr) {
                     *pBackSlash = 0;        /* Truncate the string at the '\'   */
                 }
             }
 
-            if (pBackSlash != NULL) {
+            if (pBackSlash != nullptr) {
                 /* We found and truncated three names from the path.
                 *  Now append "source\data" and set the environment
                 */
@@ -132,10 +132,10 @@ public:
     }
 
     static const char* loadTestData(UErrorCode& err){
-        if( fgTestDataPath == NULL){
-            const char*      directory=NULL;
-            UResourceBundle* test =NULL;
-            char* tdpath=NULL;
+        if( fgTestDataPath == nullptr){
+            const char*      directory=nullptr;
+            UResourceBundle* test =nullptr;
+            char* tdpath=nullptr;
             const char* tdrelativepath;
 
 #if defined (U_TOPBUILDDIR)
@@ -174,12 +174,12 @@ public:
     }
 };
 
-const char* DataDrivenLogger::fgDataDir = NULL;
-char* DataDrivenLogger::fgTestDataPath = NULL;
+const char* DataDrivenLogger::fgDataDir = nullptr;
+char* DataDrivenLogger::fgTestDataPath = nullptr;
 
 #if !UCONFIG_NO_FORMATTING && !UCONFIG_NO_FILE_IO
 static int64_t
-uto64(const UChar     *buffer)
+uto64(const char16_t  *buffer)
 {
     uint64_t result = 0;
     /* iterate through buffer */
@@ -192,12 +192,12 @@ uto64(const UChar     *buffer)
         result += *buffer - 0x0030 - (*buffer >= 0x0041 ? (*buffer >= 0x0061 ? 39 : 7) : 0);
         buffer++;
     }
-    return (int64_t)result;
+    return static_cast<int64_t>(result);
 }
 #endif
 
 U_CDECL_BEGIN
-static void U_CALLCONV DataDrivenPrintf(void)
+static void U_CALLCONV DataDrivenPrintf()
 {
 #if !UCONFIG_NO_FORMATTING && !UCONFIG_NO_FILE_IO
     UErrorCode errorCode;
@@ -205,14 +205,14 @@ static void U_CALLCONV DataDrivenPrintf(void)
     TestData *testData;
     const DataMap *testCase;
     DataDrivenLogger logger;
-    UChar uBuffer[512];
+    char16_t uBuffer[512];
     char cBuffer[512];
     char cFormat[sizeof(cBuffer)];
     char cExpected[sizeof(cBuffer)];
     UnicodeString tempStr;
-    UChar format[512];
-    UChar expectedResult[512];
-    UChar argument[512];
+    char16_t format[512];
+    char16_t expectedResult[512];
+    char16_t argument[512];
     int32_t i;
     int8_t i8;
     int16_t i16;
@@ -290,7 +290,7 @@ static void U_CALLCONV DataDrivenPrintf(void)
                     uBufferLenReturned = u_sprintf_u(uBuffer, format, cBuffer);
                     uFileBufferLenReturned = u_fprintf_u(testFile.getAlias(), format, cBuffer);
                     break;
-                case 0x53:  // 'S' UChar *
+                case 0x53:  // 'S' char16_t *
                     uBufferLenReturned = u_sprintf_u(uBuffer, format, argument);
                     uFileBufferLenReturned = u_fprintf_u(testFile.getAlias(), format, argument);
                     break;
@@ -363,7 +363,7 @@ static void U_CALLCONV DataDrivenPrintf(void)
 U_CDECL_END
 
 U_CDECL_BEGIN
-static void U_CALLCONV ScanfMultipleIntegers(void)
+static void U_CALLCONV ScanfMultipleIntegers()
 {
 #if !UCONFIG_NO_FORMATTING && !UCONFIG_NO_FILE_IO
     UnicodeString input = UNICODE_STRING("[1.2.3]", 7);
@@ -400,7 +400,7 @@ static void U_CALLCONV ScanfMultipleIntegers(void)
 U_CDECL_END
 
 U_CDECL_BEGIN
-static void U_CALLCONV DataDrivenScanf(void)
+static void U_CALLCONV DataDrivenScanf()
 {
 #if !UCONFIG_NO_FORMATTING && !UCONFIG_NO_FILE_IO
     UErrorCode errorCode;
@@ -408,13 +408,13 @@ static void U_CALLCONV DataDrivenScanf(void)
     TestData *testData;
     const DataMap *testCase;
     DataDrivenLogger logger;
-    UChar uBuffer[512];
+    char16_t uBuffer[512];
     char cBuffer[512];
     char cExpected[sizeof(cBuffer)];
     UnicodeString tempStr;
-    UChar format[512];
-    UChar expectedResult[512];
-    UChar argument[512];
+    char16_t format[512];
+    char16_t expectedResult[512];
+    char16_t argument[512];
     int32_t i;
     int8_t i8, expected8;
     int16_t i16, expected16;
@@ -523,13 +523,13 @@ static void U_CALLCONV DataDrivenScanf(void)
                         log_err("error in scanf char * string. Got \"%s\" Expected \"%s\". Test case = %d\n", cBuffer, cExpected, i);
                     }
                     break;
-                case 0x53:  // 'S' UChar *
+                case 0x53:  // 'S' char16_t *
                     uBufferLenReturned = u_sscanf_u(argument, format, uBuffer);
                     //uFileBufferLenReturned = u_fscanf_u(testFile, format, argument);
                     if (u_strcmp(uBuffer, expectedResult) != 0) {
                         u_austrcpy(cExpected, format);
                         u_austrcpy(cBuffer, uBuffer);
-                        log_err("error in scanf UChar * string %s Got: \"%s\". Test case = %d\n", cExpected, cBuffer, i);
+                        log_err("error in scanf char16_t * string %s Got: \"%s\". Test case = %d\n", cExpected, cBuffer, i);
                     }
                     break;
                 default:
@@ -602,7 +602,7 @@ static void U_CALLCONV DataDrivenScanf(void)
 U_CDECL_END
 
 U_CDECL_BEGIN
-static void U_CALLCONV DataDrivenPrintfPrecision(void)
+static void U_CALLCONV DataDrivenPrintfPrecision()
 {
 #if !UCONFIG_NO_FORMATTING && !UCONFIG_NO_FILE_IO
     UErrorCode errorCode;
@@ -610,14 +610,14 @@ static void U_CALLCONV DataDrivenPrintfPrecision(void)
     TestData *testData;
     const DataMap *testCase;
     DataDrivenLogger logger;
-    UChar uBuffer[512];
+    char16_t uBuffer[512];
     char cBuffer[512];
     char cFormat[sizeof(cBuffer)];
     char cExpected[sizeof(cBuffer)];
     UnicodeString tempStr;
-    UChar format[512];
-    UChar expectedResult[512];
-    UChar argument[512];
+    char16_t format[512];
+    char16_t expectedResult[512];
+    char16_t argument[512];
     int32_t precision;
     int32_t i;
     int8_t i8;
@@ -681,7 +681,7 @@ static void U_CALLCONV DataDrivenPrintfPrecision(void)
                     u_austrncpy(cBuffer, uBuffer, sizeof(cBuffer));
                     uBufferLenReturned = u_sprintf_u(uBuffer, format, precision, cBuffer);
                     break;
-                case 0x53:  // 'S' UChar *
+                case 0x53:  // 'S' char16_t *
                     uBufferLenReturned = u_sprintf_u(uBuffer, format, precision, argument);
                     break;
                 default:
@@ -745,7 +745,7 @@ static void addAllTests(TestNode** root) {
 /* returns the path to icu/source/data/out */
 static const char *ctest_dataOutDir()
 {
-    static const char *dataOutDir = NULL;
+    static const char *dataOutDir = nullptr;
 
     if(dataOutDir) {
         return dataOutDir;
@@ -779,12 +779,12 @@ static const char *ctest_dataOutDir()
         /*   Only Windows should end up here, so looking for '\' is safe.   */
         for (i=1; i<=3; i++) {
             pBackSlash = strrchr(p, U_FILE_SEP_CHAR);
-            if (pBackSlash != NULL) {
+            if (pBackSlash != nullptr) {
                 *pBackSlash = 0;        /* Truncate the string at the '\'   */
             }
         }
 
-        if (pBackSlash != NULL) {
+        if (pBackSlash != nullptr) {
             /* We found and truncated three names from the path.
              *  Now append "source\data" and set the environment
              */
@@ -822,7 +822,7 @@ static void ctest_setICU_DATA() {
     /* No location for the data dir was identifiable.
      *   Add other fallbacks for the test data location here if the need arises
      */
-    if (getenv("ICU_DATA") == NULL) {
+    if (getenv("ICU_DATA") == nullptr) {
         /* If ICU_DATA isn't set, set it to the usual location */
         u_setDataDirectory(ctest_dataOutDir());
     }
@@ -850,7 +850,7 @@ U_CDECL_END
 int main(int argc, char* argv[])
 {
     int32_t nerrors = 0;
-    TestNode *root = NULL;
+    TestNode *root = nullptr;
     UErrorCode errorCode = U_ZERO_ERROR;
     UDate startTime, endTime;
     int32_t diffTime;

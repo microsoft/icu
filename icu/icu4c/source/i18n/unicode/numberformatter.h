@@ -1147,10 +1147,10 @@ class U_I18N_API Scale : public UMemory {
     Scale& operator=(const Scale& other);
 
     /** @stable ICU 62 */
-    Scale(Scale&& src) U_NOEXCEPT;
+    Scale(Scale&& src) noexcept;
 
     /** @stable ICU 62 */
-    Scale& operator=(Scale&& src) U_NOEXCEPT;
+    Scale& operator=(Scale&& src) noexcept;
 
     /** @stable ICU 62 */
     ~Scale();
@@ -1226,10 +1226,10 @@ class U_I18N_API StringProp : public UMemory {
 #ifndef U_HIDE_INTERNAL_API
 
     /** @internal */
-    StringProp(StringProp &&src) U_NOEXCEPT;
+    StringProp(StringProp &&src) noexcept;
 
     /** @internal */
-    StringProp &operator=(StringProp &&src) U_NOEXCEPT;
+    StringProp &operator=(StringProp &&src) noexcept;
 
     /** @internal */
     int16_t length() const {
@@ -1289,10 +1289,10 @@ class U_I18N_API SymbolsWrapper : public UMemory {
     SymbolsWrapper &operator=(const SymbolsWrapper &other);
 
     /** @internal */
-    SymbolsWrapper(SymbolsWrapper&& src) U_NOEXCEPT;
+    SymbolsWrapper(SymbolsWrapper&& src) noexcept;
 
     /** @internal */
-    SymbolsWrapper &operator=(SymbolsWrapper&& src) U_NOEXCEPT;
+    SymbolsWrapper &operator=(SymbolsWrapper&& src) noexcept;
 
     /** @internal */
     ~SymbolsWrapper();
@@ -2474,7 +2474,7 @@ class U_I18N_API UnlocalizedNumberFormatter
      * The source UnlocalizedNumberFormatter will be left in a valid but undefined state.
      * @stable ICU 62
      */
-    UnlocalizedNumberFormatter(UnlocalizedNumberFormatter&& src) U_NOEXCEPT;
+    UnlocalizedNumberFormatter(UnlocalizedNumberFormatter&& src) noexcept;
 
     /**
      * Copy assignment operator.
@@ -2487,7 +2487,7 @@ class U_I18N_API UnlocalizedNumberFormatter
      * The source UnlocalizedNumberFormatter will be left in a valid but undefined state.
      * @stable ICU 62
      */
-    UnlocalizedNumberFormatter& operator=(UnlocalizedNumberFormatter&& src) U_NOEXCEPT;
+    UnlocalizedNumberFormatter& operator=(UnlocalizedNumberFormatter&& src) noexcept;
 
   private:
     explicit UnlocalizedNumberFormatter(const NumberFormatterSettings<UnlocalizedNumberFormatter>& other);
@@ -2644,7 +2644,7 @@ class U_I18N_API LocalizedNumberFormatter
      * The source LocalizedNumberFormatter will be left in a valid but undefined state.
      * @stable ICU 62
      */
-    LocalizedNumberFormatter(LocalizedNumberFormatter&& src) U_NOEXCEPT;
+    LocalizedNumberFormatter(LocalizedNumberFormatter&& src) noexcept;
 
     /**
      * Copy assignment operator.
@@ -2657,7 +2657,7 @@ class U_I18N_API LocalizedNumberFormatter
      * The source LocalizedNumberFormatter will be left in a valid but undefined state.
      * @stable ICU 62
      */
-    LocalizedNumberFormatter& operator=(LocalizedNumberFormatter&& src) U_NOEXCEPT;
+    LocalizedNumberFormatter& operator=(LocalizedNumberFormatter&& src) noexcept;
 
 #ifndef U_HIDE_INTERNAL_API
 
@@ -2695,7 +2695,7 @@ class U_I18N_API LocalizedNumberFormatter
 
     explicit LocalizedNumberFormatter(const NumberFormatterSettings<LocalizedNumberFormatter>& other);
 
-    explicit LocalizedNumberFormatter(NumberFormatterSettings<LocalizedNumberFormatter>&& src) U_NOEXCEPT;
+    explicit LocalizedNumberFormatter(NumberFormatterSettings<LocalizedNumberFormatter>&& src) noexcept;
 
     LocalizedNumberFormatter(const impl::MacroProps &macros, const Locale &locale);
 

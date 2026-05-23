@@ -62,15 +62,15 @@ class CodePointIterator;
 class CollationTest : public IntlTest {
 public:
     CollationTest()
-            : fcd(NULL), nfd(NULL),
+            : fcd(nullptr), nfd(nullptr),
               fileLineNumber(0),
-              coll(NULL) {}
+              coll(nullptr) {}
 
     ~CollationTest() {
         delete coll;
     }
 
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL) override;
+    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=nullptr) override;
 
     void TestMinMax();
     void TestImplicits();
@@ -101,9 +101,9 @@ private:
     static UnicodeString printCollationKey(const CollationKey &key);
 
     // Helpers & fields for data-driven test.
-    static UBool isCROrLF(UChar c) { return c == 0xa || c == 0xd; }
-    static UBool isSpace(UChar c) { return c == 9 || c == 0x20 || c == 0x3000; }
-    static UBool isSectionStarter(UChar c) { return c == 0x25 || c == 0x2a || c == 0x40; }  // %*@
+    static UBool isCROrLF(char16_t c) { return c == 0xa || c == 0xd; }
+    static UBool isSpace(char16_t c) { return c == 9 || c == 0x20 || c == 0x3000; }
+    static UBool isSectionStarter(char16_t c) { return c == 0x25 || c == 0x2a || c == 0x40; }  // %*@
     int32_t skipSpaces(int32_t i) {
         while(isSpace(fileLine[i])) { ++i; }
         return i;
@@ -120,13 +120,13 @@ private:
 
     UBool needsNormalization(const UnicodeString &s, UErrorCode &errorCode) const;
 
-    UBool getSortKeyParts(const UChar *s, int32_t length,
+    UBool getSortKeyParts(const char16_t *s, int32_t length,
                           CharString &dest, int32_t partSize,
                           IcuTestErrorCode &errorCode);
     UBool getCollationKey(const char *norm, const UnicodeString &line,
-                          const UChar *s, int32_t length,
+                          const char16_t *s, int32_t length,
                           CollationKey &key, IcuTestErrorCode &errorCode);
-    UBool getMergedCollationKey(const UChar *s, int32_t length,
+    UBool getMergedCollationKey(const char16_t *s, int32_t length,
                                 CollationKey &key, IcuTestErrorCode &errorCode);
     UBool checkCompareTwo(const char *norm, const UnicodeString &prevFileLine,
                           const UnicodeString &prevString, const UnicodeString &s,
@@ -180,29 +180,29 @@ void CollationTest::TestMinMax() {
         return;
     }
     RuleBasedCollator *rbc = dynamic_cast<RuleBasedCollator *>(coll);
-    if(rbc == NULL) {
+    if(rbc == nullptr) {
         errln("the root collator is not a RuleBasedCollator");
         return;
     }
 
-    static const UChar s[2] = { 0xfffe, 0xffff };
+    static const char16_t s[2] = { 0xfffe, 0xffff };
     UVector64 ces(errorCode);
     rbc->internalGetCEs(UnicodeString(false, s, 2), ces, errorCode);
     errorCode.assertSuccess();
     if(ces.size() != 2) {
-        errln("expected 2 CEs for <FFFE, FFFF>, got %d", (int)ces.size());
+        errln("expected 2 CEs for <FFFE, FFFF>, got %d", static_cast<int>(ces.size()));
         return;
     }
     int64_t ce = ces.elementAti(0);
     int64_t expected = Collation::makeCE(Collation::MERGE_SEPARATOR_PRIMARY);
     if(ce != expected) {
-        errln("CE(U+fffe)=%04lx != 02..", (long)ce);
+        errln("CE(U+fffe)=%04lx != 02..", static_cast<long>(ce));
     }
 
     ce = ces.elementAti(1);
     expected = Collation::makeCE(Collation::MAX_PRIMARY);
     if(ce != expected) {
-        errln("CE(U+ffff)=%04lx != max..", (long)ce);
+        errln("CE(U+ffff)=%04lx != max..", static_cast<long>(ce));
     }
 }
 
@@ -260,7 +260,7 @@ void CollationTest::TestImplicits() {
     const char *const setNames[] = { "core Han", "Han extensions", "unassigned" };
     UChar32 prev = 0;
     uint32_t prevPrimary = 0;
-    UTF16CollationIterator ci(cd, false, NULL, NULL, NULL);
+    UTF16CollationIterator ci(cd, false, nullptr, nullptr, nullptr);
     for(int32_t i = 0; i < UPRV_LENGTHOF(sets); ++i) {
         const char *setName = setNames[i];
         LocalPointer<UnicodeSetIterator> iter(new UnicodeSetIterator(*sets[i]));
@@ -275,7 +275,7 @@ void CollationTest::TestImplicits() {
             }
             if(ce == Collation::NO_CE || ce2 != Collation::NO_CE) {
                 errln("%s: CollationIterator.nextCE(U+%04lx) did not yield exactly one CE",
-                      setName, (long)c);
+                      setName, static_cast<long>(c));
                 continue;
             }
             if((ce & 0xffffffff) != Collation::COMMON_SEC_AND_TER_CE) {
@@ -286,7 +286,7 @@ void CollationTest::TestImplicits() {
             uint32_t primary = static_cast<uint32_t>(ce >> 32);
             if(!(primary > prevPrimary) && inOrder.contains(c) && inOrder.contains(prev)) {
                 errln("%s: CE(U+%04lx)=%04lx.. not greater than CE(U+%04lx)=%04lx..",
-                      setName, (long)c, (long)primary, (long)prev, (long)prevPrimary);
+                      setName, static_cast<long>(c), static_cast<long>(primary), static_cast<long>(prev), static_cast<long>(prevPrimary));
             }
             prev = c;
             prevPrimary = primary;
@@ -301,10 +301,10 @@ void CollationTest::TestNulTerminated() {
         return;
     }
 
-    static const UChar s[] = { 0x61, 0x62, 0x61, 0x62, 0 };
+    static const char16_t s[] = { 0x61, 0x62, 0x61, 0x62, 0 };
 
     UTF16CollationIterator ci1(data, false, s, s, s + 2);
-    UTF16CollationIterator ci2(data, false, s + 2, s + 2, NULL);
+    UTF16CollationIterator ci2(data, false, s + 2, s + 2, nullptr);
     for(int32_t i = 0;; ++i) {
         int64_t ce1 = ci1.nextCE(errorCode);
         int64_t ce2 = ci2.nextCE(errorCode);
@@ -312,7 +312,7 @@ void CollationTest::TestNulTerminated() {
             return;
         }
         if(ce1 != ce2) {
-            errln("CollationIterator.nextCE(with length) != nextCE(NUL-terminated) at CE %d", (int)i);
+            errln("CollationIterator.nextCE(with length) != nextCE(NUL-terminated) at CE %d", static_cast<int>(i));
             break;
         }
         if(ce1 == Collation::NO_CE) { break; }
@@ -346,7 +346,7 @@ void CollationTest::TestIllegalUTF8() {
         UCollationResult order = coll->compareUTF8(fffd, illegal, errorCode);
         if(order != UCOL_EQUAL) {
             errln("compareUTF8(pair %d: U+FFFD, illegal UTF-8)=%d != UCOL_EQUAL",
-                  (int)i, order);
+                  static_cast<int>(i), order);
         }
     }
 }
@@ -414,7 +414,7 @@ public:
     UChar32 next() { return (pos < length) ? cp[pos++] : U_SENTINEL; }
     UChar32 previous() { return (pos > 0) ? cp[--pos] : U_SENTINEL; }
     int32_t getLength() const { return length; }
-    int getIndex() const { return (int)pos; }
+    int getIndex() const { return static_cast<int>(pos); }
 private:
     const UChar32 *cp;
     int32_t length;
@@ -431,7 +431,7 @@ void CollationTest::checkFCD(const char *name,
         UChar32 c2 = cpi.next();
         if(c1 != c2) {
             errln("%s.nextCodePoint(to limit, 1st pass) = U+%04lx != U+%04lx at %d",
-                  name, (long)c1, (long)c2, cpi.getIndex());
+                  name, static_cast<long>(c1), static_cast<long>(c2), cpi.getIndex());
             return;
         }
         if(c1 < 0) { break; }
@@ -443,7 +443,7 @@ void CollationTest::checkFCD(const char *name,
         UChar32 c2 = cpi.previous();
         if(c1 != c2) {
             errln("%s.previousCodePoint() = U+%04lx != U+%04lx at %d",
-                  name, (long)c1, (long)c2, cpi.getIndex());
+                  name, static_cast<long>(c1), static_cast<long>(c2), cpi.getIndex());
             return;
         }
     }
@@ -454,7 +454,7 @@ void CollationTest::checkFCD(const char *name,
         UChar32 c2 = cpi.next();
         if(c1 != c2) {
             errln("%s.nextCodePoint(to limit again) = U+%04lx != U+%04lx at %d",
-                  name, (long)c1, (long)c2, cpi.getIndex());
+                  name, static_cast<long>(c1), static_cast<long>(c2), cpi.getIndex());
             return;
         }
         if(c1 < 0) { break; }
@@ -466,7 +466,7 @@ void CollationTest::checkFCD(const char *name,
         UChar32 c2 = cpi.previous();
         if(c1 != c2) {
             errln("%s.previousCodePoint(to start) = U+%04lx != U+%04lx at %d",
-                  name, (long)c1, (long)c2, cpi.getIndex());
+                  name, static_cast<long>(c1), static_cast<long>(c2), cpi.getIndex());
             return;
         }
         if(c1 < 0) { break; }
@@ -481,7 +481,7 @@ void CollationTest::TestFCD() {
     }
 
     // Input string, not FCD, NUL-terminated.
-    static const UChar s[] = {
+    static const char16_t s[] = {
         0x308, 0xe1, 0x62, 0x301, 0x327, 0x430, 0x62,
         U16_LEAD(0x1D15F), U16_TRAIL(0x1D15F),  // MUSICAL SYMBOL QUARTER NOTE=1D158 1D165, ccc=0, 216
         0x327, 0x308,  // ccc=202, 230
@@ -508,7 +508,7 @@ void CollationTest::TestFCD() {
         0x4e00, 0xf71, 0xf80
     };
 
-    FCDUTF16CollationIterator u16ci(data, false, s, s, NULL);
+    FCDUTF16CollationIterator u16ci(data, false, s, s, nullptr);
     if(errorCode.errIfFailureAndReset("FCDUTF16CollationIterator constructor")) {
         return;
     }
@@ -540,7 +540,7 @@ void CollationTest::checkAllocWeights(CollationWeights &cw,
                                       int32_t someLength, int32_t minCount) {
     if(!cw.allocWeights(lowerLimit, upperLimit, n)) {
         errln("CollationWeights::allocWeights(%lx, %lx, %ld) = false",
-              (long)lowerLimit, (long)upperLimit, (long)n);
+              static_cast<long>(lowerLimit), static_cast<long>(upperLimit), static_cast<long>(n));
         return;
     }
     uint32_t previous = lowerLimit;
@@ -550,13 +550,13 @@ void CollationTest::checkAllocWeights(CollationWeights &cw,
         if(w == 0xffffffff) {
             errln("CollationWeights::allocWeights(%lx, %lx, %ld).nextWeight() "
                   "returns only %ld weights",
-                  (long)lowerLimit, (long)upperLimit, (long)n, (long)i);
+                  static_cast<long>(lowerLimit), static_cast<long>(upperLimit), static_cast<long>(n), static_cast<long>(i));
             return;
         }
         if(!(previous < w && w < upperLimit)) {
             errln("CollationWeights::allocWeights(%lx, %lx, %ld).nextWeight() "
                   "number %ld -> %lx not between %lx and %lx",
-                  (long)lowerLimit, (long)upperLimit, (long)n,
+                  static_cast<long>(lowerLimit), static_cast<long>(upperLimit), static_cast<long>(n),
                   static_cast<long>(i + 1), static_cast<long>(w), static_cast<long>(previous), static_cast<long>(upperLimit));
             return;
         }
@@ -565,8 +565,8 @@ void CollationTest::checkAllocWeights(CollationWeights &cw,
     if(count < minCount) {
         errln("CollationWeights::allocWeights(%lx, %lx, %ld).nextWeight() "
               "returns only %ld < %ld weights of length %d",
-              (long)lowerLimit, (long)upperLimit, (long)n,
-              (long)count, (long)minCount, (int)someLength);
+              static_cast<long>(lowerLimit), static_cast<long>(upperLimit), static_cast<long>(n),
+              static_cast<long>(count), static_cast<long>(minCount), static_cast<int>(someLength));
     }
 }
 
@@ -711,7 +711,7 @@ UBool isValidCE(const CollationRootElements &re, const CollationData &data,
 
 UBool isValidCE(const CollationRootElements &re, const CollationData &data, int64_t ce) {
     uint32_t p = static_cast<uint32_t>(ce >> 32);
-    uint32_t secTer = (uint32_t)ce;
+    uint32_t secTer = static_cast<uint32_t>(ce);
     return isValidCE(re, data, p, secTer >> 16, secTer & 0xffff);
 }
 
@@ -721,7 +721,7 @@ public:
             : data(root),
               elements(root.rootElements), length(root.rootElementsLength),
               pri(0), secTer(0),
-              index((int32_t)elements[CollationRootElements::IX_FIRST_TERTIARY_INDEX]) {}
+              index(static_cast<int32_t>(elements[CollationRootElements::IX_FIRST_TERTIARY_INDEX])) {}
 
     UBool next() {
         if(index >= length) { return false; }
@@ -734,7 +734,7 @@ public:
         }
         if((p & CollationRootElements::PRIMARY_STEP_MASK) != 0) {
             // End of a range, enumerate the primaries in the range.
-            int32_t step = (int32_t)p & CollationRootElements::PRIMARY_STEP_MASK;
+            int32_t step = static_cast<int32_t>(p) & CollationRootElements::PRIMARY_STEP_MASK;
             p &= 0xffffff00;
             if(pri == p) {
                 // Finished the range, return the next CE after it.
@@ -824,7 +824,7 @@ void CollationTest::TestRootElements() {
         // CollationRootElements CEs must have 0 case and quaternary bits.
         if((secTer & Collation::CASE_AND_QUATERNARY_MASK) != 0) {
             errln("CollationRootElements CE has non-zero case and/or quaternary bits: %08lx %08lx",
-                  (long)pri, (long)secTer);
+                  static_cast<long>(pri), static_cast<long>(secTer));
         }
         uint32_t sec = secTer >> 16;
         uint32_t ter = secTer & Collation::ONLY_TERTIARY_MASK;
@@ -835,7 +835,7 @@ void CollationTest::TestRootElements() {
             ctq |= 0x8000;
         }
         if(!isValidCE(rootElements, *root, pri, sec, ctq)) {
-            errln("invalid root CE %08lx %08lx", (long)pri, (long)secTer);
+            errln("invalid root CE %08lx %08lx", static_cast<long>(pri), static_cast<long>(secTer));
         } else {
             if(pri != prevPri) {
                 uint32_t newWeight = 0;
@@ -845,21 +845,21 @@ void CollationTest::TestRootElements() {
                 } else if(root->isCompressiblePrimary(prevPri)) {
                     if(!cw1c.allocWeights(prevPri, pri, 1)) {
                         errln("no primary/compressible tailoring gap between %08lx and %08lx",
-                              (long)prevPri, (long)pri);
+                              static_cast<long>(prevPri), static_cast<long>(pri));
                     } else {
                         newWeight = cw1c.nextWeight();
                     }
                 } else {
                     if(!cw1u.allocWeights(prevPri, pri, 1)) {
                         errln("no primary/uncompressible tailoring gap between %08lx and %08lx",
-                              (long)prevPri, (long)pri);
+                              static_cast<long>(prevPri), static_cast<long>(pri));
                     } else {
                         newWeight = cw1u.nextWeight();
                     }
                 }
                 if(newWeight != 0 && !(prevPri < newWeight && newWeight < pri)) {
                     errln("mis-allocated primary weight, should get %08lx < %08lx < %08lx",
-                          (long)prevPri, (long)newWeight, (long)pri);
+                          static_cast<long>(prevPri), static_cast<long>(newWeight), static_cast<long>(pri));
                 }
             } else if(sec != prevSec) {
                 uint32_t lowerLimit =
@@ -870,7 +870,7 @@ void CollationTest::TestRootElements() {
                     uint32_t newWeight = cw2.nextWeight();
                     if(!(prevSec < newWeight && newWeight < sec)) {
                         errln("mis-allocated secondary weight, should get %04x < %04x < %04x",
-                              (long)lowerLimit, (long)newWeight, (long)sec);
+                              static_cast<long>(lowerLimit), static_cast<long>(newWeight), static_cast<long>(sec));
                     }
                 }
             } else if(ter != prevTer) {
@@ -882,11 +882,11 @@ void CollationTest::TestRootElements() {
                     uint32_t newWeight = cw3.nextWeight();
                     if(!(prevTer < newWeight && newWeight < ter)) {
                         errln("mis-allocated secondary weight, should get %04x < %04x < %04x",
-                              (long)lowerLimit, (long)newWeight, (long)ter);
+                              static_cast<long>(lowerLimit), static_cast<long>(newWeight), static_cast<long>(ter));
                     }
                 }
             } else {
-                errln("duplicate root CE %08lx %08lx", (long)pri, (long)secTer);
+                errln("duplicate root CE %08lx %08lx", static_cast<long>(pri), static_cast<long>(secTer));
             }
         }
         prevPri = pri;
@@ -903,7 +903,7 @@ void CollationTest::TestTailoredElements() {
     }
     CollationRootElements rootElements(root->rootElements, root->rootElementsLength);
 
-    UHashtable *prevLocales = uhash_open(uhash_hashChars, uhash_compareChars, NULL, errorCode);
+    UHashtable *prevLocales = uhash_open(uhash_hashChars, uhash_compareChars, nullptr, errorCode);
     if(errorCode.errIfFailureAndReset("failed to create a hash table")) {
         return;
     }
@@ -923,7 +923,7 @@ void CollationTest::TestTailoredElements() {
                 Collator::getKeywordValuesForLocale("collation", locale, false, errorCode));
         errorCode.assertSuccess();
         const char *type;  // first: default type
-        while((type = types->next(NULL, errorCode)) != NULL) {
+        while((type = types->next(nullptr, errorCode)) != nullptr) {
             if(strncmp(type, "private-", 8) == 0) {
                 errln("Collator::getKeywordValuesForLocale(%s) returns private collation keyword: %s",
                         localeID, type);
@@ -945,7 +945,7 @@ void CollationTest::TestTailoredElements() {
             logln("TestTailoredElements(): requested %s -> actual %s",
                   localeWithType.getName(), actual.getName());
             RuleBasedCollator *rbc = dynamic_cast<RuleBasedCollator *>(coll.getAlias());
-            if(rbc == NULL) {
+            if(rbc == nullptr) {
                 continue;
             }
             // Note: It would be better to get tailored strings such that we can
@@ -968,13 +968,13 @@ void CollationTest::TestTailoredElements() {
                     int64_t ce = ces.elementAti(i);
                     if(!isValidCE(rootElements, *root, ce)) {
                         errln("invalid tailored CE %016llx at CE index %d from string:",
-                              (long long)ce, (int)i);
+                              static_cast<long long>(ce), static_cast<int>(i));
                         infoln(prettify(s));
                     }
                 }
             }
         }
-    } while((localeID = locales->next(NULL, errorCode)) != NULL);
+    } while((localeID = locales->next(nullptr, errorCode)) != nullptr);
     uhash_close(prevLocales);
 }
 
@@ -984,9 +984,9 @@ UnicodeString CollationTest::printSortKey(const uint8_t *p, int32_t length) {
         if (i > 0) { s.append(static_cast<char16_t>(0x20)); }
         uint8_t b = p[i];
         if(b == 0) {
-            s.append((UChar)0x2e);  // period
+            s.append(static_cast<char16_t>(0x2e)); // period
         } else if(b == 1) {
-            s.append((UChar)0x7c);  // vertical bar
+            s.append(static_cast<char16_t>(0x7c)); // vertical bar
         } else {
             appendHex(b, 2, s);
         }
@@ -1003,15 +1003,15 @@ UnicodeString CollationTest::printCollationKey(const CollationKey &key) {
 UBool CollationTest::readNonEmptyLine(UCHARBUF *f, IcuTestErrorCode &errorCode) {
     for(;;) {
         int32_t lineLength;
-        const UChar *line = ucbuf_readline(f, &lineLength, errorCode);
-        if(line == NULL || errorCode.isFailure()) {
+        const char16_t *line = ucbuf_readline(f, &lineLength, errorCode);
+        if(line == nullptr || errorCode.isFailure()) {
             fileLine.remove();
             return false;
         }
         ++fileLineNumber;
         // Strip trailing CR/LF, comments, and spaces.
-        const UChar *comment = u_memchr(line, 0x23, lineLength);  // '#'
-        if(comment != NULL) {
+        const char16_t *comment = u_memchr(line, 0x23, lineLength);  // '#'
+        if(comment != nullptr) {
             lineLength = static_cast<int32_t>(comment - line);
         } else {
             while(lineLength > 0 && isCROrLF(line[lineLength - 1])) { --lineLength; }
@@ -1030,11 +1030,11 @@ void CollationTest::parseString(int32_t &start, UnicodeString &prefix, UnicodeSt
     int32_t length = fileLine.length();
     int32_t i;
     for(i = start; i < length && !isSpace(fileLine[i]); ++i) {}
-    int32_t pipeIndex = fileLine.indexOf((UChar)0x7c, start, i - start);  // '|'
+    int32_t pipeIndex = fileLine.indexOf(static_cast<char16_t>(0x7c), start, i - start); // '|'
     if(pipeIndex >= 0) {
         prefix = fileLine.tempSubStringBetween(start, pipeIndex).unescape();
         if(prefix.isEmpty()) {
-            errln("empty prefix on line %d", (int)fileLineNumber);
+            errln("empty prefix on line %d", static_cast<int>(fileLineNumber));
             infoln(fileLine);
             errorCode = U_PARSE_ERROR;
             return;
@@ -1045,7 +1045,7 @@ void CollationTest::parseString(int32_t &start, UnicodeString &prefix, UnicodeSt
     }
     s = fileLine.tempSubStringBetween(start, i).unescape();
     if(s.isEmpty()) {
-        errln("empty string on line %d", (int)fileLineNumber);
+        errln("empty string on line %d", static_cast<int>(fileLineNumber));
         infoln(fileLine);
         errorCode = U_PARSE_ERROR;
         return;
@@ -1057,7 +1057,7 @@ Collation::Level CollationTest::parseRelationAndString(UnicodeString &s, IcuTest
     Collation::Level relation;
     int32_t start;
     if(fileLine[0] == 0x3c) {  // <
-        UChar second = fileLine[1];
+        char16_t second = fileLine[1];
         start = 2;
         switch(second) {
         case 0x31:  // <1
@@ -1090,7 +1090,7 @@ Collation::Level CollationTest::parseRelationAndString(UnicodeString &s, IcuTest
         start = 0;
     }
     if(start == 0 || !isSpace(fileLine[start])) {
-        errln("no relation (= < <1 <2 <c <3 <4 <i) at beginning of line %d", (int)fileLineNumber);
+        errln("no relation (= < <1 <2 <c <3 <4 <i) at beginning of line %d", static_cast<int>(fileLineNumber));
         infoln(fileLine);
         errorCode.set(U_PARSE_ERROR);
         return Collation::NO_LEVEL;
@@ -1099,13 +1099,13 @@ Collation::Level CollationTest::parseRelationAndString(UnicodeString &s, IcuTest
     UnicodeString prefix;
     parseString(start, prefix, s, errorCode);
     if(errorCode.isSuccess() && !prefix.isEmpty()) {
-        errln("prefix string not allowed for test string: on line %d", (int)fileLineNumber);
+        errln("prefix string not allowed for test string: on line %d", static_cast<int>(fileLineNumber));
         infoln(fileLine);
         errorCode.set(U_PARSE_ERROR);
         return Collation::NO_LEVEL;
     }
     if(start < fileLine.length()) {
-        errln("unexpected line contents after test string on line %d", (int)fileLineNumber);
+        errln("unexpected line contents after test string on line %d", static_cast<int>(fileLineNumber));
         infoln(fileLine);
         errorCode.set(U_PARSE_ERROR);
         return Collation::NO_LEVEL;
@@ -1149,13 +1149,13 @@ void CollationTest::parseAndSetAttribute(IcuTestErrorCode &errorCode) {
     // Parse attributes even if the Collator could not be created,
     // in order to report syntax errors.
     int32_t start = skipSpaces(1);
-    int32_t equalPos = fileLine.indexOf((UChar)0x3d);
+    int32_t equalPos = fileLine.indexOf(static_cast<char16_t>(0x3d));
     if(equalPos < 0) {
         if(fileLine.compare(start, 7, UNICODE_STRING("reorder", 7)) == 0) {
             parseAndSetReorderCodes(start + 7, errorCode);
             return;
         }
-        errln("missing '=' on line %d", (int)fileLineNumber);
+        errln("missing '=' on line %d", static_cast<int>(fileLineNumber));
         infoln(fileLine);
         errorCode.set(U_PARSE_ERROR);
         return;
@@ -1174,16 +1174,16 @@ void CollationTest::parseAndSetAttribute(IcuTestErrorCode &errorCode) {
         } else if(valueString == UNICODE_STRING("currency", 8)) {
             max = UCOL_REORDER_CODE_CURRENCY;
         } else {
-            errln("invalid attribute value name on line %d", (int)fileLineNumber);
+            errln("invalid attribute value name on line %d", static_cast<int>(fileLineNumber));
             infoln(fileLine);
             errorCode.set(U_PARSE_ERROR);
             return;
         }
-        if(coll != NULL) {
+        if(coll != nullptr) {
             coll->setMaxVariable(max, errorCode);
             if(errorCode.isFailure()) {
                 errln("setMaxVariable() failed on line %d: %s",
-                      (int)fileLineNumber, errorCode.errorName());
+                      static_cast<int>(fileLineNumber), errorCode.errorName());
                 infoln(fileLine);
                 return;
             }
@@ -1195,7 +1195,7 @@ void CollationTest::parseAndSetAttribute(IcuTestErrorCode &errorCode) {
     UColAttribute attr;
     for(int32_t i = 0;; ++i) {
         if(i == UPRV_LENGTHOF(attributes)) {
-            errln("invalid attribute name on line %d", (int)fileLineNumber);
+            errln("invalid attribute name on line %d", static_cast<int>(fileLineNumber));
             infoln(fileLine);
             errorCode.set(U_PARSE_ERROR);
             return;
@@ -1209,7 +1209,7 @@ void CollationTest::parseAndSetAttribute(IcuTestErrorCode &errorCode) {
     UColAttributeValue value;
     for(int32_t i = 0;; ++i) {
         if(i == UPRV_LENGTHOF(attributeValues)) {
-            errln("invalid attribute value name on line %d", (int)fileLineNumber);
+            errln("invalid attribute value name on line %d", static_cast<int>(fileLineNumber));
             infoln(fileLine);
             errorCode.set(U_PARSE_ERROR);
             return;
@@ -1220,11 +1220,11 @@ void CollationTest::parseAndSetAttribute(IcuTestErrorCode &errorCode) {
         }
     }
 
-    if(coll != NULL) {
+    if(coll != nullptr) {
         coll->setAttribute(attr, value, errorCode);
         if(errorCode.isFailure()) {
             errln("illegal attribute=value combination on line %d: %s",
-                  (int)fileLineNumber, errorCode.errorName());
+                  static_cast<int>(fileLineNumber), errorCode.errorName());
             infoln(fileLine);
             return;
         }
@@ -1245,7 +1245,7 @@ void CollationTest::parseAndSetReorderCodes(int32_t start, IcuTestErrorCode &err
             if(uprv_stricmp(name.data(), "default") == 0) {
                 code = UCOL_REORDER_CODE_DEFAULT;  // -1
             } else {
-                errln("invalid reorder code '%s' on line %d", name.data(), (int)fileLineNumber);
+                errln("invalid reorder code '%s' on line %d", name.data(), static_cast<int>(fileLineNumber));
                 infoln(fileLine);
                 errorCode.set(U_PARSE_ERROR);
                 return;
@@ -1254,11 +1254,11 @@ void CollationTest::parseAndSetReorderCodes(int32_t start, IcuTestErrorCode &err
         reorderCodes.addElement(code, errorCode);
         start = limit;
     }
-    if(coll != NULL) {
+    if(coll != nullptr) {
         coll->setReorderCodes(reorderCodes.getBuffer(), reorderCodes.size(), errorCode);
         if(errorCode.isFailure()) {
             errln("setReorderCodes() failed on line %d: %s",
-                  (int)fileLineNumber, errorCode.errorName());
+                  static_cast<int>(fileLineNumber), errorCode.errorName());
             infoln(fileLine);
             return;
         }
@@ -1278,7 +1278,7 @@ void CollationTest::buildTailoring(UCHARBUF *f, IcuTestErrorCode &errorCode) {
     UnicodeString reason;
     delete coll;
     coll = new RuleBasedCollator(rules, parseError, reason, errorCode);
-    if(coll == NULL) {
+    if(coll == nullptr) {
         errln("unable to allocate a new collator");
         errorCode.set(U_MEMORY_ALLOCATION_ERROR);
         return;
@@ -1292,7 +1292,7 @@ void CollationTest::buildTailoring(UCHARBUF *f, IcuTestErrorCode &errorCode) {
                 parseError.preContext + "(!)" + parseError.postContext + "...");
         }
         delete coll;
-        coll = NULL;
+        coll = nullptr;
         errorCode.reset();
     } else {
         assertEquals("no error reason when RuleBasedCollator(rules) succeeds",
@@ -1313,10 +1313,10 @@ void CollationTest::setRootCollator(IcuTestErrorCode &errorCode) {
 void CollationTest::setLocaleCollator(IcuTestErrorCode &errorCode) {
     if(errorCode.isFailure()) { return; }
     delete coll;
-    coll = NULL;
-    int32_t at = fileLine.indexOf((UChar)0x40, 9);  // @ is not invariant
+    coll = nullptr;
+    int32_t at = fileLine.indexOf(static_cast<char16_t>(0x40), 9); // @ is not invariant
     if(at >= 0) {
-        fileLine.setCharAt(at, (UChar)0x2a);  // *
+        fileLine.setCharAt(at, static_cast<char16_t>(0x2a)); // *
     }
     CharString localeID;
     localeID.appendInvariantChars(fileLine.tempSubString(9), errorCode);
@@ -1325,7 +1325,7 @@ void CollationTest::setLocaleCollator(IcuTestErrorCode &errorCode) {
     }
     Locale locale(localeID.data());
     if(fileLine.length() == 9 || errorCode.isFailure() || locale.isBogus()) {
-        errln("invalid language tag on line %d", (int)fileLineNumber);
+        errln("invalid language tag on line %d", static_cast<int>(fileLineNumber));
         infoln(fileLine);
         if(errorCode.isSuccess()) { errorCode.set(U_PARSE_ERROR); }
         return;
@@ -1335,10 +1335,10 @@ void CollationTest::setLocaleCollator(IcuTestErrorCode &errorCode) {
     coll = Collator::createInstance(locale, errorCode);
     if(errorCode.isFailure()) {
         dataerrln("unable to create a collator for locale %s on line %d",
-                  locale.getName(), (int)fileLineNumber);
+                  locale.getName(), static_cast<int>(fileLineNumber));
         infoln(fileLine);
         delete coll;
-        coll = NULL;
+        coll = nullptr;
         errorCode.reset();
     }
 }
@@ -1352,14 +1352,14 @@ UBool CollationTest::needsNormalization(const UnicodeString &s, UErrorCode &erro
     int32_t index = 0;
     while ((index = s.indexOf(static_cast<char16_t>(0xf71), index)) >= 0) {
         if(++index < s.length()) {
-            UChar c = s[index];
+            char16_t c = s[index];
             if(c == 0xf73 || c == 0xf75 || c == 0xf81) { return true; }
         }
     }
     return false;
 }
 
-UBool CollationTest::getSortKeyParts(const UChar *s, int32_t length,
+UBool CollationTest::getSortKeyParts(const char16_t *s, int32_t length,
                                      CharString &dest, int32_t partSize,
                                      IcuTestErrorCode &errorCode) {
     if(errorCode.isFailure()) { return false; }
@@ -1383,7 +1383,7 @@ UBool CollationTest::getSortKeyParts(const UChar *s, int32_t length,
 }
 
 UBool CollationTest::getCollationKey(const char *norm, const UnicodeString &line,
-                                     const UChar *s, int32_t length,
+                                     const char16_t *s, int32_t length,
                                      CollationKey &key, IcuTestErrorCode &errorCode) {
     if(errorCode.isFailure()) { return false; }
     coll->getCollationKey(s, length, key, errorCode);
@@ -1430,7 +1430,7 @@ UBool CollationTest::getCollationKey(const char *norm, const UnicodeString &line
     if(numLevelSeparators != (numLevels - 1)) {
         infoln(fileTestName);
         errln("Collator(%s).getCollationKey() has %d level separators for %d levels",
-              norm, (int)numLevelSeparators, (int)numLevels);
+              norm, static_cast<int>(numLevelSeparators), static_cast<int>(numLevels));
         infoln(line);
         infoln(printCollationKey(key));
         return false;
@@ -1444,14 +1444,14 @@ UBool CollationTest::getCollationKey(const char *norm, const UnicodeString &line
         if(!getSortKeyParts(s, length, parts, 32, errorCode)) {
             infoln(fileTestName);
             errln("Collator(%s).internalNextSortKeyPart(%d) failed: %s",
-                  norm, (int)partSize, errorCode.errorName());
+                  norm, static_cast<int>(partSize), errorCode.errorName());
             infoln(line);
             return false;
         }
         if(keyLength != parts.length() || uprv_memcmp(keyBytes, parts.data(), keyLength) != 0) {
             infoln(fileTestName);
             errln("Collator(%s).getCollationKey() != internalNextSortKeyPart(%d)",
-                  norm, (int)partSize);
+                  norm, static_cast<int>(partSize));
             infoln(line);
             infoln(printCollationKey(key));
             infoln(printSortKey(reinterpret_cast<uint8_t *>(parts.data()), parts.length()));
@@ -1466,7 +1466,7 @@ UBool CollationTest::getCollationKey(const char *norm, const UnicodeString &line
  * Leaves key unchanged if s does not contain U+FFFE.
  * @return true if the key was successfully changed
  */
-UBool CollationTest::getMergedCollationKey(const UChar *s, int32_t length,
+UBool CollationTest::getMergedCollationKey(const char16_t *s, int32_t length,
                                            CollationKey &key, IcuTestErrorCode &errorCode) {
     if(errorCode.isFailure()) { return false; }
     LocalMemory<uint8_t> mergedKey;
@@ -1506,7 +1506,7 @@ UBool CollationTest::getMergedCollationKey(const UChar *s, int32_t length,
             }
             dest = mergedKey.allocateInsteadAndReset(mergedKeyCapacity);
         }
-        U_ASSERT(dest != NULL || mergedKeyCapacity == 0);
+        U_ASSERT(dest != nullptr || mergedKeyCapacity == 0);
         if(key1Length == 0) {
             // key2 is the sort key for the first segment.
             uprv_memcpy(dest, key2Bytes, key2Length);
@@ -1537,7 +1537,7 @@ const UnicodeString &surrogatesToFFFD(const UnicodeString &s, UnicodeString &buf
             if(buffer.length() < i) {
                 buffer.append(s, buffer.length(), i - buffer.length());
             }
-            buffer.append((UChar)0xfffd);
+            buffer.append(static_cast<char16_t>(0xfffd));
         }
         i += U16_LENGTH(c);
     }
@@ -1594,7 +1594,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
     if(order != expectedOrder || errorCode.isFailure()) {
         infoln(fileTestName);
         errln("line %d Collator(%s).compare(previous, current) wrong order: %d != %d (%s)",
-              (int)fileLineNumber, norm, order, expectedOrder, errorCode.errorName());
+              static_cast<int>(fileLineNumber), norm, order, expectedOrder, errorCode.errorName());
         infoln(prevFileLine);
         infoln(fileLine);
         infoln(printCollationKey(prevKey));
@@ -1605,7 +1605,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
     if(order != -expectedOrder || errorCode.isFailure()) {
         infoln(fileTestName);
         errln("line %d Collator(%s).compare(current, previous) wrong order: %d != %d (%s)",
-              (int)fileLineNumber, norm, order, -expectedOrder, errorCode.errorName());
+              static_cast<int>(fileLineNumber), norm, order, -expectedOrder, errorCode.errorName());
         infoln(prevFileLine);
         infoln(fileLine);
         infoln(printCollationKey(prevKey));
@@ -1613,13 +1613,13 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
         return false;
     }
     // Test NUL-termination if the strings do not contain NUL characters.
-    UBool containNUL = prevString.indexOf((UChar)0) >= 0 || s.indexOf((UChar)0) >= 0;
+    UBool containNUL = prevString.indexOf(static_cast<char16_t>(0)) >= 0 || s.indexOf(static_cast<char16_t>(0)) >= 0;
     if(!containNUL) {
         order = coll->compare(prevString.getBuffer(), -1, s.getBuffer(), -1, errorCode);
         if(order != expectedOrder || errorCode.isFailure()) {
             infoln(fileTestName);
             errln("line %d Collator(%s).compare(previous-NUL, current-NUL) wrong order: %d != %d (%s)",
-                  (int)fileLineNumber, norm, order, expectedOrder, errorCode.errorName());
+                  static_cast<int>(fileLineNumber), norm, order, expectedOrder, errorCode.errorName());
             infoln(prevFileLine);
             infoln(fileLine);
             infoln(printCollationKey(prevKey));
@@ -1630,7 +1630,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
         if(order != -expectedOrder || errorCode.isFailure()) {
             infoln(fileTestName);
             errln("line %d Collator(%s).compare(current-NUL, previous-NUL) wrong order: %d != %d (%s)",
-                  (int)fileLineNumber, norm, order, -expectedOrder, errorCode.errorName());
+                  static_cast<int>(fileLineNumber), norm, order, -expectedOrder, errorCode.errorName());
             infoln(prevFileLine);
             infoln(fileLine);
             infoln(printCollationKey(prevKey));
@@ -1660,7 +1660,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
     if(order != expectedUTF8Order || errorCode.isFailure()) {
         infoln(fileTestName);
         errln("line %d Collator(%s).compareUTF8(previous, current) wrong order: %d != %d (%s)",
-              (int)fileLineNumber, norm, order, expectedUTF8Order, errorCode.errorName());
+              static_cast<int>(fileLineNumber), norm, order, expectedUTF8Order, errorCode.errorName());
         infoln(prevFileLine);
         infoln(fileLine);
         infoln(printCollationKey(prevKey));
@@ -1671,7 +1671,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
     if(order != -expectedUTF8Order || errorCode.isFailure()) {
         infoln(fileTestName);
         errln("line %d Collator(%s).compareUTF8(current, previous) wrong order: %d != %d (%s)",
-              (int)fileLineNumber, norm, order, -expectedUTF8Order, errorCode.errorName());
+              static_cast<int>(fileLineNumber), norm, order, -expectedUTF8Order, errorCode.errorName());
         infoln(prevFileLine);
         infoln(fileLine);
         infoln(printCollationKey(prevKey));
@@ -1684,7 +1684,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
         if(order != expectedUTF8Order || errorCode.isFailure()) {
             infoln(fileTestName);
             errln("line %d Collator(%s).internalCompareUTF8(previous-NUL, current-NUL) wrong order: %d != %d (%s)",
-                  (int)fileLineNumber, norm, order, expectedUTF8Order, errorCode.errorName());
+                  static_cast<int>(fileLineNumber), norm, order, expectedUTF8Order, errorCode.errorName());
             infoln(prevFileLine);
             infoln(fileLine);
             infoln(printCollationKey(prevKey));
@@ -1695,7 +1695,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
         if(order != -expectedUTF8Order || errorCode.isFailure()) {
             infoln(fileTestName);
             errln("line %d Collator(%s).internalCompareUTF8(current-NUL, previous-NUL) wrong order: %d != %d (%s)",
-                  (int)fileLineNumber, norm, order, -expectedUTF8Order, errorCode.errorName());
+                  static_cast<int>(fileLineNumber), norm, order, -expectedUTF8Order, errorCode.errorName());
             infoln(prevFileLine);
             infoln(fileLine);
             infoln(printCollationKey(prevKey));
@@ -1713,7 +1713,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
         infoln(fileTestName);
         errln("line %d Collator(%s).compare(UCharIterator: previous, current) "
               "wrong order: %d != %d (%s)",
-              (int)fileLineNumber, norm, order, expectedOrder, errorCode.errorName());
+              static_cast<int>(fileLineNumber), norm, order, expectedOrder, errorCode.errorName());
         infoln(prevFileLine);
         infoln(fileLine);
         infoln(printCollationKey(prevKey));
@@ -1725,7 +1725,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
     if(order != expectedOrder || errorCode.isFailure()) {
         infoln(fileTestName);
         errln("line %d Collator(%s).getCollationKey(previous, current).compareTo() wrong order: %d != %d (%s)",
-              (int)fileLineNumber, norm, order, expectedOrder, errorCode.errorName());
+              static_cast<int>(fileLineNumber), norm, order, expectedOrder, errorCode.errorName());
         infoln(prevFileLine);
         infoln(fileLine);
         infoln(printCollationKey(prevKey));
@@ -1738,7 +1738,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
         if(level != expectedLevel) {
             infoln(fileTestName);
             errln("line %d Collator(%s).getCollationKey(previous, current).compareTo()=%d wrong level: %d != %d",
-                  (int)fileLineNumber, norm, order, level, expectedLevel);
+                  static_cast<int>(fileLineNumber), norm, order, level, expectedLevel);
             infoln(prevFileLine);
             infoln(fileLine);
             infoln(printCollationKey(prevKey));
@@ -1763,7 +1763,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
             infoln(fileTestName);
             errln("line %d ucol_mergeSortkeys(Collator(%s).getCollationKey"
                 "(previous, current segments between U+FFFE)).compareTo() wrong order: %d != %d (%s)",
-                (int)fileLineNumber, norm, order, expectedOrder, errorCode.errorName());
+                static_cast<int>(fileLineNumber), norm, order, expectedOrder, errorCode.errorName());
             infoln(prevFileLine);
             infoln(fileLine);
             infoln(printCollationKey(prevKey));
@@ -1776,7 +1776,7 @@ UBool CollationTest::checkCompareTwo(const char *norm, const UnicodeString &prev
                 infoln(fileTestName);
                 errln("line %d ucol_mergeSortkeys(Collator(%s).getCollationKey"
                     "(previous, current segments between U+FFFE)).compareTo()=%d wrong level: %d != %d",
-                    (int)fileLineNumber, norm, order, mergedLevel, level);
+                    static_cast<int>(fileLineNumber), norm, order, mergedLevel, level);
                 infoln(prevFileLine);
                 infoln(fileLine);
                 infoln(printCollationKey(prevKey));
@@ -1801,7 +1801,7 @@ void CollationTest::checkCompareStrings(UCHARBUF *f, IcuTestErrorCode &errorCode
             errorCode.reset();
             break;
         }
-        if(coll == NULL) {
+        if(coll == nullptr) {
             // We were unable to create the Collator but continue with tests.
             // Ignore test data for this Collator.
             // The next Collator creation might work.
@@ -1859,7 +1859,7 @@ void CollationTest::TestDataDriven() {
     // Sub-parsers leave the first line set that they do not handle.
     while(errorCode.isSuccess() && (!fileLine.isEmpty() || readNonEmptyLine(f.getAlias(), errorCode))) {
         if(!isSectionStarter(fileLine[0])) {
-            errln("syntax error on line %d", (int)fileLineNumber);
+            errln("syntax error on line %d", static_cast<int>(fileLineNumber));
             infoln(fileLine);
             return;
         }
@@ -1880,7 +1880,7 @@ void CollationTest::TestDataDriven() {
         } else if(fileLine == UNICODE_STRING("* compare", 9)) {
             checkCompareStrings(f.getAlias(), errorCode);
         } else {
-            errln("syntax error on line %d", (int)fileLineNumber);
+            errln("syntax error on line %d", static_cast<int>(fileLineNumber));
             infoln(fileLine);
             return;
         }

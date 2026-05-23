@@ -48,25 +48,25 @@ TransliterationRuleData::TransliterationRuleData(const TransliterationRuleData& 
     const UHashElement *e;
     while ((e = other.variableNames.nextElement(pos)) != nullptr) {
         UnicodeString* value =
-            new UnicodeString(*(const UnicodeString*)e->value.pointer);
+            new UnicodeString(*static_cast<const UnicodeString*>(e->value.pointer));
         // Exit out if value could not be created.
-        if (value == NULL) {
+        if (value == nullptr) {
         	return;
         }
-        variableNames.put(*(UnicodeString*)e->key.pointer, value, status);
+        variableNames.put(*static_cast<UnicodeString*>(e->key.pointer), value, status);
     }
 
     variables = nullptr;
     if (other.variables != nullptr) {
-        variables = (UnicodeFunctor **)uprv_malloc(variablesLength * sizeof(UnicodeFunctor *));
-        /* test for NULL */
+        variables = static_cast<UnicodeFunctor**>(uprv_malloc(variablesLength * sizeof(UnicodeFunctor*)));
+        /* test for nullptr */
         if (variables == nullptr) {
             status = U_MEMORY_ALLOCATION_ERROR;
             return;
         }
         for (i=0; i<variablesLength; ++i) {
             variables[i] = other.variables[i]->clone();
-            if (variables[i] == NULL) {
+            if (variables[i] == nullptr) {
                 status = U_MEMORY_ALLOCATION_ERROR;
                 break;
             }
@@ -78,7 +78,7 @@ TransliterationRuleData::TransliterationRuleData(const TransliterationRuleData& 
             delete variables[n];
         }
         uprv_free(variables);
-        variables = NULL;
+        variables = nullptr;
         return;
     }
 

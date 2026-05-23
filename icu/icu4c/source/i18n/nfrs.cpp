@@ -118,17 +118,17 @@ util_lcm(int64_t x, int64_t y)
 }
 #endif
 
-static const UChar gPercent = 0x0025;
-static const UChar gColon = 0x003a;
-static const UChar gSemicolon = 0x003b;
-static const UChar gLineFeed = 0x000a;
+static const char16_t gPercent = 0x0025;
+static const char16_t gColon = 0x003a;
+static const char16_t gSemicolon = 0x003b;
+static const char16_t gLineFeed = 0x000a;
 
-static const UChar gPercentPercent[] =
+static const char16_t gPercentPercent[] =
 {
     0x25, 0x25, 0
 }; /* "%%" */
 
-static const UChar gNoparse[] =
+static const char16_t gNoparse[] =
 {
     0x40, 0x6E, 0x6F, 0x70, 0x61, 0x72, 0x73, 0x65, 0
 }; /* "@noparse" */
@@ -143,7 +143,7 @@ NFRuleSet::NFRuleSet(RuleBasedNumberFormat *_owner, UnicodeString* descriptions,
   , fIsParseable(true)
 {
     for (int32_t i = 0; i < NON_NUMERICAL_RULE_LENGTH; ++i) {
-        nonNumericalRules[i] = NULL;
+        nonNumericalRules[i] = nullptr;
     }
 
     if (U_FAILURE(status)) {
@@ -320,7 +320,7 @@ void NFRuleSet::setBestFractionRule(int32_t originalIndex, NFRule *newRule, UBoo
         fractionRules.add(newRule);
     }
     NFRule *bestResult = nonNumericalRules[originalIndex];
-    if (bestResult == NULL) {
+    if (bestResult == nullptr) {
         nonNumericalRules[originalIndex] = newRule;
     }
     else {
@@ -507,7 +507,7 @@ NFRuleSet::findNormalRule(int64_t number) const
     // to find the rule (we should only go into this clause if the
     // value is 0)
     if (fIsFractionRuleSet) {
-        return findFractionRuleSetRule((double)number);
+        return findFractionRuleSetRule(static_cast<double>(number));
     }
 
     // if the number is negative, return the negative-number rule
@@ -552,7 +552,7 @@ NFRuleSet::findNormalRule(int64_t number) const
             }
         }
         if (hi == 0) { // bad rule set, minimum base > 0
-            return NULL; // want to throw exception here
+            return nullptr; // want to throw exception here
         }
 
         NFRule *result = rules[hi - 1];
@@ -564,7 +564,7 @@ NFRuleSet::findNormalRule(int64_t number) const
         // return
         if (result->shouldRollBack(number)) {
             if (hi == 1) { // bad rule set, no prior rule to rollback to from this base
-                return NULL;
+                return nullptr;
             }
             result = rules[hi - 2];
         }
@@ -607,7 +607,7 @@ NFRuleSet::findFractionRuleSetRule(double number) const
         for (uint32_t i = 1; i < rules.size(); ++i) {
             leastCommonMultiple = util_lcm(leastCommonMultiple, rules[i]->getBaseValue());
         }
-        numerator = util64_fromDouble(number * (double)leastCommonMultiple + 0.5);
+        numerator = util64_fromDouble(number * static_cast<double>(leastCommonMultiple) + 0.5);
     }
     // for each rule, do the following...
     int64_t tempDifference;
@@ -688,7 +688,7 @@ NFRuleSet::findFractionRuleSetRule(double number) const
 static void dumpUS(FILE* f, const UnicodeString& us) {
   int len = us.length();
   char* buf = (char *)uprv_malloc((len+1)*sizeof(char)); //new char[len+1];
-  if (buf != NULL) {
+  if (buf != nullptr) {
 	  us.extract(0, len, buf);
 	  buf[len] = 0;
 	  fprintf(f, "%s", buf);
@@ -848,7 +848,7 @@ int64_t util64_fromDouble(double d) {
         if (neg) {
             d = -d;
         }
-        result = (int64_t)uprv_floor(d);
+        result = static_cast<int64_t>(uprv_floor(d));
         if (neg) {
             result = -result;
         }
@@ -883,7 +883,7 @@ static const uint8_t asciiDigits[] = {
     0x77u, 0x78u, 0x79u, 0x7au,  
 };
 
-static const UChar kUMinus = (UChar)0x002d;
+static const char16_t kUMinus = static_cast<char16_t>(0x002d);
 
 #ifdef RBNF_DEBUG
 static const char kMinus = '-';
@@ -933,7 +933,7 @@ int64_t util64_atoi(const char* str, uint32_t radix)
     return result;
 }
 
-int64_t util64_utoi(const UChar* str, uint32_t radix)
+int64_t util64_utoi(const char16_t* str, uint32_t radix)
 {
     if (radix > 36) {
         radix = 36;
@@ -948,7 +948,7 @@ int64_t util64_utoi(const UChar* str, uint32_t radix)
         neg = 1;
     }
     int64_t result = 0;
-    UChar c;
+    char16_t c;
     uint8_t b;
     while (((c = *str++) < 0x0080) && (b = digitInfo[c]) && ((b &= 0x7f) < radix)) {
         result *= lradix;
@@ -1006,7 +1006,7 @@ uint32_t util64_toa(int64_t w, char* buf, uint32_t len, uint32_t radix, UBool ra
 }
 #endif
 
-uint32_t util64_tou(int64_t w, UChar* buf, uint32_t len, uint32_t radix, UBool raw)
+uint32_t util64_tou(int64_t w, char16_t* buf, uint32_t len, uint32_t radix, UBool raw)
 {    
     if (radix > 36) {
         radix = 36;
@@ -1015,13 +1015,13 @@ uint32_t util64_tou(int64_t w, UChar* buf, uint32_t len, uint32_t radix, UBool r
     }
     int64_t base = radix;
 
-    UChar* p = buf;
+    char16_t* p = buf;
     if (len && (w < 0) && (radix == 10) && !raw) {
         w = -w;
         *p++ = kUMinus;
         --len;
     } else if (len && (w == 0)) {
-        *p++ = (UChar)raw ? 0 : asciiDigits[0];
+        *p++ = static_cast<char16_t>(raw) ? 0 : asciiDigits[0];
         --len;
     }
 
@@ -1042,7 +1042,7 @@ uint32_t util64_tou(int64_t w, UChar* buf, uint32_t len, uint32_t radix, UBool r
         ++buf;
     }
     while (--p > buf) {
-        UChar c = *p;
+        char16_t c = *p;
         *p = *buf;
         *buf = c;
         ++buf;

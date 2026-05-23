@@ -48,7 +48,7 @@ CollationIteratorTest::~CollationIteratorTest()
 void CollationIteratorTest::TestUnicodeChar()
 {
     CollationElementIterator *iter;
-    UChar codepoint;
+    char16_t codepoint;
     UnicodeString source;
     
     for (codepoint = 1; codepoint < 0xFFFE;)
@@ -92,11 +92,11 @@ void CollationIteratorTest::TestPrevious(/* char* par */)
 
     // Test with a contracting character sequence
     UnicodeString source;
-    RuleBasedCollator *c1 = NULL;
+    RuleBasedCollator *c1 = nullptr;
     c1 = new RuleBasedCollator(
         UnicodeString("&a,A < b,B < c,C, d,D < z,Z < ch,cH,Ch,CH"), status);
 
-    if (c1 == NULL || U_FAILURE(status))
+    if (c1 == nullptr || U_FAILURE(status))
     {
         errln("Couldn't create a RuleBasedCollator with a contracting sequence.");
         delete c1;
@@ -110,10 +110,10 @@ void CollationIteratorTest::TestPrevious(/* char* par */)
     delete c1;
 
     // Test with an expanding character sequence
-    RuleBasedCollator *c2 = NULL;
+    RuleBasedCollator *c2 = nullptr;
     c2 = new RuleBasedCollator(UnicodeString("&a < b < c/abd < d"), status);
 
-    if (c2 == NULL || U_FAILURE(status))
+    if (c2 == nullptr || U_FAILURE(status))
     {
         errln("Couldn't create a RuleBasedCollator with an expanding sequence.");
         delete c2;
@@ -127,10 +127,10 @@ void CollationIteratorTest::TestPrevious(/* char* par */)
     delete c2;
 
     // Now try both
-    RuleBasedCollator *c3 = NULL;
+    RuleBasedCollator *c3 = nullptr;
     c3 = new RuleBasedCollator(UnicodeString("&a < b < c/aba < d < z < ch"), status);
 
-    if (c3 == NULL || U_FAILURE(status))
+    if (c3 == nullptr || U_FAILURE(status))
     {
         errln("Couldn't create a RuleBasedCollator with both an expanding and a contracting sequence.");
         delete c3;
@@ -329,13 +329,13 @@ void CollationIteratorTest::TestSetText(/* char* par */)
     UnicodeString empty("");
     iter1->setText(empty, status);
     if (U_FAILURE(status) 
-        || iter1->next(status) != (int32_t)CollationElementIterator::NULLORDER) {
+        || iter1->next(status) != static_cast<int32_t>(CollationElementIterator::NULLORDER)) {
         errln("Empty string should have no CEs.");
     }
     (dynamic_cast<StringCharacterIterator*>(chariter))->setText(empty);
     iter1->setText(*chariter, status);
     if (U_FAILURE(status) 
-        || iter1->next(status) != (int32_t)CollationElementIterator::NULLORDER) {
+        || iter1->next(status) != static_cast<int32_t>(CollationElementIterator::NULLORDER)) {
         errln("Empty string should have no CEs.");
     }
     delete chariter;
@@ -351,7 +351,7 @@ void CollationIteratorTest::TestMaxExpansion(/* char* par */)
     UErrorCode          status = U_ZERO_ERROR; 
     UnicodeString rule("&a < ab < c/aba < d < z < ch");
     RuleBasedCollator  *coll   = new RuleBasedCollator(rule, status);
-    UChar               ch     = 0;
+    char16_t            ch     = 0;
     UnicodeString       str(ch);
 
     CollationElementIterator *iter   = coll->createCollationElementIterator(str);
@@ -369,7 +369,7 @@ void CollationIteratorTest::TestMaxExpansion(/* char* par */)
             order = iter->previous(status);
 
         while (U_SUCCESS(status)
-            && iter->previous(status) != (int32_t)CollationElementIterator::NULLORDER)
+            && iter->previous(status) != static_cast<int32_t>(CollationElementIterator::NULLORDER))
         {
             count ++; 
         }
@@ -392,7 +392,7 @@ void CollationIteratorTest::TestClearBuffers(/* char* par */)
     UErrorCode status = U_ZERO_ERROR;
     RuleBasedCollator* c = new RuleBasedCollator(UnicodeString("&a < b < c & ab = d"), status);
 
-    if (c == NULL || U_FAILURE(status))
+    if (c == nullptr || U_FAILURE(status))
     {
         errln("Couldn't create a RuleBasedCollator.");
         delete c;
@@ -461,7 +461,7 @@ void CollationIteratorTest::TestAssignment()
     RuleBasedCollator *coll = 
         dynamic_cast<RuleBasedCollator*>(Collator::createInstance(status));
 
-    if (coll == NULL || U_FAILURE(status))
+    if (coll == nullptr || U_FAILURE(status))
     {
         errln("Couldn't create a default collator.");
         return;
@@ -544,7 +544,7 @@ void CollationIteratorTest::TestConstructors()
     UErrorCode status = U_ZERO_ERROR;
     RuleBasedCollator *coll = 
         dynamic_cast<RuleBasedCollator*>(Collator::createInstance(status));
-    if (coll == NULL || U_FAILURE(status))
+    if (coll == nullptr || U_FAILURE(status))
     {
         errln("Couldn't create a default collator.");
         return;
@@ -580,10 +580,10 @@ void CollationIteratorTest::TestConstructors()
         || *iter2 != *iter1) {
         errln("CollationElementIterators constructed with the same string data should be the same at the start");
     } 
-    if (iter1->next(status) != (int32_t)CollationElementIterator::NULLORDER) {
+    if (iter1->next(status) != static_cast<int32_t>(CollationElementIterator::NULLORDER)) {
         errln("Empty string should have no CEs.");
     }
-    if (iter2->next(status) != (int32_t)CollationElementIterator::NULLORDER) {
+    if (iter2->next(status) != static_cast<int32_t>(CollationElementIterator::NULLORDER)) {
         errln("Empty string should have no CEs.");
     }
     delete iter1;
@@ -601,7 +601,7 @@ void CollationIteratorTest::TestStrengthOrder()
     UErrorCode status = U_ZERO_ERROR;
     RuleBasedCollator *coll = 
         dynamic_cast<RuleBasedCollator*>(Collator::createInstance(status));
-    if (coll == NULL || U_FAILURE(status))
+    if (coll == nullptr || U_FAILURE(status))
     {
         errln("Couldn't create a default collator.");
         return;
@@ -611,7 +611,7 @@ void CollationIteratorTest::TestStrengthOrder()
     CollationElementIterator *iter = 
         coll->createCollationElementIterator(test1);
 
-    if (iter == NULL) {
+    if (iter == nullptr) {
         errln("Couldn't create a collation element iterator from default collator");
         return;
     }

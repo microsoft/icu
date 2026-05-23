@@ -25,9 +25,9 @@ class MutablePatternModifier;
 // Exported as U_I18N_API_CLASS because it is needed for the unit test PatternModifierTest
 class U_I18N_API_CLASS ImmutablePatternModifier : public MicroPropsGenerator, public UMemory {
   public:
-    ~ImmutablePatternModifier() U_OVERRIDE = default;
+    ~ImmutablePatternModifier() override = default;
 
-    void processQuantity(DecimalQuantity&, MicroProps& micros, UErrorCode& status) const U_OVERRIDE;
+    void processQuantity(DecimalQuantity&, MicroProps& micros, UErrorCode& status) const override;
 
     U_I18N_API void applyToMicros(MicroProps& micros,
                                   const DecimalQuantity& quantity,
@@ -74,7 +74,7 @@ class U_I18N_API_CLASS MutablePatternModifier
           public UMemory {
   public:
 
-    ~MutablePatternModifier() U_OVERRIDE = default;
+    ~MutablePatternModifier() override = default;
 
     /**
      * @param isStrong
@@ -167,24 +167,24 @@ class U_I18N_API_CLASS MutablePatternModifier
                                     UErrorCode &status) const override;
 
     U_I18N_API int32_t apply(FormattedStringBuilder &output, int32_t leftIndex, int32_t rightIndex,
-                  UErrorCode &status) const U_OVERRIDE;
+                             UErrorCode &status) const override;
 
-    int32_t getPrefixLength() const U_OVERRIDE;
+    int32_t getPrefixLength() const override;
 
-    int32_t getCodePointCount() const U_OVERRIDE;
+    int32_t getCodePointCount() const override;
 
-    bool isStrong() const U_OVERRIDE;
+    bool isStrong() const override;
 
-    bool containsField(Field field) const U_OVERRIDE;
+    bool containsField(Field field) const override;
 
-    void getParameters(Parameters& output) const U_OVERRIDE;
+    void getParameters(Parameters& output) const override;
 
     bool strictEquals(const Modifier& other) const override;
 
     /**
      * Returns the string that substitutes a given symbol type in a pattern.
      */
-    UnicodeString getSymbol(AffixPatternType type) const U_OVERRIDE;
+    UnicodeString getSymbol(AffixPatternType type) const override;
 
     /**
      * Returns the currency symbol for the unit width specified in setSymbols()

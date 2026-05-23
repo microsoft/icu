@@ -43,7 +43,7 @@ class UsagePrefsHandler : public MicroPropsGenerator, public UMemory {
      * micros.outputUnit.
      */
     void processQuantity(DecimalQuantity &quantity, MicroProps &micros,
-                         UErrorCode &status) const U_OVERRIDE;
+                         UErrorCode &status) const override;
 
     /**
      * Returns the list of possible output units, i.e. the full set of
@@ -85,7 +85,7 @@ class UnitConversionHandler : public MicroPropsGenerator, public UMemory {
      * Obtains the appropriate output values from the Unit Converter.
      */
     void processQuantity(DecimalQuantity &quantity, MicroProps &micros,
-                         UErrorCode &status) const U_OVERRIDE;
+                         UErrorCode &status) const override;
   private:
     MeasureUnit fOutputUnit;
     LocalPointer<ComplexUnitsConverter> fUnitConverter;

@@ -117,7 +117,7 @@ class ExternalBreakEngine : public UObject {
  *
  * <p>This class is not intended to be subclassed.</p>
  */
-class U_COMMON_API RuleBasedBreakIterator /*U_FINAL*/ : public BreakIterator {
+class U_COMMON_API RuleBasedBreakIterator /*final*/ : public BreakIterator {
 
 private:
     /**
@@ -379,14 +379,14 @@ public:
      * @return A hash code
      *  @stable ICU 2.0
      */
-    virtual int32_t hashCode(void) const;
+    virtual int32_t hashCode() const;
 
     /**
      * Returns the description used to create this iterator
      * @return the description used to create this iterator
      *  @stable ICU 2.0
      */
-    virtual const UnicodeString& getRules(void) const;
+    virtual const UnicodeString& getRules() const;
 
     //=======================================================================
     // BreakIterator overrides
@@ -425,7 +425,7 @@ public:
       *  access the text without impacting any break iterator operations,
       *  but the underlying text itself must not be altered.
       *
-      * @param fillIn A UText to be filled in.  If NULL, a new UText will be
+      * @param fillIn A UText to be filled in.  If nullptr, a new UText will be
       *           allocated to hold the result.
       * @param status receives any error codes.
       * @return   The current UText for this break iterator.  If an input
@@ -476,14 +476,14 @@ public:
      * @return The offset of the beginning of the text, zero.
      *  @stable ICU 2.0
      */
-    virtual int32_t first(void) override;
+    virtual int32_t first() override;
 
     /**
      * Sets the current iteration position to the end of the text.
      * @return The text's past-the-end offset.
      *  @stable ICU 2.0
      */
-    virtual int32_t last(void) override;
+    virtual int32_t last() override;
 
     /**
      * Advances the iterator either forward or backward the specified number of steps.
@@ -502,14 +502,14 @@ public:
      * @return The position of the first boundary after this one.
      *  @stable ICU 2.0
      */
-    virtual int32_t next(void) override;
+    virtual int32_t next() override;
 
     /**
      * Moves the iterator backwards, to the last boundary preceding this one.
      * @return The position of the last boundary position preceding this one.
      *  @stable ICU 2.0
      */
-    virtual int32_t previous(void) override;
+    virtual int32_t previous() override;
 
     /**
      * Sets the iterator to refer to the first boundary position following
@@ -618,7 +618,7 @@ public:
      *                  other classes have different class IDs.
      * @stable ICU 2.0
      */
-    virtual UClassID getDynamicClassID(void) const override;
+    virtual UClassID getDynamicClassID() const override;
 
     /**
      * Returns the class ID for this class.  This is useful only for
@@ -631,7 +631,7 @@ public:
      * @return          The class ID for all objects of this class.
      * @stable ICU 2.0
      */
-    static UClassID U_EXPORT2 getStaticClassID(void);
+    static UClassID U_EXPORT2 getStaticClassID();
 
 #ifndef U_FORCE_HIDE_DEPRECATED_API
     /**
@@ -644,7 +644,7 @@ public:
      *  tricky.  Use clone() instead.
      *
      * @param stackBuffer  The pointer to the memory into which the cloned object
-     *                     should be placed.  If NULL,  allocate heap memory
+     *                     should be placed.  If nullptr,  allocate heap memory
      *                     for the cloned object.
      * @param BufferSize   The size of the buffer.  If zero, return the required
      *                     buffer size, but do not clone the object.  If the

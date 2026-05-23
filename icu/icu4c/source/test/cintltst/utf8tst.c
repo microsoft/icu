@@ -125,7 +125,7 @@ addUTF8Test(TestNode** root)
     addTest(root, &TestLengthFromLeadByte,      "utf8tst/TestLengthFromLeadByte");
 }
 
-static void TestCodeUnitValues()
+static void TestCodeUnitValues(void)
 {
     static const uint8_t codeunit[]={0x00, 0x65, 0x7e, 0x7f, 0xc2, 0xc4, 0xf0, 0xf4, 0x80, 0x81, 0xbc, 0xbe,};
 
@@ -164,7 +164,7 @@ static void TestCodeUnitValues()
     }
 }
 
-static void TestCharLength()
+static void TestCharLength(void)
 {
     static const uint32_t codepoint[]={
         1, 0x0061,
@@ -207,7 +207,7 @@ static void TestCharLength()
     }
 }
 
-static void TestGetChar()
+static void TestGetChar(void)
 {
     static const uint8_t input[]={
     /*  code unit,*/
@@ -293,7 +293,7 @@ static void TestGetChar()
     }
 }
 
-static void TestNextPrevChar() {
+static void TestNextPrevChar(void) {
     static const uint8_t input[]={
         0x61,
         0xf0, 0x90, 0x90, 0x81,
@@ -452,7 +452,7 @@ static void TestNextPrevChar() {
 }
 
 /* keep this in sync with utf16tst.c's TestNulTerminated() */
-static void TestNulTerminated() {
+static void TestNulTerminated(void) {
     static const uint8_t input[]={
         /*  0 */  0x61,
         /*  1 */  0xf0, 0x90, 0x90, 0x81,
@@ -546,7 +546,7 @@ static void TestNulTerminated() {
     } while(c!=0);
 }
 
-static void TestNextPrevNonCharacters() {
+static void TestNextPrevNonCharacters(void) {
     /* test non-characters */
     static const uint8_t nonChars[]={
         0xef, 0xb7, 0x90,       /* U+fdd0 */
@@ -589,7 +589,7 @@ static void TestNextPrevNonCharacters() {
 #endif
 }
 
-static void TestNextPrevCharUnsafe() {
+static void TestNextPrevCharUnsafe(void) {
     /*
      * Use a (mostly) well-formed UTF-8 string and test at code point boundaries.
      * The behavior of _UNSAFE macros for ill-formed strings is undefined.
@@ -659,7 +659,7 @@ static void TestNextPrevCharUnsafe() {
     }
 }
 
-static void TestFwdBack() {
+static void TestFwdBack(void) {
     static const uint8_t input[]={
         0x61,
         0xF0, 0x90, 0x90, 0x81,
@@ -771,7 +771,7 @@ static void TestFwdBack() {
 #pragma optimize( "", off )
 #endif
 
-static void TestFwdBackUnsafe() {
+static void TestFwdBackUnsafe(void) {
     /*
      * Use a (mostly) well-formed UTF-8 string and test at code point boundaries.
      * The behavior of _UNSAFE macros for ill-formed strings is undefined.
@@ -861,7 +861,7 @@ static void TestFwdBackUnsafe() {
 #pragma optimize( "", on )
 #endif
 
-static void TestSetChar() {
+static void TestSetChar(void) {
     static const uint8_t input[]
         = {0x61, 0xe4, 0xba, 0x8c, 0x7f, 0xfe, 0x62, 0xc5, 0x7f, 0x61, 0x80, 0x80, 0xe0, 0x00 };
     static const int16_t start_safe[]
@@ -903,7 +903,7 @@ static void TestSetChar() {
     }
 }
 
-static void TestSetCharUnsafe() {
+static void TestSetCharUnsafe(void) {
     static const uint8_t input[]
         = {0x61, 0xe4, 0xba, 0x8c, 0x7f, 0x2e, 0x62, 0xc5, 0x7f, 0x61, 0x80, 0x80, 0xe0, 0x80, 0x80, 0x00 };
     static const int16_t start_unsafe[]
@@ -948,7 +948,7 @@ static void TestSetCharUnsafe() {
     }
 }
 
-static void TestTruncateIfIncomplete() {
+static void TestTruncateIfIncomplete(void) {
     // Difference from U8_SET_CP_START():
     // U8_TRUNCATE_IF_INCOMPLETE() does not look at s[length].
     // Therefore, if the last byte is a lead byte, then this macro truncates
@@ -1006,7 +1006,7 @@ static void TestTruncateIfIncomplete() {
     }
 }
 
-static void TestAppendChar(){
+static void TestAppendChar(void){
 #if !U_HIDE_OBSOLETE_UTF_OLD_H
     static const uint8_t s[11]={0x61, 0x62, 0x63, 0x64, 0x65, 0x66, 0x67, 0x68, 0x69, 0x6a, 0x00};
     static const uint32_t test[]={
@@ -1175,7 +1175,7 @@ static void TestAppendChar(){
 #endif
 }
 
-static void TestAppend() {
+static void TestAppend(void) {
     static const UChar32 codePoints[]={
         0x61, 0xdf, 0x901, 0x3040,
         0xac00, 0xd800, 0xdbff, 0xdcde,
@@ -1237,7 +1237,7 @@ static void TestAppend() {
 }
 
 static void
-TestSurrogates() {
+TestSurrogates(void) {
     static const uint8_t b[]={
         0xc3, 0x9f,             /*  00DF */
         0xed, 0x9f, 0xbf,       /*  D7FF */

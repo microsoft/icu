@@ -63,7 +63,7 @@ UnicodeString::UnicodeString(const char *codepageData,
                              const char *codepage) {
     fUnion.fFields.fLengthAndFlags = kShortString;
     if (codepageData != nullptr) {
-        doCodepageCreate(codepageData, (int32_t)uprv_strlen(codepageData), codepage);
+        doCodepageCreate(codepageData, static_cast<int32_t>(uprv_strlen(codepageData)), codepage);
     }
 }
 
@@ -82,7 +82,7 @@ UnicodeString::UnicodeString(const char *src, int32_t srcLength,
     fUnion.fFields.fLengthAndFlags = kShortString;
     if(U_SUCCESS(errorCode)) {
         // check arguments
-        if(src==NULL) {
+        if(src==nullptr) {
             // treat as an empty string, do nothing more
         } else if(srcLength<-1) {
             errorCode=U_ILLEGAL_ARGUMENT_ERROR;
@@ -151,10 +151,10 @@ UnicodeString::extract(int32_t start,
     int32_t capacity;
     if(dstSize < 0x7fffffff) {
         // Assume that the capacity is real and a limit pointer won't wrap around.
-        capacity = (int32_t)dstSize;
+        capacity = static_cast<int32_t>(dstSize);
     } else {
         // Pin the capacity so that a limit pointer does not wrap around.
-        char *targetLimit = (char *)U_MAX_PTR(target);
+        char* targetLimit = static_cast<char*>(U_MAX_PTR(target));
         // U_MAX_PTR(target) returns a targetLimit that is at most 0x7fffffff
         // greater than target and does not wrap around the top of the address space.
         capacity = static_cast<int32_t>(targetLimit - target);
@@ -259,7 +259,7 @@ UnicodeString::doExtract(int32_t start, int32_t length,
         return 0;
     }
 
-    const UChar *src=getArrayStart()+start, *srcLimit=src+length;
+    const char16_t *src=getArrayStart()+start, *srcLimit=src+length;
     char *originalDest=dest;
     const char *destLimit;
 
@@ -308,7 +308,7 @@ UnicodeString::doCodepageCreate(const char *codepageData,
         return;
     }
     if(dataLength == -1) {
-        dataLength = (int32_t)uprv_strlen(codepageData);
+        dataLength = static_cast<int32_t>(uprv_strlen(codepageData));
     }
 
     UErrorCode status = U_ZERO_ERROR;
@@ -370,7 +370,7 @@ UnicodeString::doCodepageCreate(const char *codepageData,
     // set up the conversion parameters
     const char *mySource     = codepageData;
     const char *mySourceEnd  = mySource + dataLength;
-    UChar *array, *myTarget;
+    char16_t *array, *myTarget;
 
     // estimate the size needed:
     int32_t arraySize;
@@ -378,7 +378,7 @@ UnicodeString::doCodepageCreate(const char *codepageData,
         // try to use the stack buffer
         arraySize = US_STACKBUF_SIZE;
     } else {
-        // 1.25 UChar's per source byte should cover most cases
+        // 1.25 char16_t's per source byte should cover most cases
         arraySize = dataLength + (dataLength >> 2);
     }
 
@@ -406,7 +406,7 @@ UnicodeString::doCodepageCreate(const char *codepageData,
             doCopyArray = true;
 
             // estimate the new size needed, larger than before
-            // try 2 UChar's per remaining source byte
+            // try 2 char16_t's per remaining source byte
             arraySize = static_cast<int32_t>(length() + 2 * (mySourceEnd - mySource));
         } else {
             if (U_FAILURE(bufferStatus)) {

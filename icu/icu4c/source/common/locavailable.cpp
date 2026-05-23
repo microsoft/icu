@@ -35,7 +35,7 @@
 
 U_NAMESPACE_BEGIN
 
-static icu::Locale*  availableLocaleList = NULL;
+static icu::Locale*  availableLocaleList = nullptr;
 static int32_t  availableLocaleListCount;
 static icu::UInitOnce gInitOnceLocale {};
 
@@ -45,7 +45,7 @@ UBool U_CALLCONV locale_available_cleanup()
 {
     if (availableLocaleList) {
         delete []availableLocaleList;
-        availableLocaleList = NULL;
+        availableLocaleList = nullptr;
     }
     availableLocaleListCount = 0;
     gInitOnceLocale.reset();
@@ -65,7 +65,7 @@ void U_CALLCONV locale_available_init() {
     if(availableLocaleListCount) {
        availableLocaleList = new Locale[availableLocaleListCount];
     }
-    if (availableLocaleList == NULL) {
+    if (availableLocaleList == nullptr) {
         availableLocaleListCount= 0;
     }
     for (int32_t locCount=availableLocaleListCount-1; locCount>=0; --locCount) {
@@ -208,7 +208,7 @@ UBool U_CALLCONV uloc_cleanup() {
 void U_CALLCONV loadInstalledLocales(UErrorCode& status) {
     ucln_common_registerCleanup(UCLN_COMMON_ULOC, uloc_cleanup);
 
-    icu::LocalUResourceBundlePointer rb(ures_openDirect(NULL, "res_index", &status));
+    icu::LocalUResourceBundlePointer rb(ures_openDirect(nullptr, "res_index", &status));
     AvailableLocalesSink sink;
     ures_getAllItemsWithFallback(rb.getAlias(), "", sink, status);
 }

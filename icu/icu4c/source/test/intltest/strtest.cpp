@@ -38,7 +38,7 @@
 
 StringTest::~StringTest() {}
 
-void StringTest::TestEndian(void) {
+void StringTest::TestEndian() {
     union {
         uint8_t byte;
         uint16_t word;
@@ -49,7 +49,7 @@ void StringTest::TestEndian(void) {
     }
 }
 
-void StringTest::TestSizeofTypes(void) {
+void StringTest::TestSizeofTypes() {
     if(U_SIZEOF_WCHAR_T!=sizeof(wchar_t)) {
         errln("TestSizeofWCharT: U_SIZEOF_WCHAR_T!=sizeof(wchar_t) - U_SIZEOF_WCHAR_T needs to be fixed in platform.h");
     }
@@ -78,8 +78,8 @@ void StringTest::TestSizeofTypes(void) {
     if(2!=sizeof(uint16_t)) {
         errln("2!=sizeof(uint16_t)");
     }
-    if(2!=sizeof(UChar)) {
-        errln("2!=sizeof(UChar)");
+    if(2!=sizeof(char16_t)) {
+        errln("2!=sizeof(char16_t)");
     }
     if(1!=sizeof(int8_t)) {
         errln("1!=sizeof(int8_t)");
@@ -92,7 +92,7 @@ void StringTest::TestSizeofTypes(void) {
     }
 }
 
-void StringTest::TestCharsetFamily(void) {
+void StringTest::TestCharsetFamily() {
     unsigned char c='A';
     if( (U_CHARSET_FAMILY==U_ASCII_FAMILY && c!=0x41) ||
         (U_CHARSET_FAMILY==U_EBCDIC_FAMILY && c!=0xc1)
@@ -173,12 +173,12 @@ StringTest::TestUpperOrdinal() {
         if (0 <= expected && expected <= 25) {
             if (actual != expected) {
                 errln("uprv_upperOrdinal('%c')=%d != expected %d",
-                      ic, (int)actual, (int)expected);
+                      ic, static_cast<int>(actual), static_cast<int>(expected));
             }
         } else {
             if (0 <= actual && actual <= 25) {
                 errln("uprv_upperOrdinal('%c')=%d should have been outside 0..25",
-                      ic, (int)actual);
+                      ic, static_cast<int>(actual));
             }
         }
         if (ic == 0) { break; }
@@ -195,12 +195,12 @@ StringTest::TestLowerOrdinal() {
         if (0 <= expected && expected <= 25) {
             if (actual != expected) {
                 errln("uprv_lowerOrdinal('%c')=%d != expected %d",
-                      ic, (int)actual, (int)expected);
+                      ic, static_cast<int>(actual), static_cast<int>(expected));
             }
         } else {
             if (0 <= actual && actual <= 25) {
                 errln("uprv_lowerOrdinal('%c')=%d should have been outside 0..25",
-                      ic, (int)actual);
+                      ic, static_cast<int>(actual));
             }
         }
         if (ic == 0) { break; }
@@ -265,13 +265,13 @@ void
 StringTest::TestStringPiece() {
     // Default constructor.
     StringPiece empty;
-    if(!empty.empty() || empty.data()!=NULL || empty.length()!=0 || empty.size()!=0) {
+    if(!empty.empty() || empty.data()!=nullptr || empty.length()!=0 || empty.size()!=0) {
         errln("StringPiece() failed");
     }
-    // Construct from NULL const char * pointer.
+    // Construct from nullptr const char * pointer.
     StringPiece null((const char *)nullptr);
-    if(!null.empty() || null.data()!=NULL || null.length()!=0 || null.size()!=0) {
-        errln("StringPiece(NULL) failed");
+    if(!null.empty() || null.data()!=nullptr || null.length()!=0 || null.size()!=0) {
+        errln("StringPiece(nullptr) failed");
     }
     // Construct from const char * pointer.
     static const char *abc_chars="abc";
@@ -359,7 +359,7 @@ StringTest::TestStringPiece() {
     // clear()
     sp=abcd;
     sp.clear();
-    if(!sp.empty() || sp.data()!=NULL || sp.length()!=0 || sp.size()!=0) {
+    if(!sp.empty() || sp.data()!=nullptr || sp.length()!=0 || sp.size()!=0) {
         errln("abcd.clear() failed");
     }
     // remove_prefix()
@@ -606,17 +606,17 @@ StringTest::TestByteSink() {
     }
     char scratch[20];
     int32_t capacity = -1;
-    char *dest = sink.GetAppendBuffer(0, 50, scratch, (int32_t)sizeof(scratch), &capacity);
-    if(dest != NULL || capacity != 0) {
-        errln("ByteSink.GetAppendBuffer(min_capacity<1) did not properly return NULL[0]");
+    char* dest = sink.GetAppendBuffer(0, 50, scratch, static_cast<int32_t>(sizeof(scratch)), &capacity);
+    if(dest != nullptr || capacity != 0) {
+        errln("ByteSink.GetAppendBuffer(min_capacity<1) did not properly return nullptr[0]");
         return;
     }
     dest = sink.GetAppendBuffer(10, 50, scratch, 9, &capacity);
-    if(dest != NULL || capacity != 0) {
-        errln("ByteSink.GetAppendBuffer(scratch_capacity<min_capacity) did not properly return NULL[0]");
+    if(dest != nullptr || capacity != 0) {
+        errln("ByteSink.GetAppendBuffer(scratch_capacity<min_capacity) did not properly return nullptr[0]");
         return;
     }
-    dest = sink.GetAppendBuffer(5, 50, scratch, (int32_t)sizeof(scratch), &capacity);
+    dest = sink.GetAppendBuffer(5, 50, scratch, static_cast<int32_t>(sizeof(scratch)), &capacity);
     if (dest != scratch || capacity != static_cast<int32_t>(sizeof(scratch))) {
         errln("ByteSink.GetAppendBuffer() did not properly return the scratch buffer");
     }
@@ -626,7 +626,7 @@ void
 StringTest::TestCheckedArrayByteSink() {
     char buffer[20];  // < 26 for the test code to work
     buffer[3] = '!';
-    CheckedArrayByteSink sink(buffer, (int32_t)sizeof(buffer));
+    CheckedArrayByteSink sink(buffer, static_cast<int32_t>(sizeof(buffer)));
     sink.Append("abc", 3);
     if(!(sink.NumberOfBytesAppended() == 3 && sink.NumberOfBytesWritten() == 3 &&
          0 == memcmp("abc", buffer, 3) && buffer[3] == '!') &&
@@ -637,17 +637,17 @@ StringTest::TestCheckedArrayByteSink() {
     }
     char scratch[10];
     int32_t capacity = -1;
-    char *dest = sink.GetAppendBuffer(0, 50, scratch, (int32_t)sizeof(scratch), &capacity);
-    if(dest != NULL || capacity != 0) {
-        errln("CheckedArrayByteSink.GetAppendBuffer(min_capacity<1) did not properly return NULL[0]");
+    char* dest = sink.GetAppendBuffer(0, 50, scratch, static_cast<int32_t>(sizeof(scratch)), &capacity);
+    if(dest != nullptr || capacity != 0) {
+        errln("CheckedArrayByteSink.GetAppendBuffer(min_capacity<1) did not properly return nullptr[0]");
         return;
     }
     dest = sink.GetAppendBuffer(10, 50, scratch, 9, &capacity);
-    if(dest != NULL || capacity != 0) {
-        errln("CheckedArrayByteSink.GetAppendBuffer(scratch_capacity<min_capacity) did not properly return NULL[0]");
+    if(dest != nullptr || capacity != 0) {
+        errln("CheckedArrayByteSink.GetAppendBuffer(scratch_capacity<min_capacity) did not properly return nullptr[0]");
         return;
     }
-    dest = sink.GetAppendBuffer(10, 50, scratch, (int32_t)sizeof(scratch), &capacity);
+    dest = sink.GetAppendBuffer(10, 50, scratch, static_cast<int32_t>(sizeof(scratch)), &capacity);
     if (dest != buffer + 3 || capacity != static_cast<int32_t>(sizeof(buffer)) - 3) {
         errln("CheckedArrayByteSink.GetAppendBuffer() did not properly return its own buffer");
         return;
@@ -661,15 +661,15 @@ StringTest::TestCheckedArrayByteSink() {
         errln("CheckedArrayByteSink did not Append(its own buffer) as expected");
         return;
     }
-    dest = sink.GetAppendBuffer(10, 50, scratch, (int32_t)sizeof(scratch), &capacity);
+    dest = sink.GetAppendBuffer(10, 50, scratch, static_cast<int32_t>(sizeof(scratch)), &capacity);
     if (dest != scratch || capacity != static_cast<int32_t>(sizeof(scratch))) {
         errln("CheckedArrayByteSink.GetAppendBuffer() did not properly return the scratch buffer");
     }
     memcpy(dest, "nopqrstuvw", 10);
     sink.Append(dest, 10);
     if(!(sink.NumberOfBytesAppended() == 23 &&
-         sink.NumberOfBytesWritten() == (int32_t)sizeof(buffer) &&
-         0 == memcmp("abcdefghijklmnopqrstuvwxyz", buffer, (int32_t)sizeof(buffer)) &&
+         sink.NumberOfBytesWritten() == static_cast<int32_t>(sizeof(buffer)) &&
+         0 == memcmp("abcdefghijklmnopqrstuvwxyz", buffer, static_cast<int32_t>(sizeof(buffer))) &&
          sink.Overflowed())
     ) {
         errln("CheckedArrayByteSink did not Append(scratch buffer) as expected");
@@ -677,7 +677,7 @@ StringTest::TestCheckedArrayByteSink() {
     }
     sink.Reset().Append("123", 3);
     if(!(sink.NumberOfBytesAppended() == 3 && sink.NumberOfBytesWritten() == 3 &&
-         0 == memcmp("123defghijklmnopqrstuvwxyz", buffer, (int32_t)sizeof(buffer)) &&
+         0 == memcmp("123defghijklmnopqrstuvwxyz", buffer, static_cast<int32_t>(sizeof(buffer))) &&
          !sink.Overflowed())
     ) {
         errln("CheckedArrayByteSink did not Reset().Append() as expected");
@@ -740,13 +740,13 @@ StringTest::TestCharString() {
     static const char longStr[] =
         "This is a long string that is meant to cause reallocation of the internal buffer of CharString.";
     CharString chStr(longStr, errorCode);
-    if (0 != strcmp(longStr, chStr.data()) || (int32_t)strlen(longStr) != chStr.length()) {
+    if (0 != strcmp(longStr, chStr.data()) || static_cast<int32_t>(strlen(longStr)) != chStr.length()) {
         errln("CharString(longStr) failed.");
     }
     CharString test("Test", errorCode);
     CharString copy(test,errorCode);
     copy.copyFrom(chStr, errorCode);
-    if (0 != strcmp(longStr, copy.data()) || (int32_t)strlen(longStr) != copy.length()) {
+    if (0 != strcmp(longStr, copy.data()) || static_cast<int32_t>(strlen(longStr)) != copy.length()) {
         errln("CharString.copyFrom() failed.");
     }
     StringPiece sp(chStr.toStringPiece());
@@ -756,7 +756,7 @@ StringTest::TestCharString() {
     strcat(expected, longStr+4);
     strcat(expected, longStr);
     strcat(expected, longStr+4);
-    if (0 != strcmp(expected, chStr.data()) || (int32_t)strlen(expected) != chStr.length()) {
+    if (0 != strcmp(expected, chStr.data()) || static_cast<int32_t>(strlen(expected)) != chStr.length()) {
         errln("CharString(longStr).append(substring of self).append(self) failed.");
     }
     chStr.clear().append("abc", errorCode).append("defghij", 3, errorCode);
@@ -768,7 +768,7 @@ StringTest::TestCharString() {
         errorCode);
     strcpy(expected, "abcdef");
     strcat(expected, longStr);
-    if (0 != strcmp(expected, chStr.data()) || (int32_t)strlen(expected) != chStr.length()) {
+    if (0 != strcmp(expected, chStr.data()) || static_cast<int32_t>(strlen(expected)) != chStr.length()) {
         errln("CharString.appendInvariantChars(longStr) failed.");
     }
     int32_t appendCapacity = 0;
@@ -780,7 +780,7 @@ StringTest::TestCharString() {
     chStr.append(buffer, 5, errorCode);
     chStr.truncate(chStr.length()-3);
     strcat(expected, "**");
-    if (0 != strcmp(expected, chStr.data()) || (int32_t)strlen(expected) != chStr.length()) {
+    if (0 != strcmp(expected, chStr.data()) || static_cast<int32_t>(strlen(expected)) != chStr.length()) {
         errln("CharString.getAppendBuffer().append(**) failed.");
     }
 

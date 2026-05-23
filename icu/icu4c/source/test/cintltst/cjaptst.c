@@ -135,7 +135,7 @@ static void TestTertiary(void)
 }
 
 /* Testing base letters */
-static void TestBase()
+static void TestBase(void)
 {
     int32_t i;
     UErrorCode status = U_ZERO_ERROR;

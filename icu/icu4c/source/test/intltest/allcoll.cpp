@@ -150,7 +150,7 @@ void CollationDummyTest::TestIdentical()
     }
 }
 
-void CollationDummyTest::TestJB581(void)
+void CollationDummyTest::TestJB581()
 {
     UErrorCode status = U_ZERO_ERROR;
 

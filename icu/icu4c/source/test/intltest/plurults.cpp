@@ -82,8 +82,8 @@ class US {
     char *buf;
   public:
     US(const UnicodeString &us) {
-       int32_t bufLen = us.extract((int32_t)0, us.length(), (char *)NULL, (uint32_t)0) + 1;
-       buf = (char *)uprv_malloc(bufLen);
+       int32_t bufLen = us.extract(static_cast<int32_t>(0), us.length(), (char*)nullptr, static_cast<uint32_t>(0)) + 1;
+       buf = static_cast<char*>(uprv_malloc(bufLen));
        us.extract(0, us.length(), buf, bufLen); }
     const char *cstr() {return buf;}
     ~US() { uprv_free(buf);}
@@ -160,7 +160,7 @@ void PluralRulesTest::testAPI(/*char *par*/)
 
     // ======= Test clone, assignment operator && == operator.
     LocalPointer<PluralRules> dupRule(defRule.clone());
-    if (dupRule==NULL) {
+    if (dupRule==nullptr) {
         errln("ERROR: clone plural rules test failed!");
         return;
     } else {
@@ -169,7 +169,7 @@ void PluralRulesTest::testAPI(/*char *par*/)
         }
     }
     *dupRule = *newEnPlural;
-    if (dupRule!=NULL) {
+    if (dupRule!=nullptr) {
         if ( *dupRule != *newEnPlural ) {
             errln("ERROR:  clone plural rules test failed!");
         }
@@ -336,7 +336,7 @@ UBool testEquality(const PluralRules &test) {
         PluralRules* rules[MAX_EQ_COL];
 
         for (int32_t j=0; j<MAX_EQ_COL; ++j) {
-            rules[j]=NULL;
+            rules[j]=nullptr;
         }
         int32_t totalRules=0;
         while((totalRules<MAX_EQ_COL) && (testEquRules[i][totalRules].length()>0) ) {
@@ -356,7 +356,7 @@ UBool testEquality(const PluralRules &test) {
 
         }
         for (int32_t j=0; j<MAX_EQ_COL; ++j) {
-            if (rules[j]!=NULL) {
+            if (rules[j]!=nullptr) {
                 delete rules[j];
             }
         }
@@ -427,7 +427,7 @@ void PluralRulesTest::testGetSamples() {
             break;
         }
         const UnicodeString* keyword;
-        while (NULL != (keyword = keywords->snext(status))) {
+        while (nullptr != (keyword = keywords->snext(status))) {
             int32_t count = rules->getSamples(*keyword, values, UPRV_LENGTHOF(values), status);
             if (U_FAILURE(status)) {
                 errln(UnicodeString(u"getSamples() failed for locale ") +
@@ -491,7 +491,7 @@ void PluralRulesTest::testGetDecimalQuantitySamples() {
             break;
         }
         const UnicodeString* keyword;
-        while (NULL != (keyword = keywords->snext(status))) {
+        while (nullptr != (keyword = keywords->snext(status))) {
             int32_t count = rules->getSamples(*keyword, values, UPRV_LENGTHOF(values), status);
             if (U_FAILURE(status)) {
                 errln(UnicodeString(u"getSamples() failed for locale ") +
@@ -746,7 +746,7 @@ void PluralRulesTest::testWithin() {
         return;
     }
 
-    UnicodeString keyword = rules->select((int32_t)26);
+    UnicodeString keyword = rules->select(static_cast<int32_t>(26));
     if (keyword != "a") {
         errln("expected 'a' for 26 but didn't get it.");
     }
@@ -779,10 +779,10 @@ PluralRulesTest::testGetAllKeywordValues() {
         "a: n mod 3 is 0 and n within 0..5", "a: 0,3",
         "a: n mod 3 is 0 and n within 0..6", "a: null", // similarly with mod, we don't catch...
         "a: n mod 3 is 0 and n in 3..12", "a: 3,6,9,12",
-        NULL
+        nullptr
     };
 
-    for (int i = 0; data[i] != NULL; i += 2) {
+    for (int i = 0; data[i] != nullptr; i += 2) {
         UErrorCode status = U_ZERO_ERROR;
         UnicodeString ruleDescription(data[i], -1, US_INV);
         const char* result = data[i+1];
@@ -790,7 +790,7 @@ PluralRulesTest::testGetAllKeywordValues() {
         logln("[%d] %s", i >> 1, data[i]);
 
         PluralRules *p = PluralRules::createRules(ruleDescription, status);
-        if (p == NULL || U_FAILURE(status)) {
+        if (p == nullptr || U_FAILURE(status)) {
             errln("file %s, line %d: could not create rules from '%s'\n"
                   "  ErrorCode: %s\n", 
                   __FILE__, __LINE__, data[i], u_errorName(status));
@@ -1169,8 +1169,8 @@ void PluralRulesTest::checkSelect(const LocalPointer<PluralRules> &rules, UError
         return;
     }
 
-    if (rules == NULL) {
-        errln("file %s, line %d: rules pointer is NULL", __FILE__, line);
+    if (rules == nullptr) {
+        errln("file %s, line %d: rules pointer is nullptr", __FILE__, line);
         return;
     }
         
@@ -1192,7 +1192,7 @@ void PluralRulesTest::checkSelect(const LocalPointer<PluralRules> &rules, UError
         }
         double numDbl = dl.toDouble();
         const char *decimalPoint = strchr(num, '.');
-        int fractionDigitCount = decimalPoint == NULL ? 0 : static_cast<int>((num + strlen(num) - 1) - decimalPoint);
+        int fractionDigitCount = decimalPoint == nullptr ? 0 : static_cast<int>((num + strlen(num) - 1) - decimalPoint);
         int fractionDigits = fractionDigitCount == 0 ? 0 : atoi(decimalPoint + 1);
         FixedDecimal ni(numDbl, fractionDigitCount, fractionDigits);
         
@@ -1445,12 +1445,12 @@ void PluralRulesTest::testAvailableLocales() {
     StringEnumeration *localesEnum = PluralRules::getAvailableLocales(status);
     int localeCount = 0;
     for (;;) {
-        const char *locale = localesEnum->next(NULL, status);
+        const char *locale = localesEnum->next(nullptr, status);
         if (U_FAILURE(status)) {
             dataerrln("file %s,  line %d: Error status = %s", __FILE__, __LINE__, u_errorName(status));
             return;
         }
-        if (locale == NULL) {
+        if (locale == nullptr) {
             break;
         }
         localeCount++;
@@ -1463,7 +1463,7 @@ void PluralRulesTest::testAvailableLocales() {
     // Reset the iterator, verify that we get the same count.
     localesEnum->reset(status);
     int32_t localeCount2 = 0;
-    while (localesEnum->next(NULL, status) != NULL) {
+    while (localesEnum->next(nullptr, status) != nullptr) {
         if (U_FAILURE(status)) {
             errln("file %s,  line %d: Error status = %s", __FILE__, __LINE__, u_errorName(status));
             break;
@@ -1479,13 +1479,13 @@ void PluralRulesTest::testAvailableLocales() {
     localesEnum->reset(status);
     for (;;) {
         status = U_ZERO_ERROR;
-        const char *localeName = localesEnum->next(NULL, status);
+        const char *localeName = localesEnum->next(nullptr, status);
         if (U_FAILURE(status)) {
             errln("file %s,  line %d: Error status = %s, locale = %s",
                 __FILE__, __LINE__, u_errorName(status), localeName);
             return;
         }
-        if (localeName == NULL) {
+        if (localeName == nullptr) {
             break;
         }
         Locale locale = Locale::createFromName(localeName);
@@ -1495,7 +1495,7 @@ void PluralRulesTest::testAvailableLocales() {
                 __FILE__, __LINE__, u_errorName(status), localeName);
             continue;
         }
-        if (pr == NULL) {
+        if (pr == nullptr) {
             errln("file %s, line %d: Null plural rules for locale %s", __FILE__, __LINE__, localeName);
             continue;
         }
@@ -1544,8 +1544,8 @@ void PluralRulesTest::testParseErrors() {
         if (U_SUCCESS(status)) {
             errln("file %s, line %d, expected failure with \"%s\".", __FILE__, __LINE__, rules);
         }
-        if (pr != NULL) {
-            errln("file %s, line %d, expected NULL. Rules: \"%s\"", __FILE__, __LINE__, rules);
+        if (pr != nullptr) {
+            errln("file %s, line %d, expected nullptr. Rules: \"%s\"", __FILE__, __LINE__, rules);
         }
     }
 }

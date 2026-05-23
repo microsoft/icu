@@ -69,8 +69,8 @@ void PluralMapTest::TestToCategory() {
 }
 
 void PluralMapTest::TestGetCategoryName() {
-    assertTrue("", PluralMapBase::getCategoryName(PluralMapBase::NONE) == NULL);
-    assertTrue("", PluralMapBase::getCategoryName(PluralMapBase::CATEGORY_COUNT) == NULL);
+    assertTrue("", PluralMapBase::getCategoryName(PluralMapBase::NONE) == nullptr);
+    assertTrue("", PluralMapBase::getCategoryName(PluralMapBase::CATEGORY_COUNT) == nullptr);
     assertEquals("", "other", PluralMapBase::getCategoryName(PluralMapBase::OTHER));
     assertEquals("", "zero", PluralMapBase::getCategoryName(PluralMapBase::ZERO));
     assertEquals("", "one", PluralMapBase::getCategoryName(PluralMapBase::ONE));
@@ -117,7 +117,7 @@ void PluralMapTest::TestIterate() {
     assertEquals("", PluralMapBase::FEW, index);
     current = map.next(index);
     assertEquals("", PluralMapBase::CATEGORY_COUNT, index);
-    assertTrue("", current == NULL);
+    assertTrue("", current == nullptr);
 
     PluralMapForPluralMapTest map2;
     index = PluralMapBase::NONE;
@@ -126,7 +126,7 @@ void PluralMapTest::TestIterate() {
     assertEquals("", PluralMapBase::OTHER, index);
     current = map2.next(index);
     assertEquals("", PluralMapBase::CATEGORY_COUNT, index);
-    assertTrue("", current == NULL);
+    assertTrue("", current == nullptr);
 }
 
 void PluralMapTest::TestEqual() {
@@ -160,7 +160,7 @@ void PluralMapTest::TestCopyAndAssign() {
     addVariant(PluralMapBase::FEW, "picklefew", control);
     {
         PluralMapForPluralMapTest *rhs = new PluralMapForPluralMapTest();
-        if (rhs == NULL) {
+        if (rhs == nullptr) {
             errln("Memory allocation error.");
             return;
         }
@@ -173,7 +173,7 @@ void PluralMapTest::TestCopyAndAssign() {
     }
     {
         PluralMapForPluralMapTest *rhs = new PluralMapForPluralMapTest();
-        if (rhs == NULL) {
+        if (rhs == nullptr) {
             errln("Memory allocation error.");
             return;
         }

@@ -436,7 +436,7 @@ public:
             ce32 -= tertiary;
             if((tertiary & 0xf) == LONG_PRIMARY_TAG) {
                 // long-primary form ppppppC1 -> pppppp00050000500
-                return ((int64_t)ce32 << 32) | COMMON_SEC_AND_TER_CE;
+                return (static_cast<int64_t>(ce32) << 32) | COMMON_SEC_AND_TER_CE;
             } else {
                 // long-secondary form ssssttC2 -> 00000000sssstt00
                 // assert (tertiary & 0xf) == LONG_SECONDARY_TAG
@@ -447,14 +447,14 @@ public:
 
     /** Creates a CE from a primary weight. */
     static inline int64_t makeCE(uint32_t p) {
-        return ((int64_t)p << 32) | COMMON_SEC_AND_TER_CE;
+        return (static_cast<int64_t>(p) << 32) | COMMON_SEC_AND_TER_CE;
     }
     /**
      * Creates a CE from a primary weight,
      * 16-bit secondary/tertiary weights, and a 2-bit quaternary.
      */
     static inline int64_t makeCE(uint32_t p, uint32_t s, uint32_t t, uint32_t q) {
-        return ((int64_t)p << 32) | (s << 16) | t | (q << 6);
+        return (static_cast<int64_t>(p) << 32) | (s << 16) | t | (q << 6);
     }
 
     /**

@@ -131,7 +131,7 @@ public:
     // it will be returned in status
     // isBytesTrie != 0 will produce a BytesTrieBuilder,
     // isBytesTrie == 0 will produce a UCharsTrieBuilder
-    DataDict(UBool isBytesTrie, UErrorCode &status) : bt(NULL), ut(NULL), 
+    DataDict(UBool isBytesTrie, UErrorCode &status) : bt(nullptr), ut(nullptr), 
         transformConstant(0), transformType(DictionaryData::TRANSFORM_NONE) {
         if (isBytesTrie) {
             bt = new BytesTrieBuilder(status);
@@ -148,18 +148,18 @@ public:
 private:
     char transform(UChar32 c, UErrorCode &status) {
         if (transformType == DictionaryData::TRANSFORM_TYPE_OFFSET) {
-            if (c == 0x200D) { return (char)0xFF; }
-            else if (c == 0x200C) { return (char)0xFE; }
+            if (c == 0x200D) { return static_cast<char>(0xFF); }
+            else if (c == 0x200C) { return static_cast<char>(0xFE); }
             int32_t delta = c - transformConstant;
             if (delta < 0 || 0xFD < delta) {
                 fprintf(stderr, "Codepoint U+%04lx out of range for --transform offset-%04lx!\n",
-                        (long)c, (long)transformConstant);
+                        static_cast<long>(c), static_cast<long>(transformConstant));
                 exit(U_ILLEGAL_ARGUMENT_ERROR); // TODO: should return and print the line number
             }
-            return (char)delta;
+            return static_cast<char>(delta);
         } else { // no such transform type 
             status = U_INTERNAL_PROGRAM_ERROR;
-            return (char)c; // it should be noted this transform type will not generally work
+            return static_cast<char>(c); // it should be noted this transform type will not generally work
         }
     }
 
@@ -187,7 +187,7 @@ public:
                 usageAndDie(U_ILLEGAL_ARGUMENT_ERROR);
             }
             transformType = DictionaryData::TRANSFORM_TYPE_OFFSET;
-            transformConstant = (UChar32)base;
+            transformConstant = static_cast<UChar32>(base);
         }
         else {
             fprintf(stderr, "Invalid transform specified: %s\n", t);
@@ -221,16 +221,16 @@ public:
 };
 #endif
 
-static const UChar LINEFEED_CHARACTER = 0x000A;
-static const UChar CARRIAGE_RETURN_CHARACTER = 0x000D;
+static const char16_t LINEFEED_CHARACTER = 0x000A;
+static const char16_t CARRIAGE_RETURN_CHARACTER = 0x000D;
 
 static UBool readLine(UCHARBUF *f, UnicodeString &fileLine, IcuToolErrorCode &errorCode) {
     int32_t lineLength;
-    const UChar *line = ucbuf_readline(f, &lineLength, errorCode);
-    if(line == NULL || errorCode.isFailure()) { return false; }
+    const char16_t *line = ucbuf_readline(f, &lineLength, errorCode);
+    if(line == nullptr || errorCode.isFailure()) { return false; }
     // Strip trailing CR/LF, comments, and spaces.
-    const UChar *comment = u_memchr(line, 0x23, lineLength);  // '#'
-    if(comment != NULL) {
+    const char16_t *comment = u_memchr(line, 0x23, lineLength);  // '#'
+    if(comment != nullptr) {
         lineLength = static_cast<int32_t>(comment - line);
     } else {
         while(lineLength > 0 && (line[lineLength - 1] == CARRIAGE_RETURN_CHARACTER || line[lineLength - 1] == LINEFEED_CHARACTER)) { --lineLength; }
@@ -280,7 +280,7 @@ int  main(int argc, char **argv) {
         u_setDataDirectory(options[ARG_ICUDATADIR].value);
     }
 
-    const char *copyright = NULL;
+    const char *copyright = nullptr;
     if (options[ARG_COPYRIGHT].doesOccur) {
         copyright = U_COPYRIGHT_STRING;
     }
@@ -300,7 +300,7 @@ int  main(int argc, char **argv) {
     UBool isToml = options[ARG_TOML].doesOccur;
 
 #if UCONFIG_NO_BREAK_ITERATION || UCONFIG_NO_FILE_IO
-    const char* outDir=NULL;
+    const char* outDir=nullptr;
 
     UNewDataMemory *pData;
     char msg[1024];
@@ -311,7 +311,7 @@ int  main(int argc, char **argv) {
     fprintf(stderr, "%s\n", msg);
 
     /* write the dummy data file */
-    pData = udata_create(outDir, NULL, outFileName, &dataInfo, NULL, &tempstatus);
+    pData = udata_create(outDir, nullptr, outFileName, &dataInfo, nullptr, &tempstatus);
     udata_writeBlock(pData, msg, strlen(msg));
     udata_finish(pData, &tempstatus);
     return (int)tempstatus;
@@ -372,12 +372,12 @@ int  main(int argc, char **argv) {
             fileLine.extract(valueStart, valueLength, s, 16, US_INV);
             char *end;
             unsigned long value = uprv_strtoul(s, &end, 0);
-            if (end == s || *end != 0 || (int32_t)uprv_strlen(s) != valueLength || value > 0xffffffff) {
+            if (end == s || *end != 0 || static_cast<int32_t>(uprv_strlen(s)) != valueLength || value > 0xffffffff) {
                 fprintf(stderr, "Error: value syntax error or value too large on line %i!\n", lineCount);
                 isOk = false;
                 continue;
             }
-            dict.addWord(fileLine.tempSubString(0, keyLen), (int32_t)value, status);
+            dict.addWord(fileLine.tempSubString(0, keyLen), static_cast<int32_t>(value), status);
             hasValues = true;
             wordCount++;
             if (keyLen < minlen) minlen = keyLen;
@@ -492,7 +492,7 @@ int  main(int argc, char **argv) {
             printf("%s -> %i\n", s.data(), val);
         }
     } else {
-        UCharsTrie::Iterator it((const UChar *)outData, outDataSize, status);
+        UCharsTrie::Iterator it((const char16_t *)outData, outDataSize, status);
         while (it.hasNext()) {
             it.next(status);
             const UnicodeString s = it.getString();
