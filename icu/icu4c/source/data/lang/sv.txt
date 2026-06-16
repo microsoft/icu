@@ -50,7 +50,6 @@ sv{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabiska"}
-        ar_001{"modern standardarabiska"}
         arc{"arameiska"}
         arn{"mapudungun"}
         aro{"araoniska"}
@@ -156,8 +155,6 @@ sv{
         dar{"darginska"}
         dav{"taita"}
         de{"tyska"}
-        de_AT{"österrikisk tyska"}
-        de_CH{"schweizisk högtyska"}
         del{"delaware"}
         den{"slavej"}
         dgr{"dogrib"}
@@ -182,23 +179,15 @@ sv{
         el{"grekiska"}
         elx{"elamitiska"}
         en{"engelska"}
-        en_AU{"australisk engelska"}
-        en_CA{"kanadensisk engelska"}
-        en_GB{"brittisk engelska"}
-        en_US{"amerikansk engelska"}
         enm{"medelengelska"}
         eo{"esperanto"}
         es{"spanska"}
-        es_419{"latinamerikansk spanska"}
-        es_ES{"europeisk spanska"}
-        es_MX{"mexikansk spanska"}
         esu{"centralalaskisk jupiska"}
         et{"estniska"}
         eu{"baskiska"}
         ewo{"ewondo"}
         ext{"extremaduriska"}
         fa{"persiska"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulani"}
@@ -209,8 +198,6 @@ sv{
         fo{"färöiska"}
         fon{"fonspråket"}
         fr{"franska"}
-        fr_CA{"kanadensisk franska"}
-        fr_CH{"schweizisk franska"}
         frc{"cajun-franska"}
         frm{"medelfranska"}
         fro{"fornfranska"}
@@ -253,7 +240,6 @@ sv{
         hax{"sydhaida"}
         he{"hebreiska"}
         hi{"hindi"}
-        hi_Latn{"hindi (latinsk)"}
         hif{"Fiji-hindi"}
         hil{"hiligaynon"}
         hit{"hettitiska"}
@@ -429,7 +415,6 @@ sv{
         nb{"norskt bokmål"}
         nd{"nordndebele"}
         nds{"lågtyska"}
-        nds_NL{"lågsaxiska"}
         ne{"nepalesiska"}
         new{"newariska"}
         ng{"ndonga"}
@@ -437,7 +422,6 @@ sv{
         niu{"niueanska"}
         njo{"ao-naga"}
         nl{"nederländska"}
-        nl_BE{"flamländska"}
         nmg{"kwasio"}
         nn{"nynorska"}
         nnh{"bamileké-ngiemboon"}
@@ -492,8 +476,6 @@ sv{
         pro{"fornprovensalska"}
         ps{"afghanska"}
         pt{"portugisiska"}
-        pt_BR{"brasiliansk portugisiska"}
-        pt_PT{"europeisk portugisiska"}
         qu{"quechua"}
         quc{"quiché"}
         qug{"Chimborazo-höglandskichwa"}
@@ -506,7 +488,6 @@ sv{
         rm{"rätoromanska"}
         rn{"rundi"}
         ro{"rumänska"}
-        ro_MD{"moldaviska"}
         rof{"rombo"}
         rom{"romani"}
         rtm{"rotumänska"}
@@ -541,7 +522,6 @@ sv{
         sg{"sango"}
         sga{"forniriska"}
         sgs{"samogitiska"}
-        sh{"serbokroatiska"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"Tchad-arabiska"}
@@ -576,7 +556,6 @@ sv{
         sux{"sumeriska"}
         sv{"svenska"}
         sw{"swahili"}
-        sw_CD{"Kongo-swahili"}
         swb{"shimaoré"}
         syc{"klassisk syriska"}
         syr{"syriska"}
@@ -673,8 +652,6 @@ sv{
         zen{"zenaga"}
         zgh{"marockansk standard-tamazight"}
         zh{"kinesiska"}
-        zh_Hans{"förenklad kinesiska"}
-        zh_Hant{"traditionell kinesiska"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"inget språkligt innehåll"}
@@ -685,20 +662,6 @@ sv{
     }
     Languages%extension{
         ku{"kurmandji"}
-    }
-    Languages%menu{
-        ars{"arabiska (najdi)"}
-        ckb{"kurdiska (sorani)"}
-        zh{"mandarin"}
-    }
-    Languages%short{
-        az{"azeriska"}
-    }
-    Languages%variant{
-        ckb{"soranisk kurdiska"}
-        hi_Latn{"hinglish"}
-        ps{"pashto"}
-        ug{"östturkiska"}
     }
     Scripts{
         Adlm{"adlamiska"}
@@ -921,7 +884,6 @@ sv{
             iso8601{"ISO 8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
-            roc{"kinesiska republikens kalender"}
         }
         calendar%core{
             buddhist{"buddistisk"}
@@ -937,7 +899,6 @@ sv{
             islamic-umalqura{"islamisk, Umm al-Qura"}
             japanese{"japansk"}
             persian{"persisk"}
-            roc{"kinesiska republikens"}
         }
         cf{
             account{"redovisningsformat"}

@@ -847,9 +847,6 @@ ff_Adlm{
         "Asia:Ulaanbaatar"{
             ec{"𞤓𞤤𞤢𞤲𞤦𞤢𞤼𞤢𞤪"}
         }
-        "Asia:Urumqi"{
-            ec{"𞤓𞤪𞤵𞤥𞤳𞤵"}
-        }
         "Asia:Ust-Nera"{
             ec{"𞤓𞤧𞤼𞤢-𞤐𞤫𞤪𞤢"}
         }

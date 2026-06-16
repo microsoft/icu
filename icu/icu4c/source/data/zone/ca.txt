@@ -177,9 +177,6 @@ ca{
         "Asia:Tokyo"{
             ec{"Tòquio"}
         }
-        "Asia:Urumqi"{
-            ec{"Ürümchi"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust’-Nera"}
         }

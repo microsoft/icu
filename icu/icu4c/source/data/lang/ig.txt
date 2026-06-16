@@ -33,7 +33,6 @@ ig{
         anp{"Angika"}
         apc{"apcc"}
         ar{"Asụsụ Arabiikị"}
-        ar_001{"Ụdị Arabiikị nke oge a"}
         arn{"Mapuche"}
         arp{"Arapaho"}
         ars{"Najdi Arabikị"}
@@ -106,8 +105,6 @@ ig{
         dar{"Dargwa"}
         dav{"Taita"}
         de{"German"}
-        de_AT{"Austrian German"}
-        de_CH{"Swiss High German"}
         dgr{"Dogrib"}
         dje{"Zarma"}
         doi{"Dogri"}
@@ -123,20 +120,12 @@ ig{
         eka{"Ekajuk"}
         el{"Grik"}
         en{"Bekee"}
-        en_AU{"Bekee ndị Australia"}
-        en_CA{"Bekee ndị Canada"}
-        en_GB{"Bekee ndị United Kingdom"}
-        en_US{"Bekee ndị America"}
         eo{"Esperanto"}
         es{"Spanish"}
-        es_419{"Spanish ndị Latin America"}
-        es_ES{"Spanish ndị Europe"}
-        es_MX{"Spanish ndị Mexico"}
         et{"Estonian"}
         eu{"Basque"}
         ewo{"Ewondo"}
         fa{"Asụsụ Persia"}
-        fa_AF{"Dari"}
         ff{"Fula"}
         fi{"Finnish"}
         fil{"Filipino"}
@@ -144,8 +133,6 @@ ig{
         fo{"Faroese"}
         fon{"Fon"}
         fr{"French"}
-        fr_CA{"Canadian French"}
-        fr_CH{"Swiss French"}
         frc{"Cajun French"}
         frr{"Northern Frisian"}
         fur{"Friulian"}
@@ -307,14 +294,12 @@ ig{
         nb{"Norwegian Bokmål"}
         nd{"North Ndebele"}
         nds{"Low German"}
-        nds_NL{"Low Saxon"}
         ne{"Nepali"}
         new{"Newari"}
         ng{"Ndonga"}
         nia{"Nias"}
         niu{"Niuean"}
         nl{"Dutch"}
-        nl_BE{"Flemish"}
         nmg{"Kwasio"}
         nn{"Norwegian Nynorsk"}
         nnh{"Ngiemboon"}
@@ -349,8 +334,6 @@ ig{
         prg{"Prụssịan"}
         ps{"Pashọ"}
         pt{"Pọrtụgụese"}
-        pt_BR{"Asụsụ Portugese ndị Brazil"}
-        pt_PT{"Asụsụ Portuguese ndị Europe"}
         qu{"Asụsụ Quechua"}
         quc{"Kʼicheʼ"}
         raj{"Rajastani"}
@@ -361,7 +344,6 @@ ig{
         rm{"Asụsụ Romansh"}
         rn{"Rundi"}
         ro{"Asụsụ Romanian"}
-        ro_MD{"Moldavian"}
         rof{"Rombo"}
         ru{"Asụsụ Russia"}
         rup{"Aromanian"}
@@ -477,8 +459,6 @@ ig{
         za{"Zhuang"}
         zgh{"Standard Moroccan Tamazight"}
         zh{"Chaịniiz"}
-        zh_Hans{"Asụsụ Chaịniiz dị mfe"}
-        zh_Hant{"Asụsụ ọdịnala Chaịniiz"}
         zu{"Zulu"}
         zun{"Zuni"}
         zxx{"Enweghị asụsụ dịnaya"}
@@ -489,24 +469,6 @@ ig{
     }
     Languages%extension{
         ku{"Asụsụ Kurmanji"}
-    }
-    Languages%long{
-        zh_Hans{"Asụsụ Mandarin Chaịniiz dị mfe"}
-        zh_Hant{"Asụsụ ọdịnala Mandarin Chaịniiz"}
-    }
-    Languages%menu{
-        ckb{"Kurdish, Central"}
-        yue{"Chaịniiz,Cantonese"}
-        zh{"Chaịniiz, Mandarin"}
-    }
-    Languages%short{
-        az{"Azeri"}
-        en_GB{"Bekee ndị UK"}
-        en_US{"Bekee ndị US"}
-    }
-    Languages%variant{
-        ckb{"Kurdish, Sorani"}
-        hi_Latn{"Hinglish"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -716,7 +678,6 @@ ig{
             iso8601{"Kalenda ISO-8601"}
             japanese{"Kalenda Japanese"}
             persian{"Kalenda Persian"}
-            roc{"Kalenda repụblic nke China"}
         }
         calendar%core{
             buddhist{"Onye ụka Buda"}
@@ -732,7 +693,6 @@ ig{
             islamic-umalqura{"Hijri (Umm al-Qura)"}
             japanese{"Japanese"}
             persian{"Persian"}
-            roc{"Minguo"}
         }
         cf{
             account{"Ụsọrọ akantụ egọ"}

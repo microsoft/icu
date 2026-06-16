@@ -846,9 +846,6 @@ kxv{
         "Asia:Ulaanbaatar"{
             ec{"ulanbaṭar"}
         }
-        "Asia:Urumqi"{
-            ec{"urumci"}
-        }
         "Asia:Ust-Nera"{
             ec{"yust-nera"}
         }

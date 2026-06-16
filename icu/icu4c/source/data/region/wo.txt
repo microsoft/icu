@@ -94,17 +94,14 @@ wo{
         CY{"Siipar"}
         CZ{"Réewum Cek"}
         DE{"Almaañ"}
-        DG{"Garsiya"}
         DJ{"Jibuti"}
         DK{"Danmàrk"}
         DM{"Dominik"}
         DO{"Repiblik Dominiken"}
         DZ{"Alseri"}
-        EA{"Ceuta & Melilla"}
         EC{"Ekwaatër"}
         EE{"Estoni"}
         EG{"Esipt"}
-        EH{"Sahara bu sowwu"}
         ER{"Eritere"}
         ES{"Españ"}
         ET{"Ecopi"}
@@ -141,7 +138,6 @@ wo{
         HR{"Korowasi"}
         HT{"Ayti"}
         HU{"Ongari"}
-        IC{"Ile Canary"}
         ID{"Indonesi"}
         IE{"Irlànd"}
         IL{"Israyel"}
@@ -289,8 +285,6 @@ wo{
         VU{"Wanuatu"}
         WF{"Walis ak Futuna"}
         WS{"Samowa"}
-        XA{"Pseudo-aksan"}
-        XB{"Pseudo-bidi"}
         XK{"Kosowo"}
         YE{"Yaman"}
         YT{"Mayot"}
@@ -298,11 +292,5 @@ wo{
         ZM{"Sàmbi"}
         ZW{"Simbabwe"}
         ZZ{"Gox buñ xamul"}
-    }
-    Countries%short{
-        PS{"Palestine"}
-    }
-    Countries%variant{
-        TL{"Timor oriental"}
     }
 }

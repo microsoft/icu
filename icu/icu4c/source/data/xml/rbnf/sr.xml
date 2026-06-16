@@ -12,10 +12,10 @@
     </identity>
     <rbnf>
         <rulesetGrouping type="SpelloutRules">
-            <rbnfRules><![CDATA[
-%%lenient-parse:
-&[last primary ignorable ] << ' ' << ',' << '-' << '­';
-]]></rbnfRules>
+            <ruleset type="lenient-parse" access="private">
+                <rbnfrule value="0">&amp;[last primary ignorable ] ←← ' ' ←← ',' ←← '-' ←← '­';</rbnfrule>
+            </ruleset>
         </rulesetGrouping>
+ 
    </rbnf>
 </ldml>

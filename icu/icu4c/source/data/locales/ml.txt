@@ -884,17 +884,6 @@ ml{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"R.O.C-യ്‌ക്ക് മു."}
-                    1{"മിംഗ്വോ"}
-                }
-                wide{
-                    0{"R.O.C-യ്‌ക്ക് മുമ്പ്"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"ആക്‌റ്റിവിറ്റി"}

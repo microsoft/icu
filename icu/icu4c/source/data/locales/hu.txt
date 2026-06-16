@@ -986,13 +986,6 @@ hu{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"R.O.C. előtt"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"tevékenység"}

@@ -47,7 +47,6 @@ sl{
         ann{"obolo"}
         anp{"angikaščina"}
         ar{"arabščina"}
-        ar_001{"sodobna standardna arabščina"}
         arc{"aramejščina"}
         arn{"mapudungunščina"}
         arp{"arapaščina"}
@@ -130,8 +129,6 @@ sl{
         dar{"darginščina"}
         dav{"taitajščina"}
         de{"nemščina"}
-        de_AT{"avstrijska nemščina"}
-        de_CH{"visoka nemščina (Švica)"}
         del{"delavarščina"}
         den{"slavejščina"}
         dgr{"dogrib"}
@@ -154,21 +151,13 @@ sl{
         el{"grščina"}
         elx{"elamščina"}
         en{"angleščina"}
-        en_AU{"avstralska angleščina"}
-        en_CA{"kanadska angleščina"}
-        en_GB{"britanska angleščina"}
-        en_US{"ameriška angleščina"}
         enm{"srednja angleščina"}
         eo{"esperanto"}
         es{"španščina"}
-        es_419{"latinskoameriška španščina"}
-        es_ES{"evropska španščina"}
-        es_MX{"mehiška španščina"}
         et{"estonščina"}
         eu{"baskovščina"}
         ewo{"evondovščina"}
         fa{"perzijščina"}
-        fa_AF{"darijščina"}
         fan{"fangijščina"}
         fat{"fantijščina"}
         ff{"fulščina"}
@@ -178,8 +167,6 @@ sl{
         fo{"ferščina"}
         fon{"fonščina"}
         fr{"francoščina"}
-        fr_CA{"kanadska francoščina"}
-        fr_CH{"švicarska francoščina"}
         frc{"cajunska francoščina"}
         frm{"srednja francoščina"}
         fro{"stara francoščina"}
@@ -369,14 +356,12 @@ sl{
         nb{"knjižna norveščina"}
         nd{"severna ndebelščina"}
         nds{"nizka nemščina"}
-        nds_NL{"nizka saščina"}
         ne{"nepalščina"}
         new{"nevarščina"}
         ng{"ndonga"}
         nia{"niaščina"}
         niu{"niuejščina"}
         nl{"nizozemščina"}
-        nl_BE{"flamščina"}
         nmg{"kwasio"}
         nn{"novonorveščina"}
         nnh{"ngiemboonščina"}
@@ -423,8 +408,6 @@ sl{
         pro{"stara provansalščina"}
         ps{"paštunščina"}
         pt{"portugalščina"}
-        pt_BR{"brazilska portugalščina"}
-        pt_PT{"evropska portugalščina"}
         qu{"kečuanščina"}
         quc{"quiche"}
         raj{"radžastanščina"}
@@ -434,7 +417,6 @@ sl{
         rm{"retoromanščina"}
         rn{"rundščina"}
         ro{"romunščina"}
-        ro_MD{"moldavščina"}
         rof{"rombo"}
         rom{"romščina"}
         ru{"ruščina"}
@@ -461,7 +443,6 @@ sl{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"stara irščina"}
-        sh{"srbohrvaščina"}
         shi{"tahelitska berberščina"}
         shn{"šanščina"}
         si{"sinhalščina"}
@@ -491,7 +472,6 @@ sl{
         sux{"sumerščina"}
         sv{"švedščina"}
         sw{"svahili"}
-        sw_CD{"kongoški svahili"}
         swb{"šikomor"}
         syc{"klasična sirščina"}
         syr{"sirščina"}
@@ -575,8 +555,6 @@ sl{
         zen{"zenaščina"}
         zgh{"standardni maroški tamazig"}
         zh{"kitajščina"}
-        zh_Hans{"poenostavljena kitajščina"}
-        zh_Hant{"tradicionalna kitajščina"}
         zu{"zulujščina"}
         zun{"zunijščina"}
         zxx{"brez jezikoslovne vsebine"}
@@ -587,23 +565,6 @@ sl{
     }
     Languages%extension{
         ku{"kurmanščina"}
-    }
-    Languages%long{
-        zh_Hans{"poenostavljena mandarinska kitajščina"}
-        zh_Hant{"tradicionalna mandarinska kitajščina"}
-    }
-    Languages%menu{
-        yue{"kitajščina (kantonščina)"}
-        zh{"kitajščina (mandarinščina)"}
-    }
-    Languages%short{
-        az{"azerščina"}
-        en_GB{"angleščina (ZK)"}
-        en_US{"angleščina (ZDA)"}
-    }
-    Languages%variant{
-        ckb{"soranska kurdščina"}
-        hi_Latn{"hingleščina"}
     }
     Scripts{
         Adlm{"adlamski"}
@@ -761,7 +722,6 @@ sl{
             iso8601{"koledar ISO-8601"}
             japanese{"japonski koledar"}
             persian{"perzijski koledar"}
-            roc{"koledar Minguo"}
         }
         calendar%core{
             buddhist{"budistični"}
@@ -777,7 +737,6 @@ sl{
             islamic-umalqura{"islamski (Umm al-Qura)"}
             japanese{"japonski"}
             persian{"perzijski"}
-            roc{"Minguo"}
         }
         cf{
             account{"oblika zapisa valute v računovodstvu"}

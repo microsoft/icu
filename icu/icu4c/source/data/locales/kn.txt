@@ -741,14 +741,6 @@ kn{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"ಆರ್.ಓ.ಸಿ.ಗೆ ಮುಂಚೆ"}
-                    1{"ಮಿಂಗೋ"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"ಚಟುವಟಿಕೆ"}

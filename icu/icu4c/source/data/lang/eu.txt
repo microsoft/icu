@@ -43,7 +43,6 @@ eu{
         ann{"oboloera"}
         anp{"angikera"}
         ar{"arabiera"}
-        ar_001{"arabiera moderno estandarra"}
         arn{"mapudunguna"}
         arp{"arapahoera"}
         ars{"Najdeko arabiera"}
@@ -110,8 +109,6 @@ eu{
         dar{"darginera"}
         dav{"taitera"}
         de{"alemana"}
-        de_AT{"Austriako alemana"}
-        de_CH{"Suitzako aleman garaia"}
         dgr{"dogribera"}
         dje{"zarma"}
         doi{"dogria"}
@@ -127,20 +124,12 @@ eu{
         eka{"ekajuka"}
         el{"greziera"}
         en{"ingelesa"}
-        en_AU{"Australiako ingelesa"}
-        en_CA{"Kanadako ingelesa"}
-        en_GB{"Britainia Handiko ingelesa"}
-        en_US{"ingeles amerikarra"}
         eo{"esperantoa"}
         es{"gaztelania"}
-        es_419{"Latinoamerikako gaztelania"}
-        es_ES{"Europako gaztelania"}
-        es_MX{"Mexikoko gaztelania"}
         et{"estoniera"}
         eu{"euskara"}
         ewo{"ewondoa"}
         fa{"persiera"}
-        fa_AF{"daria"}
         ff{"fula"}
         fi{"finlandiera"}
         fil{"filipinera"}
@@ -148,8 +137,6 @@ eu{
         fo{"faroera"}
         fon{"fonera"}
         fr{"frantsesa"}
-        fr_CA{"Kanadako frantsesa"}
-        fr_CH{"Suitzako frantsesa"}
         frc{"cajun frantsesa"}
         frr{"iparraldeko frisiera"}
         fur{"friulera"}
@@ -174,7 +161,6 @@ eu{
         hax{"hegoaldeko haidera"}
         he{"hebreera"}
         hi{"hindia"}
-        hi_Latn{"hindia (latindarra)"}
         hil{"hiligaynonera"}
         hmn{"hmonga"}
         hr{"kroaziera"}
@@ -310,14 +296,12 @@ eu{
         nb{"bokmål (norvegiera)"}
         nd{"iparraldeko ndebeleera"}
         nds{"behe-alemana"}
-        nds_NL{"behe-saxoiera"}
         ne{"nepalera"}
         new{"newarera"}
         ng{"ndonga"}
         nia{"niasera"}
         niu{"niueera"}
         nl{"nederlandera"}
-        nl_BE{"flandriera"}
         nmg{"kwasiera"}
         nn{"nynorsk (norvegiera)"}
         nnh{"ngiemboonera"}
@@ -351,8 +335,6 @@ eu{
         prg{"prusiera"}
         ps{"paxtunera"}
         pt{"portugesa"}
-        pt_BR{"Brasilgo portugesa"}
-        pt_PT{"Europako portugesa"}
         qu{"kitxua"}
         quc{"quicheera"}
         raj{"rajastanera"}
@@ -362,7 +344,6 @@ eu{
         rm{"erretorromaniera"}
         rn{"rundiera"}
         ro{"errumaniera"}
-        ro_MD{"moldaviera"}
         rof{"romboa"}
         ru{"errusiera"}
         rup{"aromaniera"}
@@ -383,7 +364,6 @@ eu{
         seh{"senera"}
         ses{"koyraboro sennia"}
         sg{"sangoa"}
-        sh{"serbokroaziera"}
         shi{"tachelhita"}
         shn{"shanera"}
         si{"sinhala"}
@@ -409,7 +389,6 @@ eu{
         suk{"sukumera"}
         sv{"suediera"}
         sw{"swahilia"}
-        sw_CD{"Kongoko swahilia"}
         swb{"komoreera"}
         syr{"asiriera"}
         szl{"silesiera"}
@@ -478,8 +457,6 @@ eu{
         za{"zhuangera"}
         zgh{"amazigera estandarra"}
         zh{"txinera"}
-        zh_Hans{"txinera sinplifikatua"}
-        zh_Hant{"txinera tradizionala"}
         zu{"zuluera"}
         zun{"zuñiera"}
         zxx{"ez dago eduki linguistikorik"}
@@ -490,21 +467,6 @@ eu{
     }
     Languages%extension{
         ku{"kurmanjia"}
-    }
-    Languages%long{
-        zh_Hans{"mandarin sinplifikatua"}
-        zh_Hant{"mandarin tradizionala"}
-    }
-    Languages%menu{
-        yue{"Kantongo txinera"}
-        zh{"mandarina"}
-    }
-    Languages%short{
-        en_GB{"Erresuma Batuko ingelesa"}
-        en_US{"AEBko ingelesa"}
-    }
-    Languages%variant{
-        hi_Latn{"hinglisha"}
     }
     Scripts{
         Adlm{"adlama"}
@@ -711,7 +673,6 @@ eu{
             iso8601{"ISO-8601 egutegia"}
             japanese{"Japoniar egutegia"}
             persian{"Egutegi persiarra"}
-            roc{"Minguo egutegia"}
         }
         calendar%core{
             buddhist{"Budista"}
@@ -727,7 +688,6 @@ eu{
             islamic-umalqura{"Islamiarra (Umm al-Qura)"}
             japanese{"Japoniarra"}
             persian{"Persiarra"}
-            roc{"Minguoa"}
         }
         cf{
             account{"Kontabilitateko moneta-formatua"}

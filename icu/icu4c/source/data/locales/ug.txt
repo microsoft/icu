@@ -633,16 +633,6 @@ ug{
                 "{1}، {0}",
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    1{"مىنگو"}
-                }
-                wide{
-                    0{"جۇڭخۇا مىنگودىن بۇرۇن"}
-                }
-            }
-        }
     }
     delimiters{
         alternateQuotationEnd{"‹"}

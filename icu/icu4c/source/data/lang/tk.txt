@@ -32,7 +32,6 @@ tk{
         ann{"obolo dili"}
         anp{"angika dili"}
         ar{"arap dili"}
-        ar_001{"häzirki zaman standart arap dili"}
         arn{"mapuçe dili"}
         arp{"arapaho dili"}
         ars{"nejdi arap dili"}
@@ -99,7 +98,6 @@ tk{
         dar{"dargi dili"}
         dav{"taita dili"}
         de{"nemes dili"}
-        de_CH{"ýokarky nemes dili (Şweýsariýa)"}
         dgr{"dogrib dili"}
         dje{"zarma dili"}
         doi{"dogri"}
@@ -115,16 +113,12 @@ tk{
         eka{"ekajuk dili"}
         el{"grek dili"}
         en{"iňlis dili"}
-        en_GB{"iňlis dili (Beýik Britaniýa)"}
-        en_US{"iňlis dili (Amerika)"}
         eo{"esperanto dili"}
         es{"ispan dili"}
-        es_ES{"ispan dili (Ýewropa)"}
         et{"eston dili"}
         eu{"bask dili"}
         ewo{"ewondo dili"}
         fa{"pars dili"}
-        fa_AF{"dari dili"}
         ff{"fula dili"}
         fi{"fin dili"}
         fil{"filippin dili"}
@@ -294,7 +288,6 @@ tk{
         nia{"nias dili"}
         niu{"niue dili"}
         nl{"niderland dili"}
-        nl_BE{"flamand dili"}
         nmg{"kwasio dili"}
         nn{"norwegiýa nýunorsk dili"}
         nnh{"ngembun dili"}
@@ -328,7 +321,6 @@ tk{
         prg{"prus dili"}
         ps{"puştu dili"}
         pt{"portugal dili"}
-        pt_PT{"portugal dili (Ýewropa)"}
         qu{"keçua dili"}
         quc{"kiçe dili"}
         raj{"rajastani dili"}
@@ -338,7 +330,6 @@ tk{
         rm{"retoroman dili"}
         rn{"rundi dili"}
         ro{"rumyn dili"}
-        ro_MD{"moldaw dili"}
         rof{"rombo dili"}
         ru{"rus dili"}
         rup{"arumyn dili"}
@@ -384,7 +375,6 @@ tk{
         suk{"sukuma dili"}
         sv{"şwed dili"}
         sw{"suahili dili"}
-        sw_CD{"kongo suahili dili"}
         swb{"komor dili"}
         syr{"siriýa dili"}
         szl{"silez dili"}
@@ -451,8 +441,6 @@ tk{
         za{"çžuan dili"}
         zgh{"standart Marokko tamazight dili"}
         zh{"hytaý dili"}
-        zh_Hans{"ýönekeýleşdirilen hytaý dili"}
-        zh_Hant{"adaty hytaý dili"}
         zu{"zulu dili"}
         zun{"zuni dili"}
         zxx{"dilçilige degişli mazmun ýok"}
@@ -463,21 +451,6 @@ tk{
     }
     Languages%extension{
         ku{"kurmanji dili"}
-    }
-    Languages%long{
-        zh_Hans{"ýönekeýleşdirilen hytaý diliniň mandarin şiwesi"}
-        zh_Hant{"adaty hytaý diliniň mandarin şiwesi"}
-    }
-    Languages%menu{
-        yue{"hytaý dili, kantonça"}
-        zh{"hytaý dili, mandarin"}
-    }
-    Languages%short{
-        az{"azeri dili"}
-        en_US{"iňlis dili (ABŞ)"}
-    }
-    Languages%variant{
-        hi_Latn{"hingliş"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -560,7 +533,6 @@ tk{
             iso8601{"ISO-8601 senenamasy"}
             japanese{"Ýapon senenamasy"}
             persian{"Pars senenamasy"}
-            roc{"Minguo senenamasy"}
         }
         calendar%core{
             buddhist{"Buddist"}
@@ -577,7 +549,6 @@ tk{
             islamic-umalqura{"Hijri-kamary (Umm al-Kura)"}
             japanese{"Ýapon"}
             persian{"Pars"}
-            roc{"Minguo"}
         }
         cf{
             account{"Pul birliginiň buhgalterçilik formaty"}

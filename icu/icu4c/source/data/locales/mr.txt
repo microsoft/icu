@@ -1004,14 +1004,6 @@ mr{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"आर.ओ.सी. आधी"}
-                    1{"मिंगू"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"क्रियाकलाप"}

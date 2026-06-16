@@ -849,9 +849,6 @@ blo{
         "Asia:Ulaanbaatar"{
             ec{"Ulanbatɔɔr"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumkii"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Neraa"}
         }
