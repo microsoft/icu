@@ -1,7 +1,10 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 fr_CA{
+    Keys{
+        em{"Présentation des émojis"}
+    }
     Languages{
         ady{"adygué"}
         ang{"vieil anglais"}
@@ -28,7 +31,6 @@ fr_CA{
         gu{"gujarati"}
         ii{"yi de Sichuan"}
         ken{"kenyang"}
-        kg{"kongo"}
         kl{"kalaallisut"}
         ks{"kashmiri"}
         ksb{"chambala"}
@@ -37,9 +39,9 @@ fr_CA{
         lzh{"chinois classique"}
         mgh{"makhuwa-meetto"}
         mgo{"meta’"}
-        mr{"marathe"}
         mwr{"marwari"}
         mwv{"mentawai"}
+        nds_NL{"bas saxon"}
         njo{"ao naga"}
         nmg{"kwasio"}
         nwc{"newari classique"}
@@ -62,8 +64,29 @@ fr_CA{
         smn{"sami d’Inari"}
         stq{"frison de Saterland"}
         sus{"sosso"}
+        sw_CD{"swahili congolais"}
         tru{"turoyo"}
         tzm{"tamazight"}
+    }
+    Languages%extension{
+        ku{"kurmanji"}
+    }
+    Languages%long{
+        zh_Hans{"chinois, mandarin simplifié"}
+        zh_Hant{"chinois, mandarin traditionnel"}
+    }
+    Languages%menu{
+        ckb{"kurde central"}
+        yue{"chinois, cantonais"}
+        zh{"chinois, mandarin"}
+    }
+    Languages%short{
+        en_GB{"anglais (R.-U.)"}
+        en_US{"anglais (É.-U.)"}
+    }
+    Languages%variant{
+        ckb{"sorani"}
+        ug{"ouïghour"}
     }
     Scripts{
         Deva{"devanagari"}
@@ -80,25 +103,28 @@ fr_CA{
         Hant{"caractères chinois traditionnels"}
     }
     Types{
-        calendar{
-            islamic-umalqura{"calendrier musulman (calculé, Umm al-Qura)"}
-        }
         collation{
-            big5han{"ordre de tri chinois traditionnel - Big5"}
             dictionary{"ordre de tri du dictionnaire"}
             eor{"ordre multilingue européen"}
-            gb2312han{"ordre de tri chinois simplifié - GB2312"}
             phonebook{"ordre de tri de l’annuaire"}
             pinyin{"ordre de tri pinyin"}
-            reformed{"ordre de tri réformé"}
             searchjl{"Rechercher par consonne initiale en hangeul"}
             stroke{"ordre de tri des traits"}
             traditional{"ordre de tri traditionnel"}
             zhuyin{"ordre de tri zhuyin"}
         }
+        collation%core{
+            compat{"par compatibilité"}
+            dictionary{"du dictionnaire"}
+            phonebook{"de l’annuaire"}
+            stroke{"des traits"}
+        }
         d0{
             fwidth{"pleine chasse"}
             hwidth{"demi-chasse"}
+        }
+        em%core{
+            emoji{"émoji"}
         }
         m0{
             bgn{"BGN (commission de toponymie des États-Unis)"}
@@ -118,6 +144,6 @@ fr_CA{
         territory{"région : {0}"}
     }
     localeDisplayPattern{
-        keyTypePattern{"{0} : {1}"}
+        keyTypePattern{"{0} : {1}"}
     }
 }

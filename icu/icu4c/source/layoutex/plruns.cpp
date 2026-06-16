@@ -44,7 +44,7 @@ pl_getFontRunCount(const pl_fontRuns *fontRuns)
 {
     const FontRuns *fr = (const FontRuns *) fontRuns;
 
-    if (fr == NULL) {
+    if (fr == nullptr) {
         return -1;
     }
 
@@ -56,7 +56,7 @@ pl_resetFontRuns(pl_fontRuns *fontRuns)
 {
     FontRuns *fr = (FontRuns *) fontRuns;
 
-    if (fr != NULL) {
+    if (fr != nullptr) {
         fr->reset();
     }
 }
@@ -66,7 +66,7 @@ pl_getFontRunLastLimit(const pl_fontRuns *fontRuns)
 {
     const FontRuns *fr = (const FontRuns *) fontRuns;
 
-    if (fr == NULL) {
+    if (fr == nullptr) {
         return -1;
     }
 
@@ -79,7 +79,7 @@ pl_getFontRunLimit(const pl_fontRuns *fontRuns,
 {
     const FontRuns *fr = (const FontRuns *) fontRuns;
 
-    if (fr == NULL) {
+    if (fr == nullptr) {
         return -1;
     }
 
@@ -92,8 +92,8 @@ pl_getFontRunFont(const pl_fontRuns *fontRuns,
 {
     const FontRuns *fr = (const FontRuns *) fontRuns;
 
-    if (fr == NULL) {
-        return NULL;
+    if (fr == nullptr) {
+        return nullptr;
     }
 
     return (const le_font *) fr->getFont(run);
@@ -106,7 +106,7 @@ pl_addFontRun(pl_fontRuns *fontRuns,
 {
     FontRuns *fr = (FontRuns *) fontRuns;
 
-    if (fr == NULL) {
+    if (fr == nullptr) {
         return -1;
     }
 
@@ -140,7 +140,7 @@ pl_getValueRunCount(const pl_valueRuns *valueRuns)
 {
     const ValueRuns *vr = (const ValueRuns *) valueRuns;
 
-    if (vr == NULL) {
+    if (vr == nullptr) {
         return -1;
     }
 
@@ -152,7 +152,7 @@ pl_resetValueRuns(pl_valueRuns *valueRuns)
 {
     ValueRuns *vr = (ValueRuns *) valueRuns;
 
-    if (vr != NULL) {
+    if (vr != nullptr) {
         vr->reset();
     }
 }
@@ -162,7 +162,7 @@ pl_getValueRunLastLimit(const pl_valueRuns *valueRuns)
 {
     const ValueRuns *vr = (const ValueRuns *) valueRuns;
 
-    if (vr == NULL) {
+    if (vr == nullptr) {
         return -1;
     }
 
@@ -175,7 +175,7 @@ pl_getValueRunLimit(const pl_valueRuns *valueRuns,
 {
     const ValueRuns *vr = (const ValueRuns *) valueRuns;
 
-    if (vr == NULL) {
+    if (vr == nullptr) {
         return -1;
     }
 
@@ -188,7 +188,7 @@ pl_getValueRunValue(const pl_valueRuns *valueRuns,
 {
     const ValueRuns *vr = (const ValueRuns *) valueRuns;
 
-    if (vr == NULL) {
+    if (vr == nullptr) {
         return -1;
     }
 
@@ -202,7 +202,7 @@ pl_addValueRun(pl_valueRuns *valueRuns,
 {
     ValueRuns *vr = (ValueRuns *) valueRuns;
 
-    if (vr == NULL) {
+    if (vr == nullptr) {
         return -1;
     }
 
@@ -301,28 +301,28 @@ public:
      *
      * @draft ICU 3.8
      */
-    virtual inline UClassID getDynamicClassID() const;
+    inline UClassID getDynamicClassID() const override;
 
 protected:
-    virtual void init(le_int32 capacity);
-    virtual void grow(le_int32 capacity);
+    void init(le_int32 capacity) override;
+    void grow(le_int32 capacity) override;
 
 private:
 
     inline ULocRuns();
     inline ULocRuns(const ULocRuns &other);
-    inline ULocRuns &operator=(const ULocRuns & /*other*/) { return *this; };
+    inline ULocRuns &operator=(const ULocRuns & /*other*/) { return *this; }
     const char **fLocaleNames;
 };
 
 inline ULocRuns::ULocRuns()
-    : LocaleRuns(0), fLocaleNames(NULL)
+    : LocaleRuns(0), fLocaleNames(nullptr)
 {
     // nothing else to do...
 }
 
 inline ULocRuns::ULocRuns(const ULocRuns & /*other*/)
-    : LocaleRuns(0), fLocaleNames(NULL)
+    : LocaleRuns(0), fLocaleNames(nullptr)
 {
     // nothing else to do...
 }
@@ -345,7 +345,7 @@ ULocRuns::ULocRuns(const char **locales, const le_int32 *limits, le_int32 count)
 }
 
 ULocRuns::ULocRuns(le_int32 initialCapacity)
-    : LocaleRuns(initialCapacity), fLocaleNames(NULL)
+    : LocaleRuns(initialCapacity), fLocaleNames(nullptr)
 {
     if(initialCapacity > 0) {
         fLocaleNames = LE_NEW_ARRAY(const char *, initialCapacity);
@@ -362,10 +362,10 @@ ULocRuns::~ULocRuns()
 
     if (fClientArrays) {
         LE_DELETE_ARRAY(fLocales);
-        fLocales = NULL;
+        fLocales = nullptr;
     } else {
         LE_DELETE_ARRAY(fLocaleNames);
-        fLocaleNames = NULL;
+        fLocaleNames = nullptr;
     }
 }
 
@@ -378,7 +378,7 @@ void ULocRuns::init(le_int32 capacity)
 void ULocRuns::grow(le_int32 capacity)
 {
     LocaleRuns::grow(capacity);
-    fLocaleNames = (const char **) LE_GROW_ARRAY(fLocaleNames, capacity);
+    fLocaleNames = static_cast<const char**>(LE_GROW_ARRAY(fLocaleNames, capacity));
 }
 
 le_int32 ULocRuns::add(const char *locale, le_int32 limit)
@@ -387,9 +387,9 @@ le_int32 ULocRuns::add(const char *locale, le_int32 limit)
     le_int32 index = LocaleRuns::add(loc, limit);
 
     if (index >= 0) {
-        char **localeNames = (char **) fLocaleNames;
+        char** localeNames = const_cast<char**>(fLocaleNames);
 
-        localeNames[index] = (char *) locale;
+        localeNames[index] = const_cast<char*>(locale);
     }
 
     return index;
@@ -398,7 +398,7 @@ le_int32 ULocRuns::add(const char *locale, le_int32 limit)
 const char *ULocRuns::getLocaleName(le_int32 run) const
 {
     if (run < 0 || run >= getCount()) {
-        return NULL;
+        return nullptr;
     }
 
     return fLocaleNames[run];
@@ -433,7 +433,7 @@ pl_getLocaleRunCount(const pl_localeRuns *localeRuns)
 {
     const ULocRuns *lr = (const ULocRuns *) localeRuns;
 
-    if (lr == NULL) {
+    if (lr == nullptr) {
         return -1;
     }
 
@@ -445,7 +445,7 @@ pl_resetLocaleRuns(pl_localeRuns *localeRuns)
 {
     ULocRuns *lr = (ULocRuns *) localeRuns;
 
-    if (lr != NULL) {
+    if (lr != nullptr) {
         lr->reset();
     }
 }
@@ -455,7 +455,7 @@ pl_getLocaleRunLastLimit(const pl_localeRuns *localeRuns)
 {
     const ULocRuns *lr = (const ULocRuns *) localeRuns;
 
-    if (lr == NULL) {
+    if (lr == nullptr) {
         return -1;
     }
 
@@ -468,7 +468,7 @@ pl_getLocaleRunLimit(const pl_localeRuns *localeRuns,
 {
     const ULocRuns *lr = (const ULocRuns *) localeRuns;
 
-    if (lr == NULL) {
+    if (lr == nullptr) {
         return -1;
     }
 
@@ -481,8 +481,8 @@ pl_getLocaleRunLocale(const pl_localeRuns *localeRuns,
 {
     const ULocRuns *lr = (const ULocRuns *) localeRuns;
 
-    if (lr == NULL) {
-        return NULL;
+    if (lr == nullptr) {
+        return nullptr;
     }
 
     return lr->getLocaleName(run);
@@ -495,7 +495,7 @@ pl_addLocaleRun(pl_localeRuns *localeRuns,
 {
     ULocRuns *lr = (ULocRuns *) localeRuns;
 
-    if (lr == NULL) {
+    if (lr == nullptr) {
         return -1;
     }
 

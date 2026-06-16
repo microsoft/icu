@@ -31,13 +31,13 @@ public:
     DateFormatRoundTripTest();
     virtual ~DateFormatRoundTripTest();
     
-    void TestDateFormatRoundTrip(void);
-    void TestCentury(void);
+    void TestDateFormatRoundTrip();
+    void TestCentury();
     void test(const Locale& loc);
     void test(DateFormat *fmt, const Locale &origLocale, UBool timeOnly = false );
     int32_t getField(UDate d, int32_t f);
     UnicodeString& escape(const UnicodeString& src, UnicodeString& dst);
-    UDate generateDate(void); 
+    UDate generateDate(); 
     UDate generateDate(UDate minDate); 
 
 
@@ -51,8 +51,8 @@ public:
 static uint32_t randLong() {
     // The portable IntlTest::random() function has sufficient
     // resolution for a 16-bit value, but not for 32 bits.
-    return ((uint32_t) (IntlTest::random() * (1<<16))) |
-          (((uint32_t) (IntlTest::random() * (1<<16))) << 16);
+    return static_cast<uint32_t>(IntlTest::random() * (1 << 16)) |
+           (static_cast<uint32_t>(IntlTest::random() * (1 << 16)) << 16);
 }
 
 /**
@@ -60,7 +60,7 @@ static uint32_t randLong() {
  **/
 static double randFraction()
 {
-    return (double)randLong() / (double)0xFFFFFFFF;
+    return static_cast<double>(randLong()) / static_cast<double>(0xFFFFFFFF);
 }
 
 /**

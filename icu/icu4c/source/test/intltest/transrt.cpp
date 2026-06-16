@@ -129,7 +129,7 @@ public:
     LegalJamo() {}
     virtual ~LegalJamo() {}
     virtual UBool is(const UnicodeString& sourceString) const override;
-            int   getType(UChar c) const;
+            int   getType(char16_t c) const;
 };
 
 UBool LegalJamo::is(const UnicodeString& sourceString) const {
@@ -156,7 +156,7 @@ UBool LegalJamo::is(const UnicodeString& sourceString) const {
     return true;
 }
 
-int LegalJamo::getType(UChar c) const {
+int LegalJamo::getType(char16_t c) const {
     if (0x1100 <= c && c <= 0x1112) 
         return 0;
     else if (0x1161 <= c && c  <= 0x1175) 
@@ -174,9 +174,9 @@ public:
 
     virtual UBool is(const UnicodeString& sourceString) const override;
 
-    static UBool isVowel(UChar c);
+    static UBool isVowel(char16_t c);
     
-    static UBool isRho(UChar c);
+    static UBool isRho(char16_t c);
 };
 
 UBool LegalGreek::is(const UnicodeString& sourceString) const { 
@@ -192,7 +192,7 @@ UBool LegalGreek::is(const UnicodeString& sourceString) const {
         //    return false;
         // }       
         for (int32_t i = 0; i < decomp.length(); ++i) {
-            UChar c = decomp.charAt(i);
+            char16_t c = decomp.charAt(i);
             // exclude all the accents
             if (c == 0x0313 || c == 0x0314 || c == 0x0300 || c == 0x0302
                 || c == 0x0342 || c == 0x0345
@@ -211,7 +211,7 @@ UBool LegalGreek::is(const UnicodeString& sourceString) const {
     int32_t breathingCount = 0;
     int32_t letterCount = 0;
     for (int32_t i = 0; i < decomp.length(); ++i) {
-        UChar c = decomp.charAt(i);
+        char16_t c = decomp.charAt(i);
         if (u_isalpha(c)) {
             ++letterCount;
             if (noLetterYet) {
@@ -232,7 +232,7 @@ UBool LegalGreek::is(const UnicodeString& sourceString) const {
     return breathingCount == 0;
 }
 
-UBool LegalGreek::isVowel(UChar c) {
+UBool LegalGreek::isVowel(char16_t c) {
     switch (c) {
     case 0x03B1:
     case 0x03B5:
@@ -253,7 +253,7 @@ UBool LegalGreek::isVowel(UChar c) {
     return false;
 }
 
-UBool LegalGreek::isRho(UChar c) {
+UBool LegalGreek::isRho(char16_t c) {
     switch (c) {
     case 0x03C1:
     case 0x03A1:
@@ -494,7 +494,7 @@ void RTTest::test(const UnicodeString& sourceRangeVal,
     this->toTarget.addAll(okAnyway);
 
     this->roundtripExclusionsSet.clear();
-    if (roundtripExclusions != NULL && strlen(roundtripExclusions) > 0) {
+    if (roundtripExclusions != nullptr && strlen(roundtripExclusions) > 0) {
         this->roundtripExclusionsSet.applyPattern(UnicodeString(roundtripExclusions, -1, US_INV), status);
         if (U_FAILURE(status)) {
             parent->errln("FAIL: UnicodeSet::applyPattern(%s)", roundtripExclusions);
@@ -513,12 +513,12 @@ void RTTest::test(const UnicodeString& sourceRangeVal,
 
     if (errorCount > 0) {
         char str[100];
-        int32_t length = transliteratorID.extract(str, 100, NULL, status);
+        int32_t length = transliteratorID.extract(str, 100, nullptr, status);
         str[length] = 0;
         parent->errln("FAIL: %s errors: %d %s", str, errorCount, (errorCount > errorLimit ? " (at least!)" : " ")); // + ", see " + logFileName);
     } else {
         char str[100];
-        int32_t length = transliteratorID.extract(str, 100, NULL, status);
+        int32_t length = transliteratorID.extract(str, 100, nullptr, status);
         str[length] = 0;
         parent->logln("%s ok", str);
     }
@@ -527,7 +527,7 @@ void RTTest::test(const UnicodeString& sourceRangeVal,
 UBool RTTest::checkIrrelevants(Transliterator *t, 
                                const UnicodeString& irrelevants) {
     for (int i = 0; i < irrelevants.length(); ++i) {
-        UChar c = irrelevants.charAt(i);
+        char16_t c = irrelevants.charAt(i);
         UnicodeString srcStr(c);
         UnicodeString targ = srcStr;
         t->transliterate(targ);
@@ -544,18 +544,18 @@ void RTTest::test2(UBool quickRt, int32_t density) {
     TransliteratorPointer sourceToTarget(
         Transliterator::createInstance(transliteratorID, UTRANS_FORWARD, parseError,
                                        status));
-    if ((Transliterator *)sourceToTarget == NULL) {
+    if (sourceToTarget == nullptr) {
         parent->dataerrln("FAIL: createInstance(" + transliteratorID +
-                   ") returned NULL. Error: " + u_errorName(status)
+                   ") returned nullptr. Error: " + u_errorName(status)
                    + "\n\tpreContext : " + prettify(parseError.preContext) 
                    + "\n\tpostContext : " + prettify(parseError.postContext));
         
                 return;
     }
     TransliteratorPointer targetToSource(sourceToTarget->createInverse(status));
-    if ((Transliterator *)targetToSource == NULL) {
+    if (targetToSource == nullptr) {
         parent->errln("FAIL: " + transliteratorID +
-                   ".createInverse() returned NULL. Error:" + u_errorName(status)          
+                   ".createInverse() returned nullptr. Error:" + u_errorName(status)          
                    + "\n\tpreContext : " + prettify(parseError.preContext) 
                    + "\n\tpostContext : " + prettify(parseError.postContext));
         return;
@@ -606,7 +606,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
           if (!usi.next() || usi.isString()) break;
           UChar32 c = usi.getCodepoint();
                     
-          UnicodeString srcStr((UChar32)c);
+          UnicodeString srcStr(c);
           UnicodeString targ = srcStr;
           sourceToTarget->transliterate(targ);
           UnicodeString targ2 = srcStr;
@@ -621,7 +621,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
           if (!usi.next() || usi.isString()) break;
           UChar32 c = usi.getCodepoint();
               
-          UnicodeString srcStr((UChar32)c);
+          UnicodeString srcStr(c);
           UnicodeString targ = srcStr;
           targetToSource->transliterate(targ);
           UnicodeString targ2 = srcStr;
@@ -640,7 +640,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
         if (!usi.next() || usi.isString()) break;
         UChar32 c = usi.getCodepoint();
                 
-        UnicodeString srcStr((UChar32)c);
+        UnicodeString srcStr(c);
         UnicodeString targ = srcStr;
         sourceToTarget->transliterate(targ);
         if (toTarget.containsAll(targ) == false
@@ -689,8 +689,8 @@ void RTTest::test2(UBool quickRt, int32_t density) {
             UChar32 d = usi2.getCodepoint();
                     
             UnicodeString srcStr;
-            srcStr += (UChar32)c;
-            srcStr += (UChar32)d;
+            srcStr += c;
+            srcStr += d;
             UnicodeString targ = srcStr;
             sourceToTarget->transliterate(targ);
             if (toTarget.containsAll(targ) == false || 
@@ -734,7 +734,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
         if(usi.isString()){
             srcStr = usi.getString();
         }else{
-            srcStr = (UnicodeString)usi.getCodepoint();
+            srcStr = UnicodeString(usi.getCodepoint());
         }
 
         UChar32 c = srcStr.char32At(0);
@@ -801,7 +801,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
         if (++count > pairLimit) {
             //throw new TestTruncated("Test truncated at " + pairLimit + " x 64k pairs");
             parent->logln("");
-            parent->logln((UnicodeString)"Test truncated at " + pairLimit + " x 64k pairs");
+            parent->logln(UnicodeString("Test truncated at ") + pairLimit + " x 64k pairs");
             return;
         }
 
@@ -864,7 +864,7 @@ void RTTest::test2(UBool quickRt, int32_t density) {
 void RTTest::logWrongScript(const UnicodeString& label,
                             const UnicodeString& from,
                             const UnicodeString& to) {
-    parent->errln((UnicodeString)"FAIL " +
+    parent->errln(UnicodeString("FAIL ") +
                label + ": " +
                from + "(" + TestUtility::hex(from) + ") => " +
                to + "(" + TestUtility::hex(to) + ")");
@@ -876,7 +876,7 @@ void RTTest::logNotCanonical(const UnicodeString& label,
                              const UnicodeString& to,
                              const UnicodeString& fromCan,
                              const UnicodeString& toCan) {
-    parent->errln((UnicodeString)"FAIL (can.equiv)" +
+    parent->errln(UnicodeString("FAIL (can.equiv)") +
                label + ": " +
                from + "(" + TestUtility::hex(from) + ") => " +
                to + "(" + TestUtility::hex(to) + ")" +
@@ -888,7 +888,7 @@ void RTTest::logNotCanonical(const UnicodeString& label,
 }
 
 void RTTest::logFails(const UnicodeString& label) {
-    parent->errln((UnicodeString)"<br>FAIL " + label);
+    parent->errln(UnicodeString("<br>FAIL ") + label);
     ++errorCount;
 }
 
@@ -897,7 +897,7 @@ void RTTest::logToRulesFails(const UnicodeString& label,
                              const UnicodeString& to, 
                              const UnicodeString& otherTo)
 {
-    parent->errln((UnicodeString)"FAIL: " +
+    parent->errln(UnicodeString("FAIL: ") +
                label + ": " +
                from + "(" + TestUtility::hex(from) + ") => " +
                to + "(" + TestUtility::hex(to) + ")" +
@@ -916,10 +916,10 @@ void RTTest::logRoundTripFailure(const UnicodeString& from,
                                  const UnicodeString& back) {
     if (legalSource->is(from) == false) return; // skip illegals
 
-    parent->errln((UnicodeString)"FAIL Roundtrip: " +
+    parent->errln(UnicodeString("FAIL Roundtrip: ") +
                from + "(" + TestUtility::hex(from) + ") => " +
-               to + "(" + TestUtility::hex(to) + ")  "+toID+" => " +
-               back + "(" + TestUtility::hex(back) + ") "+backID+" => ");
+               to + "(" + TestUtility::hex(to) + ")  " + toID + " => " +
+               back + "(" + TestUtility::hex(back) + ") " + backID + " => ");
     ++errorCount;
 }
 
@@ -994,7 +994,7 @@ void TransliteratorRoundTripTest::TestJamo() {
     t.test(UnicodeString("[a-zA-Z]", ""), 
            UnicodeString("[\\u1100-\\u1112 \\u1161-\\u1175 \\u11A8-\\u11C2]", 
                          ""), 
-           NULL, this, quick, legal);
+           nullptr, this, quick, legal);
     delete legal;
 }
 
@@ -1004,7 +1004,7 @@ void TransliteratorRoundTripTest::TestHangul() {
     if (quick) t.setPairLimit(1000);
     t.test(UnicodeString("[a-zA-Z]", ""), 
            UnicodeString("[\\uAC00-\\uD7A4]", ""), 
-           NULL, this, quick, legal, 1);
+           nullptr, this, quick, legal, 1);
     delete legal;
 }
 
@@ -1050,7 +1050,7 @@ void TransliteratorRoundTripTest::TestHan() {
     for (i=0; ;i++) {
         // Add all of the Chinese exemplar chars to the string "source".
         c = uset_charAt(USetExemplars.getAlias(), i);
-        if (c == (UChar32)-1) {
+        if (c == static_cast<UChar32>(-1)) {
             break;
         }
         source.append(c);
@@ -1212,8 +1212,8 @@ UBool LegalHebrew::is(const UnicodeString& sourceString)const{
     if (sourceString.length() == 0) return true;
     // don't worry about surrogates.
     for (int i = 0; i < sourceString.length(); ++i) {
-        UChar ch = sourceString.charAt(i);
-        UChar next = i+1 == sourceString.length() ? 0x0000 : sourceString.charAt(i);
+        char16_t ch = sourceString.charAt(i);
+        char16_t next = i+1 == sourceString.length() ? 0x0000 : sourceString.charAt(i);
         if (FINAL.contains(ch)) {
             if (LETTER.contains(next)) return false;
         } else if (NON_FINAL.contains(ch)) {
@@ -1244,7 +1244,7 @@ void TransliteratorRoundTripTest::TestCyrillic() {
     Legal *legal = new Legal();
 
     test.test(UnicodeString("[a-zA-Z\\u0110\\u0111\\u02BA\\u02B9]", ""), 
-              UnicodeString("[[\\u0400-\\u045F] & [:Age=3.2:]]", ""), NULL, this, quick, 
+              UnicodeString("[[\\u0400-\\u045F] & [:Age=3.2:]]", ""), nullptr, this, quick, 
               legal);
 
     delete legal;
@@ -1329,7 +1329,7 @@ void TransliteratorRoundTripTest::TestDevanagariLatin() {
         UErrorCode status = U_ZERO_ERROR;
         UParseError parseError;
         TransliteratorPointer t1(Transliterator::createInstance("[\\u0964-\\u0965\\u0981-\\u0983\\u0985-\\u098C\\u098F-\\u0990\\u0993-\\u09A8\\u09AA-\\u09B0\\u09B2\\u09B6-\\u09B9\\u09BC\\u09BE-\\u09C4\\u09C7-\\u09C8\\u09CB-\\u09CD\\u09D7\\u09DC-\\u09DD\\u09DF-\\u09E3\\u09E6-\\u09FA];NFD;Bengali-InterIndic;InterIndic-Gujarati;NFC;",UTRANS_FORWARD, parseError, status));
-        if((Transliterator *)t1 != NULL){
+        if(t1 != nullptr){
             TransliteratorPointer t2(t1->createInverse(status));
             if(U_FAILURE(status)){
                 errln("FAIL: could not create the Inverse:-( \n");
@@ -1587,13 +1587,13 @@ static const char * const interIndicArray[] = {
     "[\\u0BF0\\u0BF1\\u0BF2]" /*roundtrip exclusions*/,
 
     "Latin-Telugu",latinForIndic, "[:Telugu:]", 
-    NULL /*roundtrip exclusions*/,
+    nullptr /*roundtrip exclusions*/,
 
     "Latin-Kannada",latinForIndic, "[:Kannada:]", 
-    NULL /*roundtrip exclusions*/,
+    nullptr /*roundtrip exclusions*/,
 
     "Latin-Malayalam",latinForIndic, "[:Malayalam:]", 
-    NULL /*roundtrip exclusions*/  
+    nullptr /*roundtrip exclusions*/  
 };
 
 void TransliteratorRoundTripTest::TestDebug(const char* name,const char fromSet[],

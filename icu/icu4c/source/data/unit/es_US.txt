@@ -1,15 +1,34 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 es_US{
     %%Parent{"es_419"}
     units{
+        angle{
+            steradian{
+                dnam{"estereorradián"}
+            }
+        }
         compound{
+            10p-12{"picó{0}"}
             10p-2{"centí{0}"}
+            10p-27{"ronto {0}"}
+            10p-30{"quecto {0}"}
         }
         concentr{
-            milligram-ofglucose-per-deciliter{
-                dnam{"miligramos por decilitro"}
+            katal{
+                dnam{"katal"}
+            }
+            part{
+                dnam{"partes por millón"}
+                one{"{0} parte por millón"}
+                other{"{0} partes por millón"}
+            }
+            percent{
+                dnam{"por ciento"}
+            }
+            permille{
+                dnam{"por mil"}
             }
         }
         electric{
@@ -17,6 +36,15 @@ es_US{
                 dnam{"amperios"}
                 one{"{0} amperio"}
                 other{"{0} amperios"}
+            }
+            coulomb{
+                dnam{"culombio"}
+            }
+            farad{
+                dnam{"faradio"}
+            }
+            henry{
+                dnam{"henrio"}
             }
             milliampere{
                 dnam{"miliamperio"}
@@ -28,8 +56,20 @@ es_US{
                 one{"{0} ohmio"}
                 other{"{0} ohmios"}
             }
+            siemens{
+                dnam{"simens"}
+                other{"{0} siemens"}
+            }
         }
         energy{
+            calorie-it{
+                dnam{"caloría IT"}
+                one{"{0} caloría IT"}
+                other{"{0} calorías IT"}
+            }
+            gray{
+                dnam{"gray"}
+            }
             joule{
                 dnam{"julios"}
                 one{"{0} julio"}
@@ -44,6 +84,16 @@ es_US{
                 dnam{"kilovatios por hora"}
                 one{"{0} kilovatio por hora"}
                 other{"{0} kilovatios por hora"}
+            }
+            sievert{
+                dnam{"sievert"}
+            }
+        }
+        force{
+            kilogram-force{
+                dnam{"kilopondio"}
+                one{"{0} kilopondio"}
+                other{"{0} kilopondios"}
             }
         }
         graphics{
@@ -76,10 +126,30 @@ es_US{
                 other{"{0} millas naúticas"}
             }
         }
+        magnetic{
+            tesla{
+                dnam{"tesla"}
+            }
+            weber{
+                dnam{"weber"}
+            }
+        }
         power{
             horsepower{
                 one{"{0} caballo de fuerza"}
                 other{"{0} caballos de fuerza"}
+            }
+        }
+        speed{
+            beaufort{
+                dnam{"Escala Beaufort"}
+                gender{"feminine"}
+                one{"Escala Beaufort {0}"}
+                other{"Escala Beaufort {0}"}
+            }
+            light-speed{
+                one{"{0} de luces"}
+                other{"{0} luces"}
             }
         }
         temperature{
@@ -116,9 +186,33 @@ es_US{
                 one{"onza fluida imperial"}
                 other{"{0} onzas fluidas imperiales"}
             }
+            fluid-ounce-metric{
+                dnam{"onza líquida métrica"}
+            }
         }
     }
     unitsNarrow{
+        angle{
+            arc-minute{
+                one{"{0} arcmin"}
+                other{"{0}′"}
+            }
+            arc-second{
+                one{"{0} arcsec"}
+                other{"{0}″"}
+            }
+        }
+        concentr{
+            ofglucose{
+                one{"{0} Glc"}
+                other{"{0} Glc"}
+            }
+            part{
+                dnam{"ppm"}
+                one{"{0} ppm"}
+                other{"{0} ppm"}
+            }
+        }
         duration{
             day{
                 dnam{"día"}
@@ -136,11 +230,28 @@ es_US{
                 other{"{0}a"}
             }
         }
-        graphics{
-            dot{
-                dnam{"punto"}
-                one{"{0} p"}
-                other{"{0} p"}
+        electric{
+            farad{
+                one{"{0} F"}
+                other{"{0}F"}
+            }
+        }
+        energy{
+            calorie-it{
+                dnam{"cal. IT"}
+                one{"{0} cal. IT"}
+                other{"{0} cal. IT"}
+            }
+            therm-us{
+                one{"{0}th US"}
+                other{"{0}th US"}
+            }
+        }
+        force{
+            kilogram-force{
+                dnam{"kp"}
+                one{"{0} kp"}
+                other{"{0} kp"}
             }
         }
         length{
@@ -150,10 +261,37 @@ es_US{
             furlong{
                 dnam{"furlong"}
             }
+            kilometer{
+                one{"{0} km"}
+                other{"{0}km"}
+            }
             mile-scandinavian{
                 dnam{"mil"}
                 one{"{0}mil"}
                 other{"{0}mil"}
+            }
+            millimeter{
+                one{"{0} mm"}
+                other{"{0}mm"}
+            }
+            nautical-mile{
+                one{"{0}mn"}
+                other{"{0}mn"}
+            }
+        }
+        pressure{
+            ofhg{
+                one{"{0} de Hg"}
+                other{"{0} de Hg"}
+            }
+        }
+        speed{
+            beaufort{
+                dnam{"B"}
+            }
+            light-speed{
+                one{"{0}luz"}
+                other{"{0}luces"}
             }
         }
         temperature{
@@ -162,9 +300,32 @@ es_US{
                 other{"{0}°"}
             }
         }
+        volume{
+            bushel{
+                one{"{0}bsh"}
+                other{"{0}bsh"}
+            }
+            pint-metric{
+                one{"{0}ptm"}
+                other{"{0}ptm"}
+            }
+        }
     }
     unitsShort{
         concentr{
+            ofglucose{
+                one{"{0} Glc"}
+                other{"{0} Glc"}
+            }
+            part{
+                dnam{"parte por millón"}
+                one{"{0} ppm"}
+                other{"{0} ppm"}
+            }
+            part-per-1e6{
+                one{"{0} partes/millón"}
+                other{"{0} pts./M"}
+            }
             percent{
                 dnam{"%"}
             }
@@ -197,25 +358,34 @@ es_US{
                 per{"{0}/a"}
             }
         }
+        electric{
+            farad{
+                one{"{0} F"}
+                other{"{0} F"}
+            }
+        }
         energy{
+            calorie-it{
+                dnam{"cal. IT"}
+                one{"{0} cal. IT"}
+                other{"{0} cal. IT"}
+            }
             therm-us{
                 dnam{"th US"}
                 one{"{0} th US"}
                 other{"{0} th US"}
             }
         }
-        graphics{
-            dot{
-                dnam{"px"}
-                one{"{0} px"}
-                other{"{0} px"}
+        force{
+            kilogram-force{
+                dnam{"kp"}
+                one{"{0} kp"}
+                other{"{0} kp"}
             }
         }
         length{
             furlong{
                 dnam{"furlongs"}
-                one{"{0} fur"}
-                other{"{0} fur"}
             }
             light-year{
                 one{"{0} a. l."}
@@ -236,9 +406,18 @@ es_US{
             }
         }
         speed{
+            beaufort{
+                dnam{"Beaufort"}
+                one{"Beaufort {0}"}
+                other{"Beaufort {0}"}
+            }
             knot{
                 one{"{0} nudo"}
                 other{"{0} nudos"}
+            }
+            light-speed{
+                one{"{0} de luces"}
+                other{"{0} de luces"}
             }
         }
         torque{
@@ -256,7 +435,7 @@ es_US{
             }
             cup{
                 dnam{"tza."}
-                one{"{0} tza."}
+                one{"{0} tzas."}
                 other{"{0} tzas."}
             }
             dessert-spoon{

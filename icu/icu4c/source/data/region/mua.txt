@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 mua{
     Countries{
         AD{"andorra"}
@@ -36,7 +36,7 @@ mua{
         BY{"belarussiya"}
         BZ{"beliziya"}
         CA{"kanada"}
-        CD{"Congo (RDC)"}
+        CD{"Sǝr Kongo ma dii ne zair"}
         CF{"centrafrika"}
         CG{"kongo"}
         CH{"Sǝr Swiss"}
@@ -93,7 +93,6 @@ mua{
         IE{"Sǝr Ireland"}
         IL{"Sǝr Israel"}
         IN{"Sǝr Indǝ"}
-        IO{"anglofoŋ ma Indiya"}
         IQ{"Irak"}
         IR{"Iraŋ"}
         IS{"Sǝr Island"}
@@ -165,7 +164,7 @@ mua{
         PM{"Sǝr Pǝtar ne Mikǝlon"}
         PN{"Pitkairn"}
         PR{"Porto Riko"}
-        PS{"Autorité palestinienne"}
+        PS{"Sǝr Palestiniya"}
         PT{"Sǝr Portugal"}
         PW{"Sǝr Palau"}
         PY{"Paragwai"}

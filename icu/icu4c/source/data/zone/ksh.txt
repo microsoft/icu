@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 ksh{
     zoneStrings{
         "Africa:Cairo"{
@@ -147,6 +147,9 @@ ksh{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
+        "Asia:Urumqi"{
+            ec{"Urrumptschi"}
+        }
         "Asia:Vladivostok"{
             ec{"Wladiwostok"}
         }
@@ -237,9 +240,6 @@ ksh{
         "Europe:Tirane"{
             ec{"Tiraana"}
         }
-        "Europe:Uzhgorod"{
-            ec{"Uschjorod"}
-        }
         "Europe:Vatican"{
             ec{"der Vatikahn"}
         }
@@ -254,9 +254,6 @@ ksh{
         }
         "Europe:Zagreb"{
             ec{"Sagreb"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"Saporischschja"}
         }
         "Europe:Zurich"{
             ec{"Züresch"}
@@ -286,9 +283,7 @@ ksh{
             ls{"Söd-Affrekaanesche Zigg"}
         }
         "meta:Africa_Western"{
-            ld{"Wäß-Affrekaanesche Sommerzigg"}
-            lg{"Wäß-Affrekaanesche Zigg"}
-            ls{"Jewöhnlijje Wäß-Affrekaanesche Zigg"}
+            ls{"Wäß-Affrekaanesche Zigg"}
         }
         "meta:Azores"{
             ld{"de Azore ier Summerzick"}
@@ -341,9 +336,6 @@ ksh{
         "meta:Seychelles"{
             ls{"Zigg vun de Seischälle"}
         }
-        fallbackFormat{"{1} ({0})"}
-        gmtFormat{"GMT{0}"}
-        hourFormat{"+HH:mm;-HH:mm"}
         regionFormat{"Zick vun {0}"}
         regionFormatDaylight{"Summerzick vun {0}"}
         regionFormatStandard{"Schtandattzick vun {0}"}

@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 sr_Cyrl_BA{
     Countries{
         001{"свијет"}
@@ -40,5 +40,8 @@ sr_Cyrl_BA{
         VC{"Свети Винсент и Гренадини"}
         VG{"Британска Дјевичанска острва"}
         VI{"Америчка Дјевичанска острва"}
+    }
+    Countries%variant{
+        FK{"Фолкландска (Малвинска) острва"}
     }
 }

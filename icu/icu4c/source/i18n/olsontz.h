@@ -113,7 +113,7 @@ class SimpleTimeZone;
  * (UN M.49 - World).  This data is generated from "zone.tab"
  * in the tz database.
  */
-class U_I18N_API OlsonTimeZone: public BasicTimeZone {
+class U_I18N_API_CLASS OlsonTimeZone : public BasicTimeZone {
  public:
     /**
      * Construct from a resource bundle.
@@ -141,7 +141,7 @@ class U_I18N_API OlsonTimeZone: public BasicTimeZone {
     /**
      * Assignment operator
      */
-    OlsonTimeZone& operator=(const OlsonTimeZone& other);
+    U_I18N_API OlsonTimeZone& operator=(const OlsonTimeZone& other);
 
     /**
      * Returns true if the two TimeZone objects are equal.
@@ -156,7 +156,7 @@ class U_I18N_API OlsonTimeZone: public BasicTimeZone {
     /**
      * TimeZone API.
      */
-    static UClassID U_EXPORT2 getStaticClassID();
+    U_I18N_API static UClassID U_EXPORT2 getStaticClassID();
 
     /**
      * TimeZone API.
@@ -263,7 +263,7 @@ class U_I18N_API OlsonTimeZone: public BasicTimeZone {
     /**
      * Gets the <code>InitialTimeZoneRule</code> and the set of <code>TimeZoneRule</code>
      * which represent time transitions for this time zone.  On successful return,
-     * the argument initial points to non-NULL <code>InitialTimeZoneRule</code> and
+     * the argument initial points to non-nullptr <code>InitialTimeZoneRule</code> and
      * the array trsrules is filled with 0 or multiple <code>TimeZoneRule</code>
      * instances up to the size specified by trscount.  The results are referencing the
      * rule instance held by this time zone instance.  Therefore, after this time zone
@@ -282,7 +282,7 @@ class U_I18N_API OlsonTimeZone: public BasicTimeZone {
      * Internal API returning the canonical ID of this zone.
      * This ID won't be affected by setID().
      */
-    const UChar *getCanonicalID() const;
+    const char16_t *getCanonicalID() const;
 
 private:
     /**
@@ -328,20 +328,20 @@ private:
     /**
      * Time of each transition in seconds from 1970 epoch before 32bit second range (<= 1900).
      * Each transition in this range is represented by a pair of int32_t.
-     * Length is transitionCount int32_t's.  NULL if no transitions in this range.
+     * Length is transitionCount int32_t's.  nullptr if no transitions in this range.
      */
     const int32_t *transitionTimesPre32; // alias into res; do not delete
 
     /**
      * Time of each transition in seconds from 1970 epoch in 32bit second range.
-     * Length is transitionCount int32_t's.  NULL if no transitions in this range.
+     * Length is transitionCount int32_t's.  nullptr if no transitions in this range.
      */
     const int32_t *transitionTimes32; // alias into res; do not delete
 
     /**
      * Time of each transition in seconds from 1970 epoch after 32bit second range (>= 2038).
      * Each transition in this range is represented by a pair of int32_t.
-     * Length is transitionCount int32_t's.  NULL if no transitions in this range.
+     * Length is transitionCount int32_t's.  nullptr if no transitions in this range.
      */
     const int32_t *transitionTimesPost32; // alias into res; do not delete
 
@@ -360,14 +360,14 @@ private:
     /**
      * Type description data, consisting of transitionCount uint8_t
      * type indices (from 0..typeCount-1).
-     * Length is transitionCount int16_t's.  NULL if no transitions.
+     * Length is transitionCount int16_t's.  nullptr if no transitions.
      */
     const uint8_t *typeMapData; // alias into res; do not delete
 
     /**
      * A SimpleTimeZone that governs the behavior for date >= finalMillis.
      */
-    SimpleTimeZone *finalZone; // owned, may be NULL
+    SimpleTimeZone *finalZone; // owned, may be nullptr
 
     /**
      * For date >= finalMillis, the finalZone will be used.
@@ -382,11 +382,11 @@ private:
     /*
      * Canonical (CLDR) ID of this zone
      */
-    const UChar *canonicalID;
+    const char16_t *canonicalID;
 
     /* BasicTimeZone support */
-    void clearTransitionRules(void);
-    void deleteTransitionRules(void);
+    void clearTransitionRules();
+    void deleteTransitionRules();
     void checkTransitionRules(UErrorCode& status) const;
 
   public:    // Internal, for access from plain C code
@@ -410,7 +410,7 @@ OlsonTimeZone::transitionCount() const {
 
 inline double
 OlsonTimeZone::transitionTime(int16_t transIdx) const {
-    return (double)transitionTimeInSeconds(transIdx) * U_MILLIS_PER_SECOND;
+    return static_cast<double>(transitionTimeInSeconds(transIdx)) * U_MILLIS_PER_SECOND;
 }
 
 inline int32_t
@@ -441,7 +441,7 @@ OlsonTimeZone::initialDstOffset() const {
     return typeOffsets[1];
 }
 
-inline const UChar*
+inline const char16_t*
 OlsonTimeZone::getCanonicalID() const {
     return canonicalID;
 }

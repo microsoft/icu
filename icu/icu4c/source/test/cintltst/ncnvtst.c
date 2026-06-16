@@ -79,6 +79,7 @@ static void TestFlushInternalBuffer(void);  /*for improved code coverage in ucnv
 static void TestResetBehaviour(void);
 static void TestTruncated(void);
 static void TestUnicodeSet(void);
+static void TestISO2022Crash(void);
 
 static void TestWithBufferSize(int32_t osize, int32_t isize);
 
@@ -137,10 +138,11 @@ void addExtraTests(TestNode** root)
      addTest(root, &TestRegressionUTF32,            "tsconv/ncnvtst/TestRegressionUTF32");
      addTest(root, &TestTruncated,                  "tsconv/ncnvtst/TestTruncated");
      addTest(root, &TestUnicodeSet,                 "tsconv/ncnvtst/TestUnicodeSet");
+     addTest(root, &TestISO2022Crash,               "tsconv/ncnvtst/TestISO2022Crash");
 }
 
 /*test surrogate behaviour*/
-static void TestSurrogateBehaviour(){
+static void TestSurrogateBehaviour(void){
     log_verbose("Testing for SBCS and LATIN_1\n");
     {
         UChar sampleText[] = {0x0031, 0xd801, 0xdc01, 0x0032};
@@ -334,7 +336,7 @@ static void TestSurrogateBehaviour(){
 }
 
 /*test various error behaviours*/
-static void TestErrorBehaviour(){
+static void TestErrorBehaviour(void){
     log_verbose("Testing for SBCS and LATIN_1\n");
     {
         static const UChar    sampleText[] =   { 0x0031, 0xd801};
@@ -633,7 +635,7 @@ static void TestErrorBehaviour(){
 
 #if !UCONFIG_NO_LEGACY_CONVERSION
 /*test different convertToUnicode error behaviours*/
-static void TestToUnicodeErrorBehaviour()
+static void TestToUnicodeErrorBehaviour(void)
 {
     log_verbose("Testing error conditions for DBCS\n");
     {
@@ -665,7 +667,7 @@ static void TestToUnicodeErrorBehaviour()
     }
 }
 
-static void TestGetNextErrorBehaviour(){
+static void TestGetNextErrorBehaviour(void){
    /*Test for unassigned character*/
 #define INPUT_SIZE 1
     static const char input1[INPUT_SIZE]={ 0x70 };
@@ -689,7 +691,7 @@ static void TestGetNextErrorBehaviour(){
 #define MAX_UTF8_LEN 4
 
 /*Regression test for utf8 converter*/
-static void TestRegressionUTF8(){
+static void TestRegressionUTF8(void){
     UChar32 currCh = 0;
     int32_t offset8;
     int32_t offset16;
@@ -759,7 +761,7 @@ static void TestRegressionUTF8(){
 
 #define MAX_UTF32_LEN 1
 
-static void TestRegressionUTF32(){
+static void TestRegressionUTF32(void){
 #if !UCONFIG_ONLY_HTML_CONVERSION
     UChar32 currCh = 0;
     int32_t offset32;
@@ -896,7 +898,7 @@ static void TestRegressionUTF32(){
 }
 
 /*Walk through the available converters*/
-static void TestAvailableConverters(){
+static void TestAvailableConverters(void){
     UErrorCode status=U_ZERO_ERROR;
     UConverter *conv=NULL;
     int32_t i=0;
@@ -913,7 +915,7 @@ static void TestAvailableConverters(){
 
 }
 
-static void TestFlushInternalBuffer(){
+static void TestFlushInternalBuffer(void){
     TestWithBufferSize(MAX_LENGTH, 1);
     TestWithBufferSize(1, 1);
     TestWithBufferSize(1, MAX_LENGTH);
@@ -1027,8 +1029,8 @@ static UBool convertFromU( const UChar *source, int sourceLen,  const uint8_t *e
     targetLimit=targ+MAX_LENGTH;
     offs=offsetBuffer;
     ucnv_fromUnicode (conv,
-                  (char **)&targ,
-                  (const char *)targetLimit,
+                  &targ,
+                  targetLimit,
                   &src,
                   sourceLimit,
                   expectOffsets ? offs : NULL,
@@ -1125,7 +1127,7 @@ static UBool convertToU( const uint8_t *source, int sourceLen, const UChar *expe
     ucnv_toUnicode (conv,
                 &targ,
                 targetLimit,
-                (const char **)&src,
+                &src,
                 (const char *)sourceLimit,
                 expectOffsets ? offs : NULL,
                 doFlush,
@@ -1259,8 +1261,8 @@ static UBool testConvertFromU( const UChar *source, int sourceLen,  const uint8_
         if(gInBufferSize ==999 && gOutBufferSize==999)
             doFlush = false;
         ucnv_fromUnicode (conv,
-                  (char **)&targ,
-                  (const char *)end,
+                  &targ,
+                  end,
                   &src,
                   sourceLimit,
                   offs,
@@ -1434,8 +1436,8 @@ static UBool testConvertToU( const uint8_t *source, int sourcelen, const UChar *
         ucnv_toUnicode (conv,
                 &targ,
                 end,
-                (const char **)&src,
-                (const char *)srcLimit,
+                &src,
+                srcLimit,
                 offs,
                 doFlush, /* flush if we're at the end of the source data */
                 &status);
@@ -1834,7 +1836,7 @@ doTestTruncated(const char *cnvName, const uint8_t *bytes, int32_t length) {
 }
 
 static void
-TestTruncated() {
+TestTruncated(void) {
     static const struct {
         const char *cnvName;
         uint8_t bytes[8]; /* partial input bytes resulting in no output */
@@ -1884,7 +1886,7 @@ typedef struct NameRange {
 } NameRange;
 
 static void
-TestUnicodeSet() {
+TestUnicodeSet(void) {
     UErrorCode errorCode;
     UConverter *cnv;
     USet *set;
@@ -2060,4 +2062,33 @@ TestUnicodeSet() {
     }
 
     uset_close(set);
+}
+
+// Test for https://unicode-org.atlassian.net/browse/ICU-23165
+static void TestISO2022Crash(void) {
+    static const char offendingText[] = {
+        0x6d, 0x1b, 0x24, 0x29, 0x45, 0x65, 0x6c, 0x3a,
+        0x6c, 0x2e, 0x27, 0x41, 0x41, 0x0e, 0x41, 0x6c,
+    };
+    UErrorCode   err = U_ZERO_ERROR;
+    UConverter * cnv = ucnv_open("ISO_2022,locale=zh,version=2", &err);
+    if (U_FAILURE(err)) {
+        log_data_err("Unable to open ISO-2022-CN converter: %s\n", u_errorName(err));
+        return;
+    }
+    ucnv_setToUCallBack(cnv, UCNV_TO_U_CALLBACK_ESCAPE, NULL, NULL, NULL, &err);
+    if (U_FAILURE(err)) {
+        log_data_err("Unable to setToUCallBack for ISO-2022-CN converter: %s\n", u_errorName(err));
+        ucnv_close(cnv);
+        return;
+    }
+    {
+        UChar         toUChars[100];
+        UChar *       toUCharsPtr = toUChars;
+        const UChar * toUCharsLimit = toUCharsPtr + 100;
+        const char *  inCharsPtr = offendingText;
+        const char *  inCharsLimit = offendingText + sizeof(offendingText);
+        ucnv_toUnicode(cnv, &toUCharsPtr, toUCharsLimit, &inCharsPtr, inCharsLimit, NULL, true, &err);
+    }
+    ucnv_close(cnv);
 }

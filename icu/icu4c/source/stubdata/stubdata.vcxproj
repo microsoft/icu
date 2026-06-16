@@ -37,14 +37,12 @@
     <ClCompile>
       <AdditionalIncludeDirectories>..\common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>STUBDATA_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <DisableLanguageExtensions>true</DisableLanguageExtensions>
       <WarningLevel>Level3</WarningLevel>
       <CompileAs>Default</CompileAs>
       <PrecompiledHeaderOutputFile>$(OutDir)/icudt.pch</PrecompiledHeaderOutputFile>
       <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
       <ObjectFileName>$(OutDir)/</ObjectFileName>
-      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDataBaseFileName>$(OutDir)/icudt$(IcuMajorVersion).pdb</ProgramDataBaseFileName>
+      <ProgramDataBaseFileName>$(OutDir)/icudt.pdb</ProgramDataBaseFileName>
     </ClCompile>
     <ResourceCompile>
       <PreprocessorDefinitions>STUBDATA_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
@@ -58,8 +56,7 @@
       <TurnOffAssemblyGeneration>true</TurnOffAssemblyGeneration>
       <!-- Note: stubdata is somewhat odd in that it doesn't suffix the Debug output DLL/LIB with a "d" like common/i18n/etc. -->
       <OutputFile>..\..\$(IcuBinOutputDir)\icudt$(IcuMajorVersion).dll</OutputFile>
-      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icudt$(IcuMajorVersion).pdb</ProgramDatabaseFile>
+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icudt.pdb</ProgramDatabaseFile>
       <ImportLibrary>..\..\$(IcuLibOutputDir)\icudt.lib</ImportLibrary>
     </Link>
   </ItemDefinitionGroup>

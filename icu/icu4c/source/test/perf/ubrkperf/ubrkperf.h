@@ -19,13 +19,13 @@
 class ICUBreakFunction : public UPerfFunction {
 protected:
   BreakIterator *m_brkIt_;
-  const UChar *m_file_;
+  const char16_t *m_file_;
   int32_t m_fileLen_;
   int32_t m_noBreaks_;
   UErrorCode m_status_;
 public:
-  ICUBreakFunction(const char *locale, const char *mode, const UChar *file, int32_t file_len) :
-      m_brkIt_(NULL),
+  ICUBreakFunction(const char *locale, const char *mode, const char16_t *file, int32_t file_len) :
+      m_brkIt_(nullptr),
       m_file_(file),
       m_fileLen_(file_len),
       m_noBreaks_(-1),
@@ -52,15 +52,15 @@ public:
   }
 
   ~ICUBreakFunction() {  delete m_brkIt_; }
-  virtual void call(UErrorCode *status) = 0;
-  virtual long getOperationsPerIteration() { return m_fileLen_; }
-  virtual long getEventsPerIteration() { return m_noBreaks_; }
+  void call(UErrorCode* status) override = 0;
+  long getOperationsPerIteration() override { return m_fileLen_; }
+  long getEventsPerIteration() override { return m_noBreaks_; }
   virtual UErrorCode getStatus() { return m_status_; }
 };
 
 class ICUIsBound : public ICUBreakFunction {
 public:
-  ICUIsBound(const char *locale, const char *mode, const UChar *file, int32_t file_len) :
+  ICUIsBound(const char *locale, const char *mode, const char16_t *file, int32_t file_len) :
       ICUBreakFunction(locale, mode, file, file_len)
   {
     m_noBreaks_ = 0;
@@ -73,7 +73,7 @@ public:
       }
     }    
   }
-  virtual void call(UErrorCode *status) 
+  void call(UErrorCode* status) override
   {
     m_noBreaks_ = 0;
     int32_t j = 0;
@@ -87,7 +87,7 @@ public:
 
 class ICUForward : public ICUBreakFunction {
 public:
-  ICUForward(const char *locale, const char *mode, const UChar *file, int32_t file_len) :
+  ICUForward(const char *locale, const char *mode, const char16_t *file, int32_t file_len) :
       ICUBreakFunction(locale, mode, file, file_len)
   {
     m_noBreaks_ = 0;
@@ -97,7 +97,7 @@ public:
       m_noBreaks_++;
     }
   }
-  virtual void call(UErrorCode *status) 
+  void call(UErrorCode* status) override
   {
     m_noBreaks_ = 0;
     m_brkIt_->first();
@@ -109,21 +109,21 @@ public:
 
 class DarwinBreakFunction : public UPerfFunction {
 public:
-  virtual void call(UErrorCode *status) {};
+  void call(UErrorCode* status) override {}
 };
 
 class BreakIteratorPerformanceTest : public UPerfTest {
 private:
   const char* m_mode_;
-  const UChar* m_file_;
+  const char16_t* m_file_;
   int32_t m_fileLen_;
 
 public:
   BreakIteratorPerformanceTest(int32_t argc, const char* argv[], UErrorCode& status);
   ~BreakIteratorPerformanceTest();
 
-  virtual UPerfFunction* runIndexedTest(int32_t index, UBool exec,
-    const char* &name, char* par = NULL);     
+  UPerfFunction* runIndexedTest(int32_t index, UBool exec,
+    const char*& name, char* par = nullptr) override;
 
   UPerfFunction* TestICUForward();
   UPerfFunction* TestICUIsBound();

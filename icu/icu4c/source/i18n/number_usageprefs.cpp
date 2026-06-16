@@ -49,7 +49,7 @@ StringProp &StringProp::operator=(const StringProp &other) {
         // copying an errored StringProp.
         return *this;
     }
-    fValue = (char *)uprv_malloc(other.fLength + 1);
+    fValue = static_cast<char*>(uprv_malloc(other.fLength + 1));
     if (fValue == nullptr) {
         fError = U_MEMORY_ALLOCATION_ERROR;
         return *this;
@@ -60,7 +60,7 @@ StringProp &StringProp::operator=(const StringProp &other) {
 }
 
 // Move constructor
-StringProp::StringProp(StringProp &&src) U_NOEXCEPT : fValue(src.fValue),
+StringProp::StringProp(StringProp &&src) noexcept : fValue(src.fValue),
                                                       fLength(src.fLength),
                                                       fError(src.fError) {
     // Take ownership away from src if necessary
@@ -68,7 +68,7 @@ StringProp::StringProp(StringProp &&src) U_NOEXCEPT : fValue(src.fValue),
 }
 
 // Move assignment operator
-StringProp &StringProp::operator=(StringProp &&src) U_NOEXCEPT {
+StringProp &StringProp::operator=(StringProp &&src) noexcept {
     if (this == &src) {
         return *this;
     }
@@ -96,13 +96,15 @@ void StringProp::set(StringPiece value) {
         fValue = nullptr;
     }
     fLength = value.length();
-    fValue = (char *)uprv_malloc(fLength + 1);
+    fValue = static_cast<char*>(uprv_malloc(fLength + 1));
     if (fValue == nullptr) {
         fLength = 0;
         fError = U_MEMORY_ALLOCATION_ERROR;
         return;
     }
-    uprv_strncpy(fValue, value.data(), fLength);
+    if (fLength > 0) {
+        uprv_strncpy(fValue, value.data(), fLength);
+    }
     fValue[fLength] = 0;
 }
 

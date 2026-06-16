@@ -18,11 +18,32 @@
 
 TestLog::~TestLog() {}
 
+IcuTestErrorCode::IcuTestErrorCode(TestLog &callingTestClass, const char *callingTestName)
+    : errorCode(U_ZERO_ERROR),
+      testClass(callingTestClass), testName(callingTestName), scopeMessage() {
+}
+
 IcuTestErrorCode::~IcuTestErrorCode() {
     // Safe because our errlog() does not throw exceptions.
     if(isFailure()) {
         errlog(false, u"destructor: expected success", nullptr);
     }
+}
+
+UErrorCode IcuTestErrorCode::reset() {
+    UErrorCode code = errorCode;
+    errorCode = U_ZERO_ERROR;
+    return code;
+}
+
+void IcuTestErrorCode::assertSuccess() const {
+    if(isFailure()) {
+        handleFailure();
+    }
+}
+
+const char* IcuTestErrorCode::errorName() const {
+    return u_errorName(errorCode);
 }
 
 UBool IcuTestErrorCode::errIfFailureAndReset() {
@@ -103,10 +124,11 @@ UBool IcuTestErrorCode::expectErrorAndReset(UErrorCode expectedError, const char
 }
 
 void IcuTestErrorCode::setScope(const char* message) {
-    scopeMessage.remove().append({ message, -1, US_INV });
+    UnicodeString us(message, -1, US_INV);
+    scopeMessage = us;
 }
 
-void IcuTestErrorCode::setScope(const UnicodeString& message) {
+void IcuTestErrorCode::setScope(std::u16string_view message) {
     scopeMessage = message;
 }
 
@@ -114,12 +136,12 @@ void IcuTestErrorCode::handleFailure() const {
     errlog(false, u"(handleFailure)", nullptr);
 }
 
-void IcuTestErrorCode::errlog(UBool dataErr, const UnicodeString& mainMessage, const char* extraMessage) const {
+void IcuTestErrorCode::errlog(UBool dataErr, std::u16string_view mainMessage, const char* extraMessage) const {
     UnicodeString msg(testName, -1, US_INV);
     msg.append(u' ').append(mainMessage);
     msg.append(u" but got error: ").append(UnicodeString(errorName(), -1, US_INV));
 
-    if (!scopeMessage.isEmpty()) {
+    if (!scopeMessage.empty()) {
         msg.append(u" scope: ").append(scopeMessage);
     }
 
@@ -137,9 +159,9 @@ void IcuTestErrorCode::errlog(UBool dataErr, const UnicodeString& mainMessage, c
 TestDataModule *TestDataModule::getTestDataModule(const char* name, TestLog& log, UErrorCode &status)
 {
   if(U_FAILURE(status)) {
-    return NULL;
+    return nullptr;
   }
-  TestDataModule *result = NULL;
+  TestDataModule *result = nullptr;
 
   // TODO: probe for resource bundle and then for XML.
   // According to that, construct an appropriate driver object
@@ -149,21 +171,19 @@ TestDataModule *TestDataModule::getTestDataModule(const char* name, TestLog& log
     return result;
   } else {
     delete result;
-    return NULL;
+    return nullptr;
   }
 }
 
 TestDataModule::TestDataModule(const char* name, TestLog& log, UErrorCode& /*status*/)
 : testName(name),
-fInfo(NULL),
+fInfo(nullptr),
 fLog(log)
 {
 }
 
 TestDataModule::~TestDataModule() {
-  if(fInfo != NULL) {
-    delete fInfo;
-  }
+  delete fInfo;
 }
 
 const char * TestDataModule::getName() const
@@ -183,20 +203,20 @@ RBTestDataModule::~RBTestDataModule()
 
 RBTestDataModule::RBTestDataModule(const char* name, TestLog& log, UErrorCode& status) 
 : TestDataModule(name, log, status),
-  fModuleBundle(NULL),
-  fTestData(NULL),
-  fInfoRB(NULL),
-  tdpath(NULL)
+  fModuleBundle(nullptr),
+  fTestData(nullptr),
+  fInfoRB(nullptr),
+  tdpath(nullptr)
 {
   fNumberOfTests = 0;
   fDataTestValid = true;
   fModuleBundle = getTestBundle(name, status);
   if(fDataTestValid) {
-    fTestData = ures_getByKey(fModuleBundle, "TestData", NULL, &status);
+    fTestData = ures_getByKey(fModuleBundle, "TestData", nullptr, &status);
     fNumberOfTests = ures_getSize(fTestData);
-    fInfoRB = ures_getByKey(fModuleBundle, "Info", NULL, &status);
+    fInfoRB = ures_getByKey(fModuleBundle, "Info", nullptr, &status);
     if(status != U_ZERO_ERROR) {
-      log.errln(UNICODE_STRING_SIMPLE("Unable to initialize test data - missing mandatory description resources!")); // CodeQL [SM03728] This is a test module, so it's OK to use errln.
+      log.errln(UNICODE_STRING_SIMPLE("Unable to initialize test data - missing mandatory description resources!"));
       fDataTestValid = false;
     } else {
       fInfo = new RBDataMap(fInfoRB, status);
@@ -216,13 +236,13 @@ UBool RBTestDataModule::getInfo(const DataMap *& info, UErrorCode &/*status*/) c
 
 TestData* RBTestDataModule::createTestData(int32_t index, UErrorCode &status) const 
 {
-  TestData *result = NULL;
+  TestData *result = nullptr;
   UErrorCode intStatus = U_ZERO_ERROR;
 
   if(fDataTestValid == true) {
     // Both of these resources get adopted by a TestData object.
-    UResourceBundle *DataFillIn = ures_getByIndex(fTestData, index, NULL, &status); 
-    UResourceBundle *headers = ures_getByKey(fInfoRB, "Headers", NULL, &intStatus);
+    UResourceBundle *DataFillIn = ures_getByIndex(fTestData, index, nullptr, &status); 
+    UResourceBundle *headers = ures_getByKey(fInfoRB, "Headers", nullptr, &intStatus);
   
     if(U_SUCCESS(status)) {
       result = new RBTestData(DataFillIn, headers, status);
@@ -239,18 +259,18 @@ TestData* RBTestDataModule::createTestData(int32_t index, UErrorCode &status) co
   } else {
     status = U_MISSING_RESOURCE_ERROR;
   }
-  return NULL;
+  return nullptr;
 }
 
 TestData* RBTestDataModule::createTestData(const char* name, UErrorCode &status) const
 {
-  TestData *result = NULL;
+  TestData *result = nullptr;
   UErrorCode intStatus = U_ZERO_ERROR;
 
   if(fDataTestValid == true) {
     // Both of these resources get adopted by a TestData object.
-    UResourceBundle *DataFillIn = ures_getByKey(fTestData, name, NULL, &status); 
-    UResourceBundle *headers = ures_getByKey(fInfoRB, "Headers", NULL, &intStatus);
+    UResourceBundle *DataFillIn = ures_getByKey(fTestData, name, nullptr, &status); 
+    UResourceBundle *headers = ures_getByKey(fInfoRB, "Headers", nullptr, &intStatus);
    
     if(U_SUCCESS(status)) {
       result = new RBTestData(DataFillIn, headers, status);
@@ -266,7 +286,7 @@ TestData* RBTestDataModule::createTestData(const char* name, UErrorCode &status)
   } else {
     status = U_MISSING_RESOURCE_ERROR;
   }
-  return NULL;
+  return nullptr;
 }
 
 
@@ -276,9 +296,9 @@ UResourceBundle*
 RBTestDataModule::getTestBundle(const char* bundleName, UErrorCode &status) 
 {
   if(U_SUCCESS(status)) {
-    UResourceBundle *testBundle = NULL;
+    UResourceBundle *testBundle = nullptr;
     const char* icu_data = fLog.getTestDataPath(status);
-    if (testBundle == NULL) {
+    if (testBundle == nullptr) {
         testBundle = ures_openDirect(icu_data, bundleName, &status);
         if (status != U_ZERO_ERROR) {
             fLog.dataerrln(UNICODE_STRING_SIMPLE("Could not load test data from resourcebundle: ") + UnicodeString(bundleName, -1, US_INV));
@@ -287,7 +307,7 @@ RBTestDataModule::getTestBundle(const char* bundleName, UErrorCode &status)
     }
     return testBundle;
   } else {
-    return NULL;
+    return nullptr;
   }
 }
 

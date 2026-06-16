@@ -5,7 +5,7 @@
         "type": "git",
         "git": {
           "repositoryUrl": "https://github.com/unicode-org/icu",
-          "commitHash": "ff3514f257ea10afe7e710e9f946f68d256704b1"
+          "commitHash": "21d1eb0f306e1141c10931e914dfc038c06121da"
         }
       }
     }

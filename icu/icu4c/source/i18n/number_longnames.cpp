@@ -9,6 +9,8 @@
 
 #include "unicode/simpleformatter.h"
 #include "unicode/ures.h"
+#include "unicode/plurrule.h"
+#include "unicode/strenum.h"
 #include "ureslocs.h"
 #include "charstr.h"
 #include "uresimp.h"
@@ -18,6 +20,7 @@
 #include <algorithm>
 #include "cstring.h"
 #include "util.h"
+#include "sharedpluralrules.h"
 
 using namespace icu;
 using namespace icu::number;
@@ -45,8 +48,12 @@ constexpr int32_t PER_INDEX = StandardPlural::Form::COUNT + 1;
  * Gender of the word, in languages with grammatical gender.
  */
 constexpr int32_t GENDER_INDEX = StandardPlural::Form::COUNT + 2;
+/**
+ *  Denominator constant of the unit.
+ */
+constexpr int32_t CONSTANT_DENOMINATOR_INDEX = StandardPlural::Form::COUNT + 3;
 // Number of keys in the array populated by PluralTableSink.
-constexpr int32_t ARRAY_LENGTH = StandardPlural::Form::COUNT + 3;
+constexpr int32_t ARRAY_LENGTH = StandardPlural::Form::COUNT + 4;
 
 // TODO(icu-units#28): load this list from resources, after creating a "&set"
 // function for use in ldml2icu rules.
@@ -89,7 +96,7 @@ const char *getGenderString(UnicodeString uGender, UErrorCode status) {
 }
 
 // Returns the array index that corresponds to the given pluralKeyword.
-static int32_t getIndex(const char* pluralKeyword, UErrorCode& status) {
+int32_t getIndex(const char* pluralKeyword, UErrorCode& status) {
     // pluralKeyword can also be "dnam", "per", or "gender"
     switch (*pluralKeyword) {
     case 'd':
@@ -119,7 +126,7 @@ static int32_t getIndex(const char* pluralKeyword, UErrorCode& status) {
 //
 // The `strings` array must have ARRAY_LENGTH items: one corresponding to each
 // of the plural forms, plus a display name ("dnam") and a "per" form.
-static UnicodeString getWithPlural(
+UnicodeString getWithPlural(
         const UnicodeString* strings,
         StandardPlural::Form plural,
         UErrorCode& status) {
@@ -151,7 +158,7 @@ enum PlaceholderPosition { PH_EMPTY, PH_NONE, PH_BEGINNING, PH_MIDDLE, PH_END };
 void extractCorePattern(const UnicodeString &pattern,
                         UnicodeString &coreUnit,
                         PlaceholderPosition &placeholderPosition,
-                        UChar &joinerChar) {
+                        char16_t &joinerChar) {
     joinerChar = 0;
     int32_t len = pattern.length();
     if (pattern.startsWith(u"{0}", 3)) {
@@ -209,7 +216,7 @@ getGenderForBuiltin(const Locale &locale, const MeasureUnit &builtinUnit, UError
 
     UErrorCode localStatus = status;
     int32_t resultLen = 0;
-    const UChar *result =
+    const char16_t *result =
         ures_getStringByKeyWithFallback(unitsBundle.getAlias(), key.data(), &resultLen, &localStatus);
     if (U_SUCCESS(localStatus)) {
         status = localStatus;
@@ -258,7 +265,7 @@ class InflectedPluralSink : public ResourceSink {
     }
 
     // See ResourceSink::put().
-    void put(const char *key, ResourceValue &value, UBool /*noFallback*/, UErrorCode &status) U_OVERRIDE {
+    void put(const char *key, ResourceValue &value, UBool /*noFallback*/, UErrorCode &status) override {
         int32_t pluralIndex = getIndex(key, status);
         if (U_FAILURE(status)) { return; }
         if (!outArray[pluralIndex].isBogus()) {
@@ -384,7 +391,7 @@ class PluralTableSink : public ResourceSink {
         }
     }
 
-    void put(const char *key, ResourceValue &value, UBool /*noFallback*/, UErrorCode &status) U_OVERRIDE {
+    void put(const char *key, ResourceValue &value, UBool /*noFallback*/, UErrorCode &status) override {
         if (uprv_strcmp(key, "case") == 0) {
             return;
         }
@@ -431,6 +438,7 @@ void getMeasureData(const Locale &locale,
     subKey.append(unit.getType(), status);
     subKey.append("/", status);
 
+    // TODO(ICU-23226): Refactor LongNameHandler to use gUnitAliases and gUnitReplacements measunit_extra.cpp instead of local reasource bundle.
     // Check if unitSubType is an alias or not.
     LocalUResourceBundlePointer aliasBundle(ures_open(U_ICUDATA_ALIAS, "metadata", &status));
 
@@ -519,10 +527,35 @@ void getCurrencyLongNameData(const Locale &locale, const CurrencyUnit &currency,
     // In ICU4J, this method gets a CurrencyData from CurrencyData.provider.
     // TODO(ICU4J): Implement this without going through CurrencyData, like in ICU4C?
     PluralTableSink sink(outArray);
+    // Here all outArray entries are bogus.
     LocalUResourceBundlePointer unitsBundle(ures_open(U_ICUDATA_CURR, locale.getName(), &status));
     if (U_FAILURE(status)) { return; }
     ures_getAllChildrenWithFallback(unitsBundle.getAlias(), "CurrencyUnitPatterns", sink, status);
     if (U_FAILURE(status)) { return; }
+    // Here the outArray[] entries are filled in with any CurrencyUnitPatterns data for locale,
+    // or if there is no CurrencyUnitPatterns data for locale since the patterns all inherited
+    // from the "other" pattern in root (which is true for many locales in CLDR 46), then only
+    // the "other" entry has a currency pattern. So now what we do is: For all valid plural keywords
+    // for the locale, if the corresponding outArray[] entry is bogus, fill it in from the "other"
+    // entry. In the longer run, clients of this should instead consider using CurrencyPluralInfo
+    // (see i18n/unicode/currpinf.h).
+    UErrorCode localStatus = U_ZERO_ERROR;
+    const SharedPluralRules *pr = PluralRules::createSharedInstance(
+            locale, UPLURAL_TYPE_CARDINAL, localStatus);
+    if (U_SUCCESS(localStatus)) {
+        LocalPointer<StringEnumeration> keywords((*pr)->getKeywords(localStatus), localStatus);
+        if (U_SUCCESS(localStatus)) {
+            const char* keyword;
+            while (((keyword = keywords->next(nullptr, localStatus)) != nullptr) && U_SUCCESS(localStatus)) {
+                int32_t index = StandardPlural::indexOrOtherIndexFromString(keyword);
+                if (index != StandardPlural::Form::OTHER && outArray[index].isBogus()) {
+                    outArray[index].setTo(outArray[StandardPlural::Form::OTHER]);
+                }
+            }
+        }
+        pr->removeRef();
+    }
+
     for (int32_t i = 0; i < StandardPlural::Form::COUNT; i++) {
         UnicodeString &pattern = outArray[i];
         if (pattern.isBogus()) {
@@ -560,7 +593,7 @@ UnicodeString getCompoundValue(StringPiece compoundKey,
 
     UErrorCode localStatus = status;
     int32_t len = 0;
-    const UChar *ptr =
+    const char16_t *ptr =
         ures_getStringByKeyWithFallback(unitsBundle.getAlias(), key.data(), &len, &localStatus);
     if (U_FAILURE(localStatus) && width != UNUM_UNIT_WIDTH_SHORT) {
         // Fall back to short, which contains more compound data
@@ -606,7 +639,7 @@ class DerivedComponents {
      */
     DerivedComponents(const Locale &locale, const char *feature, const char *structure) {
         StackUResourceBundle derivationsBundle, stackBundle;
-        ures_openDirectFillIn(derivationsBundle.getAlias(), NULL, "grammaticalFeatures", &status);
+        ures_openDirectFillIn(derivationsBundle.getAlias(), nullptr, "grammaticalFeatures", &status);
         ures_getByKey(derivationsBundle.getAlias(), "grammaticalData", derivationsBundle.getAlias(),
                       &status);
         ures_getByKey(derivationsBundle.getAlias(), "derivations", derivationsBundle.getAlias(),
@@ -695,7 +728,7 @@ class DerivedComponents {
 UnicodeString
 getDeriveCompoundRule(Locale locale, const char *feature, const char *structure, UErrorCode &status) {
     StackUResourceBundle derivationsBundle, stackBundle;
-    ures_openDirectFillIn(derivationsBundle.getAlias(), NULL, "grammaticalFeatures", &status);
+    ures_openDirectFillIn(derivationsBundle.getAlias(), nullptr, "grammaticalFeatures", &status);
     ures_getByKey(derivationsBundle.getAlias(), "grammaticalData", derivationsBundle.getAlias(),
                   &status);
     ures_getByKey(derivationsBundle.getAlias(), "derivations", derivationsBundle.getAlias(), &status);
@@ -759,7 +792,7 @@ UnicodeString getDerivedGender(Locale locale,
 ////////////////////////
 
 // TODO: promote this somewhere? It's based on patternprops.cpp' trimWhitespace
-const UChar *trimSpaceChars(const UChar *s, int32_t &length) {
+const char16_t *trimSpaceChars(const char16_t *s, int32_t &length) {
     if (length <= 0 || (!u_isJavaSpaceChar(s[0]) && !u_isJavaSpaceChar(s[length - 1]))) {
         return s;
     }
@@ -982,6 +1015,11 @@ void LongNameHandler::forArbitraryUnit(const Locale &loc,
     //    denominator (the part after the "-per-). If both are empty, fail
     MeasureUnitImpl unit;
     MeasureUnitImpl perUnit;
+
+    if (unitRef.getConstantDenominator(status) != 0) {
+        perUnit.constantDenominator = unitRef.getConstantDenominator(status);
+    }
+
     {
         MeasureUnitImpl fullUnit = MeasureUnitImpl::forMeasureUnitMaybeCopy(unitRef, status);
         if (U_FAILURE(status)) {
@@ -1053,7 +1091,7 @@ void LongNameHandler::forArbitraryUnit(const Locale &loc,
         }
         UnicodeString denominatorPattern = denominatorFormatter.getTextWithNoArguments();
         int32_t trimmedLen = denominatorPattern.length();
-        const UChar *trimmed = trimSpaceChars(denominatorPattern.getBuffer(), trimmedLen);
+        const char16_t *trimmed = trimSpaceChars(denominatorPattern.getBuffer(), trimmedLen);
         UnicodeString denominatorString(false, trimmed, trimmedLen);
         // 9. If the denominatorString is empty, set result to
         //    [numeratorString], otherwise set result to format(perPattern,
@@ -1115,13 +1153,13 @@ void LongNameHandler::processPatternTimes(MeasureUnitImpl &&productUnit,
     if (U_FAILURE(status)) {
         return;
     }
-    if (productUnit.identifier.length() == 0) {
+    if (productUnit.identifier.isEmpty()) {
         // MeasureUnit(): no units: return empty strings.
         return;
     }
 
     MeasureUnit builtinUnit;
-    if (MeasureUnit::findBySubType(productUnit.identifier.toStringPiece(), &builtinUnit)) {
+    if (MeasureUnit::findBySubType(productUnit.identifier.data(), &builtinUnit)) {
         // TODO(icu-units#145): spec doesn't cover builtin-per-builtin, it
         // breaks them all down. Do we want to drop this?
         // - findBySubType isn't super efficient, if we skip it and go to basic
@@ -1144,7 +1182,7 @@ void LongNameHandler::processPatternTimes(MeasureUnitImpl &&productUnit,
     }
 
     PlaceholderPosition globalPlaceholder[ARRAY_LENGTH];
-    UChar globalJoinerChar = 0;
+    char16_t globalJoinerChar = 0;
     // Numbered list items are from the algorithms at
     // https://unicode.org/reports/tr35/tr35-general.html#compound-units:
     //
@@ -1167,6 +1205,12 @@ void LongNameHandler::processPatternTimes(MeasureUnitImpl &&productUnit,
     DerivedComponents derivedTimesPlurals(loc, "plural", "times");
     DerivedComponents derivedTimesCases(loc, "case", "times");
     DerivedComponents derivedPowerCases(loc, "case", "power");
+
+    if (productUnit.constantDenominator != 0) {
+        CharString constantString;
+        constantString.appendNumber(productUnit.constantDenominator, status);
+        outArray[CONSTANT_DENOMINATOR_INDEX] = UnicodeString::fromUTF8(constantString.toStringPiece());
+    }
 
     // 4. For each single_unit in product_unit
     for (int32_t singleUnitIndex = 0; singleUnitIndex < productUnit.singleUnits.length();
@@ -1341,7 +1385,7 @@ void LongNameHandler::processPatternTimes(MeasureUnitImpl &&productUnit,
             // 4.6. Extract(corePattern, coreUnit, placeholder, placeholderPosition) from that pattern.
             UnicodeString coreUnit;
             PlaceholderPosition placeholderPosition;
-            UChar joinerChar;
+            char16_t joinerChar;
             extractCorePattern(getWithPlural(singleUnitArray, plural, status), coreUnit,
                                placeholderPosition, joinerChar);
 
@@ -1426,6 +1470,39 @@ void LongNameHandler::processPatternTimes(MeasureUnitImpl &&productUnit,
             }
         }
     }
+
+    // 5. Handling constant denominator if it exists.
+    if (productUnit.constantDenominator != 0) {
+        int32_t pluralIndex = -1;
+        for (int32_t index = 0; index < StandardPlural::Form::COUNT; index++) {
+            if (!outArray[index].isBogus()) {
+                pluralIndex = index;
+                break;
+            }
+        }
+
+        U_ASSERT(pluralIndex >= 0); // "No plural form found for constant denominator"
+
+        // TODO(ICU-23039):
+        // Improve the handling of constant_denominator representation.
+        // For instance, a constant_denominator of 1000000 should be adaptable to
+        // formats like
+        // 1,000,000, 1e6, or 1 million.
+        // Furthermore, ensure consistent pluralization rules for units. For example,
+        // "meter per 100 seconds" should be evaluated for correct singular/plural
+        // usage: "second" or "seconds"?
+        // Similarly, "kilogram per 1000 meters" should be checked for "meter" or
+        // "meters"?
+        if (outArray[pluralIndex].length() == 0) {
+            outArray[pluralIndex] = outArray[CONSTANT_DENOMINATOR_INDEX];
+        } else {
+            UnicodeString tmp;
+            timesPatternFormatter.format(outArray[CONSTANT_DENOMINATOR_INDEX], outArray[pluralIndex],
+                                         tmp, status);
+            outArray[pluralIndex] = tmp;
+        }
+    }
+
     for (int32_t pluralIndex = 0; pluralIndex < StandardPlural::Form::COUNT; pluralIndex++) {
         if (globalPlaceholder[pluralIndex] == PH_BEGINNING) {
             UnicodeString tmp;
@@ -1481,9 +1558,8 @@ LongNameHandler* LongNameHandler::forCurrencyLongNames(const Locale &loc, const 
                                                       const PluralRules *rules,
                                                       const MicroPropsGenerator *parent,
                                                       UErrorCode &status) {
-    auto* result = new LongNameHandler(rules, parent);
-    if (result == nullptr) {
-        status = U_MEMORY_ALLOCATION_ERROR;
+    LocalPointer<LongNameHandler> result(new LongNameHandler(rules, parent), status);
+    if (U_FAILURE(status)) {
         return nullptr;
     }
     UnicodeString simpleFormats[ARRAY_LENGTH];
@@ -1491,7 +1567,7 @@ LongNameHandler* LongNameHandler::forCurrencyLongNames(const Locale &loc, const 
     if (U_FAILURE(status)) { return nullptr; }
     result->simpleFormatsToModifiers(simpleFormats, {UFIELD_CATEGORY_NUMBER, UNUM_CURRENCY_FIELD}, status);
     // TODO(icu-units#28): currency gender?
-    return result;
+    return result.orphan();
 }
 
 void LongNameHandler::simpleFormatsToModifiers(const UnicodeString *simpleFormats, Field field,
@@ -1529,7 +1605,7 @@ void LongNameHandler::multiSimpleFormatsToModifiers(const UnicodeString *leadFor
 
 void LongNameHandler::processQuantity(DecimalQuantity &quantity, MicroProps &micros,
                                       UErrorCode &status) const {
-    if (parent != NULL) {
+    if (parent != nullptr) {
         parent->processQuantity(quantity, micros, status);
     }
     StandardPlural::Form pluralForm = utils::getPluralSafe(micros.rounder, rules, quantity, status);
@@ -1726,12 +1802,12 @@ LongNameMultiplexer *LongNameMultiplexer::forMeasureUnits(const Locale &loc,
         result->fMeasureUnits[i] = unit;
         if (unit.getComplexity(status) == UMEASURE_UNIT_MIXED) {
             MixedUnitLongNameHandler *mlnh = result->fMixedUnitHandlers.createAndCheckErrorCode(status);
-            MixedUnitLongNameHandler::forMeasureUnit(loc, unit, width, unitDisplayCase, rules, NULL,
+            MixedUnitLongNameHandler::forMeasureUnit(loc, unit, width, unitDisplayCase, rules, nullptr,
                                                      mlnh, status);
             result->fHandlers[i] = mlnh;
         } else {
             LongNameHandler *lnh = result->fLongNameHandlers.createAndCheckErrorCode(status);
-            LongNameHandler::forMeasureUnit(loc, unit, width, unitDisplayCase, rules, NULL, lnh, status);
+            LongNameHandler::forMeasureUnit(loc, unit, width, unitDisplayCase, rules, nullptr, lnh, status);
             result->fHandlers[i] = lnh;
         }
         if (U_FAILURE(status)) {

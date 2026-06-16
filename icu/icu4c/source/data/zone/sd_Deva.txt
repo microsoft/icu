@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 sd_Deva{
     %%Parent{"root"}
     zoneStrings{
@@ -35,6 +35,11 @@ sd_Deva{
             lg{"अटलांटिक वक्त"}
             ls{"अटलांटिक मअयारी वक्त"}
         }
+        "meta:Azores"{
+            ld{"एज़ोर्स ऊनहारे जो वक़्तु"}
+            lg{"वक़्तु"}
+            ls{"एज़ोर्स मइयारी वक़्तु"}
+        }
         "meta:Europe_Central"{
             ld{"मरकज़ी यूरोपी उनहारे जो वक्तु"}
             lg{"मरकज़ी यूरोपी वक्त"}
@@ -51,13 +56,12 @@ sd_Deva{
             ls{"उलहंदो यूरोपी मअयारी वक्तु"}
         }
         "meta:GMT"{
-            ls{"ग्रीनविच मीन वक्तु"}
+            ls{"ग्रीनविच मीन वक़्तु"}
         }
-        fallbackFormat{"{1} ({0})"}
         gmtFormat{"जीएमटी{0}"}
         gmtZeroFormat{"जीएमटी"}
-        regionFormat{"{0} वक्त"}
+        regionFormat{"{0} वक़्तु"}
         regionFormatDaylight{"{0} दीं॒ह जो वक्त"}
-        regionFormatStandard{"{0} मअयारी वक्त"}
+        regionFormatStandard{"{0} मइयारी वक़्तु"}
     }
 }

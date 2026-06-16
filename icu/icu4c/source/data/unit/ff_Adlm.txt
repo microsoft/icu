@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 ff_Adlm{
     %%Parent{"root"}
     units{
@@ -28,12 +28,10 @@ ff_Adlm{
                 other{"{0} 𞤳𞤭𞤲𞤰𞤮𞤤𞤢𞥄𞤻𞤫"}
             }
             degree{
-                dnam{"𞤶𞤫𞤩𞤫"}
                 one{"{0} 𞤶𞤫𞤩𞤫𞤪𞤫"}
                 other{"{0} 𞤶𞤫𞤩𞤫"}
             }
             radian{
-                dnam{"𞤪𞤢𞤣𞤭𞤴𞤢𞤲𞤶𞤭"}
                 one{"{0} 𞤪𞤢𞤣𞤭𞤴𞤢𞤲𞤪𞤵"}
                 other{"{0} 𞤪𞤢𞤣𞤭𞤴𞤢𞤲𞤶𞤭"}
             }
@@ -45,17 +43,10 @@ ff_Adlm{
         }
         area{
             acre{
-                dnam{"𞤺𞤢𞤪𞤳𞤭"}
                 one{"{0} 𞤺𞤢𞤪𞤳𞤵"}
                 other{"{0} 𞤺𞤢𞤪𞤳𞤭"}
             }
-            dunam{
-                dnam{"𞤣𞤵𞥅𞤲𞤢𞤥𞤭"}
-                one{"{0} 𞤣𞤵𞥅𞤲𞤢𞤥𞤵"}
-                other{"{0} 𞤣𞤵𞥅𞤲𞤢𞤥𞤭"}
-            }
             hectare{
-                dnam{"𞤸𞤫𞤳𞤼𞤢𞤪𞤯𞤫"}
                 one{"{0} 𞤸𞤫𞤳𞤼𞤢𞤪𞤣𞤫"}
                 other{"{0} 𞤸𞤫𞤳𞤼𞤢𞤪𞤯𞤫"}
             }
@@ -117,7 +108,6 @@ ff_Adlm{
             10p-21{"𞥁𞤫𞤨𞤼𞤮{0}"}
             10p-24{"𞤴𞤮𞤳𞤼𞤮{0}"}
             10p-3{"𞤥𞤭𞤤𞤭{0}"}
-            10p-6{"𞤻𞤭𞤤𞤢{0}"}
             10p-9{"𞤲𞤢𞤲𞤮{0}"}
             10p1{"𞤣𞤫𞤳𞤢{0}"}
             10p12{"𞤼𞤫𞤪𞤢{0}"}
@@ -154,7 +144,6 @@ ff_Adlm{
                     }
                 }
             }
-            times{"{0}-{1}"}
         }
         concentr{
             item{
@@ -163,7 +152,6 @@ ff_Adlm{
                 other{"{0} 𞤨𞤭𞤪𞤰𞤭"}
             }
             karat{
-                dnam{"𞤳𞤢𞤪𞤼𞤭"}
                 one{"{0} 𞤳𞤢𞤪𞤼𞤵"}
                 other{"{0} 𞤳𞤢𞤪𞤼𞤭"}
             }
@@ -182,20 +170,18 @@ ff_Adlm{
                 one{"{0} 𞤥𞤮𞤤𞤰𞤵"}
                 other{"{0} 𞤥𞤮𞤤𞤰𞤭"}
             }
+            part-per-1e6{
+                dnam{"𞤺𞤫𞤩𞤫 𞤳𞤢𞤤𞤢 𞤣𞤵𞤦𞤵𞥅𞤪𞤫"}
+                one{"{0} 𞤺𞤫𞤩𞤢𞤤 𞤳𞤢𞤤𞤢 𞤣𞤵𞤦𞤵𞥅𞤪𞤫"}
+                other{"{0} 𞤺𞤫𞤩𞤫 𞤳𞤢𞤤𞤢 𞤣𞤵𞤦𞤵𞥅𞤪𞤫"}
+            }
             percent{
-                dnam{"𞤳𞤢𞤤𞤼𞤫𞥅𞤥𞤵"}
                 one{"{0} 𞤳𞤢𞤤𞤼𞤫𞥅𞤥𞤵"}
                 other{"{0} 𞤳𞤢𞤤𞤼𞤫𞥅𞤥𞤵"}
             }
             permille{
-                dnam{"𞤳𞤢𞤤𞤺𞤵𞤤𞤶𞤵"}
                 one{"{0} 𞤳𞤢𞤤𞤺𞤵𞤤𞤶𞤵"}
                 other{"{0} 𞤳𞤢𞤤𞤺𞤵𞤤𞤶𞤵"}
-            }
-            permillion{
-                dnam{"𞤺𞤫𞤩𞤫 𞤳𞤢𞤤𞤢 𞤣𞤵𞤦𞤵𞥅𞤪𞤫"}
-                one{"{0} 𞤺𞤫𞤩𞤢𞤤 𞤳𞤢𞤤𞤢 𞤣𞤵𞤦𞤵𞥅𞤪𞤫"}
-                other{"{0} 𞤺𞤫𞤩𞤫 𞤳𞤢𞤤𞤢 𞤣𞤵𞤦𞤵𞥅𞤪𞤫"}
             }
             permyriad{
                 dnam{"𞤳𞤢𞤤𞤺𞤵𞤤𞤧𞤢𞤨𞥆𞤮"}
@@ -307,7 +293,6 @@ ff_Adlm{
                 other{"{0} 𞤼𞤭𞤶𞤢𞤲𞤯𞤫"}
             }
             hour{
-                dnam{"𞤲𞤶𞤢𞤥𞤤𞤭"}
                 one{"{0} 𞤲𞤶𞤢𞤥𞤲𞤣𞤭"}
                 other{"{0} 𞤲𞤶𞤢𞤥𞤤𞤭"}
                 per{"{0} 𞤲𞤣𞤫𞤪 𞤲𞤶𞤢𞤥𞤲𞤣𞤭"}
@@ -329,7 +314,6 @@ ff_Adlm{
                 per{"{0} 𞤲𞤣𞤫𞤪 𞤸𞤮𞤶𞤮𞤥𞤢𞥄𞤪𞤫"}
             }
             month{
-                dnam{"𞤤𞤫𞤦𞥆𞤭"}
                 one{"{0} 𞤤𞤫𞤱𞤪𞤵"}
                 other{"{0} 𞤤𞤫𞤦𞥆𞤭"}
                 per{"{0} 𞤲𞤣𞤫𞤪 𞤤𞤫𞤱𞤪𞤵"}
@@ -341,9 +325,6 @@ ff_Adlm{
             }
             quarter{
                 dnam{"𞤲𞤢𞤤𞤫𞤦𞥆𞤭"}
-                one{"{0} 𞤲"}
-                other{"{0} 𞤲"}
-                per{"{0}/𞤲"}
             }
             second{
                 dnam{"𞤳𞤭𞤲𞤰𞤫"}
@@ -358,7 +339,6 @@ ff_Adlm{
                 per{"{0} 𞤲𞤣𞤫𞤪 𞤴𞤮𞤲𞤼𞤫𞤪𞤫"}
             }
             year{
-                dnam{"𞤳𞤭𞤼𞤢𞥄𞤯𞤫"}
                 one{"{0} 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫"}
                 other{"{0} 𞤳𞤭𞤼𞤢𞥄𞤯𞤫"}
                 per{"{0} 𞤲𞤣𞤫𞤪 𞤸𞤭𞤼𞤢𞥄𞤲𞤣𞤫"}
@@ -366,7 +346,6 @@ ff_Adlm{
         }
         electric{
             ampere{
-                dnam{"𞤢𞤥𞤨𞤫𞤪𞤶𞤭"}
                 one{"{0} 𞤢𞤥𞤨𞤫𞤪𞤱𞤵"}
                 other{"{0} 𞤢𞤥𞤨𞤫𞤪𞤶𞤭"}
             }
@@ -376,12 +355,10 @@ ff_Adlm{
                 other{"{0} 𞤥𞤭𞤤𞤭𞤢𞤥𞤨𞤫𞤪𞤶𞤭"}
             }
             ohm{
-                dnam{"𞤮𞤸𞤥𞤵𞥅𞤶𞤭"}
                 one{"{0} 𞤮𞤸𞤥𞤵"}
                 other{"{0} 𞤮𞤸𞤥𞤵𞥅𞤶𞤭"}
             }
             volt{
-                dnam{"𞤾𞤮𞤤𞤼𞤵𞥅𞤶𞤭"}
                 one{"{0} 𞤾𞤮𞤤𞤼𞤵"}
                 other{"{0} 𞤾𞤮𞤤𞤼𞤵𞥅𞤶𞤭"}
             }
@@ -402,13 +379,7 @@ ff_Adlm{
                 one{"{0} 𞤫𞤤𞤫𞤳𞤼𞤮𞤾𞤮𞤤𞤼𞤵"}
                 other{"{0} 𞤫𞤤𞤫𞤳𞤼𞤮𞤾𞤮𞤤𞤼𞤭"}
             }
-            foodcalorie{
-                dnam{"𞤐𞤺𞤵𞤤𞤭"}
-                one{"{0} 𞤐𞤺𞤵𞤤𞤵"}
-                other{"{0} 𞤐𞤺𞤵𞤤𞤭"}
-            }
             joule{
-                dnam{"𞥁𞤵𞥅𞤤𞤶𞤭"}
                 one{"{0} 𞥁𞤵𞥅𞤤𞤱𞤵"}
                 other{"{0} 𞥁𞤵𞥅𞤤𞤶𞤭"}
             }
@@ -451,7 +422,6 @@ ff_Adlm{
                 other{"{0} 𞤲𞤫𞤱𞤼𞤮𞤲𞤶𞤭"}
             }
             pound-force{
-                dnam{"𞤺𞤢𞤪𞤤𞤭-𞤷𞤫𞤥𞤦𞤫"}
                 one{"{0} 𞤺𞤢𞤪𞤤𞤵-𞤷𞤫𞤥𞤦𞤫"}
                 other{"{0} 𞤺𞤢𞤪𞤤𞤭-𞤷𞤫𞤥𞤦𞤫"}
             }
@@ -479,21 +449,6 @@ ff_Adlm{
             }
         }
         graphics{
-            dot{
-                dnam{"𞤼𞤮𞤩𞥆𞤫"}
-                one{"{0} 𞤼𞤮𞤩𞥆𞤫𞤪𞤫"}
-                other{"{0} 𞤼𞤮𞤩𞥆𞤫𞤪𞤫"}
-            }
-            dot-per-centimeter{
-                dnam{"𞤼𞤮𞤩𞥆𞤫 𞤲𞤣𞤫𞤪 𞤧𞤢𞤲𞤼𞤭𞤥𞤫𞥅𞤼𞤮𞤤"}
-                one{"{0} 𞤼𞤮𞤩𞥆𞤫𞤪𞤫 𞤲𞤣𞤫𞤪 𞤧𞤢𞤲𞤼𞤭𞤥𞤫𞥅𞤼𞤮𞤤"}
-                other{"{0} 𞤼𞤮𞤩𞥆𞤫 𞤲𞤣𞤫𞤪 𞤧𞤢𞤲𞤼𞤭𞤥𞤫𞥅𞤼𞤮𞤤"}
-            }
-            dot-per-inch{
-                dnam{"𞤼𞤮𞤩𞥆𞤫 𞤲𞤣𞤫𞤪 𞤲𞤺𞤮𞤪𞤰𞤵"}
-                one{"{0} 𞤼𞤮𞤩𞥆𞤫𞤪𞤫 𞤲𞤣𞤫𞤪 𞤲𞤺𞤮𞤪𞤰𞤵"}
-                other{"{0} 𞤼𞤮𞤩𞥆𞤫 𞤲𞤣𞤫𞤪 𞤲𞤺𞤮𞤪𞤰𞤵"}
-            }
             em{
                 dnam{"𞤭𞤥𞤵 𞤬𞤭𞥅 𞤴𞤢𞥄𞤴𞤮"}
                 one{"{0} 𞤭𞤥𞤵"}
@@ -505,7 +460,6 @@ ff_Adlm{
                 other{"{0} 𞤥𞤫𞤺𞤢𞤨𞤭𞤳𞤷𞤭"}
             }
             pixel{
-                dnam{"𞤨𞤭𞤳𞤷𞤭"}
                 one{"{0} 𞤨𞤭𞤳𞤷𞤮𞤤"}
                 other{"{0} 𞤨𞤭𞤳𞤷𞤭"}
             }
@@ -543,23 +497,19 @@ ff_Adlm{
                 other{"{0} 𞤤𞤢𞥄𞤧𞤮𞤤 𞤤𞤫𞤴𞤣𞤭 𞤲𞤣𞤭𞤲"}
             }
             fathom{
-                dnam{"𞤶𞤮𞤤𞥆𞤢𞤲𞤯𞤫"}
                 one{"{0} 𞤶𞤮𞤤𞥆𞤢𞤲𞤣𞤫"}
                 other{"{0} 𞤶𞤮𞤤𞥆𞤢𞤲𞤯𞤫"}
             }
             foot{
-                dnam{"𞤼𞤫𞤨𞥆𞤭"}
                 one{"{0} 𞤼𞤫𞤨𞥆𞤵"}
                 other{"{0} 𞤼𞤫𞤨𞥆𞤭"}
                 per{"{0} 𞤲𞤣𞤫𞤪 𞤼𞤫𞤨𞥆𞤵"}
             }
             furlong{
-                dnam{"𞤬𞤵𞤪𞤤𞤮𞤲𞤺𞤭"}
                 one{"{0} 𞤬𞤵𞤪𞤤𞤮𞤲𞤺𞤵"}
                 other{"{0} 𞤬𞤵𞤪𞤤𞤮𞤲𞤺𞤭"}
             }
             inch{
-                dnam{"𞤲𞤺𞤮𞤪𞤰𞤭"}
                 one{"{0} 𞤲𞤺𞤮𞤪𞤰𞤵"}
                 other{"{0} 𞤲𞤺𞤮𞤪𞤰𞤭"}
                 per{"{0} 𞤲𞤣𞤫𞤪 𞤲𞤺𞤮𞤪𞤰𞤵"}
@@ -630,12 +580,10 @@ ff_Adlm{
                 other{"{0} 𞤲𞤶𞤮𞤣𞥆𞤵𞥅𞤶𞤭"}
             }
             solar-radius{
-                dnam{"𞤤𞤢𞥄𞤧𞤮𞤤 𞤲𞤢𞥄𞤲𞤺𞤫𞤴𞤢𞤲𞤳𞤮"}
                 one{"{0} 𞤤𞤢𞥄𞤧𞤭 𞤲𞤢𞥄𞤲𞤺𞤫𞤴𞤢𞤲𞤳𞤮"}
                 other{"{0} 𞤤𞤢𞥄𞤧𞤮𞤤 𞤲𞤢𞥄𞤲𞤺𞤫𞤴𞤢𞤲𞤳𞤮"}
             }
             yard{
-                dnam{"𞤧𞤮𞤺𞤮𞤲𞤫"}
                 one{"{0} 𞤧𞤮𞤺𞤮𞤲𞤢𞤤"}
                 other{"{0} 𞤧𞤮𞤺𞤮𞤲𞤫"}
             }
@@ -652,7 +600,6 @@ ff_Adlm{
                 other{"{0} 𞤲𞤮𞤪𞤰𞤭"}
             }
             lux{
-                dnam{"𞤤𞤵𞤳𞤧𞤵"}
                 one{"{0} 𞤤𞤵𞤳𞤧𞤵"}
                 other{"{0} 𞤤𞤵𞤳𞤧𞤭"}
             }
@@ -669,12 +616,10 @@ ff_Adlm{
                 other{"{0} 𞤳𞤢𞤪𞤢𞤪𞤼𞤭"}
             }
             dalton{
-                dnam{"𞤣𞤢𞤤𞤼𞤮𞥅𞤲𞤭"}
                 one{"{0} 𞤣𞤢𞤤𞤼𞤮𞥅𞤲𞤵"}
                 other{"{0} 𞤣𞤢𞤤𞤼𞤮𞥅𞤲𞤭"}
             }
             earth-mass{
-                dnam{"𞤲𞤭𞥅𞤧𞤵𞥅𞤶𞤭 𞤤𞤫𞤴𞤣𞤭 𞤲𞤣𞤭𞤲"}
                 one{"{0} 𞤲𞤭𞥅𞤧𞤵 𞤤𞤫𞤴𞤣𞤭 𞤲𞤣𞤭𞤲"}
                 other{"{0} 𞤲𞤭𞥅𞤧𞤵𞥅𞤶𞤭 𞤤𞤫𞤴𞤣𞤭 𞤲𞤣𞤭𞤲"}
             }
@@ -684,7 +629,6 @@ ff_Adlm{
                 other{"{0} 𞤺𞤢𞤰𞥆𞤫"}
             }
             gram{
-                dnam{"𞤺𞤢𞤪𞤬𞤭"}
                 one{"{0} 𞤺𞤢𞤪𞤬𞤵"}
                 other{"{0} 𞤺𞤢𞤪𞤬𞤭"}
                 per{"{0} 𞤲𞤣𞤫𞤪 𞤺𞤢𞤪𞤬𞤵"}
@@ -717,13 +661,11 @@ ff_Adlm{
                 other{"{0} 𞤱𞤢𞤺𞤭𞤴𞤢𞥄𞤶𞤭 𞤥𞤫𞤲𞤳𞤫𞤤𞤣𞤫"}
             }
             pound{
-                dnam{"𞤺𞤢𞤪𞤤𞤭"}
                 one{"{0} 𞤺𞤢𞤪𞤤𞤵"}
                 other{"{0} 𞤺𞤢𞤪𞤤𞤭"}
                 per{"{0} 𞤲𞤣𞤫𞤪 𞤺𞤢𞤪𞤤𞤵"}
             }
             solar-mass{
-                dnam{"𞤲𞤭𞥅𞤧𞤵𞥅𞤶𞤭 𞤲𞤢𞥄𞤲𞤺𞤫"}
                 one{"{0} 𞤲𞤭𞥅𞤧𞤵 𞤲𞤢𞥄𞤲𞤺𞤫 𞤲𞤺𞤫𞤲"}
                 other{"{0} 𞤲𞤭𞥅𞤧𞤵𞥅𞤶𞤭 𞤲𞤢𞥄𞤲𞤺𞤫 𞤲𞤺𞤫𞤲"}
             }
@@ -733,7 +675,6 @@ ff_Adlm{
                 other{"{0} 𞤧𞤭𞤼𞤮𞤲𞤶𞤫"}
             }
             ton{
-                dnam{"𞤼𞤮𞥅𞤲𞤭"}
                 one{"{0} 𞤼𞤮𞥅𞤲𞤵"}
                 other{"{0} 𞤼𞤮𞥅𞤲𞤭"}
             }
@@ -770,7 +711,6 @@ ff_Adlm{
                 other{"{0} 𞤥𞤭𞤤𞤭𞤱𞤢𞥄𞤼𞤭"}
             }
             watt{
-                dnam{"𞤱𞤢𞥄𞤼𞤭"}
                 one{"{0} 𞤱𞤢𞥄𞤼𞤵"}
                 other{"{0} 𞤱𞤢𞥄𞤼𞤭"}
             }
@@ -895,7 +835,6 @@ ff_Adlm{
                 other{"{0} 𞤺𞤮𞤲𞤺𞤮𞥅𞤶𞤭"}
             }
             bushel{
-                dnam{"𞤥𞤢𞤤𞤼𞤭"}
                 one{"{0} 𞤥𞤢𞤤𞤼𞤵"}
                 other{"{0} 𞤥𞤢𞤤𞤼𞤭"}
             }
@@ -942,7 +881,6 @@ ff_Adlm{
                 other{"{0} 𞤤𞤢𞤥𞤦𞤵 𞤧𞤮𞤺𞤮𞤲𞤫"}
             }
             cup{
-                dnam{"𞤳𞤮𞤪𞤲𞤣𞤮𞥅𞤤𞤫"}
                 one{"{0} 𞤳𞤮𞤪𞤲𞤣𞤮𞥅𞤤𞤮"}
                 other{"{0} 𞤳𞤮𞤪𞤲𞤣𞤮𞥅𞤤𞤫"}
             }
@@ -972,7 +910,6 @@ ff_Adlm{
                 other{"{0} 𞤣𞤭𞤪𞤸𞤢𞤥𞤵"}
             }
             drop{
-                dnam{"𞤧𞤭𞤲𞤼𞤫𞤪𞤫"}
                 one{"{0} 𞤧𞤭𞤲𞤼𞤫𞤪𞤫"}
                 other{"{0} 𞤷𞤭𞤲𞤼𞤫"}
             }
@@ -1009,7 +946,6 @@ ff_Adlm{
                 other{"{0} 𞤶𞤭𞤺𞥆𞤫"}
             }
             liter{
-                dnam{"𞤤𞤭𞥅𞤼𞤭"}
                 one{"{0} 𞤤𞤭𞥅𞤼𞤵"}
                 other{"{0} 𞤤𞤭𞥅𞤼𞤭"}
                 per{"{0} 𞤲𞤣𞤫𞤪 𞤤𞤭𞥅𞤼𞤵"}
@@ -1025,12 +961,10 @@ ff_Adlm{
                 other{"{0} 𞤥𞤭𞤤𞤭𞤤𞤭𞥅𞤼𞤭"}
             }
             pinch{
-                dnam{"𞤩𞤵𞤷𞥆𞤢𞤲𞤣𞤫"}
                 one{"{0} 𞤩𞤵𞤷𞥆𞤢𞤲𞤣𞤫"}
                 other{"{0} 𞤩𞤵𞤷𞥆𞤢𞤲𞤯𞤫"}
             }
             pint{
-                dnam{"𞤨𞤭𞤲𞤼𞤭"}
                 one{"{0} 𞤨𞤭𞤲𞤼𞤵"}
                 other{"{0} 𞤨𞤭𞤲𞤼𞤭"}
             }
@@ -1064,7 +998,6 @@ ff_Adlm{
     unitsNarrow{
         acceleration{
             g-force{
-                dnam{"𞤻-𞤷𞤫𞤥𞤦𞤫"}
                 one{"{0}𞤙"}
                 other{"{0}𞤙"}
             }
@@ -1096,7 +1029,6 @@ ff_Adlm{
                 other{"{0}𞤪𞤢𞤣"}
             }
             revolution{
-                dnam{"𞤱𞤭𞤣"}
                 one{"{0}𞤱𞤭𞤣"}
                 other{"{0}𞤱𞤭𞤣"}
             }
@@ -1118,10 +1050,8 @@ ff_Adlm{
                 other{"{0}𞤸𞤳"}
             }
             square-centimeter{
-                dnam{"𞤧𞤥𞥒"}
                 one{"{0}𞤧𞤥𞥒"}
                 other{"{0}𞤧𞤥𞥒"}
-                per{"{0}/𞤧𞤥𞥒"}
             }
             square-foot{
                 dnam{"𞤼𞤨𞥒"}
@@ -1132,25 +1062,19 @@ ff_Adlm{
                 dnam{"𞤺𞤮𞥒"}
                 one{"{0}𞤺𞤮𞥒"}
                 other{"{0}𞤺𞤮𞥒"}
-                per{"{0}/𞤺𞤮𞥒"}
             }
             square-kilometer{
-                dnam{"𞤳𞤥𞥒"}
                 one{"{0}𞤳𞤥𞥒"}
                 other{"{0}𞤳𞤥𞥒"}
-                per{"{0}/𞤳𞤥𞥒"}
             }
             square-meter{
-                dnam{"𞤥𞤫𞥅𞤼𞤭𞥒"}
                 one{"{0}𞤥𞥒"}
                 other{"{0}𞤥𞥒"}
-                per{"{0}/𞤥𞥒"}
             }
             square-mile{
                 dnam{"𞤥𞤢𞥒"}
                 one{"{0}𞤥𞤢𞥒"}
                 other{"{0}𞤥𞤢𞥒"}
-                per{"{0}/𞤥𞤢𞥒"}
             }
             square-yard{
                 dnam{"𞤧𞤺𞥒"}
@@ -1159,64 +1083,10 @@ ff_Adlm{
             }
         }
         compound{
-            1024p1{"𞤑𞤭{0}"}
-            1024p2{"𞤃𞤭{0}"}
-            1024p3{"𞤘𞤭{0}"}
-            1024p4{"𞤚𞤭{0}"}
-            1024p5{"𞤆𞤭{0}"}
-            1024p6{"𞤉𞤭{0}"}
-            1024p7{"𞤟𞤭{0}"}
-            1024p8{"𞤒𞤭{0}"}
-            10p-1{"𞤣{0}"}
-            10p-12{"𞤨{0}"}
-            10p-15{"𞤬{0}"}
-            10p-18{"𞤢{0}"}
-            10p-2{"𞤧{0}"}
-            10p-21{"𞥁{0}"}
-            10p-24{"𞤴{0}"}
-            10p-3{"𞤥{0}"}
             10p-6{"𞤻{0}"}
-            10p-9{"𞤲{0}"}
-            10p1{"𞤣𞤢{0}"}
-            10p12{"𞤚{0}"}
-            10p15{"𞤆{0}"}
-            10p18{"𞤉{0}"}
-            10p2{"𞤸{0}"}
-            10p21{"𞤟{0}"}
-            10p24{"𞤒{0}"}
-            10p3{"𞤳{0}"}
-            10p6{"𞤃{0}"}
-            10p9{"𞤘{0}"}
-            per{"{0}/{1}"}
-            power2{
-                one{
-                    _{
-                        _{"{0}𞥒"}
-                    }
-                }
-                other{
-                    _{
-                        _{"{0}𞥒"}
-                    }
-                }
-            }
-            power3{
-                one{
-                    _{
-                        _{"{0}𞥓"}
-                    }
-                }
-                other{
-                    _{
-                        _{"{0}𞥓"}
-                    }
-                }
-            }
-            times{"{0}-{1}"}
         }
         concentr{
             item{
-                dnam{"𞤨𞤭𞤪𞤰𞤵"}
                 one{"{0}𞤨𞤭𞤪"}
                 other{"{0}𞤨𞤭𞤪"}
             }
@@ -1226,7 +1096,6 @@ ff_Adlm{
                 other{"{0}𞤳𞤼"}
             }
             milligram-ofglucose-per-deciliter{
-                dnam{"𞤥𞤺/𞤣𞤤"}
                 one{"{0}𞤥𞤺/𞤣𞤤"}
                 other{"{0}𞤥𞤺/𞤣𞤤"}
             }
@@ -1240,30 +1109,23 @@ ff_Adlm{
                 one{"{0}𞤥𞤮𞤤"}
                 other{"{0}𞤥𞤮𞤤"}
             }
-            percent{
-                dnam{"%"}
-                one{"{0}%"}
-                other{"{0}%"}
-            }
-            permille{
-                dnam{"‰"}
-                one{"{0}‰"}
-                other{"{0}‰"}
-            }
-            permillion{
+            part-per-1e6{
                 dnam{"𞤺𞤳𞤣"}
                 one{"{0}𞤺𞤳𞤣"}
                 other{"{0}𞤺𞤳𞤣"}
             }
+            percent{
+                dnam{"%"}
+            }
+            permille{
+                dnam{"‰"}
+            }
             permyriad{
                 dnam{"‱"}
-                one{"{0}‱"}
-                other{"{0}‱"}
             }
         }
         consumption{
             liter-per-100-kilometer{
-                dnam{"𞤤/𞥑𞥐𞥐 𞤳𞤥"}
                 one{"{0}𞤤/𞥑𞥐𞥐 𞤳𞤥"}
                 other{"{0}𞤤/𞥑𞥐𞥐 𞤳𞤥"}
             }
@@ -1284,7 +1146,6 @@ ff_Adlm{
             }
         }
         coordinate{
-            dnam{"𞤸𞤫𞤤𞥆𞤢"}
             east{"{0}𞤊"}
             north{"{0}𞤐"}
             south{"{0}𞤙"}
@@ -1349,18 +1210,15 @@ ff_Adlm{
         }
         duration{
             century{
-                dnam{"𞤼"}
                 one{"{0}𞤼"}
                 other{"{0}𞤼"}
             }
             day{
-                dnam{"𞤻𞤢𞤤."}
                 one{"{0}𞤻"}
                 other{"{0}𞤻"}
                 per{"{0}/𞤻"}
             }
             decade{
-                dnam{"𞤼𞤭𞤶"}
                 one{"{0}𞤼𞤭𞤶"}
                 other{"{0}𞤼𞤭𞤶"}
             }
@@ -1368,10 +1226,8 @@ ff_Adlm{
                 dnam{"𞤲𞤶𞤢𞤥𞤲𞤣𞤭"}
                 one{"{0}𞤶"}
                 other{"{0}𞤶"}
-                per{"{0}/𞤶"}
             }
             microsecond{
-                dnam{"𞤻𞤳𞤭𞤲"}
                 one{"{0}𞤻𞤳𞤭𞤲"}
                 other{"{0}𞤻𞤳𞤭𞤲"}
             }
@@ -1381,45 +1237,26 @@ ff_Adlm{
                 other{"{0}𞤥𞤳𞤭𞤲"}
             }
             minute{
-                dnam{"𞤸𞤮𞤶"}
                 one{"{0}𞤸𞤮𞤶"}
                 other{"{0}𞤸𞤮𞤶"}
-                per{"{0}/𞤸𞤮𞤶"}
             }
             month{
-                dnam{"𞤤𞤫𞤦𞥆𞤭"}
                 one{"{0} 𞤤"}
                 other{"{0} 𞤤"}
-                per{"{0}/𞤤"}
             }
             nanosecond{
                 dnam{"𞤲𞤳𞤭𞤲"}
                 one{"{0}𞤲𞤳𞤭𞤲"}
                 other{"{0}𞤲𞤳𞤭𞤲"}
             }
-            quarter{
-                dnam{"𞤲𞤤𞤦"}
-                one{"{0} 𞤲"}
-                other{"{0} 𞤲"}
-                per{"{0}/𞤲"}
-            }
             second{
-                dnam{"𞤳𞤭𞤲"}
                 one{"{0}𞤳𞤭𞤲"}
                 other{"{0}𞤳𞤭𞤲"}
-                per{"{0}/𞤳𞤭𞤲"}
-            }
-            week{
-                dnam{"𞤶𞤼"}
-                one{"{0} 𞤴𞤼"}
-                other{"{0} 𞤶𞤼"}
-                per{"{0}/𞤴𞤼"}
             }
             year{
                 dnam{"𞤸𞤭𞤼"}
                 one{"{0} 𞤳𞤭𞤼"}
                 other{"{0}/𞤳𞤭𞤼"}
-                per{"{0}/𞤸"}
             }
         }
         electric{
@@ -1446,12 +1283,10 @@ ff_Adlm{
         }
         energy{
             british-thermal-unit{
-                dnam{"𞤑𞤘𞤄"}
                 one{"{0}𞤑𞤺𞤦"}
                 other{"{0}𞤑𞤺𞤦"}
             }
             calorie{
-                dnam{"𞤺𞤵𞤤"}
                 one{"{0}𞤺𞤵𞤤"}
                 other{"{0}𞤺𞤵𞤤"}
             }
@@ -1460,18 +1295,12 @@ ff_Adlm{
                 one{"{0}𞤫𞤜"}
                 other{"{0}𞤫𞤜"}
             }
-            foodcalorie{
-                dnam{"𞤘𞤵𞤤"}
-                one{"{0}𞤘𞤵𞤤"}
-                other{"{0}𞤘𞤵𞤤"}
-            }
             joule{
                 dnam{"𞥁𞤵𞥅𞤤𞤱𞤵"}
                 one{"{0}𞤟"}
                 other{"{0}𞤟"}
             }
             kilocalorie{
-                dnam{"𞤳𞤺𞤵𞤤"}
                 one{"{0}𞤳𞤺𞤵𞤤"}
                 other{"{0}𞤳𞤺𞤵𞤤"}
             }
@@ -1493,7 +1322,6 @@ ff_Adlm{
         }
         force{
             kilowatt-hour-per-100-kilometer{
-                dnam{"𞤳𞤏𞤶/𞥑𞥐𞥐𞤳𞤥"}
                 one{"{0}𞤳𞤏𞤶/𞥑𞥐𞥐𞤳𞤥"}
                 other{"{0}𞤳𞤏𞤶/𞥑𞥐𞥐𞤳𞤥"}
             }
@@ -1510,44 +1338,24 @@ ff_Adlm{
         }
         frequency{
             gigahertz{
-                dnam{"𞤘𞤖𞤪"}
                 one{"{0}𞤘𞤖𞤪"}
                 other{"{0}𞤘𞤖𞤪"}
             }
             hertz{
-                dnam{"𞤖𞤪"}
                 one{"{0}𞤖𞤪"}
                 other{"{0}𞤖𞤪"}
             }
             kilohertz{
-                dnam{"𞤳𞤖𞤪"}
                 one{"{0}𞤳𞤖𞤪"}
                 other{"{0}𞤳𞤖𞤪"}
             }
             megahertz{
-                dnam{"𞤃𞤖𞤪"}
                 one{"{0}𞤃𞤖𞤪"}
                 other{"{0}𞤃𞤖𞤪"}
             }
         }
         graphics{
-            dot{
-                dnam{"𞤼𞤮𞤩𞥆𞤫𞤪𞤫"}
-                one{"{0}𞤼𞤮𞤩𞥆𞤫𞤪𞤫"}
-                other{"{0}𞤼𞤮𞤩𞥆𞤫𞤪𞤫"}
-            }
-            dot-per-centimeter{
-                dnam{"𞤼𞤩𞤧𞤥"}
-                one{"{0}𞤼𞤩𞤧𞤥"}
-                other{"{0}𞤼𞤩𞤧𞤥"}
-            }
-            dot-per-inch{
-                dnam{"𞤼𞤩𞤺𞤰"}
-                one{"{0}𞤼𞤩𞤺𞤰"}
-                other{"{0}𞤼𞤩𞤺𞤰"}
-            }
             em{
-                dnam{"𞤭𞤥𞤵"}
                 one{"{0}𞤭𞤥𞤵"}
                 other{"{0}𞤭𞤥𞤵"}
             }
@@ -1562,35 +1370,28 @@ ff_Adlm{
                 other{"{0}𞤨𞤳"}
             }
             pixel-per-centimeter{
-                dnam{"𞤨𞤳𞤣𞤧𞤥"}
                 one{"{0}𞤨𞤳𞤣𞤧𞤥"}
                 other{"{0}𞤨𞤳𞤣𞤧𞤥"}
             }
             pixel-per-inch{
-                dnam{"𞤨𞤳𞤣𞤺𞤰"}
                 one{"{0}𞤨𞤳𞤣𞤺𞤰"}
                 other{"{0}𞤨𞤳𞤣𞤺𞤰"}
             }
         }
         length{
             astronomical-unit{
-                dnam{"𞤳𞤵"}
                 one{"{0}𞤳𞤵"}
                 other{"{0}𞤳𞤵"}
             }
             centimeter{
-                dnam{"𞤧𞤥"}
                 one{"{0}𞤧𞤥"}
                 other{"{0}𞤧𞤥"}
-                per{"{0}/𞤧𞤥"}
             }
             decimeter{
-                dnam{"𞤣𞤥"}
                 one{"{0}𞤣𞤥"}
                 other{"{0}𞤣𞤥"}
             }
             earth-radius{
-                dnam{"𞤂⊕"}
                 one{"{0}𞤂⊕"}
                 other{"{0}𞤂⊕"}
             }
@@ -1603,7 +1404,6 @@ ff_Adlm{
                 dnam{"𞤼𞤨"}
                 one{"{0}𞤼𞤨"}
                 other{"{0}𞤼𞤨"}
-                per{"{0}/𞤼𞤨"}
             }
             furlong{
                 dnam{"𞤬𞤵𞤪𞤤𞤮𞤲𞤺𞤵"}
@@ -1614,13 +1414,10 @@ ff_Adlm{
                 dnam{"𞤺𞤮"}
                 one{"{0}𞤺𞤮"}
                 other{"{0}𞤺𞤮"}
-                per{"{0}/𞤺𞤮"}
             }
             kilometer{
-                dnam{"𞤳𞤥"}
                 one{"{0}𞤳𞤥"}
                 other{"{0}𞤳𞤥"}
-                per{"{0}/𞤳𞤥"}
             }
             light-year{
                 dnam{"𞤳𞤣"}
@@ -1628,10 +1425,8 @@ ff_Adlm{
                 other{"{0}𞤳𞤣"}
             }
             meter{
-                dnam{"𞤥"}
                 one{"{0}𞤥"}
                 other{"{0}𞤥"}
-                per{"{0}/𞤥"}
             }
             micrometer{
                 dnam{"𞤻𞤥"}
@@ -1639,37 +1434,30 @@ ff_Adlm{
                 other{"{0}𞤻𞤥"}
             }
             mile{
-                dnam{"𞤥𞤢"}
                 one{"{0}𞤥𞤢"}
                 other{"{0}𞤥𞤢"}
             }
             mile-scandinavian{
-                dnam{"𞤥𞤢𞤧"}
                 one{"{0}𞤥𞤢𞤧"}
                 other{"{0}𞤥𞤢𞤧"}
             }
             millimeter{
-                dnam{"𞤥𞤥"}
                 one{"{0}𞤥𞤥"}
                 other{"{0}𞤥𞤥"}
             }
             nanometer{
-                dnam{"𞤲𞤥"}
                 one{"{0}𞤲𞤥"}
                 other{"{0}𞤲𞤥"}
             }
             nautical-mile{
-                dnam{"𞤥𞤢𞤥"}
                 one{"{0}𞤥𞤢𞤥"}
                 other{"{0}𞤥𞤢𞤥"}
             }
             parsec{
-                dnam{"𞤨𞤧"}
                 one{"{0}𞤨𞤧"}
                 other{"{0}𞤨𞤧"}
             }
             picometer{
-                dnam{"𞤨𞤥"}
                 one{"{0}𞤨𞤥"}
                 other{"{0}𞤨𞤥"}
             }
@@ -1691,12 +1479,10 @@ ff_Adlm{
         }
         light{
             candela{
-                dnam{"𞤶𞤤"}
                 one{"{0}𞤶𞤤"}
                 other{"{0}𞤶𞤤"}
             }
             lumen{
-                dnam{"𞤲𞤪"}
                 one{"{0}𞤲𞤪"}
                 other{"{0}𞤲𞤪"}
             }
@@ -1736,29 +1522,22 @@ ff_Adlm{
                 dnam{"𞤺𞤢𞤪𞤬𞤵"}
                 one{"{0}𞤺"}
                 other{"{0}𞤺"}
-                per{"{0}/𞤺"}
             }
             kilogram{
-                dnam{"𞤳𞤺"}
                 one{"{0}𞤳𞤺"}
                 other{"{0}𞤳𞤺"}
-                per{"{0}/𞤳𞤺"}
             }
             microgram{
-                dnam{"𞤻𞤺"}
                 one{"{0}𞤻𞤺"}
                 other{"{0}𞤻𞤺"}
             }
             milligram{
-                dnam{"𞤥𞤺"}
                 one{"{0}𞤥𞤺"}
                 other{"{0}𞤥𞤺"}
             }
             ounce{
-                dnam{"𞤱𞤺"}
                 one{"{0}𞤱𞤺"}
                 other{"{0}𞤱𞤺"}
-                per{"{0}/𞤱𞤺"}
             }
             ounce-troy{
                 dnam{"𞤱𞤺 𞤥𞤳"}
@@ -1766,10 +1545,8 @@ ff_Adlm{
                 other{"{0}𞤱𞤺 𞤥𞤳"}
             }
             pound{
-                dnam{"𞤺𞤢𞤪𞤤𞤭"}
                 one{"{0}𞤺𞤤"}
                 other{"{0}𞤺𞤤"}
-                per{"{0}/𞤺𞤤"}
             }
             solar-mass{
                 dnam{"𞤐☉"}
@@ -1787,34 +1564,28 @@ ff_Adlm{
                 other{"{0}𞤼𞤲"}
             }
             tonne{
-                dnam{"𞤼"}
                 one{"{0}𞤼"}
                 other{"{0}𞤼"}
             }
         }
         power{
             gigawatt{
-                dnam{"𞤘𞤏"}
                 one{"{0}𞤘𞤏"}
                 other{"{0}𞤘𞤏"}
             }
             horsepower{
-                dnam{"𞤷𞤨"}
                 one{"{0}𞤷𞤨"}
                 other{"{0}𞤷𞤨"}
             }
             kilowatt{
-                dnam{"𞤳𞤏"}
                 one{"{0}𞤳𞤏"}
                 other{"{0}𞤳𞤏"}
             }
             megawatt{
-                dnam{"𞤃𞤏"}
                 one{"{0}𞤃𞤏"}
                 other{"{0}𞤃𞤏"}
             }
             milliwatt{
-                dnam{"𞤥𞤏"}
                 one{"{0}𞤥𞤏"}
                 other{"{0}𞤥𞤏"}
             }
@@ -1826,7 +1597,6 @@ ff_Adlm{
         }
         pressure{
             atmosphere{
-                dnam{"𞤦𞤫𞤧"}
                 one{"{0}𞤦𞤫𞤧"}
                 other{"{0}𞤦𞤫𞤧"}
             }
@@ -1836,42 +1606,34 @@ ff_Adlm{
                 other{"{0}𞤦𞤢𞤪"}
             }
             hectopascal{
-                dnam{"𞤸𞤆𞤢"}
                 one{"{0}𞤸𞤆𞤢"}
                 other{"{0}𞤸𞤆𞤢"}
             }
             inch-ofhg{
-                dnam{"𞤺𞤮𞤖𞤺"}
                 one{"{0}𞤺𞤮𞤖𞤺"}
                 other{"{0}𞤺𞤮𞤖𞤺"}
             }
             kilopascal{
-                dnam{"𞤳𞤆𞤢"}
                 one{"{0}𞤳𞤆𞤢"}
                 other{"{0}𞤳𞤆𞤢"}
             }
             megapascal{
-                dnam{"𞤃𞤆𞤢"}
                 one{"{0}𞤃𞤆𞤢"}
                 other{"{0}𞤃𞤆𞤢"}
             }
             millibar{
-                dnam{"𞤥𞤦𞤢𞤪"}
                 one{"{0}𞤥𞤦𞤢𞤪"}
                 other{"{0}𞤥𞤦𞤢𞤪"}
             }
             millimeter-ofhg{
-                dnam{"𞤥𞤥𞤖𞤺"}
                 one{"{0}𞤥𞤥𞤖𞤺"}
                 other{"{0}𞤥𞤥𞤖𞤺"}
             }
             pascal{
-                dnam{"𞤆𞤢"}
                 one{"{0}𞤆𞤢"}
                 other{"{0}𞤆𞤢"}
             }
             pound-force-per-square-inch{
-                dnam{"𞤺𞤣𞤺𞤮"}
                 one{"{0}𞤺𞤣𞤺𞤮"}
                 other{"{0}𞤺𞤣𞤺𞤮"}
             }
@@ -1883,7 +1645,6 @@ ff_Adlm{
                 other{"{0}𞤳𞤥/𞤶"}
             }
             knot{
-                dnam{"𞤨𞤩"}
                 one{"{0}𞤨𞤩"}
                 other{"{0}𞤨𞤩"}
             }
@@ -1901,40 +1662,24 @@ ff_Adlm{
         temperature{
             celsius{
                 dnam{"°𞤅"}
-                one{"{0}°𞤅"}
-                other{"{0}°𞤅"}
-            }
-            fahrenheit{
-                dnam{"𞤶𞤫𞤩. 𞤊"}
-                one{"{0}°𞤊"}
-                other{"{0}°𞤊"}
-            }
-            generic{
-                dnam{"°"}
-                one{"{0}°"}
-                other{"{0}°"}
             }
             kelvin{
-                dnam{"𞤑"}
                 one{"{0}𞤑"}
                 other{"{0}𞤑"}
             }
         }
         torque{
             newton-meter{
-                dnam{"𞤐.𞤥"}
                 one{"{0}𞤐.𞤥"}
                 other{"{0}𞤐.𞤥"}
             }
             pound-force-foot{
-                dnam{"𞤺𞤤𞤷.𞤼𞤨"}
                 one{"{0}𞤺𞤤𞤷.𞤼𞤨"}
                 other{"{0}𞤺𞤤𞤷.𞤼𞤨"}
             }
         }
         volume{
             acre-foot{
-                dnam{"𞤺𞤢𞤪𞤳𞤵 𞤼𞤨"}
                 one{"{0}𞤺𞤢 𞤼𞤨"}
                 other{"{0}𞤺𞤢 𞤼𞤨"}
             }
@@ -1944,20 +1689,16 @@ ff_Adlm{
                 other{"{0}𞤺𞤮𞤺"}
             }
             bushel{
-                dnam{"𞤥𞤢𞤤𞤼𞤭"}
                 one{"{0}𞤥𞤼"}
                 other{"{0}𞤥𞤼"}
             }
             centiliter{
-                dnam{"𞤧𞤤"}
                 one{"{0}𞤧𞤤"}
                 other{"{0}𞤧𞤤"}
             }
             cubic-centimeter{
-                dnam{"𞤧𞤥𞥓"}
                 one{"{0}𞤧𞤥𞥓"}
                 other{"{0}𞤧𞤥𞥓"}
-                per{"{0}/𞤧𞤥𞥓"}
             }
             cubic-foot{
                 dnam{"𞤼𞤨𞥓"}
@@ -1970,18 +1711,14 @@ ff_Adlm{
                 other{"{0}𞤺𞤮𞥓"}
             }
             cubic-kilometer{
-                dnam{"𞤳𞤥𞥓"}
                 one{"{0}𞤳𞤥𞥓"}
                 other{"{0}𞤳𞤥𞥓"}
             }
             cubic-meter{
-                dnam{"𞤥𞥓"}
                 one{"{0}𞤥𞥓"}
                 other{"{0}𞤥𞥓"}
-                per{"{0}/𞤥𞥓"}
             }
             cubic-mile{
-                dnam{"𞤥𞤢𞥓"}
                 one{"{0}𞤥𞤢𞥓"}
                 other{"{0}𞤥𞤢𞥓"}
             }
@@ -1996,22 +1733,18 @@ ff_Adlm{
                 other{"{0}𞤳𞤮𞤪"}
             }
             cup-metric{
-                dnam{"𞤳𞤮𞤪𞤥"}
                 one{"{0}𞤳𞤮𞤪𞤥"}
                 other{"{0}𞤳𞤮𞤪𞤥"}
             }
             deciliter{
-                dnam{"𞤣𞤤"}
                 one{"{0}𞤣𞤤"}
                 other{"{0}𞤣𞤤"}
             }
             dessert-spoon{
-                dnam{"𞤳𞤤𞤤"}
                 one{"{0}𞤳𞤤𞤤"}
                 other{"{0}𞤳𞤤𞤤"}
             }
             dessert-spoon-imperial{
-                dnam{"𞤳𞤤𞤤 𞤚𞤭𞤤."}
                 one{"{0}𞤳𞤤𞤤 𞤚𞤭𞤤."}
                 other{"{0}𞤳𞤤𞤤 𞤚𞤭𞤤."}
             }
@@ -2026,34 +1759,26 @@ ff_Adlm{
                 other{"{0}𞤷𞤭𞤲"}
             }
             fluid-ounce{
-                dnam{"𞤱𞤺 𞤧𞤫𞤤"}
                 one{"{0}𞤱𞤺 𞤧𞤫𞤤"}
                 other{"{0}𞤱𞤺 𞤧𞤫𞤤"}
             }
             fluid-ounce-imperial{
-                dnam{"𞤱𞤺 𞤧𞤫𞤤 𞤚𞤭𞤤."}
                 one{"{0}𞤱𞤺 𞤧𞤫𞤤 𞤚𞤭𞤤."}
                 other{"{0}𞤱𞤺 𞤧𞤫𞤤 𞤚𞤭𞤤."}
             }
             gallon{
-                dnam{"𞤺𞤢𞤤"}
                 one{"{0}𞤺𞤢𞤤"}
                 other{"{0}𞤺𞤢𞤤"}
-                per{"{0}/𞤺𞤢𞤤"}
             }
             gallon-imperial{
-                dnam{"𞤺𞤢𞤤 𞤚𞤭𞤤."}
                 one{"{0}𞤺𞤢𞤤 𞤚𞤭𞤤."}
                 other{"{0}𞤺𞤢𞤤 𞤚𞤭𞤤."}
-                per{"{0}/𞤺𞤢𞤤 𞤚𞤭𞤤."}
             }
             hectoliter{
-                dnam{"𞤸𞤤"}
                 one{"{0}𞤸𞤤"}
                 other{"{0}𞤸𞤤"}
             }
             jigger{
-                dnam{"𞤶𞤭𞤺𞥆𞤮"}
                 one{"{0}𞤶𞤭𞤺𞥆𞤮"}
                 other{"{0}𞤶𞤭𞤺𞥆𞤫"}
             }
@@ -2061,15 +1786,12 @@ ff_Adlm{
                 dnam{"𞤤𞤭𞥅𞤼𞤵"}
                 one{"{0}𞤤"}
                 other{"{0}𞤤"}
-                per{"{0}/𞤤"}
             }
             megaliter{
-                dnam{"𞤃𞤤"}
                 one{"{0}𞤃𞤤"}
                 other{"{0}𞤃𞤤"}
             }
             milliliter{
-                dnam{"𞤥𞤤"}
                 one{"{0}𞤥𞤤"}
                 other{"{0}𞤥𞤤"}
             }
@@ -2084,7 +1806,6 @@ ff_Adlm{
                 other{"{0}𞤨𞤼"}
             }
             pint-metric{
-                dnam{"𞤨𞤼𞤥"}
                 one{"{0}𞤨𞤼𞤥"}
                 other{"{0}𞤨𞤼𞤥"}
             }
@@ -2094,17 +1815,14 @@ ff_Adlm{
                 other{"{0}𞤳𞤼"}
             }
             quart-imperial{
-                dnam{"𞤳𞤼 𞤚𞤭𞤤"}
                 one{"{0}𞤳𞤼 𞤚𞤭𞤤."}
                 other{"{0}𞤳𞤼 𞤚𞤭𞤤."}
             }
             tablespoon{
-                dnam{"𞤳𞤤𞤻"}
                 one{"{0}𞤳𞤤𞤻"}
                 other{"{0}𞤳𞤤𞤻"}
             }
             teaspoon{
-                dnam{"𞤳𞤤𞤦"}
                 one{"{0}𞤳𞤤𞤦"}
                 other{"{0}𞤳𞤤𞤦"}
             }
@@ -2236,7 +1954,6 @@ ff_Adlm{
             10p3{"𞤳{0}"}
             10p6{"𞤃{0}"}
             10p9{"𞤘{0}"}
-            per{"{0}/{1}"}
             power2{
                 one{
                     _{
@@ -2287,25 +2004,19 @@ ff_Adlm{
                 one{"{0} 𞤥𞤮𞤤"}
                 other{"{0} 𞤥𞤮𞤤"}
             }
-            percent{
-                dnam{"𞤳𞤢𞤤𞤼𞤫𞥅𞤥𞤵"}
-                one{"{0}%"}
-                other{"{0}%"}
-            }
-            permille{
-                dnam{"𞤳𞤢𞤤𞤺𞤵𞤤𞤶𞤵"}
-                one{"{0}‰"}
-                other{"{0}‰"}
-            }
-            permillion{
+            part-per-1e6{
                 dnam{"𞤺𞤫𞤩𞤫/𞤣𞤵𞤦𞤵𞥅𞤪𞤫"}
                 one{"{0} 𞤺𞤳𞤣"}
                 other{"{0} 𞤺𞤳𞤣"}
             }
+            percent{
+                dnam{"𞤳𞤢𞤤𞤼𞤫𞥅𞤥𞤵"}
+            }
+            permille{
+                dnam{"𞤳𞤢𞤤𞤺𞤵𞤤𞤶𞤵"}
+            }
             permyriad{
                 dnam{"𞤳𞤢𞤤𞤲𞤺𞤵𞤤𞤧𞤢𞤨𞥆𞤮"}
-                one{"{0}‱"}
-                other{"{0}‱"}
             }
         }
         consumption{
@@ -2482,8 +2193,6 @@ ff_Adlm{
             }
             ohm{
                 dnam{"𞤮𞤸𞤥𞤵𞥅𞤶𞤭"}
-                one{"{0} Ω"}
-                other{"{0} Ω"}
             }
             volt{
                 dnam{"𞤾𞤮𞤤𞤼𞤵𞥅𞤶𞤭"}
@@ -2506,11 +2215,6 @@ ff_Adlm{
                 dnam{"𞤫𞤤𞤫𞤳𞤼𞤮𞤾𞤮𞤤𞤼𞤵"}
                 one{"{0} 𞤫𞤜"}
                 other{"{0} 𞤫𞤜"}
-            }
-            foodcalorie{
-                dnam{"𞤘𞤵𞤤"}
-                one{"{0} 𞤘𞤵𞤤"}
-                other{"{0} 𞤘𞤵𞤤"}
             }
             joule{
                 dnam{"𞥁𞤵𞥅𞤤𞤶𞤭"}
@@ -2578,21 +2282,6 @@ ff_Adlm{
             }
         }
         graphics{
-            dot{
-                dnam{"𞤨𞤭𞤳𞤷𞤭"}
-                one{"{0} 𞤼𞤮𞤩𞥆𞤫𞤪𞤫"}
-                other{"{0} 𞤼𞤮𞤩𞥆𞤫𞤪𞤫"}
-            }
-            dot-per-centimeter{
-                dnam{"𞤼𞤩𞤧𞤥"}
-                one{"{0} 𞤼𞤩𞤧𞤥"}
-                other{"{0} 𞤼𞤩𞤧𞤥"}
-            }
-            dot-per-inch{
-                dnam{"𞤼𞤩𞤺𞤰"}
-                one{"{0} 𞤼𞤩𞤺𞤰"}
-                other{"{0} 𞤼𞤩𞤺𞤰"}
-            }
             em{
                 dnam{"𞤭𞤥𞤵"}
                 one{"{0} 𞤭𞤥𞤵"}

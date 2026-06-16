@@ -1,16 +1,19 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 hsb{
     Keys{
         calendar{"protyka"}
         cf{"format měny"}
         collation{"rjadowanski slěd"}
         currency{"měna"}
+        em{"předstajenje emojija"}
         hc{"hodźinowy cyklus (12 vs 24)"}
         lb{"system łamanja linkow"}
+        lw{"łamanje linki w słowje"}
         ms{"system měrow"}
         numbers{"ličby"}
+        ss{"přetorhnjenje sady po skrótšence"}
     }
     Languages{
         aa{"afaršćina"}
@@ -30,6 +33,7 @@ hsb{
         ann{"obološćina"}
         anp{"angikašćina"}
         ar{"arabšćina"}
+        ar_001{"moderna wysokoarabšćina"}
         arn{"arawkanšćina"}
         arp{"arapahošćina"}
         ars{"najdi arabšćina"}
@@ -42,16 +46,19 @@ hsb{
         ay{"aymaršćina"}
         az{"azerbajdźanšćina"}
         ba{"baškiršćina"}
+        bal{"balučišćina"}
         ban{"balinezišćina"}
         bas{"basaa"}
         be{"běłorušćina"}
         bem{"bemba"}
         bez{"bena"}
         bg{"bołharšćina"}
+        bgc{"haryanvi"}
         bho{"bhojpurišćina"}
         bi{"bislamšćina"}
         bin{"binišćina"}
         bla{"siksikášćina"}
+        blo{"aniišćina"}
         bm{"bambara"}
         bn{"bengalšćina"}
         bo{"tibetšćina"}
@@ -93,6 +100,8 @@ hsb{
         dar{"dargwašćina"}
         dav{"taita"}
         de{"němčina"}
+        de_AT{"awstriska němčina"}
+        de_CH{"šwicarska wysokoněmčina"}
         dgr{"dogribšćina"}
         dje{"zarma"}
         doi{"dogrišćina"}
@@ -108,12 +117,20 @@ hsb{
         eka{"ekajukšćina"}
         el{"grjekšćina"}
         en{"jendźelšćina"}
+        en_AU{"awstralska jendźelšćina"}
+        en_CA{"kanadiska jendźelšćina"}
+        en_GB{"britiska jendźelšćina"}
+        en_US{"ameriska jendźelšćina"}
         eo{"esperanto"}
         es{"španišćina"}
+        es_419{"łaćonskoameriska španišćina"}
+        es_ES{"europska španišćina"}
+        es_MX{"mexiska španišćina"}
         et{"estišćina"}
         eu{"baskišćina"}
         ewo{"ewondo"}
         fa{"persišćina"}
+        fa_AF{"dari"}
         ff{"fulbšćina"}
         fi{"finšćina"}
         fil{"filipinšćina"}
@@ -121,6 +138,8 @@ hsb{
         fo{"färöšćina"}
         fon{"fonšćina"}
         fr{"francošćina"}
+        fr_CA{"kanadiska francošćina"}
+        fr_CH{"šwicarska francošćina"}
         frc{"cajun francošćina"}
         frr{"sewjernofrizišćina"}
         fur{"friulšćina"}
@@ -160,6 +179,7 @@ hsb{
         iba{"ibanšćina"}
         ibb{"ibibiošćina"}
         id{"indonešćina"}
+        ie{"interlinguešćina"}
         ig{"igbo"}
         ii{"sichuan yi"}
         ik{"inupiak"}
@@ -214,6 +234,7 @@ hsb{
         kv{"komišćina"}
         kw{"kornišćina"}
         kwk{"kwakʼwalašćina"}
+        kxv{"kuvišćina"}
         ky{"kirgišćina"}
         la{"łaćonšćina"}
         lad{"ladinšćina"}
@@ -222,8 +243,10 @@ hsb{
         lez{"lezgianšćina"}
         lg{"gandšćina"}
         li{"limburšćina"}
+        lij{"ligurianšćina"}
         lil{"lillooetšćina"}
         lkt{"lakota"}
+        lmo{"lombardšćina"}
         ln{"lingala"}
         lo{"laošćina"}
         lou{"Louisiana kreolšćina"}
@@ -234,7 +257,6 @@ hsb{
         lu{"luba-katanga"}
         lua{"luba-luluašćina"}
         lun{"lundašćina"}
-        luo{"luo"}
         lus{"mizošćina"}
         luy{"luhya"}
         lv{"letišćina"}
@@ -283,6 +305,7 @@ hsb{
         nia{"niazišćina"}
         niu{"niueanšćina"}
         nl{"nižozemšćina"}
+        nl_BE{"flamšćina"}
         nmg{"kwasio"}
         nn{"norwegšćina (nynorsk)"}
         nnh{"ngiemboon"}
@@ -316,14 +339,18 @@ hsb{
         prg{"prušćina"}
         ps{"paštunšćina"}
         pt{"portugalšćina"}
+        pt_BR{"brazilska portugalšćina"}
+        pt_PT{"europska portugalšćina"}
         qu{"kečua"}
         quc{"kʼicheʼ"}
+        raj{"rajasthani"}
         rap{"rapanuišćina"}
         rar{"rarotonganšćina"}
         rhg{"rohingyašćina"}
         rm{"retoromanšćina"}
         rn{"kirundišćina"}
         ro{"rumunšćina"}
+        ro_MD{"moldawšćina"}
         rof{"rombo"}
         ru{"rušćina"}
         rup{"armanianšćina"}
@@ -344,6 +371,7 @@ hsb{
         seh{"sena"}
         ses{"koyra senni"}
         sg{"sango"}
+        sh{"serbochorwatšćina"}
         shi{"tašelhit"}
         shn{"shanšćina"}
         si{"singhalšćina"}
@@ -369,8 +397,10 @@ hsb{
         suk{"sukumašćina"}
         sv{"šwedšćina"}
         sw{"suahelšćina"}
+        sw_CD{"kongoska suahelšćina"}
         swb{"comorianšćina"}
         syr{"syriacšćina"}
+        szl{"šlezišćina"}
         ta{"tamilšćina"}
         tce{"južna tutchonšćina"}
         te{"telugu"}
@@ -410,9 +440,10 @@ hsb{
         und{"njeznata rěč"}
         ur{"urdušćina"}
         uz{"uzbekšćina"}
-        vai{"vai"}
         ve{"vendašćina"}
+        vec{"venetišćina"}
         vi{"vietnamšćina"}
+        vmw{"makhuwašćina"}
         vo{"volapük"}
         vun{"vunjo"}
         wa{"walonšćina"}
@@ -423,6 +454,7 @@ hsb{
         wuu{"wu chinšćina"}
         xal{"kalmykšćina"}
         xh{"xhosa"}
+        xnr{"kangrišćina"}
         xog{"soga"}
         yav{"yangben"}
         ybb{"yembašćina"}
@@ -433,10 +465,29 @@ hsb{
         za{"zhuang"}
         zgh{"tamazight"}
         zh{"chinšćina"}
+        zh_Hans{"chinšćina (zjednorjena)"}
+        zh_Hant{"chinšćina (tradicionalna)"}
         zu{"zulušćina"}
         zun{"zunišćina"}
         zxx{"žadyn rěčny wobsah"}
         zza{"zazašćina"}
+    }
+    Languages%core{
+        ku{"kurdišćina"}
+    }
+    Languages%extension{
+        ku{"kurmandźišćina"}
+    }
+    Languages%menu{
+        yue{"chinšćina (kantonšćina)"}
+        zh{"chinšćina (mandarin)"}
+    }
+    Languages%short{
+        en_GB{"jendźelšćina (UK)"}
+        en_US{"jendźelšćina (USA)"}
+    }
+    Languages%variant{
+        ckb{"centralna kurdišćina"}
     }
     Scripts{
         Adlm{"adlamske pismo"}
@@ -518,15 +569,46 @@ hsb{
             iso8601{"protyka po iso-8601"}
             japanese{"japanska protyka"}
             persian{"persiska protyka"}
+            roc{"protyka republiki China"}
+        }
+        calendar%core{
+            buddhist{"buddhistiska"}
+            chinese{"chinska"}
+            coptic{"koptiska"}
+            dangi{"dangiska"}
+            ethiopic{"etiopiska"}
+            ethiopic-amete-alem{"etiopiska Amete-Alem"}
+            gregorian{"gregorianiska"}
+            hebrew{"hebrejska"}
+            islamic{"hijri"}
+            islamic-civil{"islamska ciwilna"}
+            islamic-umalqura{"islamska Umm al-Qura"}
+            japanese{"japanska"}
+            persian{"persiska"}
+            roc{"minguo"}
         }
         cf{
             account{"knihiwjedniski format měny"}
             standard{"standardny format měny"}
         }
+        cf%core{
+            account{"knihiwjednistwo"}
+            standard{"standard"}
+        }
         collation{
             ducet{"rjadowanski slěd po Unicode"}
             search{"powšitkowne pytanje"}
             standard{"standardowy rjadowanski slěd"}
+        }
+        collation%core{
+            ducet{"standardne unicode-rjadowanje"}
+            search{"pytaj"}
+            standard{"standardne"}
+        }
+        em%core{
+            default{"default"}
+            emoji{"emoji"}
+            text{"tekst"}
         }
         hc{
             h11{"12-hodźinowy cyklus (0-11)"}
@@ -534,15 +616,37 @@ hsb{
             h23{"24-hodźinowy cyklus (0-23)"}
             h24{"24-hodźinowy cyklus (1-24)"}
         }
+        hc%core{
+            h11{"12 (0–11)"}
+            h12{"12 (1–12)"}
+            h23{"24 (0–23)"}
+            h24{"24 (1–24)"}
+        }
         lb{
             loose{"swobodny stil łamanja linkow"}
             normal{"běžny stil łamanja linkow"}
             strict{"kruty stil łamanja linkow"}
         }
+        lb%core{
+            loose{"wólny"}
+            normal{"běžny"}
+            strict{"kruty"}
+        }
+        lw%core{
+            breakall{"łamaj wšitko"}
+            keepall{"zdźerž wšitko"}
+            normal{"normalne"}
+            phrase{"w sadach"}
+        }
         ms{
             metric{"metriski system"}
             uksystem{"britiski system měrow"}
             ussystem{"ameriski system měrow"}
+        }
+        ms%core{
+            metric{"metriski"}
+            uksystem{"britiski"}
+            ussystem{"ameriski"}
         }
         numbers{
             arab{"arabsko-indiske cyfry"}
@@ -586,13 +690,18 @@ hsb{
             tibt{"tibetske cyfry"}
             vaii{"vaiske cyfry"}
         }
+        ss%core{
+            none{"ně"}
+            standard{"haj"}
+        }
     }
     characterLabelPattern{
         all{"{0} — wšitke"}
-        category-list{"{0}: {1}"}
         compatibility{"{0} — kompatibelnosć"}
         enclosed{"{0} — zakašćikowane"}
         extended{"{0} — rozšěrjene"}
+        facing-left{"{0} dolěwa"}
+        facing-right{"{0} doprawa"}
         historic{"{0} — historisce"}
         miscellaneous{"{0} — rozdźělne"}
         other{"{0} — druhe"}
@@ -610,10 +719,5 @@ hsb{
         language{"rěč: {0}"}
         script{"pismo: {0}"}
         territory{"region: {0}"}
-    }
-    localeDisplayPattern{
-        keyTypePattern{"{0}: {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }

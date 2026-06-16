@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 lg{
     Countries{
         AD{"Andora"}
@@ -36,7 +36,7 @@ lg{
         BY{"Belarusi"}
         BZ{"Belize"}
         CA{"Kanada"}
-        CD{"Congo (DRC)"}
+        CD{"Kongo - Zayire"}
         CF{"Lipubulika eya Senturafiriki"}
         CG{"Kongo"}
         CH{"Switizirandi"}
@@ -93,7 +93,6 @@ lg{
         IE{"Ayalandi"}
         IL{"Yisirayeri"}
         IN{"Buyindi"}
-        IO{"Bizinga by’eCago"}
         IQ{"Yiraaka"}
         IR{"Yiraani"}
         IS{"Ayisirandi"}
@@ -165,7 +164,7 @@ lg{
         PM{"Senti Piyere ne Mikeloni"}
         PN{"Pitikeeni"}
         PR{"Potoriko"}
-        PS{"Palestinian Authority"}
+        PS{"Palesitayini"}
         PT{"Potugaali"}
         PW{"Palawu"}
         PY{"Paragwayi"}

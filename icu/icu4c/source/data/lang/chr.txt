@@ -1,16 +1,19 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 chr{
     Keys{
         calendar{"ᏅᏙ ᏗᏎᏍᏗ"}
         cf{"ᎠᏕᎳ ᏱᎬᏁᎸᎯ"}
         collation{"ᏗᎦᏅᏃᏙᏗ ᏕᎦᏅᏃᏛᎢ"}
         currency{"ᎠᏕᎳ"}
+        em{"ᎢᎼᏥ ᏓᎾᏓᏁᎲᎢ"}
         hc{"ᏑᏟᎶᏓ ᎠᏓᏁᏟᏴᏎᎬ (12 vs 24)"}
         lb{"ᎠᏍᏓᏅᏅ ᎠᏲᏍᏔᏅᎩ ᏂᏚᏍᏛ"}
+        lw{"ᎠᏍᏓᏅᏅ ᎠᏍᏆᎵᏍᏗ ᎪᏪᎵ"}
         ms{"ᎠᏟᎶᏛ ᏄᏍᏗᏓᏅᎢ"}
         numbers{"ᏗᏎᏍᏗ"}
+        ss{"ᏗᏒᏍᏙᏗ ᎠᏍᏆᎵᏍᏗ ᎠᏂᏬ"}
     }
     Languages{
         aa{"ᎠᏩᎳ"}
@@ -29,6 +32,7 @@ chr{
         ann{"ᎣᏉᎶ"}
         anp{"ᎠᎾᎩᎧ"}
         ar{"ᎡᎳᏈ"}
+        ar_001{"ᎪᎯᏊ ᎢᎬᏥᎩ ᎠᏟᎶᏍᏗ ᎡᎳᏈ"}
         arn{"ᎹᏊᏤ"}
         arp{"ᎠᏩᏈᎰ"}
         ars{"ᎾᏣᏗ ᎠᎳᏈ"}
@@ -41,16 +45,19 @@ chr{
         ay{"ᎠᏱᎹᎳ"}
         az{"ᎠᏎᏆᏣᏂ"}
         ba{"ᏆᏍᎯᎩᎠ"}
+        bal{"ᏆᎷᏥ"}
         ban{"ᏆᎵᏁᏏ"}
         bas{"ᏆᏌᎠ"}
         be{"ᏇᎳᎷᏏ"}
         bem{"ᏇᎹᏆ"}
         bez{"ᏇᎾ"}
         bg{"ᏊᎵᎨᎵᎠᏂ"}
+        bgc{"ᎭᏯᏅᎢ"}
         bho{"ᏉᏣᏊᎵ"}
         bi{"ᏈᏍᎳᎹ"}
         bin{"ᏈᏂ"}
         bla{"ᏏᎩᏏᎧ"}
+        blo{"ᎠᏂᎵ"}
         bm{"ᏆᎻᏆᎳ"}
         bn{"ᏇᏂᎦᎳ"}
         bo{"ᏘᏇᏔᏂ"}
@@ -92,6 +99,8 @@ chr{
         dar{"ᏓᎳᏆ"}
         dav{"ᏔᎢᏔ"}
         de{"ᏙᎢᏥ"}
+        de_AT{"ᎠᏟᏯᏂ ᎠᏂᏓᏥ"}
+        de_CH{"ᏍᏫᏏ ᎦᎸᎳᏗ ᎠᏂᏓᏥ"}
         dgr{"ᎩᏟ ᎤᏄᎳᏥ"}
         dje{"ᏌᎹ"}
         doi{"ᏙᎦᎵ"}
@@ -107,12 +116,20 @@ chr{
         eka{"ᎨᎧᏧᎧ"}
         el{"ᎠᏂᎪᎢ"}
         en{"ᎩᎵᏏ"}
+        en_AU{"ᎡᎳᏗᏜ ᎩᎵᏏ"}
+        en_CA{"ᎨᎾᏓ ᎩᎵᏏ"}
+        en_GB{"ᎩᎵᏏᏲ ᎩᎵᏏ"}
+        en_US{"ᎠᎹᏰᏟ ᎩᎵᏏ"}
         eo{"ᎡᏍᏇᎳᏂᏙ"}
         es{"ᏍᏆᏂ"}
+        es_419{"ᏔᏘᏂ ᎠᎹᏰᏟ ᏍᏆᏂ"}
+        es_ES{"ᎠᏂᏍᏆᏂᏱ ᏍᏆᏂ"}
+        es_MX{"ᏍᏆᏂᏱ ᏍᏆᏂ"}
         et{"ᎡᏍᏙᏂᎠᏂ"}
         eu{"ᏆᏍᎨ"}
         ewo{"ᎡᏬᏂᏙ"}
         fa{"ᏇᏏᎠᏂ"}
+        fa_AF{"ᏓᎵ"}
         ff{"ᏊᎳᏂ"}
         fi{"ᏈᏂᏍ"}
         fil{"ᎠᏈᎵᎩ"}
@@ -120,6 +137,8 @@ chr{
         fo{"ᏇᎶᎡᏍ"}
         fon{"ᏠᏂ"}
         fr{"ᎦᎸᏥ"}
+        fr_CA{"ᎨᎾᏓ ᎦᎸᏥ"}
+        fr_CH{"ᏍᏫᏏ ᎦᎸᏥ"}
         frc{"ᎨᏨᏂ ᎦᎸᏥ"}
         frr{"ᏧᏴᏢ ᎷᏈ"}
         fur{"ᏞᎤᎵᎠᏂ"}
@@ -157,6 +176,7 @@ chr{
         iba{"ᎢᏆᏂ"}
         ibb{"ᎢᏈᏈᎣ"}
         id{"ᎢᏂᏙᏂᏏᎠ"}
+        ie{"ᏈᏖᎵᏆ"}
         ig{"ᎢᎦᎪ"}
         ii{"ᏏᏧᏩᏂ Ᏹ"}
         ikt{"ᏭᏕᎵᎬ ᎨᎾᏓ ᎢᏄᎩᏘᏚᏘ"}
@@ -209,6 +229,7 @@ chr{
         kv{"ᎪᎻ"}
         kw{"ᏎᎷᎭ"}
         kwk{"ᏆᏆᎳ"}
+        kxv{"ᎫᏈ"}
         ky{"ᎩᎵᏣᎢᏍ"}
         la{"ᎳᏘᏂ"}
         lad{"ᎳᏗᏃ"}
@@ -217,8 +238,10 @@ chr{
         lez{"ᎴᏏᎦᏂ"}
         lg{"ᎦᏂᏓ"}
         li{"ᎴᎹᏊᎵᏏ"}
+        lij{"ᎵᏇᎢᎠ"}
         lil{"ᎵᎶᎡᏘ"}
         lkt{"ᎳᎪᏓ"}
+        lmo{"ᎶᏆᏗ"}
         ln{"ᎵᏂᎦᎳ"}
         lo{"ᎳᎣ"}
         lou{"ᎷᏫᏏᎡᎾ ᎦᏬᏂᎯᏍᏗ"}
@@ -272,12 +295,14 @@ chr{
         nb{"ᏃᎵᏪᏥᏂ ᏉᎧᎹᎵ"}
         nd{"ᏧᏴᏢ ᏂᏕᏇᎴ"}
         nds{"ᎡᎳᏗ ᎠᏂᏓᏥ"}
+        nds_NL{"ᎡᎳᏗ ᏁᏛᎳᏂ"}
         ne{"ᏁᏆᎵ"}
         new{"ᏁᏩᎵ"}
         ng{"ᎾᏙᎦ"}
         nia{"ᏂᎠᏏ"}
         niu{"ᏂᏳᏫᏯᏂ"}
         nl{"ᏛᏥ"}
+        nl_BE{"ᏊᎵᏥᎥᎻ ᏛᏥ"}
         nmg{"ᏆᏏᏲ"}
         nn{"ᏃᎵᏪᏥᏂ ᎾᎵᏍᎩ"}
         nnh{"ᎾᏥᏰᎹᏊᏂ"}
@@ -311,14 +336,18 @@ chr{
         prg{"ᏡᏏᎠᏂ"}
         ps{"ᏆᏍᏙ"}
         pt{"ᏉᏧᎩᏍ"}
+        pt_BR{"ᏆᏏᎵᎢ ᏉᏧᎩᏍ"}
+        pt_PT{"ᏳᎳᏈ ᏉᏧᎩᏍ"}
         qu{"ᎨᏧᏩ"}
         quc{"ᎩᏤ"}
+        raj{"ᎳᏣᏍᎭᏂ"}
         rap{"ᎳᏆᏄᏫ"}
         rar{"ᎳᎶᏙᎾᎦᏂ"}
         rhg{"ᎶᎯᏂᏯ"}
         rm{"ᎠᏂᎶᎺᏂ"}
         rn{"ᎷᏂᏗ"}
         ro{"ᎶᎹᏂᎠᏂ"}
+        ro_MD{"ᎹᎵᏙᏫᎠ ᏣᎹᏂᎠᏂ"}
         rof{"ᎶᎹᏉ"}
         ru{"ᏲᏅᎯ"}
         rup{"ᎠᏬᎹᏂᎠᏂ"}
@@ -365,8 +394,10 @@ chr{
         suk{"ᏑᎫᎹ"}
         sv{"ᏍᏫᏗᏏ"}
         sw{"ᏍᏩᎯᎵ"}
+        sw_CD{"ᎧᏂᎪ ᏍᏩᎯᎵ"}
         swb{"ᎪᎼᎵᎠᏂ"}
         syr{"ᏏᎵᎠᎩ"}
+        szl{"ᏏᎴᏏᏂ"}
         ta{"ᏔᎻᎵ"}
         tce{"ᏧᎦᏃᏮ ᏚᏦᏁ"}
         te{"ᏖᎷᎦ"}
@@ -406,7 +437,9 @@ chr{
         uz{"ᎤᏍᏇᎩ"}
         vai{"ᏩᏱ"}
         ve{"ᏫᏂᏓ"}
+        vec{"ᏈᏂᏒᏂ"}
         vi{"ᏫᎡᏘᎾᎻᏍ"}
+        vmw{"ᎹᎱᏩ"}
         vo{"ᏬᎳᏊᎩ"}
         vun{"ᏭᎾᏦ"}
         wa{"ᏩᎷᎾ"}
@@ -417,6 +450,7 @@ chr{
         wuu{"Ꮽ ᏓᎶᏂᎨᏍᏛ"}
         xal{"ᎧᎳᎻᎧ"}
         xh{"ᏠᏌ"}
+        xnr{"ᎧᏈᎢ"}
         xog{"ᏐᎦ"}
         yav{"ᏰᎾᎦᏇᏂ"}
         ybb{"ᏰᎹᏋ"}
@@ -424,12 +458,37 @@ chr{
         yo{"ᏲᏄᏆ"}
         yrl{"ᏂᎾᎦᏚ"}
         yue{"ᎨᎾᏙᏂᏏ"}
+        za{"ᎱᎠᏂ"}
         zgh{"ᎠᏟᎶᏍᏗ ᎼᎶᎪ ᏔᎹᏏᏘ"}
         zh{"ᏓᎶᏂᎨ"}
+        zh_Hans{"ᎠᎯᏗᎨ ᏓᎶᏂᎨ"}
+        zh_Hant{"ᎤᏦᏍᏗ ᏓᎶᏂᎨ"}
         zu{"ᏑᎷ"}
         zun{"ᏑᏂ"}
         zxx{"Ꮭ ᎦᏬᏂᎯᏍᏗ ᎦᎸᏛᎢ ᏱᎩ"}
         zza{"ᏌᏌ"}
+    }
+    Languages%core{
+        ku{"ᎫᏗᏍᎯ"}
+    }
+    Languages%extension{
+        ku{"ᎫᎹᏥ"}
+    }
+    Languages%long{
+        zh_Hans{"ᎠᎯᏗᎨ ᎹᏓᏈᏂ ᏓᎶᏂᎨ"}
+        zh_Hant{"ᎤᏦᏍᏗ ᎹᏓᏈᏂ ᏓᎶᏂᎨ"}
+    }
+    Languages%menu{
+        yue{"ᏓᎶᏂᎨ, ᎨᎾᏙᏂᏏ"}
+        zh{"ᏓᎶᏂᎨ, ᎹᏓᏈᏂ"}
+    }
+    Languages%short{
+        az{"ᎠᏎᎵ"}
+        en_GB{"UK ᎩᎵᏏ"}
+        en_US{"US ᎩᎵᏏ"}
+    }
+    Languages%variant{
+        hi_Latn{"ᎯᏂᏲᏁᎦ"}
     }
     Scripts{
         Adlm{"ᎠᏓᎳᎻ"}
@@ -506,20 +565,51 @@ chr{
             gregorian{"ᎩᎴᎪᎵᎠᏂ ᏅᏙ ᏗᏎᏍᏗ"}
             hebrew{"ᎠᏂᏈᎷ ᏅᏙ ᏗᏎᏍᏗ"}
             islamic{"ᎢᏍᎳᎻᎩ ᏅᏙ ᏗᏎᏍᏗ"}
-            islamic-civil{"ᎢᏌᎳᎻ ᏅᏙ ᏗᏎᏍᏗ (ᏴᏫ ᎡᏆᎩ)"}
-            islamic-umalqura{"ᎢᏌᎳᎻ ᏅᏙ ᏗᏎᏍᏗ (ᎥᎻ ᎠᎵ-ᏊᎳ))"}
+            islamic-civil{"ᎢᏌᎳᎻᎩ ᏅᏙ ᏗᏎᏍᏗ (ᏴᏫ ᎡᏆᎩ)"}
+            islamic-umalqura{"ᎢᏌᎳᎻᎩ ᏅᏙ ᏗᏎᏍᏗ (ᎥᎻ ᎠᎵ-ᏊᎳ)"}
             iso8601{"ISO-8601 ᏅᏙ ᏗᏎᏍᏗ"}
             japanese{"ᏣᏆᏂᏏ ᏅᏙ ᏗᏎᏍᏗ"}
             persian{"ᏇᏏᎠᏂ ᏅᏙ ᏗᏎᏍᏗ"}
+            roc{"ᏍᎦᏚᎩ ᎾᎿ ᏓᎶᏂᎨᏍᏛ ᏅᏙ ᏗᏎᏍᏗ"}
+        }
+        calendar%core{
+            buddhist{"ᏊᏗᏍᏘ"}
+            chinese{"ᏓᎶᏂᎨᏍᏛ"}
+            coptic{"ᎧᏘ"}
+            dangi{"ᏓᏂᎩ"}
+            ethiopic{"ᎡᏘᎣᏈᎠ"}
+            ethiopic-amete-alem{"ᎡᏘᎣᏈᎠ ᎠᎺᏖ ᎠᎴᎻ"}
+            gregorian{"ᎩᎴᎪᎵᎠᏂ"}
+            hebrew{"ᎠᏂᏈᎷ"}
+            islamic{"ᎢᏌᎳᎻᎩ"}
+            islamic-civil{"ᎢᏌᎳᎻᎩ (ᏴᏫ ᎡᏆᎩ)"}
+            islamic-umalqura{"ᎢᏌᎳᎻᎩ (ᎥᎻ ᎠᎵ-ᏊᎳ)"}
+            japanese{"ᏣᏆᏂᏏ"}
+            persian{"ᏇᏏᎠᏂ"}
+            roc{"ᏍᎦᏚᎩ ᎾᎿ ᏓᎶᏂᎨᏍᏛ"}
         }
         cf{
             account{"ᎠᏕᎳ ᏗᏎᎯᎯ ᎠᏕᎳ ᏱᎬᏁᎸᎯ"}
             standard{"ᎠᏟᎶᏍᏗ ᎠᏕᎳ ᏱᎬᏁᎸᎯ"}
         }
+        cf%core{
+            account{"ᎠᏕᎳ ᏗᏎᎯᎯ"}
+            standard{"ᎠᏟᎶᏍᏗ"}
+        }
         collation{
             ducet{"ᎠᏓᏁᏟᏴᏗᏍᎩ Unicode ᏗᎦᏅᏃᏙᏗ ᏕᎦᏅᏃᏛᎢ"}
             search{"ᏂᎦᎥ-ᎢᏳᏱᎸᏗ ᎠᏱᏍᏗ"}
             standard{"ᎠᏟᎶᏍᏗ ᏗᎦᏅᏃᏙᏗ ᏕᎦᏅᏃᏛᎢ"}
+        }
+        collation%core{
+            ducet{"ᎠᏓᏁᏟᏴᏗᏍᎩ Unicode"}
+            search{"ᎠᏱᏍᏗ"}
+            standard{"ᎠᏟᎶᏍᏗ"}
+        }
+        em%core{
+            default{"ᎠᏓᏁᏟᏴᏗᏍᎩ"}
+            emoji{"ᎢᎼᏥ"}
+            text{"ᏕᎪᏪᎸ"}
         }
         hc{
             h11{"12 ᎢᏳᏟᎶᏓ ᏄᏍᏗᏓᏅᎢ (0–11)"}
@@ -527,15 +617,37 @@ chr{
             h23{"24 ᎢᏳᏟᎶᏓ ᏄᏍᏗᏓᏅᎢ (0–23)"}
             h24{"24 ᎢᏳᏟᎶᏓ ᏄᏍᏗᏓᏅᎢ (1–24)"}
         }
+        hc%core{
+            h11{"12 (0–11)"}
+            h12{"12 (1–12)"}
+            h23{"24 (0–23)"}
+            h24{"24 (1–24)"}
+        }
         lb{
             loose{"ᏩᎾᎢ ᎠᏍᏓᏅᏅ ᎠᏲᏍᏔᏅᎩ ᏂᏚᏍᏛ"}
             normal{"ᏱᎬᏍᏗᎭᏊ ᎠᏍᏓᏅᏅ ᎠᏲᏍᏔᏅᎩ ᏂᏚᏍᏛ"}
             strict{"ᎤᎶᏒᏍᏔᏅᎯ ᎠᏍᏓᏅᏅ ᎠᏲᏍᏔᏅᎩ ᏂᏚᏍᏛ"}
         }
+        lb%core{
+            loose{"ᏩᎾᎢ ᎠᏍᏓᏅᏅ"}
+            normal{"ᏱᎬᏍᏗᎭᏊ"}
+            strict{"ᎤᎶᏒᏍᏔᏅᎯ"}
+        }
+        lw%core{
+            breakall{"ᎠᏍᏆᎵᏍᏗ ᏂᎦᏓ"}
+            keepall{"ᎠᏍᏆᏂᎪᏙᏗ ᏂᎦᏓ"}
+            normal{"ᏱᎬᏍᏗᎭᏊ"}
+            phrase{"ᎠᏍᏆᏂᎪᏙᏗ ᎾᎿ ᎪᏪᎵ"}
+        }
         ms{
             metric{"ᎠᏂᎩᎸᏥ ᏂᏓᏳᏓᎴᏅᎯ ᏗᏎᏍᏗ ᏄᏍᏗᏓᏅᎢ"}
             uksystem{"ᏂᎬᎾᏛᎢ ᎤᏓᏤᎵᎦᏯ ᎠᏟᎶᏛ ᏄᏍᏗᏓᏅᎢ"}
             ussystem{"US ᎠᏟᎶᏛ ᏄᏍᏗᏓᏅᎢ"}
+        }
+        ms%core{
+            metric{"ᎠᏂᎩᎸᏥ ᏂᏓᏳᏓᎴᏅᎯ ᏗᏎᏍᏗ"}
+            uksystem{"UK"}
+            ussystem{"US"}
         }
         numbers{
             arab{"ᎠᎳᏈ-ᎡᏂᏗᎩ ᏗᏎᏍᏗ"}
@@ -579,13 +691,18 @@ chr{
             tibt{"ᏘᏇᏔᏂ ᏗᏎᏍᏗ"}
             vaii{"ᏩᏱ ᏗᏎᏍᏗ"}
         }
+        ss%core{
+            none{"ᎤᏣᏘᎾ"}
+            standard{"ᎾᎿ"}
+        }
     }
     characterLabelPattern{
         all{"{0} — ᏂᎦᏓ"}
-        category-list{"{0}: {1}"}
         compatibility{"{0} — ᎤᏠᏯᏉᏗᏙᎵᎩ"}
         enclosed{"{0} — ᎠᏠᏯᏍᏔᏅ"}
         extended{"{0} — ᎦᏅᎯᏓ"}
+        facing-left{"{0} ᎠᎦᏍᎦᏂ ᎢᏗᏢ"}
+        facing-right{"{0} ᎠᎦᏘᏏ ᎢᏗᏢ"}
         historic{"{0} — ᏄᎵᏍᏔᏅᏅᎢ"}
         miscellaneous{"{0} — ᏧᏓᎴᏅᏛ"}
         other{"{0} — ᏐᎢ"}
@@ -601,10 +718,5 @@ chr{
         language{"ᎦᏬᏂᎯᏍᏗ: {0}"}
         script{"ᎧᏁᎢᏍᏗ: {0}"}
         territory{"ᎢᎬᎾᏕᎾ: {0}"}
-    }
-    localeDisplayPattern{
-        keyTypePattern{"{0}: {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }

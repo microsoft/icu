@@ -74,7 +74,7 @@ inline uint32_t getMask(UCollationStrength strength)
 
 U_CDECL_BEGIN
 static UBool U_CALLCONV
-usearch_cleanup(void) {
+usearch_cleanup() {
     g_nfcImpl = nullptr;
     return true;
 }
@@ -106,12 +106,12 @@ inline void initializeFCD(UErrorCode *status)
 * @return fcd value
 */
 static
-uint16_t getFCD(const UChar   *str, int32_t *offset,
+uint16_t getFCD(const char16_t   *str, int32_t *offset,
                              int32_t  strlength)
 {
-    const UChar *temp = str + *offset;
+    const char16_t *temp = str + *offset;
     uint16_t    result = g_nfcImpl->nextFCD16(temp, str + strlength);
-    *offset = (int32_t)(temp - str);
+    *offset = static_cast<int32_t>(temp - str);
     return result;
 }
 
@@ -152,57 +152,43 @@ inline int32_t getCE(const UStringSearch *strsrch, uint32_t sourcece)
 }
 
 /**
-* Allocate a memory and returns nullptr if it failed.
-* Internal method, status assumed to be a success.
-* @param size to allocate
-* @param status output error if any, caller to check status before calling
-*               method, status assumed to be success when passed in.
-* @return newly allocated array, nullptr otherwise
-*/
-static
-inline void * allocateMemory(uint32_t size, UErrorCode *status)
-{
-    uint32_t *result = (uint32_t *)uprv_malloc(size);
-    if (result == nullptr) {
-        *status = U_MEMORY_ALLOCATION_ERROR;
-    }
-    return result;
-}
-
-/**
 * Adds a uint32_t value to a destination array.
 * Creates a new array if we run out of space. The caller will have to
 * manually deallocate the newly allocated array.
-* Internal method, status assumed to be success, caller has to check status
-* before calling this method. destination not to be nullptr and has at least
-* size destinationlength.
+* destination not to be nullptr and has at least size destinationCapacity.
 * @param destination target array
+* @param destinationCapacity target array size, return value for the new size
+* @param destOnHeap whether the destination array is heap-allocated
 * @param offset destination offset to add value
-* @param destinationlength target array size, return value for the new size
 * @param value to be added
 * @param increments incremental size expected
-* @param status output error if any, caller to check status before calling
-*               method, status assumed to be success when passed in.
+* @param status output error if any
 * @return new destination array, destination if there was no new allocation
 */
 static
 inline int32_t * addTouint32_tArray(int32_t    *destination,
+                                    uint32_t   *destinationCapacity,
+                                    bool        destOnHeap,
                                     uint32_t    offset,
-                                    uint32_t   *destinationlength,
                                     uint32_t    value,
                                     uint32_t    increments,
                                     UErrorCode *status)
 {
-    uint32_t newlength = *destinationlength;
-    if (offset + 1 == newlength) {
-        newlength += increments;
-        int32_t *temp = (int32_t *)allocateMemory(
-                                         sizeof(int32_t) * newlength, status);
-        if (U_FAILURE(*status)) {
-            return nullptr;
+    if (U_FAILURE(*status)) {
+        return destination;
+    }
+    if (offset >= *destinationCapacity) {
+        uint32_t newlength = offset + increments;
+        int32_t* temp = static_cast<int32_t*>(uprv_malloc(sizeof(int32_t) * newlength));
+        if (temp == nullptr) {
+            *status = U_MEMORY_ALLOCATION_ERROR;
+            return destination;
         }
         uprv_memcpy(temp, destination, sizeof(int32_t) * (size_t)offset);
-        *destinationlength = newlength;
+        if (destOnHeap) {
+            uprv_free(destination);
+        }
+        *destinationCapacity = newlength;
         destination        = temp;
     }
     destination[offset] = value;
@@ -213,43 +199,43 @@ inline int32_t * addTouint32_tArray(int32_t    *destination,
 * Adds a uint64_t value to a destination array.
 * Creates a new array if we run out of space. The caller will have to
 * manually deallocate the newly allocated array.
-* Internal method, status assumed to be success, caller has to check status
-* before calling this method. destination not to be nullptr and has at least
-* size destinationlength.
+* destination not to be nullptr and has at least size destinationCapacity.
 * @param destination target array
+* @param destinationCapacity target array size, return value for the new size
+* @param destOnHeap whether the destination array is heap-allocated
 * @param offset destination offset to add value
-* @param destinationlength target array size, return value for the new size
 * @param value to be added
 * @param increments incremental size expected
-* @param status output error if any, caller to check status before calling
-*               method, status assumed to be success when passed in.
+* @param status output error if any
 * @return new destination array, destination if there was no new allocation
 */
 static
 inline int64_t * addTouint64_tArray(int64_t    *destination,
+                                    uint32_t   *destinationCapacity,
+                                    bool        destOnHeap,
                                     uint32_t    offset,
-                                    uint32_t   *destinationlength,
                                     uint64_t    value,
                                     uint32_t    increments,
                                     UErrorCode *status)
 {
-    uint32_t newlength = *destinationlength;
-    if (offset + 1 == newlength) {
-        newlength += increments;
-        int64_t *temp = (int64_t *)allocateMemory(
-                                         sizeof(int64_t) * newlength, status);
-
-        if (U_FAILURE(*status)) {
-            return nullptr;
+    if (U_FAILURE(*status)) {
+        return destination;
+    }
+    if (offset >= *destinationCapacity) {
+        uint32_t newlength = offset + increments;
+        int64_t* temp = static_cast<int64_t*>(uprv_malloc(sizeof(int64_t) * newlength));
+        if (temp == nullptr) {
+            *status = U_MEMORY_ALLOCATION_ERROR;
+            return destination;
         }
-
         uprv_memcpy(temp, destination, sizeof(int64_t) * (size_t)offset);
-        *destinationlength = newlength;
+        if (destOnHeap) {
+            uprv_free(destination);
+        }
+        *destinationCapacity = newlength;
         destination        = temp;
     }
-
     destination[offset] = value;
-
     return destination;
 }
 
@@ -299,22 +285,22 @@ inline void initializePatternCETable(UStringSearch *strsrch, UErrorCode *status)
            U_SUCCESS(*status)) {
         uint32_t newce = getCE(strsrch, ce);
         if (newce) {
-            int32_t *temp = addTouint32_tArray(cetable, offset, &cetablesize,
-                                  newce,
-                                  patternlength - ucol_getOffset(coleiter) + 1,
-                                  status);
-            if (U_FAILURE(*status)) {
-                return;
-            }
+            cetable = addTouint32_tArray(
+                cetable, &cetablesize, /* destOnHeap= */ cetable != pattern->cesBuffer,
+                offset, newce, patternlength - ucol_getOffset(coleiter) + 1, status);
             offset ++;
-            if (cetable != temp && cetable != pattern->cesBuffer) {
-                uprv_free(cetable);
-            }
-            cetable = temp;
         }
     }
 
-    cetable[offset]   = 0;
+    cetable = addTouint32_tArray(
+        cetable, &cetablesize, /* destOnHeap= */ cetable != pattern->cesBuffer,
+        offset, 0, 1, status);
+    if (U_FAILURE(*status)) {
+        if (cetable != pattern->cesBuffer) {
+            uprv_free(cetable);
+        }
+        return;
+    }
     pattern->ces       = cetable;
     pattern->cesLength = offset;
 }
@@ -368,25 +354,21 @@ inline void initializePatternPCETable(UStringSearch *strsrch,
     // **  whether a CE is signed or unsigned. For example, look at routine above this one.)
     while ((pce = iter.nextProcessed(nullptr, nullptr, status)) != UCOL_PROCESSED_NULLORDER &&
            U_SUCCESS(*status)) {
-        int64_t *temp = addTouint64_tArray(pcetable, offset, &pcetablesize,
-                              pce,
-                              patternlength - ucol_getOffset(coleiter) + 1,
-                              status);
-
-        if (U_FAILURE(*status)) {
-            return;
-        }
-
+        pcetable = addTouint64_tArray(
+            pcetable, &pcetablesize, /* destOnHeap= */ pcetable != pattern->pcesBuffer,
+            offset, pce, patternlength - ucol_getOffset(coleiter) + 1, status);
         offset += 1;
-
-        if (pcetable != temp && pcetable != pattern->pcesBuffer) {
-            uprv_free(pcetable);
-        }
-
-        pcetable = temp;
     }
 
-    pcetable[offset]   = 0;
+    pcetable = addTouint64_tArray(
+        pcetable, &pcetablesize, /* destOnHeap= */ pcetable != pattern->pcesBuffer,
+        offset, 0, 1, status);
+    if (U_FAILURE(*status)) {
+        if (pcetable != pattern->pcesBuffer) {
+            uprv_free(pcetable);
+        }
+        return;
+    }
     pattern->pces       = pcetable;
     pattern->pcesLength = offset;
 }
@@ -403,7 +385,7 @@ inline void initializePattern(UStringSearch *strsrch, UErrorCode *status)
     if (U_FAILURE(*status)) { return; }
 
           UPattern   *pattern     = &(strsrch->pattern);
-    const UChar      *patterntext = pattern->text;
+    const char16_t   *patterntext = pattern->text;
           int32_t     length      = pattern->textLength;
           int32_t index       = 0;
 
@@ -538,9 +520,9 @@ inline UBool checkIdentical(const UStringSearch *strsrch, int32_t start, int32_t
 
 // constructors and destructor -------------------------------------------
 
-U_CAPI UStringSearch * U_EXPORT2 usearch_open(const UChar *pattern,
+U_CAPI UStringSearch * U_EXPORT2 usearch_open(const char16_t *pattern,
                                           int32_t         patternlength,
-                                    const UChar          *text,
+                                    const char16_t       *text,
                                           int32_t         textlength,
                                     const char           *locale,
                                           UBreakIterator *breakiter,
@@ -579,9 +561,9 @@ U_CAPI UStringSearch * U_EXPORT2 usearch_open(const UChar *pattern,
 }
 
 U_CAPI UStringSearch * U_EXPORT2 usearch_openFromCollator(
-                                  const UChar          *pattern,
+                                  const char16_t       *pattern,
                                         int32_t         patternlength,
-                                  const UChar          *text,
+                                  const char16_t       *text,
                                         int32_t         textlength,
                                   const UCollator      *collator,
                                         UBreakIterator *breakiter,
@@ -819,11 +801,9 @@ U_CAPI USearchAttributeValue U_EXPORT2 usearch_getAttribute(
     if (strsrch) {
         switch (attribute) {
         case USEARCH_OVERLAP :
-            return (strsrch->search->isOverlap == true ? USEARCH_ON :
-                                                        USEARCH_OFF);
+            return (strsrch->search->isOverlap ? USEARCH_ON : USEARCH_OFF);
         case USEARCH_CANONICAL_MATCH :
-            return (strsrch->search->isCanonicalMatch == true ? USEARCH_ON :
-                                                               USEARCH_OFF);
+            return (strsrch->search->isCanonicalMatch ? USEARCH_ON : USEARCH_OFF);
         case USEARCH_ELEMENT_COMPARISON :
             {
                 int16_t value = strsrch->search->elementComparisonType;
@@ -851,7 +831,7 @@ U_CAPI int32_t U_EXPORT2 usearch_getMatchedStart(
 
 
 U_CAPI int32_t U_EXPORT2 usearch_getMatchedText(const UStringSearch *strsrch,
-                                            UChar         *result,
+                                            char16_t      *result,
                                             int32_t        resultCapacity,
                                             UErrorCode    *status)
 {
@@ -876,7 +856,7 @@ U_CAPI int32_t U_EXPORT2 usearch_getMatchedText(const UStringSearch *strsrch,
     }
     if (copylength > 0) {
         uprv_memcpy(result, strsrch->search->text + copyindex,
-                    copylength * sizeof(UChar));
+                    copylength * sizeof(char16_t));
     }
     return u_terminateUChars(result, resultCapacity,
                              strsrch->search->matchedLength, status);
@@ -918,7 +898,7 @@ usearch_getBreakIterator(const UStringSearch *strsrch)
 #endif
 
 U_CAPI void U_EXPORT2 usearch_setText(      UStringSearch *strsrch,
-                                      const UChar         *text,
+                                      const char16_t      *text,
                                             int32_t        textlength,
                                             UErrorCode    *status)
 {
@@ -950,7 +930,7 @@ U_CAPI void U_EXPORT2 usearch_setText(      UStringSearch *strsrch,
     }
 }
 
-U_CAPI const UChar * U_EXPORT2 usearch_getText(const UStringSearch *strsrch,
+U_CAPI const char16_t * U_EXPORT2 usearch_getText(const UStringSearch *strsrch,
                                                      int32_t       *length)
 {
     if (strsrch) {
@@ -1024,7 +1004,7 @@ U_CAPI UCollator * U_EXPORT2 usearch_getCollator(const UStringSearch *strsrch)
 }
 
 U_CAPI void U_EXPORT2 usearch_setPattern(      UStringSearch *strsrch,
-                                         const UChar         *pattern,
+                                         const char16_t      *pattern,
                                                int32_t        patternlength,
                                                UErrorCode    *status)
 {
@@ -1047,7 +1027,7 @@ U_CAPI void U_EXPORT2 usearch_setPattern(      UStringSearch *strsrch,
     }
 }
 
-U_CAPI const UChar* U_EXPORT2
+U_CAPI const char16_t* U_EXPORT2
 usearch_getPattern(const UStringSearch *strsrch,
                    int32_t             *length)
 {
@@ -1249,7 +1229,7 @@ U_CAPI int32_t U_EXPORT2 usearch_previous(UStringSearch *strsrch,
         }
 
         int32_t matchedindex = search->matchedIndex;
-        if (search->isForwardSearching == true) {
+        if (search->isForwardSearching) {
             // switching direction.
             // if matchedIndex == USEARCH_DONE, it means that either a
             // setOffset has been called or that next ran off the text
@@ -1413,11 +1393,11 @@ CEIBuffer::CEIBuffer(UStringSearch *ss, UErrorCode *status) {
     strSearch = ss;
     bufSize = ss->pattern.pcesLength + CEBUFFER_EXTRA;
     if (ss->search->elementComparisonType != 0) {
-        const UChar * patText = ss->pattern.text;
+        const char16_t * patText = ss->pattern.text;
         if (patText) {
-            const UChar * patTextLimit = patText + ss->pattern.textLength;
+            const char16_t * patTextLimit = patText + ss->pattern.textLength;
             while ( patText < patTextLimit ) {
-                UChar c = *patText++;
+                char16_t c = *patText++;
                 if (MIGHT_BE_JAMO_L(c)) {
                     bufSize += MAX_TARGET_IGNORABLES_PER_PAT_JAMO_L;
                 } else {
@@ -1434,7 +1414,7 @@ CEIBuffer::CEIBuffer(UStringSearch *ss, UErrorCode *status) {
     if (!initTextProcessedIter(ss, status)) { return; }
 
     if (bufSize>DEFAULT_CEBUFFER_SIZE) {
-        buf = (CEI *)uprv_malloc(bufSize * sizeof(CEI));
+        buf = static_cast<CEI*>(uprv_malloc(bufSize * sizeof(CEI)));
         if (buf == nullptr) {
             *status = U_MEMORY_ALLOCATION_ERROR;
         }
@@ -1559,7 +1539,7 @@ static int32_t nextBoundaryAfter(UStringSearch *strsrch, int32_t startIndex, UEr
         return startIndex;
     }
 #if 0
-    const UChar *text = strsrch->search->text;
+    const char16_t *text = strsrch->search->text;
     int32_t textLen   = strsrch->search->textLength;
 
     U_ASSERT(startIndex>=0);
@@ -1619,7 +1599,7 @@ static UBool isBreakBoundary(UStringSearch *strsrch, int32_t index, UErrorCode &
         return true;
     }
 #if 0
-    const UChar *text = strsrch->search->text;
+    const char16_t *text = strsrch->search->text;
     int32_t textLen   = strsrch->search->textLength;
 
     U_ASSERT(index>=0);
@@ -1707,8 +1687,8 @@ static UCompareCEsResult compareCE64s(int64_t targCE, int64_t patCE, int16_t com
     int64_t mask;
 
     mask = 0xFFFF0000;
-    int32_t targLev1 = (int32_t)(targCEshifted & mask);
-    int32_t patLev1 = (int32_t)(patCEshifted & mask);
+    int32_t targLev1 = static_cast<int32_t>(targCEshifted & mask);
+    int32_t patLev1 = static_cast<int32_t>(patCEshifted & mask);
     if ( targLev1 != patLev1 ) {
         if ( targLev1 == 0 ) {
             return U_CE_SKIP_TARG;
@@ -1720,8 +1700,8 @@ static UCompareCEsResult compareCE64s(int64_t targCE, int64_t patCE, int16_t com
     }
 
     mask = 0x0000FFFF;
-    int32_t targLev2 = (int32_t)(targCEshifted & mask);
-    int32_t patLev2 = (int32_t)(patCEshifted & mask);
+    int32_t targLev2 = static_cast<int32_t>(targCEshifted & mask);
+    int32_t patLev2 = static_cast<int32_t>(patCEshifted & mask);
     if ( targLev2 != patLev2 ) {
         if ( targLev2 == 0 ) {
             return U_CE_SKIP_TARG;
@@ -1734,8 +1714,8 @@ static UCompareCEsResult compareCE64s(int64_t targCE, int64_t patCE, int16_t com
     }
     
     mask = 0xFFFF0000;
-    int32_t targLev3 = (int32_t)(targCE & mask);
-    int32_t patLev3 = (int32_t)(patCE & mask);
+    int32_t targLev3 = static_cast<int32_t>(targCE & mask);
+    int32_t patLev3 = static_cast<int32_t>(patCE & mask);
     if ( targLev3 != patLev3 ) {
         return (patLev3 == U_CE_LEVEL3_BASE || (compareType == USEARCH_ANY_BASE_WEIGHT_IS_WILDCARD && targLev3 == U_CE_LEVEL3_BASE) )?
             U_CE_MATCH: U_CE_NO_MATCH;
@@ -1907,7 +1887,7 @@ U_CAPI UBool U_EXPORT2 usearch_search(UStringSearch  *strsrch,
         //    1. The match extended to the last CE from the target text, which is OK, or
         //    2. The last CE that was part of the match is in an expansion that extends
         //       to the first CE after the match. In this case, we reject the match.
-        const CEI *nextCEI = 0;
+        const CEI* nextCEI = nullptr;
         if (strsrch->search->elementComparisonType == 0) {
             nextCEI  = ceb.get(targetIx + targetIxOffset);
             maxLimit = nextCEI->lowIndex;

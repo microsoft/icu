@@ -121,16 +121,16 @@ private:
 ContextualHandler::~ContextualHandler() {
 }
 
-static const char16_t *spanishY = u"{0} y {1}";
-static const char16_t *spanishE = u"{0} e {1}";
-static const char16_t *spanishO = u"{0} o {1}";
-static const char16_t *spanishU = u"{0} u {1}";
-static const char16_t *hebrewVav = u"{0} \u05D5{1}";
-static const char16_t *hebrewVavDash = u"{0} \u05D5-{1}";
+const char16_t* spanishY = u"{0} y {1}";
+const char16_t* spanishE = u"{0} e {1}";
+const char16_t* spanishO = u"{0} o {1}";
+const char16_t* spanishU = u"{0} u {1}";
+const char16_t* hebrewVav = u"{0} \u05D5{1}";
+const char16_t* hebrewVavDash = u"{0} \u05D5-{1}";
 
 // Condiction to change to e.
 // Starts with "hi" or "i" but not with "hie" nor "hia"
-static bool shouldChangeToE(const UnicodeString& text) {
+bool shouldChangeToE(const UnicodeString& text) {
     int32_t len = text.length();
     if (len == 0) { return false; }
     // Case insensitive match hi but not hie nor hia.
@@ -147,7 +147,7 @@ static bool shouldChangeToE(const UnicodeString& text) {
 // Condiction to change to u.
 // Starts with "o", "ho", and "8". Also "11" by itself.
 // re: ^((o|ho|8).*|11)$
-static bool shouldChangeToU(const UnicodeString& text) {
+bool shouldChangeToU(const UnicodeString& text) {
     int32_t len = text.length();
     if (len == 0) { return false; }
     // Case insensitive match o.* and 8.*
@@ -164,7 +164,7 @@ static bool shouldChangeToU(const UnicodeString& text) {
 
 // Condiction to change to VAV follow by a dash.
 // Starts with non Hebrew letter.
-static bool shouldChangeToVavDash(const UnicodeString& text) {
+bool shouldChangeToVavDash(const UnicodeString& text) {
     if (text.isEmpty()) { return false; }
     UErrorCode status = U_ZERO_ERROR;
     return uscript_getScript(text.char32At(0), &status) != USCRIPT_HEBREW;
@@ -396,8 +396,8 @@ static const char* typeWidthToStyleString(UListFormatterType type, UListFormatte
     return nullptr;
 }
 
-static const UChar solidus = 0x2F;
-static const UChar aliasPrefix[] = { 0x6C,0x69,0x73,0x74,0x50,0x61,0x74,0x74,0x65,0x72,0x6E,0x2F }; // "listPattern/"
+static const char16_t solidus = 0x2F;
+static const char16_t aliasPrefix[] = { 0x6C,0x69,0x73,0x74,0x50,0x61,0x74,0x74,0x65,0x72,0x6E,0x2F }; // "listPattern/"
 enum {
     kAliasPrefixLen = UPRV_LENGTHOF(aliasPrefix),
     kStyleLenMax = 24 // longest currently is 14
@@ -405,16 +405,9 @@ enum {
 
 struct ListFormatter::ListPatternsSink : public ResourceSink {
     UnicodeString two, start, middle, end;
-#if ((U_PLATFORM == U_PF_AIX) || (U_PLATFORM == U_PF_OS390)) && (U_CPLUSPLUS_VERSION < 11)
-    char aliasedStyle[kStyleLenMax+1];
-    ListPatternsSink() {
-      uprv_memset(aliasedStyle, 0, kStyleLenMax+1);
-    }
-#else
     char aliasedStyle[kStyleLenMax+1] = {0};
 
     ListPatternsSink() {}
-#endif
     virtual ~ListPatternsSink();
 
     void setAliasedStyle(UnicodeString alias) {

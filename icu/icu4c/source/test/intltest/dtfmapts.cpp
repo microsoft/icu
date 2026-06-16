@@ -69,7 +69,7 @@ void IntlTestDateFormatAPI::runIndexedTest( int32_t index, UBool exec, const cha
 /**
  * Add better code coverage.
  */
-void IntlTestDateFormatAPI::TestCoverage(void)
+void IntlTestDateFormatAPI::TestCoverage()
 {
     const char *LOCALES[] = {
             "zh_CN@calendar=chinese",
@@ -81,7 +81,7 @@ void IntlTestDateFormatAPI::TestCoverage(void)
 
     for (int32_t i = 0; i < numOfLocales; i++) {
         DateFormat *df = DateFormat::createDateTimeInstance(DateFormat::kMedium, DateFormat::kMedium, Locale(LOCALES[i]));
-        if (df == NULL){
+        if (df == nullptr){
             dataerrln("Error creating DateFormat instances.");
             return;
         }
@@ -91,7 +91,7 @@ void IntlTestDateFormatAPI::TestCoverage(void)
 /**
  * Test that the equals method works correctly.
  */
-void IntlTestDateFormatAPI::TestEquals(void)
+void IntlTestDateFormatAPI::TestEquals()
 {
     UErrorCode status = U_ZERO_ERROR;
     // Create two objects at different system times
@@ -100,7 +100,7 @@ void IntlTestDateFormatAPI::TestEquals(void)
     while (Calendar::getNow() == start) ; // Wait for time to change
     DateFormat *b = DateFormat::createInstance();
 
-    if (a == NULL || b == NULL){
+    if (a == nullptr || b == nullptr){
         dataerrln("Error calling DateFormat::createInstance()");
         delete a;
         delete b;
@@ -111,7 +111,7 @@ void IntlTestDateFormatAPI::TestEquals(void)
         errln("FAIL: DateFormat objects created at different times are unequal.");
 
     SimpleDateFormat *sdtfmt = dynamic_cast<SimpleDateFormat *>(b);
-    if (sdtfmt != NULL)
+    if (sdtfmt != nullptr)
     {
         double ONE_YEAR = 365*24*60*60*1000.0;
         sdtfmt->set2DigitYearStart(start + 50*ONE_YEAR, status);
@@ -141,12 +141,12 @@ void IntlTestDateFormatAPI::testAPI(/* char* par */)
     DateFormat *it = DateFormat::createDateInstance(DateFormat::MEDIUM, Locale::getItalian());
     DateFormat *de = DateFormat::createDateTimeInstance(DateFormat::LONG, DateFormat::LONG, Locale::getGerman());
 
-    if (def == NULL || fr == NULL || it == NULL || de == NULL){
+    if (def == nullptr || fr == nullptr || it == nullptr || de == nullptr){
         dataerrln("Error creating DateFormat instances.");
     }
 
 // ======= Test equality
-if (fr != NULL && def != NULL)
+if (fr != nullptr && def != nullptr)
 {
     logln("Testing equality operator");
     
@@ -156,7 +156,7 @@ if (fr != NULL && def != NULL)
 }
 
 // ======= Test various format() methods
-if (fr != NULL && it != NULL && de != NULL)
+if (fr != nullptr && it != nullptr && de != nullptr)
 {
     logln("Testing various format() methods");
 
@@ -171,17 +171,17 @@ if (fr != NULL && it != NULL && de != NULL)
     if(U_FAILURE(status)) {
         errln("ERROR: format() failed (French)");
     }
-    logln( (UnicodeString) "" + d + " formatted to " + res1);
+    logln(UnicodeString("") + d + " formatted to " + res1);
 
     res2 = it->format(d, res2, pos2);
-    logln( (UnicodeString) "" + d + " formatted to " + res2);
+    logln(UnicodeString("") + d + " formatted to " + res2);
 
     res3 = de->format(d, res3);
-    logln( (UnicodeString) "" + d + " formatted to " + res3);
+    logln(UnicodeString("") + d + " formatted to " + res3);
 }
 
 // ======= Test parse()
-if (def != NULL)
+if (def != nullptr)
 {
     logln("Testing parse()");
 
@@ -208,13 +208,13 @@ if (def != NULL)
 }
 
 // ======= Test getters and setters
-if (fr != NULL && it != NULL && de != NULL)
+if (fr != nullptr && it != nullptr && de != nullptr)
 {
     logln("Testing getters and setters");
 
     int32_t count = 0;
     const Locale *locales = DateFormat::getAvailableLocales(count);
-    logln((UnicodeString) "Got " + count + " locales" );
+    logln(UnicodeString("Got ") + count + " locales");
     for(int32_t i = 0; i < count; i++) {
         UnicodeString name;
         name = locales[i].getName();
@@ -277,7 +277,7 @@ if (fr != NULL && it != NULL && de != NULL)
  * the DateFormat API test.
  */
 void
-IntlTestDateFormatAPI::TestNameHiding(void) {
+IntlTestDateFormatAPI::TestNameHiding() {
 
     // N.B.: This test passes if it COMPILES, since it's a test of
     // compile-time name hiding.
@@ -313,8 +313,8 @@ IntlTestDateFormatAPI::TestNameHiding(void) {
             sdf.format(dateObj, str, status);
             sdf.format(dateObj, str, fpos, status);
             // DateFormat API
-            sdf.format((UDate)0, str, fpos);
-            sdf.format((UDate)0, str);
+            sdf.format(static_cast<UDate>(0), str, fpos);
+            sdf.format(static_cast<UDate>(0), str);
             sdf.parse(str, status);
             sdf.parse(str, ppos);
             sdf.getNumberFormat();
@@ -348,9 +348,9 @@ IntlTestDateFormatAPI::TestNameHiding(void) {
           fmt.format(numObj, str, fpos, status);
           // NumberFormat API
           fmt.format(2.71828, str);
-          fmt.format((int32_t)1234567, str);
+          fmt.format(static_cast<int32_t>(1234567), str);
           fmt.format(1.41421, str, fpos);
-          fmt.format((int32_t)9876543, str, fpos);
+          fmt.format(static_cast<int32_t>(9876543), str, fpos);
           fmt.parse(str, obj, ppos);
           fmt.parse(str, obj, status);
         } else {
@@ -368,9 +368,9 @@ IntlTestDateFormatAPI::TestNameHiding(void) {
         fmt.format(numObj, str, fpos, status);
         // NumberFormat API
         fmt.format(2.71828, str);
-        fmt.format((int32_t)1234567, str);
+        fmt.format(static_cast<int32_t>(1234567), str);
         fmt.format(1.41421, str, fpos);
-        fmt.format((int32_t)9876543, str, fpos);
+        fmt.format(static_cast<int32_t>(9876543), str, fpos);
         fmt.parse(str, obj, ppos);
         fmt.parse(str, obj, status);
     }

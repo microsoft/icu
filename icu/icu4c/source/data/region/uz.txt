@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 uz{
     Countries{
         001{"Dunyo"}
@@ -85,6 +85,7 @@ uz{
         CN{"Xitoy"}
         CO{"Kolumbiya"}
         CP{"Klipperton oroli"}
+        CQ{"Sark"}
         CR{"Kosta-Rika"}
         CU{"Kuba"}
         CV{"Kabo-Verde"}
@@ -93,14 +94,17 @@ uz{
         CY{"Kipr"}
         CZ{"Chexiya"}
         DE{"Germaniya"}
+        DG{"Diyego-Garsiya"}
         DJ{"Jibuti"}
         DK{"Daniya"}
         DM{"Dominika"}
         DO{"Dominikan Respublikasi"}
         DZ{"Jazoir"}
+        EA{"Seuta va Melilya"}
         EC{"Ekvador"}
         EE{"Estoniya"}
         EG{"Misr"}
+        EH{"G‘arbiy Sahroi Kabir"}
         ER{"Eritreya"}
         ES{"Ispaniya"}
         ET{"Efiopiya"}
@@ -137,6 +141,7 @@ uz{
         HR{"Xorvatiya"}
         HT{"Gaiti"}
         HU{"Vengriya"}
+        IC{"Kanar orollari"}
         ID{"Indoneziya"}
         IE{"Irlandiya"}
         IL{"Isroil"}
@@ -219,7 +224,7 @@ uz{
         PM{"Sen-Pyer va Mikelon"}
         PN{"Pitkern orollari"}
         PR{"Puerto-Riko"}
-        PS{"Falastin Ma’muriyati"}
+        PS{"Falastin hududlari"}
         PT{"Portugaliya"}
         PW{"Palau"}
         PY{"Paragvay"}
@@ -284,6 +289,8 @@ uz{
         VU{"Vanuatu"}
         WF{"Uollis va Futuna"}
         WS{"Samoa"}
+        XA{"Qalbaki urg‘u"}
+        XB{"Qalbaki Bidi"}
         XK{"Kosovo"}
         YE{"Yaman"}
         YT{"Mayotta"}
@@ -291,5 +298,22 @@ uz{
         ZM{"Zambiya"}
         ZW{"Zimbabve"}
         ZZ{"Noma’lum mintaqa"}
+    }
+    Countries%short{
+        GB{"Britaniya"}
+        HK{"Gonkong"}
+        MO{"Makao"}
+        PS{"Falastin"}
+        UN{"BMT"}
+        US{"AQSH"}
+    }
+    Countries%variant{
+        CD{"Kongo (KDR)"}
+        CG{"Kongo (Respublika)"}
+        CI{"Fil suyagi qirg‘og‘i"}
+        CZ{"Chexiya Respublikasi"}
+        FK{"Folklend (Malvin) orollari"}
+        NZ{"Aotearoa Yangi Zelandiya"}
+        TL{"Sharqiy Timor"}
     }
 }

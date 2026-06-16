@@ -6,7 +6,7 @@
 // Corporation and others.  All Rights Reserved.
 //---------------------------------------------------------
 // Build tool: com.ibm.icu.dev.tool.currency.NumericCodeData
-// Build date: 2022-08-25T16:40:27Z
+// Build date: 2025-09-12T03:45:59Z
 //---------------------------------------------------------
 // >> !!! >>   THIS IS A MACHINE-GENERATED FILE   << !!! <<
 // >> !!! >>>            DO NOT EDIT             <<< !!! <<
@@ -281,6 +281,7 @@ currencyNumericCodes:table(nofallback){
         VND:int{704}
         VUV:int{548}
         WST:int{882}
+        XAD:int{396}
         XAF:int{950}
         XAG:int{961}
         XAU:int{959}
@@ -289,6 +290,7 @@ currencyNumericCodes:table(nofallback){
         XBC:int{957}
         XBD:int{958}
         XCD:int{951}
+        XCG:int{532}
         XDR:int{960}
         XEU:int{954}
         XOF:int{952}
@@ -312,6 +314,7 @@ currencyNumericCodes:table(nofallback){
         ZRZ:int{180}
         ZWC:int{716}
         ZWD:int{716}
+        ZWG:int{924}
         ZWL:int{932}
         ZWN:int{942}
         ZWR:int{935}

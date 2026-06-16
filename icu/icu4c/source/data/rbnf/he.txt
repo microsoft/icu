@@ -1,8 +1,13 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 he{
     RBNFRules{
+        OrdinalRules{
+            "%digits-ordinal:",
+            "-x: \u2212>>;",
+            "0: =#,##0=;",
+        }
         SpelloutRules{
             "%spellout-numbering-year:",
             "x.x: =0.0=;",

@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 kea{
     zoneStrings{
         "America:Adak"{
@@ -75,9 +75,6 @@ kea{
         "America:Martinique"{
             ec{"Martinika"}
         }
-        "America:Merida"{
-            ec{"Mérida"}
-        }
         "America:Mexico_City"{
             ec{"Sidadi di Méxiku"}
         }
@@ -129,9 +126,6 @@ kea{
         "America:Winnipeg"{
             ec{"Uínipeg"}
         }
-        "Atlantic:Bermuda"{
-            ec{"Bermuda"}
-        }
         "Etc:UTC"{
             ls{"Ora Universal Kordenadu"}
         }
@@ -154,9 +148,7 @@ kea{
             ls{"Ora di Sul di Áfrika"}
         }
         "meta:Africa_Western"{
-            ld{"Ora di Veron di Áfrika Osidental"}
-            lg{"Ora di Áfrika Osidental"}
-            ls{"Ora Padron di Áfrika Osidental"}
+            ls{"Ora di Áfrika Osidental"}
         }
         "meta:Alaska"{
             ld{"Ora di Veron di Alaska"}
@@ -246,15 +238,13 @@ kea{
             lg{"Ora di Gronelándia Osidental"}
             ls{"Ora Padron di Gronelándia Osidental"}
         }
+        "meta:Hawaii"{
+            ls{"Ora Padron di Avaí i Aleutas"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"Ora di Veron di Avaí i Aleutas"}
             lg{"Ora di Avaí i Aleutas"}
             ls{"Ora Padron di Avaí i Aleutas"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"Ora di Veron di Noroesti di Méxiku"}
-            lg{"Ora di Noroesti di Méxiku"}
-            ls{"Ora Padron di Noroesti di Méxiku"}
         }
         "meta:Mexico_Pacific"{
             ld{"Ora di Veron di Pasífiku Mexikanu"}
@@ -274,10 +264,6 @@ kea{
         "meta:Yukon"{
             ls{"Ora di Yukon"}
         }
-        fallbackFormat{"{1} ({0})"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
         regionFormat{"Ora di {0}"}
         regionFormatDaylight{"Ora di Veron di {0}"}
         regionFormatStandard{"Ora Padron di {0}"}

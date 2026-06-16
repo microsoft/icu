@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 zh_Hans_HK{
     units{
         compound{
@@ -15,6 +15,13 @@ zh_Hans_HK{
             kelvin{
                 dnam{"开氏度"}
                 other{"{0}开氏度"}
+            }
+        }
+    }
+    unitsNarrow{
+        concentr{
+            karat{
+                other{"{0}开"}
             }
         }
     }

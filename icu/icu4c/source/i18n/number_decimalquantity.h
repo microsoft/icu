@@ -13,8 +13,8 @@
 #include "plurrule_impl.h"
 #include "number_types.h"
 
-U_NAMESPACE_BEGIN namespace number {
-namespace impl {
+U_NAMESPACE_BEGIN
+namespace number::impl {
 
 // Forward-declare (maybe don't want number_utils.h included here):
 class DecNum;
@@ -36,7 +36,7 @@ class U_I18N_API DecimalQuantity : public IFixedDecimal, public UMemory {
     DecimalQuantity(const DecimalQuantity &other);
 
     /** Move constructor. */
-    DecimalQuantity(DecimalQuantity &&src) U_NOEXCEPT;
+    DecimalQuantity(DecimalQuantity &&src) noexcept;
 
     DecimalQuantity();
 
@@ -50,7 +50,15 @@ class U_I18N_API DecimalQuantity : public IFixedDecimal, public UMemory {
     DecimalQuantity &operator=(const DecimalQuantity &other);
 
     /** Move assignment */
-    DecimalQuantity &operator=(DecimalQuantity&& src) U_NOEXCEPT;
+    DecimalQuantity &operator=(DecimalQuantity&& src) noexcept;
+
+    /**
+     * If the minimum integer digits are greater than `minInt`,
+     * sets it to `minInt`.
+     *
+     * @param minInt The minimum number of integer digits.
+     */
+    void decreaseMinIntegerTo(int32_t minInt);
 
     /**
      * Sets the minimum integer digits that this {@link DecimalQuantity} should generate.
@@ -58,7 +66,7 @@ class U_I18N_API DecimalQuantity : public IFixedDecimal, public UMemory {
      *
      * @param minInt The minimum number of integer digits.
      */
-    void setMinInteger(int32_t minInt);
+    void increaseMinIntegerTo(int32_t minInt);
 
     /**
      * Sets the minimum fraction digits that this {@link DecimalQuantity} should generate.
@@ -195,10 +203,10 @@ class U_I18N_API DecimalQuantity : public IFixedDecimal, public UMemory {
     Signum signum() const;
 
     /** @return Whether the value represented by this {@link DecimalQuantity} is infinite. */
-    bool isInfinite() const U_OVERRIDE;
+    bool isInfinite() const override;
 
     /** @return Whether the value represented by this {@link DecimalQuantity} is not a number. */
-    bool isNaN() const U_OVERRIDE;
+    bool isNaN() const override;
 
     /**  
      * Note: this method incorporates the value of {@code exponent}
@@ -267,9 +275,9 @@ class U_I18N_API DecimalQuantity : public IFixedDecimal, public UMemory {
      */
     void appendDigit(int8_t value, int32_t leadingZeros, bool appendAsInteger);
 
-    double getPluralOperand(PluralOperand operand) const U_OVERRIDE;
+    double getPluralOperand(PluralOperand operand) const override;
 
-    bool hasIntegerValue() const U_OVERRIDE;
+    bool hasIntegerValue() const override;
 
     /**
      * Gets the digit at the specified magnitude. For example, if the represented number is 12.3,
@@ -549,8 +557,7 @@ class U_I18N_API DecimalQuantity : public IFixedDecimal, public UMemory {
     void switchStorage();
 };
 
-} // namespace impl
-} // namespace number
+} // namespace number::impl
 U_NAMESPACE_END
 
 

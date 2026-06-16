@@ -6,7 +6,6 @@ import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
 
-import com.google.common.base.Preconditions;
 import org.unicode.cldr.api.CldrDraftStatus;
 import org.unicode.icu.tool.cldrtoicu.LdmlConverter.OutputType;
 
@@ -149,4 +148,9 @@ public interface LdmlConverterConfig {
      * Whether to emit a summary report for debug purposes after conversion is complete.
      */
     boolean emitReport();
+
+    /**
+     * Whether to generate data in parallel (using multithreading).
+     */
+    boolean parallel();
 }

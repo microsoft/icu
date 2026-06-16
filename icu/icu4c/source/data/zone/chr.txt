@@ -1,6 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 chr{
     zoneStrings{
         "Africa:Abidjan"{
@@ -258,6 +258,9 @@ chr{
         "America:Chihuahua"{
             ec{"ᏥᏩᏩ"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"ᏏᏳᏓ ᏆᎡᏏ"}
+        }
         "America:Coral_Harbour"{
             ec{"ᎠᏘᎪᎦᏂ"}
         }
@@ -266,6 +269,9 @@ chr{
         }
         "America:Costa_Rica"{
             ec{"ᎪᏍᏓᎵᎧ"}
+        }
+        "America:Coyhaique"{
+            ec{"ᎪᎭᎢᏇ"}
         }
         "America:Creston"{
             ec{"ᏞᏍᏔᏂ"}
@@ -462,9 +468,6 @@ chr{
         "America:New_York"{
             ec{"ᏄᏯᎩ"}
         }
-        "America:Nipigon"{
-            ec{"ᏂᏈᎪᏂ"}
-        }
         "America:Nome"{
             ec{"ᏃᎺ"}
         }
@@ -486,9 +489,6 @@ chr{
         "America:Panama"{
             ec{"ᏆᎾᎹ"}
         }
-        "America:Pangnirtung"{
-            ec{"ᏆᏂᏂᏚᏂᎦ"}
-        }
         "America:Paramaribo"{
             ec{"ᏆᎳᎹᎴᏉ"}
         }
@@ -509,9 +509,6 @@ chr{
         }
         "America:Punta_Arenas"{
             ec{"ᏊᏔ ᎡᏫᎾᏍ"}
-        }
-        "America:Rainy_River"{
-            ec{"ᎠᎦᏍᎦ ᎤᏪᏴ"}
         }
         "America:Rankin_Inlet"{
             ec{"ᎴᏂᎩᏂ ᎢᏂᎴᏘ"}
@@ -573,9 +570,6 @@ chr{
         "America:Thule"{
             ec{"ᏡᎵ"}
         }
-        "America:Thunder_Bay"{
-            ec{"ᎠᏴᏓᏆᎶᏍᎦ ᎡᏉᏄᎸᏗ"}
-        }
         "America:Tijuana"{
             ec{"ᏘᏳᏩᎾ"}
         }
@@ -596,9 +590,6 @@ chr{
         }
         "America:Yakutat"{
             ec{"ᏯᎫᏔᏘ"}
-        }
-        "America:Yellowknife"{
-            ec{"ᏓᎶᏂᎨ ᎭᏰᏍᏗ"}
         }
         "Antarctica:Casey"{
             ec{"ᎨᏏ"}
@@ -689,9 +680,6 @@ chr{
         }
         "Asia:Chita"{
             ec{"ᏥᏔ"}
-        }
-        "Asia:Choibalsan"{
-            ec{"ᏦᏱᏆᎵᏌᏂ"}
         }
         "Asia:Colombo"{
             ec{"ᎪᎶᎻᏉ"}
@@ -864,6 +852,9 @@ chr{
         "Asia:Ulaanbaatar"{
             ec{"ᎤᎳᏂᏆᏔ"}
         }
+        "Asia:Urumqi"{
+            ec{"ᎤᎷᎻᎩ"}
+        }
         "Asia:Ust-Nera"{
             ec{"ᎤᏍᏔ-ᏁᎳ"}
         }
@@ -920,9 +911,6 @@ chr{
         }
         "Australia:Broken_Hill"{
             ec{"ᎤᏲᏨᎯ ᎦᏚᏏ"}
-        }
-        "Australia:Currie"{
-            ec{"ᎫᎵ"}
         }
         "Australia:Darwin"{
             ec{"ᏓᏩᏂ"}
@@ -1106,9 +1094,6 @@ chr{
         "Europe:Ulyanovsk"{
             ec{"ᎤᎵᏯᏃᏬᏍᎧ"}
         }
-        "Europe:Uzhgorod"{
-            ec{"ᎤᏍᎪᎶᏗ"}
-        }
         "Europe:Vaduz"{
             ec{"ᏩᏚᏏ"}
         }
@@ -1129,9 +1114,6 @@ chr{
         }
         "Europe:Zagreb"{
             ec{"ᏌᏇᏈ"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"ᏌᏉᎶᏌᏱ"}
         }
         "Europe:Zurich"{
             ec{"ᏑᎵᏥ"}
@@ -1188,7 +1170,7 @@ chr{
             ec{"ᎡᏩᏖ"}
         }
         "Pacific:Enderbury"{
-            ec{"ᎡᏂᏇᎵ"}
+            ec{"ᎧᏛᏂ"}
         }
         "Pacific:Fakaofo"{
             ec{"ᏩᎧᎣᏬ"}
@@ -1213,15 +1195,6 @@ chr{
         }
         "Pacific:Honolulu"{
             ec{"ᎭᏃᎷᎷ"}
-            sd{"HDT"}
-            sg{"HST"}
-            ss{"HST"}
-        }
-        "Pacific:Johnston"{
-            ec{"ᏣᏂᏏᏂ"}
-        }
-        "Pacific:Kanton"{
-            ec{"ᎧᏛᏂ"}
         }
         "Pacific:Kiritimati"{
             ec{"ᎩᎵᏘᎹᏘ"}
@@ -1305,9 +1278,7 @@ chr{
             ls{"ᏧᎦᎾᏮ ᎬᎿᎨᏍᏛ ᎠᏟᎶᏍᏗ ᎠᏟᎢᎵᏒ"}
         }
         "meta:Africa_Western"{
-            ld{"ᏭᏕᎵᎬ ᎬᎿᎨᏍᏛ ᎪᎩ ᎠᏟᎢᎵᏒ"}
-            lg{"ᏭᏕᎵᎬ ᎬᎿᎨᏍᏛ ᎠᏟᎢᎵᏒ"}
-            ls{"ᏭᏕᎵᎬ ᎬᎿᎨᏍᏛ ᎠᏟᎶᏍᏗ ᎠᏟᎢᎵᏒ"}
+            ls{"ᏭᏕᎵᎬ ᎬᎿᎨᏍᏛ ᎠᏟᎢᎵᏒ"}
         }
         "meta:Alaska"{
             ld{"ᎠᎳᏍᎦ ᎪᎯ ᎢᎦ ᎠᏟᎢᎵᏒ"}
@@ -1459,11 +1430,6 @@ chr{
             lg{"ᏓᎶᏂᎨᏍᏛ ᎠᏟᎢᎵᏒ"}
             ls{"ᏓᎶᏂᎨᏍᏛ ᎠᏟᎶᏍᏗ ᎠᏟᎢᎵᏒ"}
         }
-        "meta:Choibalsan"{
-            ld{"ᏦᏱᏆᎵᏌᏂ ᎪᎩ ᎠᏟᎢᎵᏒ"}
-            lg{"ᏦᏱᏆᎵᏌᏂ ᎠᏟᎢᎵᏒ"}
-            ls{"ᏦᏱᏆᎵᏌᏂ ᎠᏟᎶᏍᏗ ᎠᏟᎢᎵᏒ"}
-        }
         "meta:Christmas"{
             ls{"ᏓᏂᏍᏓᏲᎯᎲ ᎤᎦᏚᏛᎢ ᎠᏟᎢᎵᏒ"}
         }
@@ -1569,6 +1535,10 @@ chr{
         "meta:Guyana"{
             ls{"ᎦᏯᎾ ᎠᏟᎢᎵᏒ"}
         }
+        "meta:Hawaii"{
+            ls{"ᎭᏩᏱ-ᎠᎵᏳᏏᎠᏂ ᎠᏟᎶᏍᏗ ᎠᏟᎢᎵᏒ"}
+            ss{"HAST"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"ᎭᏩᏱ-ᎠᎵᏳᏏᎠᏂ ᎪᎯ ᎢᎦ ᎠᏟᎢᎵᏒ"}
             lg{"ᎭᏩᏱ-ᎠᎵᏳᏏᎠᏂ ᎠᏟᎢᎵᏒ"}
@@ -1625,6 +1595,9 @@ chr{
             lg{"ᏣᏩᏂᏏ ᎠᏟᎢᎵᏒ"}
             ls{"ᏣᏩᏂᏏ ᎠᏟᎶᏍᏗ ᎠᏟᎢᎵᏒ"}
         }
+        "meta:Kazakhstan"{
+            ls{"ᎧᏎᎧᏍᏕᏂ ᎠᏟᎢᎵᏒ"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"ᏗᎧᎸᎬ ᎧᏎᎧᏍᏕᏂ ᎠᏟᎢᎵᏒ"}
         }
@@ -1655,9 +1628,6 @@ chr{
             lg{"ᎤᎬᏫᏳᎯ ᎭᏫ ᎠᏟᎢᎵᏒ"}
             ls{"ᎤᎬᏫᏳᎯ ᎭᏫ ᎠᏟᎶᏍᏗ ᎠᏟᎢᎵᏒ"}
         }
-        "meta:Macquarie"{
-            ls{"ᎹᏇᎵ ᎤᎦᏚᏛᎢ ᎠᏟᎢᎵᏒ"}
-        }
         "meta:Magadan"{
             ld{"ᎹᎦᏓᏂ ᎪᎩ ᎠᏟᎢᎵᏒ"}
             lg{"ᎹᎦᏓᏂ ᎠᏟᎢᎵᏒ"}
@@ -1682,11 +1652,6 @@ chr{
         }
         "meta:Mawson"{
             ls{"ᎹᏌᏂ ᎠᏟᎢᎵᏒ"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"ᏧᏴᏢ ᏭᏕᎵᎬ ᎠᏂᏍᏆᏂ ᎪᎯ ᎢᎦ ᎠᏟᎢᎵᏒ"}
-            lg{"ᏧᏴᏢ ᏭᏕᎵᎬ ᎠᏂᏍᏆᏂ ᎠᏟᎢᎵᏒ"}
-            ls{"ᏧᏴᏢ ᏭᏕᎵᎬ ᎠᏂᏍᏆᏂ ᎠᏟᎶᏍᏗ ᎠᏟᎢᎵᏒ"}
         }
         "meta:Mexico_Pacific"{
             ld{"ᎠᏂᏍᏆᏂ ᏭᏕᎵᎬ ᎪᎯ ᎢᎦ ᎠᏟᎢᎵᏒ"}
@@ -1907,10 +1872,6 @@ chr{
         "meta:Yukon"{
             ls{"ᏳᎧᏂ ᎠᏟᎢᎵᏒ"}
         }
-        fallbackFormat{"{1} ({0})"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
         regionFormat{"{0} ᎠᏟᎢᎵᏒ"}
         regionFormatDaylight{"{0} ᎪᎯ ᎢᎦ ᎠᏟᎢᎵᏒ"}
         regionFormatStandard{"{0} ᎠᏟᎶᏍᏗ ᎠᏟᎢᎵᏒ"}

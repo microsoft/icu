@@ -1,16 +1,19 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 qu{
     Keys{
         calendar{"Intiwatana"}
         cf{"Imayna Qullqi kaynin"}
         collation{"Ñiqinchana"}
         currency{"qullqi"}
+        em{"Emoji nisqamanta rikuchiy"}
         hc{"Ciclo de Horas (12 vs 24)"}
         lb{"Siqi paway kaynin"}
+        lw{"Simikuna ukhupi Chiru Pakikuna"}
         ms{"Tupuy Kamay"}
         numbers{"Yupaykuna"}
+        ss{"Oración Pakikuy Abbr."}
     }
     Languages{
         ab{"Abjasia"}
@@ -22,12 +25,13 @@ qu{
         ain{"Ainu"}
         ak{"Akan Simi"}
         ale{"Aleut"}
-        alt{"ltai Meridional"}
+        alt{"Altai Meridional"}
         am{"Amarico Simi"}
         an{"Aragonesa"}
         ann{"Obolo Simi"}
         anp{"Angika"}
         ar{"Arabe Simi"}
+        ar_001{"Musuq Estandar Arabe Simi"}
         arn{"Mapuche Simi"}
         arp{"Arapaho"}
         ars{"Árabe Najdi Simi"}
@@ -40,16 +44,19 @@ qu{
         ay{"Aymara Simi"}
         az{"Azerbaiyano Simi"}
         ba{"Baskir Simi"}
+        bal{"Baluchi Simi"}
         ban{"Balines Simi"}
         bas{"Basaa Simi"}
         be{"Bielorruso Simi"}
         bem{"Bemba Simi"}
         bez{"Bena Simi"}
         bg{"Bulgaro Simi"}
-        bho{"Bhojpuri"}
+        bgc{"Haryanvi"}
+        bho{"Bhojpuri Simi"}
         bi{"Bislama"}
         bin{"Bini"}
         bla{"Siksiká Simi"}
+        blo{"Anii Simi"}
         bm{"Bambara Simi"}
         bn{"Bangla Simi"}
         bo{"Tibetano Simi"}
@@ -107,10 +114,12 @@ qu{
         en{"Ingles Simi"}
         eo{"Esperanto Simi"}
         es{"Español Simi"}
+        es_419{"Español Simi (Latino América)"}
         et{"Estonio Simi"}
         eu{"Euskera Simi"}
         ewo{"Ewondo Simi"}
         fa{"Persa Simi"}
+        fa_AF{"Dari Simi"}
         ff{"Fulah Simi"}
         fi{"Fines Simi"}
         fil{"Filipino Simi"}
@@ -155,6 +164,7 @@ qu{
         iba{"Iban Simi"}
         ibb{"Ibibio Simi"}
         id{"Indonesio Simi"}
+        ie{"Interlingue Simi"}
         ig{"Igbo Simi"}
         ii{"Yi Simi"}
         ikt{"Inuktitut Simi (Canadá occidental)"}
@@ -207,6 +217,7 @@ qu{
         kv{"Komi Simi"}
         kw{"Córnico Simi"}
         kwk{"Kwakʼwala Simi"}
+        kxv{"Kuvi Simi"}
         ky{"Kirghiz Simi"}
         la{"Latín Simi"}
         lad{"Ladino Simi"}
@@ -215,8 +226,10 @@ qu{
         lez{"Lezghian Simi"}
         lg{"Luganda Simi"}
         li{"Limburgues Simi"}
+        lij{"Liguria Simi"}
         lil{"Lillooet Simi"}
         lkt{"Lakota Simi"}
+        lmo{"Lombardo Simi"}
         ln{"Lingala Simi"}
         lo{"Lao Simi"}
         lou{"Luisiana Criollo"}
@@ -258,7 +271,7 @@ qu{
         ms{"Malayo Simi"}
         mt{"Maltes Simi"}
         mua{"Mundang Simi"}
-        mul{"Idiomas M´últiples Simi"}
+        mul{"Achka simikuna"}
         mus{"Muscogee Simi"}
         mwl{"Mirandés Simi"}
         my{"Birmano Simi"}
@@ -276,6 +289,7 @@ qu{
         nia{"Nias Simi"}
         niu{"Niuean Simi"}
         nl{"Neerlandes Simi"}
+        nl_BE{"Flamenco Simi"}
         nmg{"Kwasio Ngumba Simi"}
         nn{"Noruego Nynorsk Simi"}
         nnh{"Ngiemboon Simi"}
@@ -311,6 +325,7 @@ qu{
         pt{"Portugues Simi"}
         qu{"Runasimi"}
         quc{"Kʼicheʼ Simi"}
+        raj{"Rajasthani"}
         rap{"Rapanui Simi"}
         rar{"Rarotongan Simi"}
         rhg{"Rohingya Simi"}
@@ -361,8 +376,10 @@ qu{
         suk{"Sukuma Simi"}
         sv{"Sueco Simi"}
         sw{"Suajili Simi"}
+        sw_CD{"Suajili Simi (Congo (RDC))"}
         swb{"Comorian Simi"}
         syr{"Siriaco Simi"}
+        szl{"Silesiano"}
         ta{"Tamil Simi"}
         tce{"Tutchone Meridional"}
         te{"Telugu Simi"}
@@ -402,7 +419,9 @@ qu{
         uz{"Uzbeko Simi"}
         vai{"Vai Simi"}
         ve{"Venda Simi"}
+        vec{"Veneciamanta"}
         vi{"Vietnamita Simi"}
+        vmw{"Makhuwa Simi"}
         vo{"Volapük Simi"}
         vun{"Vunjo Simi"}
         wa{"Valona Simi"}
@@ -413,6 +432,7 @@ qu{
         wuu{"Wu Chino"}
         xal{"Kalmyk Simi"}
         xh{"Isixhosa Simi"}
+        xnr{"Kangri Simi"}
         xog{"Soga Simi"}
         yav{"Yangben Simi"}
         ybb{"Yemba Simi"}
@@ -420,12 +440,39 @@ qu{
         yo{"Yoruba Simi"}
         yrl{"Nheengatu Simi"}
         yue{"Cantonés Simi"}
+        za{"Zhuang"}
         zgh{"Bereber Marroquí Estándar Simi"}
         zh{"Chino Simi"}
+        zh_Hans{"Chino Simplificado Simi"}
+        zh_Hant{"Chino Tradicional Simi"}
         zu{"Isizulu Simi"}
         zun{"Zuni Simi"}
         zxx{"Manaraq simi yachana"}
         zza{"Zaza Simi"}
+    }
+    Languages%core{
+        ku{"Kurdo Simi"}
+    }
+    Languages%extension{
+        ku{"Kurmanji Simi"}
+    }
+    Languages%long{
+        zh_Hans{"Chino Mandarín Simplificado Simi"}
+        zh_Hant{"Chino Mandarín Tradicional Simi"}
+    }
+    Languages%menu{
+        ckb{"Kurdo Simi, Chawpi"}
+        yue{"Chino Cantonés Simi"}
+        zh{"Chino Mandarín Simi"}
+    }
+    Languages%short{
+        az{"Azerí Simi"}
+        en_GB{"Ingles Simi (GB)"}
+        en_US{"Ingles Simi (US)"}
+    }
+    Languages%variant{
+        ckb{"Kurdo Simi, Sorani"}
+        hi_Latn{"Hinglish Simi"}
     }
     Scripts{
         Adlm{"Adlam Simi"}
@@ -453,7 +500,6 @@ qu{
         Hebr{"Hebreo Simi"}
         Hira{"Hiragana"}
         Hrkt{"Japones silabico sananpakuna"}
-        Jamo{"Jamo"}
         Jpan{"Japones Simi"}
         Kana{"Katakana"}
         Khmr{"Khmer"}
@@ -501,21 +547,52 @@ qu{
             ethiopic-amete-alem{"Etíope Amete Alem Intiwatana"}
             gregorian{"Gregoriano Intiwatana"}
             hebrew{"Hebreo Intiwatana"}
-            islamic{"Islamico Intiwatana"}
-            islamic-civil{"Islamico Intiwatana (tabular, época civil)"}
-            islamic-umalqura{"Islamico Intiwatana (Umm al-Qura)"}
+            islamic{"Hijri Intiwatana"}
+            islamic-civil{"Hijri Intiwatana (tabular, epoca civil)"}
+            islamic-umalqura{"Hijri Intiwatana (Umm al-Qura)"}
             iso8601{"ISO-8601 Intiwatana"}
             japanese{"Japones Intiwatana"}
             persian{"Persa Intiwatana"}
+            roc{"Minguo Intiwatana"}
+        }
+        calendar%core{
+            buddhist{"Buddhist"}
+            chinese{"Chinese"}
+            coptic{"Copto"}
+            dangi{"Dangi"}
+            ethiopic{"Ethiopic"}
+            ethiopic-amete-alem{"Ethiopic Amete Alem"}
+            gregorian{"Gregorian"}
+            hebrew{"Hebreo"}
+            islamic{"Hijri"}
+            islamic-civil{"Hijri (tabular, epoca civil)"}
+            islamic-umalqura{"Hijri (Umm al-Qura)"}
+            japanese{"Japones"}
+            persian{"Persa"}
+            roc{"Minguo"}
         }
         cf{
             account{"Yupana Qullqi imayna kaynin"}
             standard{"Estandar nisqa qullqi imayna kaynin"}
         }
+        cf%core{
+            account{"Accounting"}
+            standard{"Standard"}
+        }
         collation{
             ducet{"Ñawpaqchasqa Unicode Nisqa Ñiqinchana"}
             search{"Llapanpaq maskana"}
             standard{"Estandar nisqa Ñiqinchana"}
+        }
+        collation%core{
+            ducet{"Ñawpaqchasqa Unicode"}
+            search{"maskana"}
+            standard{"Estandar"}
+        }
+        em%core{
+            default{"Default"}
+            emoji{"Emoji"}
+            text{"Text"}
         }
         hc{
             h11{"12 hora kaynin (0–11)"}
@@ -523,15 +600,37 @@ qu{
             h23{"24 hora kaynin (0–23)"}
             h24{"24 hora kaynin (1–24)"}
         }
+        hc%core{
+            h11{"12 (0–11)"}
+            h12{"12 (1–12)"}
+            h23{"24 (0–23)"}
+            h24{"24 (1–24)"}
+        }
         lb{
             loose{"Siqi paway chinkachiy kaynin"}
             normal{"Siqi paway Normal kaynin"}
             strict{"Siqi paway Chiqa kaynin"}
         }
+        lb%core{
+            loose{"Loose"}
+            normal{"Normal"}
+            strict{"Strict"}
+        }
+        lw%core{
+            breakall{"Tukuyta pakiy"}
+            keepall{"Tukuy imata waqaychay"}
+            normal{"Normal"}
+            phrase{"Frases nisqapi waqaychay"}
+        }
         ms{
             metric{"Metrico Kamay"}
             uksystem{"Metrico Ingles Kamay"}
             ussystem{"Metrico Americano Kamay"}
+        }
+        ms%core{
+            metric{"Metrico"}
+            uksystem{"UK"}
+            ussystem{"US"}
         }
         numbers{
             arab{"Arabe Sananpakuna"}
@@ -574,6 +673,10 @@ qu{
             thai{"Thai Sananpakuna"}
             tibt{"Tibetano Sananpakuna"}
             vaii{"Vai Yupaykuna"}
+        }
+        ss%core{
+            none{"Off"}
+            standard{"On"}
         }
     }
     codePatterns{

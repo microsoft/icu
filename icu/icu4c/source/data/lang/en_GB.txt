@@ -1,20 +1,28 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
 // License & terms of use: http://www.unicode.org/copyright.html
-// Generated using tools/cldr/cldr-to-icu/build-icu-data.xml
+// Generated using tools/cldr/cldr-to-icu/
 en_GB{
     %%Parent{"en_001"}
+    Keys{
+        lw{"Line Breaks Within Words"}
+    }
     Languages{
-        bin{"Bini"}
-        bm{"Bambara"}
         ff{"Fulah"}
-        ii{"Sichuan Yi"}
-        nso{"Northern Sotho"}
-        ss{"Swati"}
-        st{"Southern Sotho"}
-        sw{"Swahili"}
-        tn{"Tswana"}
-        ts{"Tsonga"}
-        xh{"Xhosa"}
-        zu{"Zulu"}
+    }
+    Scripts{
+        Hrkt{"Japanese Syllabaries"}
+    }
+    Types{
+        numbers%core{
+            armnlow{"Armenian Lowercase"}
+            fullwide{"Full-Width"}
+            greklow{"Greek Lowercase"}
+            hansfin{"Simplified Chinese Financial"}
+            hantfin{"Traditional Chinese Financial"}
+            jpanfin{"Japanese Financial"}
+            native{"Native Digits"}
+            roman{"Roman Uppercase"}
+            romanlow{"Roman Lowercase"}
+        }
     }
 }

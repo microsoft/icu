@@ -50,11 +50,11 @@ UIterCollationIterator::handleNextCE32(UChar32 &c, UErrorCode & /*errorCode*/) {
     return UTRIE2_GET32_FROM_U16_SINGLE_LEAD(trie, c);
 }
 
-UChar
+char16_t
 UIterCollationIterator::handleGetTrailSurrogate() {
     UChar32 trail = iter.next(&iter);
     if(!U16_IS_TRAIL(trail) && trail >= 0) { iter.previous(&iter); }
-    return (UChar)trail;
+    return static_cast<char16_t>(trail);
 }
 
 UChar32
@@ -140,7 +140,7 @@ FCDUIterCollationIterator::handleNextCE32(UChar32 &c, UErrorCode &errorCode) {
     return UTRIE2_GET32_FROM_U16_SINGLE_LEAD(trie, c);
 }
 
-UChar
+char16_t
 FCDUIterCollationIterator::handleGetTrailSurrogate() {
     if(state <= ITER_IN_FCD_SEGMENT) {
         UChar32 trail = iter.next(&iter);
@@ -149,10 +149,10 @@ FCDUIterCollationIterator::handleGetTrailSurrogate() {
         } else if(trail >= 0) {
             iter.previous(&iter);
         }
-        return (UChar)trail;
+        return static_cast<char16_t>(trail);
     } else {
         U_ASSERT(pos < normalized.length());
-        UChar trail;
+        char16_t trail;
         if(U16_IS_TRAIL(trail = normalized[pos])) { ++pos; }
         return trail;
     }
@@ -315,7 +315,7 @@ FCDUIterCollationIterator::nextSegment(UErrorCode &errorCode) {
         UChar32 c = uiter_next32(&iter);
         if(c < 0) { break; }
         uint16_t fcd16 = nfcImpl.getFCD16(c);
-        uint8_t leadCC = (uint8_t)(fcd16 >> 8);
+        uint8_t leadCC = static_cast<uint8_t>(fcd16 >> 8);
         if(leadCC == 0 && !s.isEmpty()) {
             // FCD boundary before this character.
             uiter_previous32(&iter);
@@ -340,7 +340,7 @@ FCDUIterCollationIterator::nextSegment(UErrorCode &errorCode) {
             pos = 0;
             return true;
         }
-        prevCC = (uint8_t)fcd16;
+        prevCC = static_cast<uint8_t>(fcd16);
         if(prevCC == 0) {
             // FCD boundary after the last character.
             break;
@@ -396,7 +396,7 @@ FCDUIterCollationIterator::previousSegment(UErrorCode &errorCode) {
         UChar32 c = uiter_previous32(&iter);
         if(c < 0) { break; }
         uint16_t fcd16 = nfcImpl.getFCD16(c);
-        uint8_t trailCC = (uint8_t)fcd16;
+        uint8_t trailCC = static_cast<uint8_t>(fcd16);
         if(trailCC == 0 && !s.isEmpty()) {
             // FCD boundary after this character.
             uiter_next32(&iter);
@@ -424,7 +424,7 @@ FCDUIterCollationIterator::previousSegment(UErrorCode &errorCode) {
             pos = normalized.length();
             return true;
         }
-        nextCC = (uint8_t)(fcd16 >> 8);
+        nextCC = static_cast<uint8_t>(fcd16 >> 8);
         if(nextCC == 0) {
             // FCD boundary before the following character.
             break;

@@ -85,19 +85,18 @@ const char gUsageString[] =
 //  Stubs for Windows API functions when building on UNIXes.
 //
 typedef int DWORD;
-inline int CompareStringW(DWORD, DWORD, UChar *, int, UChar *, int) {return 0;}
+inline int CompareStringW(DWORD, DWORD, char16_t *, int, char16_t *, int) {return 0;}
 #include <sys/time.h>
 unsigned long timeGetTime() {
     struct timeval t;
-    gettimeofday(&t, 0);
+    gettimeofday(&t, nullptr);
     unsigned long val = t.tv_sec * 1000;  // Let it overflow.  Who cares.
     val += t.tv_usec / 1000;
     return val;
 }
-inline int LCMapStringW(DWORD, DWORD, UChar *, int, UChar *, int) {return 0;}
+inline int LCMapStringW(DWORD, DWORD, char16_t *, int, char16_t *, int) {return 0;}
 const int LCMAP_SORTKEY = 0;
 #define MAKELCID(a,b) 0
-const int SORT_DEFAULT = 0;
 #endif
 
 
@@ -106,10 +105,10 @@ const int SORT_DEFAULT = 0;
 //  Command line option variables
 //     These global variables are set according to the options specified
 //     on the command line by the user.
-char * opt_fName      = 0;
+char* opt_fName = nullptr;
 const char * opt_locale     = "en_US";
 int    opt_langid     = 0;         // Defaults to value corresponding to opt_locale.
-char * opt_rules      = 0;
+char* opt_rules = nullptr;
 UBool  opt_help       = false;
 int    opt_loopCount  = 1;
 int    opt_iLoopCount = 1;
@@ -177,7 +176,7 @@ OptSpec opts[] = {
     {"-dump",        OptSpec::FLAG,   &opt_dump},
     {"-help",        OptSpec::FLAG,   &opt_help},
     {"-?",           OptSpec::FLAG,   &opt_help},
-    {0, OptSpec::FLAG, 0}
+    {nullptr,        OptSpec::FLAG,   nullptr}
 };
 
 
@@ -194,7 +193,7 @@ OptSpec opts[] = {
 //      one of these structs.
 //
 struct  Line {
-    UChar     *name;
+    char16_t  *name;
     int        len;
     char      *winSortKey;
     char      *icuSortKey;
@@ -229,11 +228,11 @@ UBool ProcessOptions(int argc, const char **argv, OptSpec opts[])
 
     for (argNum=1; argNum<argc; argNum++) {
         pArgName = argv[argNum];
-        for (pOpt = opts;  pOpt->name != 0; pOpt++) {
+        for (pOpt = opts; pOpt->name != nullptr; pOpt++) {
             if (strcmp(pOpt->name, pArgName) == 0) {
                 switch (pOpt->type) {
                 case OptSpec::FLAG:
-                    *(UBool *)(pOpt->pVar) = true;
+                    *static_cast<UBool*>(pOpt->pVar) = true;
                     break;
                 case OptSpec::STRING:
                     argNum ++;
@@ -241,7 +240,7 @@ UBool ProcessOptions(int argc, const char **argv, OptSpec opts[])
                         fprintf(stderr, "value expected for \"%s\" option.\n", pOpt->name);
                         return false;
                     }
-                    *(const char **)(pOpt->pVar)  = argv[argNum];
+                    *static_cast<const char**>(pOpt->pVar) = argv[argNum];
                     break;
                 case OptSpec::NUM:
                     argNum ++;
@@ -255,12 +254,12 @@ UBool ProcessOptions(int argc, const char **argv, OptSpec opts[])
                         fprintf(stderr, "integer value expected for \"%s\" option.\n", pOpt->name);
                         return false;
                     }
-                    *(int *)(pOpt->pVar) = i;
+                    *static_cast<int*>(pOpt->pVar) = i;
                 }
                 break;
             }
         }
-        if (pOpt->name == 0)
+        if (pOpt->name == nullptr)
         {
             fprintf(stderr, "Unrecognized option \"%s\"\n", pArgName);
             return false;
@@ -279,7 +278,7 @@ return true;
 //---------------------------------------------------------------------------------------
 int ICUstrcmpK(const void *a, const void *b) {
     gCount++;
-    int t = strcmp((*(Line **)a)->icuSortKey, (*(Line **)b)->icuSortKey);
+    int t = strcmp((*static_cast<Line* const*>(a))->icuSortKey, (*static_cast<Line* const*>(b))->icuSortKey);
     return t;
 }
 
@@ -287,7 +286,7 @@ int ICUstrcmpK(const void *a, const void *b) {
 int ICUstrcmpL(const void *a, const void *b) {
     gCount++;
     UCollationResult t;
-    t = ucol_strcoll(gCol, (*(Line **)a)->name, (*(Line **)a)->len, (*(Line **)b)->name, (*(Line **)b)->len);
+    t = ucol_strcoll(gCol, (*static_cast<Line* const*>(a))->name, (*static_cast<Line* const*>(a))->len, (*static_cast<Line* const*>(b))->name, (*static_cast<Line* const*>(b))->len);
     if (t == UCOL_LESS) return -1;
     if (t == UCOL_GREATER) return +1;
     return 0;
@@ -297,7 +296,7 @@ int ICUstrcmpL(const void *a, const void *b) {
 int ICUstrcmp(const void *a, const void *b) {
     gCount++;
     UCollationResult t;
-    t = ucol_strcoll(gCol, (*(Line **)a)->name, -1, (*(Line **)b)->name, -1);
+    t = ucol_strcoll(gCol, (*static_cast<Line* const*>(a))->name, -1, (*static_cast<Line* const*>(b))->name, -1);
     if (t == UCOL_LESS) return -1;
     if (t == UCOL_GREATER) return +1;
     return 0;
@@ -307,7 +306,7 @@ int ICUstrcmp(const void *a, const void *b) {
 int Winstrcmp(const void *a, const void *b) {
     gCount++;
     int t;
-    t = CompareStringW(gWinLCID, 0, (*(Line **)a)->name, -1, (*(Line **)b)->name, -1);
+    t = CompareStringW(gWinLCID, 0, (*static_cast<Line* const*>(a))->name, -1, (*static_cast<Line* const*>(b))->name, -1);
     return t-2;
 }
 
@@ -315,7 +314,7 @@ int Winstrcmp(const void *a, const void *b) {
 int UNIXstrcmp(const void *a, const void *b) {
     gCount++;
     int t;
-    t = strcoll((*(Line **)a)->unixName, (*(Line **)b)->unixName);
+    t = strcoll((*static_cast<Line* const*>(a))->unixName, (*static_cast<Line* const*>(b))->unixName);
     return t;
 }
 
@@ -323,14 +322,14 @@ int UNIXstrcmp(const void *a, const void *b) {
 int WinstrcmpL(const void *a, const void *b) {
     gCount++;
     int t;
-    t = CompareStringW(gWinLCID, 0, (*(Line **)a)->name, (*(Line **)a)->len, (*(Line **)b)->name, (*(Line **)b)->len);
+    t = CompareStringW(gWinLCID, 0, (*static_cast<Line* const*>(a))->name, (*static_cast<Line* const*>(a))->len, (*static_cast<Line* const*>(b))->name, (*static_cast<Line* const*>(b))->len);
     return t-2;
 }
 
 
 int WinstrcmpK(const void *a, const void *b) {
     gCount++;
-    int t = strcmp((*(Line **)a)->winSortKey, (*(Line **)b)->winSortKey);
+    int t = strcmp((*static_cast<Line* const*>(a))->winSortKey, (*static_cast<Line* const*>(b))->winSortKey);
     return t;
 }
 
@@ -343,8 +342,8 @@ int WinstrcmpK(const void *a, const void *b) {
 //
 //---------------------------------------------------------------------------------------
 int ICURandomCmp(const void *a, const void *b) {
-    char  *ask = (*(Line **)a)->icuSortKey;
-    char  *bsk = (*(Line **)b)->icuSortKey;
+    char* ask = (*static_cast<Line* const*>(a))->icuSortKey;
+    char* bsk = (*static_cast<Line* const*>(b))->icuSortKey;
     int   aVal = 0;
     int   bVal = 0;
     int   retVal;
@@ -377,8 +376,8 @@ void doKeyGen()
     int  len=-1;
 
     // Adjust loop count to compensate for file size.   Should be order n
-    double dLoopCount = double(opt_loopCount) * (1000. /  double(gNumFileLines));
-    int adj_loopCount = int(dLoopCount);
+    double dLoopCount = static_cast<double>(opt_loopCount) * (1000. / static_cast<double>(gNumFileLines));
+    int adj_loopCount = static_cast<int>(dLoopCount);
     if (adj_loopCount < 1) adj_loopCount = 1;
 
 
@@ -393,7 +392,7 @@ void doKeyGen()
                 for (iLoop=0; iLoop < opt_iLoopCount; iLoop++) {
                     LCMapStringW(gWinLCID, LCMAP_SORTKEY,
                         gFileLines[line].name, len,
-                        (UChar *)gFileLines[line].winSortKey, 5000);    // TODO  something with length.
+                        reinterpret_cast<char16_t*>(gFileLines[line].winSortKey), 5000); // TODO  something with length.
                 }
             }
         }
@@ -406,7 +405,7 @@ void doKeyGen()
                     len = gFileLines[line].len;
                 }
                 for (iLoop=0; iLoop < opt_iLoopCount; iLoop++) {
-                    ucol_getSortKey(gCol, gFileLines[line].name, len, (unsigned char *)gFileLines[line].icuSortKey, 5000);
+                    ucol_getSortKey(gCol, gFileLines[line].name, len, reinterpret_cast<unsigned char*>(gFileLines[line].icuSortKey), 5000);
                 }
             }
         }
@@ -423,7 +422,7 @@ void doKeyGen()
     }
 
     unsigned long elapsedTime = timeGetTime() - startTime;
-    int ns = (int)(float(1000000) * (float)elapsedTime / (float)(adj_loopCount*gNumFileLines));
+    int ns = static_cast<int>(static_cast<float>(1000000) * static_cast<float>(elapsedTime) / static_cast<float>(adj_loopCount * gNumFileLines));
 
     if (opt_terse == false) {
         printf("Sort Key Generation:  total # of keys = %d\n", loops*gNumFileLines);
@@ -449,9 +448,9 @@ void doKeyGen()
 
     }
     if (opt_terse == false) {
-        printf("Key Length / character = %f\n", (float)totalKeyLen / (float)totalChars);
+        printf("Key Length / character = %f\n", static_cast<float>(totalKeyLen) / static_cast<float>(totalChars));
     } else {
-        printf("%f, ", (float)totalKeyLen / (float)totalChars);
+        printf("%f, ", static_cast<float>(totalKeyLen) / static_cast<float>(totalChars));
     }
 }
 
@@ -476,9 +475,9 @@ void doBinarySearch()
     // Accurate timings do not depend on this being perfect.  The correction is just to try to
     //   get total running times of about the right order, so the that user doesn't need to
     //   manually adjust the loop count for every different file size.
-    double dLoopCount = double(opt_loopCount) * 3000. / (log10((double)gNumFileLines) * double(gNumFileLines));
+    double dLoopCount = static_cast<double>(opt_loopCount) * 3000. / (log10(static_cast<double>(gNumFileLines)) * static_cast<double>(gNumFileLines));
     if (opt_usekeys) dLoopCount *= 5;
-    int adj_loopCount = int(dLoopCount);
+    int adj_loopCount = static_cast<int>(dLoopCount);
     if (adj_loopCount < 1) adj_loopCount = 1;
 
 
@@ -487,7 +486,7 @@ void doBinarySearch()
         if (opt_strcmp || opt_strcmpCPO) 
         {
             unsigned long startTime = timeGetTime();
-            typedef int32_t (U_EXPORT2 *PF)(const UChar *, const UChar *);
+            typedef int32_t (U_EXPORT2 *PF)(const char16_t *, const char16_t *);
             PF pf = u_strcmp;
             if (opt_strcmpCPO) {pf = u_strcmpCodePointOrder;}
             //if (opt_strcmp && opt_win) {pf = (PF)wcscmp;}   // Damn the difference between int32_t and int
@@ -678,7 +677,7 @@ void doBinarySearch()
         break;
     }
 
-    int ns = (int)(float(1000000) * (float)elapsedTime / (float)gCount);
+    int ns = static_cast<int>(static_cast<float>(1000000) * static_cast<float>(elapsedTime) / static_cast<float>(gCount));
     if (opt_terse == false) {
         printf("binary search:  total # of string compares = %d\n", gCount);
         printf("binary search:  compares per loop = %d\n", gCount / loops);
@@ -702,9 +701,9 @@ void doQSort() {
     Line **sortBuf = new Line *[gNumFileLines];
 
     // Adjust loop count to compensate for file size.   QSort should be n log(n)
-    double dLoopCount = double(opt_loopCount) * 3000. / (log10((double)gNumFileLines) * double(gNumFileLines));
+    double dLoopCount = static_cast<double>(opt_loopCount) * 3000. / (log10(static_cast<double>(gNumFileLines)) * static_cast<double>(gNumFileLines));
     if (opt_usekeys) dLoopCount *= 5;
-    int adj_loopCount = int(dLoopCount);
+    int adj_loopCount = static_cast<int>(dLoopCount);
     if (adj_loopCount < 1) adj_loopCount = 1;
 
 
@@ -762,7 +761,7 @@ void doQSort() {
     }
 
     unsigned long elapsedTime = timeGetTime() - startTime;
-    int ns = (int)(float(1000000) * (float)elapsedTime / (float)gCount);
+    int ns = static_cast<int>(static_cast<float>(1000000) * static_cast<float>(elapsedTime) / static_cast<float>(gCount));
     if (opt_terse == false) {
         printf("qsort:  total # of string compares = %d\n", gCount);
         printf("qsort:  time per compare = %d ns\n", ns);
@@ -807,8 +806,8 @@ void doKeyHist() {
     printf("String Length,  Avg Key Length,  Avg Key Len per char\n");
     for (i=1; i<=maxLen; i++) {
         if (numKeysOfSize[i] > 0) {
-            printf("%d, %f, %f\n", i, (float)accumulatedLen[i] / (float)numKeysOfSize[i],
-                (float)accumulatedLen[i] / (float)(numKeysOfSize[i] * i));
+            printf("%d, %f, %f\n", i, static_cast<float>(accumulatedLen[i]) / static_cast<float>(numKeysOfSize[i]),
+                static_cast<float>(accumulatedLen[i]) / static_cast<float>(numKeysOfSize[i] * i));
         }
     }
     delete []accumulatedLen;
@@ -835,8 +834,8 @@ void doForwardIterTest(UBool haslen) {
     }
     printf("performance test on strings from file -----------\n");
 
-    UChar dummytext[] = {0, 0};
-    UCollationElements *iter = ucol_openElements(gCol, NULL, 0, &error);
+    char16_t dummytext[] = {0, 0};
+    UCollationElements *iter = ucol_openElements(gCol, nullptr, 0, &error);
     ucol_setText(iter, dummytext, 1, &error);
     
     gCount = 0;
@@ -844,7 +843,7 @@ void doForwardIterTest(UBool haslen) {
     while (count < opt_loopCount) {
         int linecount = 0;
         while (linecount < gNumFileLines) {
-            UChar *str = gFileLines[linecount].name;
+            char16_t *str = gFileLines[linecount].name;
             int strlen = haslen?gFileLines[linecount].len:-1;
             ucol_setText(iter, str, strlen, &error);
             while (ucol_next(iter, &error) != UCOL_NULLORDER) {
@@ -864,7 +863,7 @@ void doForwardIterTest(UBool haslen) {
     while (count < opt_loopCount) {
         int linecount = 0;
         while (linecount < gNumFileLines) {
-            UChar *str = gFileLines[linecount].name;
+            char16_t *str = gFileLines[linecount].name;
             int strlen = haslen?gFileLines[linecount].len:-1;
             ucol_setText(iter, str, strlen, &error);
             linecount ++;
@@ -876,14 +875,14 @@ void doForwardIterTest(UBool haslen) {
 
     ucol_closeElements(iter);
 
-    int ns = (int)(float(1000000) * (float)elapsedTime / (float)gCount);
+    int ns = static_cast<int>(static_cast<float>(1000000) * static_cast<float>(elapsedTime) / static_cast<float>(gCount));
     printf("Total number of strings compared %d in %d loops\n", gNumFileLines,
                                                                 opt_loopCount);
     printf("Average time per ucol_next() nano seconds %d\n", ns);
 
     printf("performance test on skipped-5 concatenated strings from file -----------\n");
 
-    UChar *str;
+    char16_t *str;
     int    strlen = 0;
     // appending all the strings
     int linecount = 0;
@@ -892,7 +891,7 @@ void doForwardIterTest(UBool haslen) {
                                       u_strlen(gFileLines[linecount].name);
         linecount ++;
     }
-    str = (UChar *)malloc(sizeof(UChar) * strlen);
+    str = static_cast<char16_t*>(malloc(sizeof(char16_t) * strlen));
     int strindex = 0;
     linecount = 0;
     while (strindex < strlen) {
@@ -900,7 +899,7 @@ void doForwardIterTest(UBool haslen) {
         len += haslen?gFileLines[linecount].len:
                                       u_strlen(gFileLines[linecount].name);
         memcpy(str + strindex, gFileLines[linecount].name, 
-               sizeof(UChar) * len);
+               sizeof(char16_t) * len);
         strindex += len;
         linecount ++;
     }
@@ -947,7 +946,6 @@ void doForwardIterTest(UBool haslen) {
     printf("elapsedTime %ld\n", elapsedTime);
     
     // empty loop recalculation
-    int tempgCount = 0;
     count = 0;
     startTime = timeGetTime();
     while (count < opt_loopCount) {
@@ -955,7 +953,6 @@ void doForwardIterTest(UBool haslen) {
         strindex = 0;
         ucol_setOffset(iter, strindex, &error);
         while (true) {
-            tempgCount ++;
             count5 --;
             if (count5 == 0) {
                 strindex += 10;
@@ -974,7 +971,7 @@ void doForwardIterTest(UBool haslen) {
     ucol_closeElements(iter);
 
     printf("gCount %d\n", gCount);
-    ns = (int)(float(1000000) * (float)elapsedTime / (float)gCount);
+    ns = static_cast<int>(static_cast<float>(1000000) * static_cast<float>(elapsedTime) / static_cast<float>(gCount));
     printf("Average time per ucol_next() nano seconds %d\n", ns);
 }
 
@@ -998,8 +995,8 @@ void doBackwardIterTest(UBool haslen) {
     
     printf("performance test on strings from file -----------\n");
 
-    UCollationElements *iter = ucol_openElements(gCol, NULL, 0, &error);
-    UChar dummytext[] = {0, 0};
+    UCollationElements *iter = ucol_openElements(gCol, nullptr, 0, &error);
+    char16_t dummytext[] = {0, 0};
     ucol_setText(iter, dummytext, 1, &error);
 
     gCount = 0;
@@ -1007,7 +1004,7 @@ void doBackwardIterTest(UBool haslen) {
     while (count < opt_loopCount) {
         int linecount = 0;
         while (linecount < gNumFileLines) {
-            UChar *str = gFileLines[linecount].name;
+            char16_t *str = gFileLines[linecount].name;
             int strlen = haslen?gFileLines[linecount].len:-1;
             ucol_setText(iter, str, strlen, &error);
             while (ucol_previous(iter, &error) != UCOL_NULLORDER) {
@@ -1028,7 +1025,7 @@ void doBackwardIterTest(UBool haslen) {
     while (count < opt_loopCount) {
         int linecount = 0;
         while (linecount < gNumFileLines) {
-            UChar *str = gFileLines[linecount].name;
+            char16_t *str = gFileLines[linecount].name;
             int strlen = haslen?gFileLines[linecount].len:-1;
             ucol_setText(iter, str, strlen, &error);
             linecount ++;
@@ -1040,14 +1037,14 @@ void doBackwardIterTest(UBool haslen) {
     printf("elapsedTime %ld\n", elapsedTime);
     ucol_closeElements(iter);
 
-    int ns = (int)(float(1000000) * (float)elapsedTime / (float)gCount);
+    int ns = static_cast<int>(static_cast<float>(1000000) * static_cast<float>(elapsedTime) / static_cast<float>(gCount));
     printf("Total number of strings compared %d in %d loops\n", gNumFileLines,
                                                                 opt_loopCount);
     printf("Average time per ucol_previous() nano seconds %d\n", ns);
 
     printf("performance test on skipped-5 concatenated strings from file -----------\n");
 
-    UChar *str;
+    char16_t *str;
     int    strlen = 0;
     // appending all the strings
     int linecount = 0;
@@ -1056,7 +1053,7 @@ void doBackwardIterTest(UBool haslen) {
                                       u_strlen(gFileLines[linecount].name);
         linecount ++;
     }
-    str = (UChar *)malloc(sizeof(UChar) * strlen);
+    str = static_cast<char16_t*>(malloc(sizeof(char16_t) * strlen));
     int strindex = 0;
     linecount = 0;
     while (strindex < strlen) {
@@ -1064,7 +1061,7 @@ void doBackwardIterTest(UBool haslen) {
         len += haslen?gFileLines[linecount].len:
                                       u_strlen(gFileLines[linecount].name);
         memcpy(str + strindex, gFileLines[linecount].name, 
-               sizeof(UChar) * len);
+               sizeof(char16_t) * len);
         strindex += len;
         linecount ++;
     }
@@ -1111,14 +1108,12 @@ void doBackwardIterTest(UBool haslen) {
     
     // empty loop recalculation
     count = 0;
-    int tempgCount = 0;
     startTime = timeGetTime();
     while (count < opt_loopCount) {
         int count5 = 5;
         strindex = 5;
         ucol_setOffset(iter, strindex, &error);
         while (true) {
-             tempgCount ++;
              count5 --;
              if (count5 == 0) {
                  strindex += 10;
@@ -1136,7 +1131,7 @@ void doBackwardIterTest(UBool haslen) {
     ucol_closeElements(iter);
 
     printf("gCount %d\n", gCount);
-    ns = (int)(float(1000000) * (float)elapsedTime / (float)gCount);
+    ns = static_cast<int>(static_cast<float>(1000000) * static_cast<float>(elapsedTime) / static_cast<float>(gCount));
     printf("Average time per ucol_previous() nano seconds %d\n", ns);
 }
 
@@ -1174,10 +1169,10 @@ void  UnixConvert() {
 
     for (line=0; line < gNumFileLines; line++) {
         int sizeNeeded = ucnv_fromUChars(cvrtr,
-                                         0,            // ptr to target buffer.
-                                         0,            // length of target buffer.
+                                         nullptr, // ptr to target buffer.
+                                         0,       // length of target buffer.
                                          gFileLines[line].name,
-                                         -1,           //  source is null terminated
+                                         -1, //  source is null terminated
                                          &status);
         if (status != U_BUFFER_OVERFLOW_ERROR && status != U_ZERO_ERROR) {
             //fprintf(stderr, "Conversion from Unicode, something is wrong.\n");
@@ -1196,7 +1191,7 @@ void  UnixConvert() {
             exit(-1);
         }
         gFileLines[line].unixName[sizeNeeded] = 0;
-    };
+    }
     ucnv_close(cvrtr);
 }
 
@@ -1211,19 +1206,19 @@ class UCharFile {
 public:
     UCharFile(const char *fileName);
     ~UCharFile();
-    UChar   get();
-    UBool   eof() {return fEof;};
-    UBool   error() {return fError;};
+    char16_t   get();
+    UBool   eof() {return fEof;}
+    UBool   error() {return fError;}
     
 private:
-    UCharFile (const UCharFile & /*other*/) {};                         // No copy constructor.
-    UCharFile & operator = (const UCharFile &/*other*/) {return *this;};   // No assignment op
+    UCharFile (const UCharFile & /*other*/) {}                         // No copy constructor.
+    UCharFile & operator = (const UCharFile &/*other*/) {return *this;}   // No assignment op
 
     FILE         *fFile;
     const char   *fName;
     UBool        fEof;
     UBool        fError;
-    UChar        fPending2ndSurrogate;
+    char16_t     fPending2ndSurrogate;
     
     enum {UTF16LE, UTF16BE, UTF8} fEncoding;
 };
@@ -1234,7 +1229,7 @@ UCharFile::UCharFile(const char * fileName) {
     fName                = fileName;
     fFile                = fopen(fName, "rb");
     fPending2ndSurrogate = 0;
-    if (fFile == NULL) {
+    if (fFile == nullptr) {
         fprintf(stderr, "Can not open file \"%s\"\n", opt_fName);
         fError = true;
         return;
@@ -1268,8 +1263,8 @@ UCharFile::~UCharFile() {
 
 
 
-UChar UCharFile::get() {
-    UChar   c;
+char16_t UCharFile::get() {
+    char16_t   c;
     switch (fEncoding) {
     case UTF16LE:
         {
@@ -1303,7 +1298,7 @@ UChar UCharFile::get() {
                 break;
             }
             
-            int ch = fgetc(fFile);   // Note:  c and ch are separate cause eof test doesn't work on UChar type.
+            int ch = fgetc(fFile);   // Note:  c and ch are separate cause eof test doesn't work on char16_t type.
             if (ch == EOF) {
                 c = 0;
                 fEof = true;
@@ -1329,7 +1324,7 @@ UChar UCharFile::get() {
             }
             
             unsigned char  bytes[10];
-            bytes[0] = (unsigned char)ch;
+            bytes[0] = static_cast<unsigned char>(ch);
             int i;
             for (i=1; i<nBytes; i++) {
                 bytes[i] = fgetc(fFile);
@@ -1344,20 +1339,20 @@ UChar UCharFile::get() {
             i = 0;
             uint32_t  cp;
             U8_NEXT_UNSAFE(bytes, i, cp);
-            c = (UChar)cp;
+            c = static_cast<char16_t>(cp);
             
             if (cp >= 0x10000) {
                 // The code point needs to be broken up into a utf-16 surrogate pair.
                 //  Process first half this time through the main loop, and
                 //   remember the other half for the next time through.
-                UChar utf16Buf[3];
+                char16_t utf16Buf[3];
                 i = 0;
                 UTF16_APPEND_CHAR_UNSAFE(utf16Buf, i, cp);
                 fPending2ndSurrogate = utf16Buf[1];
                 c = utf16Buf[0];
             }
             break;
-        };
+        }
     default:
         c = 0xFFFD; /* Error, unspecified codepage*/
         fprintf(stderr, "UCharFile: Error: unknown fEncoding\n");
@@ -1375,12 +1370,12 @@ UChar UCharFile::get() {
 UCollator *openRulesCollator() {
     UCharFile f(opt_rules);
     if (f.error()) {
-        return 0;
+        return nullptr;
     }
 
     int  bufLen = 10000;
-    UChar *buf = (UChar *)malloc(bufLen * sizeof(UChar));
-    UChar *tmp;
+    char16_t* buf = static_cast<char16_t*>(malloc(bufLen * sizeof(char16_t)));
+    char16_t *tmp;
     int i = 0;
 
     for(;;) {
@@ -1389,16 +1384,16 @@ UCollator *openRulesCollator() {
             break;
         }
         if (f.error()) {
-            return 0;
+            return nullptr;
         }
         i++;
         if (i >= bufLen) {
             tmp = buf;
             bufLen += 10000;
-            buf = (UChar *)realloc(buf, bufLen);
-            if (buf == NULL) {
+            buf = static_cast<char16_t*>(realloc(buf, bufLen));
+            if (buf == nullptr) {
                 free(tmp);
-                return 0;
+                return nullptr;
             }
         }
     }
@@ -1406,10 +1401,10 @@ UCollator *openRulesCollator() {
 
     UErrorCode    status = U_ZERO_ERROR;
     UCollator *coll = ucol_openRules(buf, u_strlen(buf), UCOL_OFF,
-                                         UCOL_DEFAULT_STRENGTH, NULL, &status);
+                                         UCOL_DEFAULT_STRENGTH, nullptr, &status);
     if (U_FAILURE(status)) {
         fprintf(stderr, "ICU ucol_openRules() open failed.: %d\n", status);
-        return 0;
+        return nullptr;
     }
     free(buf);
     return coll;
@@ -1426,7 +1421,7 @@ UCollator *openRulesCollator() {
 //
 //----------------------------------------------------------------------------------------
 int main(int argc, const char** argv) {
-    if (ProcessOptions(argc, argv, opts) != true || opt_help || opt_fName == 0) {
+    if (ProcessOptions(argc, argv, opts) != true || opt_help || opt_fName == nullptr) {
         printf(gUsageString);
         exit (1);
     }
@@ -1440,9 +1435,9 @@ int main(int argc, const char** argv) {
     //
     UErrorCode          status = U_ZERO_ERROR;
 
-    if (opt_rules != 0) {
+    if (opt_rules != nullptr) {
         gCol = openRulesCollator();
-        if (gCol == 0) {return -1;}
+        if (gCol == nullptr) { return -1; }
     }
     else {
         gCol = ucol_open(opt_locale, &status);
@@ -1527,7 +1522,7 @@ int main(int argc, const char** argv) {
     //  Set the UNIX locale
     //
     if (opt_unix) {
-        if (setlocale(LC_ALL, opt_locale) == 0) {
+        if (setlocale(LC_ALL, opt_locale) == nullptr) {
             fprintf(stderr, "setlocale(LC_ALL, %s) failed.\n", opt_locale);
             exit(-1);
         }
@@ -1546,7 +1541,7 @@ int main(int argc, const char** argv) {
 
     const int MAXLINES = 100000;
     gFileLines = new Line[MAXLINES];
-    UChar buf[1024];
+    char16_t buf[1024];
     int   column = 0;
 
     //  Read the file, split into lines, and save in memory.
@@ -1554,7 +1549,7 @@ int main(int argc, const char** argv) {
     //    (The number of bytes read from file per loop iteration depends on external encoding.)
     for (;;) {
 
-        UChar c = f.get();
+        char16_t c = f.get();
         if (f.error()){
             exit(-1);
         }
@@ -1570,9 +1565,9 @@ int main(int argc, const char** argv) {
         if (f.eof() || c == 0x0a || c==0x2028) {  // Unipad inserts 2028 line separators!
             buf[column++] = 0;
             if (column > 1) {
-                gFileLines[gNumFileLines].name  = new UChar[column];
+                gFileLines[gNumFileLines].name  = new char16_t[column];
                 gFileLines[gNumFileLines].len   = column-1;
-                memcpy(gFileLines[gNumFileLines].name, buf, column * sizeof(UChar));
+                memcpy(gFileLines[gNumFileLines].name, buf, column * sizeof(char16_t));
                 gNumFileLines++;
                 column = 0;
                 if (gNumFileLines >= MAXLINES) {
@@ -1615,11 +1610,11 @@ int main(int argc, const char** argv) {
     int32_t t;
 
     for (line=0; line<gNumFileLines; line++) {
-         t = ucol_getSortKey(gCol, gFileLines[line].name, -1, (unsigned char *)buf, sizeof(buf));
+         t = ucol_getSortKey(gCol, gFileLines[line].name, -1, reinterpret_cast<unsigned char*>(buf), sizeof(buf));
          gFileLines[line].icuSortKey  = new char[t];
 
-         if (t > (int32_t)sizeof(buf)) {
-             t = ucol_getSortKey(gCol, gFileLines[line].name, -1, (unsigned char *)gFileLines[line].icuSortKey , t);
+         if (t > static_cast<int32_t>(sizeof(buf))) {
+             t = ucol_getSortKey(gCol, gFileLines[line].name, -1, reinterpret_cast<unsigned char*>(gFileLines[line].icuSortKey), t);
          }
          else
          {
@@ -1635,8 +1630,8 @@ int main(int argc, const char** argv) {
     for (line=0; line<gNumFileLines; line++) {
          t=LCMapStringW(gWinLCID, LCMAP_SORTKEY, gFileLines[line].name, -1, buf, sizeof(buf));
          gFileLines[line].winSortKey  = new char[t];
-         if (t > (int32_t)sizeof(buf)) {
-             t = LCMapStringW(gWinLCID, LCMAP_SORTKEY, gFileLines[line].name, -1, (UChar *)(gFileLines[line].winSortKey), t);
+         if (t > static_cast<int32_t>(sizeof(buf))) {
+             t = LCMapStringW(gWinLCID, LCMAP_SORTKEY, gFileLines[line].name, -1, reinterpret_cast<char16_t*>(gFileLines[line].winSortKey), t);
          }
          else
          {
@@ -1649,9 +1644,9 @@ int main(int argc, const char** argv) {
     //
     if (opt_unix) {
         for (line=0; line<gNumFileLines; line++) {
-            t=strxfrm((char *)buf,  gFileLines[line].unixName,  sizeof(buf));
+            t = strxfrm(reinterpret_cast<char*>(buf), gFileLines[line].unixName, sizeof(buf));
             gFileLines[line].unixSortKey  = new char[t];
-            if (t > (int32_t)sizeof(buf)) {
+            if (t > static_cast<int32_t>(sizeof(buf))) {
                 t = strxfrm(gFileLines[line].unixSortKey,  gFileLines[line].unixName,  sizeof(buf));
             }
             else
@@ -1669,7 +1664,7 @@ int main(int argc, const char** argv) {
         int  i;
         for (line=0; line<gNumFileLines; line++) {
             for (i=0;;i++) {
-                UChar  c = gFileLines[line].name[i];
+                char16_t  c = gFileLines[line].name[i];
                 if (c == 0)
                     break;
                 if (c < 0x20 || c > 0x7e) {
