@@ -1,0 +1,390 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Wed, 1 Jul 2026 16:46:05 +0530
+Subject: Restore CodeQL warning fixes reverted by ICU 78 upstream import
+ (re-apply #153)
+
+Commit ba289fd3 ('Fixed CodeQL warnings (#153)') fixed 35 CodeQL findings across 23 files (tests, shipping common/ code, and tools). It was a direct commit, never recorded in icu-patches/, so the ICU 78 upstream source import (73bd9be6) silently reverted it. This re-applies those fixes onto the ICU 78 tree (22 files; wrtxml.cpp already carried the fix upstream). Optical-modernization conflicts (NULL->nullptr, C-casts->static_cast, UChar->char16_t) were resolved to the modern form plus the original logical fix.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+
+diff --git a/icu/icu4c/source/common/rbbi_cache.cpp b/icu/icu4c/source/common/rbbi_cache.cpp
+index 3ef030cb919588cc323aef64a1e11bab8168f52f..960430ae6e7d5ac0226e147fccd5d26b5e50f318 100644
+--- a/icu/icu4c/source/common/rbbi_cache.cpp
++++ b/icu/icu4c/source/common/rbbi_cache.cpp
+@@ -130,7 +130,7 @@ void RuleBasedBreakIterator::DictionaryCache::populateDictionary(int32_t startPo
+     int32_t rangeStart = startPos;
+     int32_t rangeEnd = endPos;
+ 
+-    uint16_t    category;
++    uint32_t    category;
+     int32_t     current;
+     UErrorCode  status = U_ZERO_ERROR;
+     int32_t     foundBreakCount = 0;
+@@ -142,7 +142,7 @@ void RuleBasedBreakIterator::DictionaryCache::populateDictionary(int32_t startPo
+ 
+     utext_setNativeIndex(text, rangeStart);
+     UChar32     c = utext_current32(text);
+-    category = ucptrie_get(fBI->fData->fTrie, c);
++    category = ucptrie_get(fBI->fData->fTrie, c); // ucptrie_get returns 32bit integer
+     uint32_t dictStart = fBI->fData->fForwardTable->fDictCategoriesStart;
+ 
+     while(U_SUCCESS(status)) {
+diff --git a/icu/icu4c/source/common/ucnvsel.cpp b/icu/icu4c/source/common/ucnvsel.cpp
+index 01d9c7e0c210ca9911605d0a8ff0871e7b625d8f..03b0d1e04200916439a3a73def6ad1f740c31d6f 100644
+--- a/icu/icu4c/source/common/ucnvsel.cpp
++++ b/icu/icu4c/source/common/ucnvsel.cpp
+@@ -725,7 +725,7 @@ static UEnumeration *selectForMask(const UConverterSelector* sel,
+     int16_t k = 0;
+     for (j = 0 ; j < columns; j++) {
+       uint32_t v = mask[j];
+-      for (i = 0 ; i < 32 && k < sel->encodingsCount; i++, k++) {
++      for (i = 0 ; i < 32 && k < static_cast<int16_t>(sel->encodingsCount); i++, k++) {
+         if ((v & 1) != 0) {
+           result->index[result->length++] = k;
+         }
+diff --git a/icu/icu4c/source/test/cintltst/cloctst.c b/icu/icu4c/source/test/cintltst/cloctst.c
+index 37cf24ded00c33ad69bafd45a2cbce86116da493..a1392656a19e1bb577b0414e375599fac073808c 100644
+--- a/icu/icu4c/source/test/cintltst/cloctst.c
++++ b/icu/icu4c/source/test/cintltst/cloctst.c
+@@ -1574,12 +1574,12 @@ static void TestISO3Fallback(void)
+     /* Conform to C API usage  */
+ 
+     if (!result || (result[0] != 0))
+-       log_err("getISO3Language() on xx_YY returned %s instead of \"\"");
++       log_err("getISO3Language() on xx_YY returned %s instead of \"\"", result);
+ 
+     result = uloc_getISO3Country(test);
+ 
+     if (!result || (result[0] != 0))
+-        log_err("getISO3Country() on xx_YY returned %s instead of \"\"");
++        log_err("getISO3Country() on xx_YY returned %s instead of \"\"", result);
+ }
+ 
+ /**
+diff --git a/icu/icu4c/source/test/cintltst/cmsccoll.c b/icu/icu4c/source/test/cintltst/cmsccoll.c
+index b2adeaffe13e90fb369af8dde45ab16ebcae9a9b..9d742751c4afe9124d44c260750ad3e89e15dbf0 100644
+--- a/icu/icu4c/source/test/cintltst/cmsccoll.c
++++ b/icu/icu4c/source/test/cintltst/cmsccoll.c
+@@ -2689,7 +2689,7 @@ static void TestHebrewUCA(void) {
+   for(i = 0; i < UPRV_LENGTHOF(first); i++) {
+     sizeUTF8[i] = u_parseUTF8(first[i], -1, utf8String[i], 256, &status);
+     u_strFromUTF8(utf16String[i], 256, &sizeUTF16[i], utf8String[i], sizeUTF8[i], &status);
+-    log_verbose("%i: ");
++    log_verbose("%i: ", i);
+     for(j = 0; j < sizeUTF16[i]; j++) {
+       /*log_verbose("\\u%04X", utf16String[i][j]);*/
+       log_verbose("%04X", utf16String[i][j]);
+@@ -4224,7 +4224,7 @@ static void doTestOneTestCase(const OneTestCase testcases[],
+ 
+     length = u_unescape(str_rules[rule_no], rule, 500);
+     if (length == 0) {
+-        log_err("ERROR: The rule cannot be unescaped: %s\n");
++        log_err("ERROR: The rule cannot be unescaped: %s\n", str_rules[rule_no]);
+         return;
+     }
+     myCollation = ucol_openRules(rule, length, UCOL_ON, UCOL_TERTIARY, &parse_error, &status);
+@@ -4512,7 +4512,7 @@ static void TestInvalidListsAndRanges(void)
+ 
+     length = u_unescape(invalidRules[rule_no], rule, 500);
+     if (length == 0) {
+-        log_err("ERROR: The rule cannot be unescaped: %s\n");
++        log_err("ERROR: The rule cannot be unescaped: %s\n", invalidRules[rule_no]);
+         return;
+     }
+     myCollation = ucol_openRules(rule, length, UCOL_ON, UCOL_TERTIARY, &parse_error, &status);
+diff --git a/icu/icu4c/source/test/cintltst/cucdtst.c b/icu/icu4c/source/test/cintltst/cucdtst.c
+index 48f5e81bf1acb00b2571a467ed1f7484c1619060..702330ffc97462c1af5cf968275c035192b1ff5c 100644
+--- a/icu/icu4c/source/test/cintltst/cucdtst.c
++++ b/icu/icu4c/source/test/cintltst/cucdtst.c
+@@ -1712,7 +1712,7 @@ enumCharNamesFn(void *context,
+ 
+     if(length<=0 || length!=(int32_t)strlen(name)) {
+         /* should not be called with an empty string or invalid length */
+-        log_err("u_enumCharName(0x%lx)=%s but length=%ld\n", name, length);
++        log_err("u_enumCharName(0x%lx)=%s but length=%ld\n", code, name, length);
+         return true;
+     }
+ 
+@@ -1807,7 +1807,7 @@ TestCharNames(void) {
+         return;
+     }
+     if(length<83) { /* Unicode 3.2 max char name length */
+-        log_err("uprv_getMaxCharNameLength()=%d is too short");
++        log_err("uprv_getMaxCharNameLength()=%d is too short", length);
+     }
+     /* ### TODO same tests for max ISO comment length as for max name length */
+ 
+diff --git a/icu/icu4c/source/test/cintltst/sprpdata.c b/icu/icu4c/source/test/cintltst/sprpdata.c
+index 62388796ef1a41a1228704b27e246a881a4df1bb..4184c55043bc932a96e19e4b633d40f2f27ad45c 100644
+--- a/icu/icu4c/source/test/cintltst/sprpdata.c
++++ b/icu/icu4c/source/test/cintltst/sprpdata.c
+@@ -161,7 +161,7 @@ compareMapping(UStringPrepProfile* data, uint32_t codepoint, uint32_t* mapping,i
+     const uint16_t* mappingData = data->mappingData;
+     int32_t realLength =0;
+     int32_t j=0;
+-    int8_t i=0;
++    int32_t i=0;
+ 
+     UTRIE_GET16(&trie, codepoint, result);
+     retType = getValues(result,&value,&isIndex);
+diff --git a/icu/icu4c/source/test/cintltst/tracetst.c b/icu/icu4c/source/test/cintltst/tracetst.c
+index e456d68d1e4fec7dc5d3ca502d1619a3ad6db573..48e6cf89a28cc21fb07656f20fb83a5a464bcb93 100644
+--- a/icu/icu4c/source/test/cintltst/tracetst.c
++++ b/icu/icu4c/source/test/cintltst/tracetst.c
+@@ -80,11 +80,11 @@ static void test_format(const char *format, int32_t bufCap, int32_t indent,
+ 
+     /* check that local buffers are big enough for the test case */
+     if ((int32_t)sizeof(buf) <= bufCap) {
+-        log_err("At file:line %s:%d, requested bufCap too large.\n");
++        log_err("At file:line %s:%d, requested bufCap too large.\n", __FILE__, line);
+         return;
+     }
+     if (strlen(result) >= sizeof(expectedResult)) {
+-        log_err("At file:line %s:%d, expected result too large.\n");
++        log_err("At file:line %s:%d, expected result too large.\n", __FILE__, line);
+         return;
+     }
+ 
+diff --git a/icu/icu4c/source/test/cintltst/udatatst.c b/icu/icu4c/source/test/cintltst/udatatst.c
+index 003d7d43c31ff43139dad2daf496db9a9b12cba0..92aead7fc9d987b5467c7c3b8f7811f39d20f2bd 100644
+--- a/icu/icu4c/source/test/cintltst/udatatst.c
++++ b/icu/icu4c/source/test/cintltst/udatatst.c
+@@ -1675,7 +1675,7 @@ TestSwapData(void) {
+         log_err("udata_openSwapperForInputData should have returned NULL with bad argument\n", name);
+     }
+     errorCode=U_ZERO_ERROR;
+-    memset(buffer, 0, sizeof(2*SWAP_BUFFER_SIZE));
++    memset(buffer, 0, 2*SWAP_BUFFER_SIZE);
+     ds=udata_openSwapperForInputData(buffer, 2*SWAP_BUFFER_SIZE,
+                          !U_IS_BIG_ENDIAN, U_ASCII_FAMILY,
+                          &errorCode);
+diff --git a/icu/icu4c/source/test/cintltst/usettest.c b/icu/icu4c/source/test/cintltst/usettest.c
+index 73f26a4fee71492ca284ba10f734e64fe0321608..dbf4f1291fd9af7bbbc14d506136f84fa3ba8393 100644
+--- a/icu/icu4c/source/test/cintltst/usettest.c
++++ b/icu/icu4c/source/test/cintltst/usettest.c
+@@ -569,7 +569,7 @@ TestSerialized(void) {
+     uset_getSerializedSet(&sset, buffer, length);
+     for(c=0; c<=0x10ffff; ++c) {
+         if(uset_contains(set, c)!=uset_serializedContains(&sset, c)) {
+-            log_err("uset_contains(U+%04x)!=uset_serializedContains(U+%04x)\n", c);
++            log_err("uset_contains(U+%04x)!=uset_serializedContains(U+%04x)\n", c, c);
+             break;
+         }
+     }
+diff --git a/icu/icu4c/source/test/cintltst/utf16tst.c b/icu/icu4c/source/test/cintltst/utf16tst.c
+index d6253f9c7ddcdf7c3d624c0e34cb650f43cfc4d2..4124f9cff218a7661053fe6834bb6350b54ec9a0 100644
+--- a/icu/icu4c/source/test/cintltst/utf16tst.c
++++ b/icu/icu4c/source/test/cintltst/utf16tst.c
+@@ -32,7 +32,7 @@
+ 
+ #if !U_HIDE_OBSOLETE_UTF_OLD_H
+ static void printUChars(const UChar *uchars) {
+-    int16_t i=0;
++    int32_t i=0;
+     for(i=0; i<u_strlen(uchars); i++) {
+         printf("%x ", *(uchars+i));
+     }
+diff --git a/icu/icu4c/source/test/intltest/apicoll.cpp b/icu/icu4c/source/test/intltest/apicoll.cpp
+index a31873fe43664a6eba579a5cb2ea4b89b4542dd0..e8d97e829ed4cd77e4bba552917047d53f1fc9dc 100644
+--- a/icu/icu4c/source/test/intltest/apicoll.cpp
++++ b/icu/icu4c/source/test/intltest/apicoll.cpp
+@@ -280,7 +280,7 @@ CollationAPITest::TestRuleBasedColl()
+     Locale locale("aa", "AA");
+     col3 = dynamic_cast<RuleBasedCollator*>(Collator::createInstance(locale, status));
+     if (U_FAILURE(status)) {
+-        errln("Fallback Collator creation failed.: %s\n");
++        errln("Fallback Collator creation failed.: %s\n", u_errorName(status));
+         return;
+     }
+     else {
+@@ -291,7 +291,7 @@ CollationAPITest::TestRuleBasedColl()
+     status = U_ZERO_ERROR;
+     col3 = dynamic_cast<RuleBasedCollator*>(Collator::createInstance(status));
+     if (U_FAILURE(status)) {
+-        errln("Default Collator creation failed.: %s\n");
++        errln("Default Collator creation failed.: %s\n", u_errorName(status));
+         return;
+     }
+     else {
+diff --git a/icu/icu4c/source/test/intltest/dcfmtest.cpp b/icu/icu4c/source/test/intltest/dcfmtest.cpp
+index 1b239631268fba16b9c291b97a131a6fbbb16945..455a43c94072e50f0886067dfcfc199661cd094a 100644
+--- a/icu/icu4c/source/test/intltest/dcfmtest.cpp
++++ b/icu/icu4c/source/test/intltest/dcfmtest.cpp
+@@ -358,8 +358,7 @@ void DecimalFormatTest::execParseTest(int32_t lineNum,
+     format.parse(inputText, result, pos);
+ 
+     if (expectedParseEndPosition != pos.getIndex()) {
+-        errln("file dcfmtest.txt, line %d: Expected parse position afeter parsing: %d.  "
+-              "Actual parse position: %d", expectedParseEndPosition, pos.getIndex());
++        errln("file dcfmtest.txt, line %d: Expected parse position afeter parsing: %d. Actual parse position: %d", lineNum, expectedParseEndPosition, pos.getIndex());
+         return;
+     }
+ 
+diff --git a/icu/icu4c/source/test/intltest/intltest.h b/icu/icu4c/source/test/intltest/intltest.h
+index c0e07a72f81a578915bd71acca50a0c8f4491864..67f900572a305416d485fdf251d5b9982fe02b9f 100644
+--- a/icu/icu4c/source/test/intltest/intltest.h
++++ b/icu/icu4c/source/test/intltest/intltest.h
+@@ -283,7 +283,7 @@ class IntlTest : public TestLog {
+ 
+ 
+ 
+-    enum { kMaxProps = 16 };
++    static const int kMaxProps = 16;
+ 
+     virtual void setProperty(const char* propline);
+     virtual const char* getProperty(const char* prop);
+diff --git a/icu/icu4c/source/test/intltest/numfmtst.cpp b/icu/icu4c/source/test/intltest/numfmtst.cpp
+index a8a11b1365117a46986450e951df673617caf9eb..a3665b1ebe922344381dd6f8d94908d73f1767ad 100644
+--- a/icu/icu4c/source/test/intltest/numfmtst.cpp
++++ b/icu/icu4c/source/test/intltest/numfmtst.cpp
+@@ -7329,7 +7329,7 @@ UBool NumberFormatTest::testFormattableAsUFormattable(const char *file, int line
+   UFormattable *u = f.toUFormattable();
+   logln();
+   if (u == nullptr) {
+-    errln("%s:%d: Error: f.toUFormattable() retuned nullptr.");
++    errln("%s:%d: Error: f.toUFormattable() retuned nullptr.", file, line);
+     return false;
+   }
+   logln("%s:%d: comparing Formattable with UFormattable", file, line);
+diff --git a/icu/icu4c/source/test/intltest/rbbitst.cpp b/icu/icu4c/source/test/intltest/rbbitst.cpp
+index 366d8db34422bd87aeaa6acfc2f8c7b8146281b8..ae9ddce5fd97e39519c6ff33bfb9cad8278f9832 100644
+--- a/icu/icu4c/source/test/intltest/rbbitst.cpp
++++ b/icu/icu4c/source/test/intltest/rbbitst.cpp
+@@ -3968,7 +3968,7 @@ void RBBITest::testTrieStateTable(int32_t numChar, bool expectedTrieWidthIn8Bits
+     // Generate rule which will caused length+4 character classes and
+     // length+3 states
+     UnicodeString rules(u"!!quoted_literals_only;");
+-    for (char16_t c = 0x4e00; c < 0x4e00 + numChar; c++) {
++    for (char16_t c = 0x4e00; c < static_cast<char16_t>(0x4e00 + numChar); c++) {
+         rules.append(u'\'').append(c).append(c).append(u"';");
+     }
+     rules.append(u".;");
+diff --git a/icu/icu4c/source/test/intltest/regextst.cpp b/icu/icu4c/source/test/intltest/regextst.cpp
+index b0dd29d36e7075b91a2cf7ab1f415fdfd8fca003..27dbed106618f2882fc4cdc93a0624e8d4d55cba 100644
+--- a/icu/icu4c/source/test/intltest/regextst.cpp
++++ b/icu/icu4c/source/test/intltest/regextst.cpp
+@@ -3663,7 +3663,7 @@ void RegexTest::regex_find(const UnicodeString &pattern,
+         UTF8Matcher->setTrace(false);
+     }
+     if (U_FAILURE(status)) {
+-        errln("Error at line %d. ICU ErrorCode is %s", u_errorName(status));
++        errln("Error at line %d. ICU ErrorCode is %s", line, u_errorName(status));
+     }
+ 
+     //
+diff --git a/icu/icu4c/source/test/intltest/restest.cpp b/icu/icu4c/source/test/intltest/restest.cpp
+index 2b8800ee3cf1ded82827322feb8585c5a4ff871b..f52dd61763c9cd299b24b54cf722ff492d1d4956 100644
+--- a/icu/icu4c/source/test/intltest/restest.cpp
++++ b/icu/icu4c/source/test/intltest/restest.cpp
+@@ -589,7 +589,7 @@ ResourceBundleTest::TestGetSize()
+         ResourceBundle res = rb.get(test[i].key, status);
+         if(U_FAILURE(status))
+         {
+-            err("Couldn't find the key %s. Error: %s\n", u_errorName(status));
++            err("Couldn't find the key %s. Error: %s\n", test[i].key, u_errorName(status));
+             return;
+         }
+         size = res.getSize();
+diff --git a/icu/icu4c/source/test/intltest/testidn.cpp b/icu/icu4c/source/test/intltest/testidn.cpp
+index be8981d722e3bdc8e75001f8703f20d39fec67dc..55d70a106bdf54daf5f4670162e41960917bd2ca 100644
+--- a/icu/icu4c/source/test/intltest/testidn.cpp
++++ b/icu/icu4c/source/test/intltest/testidn.cpp
+@@ -379,7 +379,7 @@ compareMapping(uint32_t codepoint, uint32_t* mapping,int32_t mapLength,
+     }
+     
+     if(isIndex){
+-        for(int8_t i =0; i< mapLength; i++){
++        for(int32_t i =0; i< mapLength; i++){
+             if(mapping[i] <= 0xFFFF){
+                 if (mappingData[index + i] != static_cast<uint16_t>(mapping[i])) {
+                     pTestIDNA->errln("Did not get the expected result. Expected: 0x%04X Got: 0x%04X \n", mapping[i], mappingData[index+i]);
+diff --git a/icu/icu4c/source/test/intltest/tstnorm.cpp b/icu/icu4c/source/test/intltest/tstnorm.cpp
+index f5f1278af1f34536c9913f93c56bc84f1d8b88ec..d37b1bd723b254bd6453d40634a6f9a1eb705c67 100644
+--- a/icu/icu4c/source/test/intltest/tstnorm.cpp
++++ b/icu/icu4c/source/test/intltest/tstnorm.cpp
+@@ -1298,7 +1298,7 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
+ 
+         if (U_FAILURE(errorCode)) {
+             ++count;
+-            dataerrln("U+%04lx: Failed with error %s", u_errorName(errorCode));
++            dataerrln("U+%04lx: Failed with error %s", c, u_errorName(errorCode));
+         }
+ 
+         // bad:
+diff --git a/icu/icu4c/source/test/intltest/ustrtest.cpp b/icu/icu4c/source/test/intltest/ustrtest.cpp
+index 3f382c5a1d0e0af8835e1d6467a37d91a80000b0..8badd250775667387ff39e9e6e6d1fe6b8499a20 100644
+--- a/icu/icu4c/source/test/intltest/ustrtest.cpp
++++ b/icu/icu4c/source/test/intltest/ustrtest.cpp
+@@ -1799,7 +1799,7 @@ UnicodeStringTest::TestStringEnumeration() {
+     }
+     status=U_ZERO_ERROR;
+     if(uenum_next(uten, &length, &status)!=nullptr) {
+-        errln("File %s, line %d, uenum_next(done)!=nullptr");
++        errln("File %s, line %d, uenum_next(done)!=nullptr", __FILE__, __LINE__);
+     }
+ 
+     // test the uenum_unext()
+@@ -1814,7 +1814,7 @@ UnicodeStringTest::TestStringEnumeration() {
+     }
+     status=U_ZERO_ERROR;
+     if(uenum_unext(uten, &length, &status)!=nullptr) {
+-        errln("File %s, Line %d, uenum_unext(done)!=nullptr" __FILE__, __LINE__);
++        errln("File %s, Line %d, uenum_unext(done)!=nullptr", __FILE__, __LINE__);
+     }
+ 
+     uenum_close(uten);
+diff --git a/icu/icu4c/source/tools/gensprep/store.c b/icu/icu4c/source/tools/gensprep/store.c
+index b2cf44d186b35002125f387c3c2145cfcb3481d1..b5911e0fb2d3d115840ded723094f88930dce0cb 100644
+--- a/icu/icu4c/source/tools/gensprep/store.c
++++ b/icu/icu4c/source/tools/gensprep/store.c
+@@ -360,7 +360,8 @@ storeMapping(uint32_t codepoint, uint32_t* mapping,int32_t length,
+ 
+ 
+     UChar* map = NULL;
+-    int16_t adjustedLen=0, i, j;
++    int16_t adjustedLen=0, j;
++    int32_t i;
+     uint16_t trieWord = 0;
+     ValueStruct *value = NULL;
+     uint32_t savedTrieWord = 0;
+diff --git a/icu/icu4c/source/tools/makeconv/genmbcs.cpp b/icu/icu4c/source/tools/makeconv/genmbcs.cpp
+index 85fbcbd12e59bcffe1f171d4dd7a22d869198df2..3983ba35ad503cfa4495a9c4bbde935298628922 100644
+--- a/icu/icu4c/source/tools/makeconv/genmbcs.cpp
++++ b/icu/icu4c/source/tools/makeconv/genmbcs.cpp
+@@ -1188,7 +1188,7 @@ singleCompactStage2(MBCSData *mbcsData) {
+ 
+     /* begin with the first block after the all-unassigned one */
+     start=newStart=MBCS_STAGE_2_FIRST_ASSIGNED;
+-    while(start<mbcsData->stage2Top) {
++    while(start<static_cast<uint16_t>(mbcsData->stage2Top)) {
+         prevEnd = static_cast<uint16_t>(newStart - 1);
+ 
+         /* find the size of the overlap */
+@@ -1277,7 +1277,7 @@ singleCompactStage3(MBCSData *mbcsData) {
+     mbcsData->stage3Top=newStart;
+ 
+     /* now adjust stage 2 */
+-    for(i=0; i<mbcsData->stage2Top; ++i) {
++    for(i=0; i<static_cast<uint16_t>(mbcsData->stage2Top); ++i) {
+         mbcsData->stage2Single[i]=map[mbcsData->stage2Single[i]>>4];
+     }
+ }
+@@ -1300,7 +1300,7 @@ compactStage2(MBCSData *mbcsData) {
+ 
+     /* begin with the first block after the all-unassigned one */
+     start=newStart=MBCS_STAGE_2_FIRST_ASSIGNED;
+-    while(start<mbcsData->stage2Top) {
++    while(start<static_cast<uint16_t>(mbcsData->stage2Top)) {
+         prevEnd = static_cast<uint16_t>(newStart - 1);
+ 
+         /* find the size of the overlap */
+@@ -1327,7 +1327,7 @@ compactStage2(MBCSData *mbcsData) {
+     }
+ 
+     /* adjust stage2Top */
+-    if(VERBOSE && newStart<mbcsData->stage2Top) {
++    if(VERBOSE && newStart<static_cast<uint16_t>(mbcsData->stage2Top)) {
+         printf("compacting stage 2 from stage2Top=0x%lx to 0x%lx, saving %ld bytes\n",
+                 static_cast<unsigned long>(mbcsData->stage2Top), static_cast<unsigned long>(newStart),
+                 static_cast<long>(mbcsData->stage2Top - newStart) * 4);
