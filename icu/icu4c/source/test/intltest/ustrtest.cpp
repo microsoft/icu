@@ -414,11 +414,11 @@ UnicodeStringTest::TestCompare()
         /* test caseCompare() */
         result=mixed.caseCompare(otherDefault, U_FOLD_CASE_DEFAULT);
         if(result!=0 || 0!=mixed.caseCompareBetween(0, INT32_MAX, otherDefault, 0, INT32_MAX, U_FOLD_CASE_DEFAULT)) {
-            errln("error: mixed.caseCompare(other, default)=%ld instead of 0\n", result);
+            errln("error: mixed.caseCompare(other, default)=%d instead of 0\n", result);
         }
         result=mixed.caseCompare(otherExcludeSpecialI, U_FOLD_CASE_EXCLUDE_SPECIAL_I);
         if(result!=0) {
-            errln("error: mixed.caseCompare(otherExcludeSpecialI, U_FOLD_CASE_EXCLUDE_SPECIAL_I)=%ld instead of 0\n", result);
+            errln("error: mixed.caseCompare(otherExcludeSpecialI, U_FOLD_CASE_EXCLUDE_SPECIAL_I)=%d instead of 0\n", result);
         }
         result=mixed.caseCompare(otherDefault, U_FOLD_CASE_EXCLUDE_SPECIAL_I);
         if(result==0 || 0==mixed.caseCompareBetween(0, INT32_MAX, otherDefault, 0, INT32_MAX, U_FOLD_CASE_EXCLUDE_SPECIAL_I)) {
@@ -428,19 +428,19 @@ UnicodeStringTest::TestCompare()
         /* test caseCompare() */
         result=mixed.caseCompare(different, U_FOLD_CASE_DEFAULT);
         if(result<=0) {
-            errln("error: mixed.caseCompare(different, default)=%ld instead of positive\n", result);
+            errln("error: mixed.caseCompare(different, default)=%d instead of positive\n", result);
         }
 
         /* test caseCompare() - include the folded sharp s (U+00df) with different lengths */
         result=mixed.caseCompare(1, 4, different, 1, 5, U_FOLD_CASE_DEFAULT);
         if(result!=0 || 0!=mixed.caseCompareBetween(1, 5, different, 1, 6, U_FOLD_CASE_DEFAULT)) {
-            errln("error: mixed.caseCompare(mixed, 1, 4, different, 1, 5, default)=%ld instead of 0\n", result);
+            errln("error: mixed.caseCompare(mixed, 1, 4, different, 1, 5, default)=%d instead of 0\n", result);
         }
 
         /* test caseCompare() - stop in the middle of the sharp s (U+00df) */
         result=mixed.caseCompare(1, 4, different, 1, 4, U_FOLD_CASE_DEFAULT);
         if(result<=0) {
-            errln("error: mixed.caseCompare(1, 4, different, 1, 4, default)=%ld instead of positive\n", result);
+            errln("error: mixed.caseCompare(1, 4, different, 1, 4, default)=%d instead of positive\n", result);
         }
     }
 
@@ -564,7 +564,7 @@ UnicodeStringTest::TestExtract()
         errorCode=U_ZERO_ERROR;
         length=s.extract((char16_t *)nullptr, 0, errorCode);
         if(errorCode!=U_BUFFER_OVERFLOW_ERROR || length!=s.length()) {
-            errln("UnicodeString.extract(nullptr, 0)==%d (%s) expected %d (U_BUFFER_OVERFLOW_ERROR)", length, s.length(), u_errorName(errorCode));
+            errln("UnicodeString.extract(nullptr, 0)==%d (%s) expected %d (U_BUFFER_OVERFLOW_ERROR)", length, u_errorName(errorCode), s.length());
         }
 
         errorCode=U_ZERO_ERROR;
@@ -614,14 +614,14 @@ UnicodeStringTest::TestExtract()
             if( (length=s.extract(nullptr, 0, cnv, errorCode))!=13 ||
                 errorCode!=U_BUFFER_OVERFLOW_ERROR
             ) {
-                errln("UnicodeString::extract(nullptr, UConverter) preflighting failed (length=%ld, %s)",
+                errln("UnicodeString::extract(nullptr, UConverter) preflighting failed (length=%d, %s)",
                       length, u_errorName(errorCode));
             }
             errorCode=U_ZERO_ERROR;
             if( (length=s.extract(buffer, 2, cnv, errorCode))!=13 ||
                 errorCode!=U_BUFFER_OVERFLOW_ERROR
             ) {
-                errln("UnicodeString::extract(too small, UConverter) preflighting failed (length=%ld, %s)",
+                errln("UnicodeString::extract(too small, UConverter) preflighting failed (length=%d, %s)",
                       length, u_errorName(errorCode));
             }
 
@@ -642,7 +642,7 @@ UnicodeStringTest::TestExtract()
                 buffer[13]!=0 ||
                 U_FAILURE(errorCode)
             ) {
-                errln("UnicodeString::extract(UConverter) conversion failed (length=%ld, %s)",
+                errln("UnicodeString::extract(UConverter) conversion failed (length=%d, %s)",
                       length, u_errorName(errorCode));
             }
             // Test again with just the converter name.
@@ -651,7 +651,7 @@ UnicodeStringTest::TestExtract()
                 buffer[13]!=0 ||
                 U_FAILURE(errorCode)
             ) {
-                errln("UnicodeString::extract(\"UTF-8\") conversion failed (length=%ld, %s)",
+                errln("UnicodeString::extract(\"UTF-8\") conversion failed (length=%d, %s)",
                       length, u_errorName(errorCode));
             }
 
