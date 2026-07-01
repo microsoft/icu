@@ -1,0 +1,159 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Wed, 1 Jul 2026 19:57:52 +0530
+Subject: Fix ICU 78 CodeQL format-string and memory-safety warnings
+
+13 cpp/wrong-type-format-argument fixes (E1+E2) and 8 use-after-free /
+double-free fixes (E4) across 6 test files, each mirroring an existing
+in-tree idiom (austrdup for UChar* printed with %s; int32_t casts for
+size_t/UDate; NULL-after-free for reused pointers). These are
+long-standing upstream bugs not covered by #153. Recorded as an
+icu-patches record so a future ICU upstream import does not revert them.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+
+diff --git a/icu/icu4c/source/test/cintltst/ccaltst.c b/icu/icu4c/source/test/cintltst/ccaltst.c
+index 50e0dca83e9cdf7992a7c1c89264706c76aed1d6..572c472155ea7eab17e7ca8e7fc32b003b5ef8e6 100644
+--- a/icu/icu4c/source/test/cintltst/ccaltst.c
++++ b/icu/icu4c/source/test/cintltst/ccaltst.c
+@@ -303,11 +303,11 @@ static void TestCalendar(void)
+     } else {
+         if (u_strcmp(AMERICA_LOS_ANGELES, canonicalID) != 0) {
+             log_data_err("FAIL: ucal_getCanonicalTimeZoneID(%s) returned %s : expected - %s (Are you missing data?)\n",
+-                PST, canonicalID, AMERICA_LOS_ANGELES);
++                austrdup(PST), austrdup(canonicalID), austrdup(AMERICA_LOS_ANGELES));
+         }
+         if (!isSystemID) {
+             log_data_err("FAIL: ucal_getCanonicalTimeZoneID(%s) set %d to isSystemID (Are you missing data?)\n",
+-                PST, isSystemID);
++                austrdup(PST), isSystemID);
+         }
+     }
+ 
+@@ -644,7 +644,7 @@ static void TestGetSetDateAPI(void)
+     if (U_FAILURE(status)) {
+         log_err("Error in getTimeZoneID : %s\n", u_errorName(status));
+     } else if (u_strcmp(id, fgGMTID) != 0) {
+-        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%d, expected=%s\n", austrdup(id), austrdup(fgGMTID));
++        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%s, expected=%s\n", austrdup(id), austrdup(fgGMTID));
+     } else {
+         log_verbose("PASS: getTimeZoneID works fine\n");
+     }
+@@ -667,7 +667,7 @@ static void TestGetSetDateAPI(void)
+     if (U_FAILURE(status)) {
+         log_err("Error in getTimeZoneID : %s\n", u_errorName(status));
+     } else if (u_strcmp(id, tzID) != 0) {
+-        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%d, expected=%s\n", austrdup(id), austrdup(tzID));
++        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%s, expected=%s\n", austrdup(id), austrdup(tzID));
+     } else {
+         log_verbose("PASS: getTimeZoneID works fine\n");
+     }
+@@ -2947,7 +2947,7 @@ TestGetIanaTimeZoneID(void) {
+             int32_t ianaLen2 = 0;
+             ianaLen2 = ucal_getIanaTimeZoneID(ianaID, ianaLen, ianaID2, sizeof(ianaID2), &sts);
+             if (U_FAILURE(sts) || ianaLen != ianaLen2 || u_strncmp(ianaID, ianaID2, ianaLen) != 0) {
+-                    log_err("Error: IANA ID for IANA ID %s", ianaID);
++                    log_err("Error: IANA ID for IANA ID %s", austrdup(ianaID));
+                 }
+         }
+     }
+diff --git a/icu/icu4c/source/test/cintltst/cdattst.c b/icu/icu4c/source/test/cintltst/cdattst.c
+index 6f27ba32a72ea232e8aae63637598531e04fd1ae..8060f818a6eb4e3195a269f72bacd8ba0b25869a 100644
+--- a/icu/icu4c/source/test/cintltst/cdattst.c
++++ b/icu/icu4c/source/test/cintltst/cdattst.c
+@@ -735,6 +735,7 @@ static void TestSymbols(void)
+         result = NULL;
+     }
+ free(pattern);
++pattern = NULL;
+ 
+     log_verbose("\nTesting setSymbols\n");
+     /*applying the pattern so that setSymbolss works */
+diff --git a/icu/icu4c/source/test/cintltst/cloctst.c b/icu/icu4c/source/test/cintltst/cloctst.c
+index a1392656a19e1bb577b0414e375599fac073808c..b5fa0d6554ac073b572acae36333c7d895ab9fd6 100644
+--- a/icu/icu4c/source/test/cintltst/cloctst.c
++++ b/icu/icu4c/source/test/cintltst/cloctst.c
+@@ -547,7 +547,7 @@ static void TestPrefixes(void) {
+                 
+                 if(len != (int32_t)strlen(buf)) {
+                     log_err("#%d: %s on %s: -> [%s] (length returned %d, actual %d!)\n",
+-                        row, testTitles[n], loc, buf, len, strlen(buf)+1);
++                        row, testTitles[n], loc, buf, len, (int32_t)strlen(buf)+1);
+                     
+                 }
+                 
+@@ -2565,8 +2565,8 @@ static void TestCanonicalizationBuffer(void)
+     }
+ 
+     if (reslen != (int32_t)len) {
+-        log_err("FAIL: uloc_canonicalize(%s) => \"%i\", expected \"%u\"\n",
+-                name, reslen, len);
++        log_err("FAIL: uloc_canonicalize(%s) => \"%i\", expected \"%i\"\n",
++                name, reslen, (int32_t)len);
+         return;
+     }
+ 
+diff --git a/icu/icu4c/source/test/cintltst/cnmdptst.c b/icu/icu4c/source/test/cintltst/cnmdptst.c
+index b7ce012361befc52b1b23e068017ffb71bdc4b4a..1f2ee035f3a03619e00a4ffae65c078db2aadcfa 100644
+--- a/icu/icu4c/source/test/cintltst/cnmdptst.c
++++ b/icu/icu4c/source/test/cintltst/cnmdptst.c
+@@ -153,6 +153,7 @@ static void TestQuotes(void)
+         log_err("FAIL: Expected afo'ob123");
+ 
+     free(str);
++    str = NULL;
+     unum_close(fmt);
+ 
+ 
+@@ -264,7 +265,7 @@ static void TestExponential(void)
+         }
+         lneed= u_strlen(upat) + 1;
+         unum_toPattern(fmt, false, pattern, lneed, &status);
+-        log_verbose("Pattern \" %s \" -toPattern-> \" %s \" \n", upat, u_austrcpy(tempMsgBug, pattern) );
++        log_verbose("Pattern \" %s \" -toPattern-> \" %s \" \n", austrdup(upat), u_austrcpy(tempMsgBug, pattern) );
+         for (v=0; v<val_length; ++v)
+         {
+             /*format*/
+@@ -384,6 +385,7 @@ static void TestCurrencySign(void)
+         log_err_status(status, "Error formatting -> %s\n", u_errorName(status));
+     }
+     free(str);
++    str = NULL;
+     free(res);
+     free(pat);
+ 
+@@ -733,7 +735,7 @@ static void TestSecondaryGrouping(void) {
+         }
+     }
+     if (!ok) {
+-        log_err("FAIL  Expected %s x hi_IN -> \"1,87,65,43,210\" (with Hindi digits), got %s\n", "1876543210L", resultBuffer);
++        log_err("FAIL  Expected %s x hi_IN -> \"1,87,65,43,210\" (with Hindi digits), got %s\n", "1876543210L", austrdup(resultBuffer));
+     }
+     unum_close(f);
+     unum_close(us);
+diff --git a/icu/icu4c/source/test/cintltst/creststn.c b/icu/icu4c/source/test/cintltst/creststn.c
+index 63a758c5b78819b1ccdc65d0162e6f0240437927..e0b131266782742036099d8c3ad9c9f803233f25 100644
+--- a/icu/icu4c/source/test/cintltst/creststn.c
++++ b/icu/icu4c/source/test/cintltst/creststn.c
+@@ -2959,7 +2959,7 @@ static void TestCLDRStyleAliases(void) {
+       result = tres_getString(a, -1, NULL, &len, &status);
+       u_charsToUChars(expects[i], expected, (int32_t)strlen(expects[i])+1);
+       if(U_FAILURE(status) || !result || u_strcmp(result, expected)) {
+-        log_err("CLDR style aliases failed resource with name \"%s\" resource, exp %s, got %S (%s)\n", resource, expects[i], result, myErrorName(status));
++        log_err("CLDR style aliases failed resource with name \"%s\" resource, exp %s, got %s (%s)\n", resource, expects[i], (result != NULL) ? austrdup(result) : "NULL", myErrorName(status));
+         status = U_ZERO_ERROR;
+       }
+     }
+diff --git a/icu/icu4c/source/test/intltest/dtfmrgts.cpp b/icu/icu4c/source/test/intltest/dtfmrgts.cpp
+index fed3546b8d4bfb78c776b0c4176fe158f2a877e7..7fbfef48b2093d193efe32af529a6ad2aa914822 100644
+--- a/icu/icu4c/source/test/intltest/dtfmrgts.cpp
++++ b/icu/icu4c/source/test/intltest/dtfmrgts.cpp
+@@ -1725,7 +1725,7 @@ void DateFormatRegressionTest::TestT10855() {
+         } else {
+             errln("Parse Succeeded...should have failed. Index is %d - ErrorIndex is %d", position.getIndex(), position.getErrorIndex());
+         }
+-        logln("Parsed date returns %d\n", d);
++        logln("Parsed date returns %f\n", d);
+ 
+         ++x;
+     }
