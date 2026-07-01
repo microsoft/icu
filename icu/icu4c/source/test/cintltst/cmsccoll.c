@@ -3654,7 +3654,7 @@ TestVI5913(void)
 
     for (j=0; j<8; j++) {
         tLen = u_strlen(tData[j]);
-        log_verbose("\n Data :%s  \tlen: %d key: ", tData[j], tLen);
+        log_verbose("\n Data :%s  \tlen: %d key: ", austrdup(tData[j]), tLen);
         rLen = ucol_getSortKey(coll, tData[j], tLen, resColl, 100);
         for(i = 0; i<rLen; i++) {
             log_verbose(" %02X", resColl[i]);
@@ -3678,7 +3678,7 @@ TestVI5913(void)
 
     for (j=4; j<8; j++) {
         tLen = u_strlen(tData[j]);
-        log_verbose("\n Data :%s  \tlen: %d key: ", tData[j], tLen);
+        log_verbose("\n Data :%s  \tlen: %d key: ", austrdup(tData[j]), tLen);
         rLen = ucol_getSortKey(coll, tData[j], tLen, resColl, 100);
         for(i = 0; i<rLen; i++) {
             log_verbose(" %02X", resColl[i]);
@@ -3698,7 +3698,7 @@ TestVI5913(void)
     for (j=1; j<6; j++) {
         tLen = u_strlen(tailorData[j]);
         if ( !ucol_equal(coll, tailorData[0], sLen, tailorData[j], tLen))  {
-            log_err("\n \\u1FA2 not equals to data[%d]:%s\n", j, tailorData[j]);
+            log_err("\n \\u1FA2 not equals to data[%d]:%s\n", j, austrdup(tailorData[j]));
         }
     }
     /* Test getSortKey. */
@@ -3708,7 +3708,7 @@ TestVI5913(void)
         tLen = u_strlen(tailorData[j]);
         rLen = ucol_getSortKey(coll, tailorData[j], tLen, resColl, 100);
         if ( kLen!=rLen || uprv_memcmp(expColl, resColl, rLen*sizeof(uint8_t))!=0 ) {
-            log_err("\n Data[%d] :%s  \tlen: %d key: ", j, tailorData[j], tLen);
+            log_err("\n Data[%d] :%s  \tlen: %d key: ", j, austrdup(tailorData[j]), tLen);
             for(i = 0; i<rLen; i++) {
                 log_err(" %02X", resColl[i]);
             }
@@ -3725,7 +3725,7 @@ TestVI5913(void)
         tLen = u_strlen(tailorData2[j]);
         rLen = ucol_getSortKey(coll, tailorData2[j], tLen, resColl, 100);
         if ( kLen!=rLen || uprv_memcmp(expColl, resColl, rLen*sizeof(uint8_t))!=0 ) {
-            log_err("\n After tailoring Data[%d] :%s  \tlen: %d key: ", j, tailorData[j], tLen);
+            log_err("\n After tailoring Data[%d] :%s  \tlen: %d key: ", j, austrdup(tailorData2[j]), tLen);
             for(i = 0; i<rLen; i++) {
                 log_err(" %02X", resColl[i]);
             }
@@ -3819,7 +3819,7 @@ TestTailor6179(void)
     tLen = u_strlen(tData1[0]);
     rLen = ucol_getSortKey(coll, tData1[0], tLen, resColl, 100);
     if (rLen != UPRV_LENGTHOF(lastPrimaryIgnCE) || uprv_memcmp(resColl, lastPrimaryIgnCE, rLen) != 0) {
-        log_err("Bad result for &[lpi]<<a...: Data[%d] :%s  \tlen: %d key: ", 0, tData1[0], rLen);
+        log_err("Bad result for &[lpi]<<a...: Data[%d] :%s  \tlen: %d key: ", 0, austrdup(tData1[0]), rLen);
         for(i = 0; i<rLen; i++) {
             log_err(" %02X", resColl[i]);
         }
@@ -3828,7 +3828,7 @@ TestTailor6179(void)
     tLen = u_strlen(tData1[1]);
     rLen = ucol_getSortKey(coll, tData1[1], tLen, resColl, 100);
     if (rLen != UPRV_LENGTHOF(firstPrimaryIgnCE) || uprv_memcmp(resColl, firstPrimaryIgnCE, rLen) != 0) {
-        log_err("Bad result for &[lpi]<<a...: Data[%d] :%s  \tlen: %d key: ", 1, tData1[1], rLen);
+        log_err("Bad result for &[lpi]<<a...: Data[%d] :%s  \tlen: %d key: ", 1, austrdup(tData1[1]), rLen);
         for(i = 0; i<rLen; i++) {
             log_err(" %02X", resColl[i]);
         }
@@ -3850,7 +3850,7 @@ TestTailor6179(void)
     tLen = u_strlen(tData2[0]);
     rLen = ucol_getSortKey(coll, tData2[0], tLen, resColl, 100);
     if (rLen != UPRV_LENGTHOF(lastSecondaryIgnCE) || uprv_memcmp(resColl, lastSecondaryIgnCE, rLen) != 0) {
-        log_err("Bad result for &[lsi]<<<a...: Data[%d] :%s  \tlen: %d key: ", 0, tData2[0], rLen);
+        log_err("Bad result for &[lsi]<<<a...: Data[%d] :%s  \tlen: %d key: ", 0, austrdup(tData2[0]), rLen);
         for(i = 0; i<rLen; i++) {
             log_err(" %02X", resColl[i]);
         }
@@ -3859,7 +3859,7 @@ TestTailor6179(void)
     tLen = u_strlen(tData2[1]);
     rLen = ucol_getSortKey(coll, tData2[1], tLen, resColl, 100);
     if (rLen != UPRV_LENGTHOF(firstSecondaryIgnCE) || uprv_memcmp(resColl, firstSecondaryIgnCE, rLen) != 0) {
-      log_err("Bad result for &[lsi]<<<a...: Data[%d] :%s  \tlen: %d key: ", 1, tData2[1], rLen);
+      log_err("Bad result for &[lsi]<<<a...: Data[%d] :%s  \tlen: %d key: ", 1, austrdup(tData2[1]), rLen);
       for(i = 0; i<rLen; i++) {
         log_err(" %02X", resColl[i]);
       }
@@ -3905,9 +3905,9 @@ TestUCAPrecontext(void)
         rLen = ucol_getSortKey(coll, tData1[j], tLen, resColl, 100);
         if ((j>0) && (strcmp((char *)resColl, (char *)prevColl)<0)) {
             log_err("\n Expecting greater key than previous test case: Data[%d] :%s.",
-                    j, tData1[j]);
+                    j, austrdup(tData1[j]));
         }
-        log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, tData1[j], rLen);
+        log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, austrdup(tData1[j]), rLen);
         for(i = 0; i<rLen; i++) {
             log_verbose(" %02X", resColl[i]);
         }
@@ -3927,9 +3927,9 @@ TestUCAPrecontext(void)
          rLen = ucol_getSortKey(coll, tData1[j], tLen, resColl, 100);
          if ((j>0) && (strcmp((char *)resColl, (char *)prevColl)<0)) {
              log_err("\n Expecting greater key than previous test case: Data[%d] :%s.",
-                     j, tData1[j]);
+                     j, austrdup(tData1[j]));
          }
-         log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, tData1[j], rLen);
+         log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, austrdup(tData1[j]), rLen);
          for(i = 0; i<rLen; i++) {
              log_verbose(" %02X", resColl[i]);
          }
@@ -3950,9 +3950,9 @@ TestUCAPrecontext(void)
           rLen = ucol_getSortKey(coll, tData1[j], tLen, resColl, 100);
           if ((j>0) && (strcmp((char *)resColl, (char *)prevColl)<0)) {
               log_err("\n Expecting greater key than previous test case: Data[%d] :%s.",
-                      j, tData1[j]);
+                      j, austrdup(tData1[j]));
           }
-          log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, tData1[j], rLen);
+          log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, austrdup(tData1[j]), rLen);
           for(i = 0; i<rLen; i++) {
               log_verbose(" %02X", resColl[i]);
           }
@@ -3973,13 +3973,13 @@ TestUCAPrecontext(void)
            rLen = ucol_getSortKey(coll, tData1[j], tLen, resColl, 100);
            if ((j>0) && (j!=3) && (strcmp((char *)resColl, (char *)prevColl)<0)) {
                log_err("\n Expecting greater key than previous test case: Data[%d] :%s.",
-                       j, tData1[j]);
+                       j, austrdup(tData1[j]));
            }
            if ((j==3)&&(strcmp((char *)resColl, (char *)prevColl)>0)) {
                log_err("\n Expecting smaller key than previous test case: Data[%d] :%s.",
-                       j, tData1[j]);
+                       j, austrdup(tData1[j]));
            }
-           log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, tData1[j], rLen);
+           log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, austrdup(tData1[j]), rLen);
            for(i = 0; i<rLen; i++) {
                log_verbose(" %02X", resColl[i]);
            }
@@ -5606,7 +5606,7 @@ static void TestImport(void)
                 ucol_getSortKey(viescoll, str, 1, sk1, 500);
                 ucol_getSortKey(importviescoll, str, 1, sk2, 500);
                 if(compare_uint8_t_arrays(sk1, sk2) != 0){
-                    log_err("Sort key for %s not equal\n", str);
+                    log_err("Sort key for %s not equal\n", aescstrdup(str, k));
                     break;
                 }
             }
@@ -5614,7 +5614,7 @@ static void TestImport(void)
             ucol_getSortKey(viescoll, str, strLength, sk1, 500);
             ucol_getSortKey(importviescoll, str, strLength, sk2, 500);
             if(compare_uint8_t_arrays(sk1, sk2) != 0){
-                log_err("ZZSort key for %s not equal\n", str);
+                log_err("ZZSort key for %s not equal\n", aescstrdup(str, strLength));
                 break;
             }
 
@@ -5716,7 +5716,7 @@ static void TestImportWithType(void)
                 ucol_getSortKey(videcoll, str, 1, sk1, 500);
                 ucol_getSortKey(importvidecoll, str, 1, sk2, 500);
                 if(compare_uint8_t_arrays(sk1, sk2) != 0){
-                    log_err("Sort key for %s not equal\n", str);
+                    log_err("Sort key for %s not equal\n", aescstrdup(str, k));
                     break;
                 }
             }
@@ -5724,7 +5724,7 @@ static void TestImportWithType(void)
             ucol_getSortKey(videcoll, str, strLength, sk1, 500);
             ucol_getSortKey(importvidecoll, str, strLength, sk2, 500);
             if(compare_uint8_t_arrays(sk1, sk2) != 0){
-                log_err("Sort key for %s not equal\n", str);
+                log_err("Sort key for %s not equal\n", aescstrdup(str, strLength));
                 break;
             }
 

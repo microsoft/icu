@@ -237,7 +237,7 @@ Checks LetterLike Symbols which were previously a source of confusion
 
     for(i=0; i < u_strlen(upper); i++){
         if(u_tolower(upper[i]) != lower[i]){
-            log_err("FAILED u_tolower() for %lx Expected %lx Got %lx\n", upper[i], lower[i], u_tolower(upper[i]));
+            log_err("FAILED u_tolower() for %x Expected %x Got %x\n", upper[i], lower[i], u_tolower(upper[i]));
         }
     }
 
@@ -987,7 +987,7 @@ unicodeDataLineFn(void *context,
         return;
     }
     if((uint32_t)c>=UCHAR_MAX_VALUE + 1) {
-        log_err("error in UnicodeData.txt: code point %lu out of range\n", c);
+        log_err("error in UnicodeData.txt: code point %u out of range\n", c);
         return;
     }
 
@@ -995,29 +995,29 @@ unicodeDataLineFn(void *context,
     *fields[2][1]=0;
     type = (int8_t)tagValues[MakeProp(fields[2][0])];
     if(u_charType(c)!=type) {
-        log_err("error: u_charType(U+%04lx)==%u instead of %u\n", c, u_charType(c), type);
+        log_err("error: u_charType(U+%04x)==%u instead of %u\n", c, u_charType(c), type);
     }
     if((uint32_t)u_getIntPropertyValue(c, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(type)) {
-        log_err("error: (uint32_t)u_getIntPropertyValue(U+%04lx, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
+        log_err("error: (uint32_t)u_getIntPropertyValue(U+%04x, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
     }
 
     /* get canonical combining class, field 3 */
     value=strtoul(fields[3][0], &end, 10);
     if(end<=fields[3][0] || end!=fields[3][1]) {
-        log_err("error: syntax error in field 3 at code 0x%lx\n", c);
+        log_err("error: syntax error in field 3 at code 0x%x\n", c);
         return;
     }
     if(value>255) {
-        log_err("error in UnicodeData.txt: combining class %lu out of range\n", value);
+        log_err("error in UnicodeData.txt: combining class %u out of range\n", value);
         return;
     }
 #if !UCONFIG_NO_NORMALIZATION
     if(value!=u_getCombiningClass(c) || value!=(uint32_t)u_getIntPropertyValue(c, UCHAR_CANONICAL_COMBINING_CLASS)) {
-        log_err("error: u_getCombiningClass(U+%04lx)==%hu instead of %lu\n", c, u_getCombiningClass(c), value);
+        log_err("error: u_getCombiningClass(U+%04x)==%hu instead of %u\n", c, u_getCombiningClass(c), value);
     }
     nfkc=((UnicodeDataContext *)context)->nfkc;
     if(value!=unorm2_getCombiningClass(nfkc, c)) {
-        log_err("error: unorm2_getCombiningClass(nfkc, U+%04lx)==%hu instead of %lu\n", c, unorm2_getCombiningClass(nfkc, c), value);
+        log_err("error: unorm2_getCombiningClass(nfkc, U+%04x)==%hu instead of %u\n", c, unorm2_getCombiningClass(nfkc, c), value);
     }
 #endif
 
@@ -1025,7 +1025,7 @@ unicodeDataLineFn(void *context,
     *fields[4][1]=0;
     i=MakeDir(fields[4][0]);
     if(i!=(int32_t)u_charDirection(c) || i!=u_getIntPropertyValue(c, UCHAR_BIDI_CLASS)) {
-        log_err("error: u_charDirection(U+%04lx)==%u instead of %u (%s)\n", c, u_charDirection(c), MakeDir(fields[4][0]), fields[4][0]);
+        log_err("error: u_charDirection(U+%04x)==%u instead of %u (%s)\n", c, u_charDirection(c), MakeDir(fields[4][0]), fields[4][0]);
     }
 
     /* get Decomposition_Type & Decomposition_Mapping, field 5 */
@@ -1076,12 +1076,12 @@ unicodeDataLineFn(void *context,
 #if !UCONFIG_NO_NORMALIZATION
     i=u_getIntPropertyValue(c, UCHAR_DECOMPOSITION_TYPE);
     if(i!=dt) {
-        log_err("error: u_getIntPropertyValue(U+%04lx, UCHAR_DECOMPOSITION_TYPE)==%d instead of %d\n", c, i, dt);
+        log_err("error: u_getIntPropertyValue(U+%04x, UCHAR_DECOMPOSITION_TYPE)==%d instead of %d\n", c, i, dt);
     }
     /* Expect Decomposition_Mapping=nfkc.getRawDecomposition(c). */
     length=unorm2_getRawDecomposition(nfkc, c, s, 32, pErrorCode);
     if(U_FAILURE(*pErrorCode) || length!=dmLength || (length>0 && 0!=u_strcmp(s, dm))) {
-        log_err("error: unorm2_getRawDecomposition(nfkc, U+%04lx)==%d instead of %d "
+        log_err("error: unorm2_getRawDecomposition(nfkc, U+%04x)==%d instead of %d "
                 "or the Decomposition_Mapping is different (%s)\n",
                 c, length, dmLength, u_errorName(*pErrorCode));
         return;
@@ -1093,7 +1093,7 @@ unicodeDataLineFn(void *context,
     nfc=((UnicodeDataContext *)context)->nfc;
     length=unorm2_getRawDecomposition(nfc, c, s, 32, pErrorCode);
     if(U_FAILURE(*pErrorCode) || length!=dmLength || (length>0 && 0!=u_strcmp(s, dm))) {
-        log_err("error: unorm2_getRawDecomposition(nfc, U+%04lx)==%d instead of %d "
+        log_err("error: unorm2_getRawDecomposition(nfc, U+%04x)==%d instead of %d "
                 "or the Decomposition_Mapping is different (%s)\n",
                 c, length, dmLength, u_errorName(*pErrorCode));
         return;
@@ -1121,7 +1121,7 @@ unicodeDataLineFn(void *context,
     *fields[11][1]=0;
     i=u_getISOComment(c, buffer, sizeof(buffer), pErrorCode);
     if(U_FAILURE(*pErrorCode) || 0!=strcmp(fields[11][0], buffer)) {
-        log_err_status(*pErrorCode, "error: u_getISOComment(U+%04lx) wrong (%s): \"%s\" should be \"%s\"\n",
+        log_err_status(*pErrorCode, "error: u_getISOComment(U+%04x) wrong (%s): \"%s\" should be \"%s\"\n",
             c, u_errorName(*pErrorCode),
             U_FAILURE(*pErrorCode) ? buffer : "[error]",
             fields[11][0]);
@@ -1131,16 +1131,16 @@ unicodeDataLineFn(void *context,
     if(fields[12][0]!=fields[12][1]) {
         value=strtoul(fields[12][0], &end, 16);
         if(end!=fields[12][1]) {
-            log_err("error: syntax error in field 12 at code 0x%lx\n", c);
+            log_err("error: syntax error in field 12 at code 0x%x\n", c);
             return;
         }
         if((UChar32)value!=u_toupper(c)) {
-            log_err("error: u_toupper(U+%04lx)==U+%04lx instead of U+%04lx\n", c, u_toupper(c), value);
+            log_err("error: u_toupper(U+%04x)==U+%04x instead of U+%04x\n", c, u_toupper(c), value);
         }
     } else {
         /* no case mapping: the API must map the code point to itself */
         if(c!=u_toupper(c)) {
-            log_err("error: U+%04lx does not have an uppercase mapping but u_toupper()==U+%04lx\n", c, u_toupper(c));
+            log_err("error: U+%04x does not have an uppercase mapping but u_toupper()==U+%04x\n", c, u_toupper(c));
         }
     }
 
@@ -1148,16 +1148,16 @@ unicodeDataLineFn(void *context,
     if(fields[13][0]!=fields[13][1]) {
         value=strtoul(fields[13][0], &end, 16);
         if(end!=fields[13][1]) {
-            log_err("error: syntax error in field 13 at code 0x%lx\n", c);
+            log_err("error: syntax error in field 13 at code 0x%x\n", c);
             return;
         }
         if((UChar32)value!=u_tolower(c)) {
-            log_err("error: u_tolower(U+%04lx)==U+%04lx instead of U+%04lx\n", c, u_tolower(c), value);
+            log_err("error: u_tolower(U+%04x)==U+%04x instead of U+%04x\n", c, u_tolower(c), value);
         }
     } else {
         /* no case mapping: the API must map the code point to itself */
         if(c!=u_tolower(c)) {
-            log_err("error: U+%04lx does not have a lowercase mapping but u_tolower()==U+%04lx\n", c, u_tolower(c));
+            log_err("error: U+%04x does not have a lowercase mapping but u_tolower()==U+%04x\n", c, u_tolower(c));
         }
     }
 
@@ -1165,16 +1165,16 @@ unicodeDataLineFn(void *context,
     if(fields[14][0]!=fields[14][1]) {
         value=strtoul(fields[14][0], &end, 16);
         if(end!=fields[14][1]) {
-            log_err("error: syntax error in field 14 at code 0x%lx\n", c);
+            log_err("error: syntax error in field 14 at code 0x%x\n", c);
             return;
         }
         if((UChar32)value!=u_totitle(c)) {
-            log_err("error: u_totitle(U+%04lx)==U+%04lx instead of U+%04lx\n", c, u_totitle(c), value);
+            log_err("error: u_totitle(U+%04x)==U+%04x instead of U+%04x\n", c, u_totitle(c), value);
         }
     } else {
         /* no case mapping: the API must map the code point to itself */
         if(c!=u_totitle(c)) {
-            log_err("error: U+%04lx does not have a titlecase mapping but u_totitle()==U+%04lx\n", c, u_totitle(c));
+            log_err("error: U+%04x does not have a titlecase mapping but u_totitle()==U+%04x\n", c, u_totitle(c));
         }
     }
 }
@@ -1200,7 +1200,7 @@ enumTypeRange(const void *context, UChar32 start, UChar32 limit, UCharCategory t
     for(i=0; i<count; ++i) {
         if(start<=test[i][0] && test[i][0]<limit) {
             if(type!=(UCharCategory)test[i][1]) {
-                log_err("error: u_enumCharTypes() has range [U+%04lx, U+%04lx[ with %ld instead of U+%04lx with %ld\n",
+                log_err("error: u_enumCharTypes() has range [U+%04x, U+%04x[ with %ld instead of U+%04x with %d\n",
                         start, limit, (long)type, test[i][0], test[i][1]);
             }
             /* stop at the range that includes the last test code point (increases code coverage for enumeration) */
@@ -1209,7 +1209,7 @@ enumTypeRange(const void *context, UChar32 start, UChar32 limit, UCharCategory t
     }
 
     if(start>test[count-1][0]) {
-        log_err("error: u_enumCharTypes() has range [U+%04lx, U+%04lx[ with %ld after it should have stopped\n",
+        log_err("error: u_enumCharTypes() has range [U+%04x, U+%04x[ with %ld after it should have stopped\n",
                 start, limit, (long)type);
         return false;
     }
@@ -1275,7 +1275,7 @@ enumDefaultsRange(const void *context, UChar32 start, UChar32 limit, UCharCatego
         c=start;
         while(c<limit) {
             if(0==u_getIntPropertyValue(c, UCHAR_LINE_BREAK)) {
-                log_err("error UCHAR_LINE_BREAK(assigned U+%04lx)=XX\n", c);
+                log_err("error UCHAR_LINE_BREAK(assigned U+%04x)=XX\n", c);
             }
             ++c;
         }
@@ -1300,7 +1300,7 @@ enumDefaultsRange(const void *context, UChar32 start, UChar32 limit, UCharCatego
                     if( u_charDirection(c)!=shouldBeDir ||
                         (UCharDirection)u_getIntPropertyValue(c, UCHAR_BIDI_CLASS)!=shouldBeDir
                     ) {
-                        log_err("error: u_charDirection(unassigned/PUA U+%04lx)=%s should be %s\n",
+                        log_err("error: u_charDirection(unassigned/PUA U+%04x)=%s should be %s\n",
                             c, dirStrings[u_charDirection(c)], dirStrings[shouldBeDir]);
                     }
                     ++c;
@@ -1362,10 +1362,10 @@ static void TestUnicodeData(void)
     for(c=0xfffe; c<=0x10ffff;) {
         type=u_charType(c);
         if((uint32_t)u_getIntPropertyValue(c, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(type)) {
-            log_err("error: (uint32_t)u_getIntPropertyValue(U+%04lx, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
+            log_err("error: (uint32_t)u_getIntPropertyValue(U+%04x, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
         }
         if(type!=U_UNASSIGNED) {
-            log_err("error: u_charType(U+%04lx)!=U_UNASSIGNED (returns %d)\n", c, u_charType(c));
+            log_err("error: u_charType(U+%04x)!=U_UNASSIGNED (returns %d)\n", c, u_charType(c));
         }
         if((c&0xffff)==0xfffe) {
             ++c;
@@ -1378,12 +1378,12 @@ static void TestUnicodeData(void)
     for(c=0xe000; c<=0x10fffd;) {
         type=u_charType(c);
         if((uint32_t)u_getIntPropertyValue(c, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(type)) {
-            log_err("error: (uint32_t)u_getIntPropertyValue(U+%04lx, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
+            log_err("error: (uint32_t)u_getIntPropertyValue(U+%04x, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
         }
         if(type==U_UNASSIGNED) {
-            log_err("error: u_charType(U+%04lx)==U_UNASSIGNED\n", c);
+            log_err("error: u_charType(U+%04x)==U_UNASSIGNED\n", c);
         } else if(type!=U_PRIVATE_USE_CHAR) {
-            log_verbose("PUA override: u_charType(U+%04lx)=%d\n", c, type);
+            log_verbose("PUA override: u_charType(U+%04x)=%d\n", c, type);
         }
         if(c==0xf8ff) {
             c=0xf0000;
@@ -1654,7 +1654,7 @@ static int32_t MakeProp(char* str)
     if (matchPosition == 0) 
     {
         log_err("unrecognized type letter ");
-        log_err(str);
+        log_err("%s", str);
     }
     else
         result = (int32_t)((matchPosition - tagStrings) / 2);
@@ -1712,7 +1712,7 @@ enumCharNamesFn(void *context,
 
     if(length<=0 || length!=(int32_t)strlen(name)) {
         /* should not be called with an empty string or invalid length */
-        log_err("u_enumCharName(0x%lx)=%s but length=%ld\n", code, name, length);
+        log_err("u_enumCharName(0x%x)=%s but length=%d\n", code, name, length);
         return true;
     }
 
@@ -1722,24 +1722,24 @@ enumCharNamesFn(void *context,
             switch (nameChoice) {
                 case U_EXTENDED_CHAR_NAME:
                     if(0!=strcmp(name, names[i].extName)) {
-                        log_err("u_enumCharName(0x%lx - Extended)=%s instead of %s\n", code, name, names[i].extName);
+                        log_err("u_enumCharName(0x%x - Extended)=%s instead of %s\n", code, name, names[i].extName);
                     }
                     break;
                 case U_UNICODE_CHAR_NAME:
                     if(0!=strcmp(name, names[i].name)) {
-                        log_err("u_enumCharName(0x%lx)=%s instead of %s\n", code, name, names[i].name);
+                        log_err("u_enumCharName(0x%x)=%s instead of %s\n", code, name, names[i].name);
                     }
                     break;
                 case U_UNICODE_10_CHAR_NAME:
                     expected=names[i].oldName;
                     if(expected[0]==0 || 0!=strcmp(name, expected)) {
-                        log_err("u_enumCharName(0x%lx - 1.0)=%s instead of %s\n", code, name, expected);
+                        log_err("u_enumCharName(0x%x - 1.0)=%s instead of %s\n", code, name, expected);
                     }
                     break;
                 case U_CHAR_NAME_ALIAS:
                     expected=names[i].alias;
                     if(expected==NULL || expected[0]==0 || 0!=strcmp(name, expected)) {
-                        log_err("u_enumCharName(0x%lx - alias)=%s instead of %s\n", code, name, expected);
+                        log_err("u_enumCharName(0x%x - alias)=%s instead of %s\n", code, name, expected);
                     }
                     break;
                 case U_CHAR_NAME_CHOICE_COUNT:
@@ -1764,15 +1764,15 @@ enumExtCharNamesFn(void *context,
 
     if (ecncp->last != (int32_t) code - 1) {
         if (ecncp->last < 0) {
-            log_err("u_enumCharName(0x%lx - Ext) after u_enumCharName(0x%lx - Ext) instead of u_enumCharName(0x%lx - Ext)\n", code, ecncp->last, ecncp->last + 1);
+            log_err("u_enumCharName(0x%x - Ext) after u_enumCharName(0x%x - Ext) instead of u_enumCharName(0x%x - Ext)\n", code, ecncp->last, ecncp->last + 1);
         } else {
-            log_err("u_enumCharName(0x%lx - Ext) instead of u_enumCharName(0x0 - Ext)\n", code);
+            log_err("u_enumCharName(0x%x - Ext) instead of u_enumCharName(0x0 - Ext)\n", code);
         }
     }
     ecncp->last = (int32_t) code;
 
     if (!*name) {
-        log_err("u_enumCharName(0x%lx - Ext) should not be an empty string\n", code);
+        log_err("u_enumCharName(0x%x - Ext) should not be an empty string\n", code);
     }
 
     return enumCharNamesFn(&ecncp->length, code, nameChoice, name, length);
@@ -1816,11 +1816,11 @@ TestCharNames(void) {
         /* modern Unicode character name */
         length=u_charName(names[i].code, U_UNICODE_CHAR_NAME, name, sizeof(name), &errorCode);
         if(U_FAILURE(errorCode)) {
-            log_err("u_charName(0x%lx) error %s\n", names[i].code, u_errorName(errorCode));
+            log_err("u_charName(0x%x) error %s\n", names[i].code, u_errorName(errorCode));
             return;
         }
         if(length<0 || 0!=strcmp(name, names[i].name) || length!=(uint16_t)strlen(name)) {
-            log_err("u_charName(0x%lx) gets: %s (length %ld) instead of: %s\n", names[i].code, name, length, names[i].name);
+            log_err("u_charName(0x%x) gets: %s (length %d) instead of: %s\n", names[i].code, name, length, names[i].name);
         }
 
         /* find the modern name */
@@ -1831,18 +1831,18 @@ TestCharNames(void) {
                 return;
             }
             if(c!=(UChar32)names[i].code) {
-                log_err("u_charFromName(%s) gets 0x%lx instead of 0x%lx\n", names[i].name, c, names[i].code);
+                log_err("u_charFromName(%s) gets 0x%x instead of 0x%x\n", names[i].name, c, names[i].code);
             }
         }
 
         /* Unicode 1.0 character name */
         length=u_charName(names[i].code, U_UNICODE_10_CHAR_NAME, name, sizeof(name), &errorCode);
         if(U_FAILURE(errorCode)) {
-            log_err("u_charName(0x%lx - 1.0) error %s\n", names[i].code, u_errorName(errorCode));
+            log_err("u_charName(0x%x - 1.0) error %s\n", names[i].code, u_errorName(errorCode));
             return;
         }
         if(length<0 || (length>0 && 0!=strcmp(name, names[i].oldName)) || length!=(uint16_t)strlen(name)) {
-            log_err("u_charName(0x%lx - 1.0) gets %s length %ld instead of nothing or %s\n", names[i].code, name, length, names[i].oldName);
+            log_err("u_charName(0x%x - 1.0) gets %s length %d instead of nothing or %s\n", names[i].code, name, length, names[i].oldName);
         }
 
         /* find the Unicode 1.0 name if it is stored (length>0 means that we could read it) */
@@ -1853,14 +1853,14 @@ TestCharNames(void) {
                 return;
             }
             if(c!=(UChar32)names[i].code) {
-                log_err("u_charFromName(%s - 1.0) gets 0x%lx instead of 0x%lx\n", names[i].oldName, c, names[i].code);
+                log_err("u_charFromName(%s - 1.0) gets 0x%x instead of 0x%x\n", names[i].oldName, c, names[i].code);
             }
         }
 
         /* Unicode character name alias */
         length=u_charName(names[i].code, U_CHAR_NAME_ALIAS, name, sizeof(name), &errorCode);
         if(U_FAILURE(errorCode)) {
-            log_err("u_charName(0x%lx - alias) error %s\n", names[i].code, u_errorName(errorCode));
+            log_err("u_charName(0x%x - alias) error %s\n", names[i].code, u_errorName(errorCode));
             return;
         }
         expected=names[i].alias;
@@ -1868,7 +1868,7 @@ TestCharNames(void) {
             expected="";
         }
         if(length<0 || (length>0 && 0!=strcmp(name, expected)) || length!=(uint16_t)strlen(name)) {
-            log_err("u_charName(0x%lx - alias) gets %s length %ld instead of nothing or %s\n",
+            log_err("u_charName(0x%x - alias) gets %s length %d instead of nothing or %s\n",
                     names[i].code, name, length, expected);
         }
 
@@ -1881,7 +1881,7 @@ TestCharNames(void) {
                 return;
             }
             if(c!=(UChar32)names[i].code) {
-                log_err("u_charFromName(%s - alias) gets 0x%lx instead of 0x%lx\n",
+                log_err("u_charFromName(%s - alias) gets 0x%x instead of 0x%x\n",
                         expected, c, names[i].code);
             }
         }
@@ -1892,7 +1892,7 @@ TestCharNames(void) {
     errorCode=U_ZERO_ERROR;
     u_enumCharNames(UCHAR_MIN_VALUE, UCHAR_MAX_VALUE + 1, enumCharNamesFn, &length, U_UNICODE_CHAR_NAME, &errorCode);
     if(U_FAILURE(errorCode) || length<94140) {
-        log_err("u_enumCharNames(%ld..%lx) error %s names count=%ld\n", UCHAR_MIN_VALUE, UCHAR_MAX_VALUE, u_errorName(errorCode), length);
+        log_err("u_enumCharNames(%d..%x) error %s names count=%d\n", UCHAR_MIN_VALUE, UCHAR_MAX_VALUE, u_errorName(errorCode), length);
     }
 
     extContext.length = 0;
@@ -1900,7 +1900,7 @@ TestCharNames(void) {
     errorCode=U_ZERO_ERROR;
     u_enumCharNames(UCHAR_MIN_VALUE, UCHAR_MAX_VALUE + 1, enumExtCharNamesFn, &extContext, U_EXTENDED_CHAR_NAME, &errorCode);
     if(U_FAILURE(errorCode) || extContext.length<UCHAR_MAX_VALUE + 1) {
-        log_err("u_enumCharNames(%ld..0x%lx - Extended) error %s names count=%ld\n", UCHAR_MIN_VALUE, UCHAR_MAX_VALUE + 1, u_errorName(errorCode), extContext.length);
+        log_err("u_enumCharNames(%d..0x%x - Extended) error %s names count=%u\n", UCHAR_MIN_VALUE, UCHAR_MAX_VALUE + 1, u_errorName(errorCode), extContext.length);
     }
 
     /* test that u_charFromName() uppercases the input name, i.e., works with mixed-case names (new in 2.0) */
@@ -2863,7 +2863,7 @@ TestAdditionalProperties(void) {
     for(i=0; i<UPRV_LENGTHOF(charAges); ++i) {
         u_charAge(charAges[i].c, version);
         if(0!=memcmp(version, charAges[i].version, sizeof(UVersionInfo))) {
-            log_err("error: u_charAge(U+%04lx)={ %u, %u, %u, %u } instead of { %u, %u, %u, %u }\n",
+            log_err("error: u_charAge(U+%04x)={ %u, %u, %u, %u } instead of { %u, %u, %u, %u }\n",
                 charAges[i].c,
                 version[0], version[1], version[2], version[3],
                 charAges[i].version[0], charAges[i].version[1], charAges[i].version[2], charAges[i].version[3]);
@@ -2957,14 +2957,14 @@ TestAdditionalProperties(void) {
         if(which<UCHAR_INT_START) {
             result=u_hasBinaryProperty(c, which);
             if(result!=props[i][2]) {
-                log_data_err("error: u_hasBinaryProperty(U+%04lx, %s)=%d is wrong (props[%d]) - (Are you missing data?)\n",
+                log_data_err("error: u_hasBinaryProperty(U+%04x, %s)=%d is wrong (props[%d]) - (Are you missing data?)\n",
                         c, whichName, result, i);
             }
         }
 
         result=u_getIntPropertyValue(c, which);
         if(result!=props[i][2]) {
-            log_data_err("error: u_getIntPropertyValue(U+%04lx, %s)=%d is wrong, should be %d (props[%d]) - (Are you missing data?)\n",
+            log_data_err("error: u_getIntPropertyValue(U+%04x, %s)=%d is wrong, should be %d (props[%d]) - (Are you missing data?)\n",
                     c, whichName, result, props[i][2], i);
         }
 
@@ -2972,25 +2972,25 @@ TestAdditionalProperties(void) {
         switch((UProperty)props[i][1]) {
         case UCHAR_ALPHABETIC:
             if(u_isUAlphabetic((UChar32)props[i][0])!=(UBool)props[i][2]) {
-                log_err("error: u_isUAlphabetic(U+%04lx)=%d is wrong (props[%d])\n",
+                log_err("error: u_isUAlphabetic(U+%04x)=%d is wrong (props[%d])\n",
                         props[i][0], result, i);
             }
             break;
         case UCHAR_LOWERCASE:
             if(u_isULowercase((UChar32)props[i][0])!=(UBool)props[i][2]) {
-                log_err("error: u_isULowercase(U+%04lx)=%d is wrong (props[%d])\n",
+                log_err("error: u_isULowercase(U+%04x)=%d is wrong (props[%d])\n",
                         props[i][0], result, i);
             }
             break;
         case UCHAR_UPPERCASE:
             if(u_isUUppercase((UChar32)props[i][0])!=(UBool)props[i][2]) {
-                log_err("error: u_isUUppercase(U+%04lx)=%d is wrong (props[%d])\n",
+                log_err("error: u_isUUppercase(U+%04x)=%d is wrong (props[%d])\n",
                         props[i][0], result, i);
             }
             break;
         case UCHAR_WHITE_SPACE:
             if(u_isUWhiteSpace((UChar32)props[i][0])!=(UBool)props[i][2]) {
-                log_err("error: u_isUWhiteSpace(U+%04lx)=%d is wrong (props[%d])\n",
+                log_err("error: u_isUWhiteSpace(U+%04x)=%d is wrong (props[%d])\n",
                         props[i][0], result, i);
             }
             break;
@@ -3085,10 +3085,10 @@ TestNumericProperties(void) {
         nv=u_getNumericValue(c);
 
         if(type!=values[i].type) {
-            log_err("UCHAR_NUMERIC_TYPE(U+%04lx)=%d should be %d\n", c, type, values[i].type);
+            log_err("UCHAR_NUMERIC_TYPE(U+%04x)=%d should be %d\n", c, type, values[i].type);
         }
         if(0.000001 <= fabs(nv - values[i].numValue)) {
-            log_err("u_getNumericValue(U+%04lx)=%g should be %g\n", c, nv, values[i].numValue);
+            log_err("u_getNumericValue(U+%04x)=%g should be %g\n", c, nv, values[i].numValue);
         }
     }
 }
