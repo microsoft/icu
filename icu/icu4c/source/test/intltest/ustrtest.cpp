@@ -1799,7 +1799,7 @@ UnicodeStringTest::TestStringEnumeration() {
     }
     status=U_ZERO_ERROR;
     if(uenum_next(uten, &length, &status)!=nullptr) {
-        errln("File %s, line %d, uenum_next(done)!=nullptr");
+        errln("File %s, line %d, uenum_next(done)!=nullptr", __FILE__, __LINE__);
     }
 
     // test the uenum_unext()
@@ -1814,7 +1814,7 @@ UnicodeStringTest::TestStringEnumeration() {
     }
     status=U_ZERO_ERROR;
     if(uenum_unext(uten, &length, &status)!=nullptr) {
-        errln("File %s, Line %d, uenum_unext(done)!=nullptr" __FILE__, __LINE__);
+        errln("File %s, Line %d, uenum_unext(done)!=nullptr", __FILE__, __LINE__);
     }
 
     uenum_close(uten);

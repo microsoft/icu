@@ -1712,7 +1712,7 @@ enumCharNamesFn(void *context,
 
     if(length<=0 || length!=(int32_t)strlen(name)) {
         /* should not be called with an empty string or invalid length */
-        log_err("u_enumCharName(0x%lx)=%s but length=%ld\n", name, length);
+        log_err("u_enumCharName(0x%lx)=%s but length=%ld\n", code, name, length);
         return true;
     }
 
@@ -1807,7 +1807,7 @@ TestCharNames(void) {
         return;
     }
     if(length<83) { /* Unicode 3.2 max char name length */
-        log_err("uprv_getMaxCharNameLength()=%d is too short");
+        log_err("uprv_getMaxCharNameLength()=%d is too short", length);
     }
     /* ### TODO same tests for max ISO comment length as for max name length */
 

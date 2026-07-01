@@ -7329,7 +7329,7 @@ UBool NumberFormatTest::testFormattableAsUFormattable(const char *file, int line
   UFormattable *u = f.toUFormattable();
   logln();
   if (u == nullptr) {
-    errln("%s:%d: Error: f.toUFormattable() retuned nullptr.");
+    errln("%s:%d: Error: f.toUFormattable() retuned nullptr.", file, line);
     return false;
   }
   logln("%s:%d: comparing Formattable with UFormattable", file, line);
