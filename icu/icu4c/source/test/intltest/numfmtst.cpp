@@ -3395,7 +3395,7 @@ double NumberFormatTest::checkRound(DecimalFormat* df, double iValue, double las
     parsed=result.getDouble();
 
     if (lastParsed>parsed) {
-        errln("Rounding wrong direction! %d > %d", lastParsed, parsed);
+        errln("Rounding wrong direction! %f > %f", lastParsed, parsed);
     }
 
     return lastParsed;
@@ -6665,7 +6665,7 @@ void NumberFormatTest::expectPositions(FieldPositionIterator& iter, int32_t *val
     // is there a logln using printf?
     char buf[128];
     snprintf(buf, sizeof(buf), "%24s %3d %3d %3d", attrString(id), id, start, limit);
-    logln(buf);
+    logln("%s", buf);
 
     for (int i = 0; i < tupleCount; ++i) {
       if (found[i]) {
@@ -7059,7 +7059,7 @@ void NumberFormatTest::TestExponentParse() {
        parsePos.getIndex() != 8
        )
     {
-        errln("ERROR: parse failed - expected 5.06E-27, 8  - returned %d, %i",
+        errln("ERROR: parse failed - expected 5.06E-27, 8  - returned %f, %i",
               result.getDouble(), parsePos.getIndex());
     }
 }
@@ -7312,13 +7312,13 @@ void NumberFormatTest::TestFormatFastpaths() {
 
 void NumberFormatTest::TestFormattableSize() {
   if(sizeof(Formattable) > 112) {
-    errln("Error: sizeof(Formattable)=%d, 112=%d\n",
+    errln("Error: sizeof(Formattable)=%zu, 112=%d\n",
           sizeof(Formattable), 112);
   } else if(sizeof(Formattable) < 112) {
-    logln("Warning: sizeof(Formattable)=%d, 112=%d\n",
+    logln("Warning: sizeof(Formattable)=%zu, 112=%d\n",
         sizeof(Formattable), 112);
   } else {
-    logln("sizeof(Formattable)=%d, 112=%d\n",
+    logln("sizeof(Formattable)=%zu, 112=%d\n",
         sizeof(Formattable), 112);
   }
 }
@@ -7842,7 +7842,7 @@ void NumberFormatTest::TestParseSignsAndMarks() {
                 errln(UnicodeString("FAIL: locale ") + itemPtr->locale + ", lenient " + itemPtr->lenient + ", parse of \"" + itemPtr->numString + "\" gives position " + ppos.getIndex());
             }
         } else {
-            dataerrln("FAIL: NumberFormat::createInstance for locale % gives error %s", itemPtr->locale, u_errorName(status));
+            dataerrln("FAIL: NumberFormat::createInstance for locale %s gives error %s", itemPtr->locale, u_errorName(status));
         }
         delete numfmt;
     }

@@ -3354,9 +3354,9 @@ void RBBITest::RunMonkey(BreakIterator *bi, RBBIMonkeyKind &mk, const char *name
 
                     // Output the error
                     if (ci == i) {
-                        errln(buffer);
+                        errln("%s", buffer);
                     } else {
-                        infoln(buffer);
+                        infoln("%s", buffer);
                     }
 
                     if (ci >= endContext) { break; }
@@ -3486,7 +3486,7 @@ void RBBITest::TestBug12797() {
     UParseError parseError;
     RuleBasedBreakIterator bi(rules, parseError, status);
     if (U_FAILURE(status)) {
-        errln("%s:%s status = %s", __FILE__, __LINE__, u_errorName(status));
+        errln("%s:%d status = %s", __FILE__, __LINE__, u_errorName(status));
         return;
     }
     UnicodeString text = "abc";
@@ -3549,7 +3549,7 @@ void RBBITest::TestEmoji() {
     testFileName.append(IntlTest::getSourceTestData(status), status);
     testFileName.appendPathPart("emoji-test.txt", status);
     if (U_FAILURE(status)) {
-        errln("%s:%s %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
+        errln("%s:%d %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
         return;
     }
     logln("Opening data file %s\n", testFileName.data());
@@ -3557,7 +3557,7 @@ void RBBITest::TestEmoji() {
     int    len;
     char16_t *testFile = ReadAndConvertFile(testFileName.data(), len, "UTF-8", status);
     if (U_FAILURE(status) || testFile == nullptr) {
-        errln("%s:%s %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
+        errln("%s:%d %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
         return;
     }
     UnicodeString testFileAsString(testFile, len);

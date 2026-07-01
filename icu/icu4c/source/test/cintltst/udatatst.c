@@ -911,7 +911,7 @@ static void TestUDataGetMemory(void) {
     intValue=(uint16_t *)udata_getMemory(result);
     /*printf("%d ..... %s", *(intValue), intValue+1));*/
     if( *intValue != 2000 || strcmp((char*)(intValue+1), "YEAR") != 0 )
-        log_err("FAIL: udata_getMemory() failed: intValue :- Expected:2000 Got:%d \n\tstringValue:- Expected:YEAR Got:%s\n", *intValue, (intValue+1));
+        log_err("FAIL: udata_getMemory() failed: intValue :- Expected:2000 Got:%d \n\tstringValue:- Expected:YEAR Got:%s\n", *intValue, (char*)(intValue+1));
 
     udata_close(result);
 
