@@ -2053,12 +2053,6 @@ zh_Hant{
                 yyyyQQQ{"Gy年QQQ"}
                 yyyyQQQQ{"Gy年QQQQ"}
             }
-            eras{
-                abbreviated{
-                    0{"民國前"}
-                    1{"民國"}
-                }
-            }
         }
     }
     characterLabel{

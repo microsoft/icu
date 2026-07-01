@@ -47,7 +47,6 @@ da{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabisk"}
-        ar_001{"moderne standardarabisk"}
         arc{"aramæisk"}
         arn{"mapudungun"}
         arp{"arapaho"}
@@ -138,8 +137,6 @@ da{
         dar{"dargwa"}
         dav{"taita"}
         de{"tysk"}
-        de_AT{"østrigsk tysk"}
-        de_CH{"schweizerhøjtysk"}
         del{"delaware"}
         den{"athapaskisk"}
         dgr{"dogrib"}
@@ -162,21 +159,13 @@ da{
         el{"græsk"}
         elx{"elamitisk"}
         en{"engelsk"}
-        en_AU{"australsk engelsk"}
-        en_CA{"canadisk engelsk"}
-        en_GB{"britisk engelsk"}
-        en_US{"amerikansk engelsk"}
         enm{"middelengelsk"}
         eo{"esperanto"}
         es{"spansk"}
-        es_419{"latinamerikansk spansk"}
-        es_ES{"europæisk spansk"}
-        es_MX{"mexicansk spansk"}
         et{"estisk"}
         eu{"baskisk"}
         ewo{"ewondo"}
         fa{"persisk"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulah"}
@@ -186,8 +175,6 @@ da{
         fo{"færøsk"}
         fon{"fon"}
         fr{"fransk"}
-        fr_CA{"canadisk fransk"}
-        fr_CH{"schweizisk fransk"}
         frc{"cajunfransk"}
         frm{"middelfransk"}
         fro{"oldfransk"}
@@ -390,7 +377,6 @@ da{
         nia{"nias"}
         niu{"niueansk"}
         nl{"nederlandsk"}
-        nl_BE{"flamsk"}
         nmg{"kwasio"}
         nn{"nynorsk"}
         nnh{"ngiemboon"}
@@ -438,8 +424,6 @@ da{
         pro{"oldprovencalsk"}
         ps{"pashto"}
         pt{"portugisisk"}
-        pt_BR{"brasiliansk portugisisk"}
-        pt_PT{"europæisk portugisisk"}
         qu{"quechua"}
         quc{"quiché"}
         raj{"rajasthani"}
@@ -449,7 +433,6 @@ da{
         rm{"rætoromansk"}
         rn{"rundi"}
         ro{"rumænsk"}
-        ro_MD{"moldovisk"}
         rof{"rombo"}
         rom{"romani"}
         ru{"russisk"}
@@ -477,7 +460,6 @@ da{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"oldirsk"}
-        sh{"serbokroatisk"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"tchadisk arabisk"}
@@ -509,7 +491,6 @@ da{
         sux{"sumerisk"}
         sv{"svensk"}
         sw{"swahili"}
-        sw_CD{"congolesisk swahili"}
         swb{"comorisk"}
         syc{"klassisk syrisk"}
         syr{"syrisk"}
@@ -593,8 +574,6 @@ da{
         zen{"zenaga"}
         zgh{"tamazight"}
         zh{"kinesisk"}
-        zh_Hans{"forenklet kinesisk"}
-        zh_Hant{"traditionelt kinesisk"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"intet sprogligt indhold"}
@@ -605,21 +584,6 @@ da{
     }
     Languages%extension{
         ku{"kurmanji"}
-    }
-    Languages%menu{
-        ars{"arabisk, najdi"}
-        ckb{"kurdisk, sorani"}
-        yue{"kantonesisk (Kina)"}
-        zh{"mandarin (Kina)"}
-    }
-    Languages%short{
-        az{"azeri"}
-    }
-    Languages%variant{
-        ckb{"centralkurdisk"}
-        hi_Latn{"hinglish"}
-        ps{"pushto"}
-        ug{"uighurisk"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -812,7 +776,6 @@ da{
             iso8601{"ISO-8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
-            roc{"kalender for Republikken Kina"}
         }
         calendar%core{
             buddhist{"buddhistisk"}
@@ -828,7 +791,6 @@ da{
             islamic-umalqura{"hijri (Umm al-Qura)"}
             japanese{"japansk"}
             persian{"persisk"}
-            roc{"Republikken Kina"}
         }
         cf{
             account{"format for regnskabsvaluta"}

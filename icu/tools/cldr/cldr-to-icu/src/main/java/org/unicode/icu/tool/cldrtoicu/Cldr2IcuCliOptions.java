@@ -380,7 +380,9 @@ class Cldr2IcuCliOptions {
 
         if (!new File(icuDir).isDirectory()
                 || ! new File(icuDir, "icu4c").isDirectory()
-                || ! new File(icuDir, "icu4j").isDirectory()
+                // MSFT-Change: microsoft/icu fork is icu4c-only; no icu4j source tree.
+                // The Maven dependency on icu4j (used by TransformsMapper) is still
+                // resolved from ~/.m2 at runtime, so source-tree absence is harmless.
                 || ! new File(icuDir, "tools/cldr/cldr-to-icu").isDirectory()
                 || ! new File(icuDir, "tools/cldr/cldr-to-icu/pom.xml").isFile()) {
             System.err.println("The `" + icuDir + "` directory does not look like a valid icu root.");

@@ -44,7 +44,6 @@ sw{
         ann{"Kiobolo"}
         anp{"Kiangika"}
         ar{"Kiarabu"}
-        ar_001{"Kiarabu sanifu"}
         arc{"Kiaramu"}
         arn{"Kimapuche"}
         arp{"Kiarapaho"}
@@ -140,16 +139,12 @@ sw{
         eka{"Kiekajuk"}
         el{"Kigiriki"}
         en{"Kiingereza"}
-        en_GB{"Kiingereza (Uingereza)"}
         eo{"Kiesperanto"}
         es{"Kihispania"}
-        es_419{"Kihispania (Amerika ya Latini)"}
-        es_ES{"Kihispania (Ulaya)"}
         et{"Kiestonia"}
         eu{"Kibaski"}
         ewo{"Kiewondo"}
         fa{"Kiajemi"}
-        fa_AF{"Kiajemi (Afganistani)"}
         ff{"Kifulani"}
         fi{"Kifini"}
         fil{"Kifilipino"}
@@ -332,7 +327,6 @@ sw{
         nia{"Kiniasi"}
         niu{"Kiniuea"}
         nl{"Kiholanzi"}
-        nl_BE{"Kiflemi"}
         nmg{"Kikwasio"}
         nn{"Kinorwe cha Nynorsk"}
         nnh{"Lugha ya Ngiemboon"}
@@ -371,8 +365,6 @@ sw{
         prg{"Kiprussia"}
         ps{"Kipashto"}
         pt{"Kireno"}
-        pt_BR{"Kireno (Brazili)"}
-        pt_PT{"Kireno (Ulaya)"}
         qu{"Kikechua"}
         quc{"Kʼicheʼ"}
         raj{"Kirajasthani"}
@@ -382,7 +374,6 @@ sw{
         rm{"Kiromanshi"}
         rn{"Kirundi"}
         ro{"Kiromania"}
-        ro_MD{"Kimoldova cha Romania"}
         rof{"Kirombo"}
         ru{"Kirusi"}
         rup{"Kiaromania"}
@@ -405,7 +396,6 @@ sw{
         seh{"Kisena"}
         ses{"Kikoyraboro Senni"}
         sg{"Kisango"}
-        sh{"Kiserbia-kroeshia"}
         shi{"Kitachelhit"}
         shn{"Kishan"}
         shu{"Kiarabu cha Chad"}
@@ -502,8 +492,6 @@ sw{
         za{"Kizhuang"}
         zgh{"Kiberber Sanifu cha Moroko"}
         zh{"Kichina"}
-        zh_Hans{"Kichina (Kilichorahisishwa)"}
-        zh_Hant{"Kichina cha Jadi"}
         zu{"Kizulu"}
         zun{"Kizuni"}
         zxx{"Hakuna maudhui ya lugha"}
@@ -514,20 +502,6 @@ sw{
     }
     Languages%extension{
         ku{"Kikurmanji"}
-    }
-    Languages%long{
-        zh_Hant{"Kichina (cha jadi)"}
-    }
-    Languages%menu{
-        yue{"Kichina, Kikantoni"}
-        zh{"Kichina sanifu"}
-    }
-    Languages%short{
-        az{"Kiazeri"}
-    }
-    Languages%variant{
-        hi_Latn{"Kihindi chenye Kiingereza"}
-        ps{"Kipushto"}
     }
     Scripts{
         Adlm{"Kiadlamu"}
@@ -612,7 +586,6 @@ sw{
             iso8601{"Kalenda ya ISO-8601"}
             japanese{"Kalenda ya Kijapani"}
             persian{"Kalenda ya Kiajemi"}
-            roc{"Kalenda ya Jamhuri ya Uchina"}
         }
         calendar%core{
             buddhist{"Kibudha"}
@@ -628,7 +601,6 @@ sw{
             islamic-umalqura{"Hijra (Umm al-Qura)"}
             japanese{"Kijapani"}
             persian{"Kiajemi"}
-            roc{"Kiminguo"}
         }
         cf{
             account{"Mpangilio wa Kihasibu wa Sarafu"}

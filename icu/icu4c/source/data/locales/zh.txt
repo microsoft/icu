@@ -2073,28 +2073,6 @@ zh{
                 }
             }
         }
-        roc{
-            availableFormats{
-                GyM{"Gy年M月"}
-                GyMEd{"Gy-MM-dd E"}
-                M{"M月"}
-                MMM{"LLL"}
-                yyyyMEd{"Gy/M/dE"}
-                yyyyMMMEd{"Gy年M月d日E"}
-                yyyyMd{"Gy/M/d"}
-            }
-            eras{
-                abbreviated{
-                    0{"民国前"}
-                    1{"民国"}
-                }
-            }
-            intervalFormats{
-                MMM{
-                    M{"MMM – MMM"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"行为"}

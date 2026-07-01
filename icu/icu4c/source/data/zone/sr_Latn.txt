@@ -853,9 +853,6 @@ sr_Latn{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumći"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Nera"}
         }

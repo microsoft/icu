@@ -87,3 +87,12 @@ configure text
 # Use JSONC for syntax highlighting on GitHub.com
 *.json linguist-language=jsonc
 
+# Codepoint trie golden tests compare bytes; keep generated TOML line endings stable.
+icu/icu4c/source/test/testdata/codepointtrie/*.toml text eol=lf
+
+# Shell script fragments assembled into icu-config (an executable shell script).
+# They must have LF line endings so WSL/Linux can execute the generated file.
+icu/icu4c/source/config/icu-config-top    text eol=lf
+icu/icu4c/source/config/icu-config-bottom text eol=lf
+icu/icu4c/source/config/mh-*              text eol=lf
+

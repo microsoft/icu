@@ -1,0 +1,26 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Tue, 19 May 2026 06:45:00 +0530
+Subject: MSFT-PATCH: Keep generated ICU test and shell artifacts LF-only
+
+Adds checkout EOL rules for byte-compared codepoint trie TOML goldens and generated icu-config shell fragments.
+
+These files are consumed by Linux/WSL test paths, where CRLF checkout breaks byte comparisons or executable shell-script behavior.
+
+diff --git a/.gitattributes b/.gitattributes
+index e7e0adbc65558ba2cc97a1d29a2a9a0aa378410b..976273bf156cbeb81e0ab0f5b8db4173fa46a1eb 100644
+--- a/.gitattributes
++++ b/.gitattributes
+@@ -87,3 +87,12 @@ configure text
+ # Use JSONC for syntax highlighting on GitHub.com
+ *.json linguist-language=jsonc
+ 
++# Codepoint trie golden tests compare bytes; keep generated TOML line endings stable.
++icu/icu4c/source/test/testdata/codepointtrie/*.toml text eol=lf
++
++# Shell script fragments assembled into icu-config (an executable shell script).
++# They must have LF line endings so WSL/Linux can execute the generated file.
++icu/icu4c/source/config/icu-config-top    text eol=lf
++icu/icu4c/source/config/icu-config-bottom text eol=lf
++icu/icu4c/source/config/mh-*              text eol=lf
++

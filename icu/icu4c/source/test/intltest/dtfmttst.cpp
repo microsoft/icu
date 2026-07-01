@@ -1003,7 +1003,7 @@ DateFormatTest::TestBadInput135()
       dataerrln("could not create date time instance");
       return;
     }
-    UnicodeString expected(u"March 1, 2000 at 1:23:45\u202FAM", -1);
+    UnicodeString expected(u"March 1, 2000 at 1:23:45 AM", -1);
     for (int32_t i = 0; i < strings_length;++i) {
         const char* text = strings[i];
         for (int32_t j = 0; j < looks_length;++j) {
@@ -1342,7 +1342,7 @@ DateFormatTest::TestLocaleDateFormat() // Bug 495
         DateFormat::FULL, Locale::getUS());
     UnicodeString expectedFRENCH ( u"lundi 15 septembre 1997 à 00:00:00 heure d’été du Pacifique nord-américain", -1 );
     expectedFRENCH = expectedFRENCH.unescape();
-    UnicodeString expectedUS ( u"Monday, September 15, 1997 at 12:00:00\u202FAM Pacific Daylight Time", -1 );
+    UnicodeString expectedUS ( u"Monday, September 15, 1997 at 12:00:00 AM Pacific Daylight Time", -1 );
     logln(UnicodeString("Date set to : ") + dateToString(testDate));
     UnicodeString out;
     if (dfUS == nullptr || dfFrench == nullptr){
@@ -5028,7 +5028,7 @@ void DateFormatTest::TestPatternFromSkeleton() {
         const char16_t* const pattern;
     } TESTDATA[] = {
         // Ticket #11985
-        {Locale::getEnglish(), "jjmm", u"h:mm\u202Fa"},
+        {Locale::getEnglish(), "jjmm", u"h:mm a"},
         {Locale::getEnglish(), "JJmm", u"hh:mm"},
         {Locale::getGerman(), "jjmm", u"HH:mm"},
         {Locale::getGerman(), "JJmm", u"HH:mm"},
@@ -5851,10 +5851,10 @@ void DateFormatTest::TestHourCycle() {
         UnicodeString expectedResult;
     } TEST_CASES[] = {
         // test some locales for which we have data
-        { "en-us", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
-        { "en-ca", u"Tuesday, March 16, 1943 at 3:45:32 p.m." },
+        { "en-us", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
+        { "en-ca", u"Tuesday, March 16, 1943 at 3:45:32 p.m." },
         { "en-gb", u"Tuesday, 16 March 1943 at 15:45:32" },
-        { "en-au", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
+        { "en-au", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
         // test a couple locales for which we don't have specific locale files (we should still get the correct hour cycle)
         { "en-co", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
         { "en-mx", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
@@ -5862,12 +5862,12 @@ void DateFormatTest::TestHourCycle() {
         { "en-us-u-rg-gbzzzz", u"Tuesday, March 16, 1943 at 15:45:32" },
         { "en-us-u-rg-cazzzz", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
         { "en-ca-u-rg-uszzzz", u"Tuesday, March 16, 1943 at 3:45:32 p.m." },
-        { "en-gb-u-rg-uszzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
-        { "en-gb-u-rg-cazzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
-        { "en-gb-u-rg-auzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
+        { "en-gb-u-rg-uszzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
+        { "en-gb-u-rg-cazzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
+        { "en-gb-u-rg-auzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
         // test that the hc ("hours") subtag does the right thing
         { "en-us-u-hc-h23", u"Tuesday, March 16, 1943 at 15:45:32" },
-        { "en-gb-u-hc-h12", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
+        { "en-gb-u-hc-h12", u"Tuesday, 16 March 1943 at 3:45:32 pm" },
         // test that the rg and hc subtags do the right thing when used together
         { "en-us-u-rg-gbzzzz-hc-h12", u"Tuesday, March 16, 1943 at 3:45:32 PM" },
         { "en-gb-u-rg-uszzzz-hc-h23", u"Tuesday, 16 March 1943 at 15:45:32" },

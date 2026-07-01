@@ -19,7 +19,6 @@ blo{
         ann{"oboloo kagɩja"}
         apc{"gjakalaŋ kagɩlaarɩbuja"}
         ar{"gɩlaaribuja"}
-        ar_001{"gɩlaaribuja ŋgɩɖee kǝ ba na fʊba na"}
         arn{"mapushi kagɩja"}
         as{"Assamɛs kagɩja"}
         asa{"Asuu kagɩja"}
@@ -80,15 +79,12 @@ blo{
         ee{"gɩyigbeja"}
         el{"grɛɛkɩ kagɩja"}
         en{"gɛɛshɩ"}
-        en_US{"gɛɛshɩ (Ganɔ gaɖɔŋkɔnɔ kabʊtǝna Amalɩka nɩ)"}
         eo{"Ɛspɛrnatoo kagɩja"}
         es{"gɩspaŋja"}
-        es_419{"gɩspaŋja (latɛŋ kaAmalɩkatǝna)"}
         et{"Ɛstonia kagɩja"}
         eu{"Baske kagɩja"}
         ewo{"Ɛwonɖoo kagɩja"}
         fa{"pɛrsɩaŋ kagɩja"}
-        fa_AF{"ɖaarii kagɩja"}
         ff{"gɩfǝlanɖɩja"}
         fi{"finiish kagɩja"}
         fil{"filipinoo kagɩja"}
@@ -112,7 +108,6 @@ blo{
         haw{"hawahiyaŋ kagɩja"}
         he{"hebree kagɩja"}
         hi{"hinɖii kagɩja"}
-        hi_Latn{"hinɖii kagɩja (latɛŋ kʊja)"}
         hnj{"Hmoŋg ŋjʊwaa kagɩja"}
         hr{"Kʊrwasiya kagɩja"}
         hsb{"Upɛr Sɔrbɩyaŋ kagɩja"}
@@ -211,7 +206,6 @@ blo{
         nb{"nɔrfɛɛjɩ bokimalɩ kagɩja"}
         nd{"nɖebelee gʊnyɩpɛnɛlaŋ kagɩja"}
         nds{"jaama atǝntǝn kagɩja"}
-        nds_NL{"jaama atǝntǝn kagɩja (Holanɖ)"}
         ne{"nepal kagɩja"}
         nl{"Holanɖ kagɩja"}
         nmg{"kʊwasiyo kagɩja"}
@@ -247,7 +241,6 @@ blo{
         rm{"Romaŋshɩ kagɩja"}
         rn{"Rʊnɖii kagɩja"}
         ro{"Romaniaŋ kagɩja"}
-        ro_MD{"Romaniaŋ kagɩja (Mɔlɖafiya)"}
         rof{"Rɔŋboo kagɩja"}
         ru{"gɩrɔɔshɩyaja"}
         rw{"kiŋyarwan kagɩja"}
@@ -287,7 +280,6 @@ blo{
         su{"sunɖanɛsɩ kagɩja"}
         sv{"sʊwɛɛɖɩ kagɩja"}
         sw{"sʊwahilii kagɩja"}
-        sw_CD{"Ccŋgoo sʊwahilii kagɩja"}
         syr{"siriyaakɩ kagɩja"}
         szl{"Sisiliyaŋ kagɩja"}
         ta{"Tamil kagɩja (Gɩtamilja)"}
@@ -338,8 +330,6 @@ blo{
         za{"Gɩsʊaŋja"}
         zgh{"morooko tamsiik ka (tututu) kagɩja"}
         zh{"gɩcaɩnaja manɖarɛŋ"}
-        zh_Hans{"gɩcaɩnaja gɩburoka"}
-        zh_Hant{"gɩcaɩnaja tututu"}
         zu{"Gɩsuluja"}
         zxx{"gɩkrǝ kakoɖǝn ɩ mana"}
     }
@@ -348,23 +338,6 @@ blo{
     }
     Languages%extension{
         ku{"Kʊrmanjii kagɩja"}
-    }
-    Languages%long{
-        zh_Hans{"gɩcaɩnaja manɖarɛŋ gɩburoka"}
-        zh_Hant{"gɩcaɩnaja manɖarɛŋ tututu"}
-    }
-    Languages%menu{
-        ckb{"Kurɖish, gɩcɩɩca kagɩja"}
-        yue{"Kantonɛs kagɩcaɩnaja"}
-        zh{"gɩcaɩnaja, manɖarɛŋ"}
-    }
-    Languages%short{
-        az{"Aserii kagɩja"}
-        en_US{"gɛɛshɩ (GKA)"}
-    }
-    Languages%variant{
-        ckb{"Kurɖish, Sorani kagɩja"}
-        hi_Latn{"hiŋgliishɩ kagɩja"}
     }
     Scripts{
         Arab{"laaribu kʊja"}
@@ -402,7 +375,6 @@ blo{
             iso8601{"Gregɔɔ ‘ɩshilé n’‘ɩŋɔrɔ ɩtʊrka (asǝba na gaja)"}
             japanese{"Japaŋ kɩshilé na kɩŋɔrɔ ɩtʊrka"}
             persian{"Pɛrs kǝbaja bɩshilé na kɩŋɔrɔ ɩtʊrka"}
-            roc{"miŋguwo kɩshilé na kɩŋɔrɔ ɩtʊrka"}
         }
         calendar%core{
             gregorian{"Gregɔɔ kaja"}

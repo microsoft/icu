@@ -17,7 +17,6 @@ ak{
         ak{"Akan"}
         am{"Amariki"}
         ar{"Arabeke"}
-        ar_001{"Arabeke Kasa Nhyehyɛeɛ Foforɔ"}
         as{"Asamese"}
         ast{"Asturiani"}
         az{"Asabegyanni"}
@@ -40,15 +39,11 @@ ak{
         cy{"Wɛɛhye Kasa"}
         da{"Dane kasa"}
         de{"Gyaaman"}
-        de_AT{"Ɔstria Gyaaman"}
-        de_CH{"Swisalande Gyaaman"}
         doi{"Dɔgri"}
         dsb{"Sɔɔbia a ɛwɔ fam"}
         ee{"Ayigbe"}
         el{"Greek kasa"}
         en{"Borɔfo"}
-        en_GB{"Ngresi Borɔfo"}
-        en_US{"Amɛrika Borɔfo"}
         eo{"Esperanto"}
         es{"Spain kasa"}
         et{"Estonia kasa"}
@@ -59,8 +54,6 @@ ak{
         fil{"Filipin kasa"}
         fo{"Farosi"}
         fr{"Frɛnkye"}
-        fr_CA{"Kanada Frɛnkye"}
-        fr_CH{"Swisalande Frɛnkye"}
         fy{"Atɔeɛ Fam Frihyia Kasa"}
         ga{"Aerelande kasa"}
         gd{"Skotlandfoɔ Galek Kasa"}
@@ -69,7 +62,6 @@ ak{
         ha{"Hausa"}
         he{"Hibri kasa"}
         hi{"Hindi"}
-        hi_Latn{"Laatenfoɔ Hindi"}
         hr{"Kurowehyia kasa"}
         hsb{"Atifi fam Sɔɔbia Kasa"}
         hu{"Hangri kasa"}
@@ -114,7 +106,6 @@ ak{
         nds{"Gyaaman kasa a ɛwɔ fam"}
         ne{"Nɛpal kasa"}
         nl{"Dɛɛkye"}
-        nl_BE{"Dɛɛkye (Bɛɛgyiɔm"}
         nn{"Nɔwefoɔ Ninɔso"}
         no{"Nɔwefoɔ kasa"}
         nqo{"Nko"}
@@ -173,21 +164,8 @@ ak{
         yue{"Kantonese"}
         za{"Zuang"}
         zh{"Kyaena kasa"}
-        zh_Hans{"Kyaena kasa a emu yɛ mmrɛ"}
-        zh_Hant{"Tete Kyaena kasa"}
         zu{"Zulu"}
         zxx{"Lengwestese biara nnim"}
-    }
-    Languages%long{
-        zh_Hans{"Mandarin Kyaena kasa a emu yɛ mmrɛ"}
-        zh_Hant{"Tete Mandarin Kyaena kasa"}
-    }
-    Languages%menu{
-        yue{"Kyaena Kantonese"}
-        zh{"Madarin, Kyaena kasa"}
-    }
-    Languages%variant{
-        hi_Latn{"Hindibrɔfo"}
     }
     Scripts{
         Adlm{"Adlam kasa"}
@@ -268,7 +246,6 @@ ak{
             iso8601{"ISO-8601 Kalɛnna"}
             japanese{"Gyapanfoɔ Kalɛnna"}
             persian{"Pɛɛsiafoɔ Kalɛnda"}
-            roc{"Minguo Kalɛnda"}
         }
         calendar%core{
             gregorian{"Gregorian"}

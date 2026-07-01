@@ -1278,17 +1278,6 @@ fi{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"e. Kiinan tasav."}
-                    1{"Minguo"}
-                }
-                wide{
-                    0{"ennen Kiinan tasavaltaa"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"toiminta"}

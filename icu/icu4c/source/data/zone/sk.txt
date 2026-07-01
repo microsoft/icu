@@ -234,9 +234,6 @@ sk{
         "Asia:Ulaanbaatar"{
             ec{"Ulanbátar"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumči"}
-        }
         "Asia:Ust-Nera"{
             ec{"Usť-Nera"}
         }

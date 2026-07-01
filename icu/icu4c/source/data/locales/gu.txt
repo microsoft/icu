@@ -865,14 +865,6 @@ gu{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"આર.ઓ.સી. પહેલાં"}
-                    1{"આર.ઓ.સી."}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"પ્રવૃત્તિ"}

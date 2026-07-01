@@ -1235,13 +1235,6 @@ hr{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"prije R.O.C."}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktivnost"}

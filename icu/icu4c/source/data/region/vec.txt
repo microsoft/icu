@@ -94,17 +94,14 @@ vec{
         CY{"Sipro"}
         CZ{"Cechia"}
         DE{"Jermania"}
-        DG{"Diego Garcia"}
         DJ{"Jibuti"}
         DK{"Danimarca"}
         DM{"Doménega"}
         DO{"Repùblega Domenegana"}
         DZ{"Aljerìa"}
-        EA{"Ceuta e Melila"}
         EC{"Ècuador"}
         EE{"Estonia"}
         EG{"Ejito"}
-        EH{"Sahara Osidentale"}
         ER{"Eritrèa"}
         ES{"Spagna"}
         ET{"Etiopia"}
@@ -141,7 +138,6 @@ vec{
         HR{"Croasia"}
         HT{"Haiti"}
         HU{"Ongarìa"}
-        IC{"Ìzole Canarie"}
         ID{"Indonezia"}
         IE{"Irlanda"}
         IL{"Izraele"}
@@ -289,8 +285,6 @@ vec{
         VU{"Vanuatu"}
         WF{"Wallis e Futuna"}
         WS{"Samòa"}
-        XA{"Pseudo asenti"}
-        XB{"Pseudo bidi"}
         XK{"Kòsovo"}
         YE{"Yemen"}
         YT{"Ìzole Maiote"}
@@ -298,25 +292,5 @@ vec{
         ZM{"Zanbia"}
         ZW{"Zinbawe"}
         ZZ{"Rejon desconosùa"}
-    }
-    Countries%chagos{
-        IO{"Arsipèlago Ciagos"}
-    }
-    Countries%short{
-        GB{"UK"}
-        HK{"Hong Kong"}
-        MO{"Macào"}
-        PS{"Palestina"}
-        US{"USA"}
-    }
-    Countries%variant{
-        CD{"Congo (RDC)"}
-        CG{"Congo (RC)"}
-        CI{"Côte d’Ivoire"}
-        CZ{"Repùblega Ceca"}
-        FK{"Ìzole Falkland"}
-        NZ{"Aotearóa (Nova Zelanda)"}
-        SZ{"Swazilanda"}
-        TL{"Timor Leste"}
     }
 }

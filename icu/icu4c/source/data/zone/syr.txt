@@ -852,9 +852,6 @@ syr{
         "Asia:Ulaanbaatar"{
             ec{"ܐܘܠܐܢܒܐܬܘܪ"}
         }
-        "Asia:Urumqi"{
-            ec{"ܐܘܪܘܡܟܝ"}
-        }
         "Asia:Ust-Nera"{
             ec{"ܐܘܣܬ-ܢܝܪܐ"}
         }

@@ -48,7 +48,7 @@ there was {$what} on planet {$planet :integer}.")
                                 .setArgument("planet", (int64_t) 7)
                                 .setDateArgument("when", (UDate) 871068000000)
                                 .setArgument("what", "a disturbance in the Force")
-                                .setExpected(CharsToUnicodeString("At 12:20:00\\u202FPM on Aug 8, 1997, there was a disturbance in the Force on planet 7."))
+                                .setExpected(CharsToUnicodeString("At 12:20:00 PM on Aug 8, 1997, there was a disturbance in the Force on planet 7."))
                                 .build(), errorCode);
 }
 

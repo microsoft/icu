@@ -31,7 +31,6 @@ qu{
         ann{"Obolo Simi"}
         anp{"Angika"}
         ar{"Arabe Simi"}
-        ar_001{"Musuq Estandar Arabe Simi"}
         arn{"Mapuche Simi"}
         arp{"Arapaho"}
         ars{"Árabe Najdi Simi"}
@@ -114,12 +113,10 @@ qu{
         en{"Ingles Simi"}
         eo{"Esperanto Simi"}
         es{"Español Simi"}
-        es_419{"Español Simi (Latino América)"}
         et{"Estonio Simi"}
         eu{"Euskera Simi"}
         ewo{"Ewondo Simi"}
         fa{"Persa Simi"}
-        fa_AF{"Dari Simi"}
         ff{"Fulah Simi"}
         fi{"Fines Simi"}
         fil{"Filipino Simi"}
@@ -289,7 +286,6 @@ qu{
         nia{"Nias Simi"}
         niu{"Niuean Simi"}
         nl{"Neerlandes Simi"}
-        nl_BE{"Flamenco Simi"}
         nmg{"Kwasio Ngumba Simi"}
         nn{"Noruego Nynorsk Simi"}
         nnh{"Ngiemboon Simi"}
@@ -376,7 +372,6 @@ qu{
         suk{"Sukuma Simi"}
         sv{"Sueco Simi"}
         sw{"Suajili Simi"}
-        sw_CD{"Suajili Simi (Congo (RDC))"}
         swb{"Comorian Simi"}
         syr{"Siriaco Simi"}
         szl{"Silesiano"}
@@ -443,8 +438,6 @@ qu{
         za{"Zhuang"}
         zgh{"Bereber Marroquí Estándar Simi"}
         zh{"Chino Simi"}
-        zh_Hans{"Chino Simplificado Simi"}
-        zh_Hant{"Chino Tradicional Simi"}
         zu{"Isizulu Simi"}
         zun{"Zuni Simi"}
         zxx{"Manaraq simi yachana"}
@@ -455,24 +448,6 @@ qu{
     }
     Languages%extension{
         ku{"Kurmanji Simi"}
-    }
-    Languages%long{
-        zh_Hans{"Chino Mandarín Simplificado Simi"}
-        zh_Hant{"Chino Mandarín Tradicional Simi"}
-    }
-    Languages%menu{
-        ckb{"Kurdo Simi, Chawpi"}
-        yue{"Chino Cantonés Simi"}
-        zh{"Chino Mandarín Simi"}
-    }
-    Languages%short{
-        az{"Azerí Simi"}
-        en_GB{"Ingles Simi (GB)"}
-        en_US{"Ingles Simi (US)"}
-    }
-    Languages%variant{
-        ckb{"Kurdo Simi, Sorani"}
-        hi_Latn{"Hinglish Simi"}
     }
     Scripts{
         Adlm{"Adlam Simi"}
@@ -553,7 +528,6 @@ qu{
             iso8601{"ISO-8601 Intiwatana"}
             japanese{"Japones Intiwatana"}
             persian{"Persa Intiwatana"}
-            roc{"Minguo Intiwatana"}
         }
         calendar%core{
             buddhist{"Buddhist"}
@@ -569,7 +543,6 @@ qu{
             islamic-umalqura{"Hijri (Umm al-Qura)"}
             japanese{"Japones"}
             persian{"Persa"}
-            roc{"Minguo"}
         }
         cf{
             account{"Yupana Qullqi imayna kaynin"}

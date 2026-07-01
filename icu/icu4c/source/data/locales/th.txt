@@ -1546,38 +1546,6 @@ th{
                 }
             }
         }
-        roc{
-            DateTimePatterns{
-                "H นาฬิกา mm นาที ss วินาที zzzz",
-                "H นาฬิกา mm นาที ss วินาที z",
-                "HH:mm:ss",
-                "HH:mm",
-                "EEEEที่ d MMMM ปีGที่ y",
-                "d MMMM ปีG y",
-                "d MMM G y",
-                "d/M/y G",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-                "{1} {0}",
-            }
-            availableFormats{
-                Gy{"ปีGที่ y"}
-                MEd{"E, d/M"}
-                y{"ปีGที่ y"}
-                yyyy{"ปีGที่ y"}
-                yyyyM{"M/GGGGG y"}
-                yyyyMEd{"E d/M/GGGGG y"}
-                yyyyMd{"d/M/GGGGG y"}
-            }
-            eras{
-                abbreviated{
-                    0{"ปีก่อนไต้หวัน"}
-                    1{"ไต้หวัน"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"กิจกรรม"}

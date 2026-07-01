@@ -911,14 +911,6 @@ ur{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"قبل از جمہوریہ چین"}
-                    1{"جمہوریہ چین"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"سرگرمی"}
