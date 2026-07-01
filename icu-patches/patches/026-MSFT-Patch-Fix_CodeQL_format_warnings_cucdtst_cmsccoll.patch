@@ -1,0 +1,642 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Wed, 1 Jul 2026 23:15:39 +0530
+Subject: Fix ICU 78 CodeQL format-string warnings in cucdtst.c and cmsccoll.c
+
+Clears the remaining cpp/wrong-type-format-argument (and one
+cpp/tainted-format-string) alerts surfaced when the #153 restoration
+touched these two files:
+- cmsccoll.c: 22 UChar* printed with %s -> austrdup() (NUL-terminated) or
+  aescstrdup(buf,len) (U16_APPEND / uset_getItem buffers).
+- cucdtst.c: 59 %l* specifiers vs 32-bit args -> drop the l
+  (%lx->%x, %lu->%u, %ld->%d); flagged specifier only.
+- cucdtst.c MakeProp: log_err(str) -> log_err("%s", str) (tainted format).
+
+Pre-existing upstream test-code issues; fixed per CodeQL guidance plus the
+files own idioms. Implemented by GPT-5.5 (dual blind research), verified.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+
+diff --git a/icu/icu4c/source/test/cintltst/cmsccoll.c b/icu/icu4c/source/test/cintltst/cmsccoll.c
+index 9d742751c4afe9124d44c260750ad3e89e15dbf0..ad7f16e1c2615cbdc119dc5c45ddbdb0797026bb 100644
+--- a/icu/icu4c/source/test/cintltst/cmsccoll.c
++++ b/icu/icu4c/source/test/cintltst/cmsccoll.c
+@@ -3654,7 +3654,7 @@ TestVI5913(void)
+ 
+     for (j=0; j<8; j++) {
+         tLen = u_strlen(tData[j]);
+-        log_verbose("\n Data :%s  \tlen: %d key: ", tData[j], tLen);
++        log_verbose("\n Data :%s  \tlen: %d key: ", austrdup(tData[j]), tLen);
+         rLen = ucol_getSortKey(coll, tData[j], tLen, resColl, 100);
+         for(i = 0; i<rLen; i++) {
+             log_verbose(" %02X", resColl[i]);
+@@ -3678,7 +3678,7 @@ TestVI5913(void)
+ 
+     for (j=4; j<8; j++) {
+         tLen = u_strlen(tData[j]);
+-        log_verbose("\n Data :%s  \tlen: %d key: ", tData[j], tLen);
++        log_verbose("\n Data :%s  \tlen: %d key: ", austrdup(tData[j]), tLen);
+         rLen = ucol_getSortKey(coll, tData[j], tLen, resColl, 100);
+         for(i = 0; i<rLen; i++) {
+             log_verbose(" %02X", resColl[i]);
+@@ -3698,7 +3698,7 @@ TestVI5913(void)
+     for (j=1; j<6; j++) {
+         tLen = u_strlen(tailorData[j]);
+         if ( !ucol_equal(coll, tailorData[0], sLen, tailorData[j], tLen))  {
+-            log_err("\n \\u1FA2 not equals to data[%d]:%s\n", j, tailorData[j]);
++            log_err("\n \\u1FA2 not equals to data[%d]:%s\n", j, austrdup(tailorData[j]));
+         }
+     }
+     /* Test getSortKey. */
+@@ -3708,7 +3708,7 @@ TestVI5913(void)
+         tLen = u_strlen(tailorData[j]);
+         rLen = ucol_getSortKey(coll, tailorData[j], tLen, resColl, 100);
+         if ( kLen!=rLen || uprv_memcmp(expColl, resColl, rLen*sizeof(uint8_t))!=0 ) {
+-            log_err("\n Data[%d] :%s  \tlen: %d key: ", j, tailorData[j], tLen);
++            log_err("\n Data[%d] :%s  \tlen: %d key: ", j, austrdup(tailorData[j]), tLen);
+             for(i = 0; i<rLen; i++) {
+                 log_err(" %02X", resColl[i]);
+             }
+@@ -3725,7 +3725,7 @@ TestVI5913(void)
+         tLen = u_strlen(tailorData2[j]);
+         rLen = ucol_getSortKey(coll, tailorData2[j], tLen, resColl, 100);
+         if ( kLen!=rLen || uprv_memcmp(expColl, resColl, rLen*sizeof(uint8_t))!=0 ) {
+-            log_err("\n After tailoring Data[%d] :%s  \tlen: %d key: ", j, tailorData[j], tLen);
++            log_err("\n After tailoring Data[%d] :%s  \tlen: %d key: ", j, austrdup(tailorData2[j]), tLen);
+             for(i = 0; i<rLen; i++) {
+                 log_err(" %02X", resColl[i]);
+             }
+@@ -3819,7 +3819,7 @@ TestTailor6179(void)
+     tLen = u_strlen(tData1[0]);
+     rLen = ucol_getSortKey(coll, tData1[0], tLen, resColl, 100);
+     if (rLen != UPRV_LENGTHOF(lastPrimaryIgnCE) || uprv_memcmp(resColl, lastPrimaryIgnCE, rLen) != 0) {
+-        log_err("Bad result for &[lpi]<<a...: Data[%d] :%s  \tlen: %d key: ", 0, tData1[0], rLen);
++        log_err("Bad result for &[lpi]<<a...: Data[%d] :%s  \tlen: %d key: ", 0, austrdup(tData1[0]), rLen);
+         for(i = 0; i<rLen; i++) {
+             log_err(" %02X", resColl[i]);
+         }
+@@ -3828,7 +3828,7 @@ TestTailor6179(void)
+     tLen = u_strlen(tData1[1]);
+     rLen = ucol_getSortKey(coll, tData1[1], tLen, resColl, 100);
+     if (rLen != UPRV_LENGTHOF(firstPrimaryIgnCE) || uprv_memcmp(resColl, firstPrimaryIgnCE, rLen) != 0) {
+-        log_err("Bad result for &[lpi]<<a...: Data[%d] :%s  \tlen: %d key: ", 1, tData1[1], rLen);
++        log_err("Bad result for &[lpi]<<a...: Data[%d] :%s  \tlen: %d key: ", 1, austrdup(tData1[1]), rLen);
+         for(i = 0; i<rLen; i++) {
+             log_err(" %02X", resColl[i]);
+         }
+@@ -3850,7 +3850,7 @@ TestTailor6179(void)
+     tLen = u_strlen(tData2[0]);
+     rLen = ucol_getSortKey(coll, tData2[0], tLen, resColl, 100);
+     if (rLen != UPRV_LENGTHOF(lastSecondaryIgnCE) || uprv_memcmp(resColl, lastSecondaryIgnCE, rLen) != 0) {
+-        log_err("Bad result for &[lsi]<<<a...: Data[%d] :%s  \tlen: %d key: ", 0, tData2[0], rLen);
++        log_err("Bad result for &[lsi]<<<a...: Data[%d] :%s  \tlen: %d key: ", 0, austrdup(tData2[0]), rLen);
+         for(i = 0; i<rLen; i++) {
+             log_err(" %02X", resColl[i]);
+         }
+@@ -3859,7 +3859,7 @@ TestTailor6179(void)
+     tLen = u_strlen(tData2[1]);
+     rLen = ucol_getSortKey(coll, tData2[1], tLen, resColl, 100);
+     if (rLen != UPRV_LENGTHOF(firstSecondaryIgnCE) || uprv_memcmp(resColl, firstSecondaryIgnCE, rLen) != 0) {
+-      log_err("Bad result for &[lsi]<<<a...: Data[%d] :%s  \tlen: %d key: ", 1, tData2[1], rLen);
++      log_err("Bad result for &[lsi]<<<a...: Data[%d] :%s  \tlen: %d key: ", 1, austrdup(tData2[1]), rLen);
+       for(i = 0; i<rLen; i++) {
+         log_err(" %02X", resColl[i]);
+       }
+@@ -3905,9 +3905,9 @@ TestUCAPrecontext(void)
+         rLen = ucol_getSortKey(coll, tData1[j], tLen, resColl, 100);
+         if ((j>0) && (strcmp((char *)resColl, (char *)prevColl)<0)) {
+             log_err("\n Expecting greater key than previous test case: Data[%d] :%s.",
+-                    j, tData1[j]);
++                    j, austrdup(tData1[j]));
+         }
+-        log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, tData1[j], rLen);
++        log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, austrdup(tData1[j]), rLen);
+         for(i = 0; i<rLen; i++) {
+             log_verbose(" %02X", resColl[i]);
+         }
+@@ -3927,9 +3927,9 @@ TestUCAPrecontext(void)
+          rLen = ucol_getSortKey(coll, tData1[j], tLen, resColl, 100);
+          if ((j>0) && (strcmp((char *)resColl, (char *)prevColl)<0)) {
+              log_err("\n Expecting greater key than previous test case: Data[%d] :%s.",
+-                     j, tData1[j]);
++                     j, austrdup(tData1[j]));
+          }
+-         log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, tData1[j], rLen);
++         log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, austrdup(tData1[j]), rLen);
+          for(i = 0; i<rLen; i++) {
+              log_verbose(" %02X", resColl[i]);
+          }
+@@ -3950,9 +3950,9 @@ TestUCAPrecontext(void)
+           rLen = ucol_getSortKey(coll, tData1[j], tLen, resColl, 100);
+           if ((j>0) && (strcmp((char *)resColl, (char *)prevColl)<0)) {
+               log_err("\n Expecting greater key than previous test case: Data[%d] :%s.",
+-                      j, tData1[j]);
++                      j, austrdup(tData1[j]));
+           }
+-          log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, tData1[j], rLen);
++          log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, austrdup(tData1[j]), rLen);
+           for(i = 0; i<rLen; i++) {
+               log_verbose(" %02X", resColl[i]);
+           }
+@@ -3973,13 +3973,13 @@ TestUCAPrecontext(void)
+            rLen = ucol_getSortKey(coll, tData1[j], tLen, resColl, 100);
+            if ((j>0) && (j!=3) && (strcmp((char *)resColl, (char *)prevColl)<0)) {
+                log_err("\n Expecting greater key than previous test case: Data[%d] :%s.",
+-                       j, tData1[j]);
++                       j, austrdup(tData1[j]));
+            }
+            if ((j==3)&&(strcmp((char *)resColl, (char *)prevColl)>0)) {
+                log_err("\n Expecting smaller key than previous test case: Data[%d] :%s.",
+-                       j, tData1[j]);
++                       j, austrdup(tData1[j]));
+            }
+-           log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, tData1[j], rLen);
++           log_verbose("\n Data[%d] :%s  \tlen: %d key: ", j, austrdup(tData1[j]), rLen);
+            for(i = 0; i<rLen; i++) {
+                log_verbose(" %02X", resColl[i]);
+            }
+@@ -5606,7 +5606,7 @@ static void TestImport(void)
+                 ucol_getSortKey(viescoll, str, 1, sk1, 500);
+                 ucol_getSortKey(importviescoll, str, 1, sk2, 500);
+                 if(compare_uint8_t_arrays(sk1, sk2) != 0){
+-                    log_err("Sort key for %s not equal\n", str);
++                    log_err("Sort key for %s not equal\n", aescstrdup(str, k));
+                     break;
+                 }
+             }
+@@ -5614,7 +5614,7 @@ static void TestImport(void)
+             ucol_getSortKey(viescoll, str, strLength, sk1, 500);
+             ucol_getSortKey(importviescoll, str, strLength, sk2, 500);
+             if(compare_uint8_t_arrays(sk1, sk2) != 0){
+-                log_err("ZZSort key for %s not equal\n", str);
++                log_err("ZZSort key for %s not equal\n", aescstrdup(str, strLength));
+                 break;
+             }
+ 
+@@ -5716,7 +5716,7 @@ static void TestImportWithType(void)
+                 ucol_getSortKey(videcoll, str, 1, sk1, 500);
+                 ucol_getSortKey(importvidecoll, str, 1, sk2, 500);
+                 if(compare_uint8_t_arrays(sk1, sk2) != 0){
+-                    log_err("Sort key for %s not equal\n", str);
++                    log_err("Sort key for %s not equal\n", aescstrdup(str, k));
+                     break;
+                 }
+             }
+@@ -5724,7 +5724,7 @@ static void TestImportWithType(void)
+             ucol_getSortKey(videcoll, str, strLength, sk1, 500);
+             ucol_getSortKey(importvidecoll, str, strLength, sk2, 500);
+             if(compare_uint8_t_arrays(sk1, sk2) != 0){
+-                log_err("Sort key for %s not equal\n", str);
++                log_err("Sort key for %s not equal\n", aescstrdup(str, strLength));
+                 break;
+             }
+ 
+diff --git a/icu/icu4c/source/test/cintltst/cucdtst.c b/icu/icu4c/source/test/cintltst/cucdtst.c
+index 702330ffc97462c1af5cf968275c035192b1ff5c..e076def5917a6e392c83e68996e617fca0e85d38 100644
+--- a/icu/icu4c/source/test/cintltst/cucdtst.c
++++ b/icu/icu4c/source/test/cintltst/cucdtst.c
+@@ -237,7 +237,7 @@ Checks LetterLike Symbols which were previously a source of confusion
+ 
+     for(i=0; i < u_strlen(upper); i++){
+         if(u_tolower(upper[i]) != lower[i]){
+-            log_err("FAILED u_tolower() for %lx Expected %lx Got %lx\n", upper[i], lower[i], u_tolower(upper[i]));
++            log_err("FAILED u_tolower() for %x Expected %x Got %x\n", upper[i], lower[i], u_tolower(upper[i]));
+         }
+     }
+ 
+@@ -987,7 +987,7 @@ unicodeDataLineFn(void *context,
+         return;
+     }
+     if((uint32_t)c>=UCHAR_MAX_VALUE + 1) {
+-        log_err("error in UnicodeData.txt: code point %lu out of range\n", c);
++        log_err("error in UnicodeData.txt: code point %u out of range\n", c);
+         return;
+     }
+ 
+@@ -995,29 +995,29 @@ unicodeDataLineFn(void *context,
+     *fields[2][1]=0;
+     type = (int8_t)tagValues[MakeProp(fields[2][0])];
+     if(u_charType(c)!=type) {
+-        log_err("error: u_charType(U+%04lx)==%u instead of %u\n", c, u_charType(c), type);
++        log_err("error: u_charType(U+%04x)==%u instead of %u\n", c, u_charType(c), type);
+     }
+     if((uint32_t)u_getIntPropertyValue(c, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(type)) {
+-        log_err("error: (uint32_t)u_getIntPropertyValue(U+%04lx, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
++        log_err("error: (uint32_t)u_getIntPropertyValue(U+%04x, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
+     }
+ 
+     /* get canonical combining class, field 3 */
+     value=strtoul(fields[3][0], &end, 10);
+     if(end<=fields[3][0] || end!=fields[3][1]) {
+-        log_err("error: syntax error in field 3 at code 0x%lx\n", c);
++        log_err("error: syntax error in field 3 at code 0x%x\n", c);
+         return;
+     }
+     if(value>255) {
+-        log_err("error in UnicodeData.txt: combining class %lu out of range\n", value);
++        log_err("error in UnicodeData.txt: combining class %u out of range\n", value);
+         return;
+     }
+ #if !UCONFIG_NO_NORMALIZATION
+     if(value!=u_getCombiningClass(c) || value!=(uint32_t)u_getIntPropertyValue(c, UCHAR_CANONICAL_COMBINING_CLASS)) {
+-        log_err("error: u_getCombiningClass(U+%04lx)==%hu instead of %lu\n", c, u_getCombiningClass(c), value);
++        log_err("error: u_getCombiningClass(U+%04x)==%hu instead of %u\n", c, u_getCombiningClass(c), value);
+     }
+     nfkc=((UnicodeDataContext *)context)->nfkc;
+     if(value!=unorm2_getCombiningClass(nfkc, c)) {
+-        log_err("error: unorm2_getCombiningClass(nfkc, U+%04lx)==%hu instead of %lu\n", c, unorm2_getCombiningClass(nfkc, c), value);
++        log_err("error: unorm2_getCombiningClass(nfkc, U+%04x)==%hu instead of %u\n", c, unorm2_getCombiningClass(nfkc, c), value);
+     }
+ #endif
+ 
+@@ -1025,7 +1025,7 @@ unicodeDataLineFn(void *context,
+     *fields[4][1]=0;
+     i=MakeDir(fields[4][0]);
+     if(i!=(int32_t)u_charDirection(c) || i!=u_getIntPropertyValue(c, UCHAR_BIDI_CLASS)) {
+-        log_err("error: u_charDirection(U+%04lx)==%u instead of %u (%s)\n", c, u_charDirection(c), MakeDir(fields[4][0]), fields[4][0]);
++        log_err("error: u_charDirection(U+%04x)==%u instead of %u (%s)\n", c, u_charDirection(c), MakeDir(fields[4][0]), fields[4][0]);
+     }
+ 
+     /* get Decomposition_Type & Decomposition_Mapping, field 5 */
+@@ -1076,12 +1076,12 @@ unicodeDataLineFn(void *context,
+ #if !UCONFIG_NO_NORMALIZATION
+     i=u_getIntPropertyValue(c, UCHAR_DECOMPOSITION_TYPE);
+     if(i!=dt) {
+-        log_err("error: u_getIntPropertyValue(U+%04lx, UCHAR_DECOMPOSITION_TYPE)==%d instead of %d\n", c, i, dt);
++        log_err("error: u_getIntPropertyValue(U+%04x, UCHAR_DECOMPOSITION_TYPE)==%d instead of %d\n", c, i, dt);
+     }
+     /* Expect Decomposition_Mapping=nfkc.getRawDecomposition(c). */
+     length=unorm2_getRawDecomposition(nfkc, c, s, 32, pErrorCode);
+     if(U_FAILURE(*pErrorCode) || length!=dmLength || (length>0 && 0!=u_strcmp(s, dm))) {
+-        log_err("error: unorm2_getRawDecomposition(nfkc, U+%04lx)==%d instead of %d "
++        log_err("error: unorm2_getRawDecomposition(nfkc, U+%04x)==%d instead of %d "
+                 "or the Decomposition_Mapping is different (%s)\n",
+                 c, length, dmLength, u_errorName(*pErrorCode));
+         return;
+@@ -1093,7 +1093,7 @@ unicodeDataLineFn(void *context,
+     nfc=((UnicodeDataContext *)context)->nfc;
+     length=unorm2_getRawDecomposition(nfc, c, s, 32, pErrorCode);
+     if(U_FAILURE(*pErrorCode) || length!=dmLength || (length>0 && 0!=u_strcmp(s, dm))) {
+-        log_err("error: unorm2_getRawDecomposition(nfc, U+%04lx)==%d instead of %d "
++        log_err("error: unorm2_getRawDecomposition(nfc, U+%04x)==%d instead of %d "
+                 "or the Decomposition_Mapping is different (%s)\n",
+                 c, length, dmLength, u_errorName(*pErrorCode));
+         return;
+@@ -1121,7 +1121,7 @@ unicodeDataLineFn(void *context,
+     *fields[11][1]=0;
+     i=u_getISOComment(c, buffer, sizeof(buffer), pErrorCode);
+     if(U_FAILURE(*pErrorCode) || 0!=strcmp(fields[11][0], buffer)) {
+-        log_err_status(*pErrorCode, "error: u_getISOComment(U+%04lx) wrong (%s): \"%s\" should be \"%s\"\n",
++        log_err_status(*pErrorCode, "error: u_getISOComment(U+%04x) wrong (%s): \"%s\" should be \"%s\"\n",
+             c, u_errorName(*pErrorCode),
+             U_FAILURE(*pErrorCode) ? buffer : "[error]",
+             fields[11][0]);
+@@ -1131,16 +1131,16 @@ unicodeDataLineFn(void *context,
+     if(fields[12][0]!=fields[12][1]) {
+         value=strtoul(fields[12][0], &end, 16);
+         if(end!=fields[12][1]) {
+-            log_err("error: syntax error in field 12 at code 0x%lx\n", c);
++            log_err("error: syntax error in field 12 at code 0x%x\n", c);
+             return;
+         }
+         if((UChar32)value!=u_toupper(c)) {
+-            log_err("error: u_toupper(U+%04lx)==U+%04lx instead of U+%04lx\n", c, u_toupper(c), value);
++            log_err("error: u_toupper(U+%04x)==U+%04x instead of U+%04x\n", c, u_toupper(c), value);
+         }
+     } else {
+         /* no case mapping: the API must map the code point to itself */
+         if(c!=u_toupper(c)) {
+-            log_err("error: U+%04lx does not have an uppercase mapping but u_toupper()==U+%04lx\n", c, u_toupper(c));
++            log_err("error: U+%04x does not have an uppercase mapping but u_toupper()==U+%04x\n", c, u_toupper(c));
+         }
+     }
+ 
+@@ -1148,16 +1148,16 @@ unicodeDataLineFn(void *context,
+     if(fields[13][0]!=fields[13][1]) {
+         value=strtoul(fields[13][0], &end, 16);
+         if(end!=fields[13][1]) {
+-            log_err("error: syntax error in field 13 at code 0x%lx\n", c);
++            log_err("error: syntax error in field 13 at code 0x%x\n", c);
+             return;
+         }
+         if((UChar32)value!=u_tolower(c)) {
+-            log_err("error: u_tolower(U+%04lx)==U+%04lx instead of U+%04lx\n", c, u_tolower(c), value);
++            log_err("error: u_tolower(U+%04x)==U+%04x instead of U+%04x\n", c, u_tolower(c), value);
+         }
+     } else {
+         /* no case mapping: the API must map the code point to itself */
+         if(c!=u_tolower(c)) {
+-            log_err("error: U+%04lx does not have a lowercase mapping but u_tolower()==U+%04lx\n", c, u_tolower(c));
++            log_err("error: U+%04x does not have a lowercase mapping but u_tolower()==U+%04x\n", c, u_tolower(c));
+         }
+     }
+ 
+@@ -1165,16 +1165,16 @@ unicodeDataLineFn(void *context,
+     if(fields[14][0]!=fields[14][1]) {
+         value=strtoul(fields[14][0], &end, 16);
+         if(end!=fields[14][1]) {
+-            log_err("error: syntax error in field 14 at code 0x%lx\n", c);
++            log_err("error: syntax error in field 14 at code 0x%x\n", c);
+             return;
+         }
+         if((UChar32)value!=u_totitle(c)) {
+-            log_err("error: u_totitle(U+%04lx)==U+%04lx instead of U+%04lx\n", c, u_totitle(c), value);
++            log_err("error: u_totitle(U+%04x)==U+%04x instead of U+%04x\n", c, u_totitle(c), value);
+         }
+     } else {
+         /* no case mapping: the API must map the code point to itself */
+         if(c!=u_totitle(c)) {
+-            log_err("error: U+%04lx does not have a titlecase mapping but u_totitle()==U+%04lx\n", c, u_totitle(c));
++            log_err("error: U+%04x does not have a titlecase mapping but u_totitle()==U+%04x\n", c, u_totitle(c));
+         }
+     }
+ }
+@@ -1200,7 +1200,7 @@ enumTypeRange(const void *context, UChar32 start, UChar32 limit, UCharCategory t
+     for(i=0; i<count; ++i) {
+         if(start<=test[i][0] && test[i][0]<limit) {
+             if(type!=(UCharCategory)test[i][1]) {
+-                log_err("error: u_enumCharTypes() has range [U+%04lx, U+%04lx[ with %ld instead of U+%04lx with %ld\n",
++                log_err("error: u_enumCharTypes() has range [U+%04x, U+%04x[ with %ld instead of U+%04x with %d\n",
+                         start, limit, (long)type, test[i][0], test[i][1]);
+             }
+             /* stop at the range that includes the last test code point (increases code coverage for enumeration) */
+@@ -1209,7 +1209,7 @@ enumTypeRange(const void *context, UChar32 start, UChar32 limit, UCharCategory t
+     }
+ 
+     if(start>test[count-1][0]) {
+-        log_err("error: u_enumCharTypes() has range [U+%04lx, U+%04lx[ with %ld after it should have stopped\n",
++        log_err("error: u_enumCharTypes() has range [U+%04x, U+%04x[ with %ld after it should have stopped\n",
+                 start, limit, (long)type);
+         return false;
+     }
+@@ -1275,7 +1275,7 @@ enumDefaultsRange(const void *context, UChar32 start, UChar32 limit, UCharCatego
+         c=start;
+         while(c<limit) {
+             if(0==u_getIntPropertyValue(c, UCHAR_LINE_BREAK)) {
+-                log_err("error UCHAR_LINE_BREAK(assigned U+%04lx)=XX\n", c);
++                log_err("error UCHAR_LINE_BREAK(assigned U+%04x)=XX\n", c);
+             }
+             ++c;
+         }
+@@ -1300,7 +1300,7 @@ enumDefaultsRange(const void *context, UChar32 start, UChar32 limit, UCharCatego
+                     if( u_charDirection(c)!=shouldBeDir ||
+                         (UCharDirection)u_getIntPropertyValue(c, UCHAR_BIDI_CLASS)!=shouldBeDir
+                     ) {
+-                        log_err("error: u_charDirection(unassigned/PUA U+%04lx)=%s should be %s\n",
++                        log_err("error: u_charDirection(unassigned/PUA U+%04x)=%s should be %s\n",
+                             c, dirStrings[u_charDirection(c)], dirStrings[shouldBeDir]);
+                     }
+                     ++c;
+@@ -1362,10 +1362,10 @@ static void TestUnicodeData(void)
+     for(c=0xfffe; c<=0x10ffff;) {
+         type=u_charType(c);
+         if((uint32_t)u_getIntPropertyValue(c, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(type)) {
+-            log_err("error: (uint32_t)u_getIntPropertyValue(U+%04lx, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
++            log_err("error: (uint32_t)u_getIntPropertyValue(U+%04x, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
+         }
+         if(type!=U_UNASSIGNED) {
+-            log_err("error: u_charType(U+%04lx)!=U_UNASSIGNED (returns %d)\n", c, u_charType(c));
++            log_err("error: u_charType(U+%04x)!=U_UNASSIGNED (returns %d)\n", c, u_charType(c));
+         }
+         if((c&0xffff)==0xfffe) {
+             ++c;
+@@ -1378,12 +1378,12 @@ static void TestUnicodeData(void)
+     for(c=0xe000; c<=0x10fffd;) {
+         type=u_charType(c);
+         if((uint32_t)u_getIntPropertyValue(c, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(type)) {
+-            log_err("error: (uint32_t)u_getIntPropertyValue(U+%04lx, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
++            log_err("error: (uint32_t)u_getIntPropertyValue(U+%04x, UCHAR_GENERAL_CATEGORY_MASK)!=U_MASK(u_charType())\n", c);
+         }
+         if(type==U_UNASSIGNED) {
+-            log_err("error: u_charType(U+%04lx)==U_UNASSIGNED\n", c);
++            log_err("error: u_charType(U+%04x)==U_UNASSIGNED\n", c);
+         } else if(type!=U_PRIVATE_USE_CHAR) {
+-            log_verbose("PUA override: u_charType(U+%04lx)=%d\n", c, type);
++            log_verbose("PUA override: u_charType(U+%04x)=%d\n", c, type);
+         }
+         if(c==0xf8ff) {
+             c=0xf0000;
+@@ -1654,7 +1654,7 @@ static int32_t MakeProp(char* str)
+     if (matchPosition == 0) 
+     {
+         log_err("unrecognized type letter ");
+-        log_err(str);
++        log_err("%s", str);
+     }
+     else
+         result = (int32_t)((matchPosition - tagStrings) / 2);
+@@ -1712,7 +1712,7 @@ enumCharNamesFn(void *context,
+ 
+     if(length<=0 || length!=(int32_t)strlen(name)) {
+         /* should not be called with an empty string or invalid length */
+-        log_err("u_enumCharName(0x%lx)=%s but length=%ld\n", code, name, length);
++        log_err("u_enumCharName(0x%x)=%s but length=%d\n", code, name, length);
+         return true;
+     }
+ 
+@@ -1722,24 +1722,24 @@ enumCharNamesFn(void *context,
+             switch (nameChoice) {
+                 case U_EXTENDED_CHAR_NAME:
+                     if(0!=strcmp(name, names[i].extName)) {
+-                        log_err("u_enumCharName(0x%lx - Extended)=%s instead of %s\n", code, name, names[i].extName);
++                        log_err("u_enumCharName(0x%x - Extended)=%s instead of %s\n", code, name, names[i].extName);
+                     }
+                     break;
+                 case U_UNICODE_CHAR_NAME:
+                     if(0!=strcmp(name, names[i].name)) {
+-                        log_err("u_enumCharName(0x%lx)=%s instead of %s\n", code, name, names[i].name);
++                        log_err("u_enumCharName(0x%x)=%s instead of %s\n", code, name, names[i].name);
+                     }
+                     break;
+                 case U_UNICODE_10_CHAR_NAME:
+                     expected=names[i].oldName;
+                     if(expected[0]==0 || 0!=strcmp(name, expected)) {
+-                        log_err("u_enumCharName(0x%lx - 1.0)=%s instead of %s\n", code, name, expected);
++                        log_err("u_enumCharName(0x%x - 1.0)=%s instead of %s\n", code, name, expected);
+                     }
+                     break;
+                 case U_CHAR_NAME_ALIAS:
+                     expected=names[i].alias;
+                     if(expected==NULL || expected[0]==0 || 0!=strcmp(name, expected)) {
+-                        log_err("u_enumCharName(0x%lx - alias)=%s instead of %s\n", code, name, expected);
++                        log_err("u_enumCharName(0x%x - alias)=%s instead of %s\n", code, name, expected);
+                     }
+                     break;
+                 case U_CHAR_NAME_CHOICE_COUNT:
+@@ -1764,15 +1764,15 @@ enumExtCharNamesFn(void *context,
+ 
+     if (ecncp->last != (int32_t) code - 1) {
+         if (ecncp->last < 0) {
+-            log_err("u_enumCharName(0x%lx - Ext) after u_enumCharName(0x%lx - Ext) instead of u_enumCharName(0x%lx - Ext)\n", code, ecncp->last, ecncp->last + 1);
++            log_err("u_enumCharName(0x%x - Ext) after u_enumCharName(0x%x - Ext) instead of u_enumCharName(0x%x - Ext)\n", code, ecncp->last, ecncp->last + 1);
+         } else {
+-            log_err("u_enumCharName(0x%lx - Ext) instead of u_enumCharName(0x0 - Ext)\n", code);
++            log_err("u_enumCharName(0x%x - Ext) instead of u_enumCharName(0x0 - Ext)\n", code);
+         }
+     }
+     ecncp->last = (int32_t) code;
+ 
+     if (!*name) {
+-        log_err("u_enumCharName(0x%lx - Ext) should not be an empty string\n", code);
++        log_err("u_enumCharName(0x%x - Ext) should not be an empty string\n", code);
+     }
+ 
+     return enumCharNamesFn(&ecncp->length, code, nameChoice, name, length);
+@@ -1816,11 +1816,11 @@ TestCharNames(void) {
+         /* modern Unicode character name */
+         length=u_charName(names[i].code, U_UNICODE_CHAR_NAME, name, sizeof(name), &errorCode);
+         if(U_FAILURE(errorCode)) {
+-            log_err("u_charName(0x%lx) error %s\n", names[i].code, u_errorName(errorCode));
++            log_err("u_charName(0x%x) error %s\n", names[i].code, u_errorName(errorCode));
+             return;
+         }
+         if(length<0 || 0!=strcmp(name, names[i].name) || length!=(uint16_t)strlen(name)) {
+-            log_err("u_charName(0x%lx) gets: %s (length %ld) instead of: %s\n", names[i].code, name, length, names[i].name);
++            log_err("u_charName(0x%x) gets: %s (length %d) instead of: %s\n", names[i].code, name, length, names[i].name);
+         }
+ 
+         /* find the modern name */
+@@ -1831,18 +1831,18 @@ TestCharNames(void) {
+                 return;
+             }
+             if(c!=(UChar32)names[i].code) {
+-                log_err("u_charFromName(%s) gets 0x%lx instead of 0x%lx\n", names[i].name, c, names[i].code);
++                log_err("u_charFromName(%s) gets 0x%x instead of 0x%x\n", names[i].name, c, names[i].code);
+             }
+         }
+ 
+         /* Unicode 1.0 character name */
+         length=u_charName(names[i].code, U_UNICODE_10_CHAR_NAME, name, sizeof(name), &errorCode);
+         if(U_FAILURE(errorCode)) {
+-            log_err("u_charName(0x%lx - 1.0) error %s\n", names[i].code, u_errorName(errorCode));
++            log_err("u_charName(0x%x - 1.0) error %s\n", names[i].code, u_errorName(errorCode));
+             return;
+         }
+         if(length<0 || (length>0 && 0!=strcmp(name, names[i].oldName)) || length!=(uint16_t)strlen(name)) {
+-            log_err("u_charName(0x%lx - 1.0) gets %s length %ld instead of nothing or %s\n", names[i].code, name, length, names[i].oldName);
++            log_err("u_charName(0x%x - 1.0) gets %s length %d instead of nothing or %s\n", names[i].code, name, length, names[i].oldName);
+         }
+ 
+         /* find the Unicode 1.0 name if it is stored (length>0 means that we could read it) */
+@@ -1853,14 +1853,14 @@ TestCharNames(void) {
+                 return;
+             }
+             if(c!=(UChar32)names[i].code) {
+-                log_err("u_charFromName(%s - 1.0) gets 0x%lx instead of 0x%lx\n", names[i].oldName, c, names[i].code);
++                log_err("u_charFromName(%s - 1.0) gets 0x%x instead of 0x%x\n", names[i].oldName, c, names[i].code);
+             }
+         }
+ 
+         /* Unicode character name alias */
+         length=u_charName(names[i].code, U_CHAR_NAME_ALIAS, name, sizeof(name), &errorCode);
+         if(U_FAILURE(errorCode)) {
+-            log_err("u_charName(0x%lx - alias) error %s\n", names[i].code, u_errorName(errorCode));
++            log_err("u_charName(0x%x - alias) error %s\n", names[i].code, u_errorName(errorCode));
+             return;
+         }
+         expected=names[i].alias;
+@@ -1868,7 +1868,7 @@ TestCharNames(void) {
+             expected="";
+         }
+         if(length<0 || (length>0 && 0!=strcmp(name, expected)) || length!=(uint16_t)strlen(name)) {
+-            log_err("u_charName(0x%lx - alias) gets %s length %ld instead of nothing or %s\n",
++            log_err("u_charName(0x%x - alias) gets %s length %d instead of nothing or %s\n",
+                     names[i].code, name, length, expected);
+         }
+ 
+@@ -1881,7 +1881,7 @@ TestCharNames(void) {
+                 return;
+             }
+             if(c!=(UChar32)names[i].code) {
+-                log_err("u_charFromName(%s - alias) gets 0x%lx instead of 0x%lx\n",
++                log_err("u_charFromName(%s - alias) gets 0x%x instead of 0x%x\n",
+                         expected, c, names[i].code);
+             }
+         }
+@@ -1892,7 +1892,7 @@ TestCharNames(void) {
+     errorCode=U_ZERO_ERROR;
+     u_enumCharNames(UCHAR_MIN_VALUE, UCHAR_MAX_VALUE + 1, enumCharNamesFn, &length, U_UNICODE_CHAR_NAME, &errorCode);
+     if(U_FAILURE(errorCode) || length<94140) {
+-        log_err("u_enumCharNames(%ld..%lx) error %s names count=%ld\n", UCHAR_MIN_VALUE, UCHAR_MAX_VALUE, u_errorName(errorCode), length);
++        log_err("u_enumCharNames(%d..%x) error %s names count=%d\n", UCHAR_MIN_VALUE, UCHAR_MAX_VALUE, u_errorName(errorCode), length);
+     }
+ 
+     extContext.length = 0;
+@@ -1900,7 +1900,7 @@ TestCharNames(void) {
+     errorCode=U_ZERO_ERROR;
+     u_enumCharNames(UCHAR_MIN_VALUE, UCHAR_MAX_VALUE + 1, enumExtCharNamesFn, &extContext, U_EXTENDED_CHAR_NAME, &errorCode);
+     if(U_FAILURE(errorCode) || extContext.length<UCHAR_MAX_VALUE + 1) {
+-        log_err("u_enumCharNames(%ld..0x%lx - Extended) error %s names count=%ld\n", UCHAR_MIN_VALUE, UCHAR_MAX_VALUE + 1, u_errorName(errorCode), extContext.length);
++        log_err("u_enumCharNames(%d..0x%x - Extended) error %s names count=%u\n", UCHAR_MIN_VALUE, UCHAR_MAX_VALUE + 1, u_errorName(errorCode), extContext.length);
+     }
+ 
+     /* test that u_charFromName() uppercases the input name, i.e., works with mixed-case names (new in 2.0) */
+@@ -2863,7 +2863,7 @@ TestAdditionalProperties(void) {
+     for(i=0; i<UPRV_LENGTHOF(charAges); ++i) {
+         u_charAge(charAges[i].c, version);
+         if(0!=memcmp(version, charAges[i].version, sizeof(UVersionInfo))) {
+-            log_err("error: u_charAge(U+%04lx)={ %u, %u, %u, %u } instead of { %u, %u, %u, %u }\n",
++            log_err("error: u_charAge(U+%04x)={ %u, %u, %u, %u } instead of { %u, %u, %u, %u }\n",
+                 charAges[i].c,
+                 version[0], version[1], version[2], version[3],
+                 charAges[i].version[0], charAges[i].version[1], charAges[i].version[2], charAges[i].version[3]);
+@@ -2957,14 +2957,14 @@ TestAdditionalProperties(void) {
+         if(which<UCHAR_INT_START) {
+             result=u_hasBinaryProperty(c, which);
+             if(result!=props[i][2]) {
+-                log_data_err("error: u_hasBinaryProperty(U+%04lx, %s)=%d is wrong (props[%d]) - (Are you missing data?)\n",
++                log_data_err("error: u_hasBinaryProperty(U+%04x, %s)=%d is wrong (props[%d]) - (Are you missing data?)\n",
+                         c, whichName, result, i);
+             }
+         }
+ 
+         result=u_getIntPropertyValue(c, which);
+         if(result!=props[i][2]) {
+-            log_data_err("error: u_getIntPropertyValue(U+%04lx, %s)=%d is wrong, should be %d (props[%d]) - (Are you missing data?)\n",
++            log_data_err("error: u_getIntPropertyValue(U+%04x, %s)=%d is wrong, should be %d (props[%d]) - (Are you missing data?)\n",
+                     c, whichName, result, props[i][2], i);
+         }
+ 
+@@ -2972,25 +2972,25 @@ TestAdditionalProperties(void) {
+         switch((UProperty)props[i][1]) {
+         case UCHAR_ALPHABETIC:
+             if(u_isUAlphabetic((UChar32)props[i][0])!=(UBool)props[i][2]) {
+-                log_err("error: u_isUAlphabetic(U+%04lx)=%d is wrong (props[%d])\n",
++                log_err("error: u_isUAlphabetic(U+%04x)=%d is wrong (props[%d])\n",
+                         props[i][0], result, i);
+             }
+             break;
+         case UCHAR_LOWERCASE:
+             if(u_isULowercase((UChar32)props[i][0])!=(UBool)props[i][2]) {
+-                log_err("error: u_isULowercase(U+%04lx)=%d is wrong (props[%d])\n",
++                log_err("error: u_isULowercase(U+%04x)=%d is wrong (props[%d])\n",
+                         props[i][0], result, i);
+             }
+             break;
+         case UCHAR_UPPERCASE:
+             if(u_isUUppercase((UChar32)props[i][0])!=(UBool)props[i][2]) {
+-                log_err("error: u_isUUppercase(U+%04lx)=%d is wrong (props[%d])\n",
++                log_err("error: u_isUUppercase(U+%04x)=%d is wrong (props[%d])\n",
+                         props[i][0], result, i);
+             }
+             break;
+         case UCHAR_WHITE_SPACE:
+             if(u_isUWhiteSpace((UChar32)props[i][0])!=(UBool)props[i][2]) {
+-                log_err("error: u_isUWhiteSpace(U+%04lx)=%d is wrong (props[%d])\n",
++                log_err("error: u_isUWhiteSpace(U+%04x)=%d is wrong (props[%d])\n",
+                         props[i][0], result, i);
+             }
+             break;
+@@ -3085,10 +3085,10 @@ TestNumericProperties(void) {
+         nv=u_getNumericValue(c);
+ 
+         if(type!=values[i].type) {
+-            log_err("UCHAR_NUMERIC_TYPE(U+%04lx)=%d should be %d\n", c, type, values[i].type);
++            log_err("UCHAR_NUMERIC_TYPE(U+%04x)=%d should be %d\n", c, type, values[i].type);
+         }
+         if(0.000001 <= fabs(nv - values[i].numValue)) {
+-            log_err("u_getNumericValue(U+%04lx)=%g should be %g\n", c, nv, values[i].numValue);
++            log_err("u_getNumericValue(U+%04x)=%g should be %g\n", c, nv, values[i].numValue);
+         }
+     }
+ }
