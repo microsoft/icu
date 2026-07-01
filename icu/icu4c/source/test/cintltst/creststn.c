@@ -2959,7 +2959,7 @@ static void TestCLDRStyleAliases(void) {
       result = tres_getString(a, -1, NULL, &len, &status);
       u_charsToUChars(expects[i], expected, (int32_t)strlen(expects[i])+1);
       if(U_FAILURE(status) || !result || u_strcmp(result, expected)) {
-        log_err("CLDR style aliases failed resource with name \"%s\" resource, exp %s, got %S (%s)\n", resource, expects[i], result, myErrorName(status));
+        log_err("CLDR style aliases failed resource with name \"%s\" resource, exp %s, got %s (%s)\n", resource, expects[i], (result != NULL) ? austrdup(result) : "NULL", myErrorName(status));
         status = U_ZERO_ERROR;
       }
     }

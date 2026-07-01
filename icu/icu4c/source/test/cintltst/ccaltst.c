@@ -303,11 +303,11 @@ static void TestCalendar(void)
     } else {
         if (u_strcmp(AMERICA_LOS_ANGELES, canonicalID) != 0) {
             log_data_err("FAIL: ucal_getCanonicalTimeZoneID(%s) returned %s : expected - %s (Are you missing data?)\n",
-                PST, canonicalID, AMERICA_LOS_ANGELES);
+                austrdup(PST), austrdup(canonicalID), austrdup(AMERICA_LOS_ANGELES));
         }
         if (!isSystemID) {
             log_data_err("FAIL: ucal_getCanonicalTimeZoneID(%s) set %d to isSystemID (Are you missing data?)\n",
-                PST, isSystemID);
+                austrdup(PST), isSystemID);
         }
     }
 
@@ -644,7 +644,7 @@ static void TestGetSetDateAPI(void)
     if (U_FAILURE(status)) {
         log_err("Error in getTimeZoneID : %s\n", u_errorName(status));
     } else if (u_strcmp(id, fgGMTID) != 0) {
-        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%d, expected=%s\n", austrdup(id), austrdup(fgGMTID));
+        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%s, expected=%s\n", austrdup(id), austrdup(fgGMTID));
     } else {
         log_verbose("PASS: getTimeZoneID works fine\n");
     }
@@ -667,7 +667,7 @@ static void TestGetSetDateAPI(void)
     if (U_FAILURE(status)) {
         log_err("Error in getTimeZoneID : %s\n", u_errorName(status));
     } else if (u_strcmp(id, tzID) != 0) {
-        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%d, expected=%s\n", austrdup(id), austrdup(tzID));
+        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%s, expected=%s\n", austrdup(id), austrdup(tzID));
     } else {
         log_verbose("PASS: getTimeZoneID works fine\n");
     }
@@ -2947,7 +2947,7 @@ TestGetIanaTimeZoneID(void) {
             int32_t ianaLen2 = 0;
             ianaLen2 = ucal_getIanaTimeZoneID(ianaID, ianaLen, ianaID2, sizeof(ianaID2), &sts);
             if (U_FAILURE(sts) || ianaLen != ianaLen2 || u_strncmp(ianaID, ianaID2, ianaLen) != 0) {
-                    log_err("Error: IANA ID for IANA ID %s", ianaID);
+                    log_err("Error: IANA ID for IANA ID %s", austrdup(ianaID));
                 }
         }
     }

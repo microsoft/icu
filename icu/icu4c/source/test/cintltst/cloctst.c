@@ -547,7 +547,7 @@ static void TestPrefixes(void) {
                 
                 if(len != (int32_t)strlen(buf)) {
                     log_err("#%d: %s on %s: -> [%s] (length returned %d, actual %d!)\n",
-                        row, testTitles[n], loc, buf, len, strlen(buf)+1);
+                        row, testTitles[n], loc, buf, len, (int32_t)strlen(buf)+1);
                     
                 }
                 
@@ -2565,8 +2565,8 @@ static void TestCanonicalizationBuffer(void)
     }
 
     if (reslen != (int32_t)len) {
-        log_err("FAIL: uloc_canonicalize(%s) => \"%i\", expected \"%u\"\n",
-                name, reslen, len);
+        log_err("FAIL: uloc_canonicalize(%s) => \"%i\", expected \"%i\"\n",
+                name, reslen, (int32_t)len);
         return;
     }
 

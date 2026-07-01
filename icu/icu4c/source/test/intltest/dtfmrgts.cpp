@@ -1725,7 +1725,7 @@ void DateFormatRegressionTest::TestT10855() {
         } else {
             errln("Parse Succeeded...should have failed. Index is %d - ErrorIndex is %d", position.getIndex(), position.getErrorIndex());
         }
-        logln("Parsed date returns %d\n", d);
+        logln("Parsed date returns %f\n", d);
 
         ++x;
     }

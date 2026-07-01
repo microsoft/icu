@@ -264,7 +264,7 @@ static void TestExponential(void)
         }
         lneed= u_strlen(upat) + 1;
         unum_toPattern(fmt, false, pattern, lneed, &status);
-        log_verbose("Pattern \" %s \" -toPattern-> \" %s \" \n", upat, u_austrcpy(tempMsgBug, pattern) );
+        log_verbose("Pattern \" %s \" -toPattern-> \" %s \" \n", austrdup(upat), u_austrcpy(tempMsgBug, pattern) );
         for (v=0; v<val_length; ++v)
         {
             /*format*/
@@ -733,7 +733,7 @@ static void TestSecondaryGrouping(void) {
         }
     }
     if (!ok) {
-        log_err("FAIL  Expected %s x hi_IN -> \"1,87,65,43,210\" (with Hindi digits), got %s\n", "1876543210L", resultBuffer);
+        log_err("FAIL  Expected %s x hi_IN -> \"1,87,65,43,210\" (with Hindi digits), got %s\n", "1876543210L", austrdup(resultBuffer));
     }
     unum_close(f);
     unum_close(us);
