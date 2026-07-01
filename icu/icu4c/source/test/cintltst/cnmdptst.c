@@ -153,6 +153,7 @@ static void TestQuotes(void)
         log_err("FAIL: Expected afo'ob123");
 
     free(str);
+    str = NULL;
     unum_close(fmt);
 
 
@@ -384,6 +385,7 @@ static void TestCurrencySign(void)
         log_err_status(status, "Error formatting -> %s\n", u_errorName(status));
     }
     free(str);
+    str = NULL;
     free(res);
     free(pat);
 

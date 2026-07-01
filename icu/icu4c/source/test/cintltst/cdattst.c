@@ -735,6 +735,7 @@ static void TestSymbols(void)
         result = NULL;
     }
 free(pattern);
+pattern = NULL;
 
     log_verbose("\nTesting setSymbols\n");
     /*applying the pattern so that setSymbolss works */
