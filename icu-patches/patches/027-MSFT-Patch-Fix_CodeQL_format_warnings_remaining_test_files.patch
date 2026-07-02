@@ -1,0 +1,562 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Thu, 2 Jul 2026 00:37:10 +0530
+Subject: Fix ICU 78 CodeQL format/comparison warnings in remaining test files
+
+Completes the CodeQL cleanup for the ba289-touched files (pre-existing upstream
+test/tool debt): format-specifier width fixes and one comparison-with-wider-type
+fix across utf16tst.c, udatatst.c, tstnorm.cpp, numfmtst.cpp, rbbitst.cpp,
+regextst.cpp, ustrtest.cpp, and tools/makeconv/genmbcs.cpp. Recorded as a patch
+so a future ICU upstream import does not revert them.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+
+diff --git a/icu/icu4c/source/test/cintltst/udatatst.c b/icu/icu4c/source/test/cintltst/udatatst.c
+index 92aead7fc9d987b5467c7c3b8f7811f39d20f2bd..e704987dd479654379afcf14cecf4bc25e17860c 100644
+--- a/icu/icu4c/source/test/cintltst/udatatst.c
++++ b/icu/icu4c/source/test/cintltst/udatatst.c
+@@ -911,7 +911,7 @@ static void TestUDataGetMemory(void) {
+     intValue=(uint16_t *)udata_getMemory(result);
+     /*printf("%d ..... %s", *(intValue), intValue+1));*/
+     if( *intValue != 2000 || strcmp((char*)(intValue+1), "YEAR") != 0 )
+-        log_err("FAIL: udata_getMemory() failed: intValue :- Expected:2000 Got:%d \n\tstringValue:- Expected:YEAR Got:%s\n", *intValue, (intValue+1));
++        log_err("FAIL: udata_getMemory() failed: intValue :- Expected:2000 Got:%d \n\tstringValue:- Expected:YEAR Got:%s\n", *intValue, (char*)(intValue+1));
+ 
+     udata_close(result);
+ 
+diff --git a/icu/icu4c/source/test/cintltst/utf16tst.c b/icu/icu4c/source/test/cintltst/utf16tst.c
+index 4124f9cff218a7661053fe6834bb6350b54ec9a0..db597d4a9c5a22035d8176db641c447b1d7105f2 100644
+--- a/icu/icu4c/source/test/cintltst/utf16tst.c
++++ b/icu/icu4c/source/test/cintltst/utf16tst.c
+@@ -131,14 +131,14 @@ static void TestCharLength(void)
+                 UTF16_CHAR_LENGTH(c) != (uint16_t)codepoint[i] ||
+ #endif
+                 U16_LENGTH(c) != (uint16_t)codepoint[i]) {
+-          log_err("The no: of code units for %lx:- Expected: %d Got: %d\n", c, codepoint[i], U16_LENGTH(c));
++          log_err("The no: of code units for %x:- Expected: %d Got: %d\n", c, codepoint[i], U16_LENGTH(c));
+         }else{
+-              log_verbose("The no: of code units for %lx is %d\n",c, U16_LENGTH(c));
++              log_verbose("The no: of code units for %x is %d\n",c, U16_LENGTH(c));
+         }
+ #if !U_HIDE_OBSOLETE_UTF_OLD_H
+         multiple=(UBool)(codepoint[i] == 1 ? false : true);
+         if(UTF16_NEED_MULTIPLE_UCHAR(c) != multiple){
+-              log_err("ERROR: UTF16_NEED_MULTIPLE_UCHAR failed for %lx\n", c);
++              log_err("ERROR: UTF16_NEED_MULTIPLE_UCHAR failed for %x\n", c);
+         }
+ #endif
+     }
+@@ -188,35 +188,35 @@ static void TestGetChar(void)
+ #if !U_HIDE_OBSOLETE_UTF_OLD_H
+             UTF16_GET_CHAR_UNSAFE(input, offset, c);
+             if(c != result[i]){
+-                log_err("ERROR: UTF16_GET_CHAR_UNSAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, result[i], c);
++                log_err("ERROR: UTF16_GET_CHAR_UNSAFE failed for offset=%d. Expected:%x Got:%x\n", offset, result[i], c);
+             }
+ #endif
+             U16_GET_UNSAFE(input, offset, c);
+             if(c != result[i]){
+-                log_err("ERROR: U16_GET_CHAR_UNSAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, result[i], c);
++                log_err("ERROR: U16_GET_CHAR_UNSAFE failed for offset=%d. Expected:%x Got:%x\n", offset, result[i], c);
+             }
+         }
+         expected=result[i+1];
+ #if !U_HIDE_OBSOLETE_UTF_OLD_H
+         UTF16_GET_CHAR_SAFE(input, 0, offset, UPRV_LENGTHOF(input), c, false);
+         if(c != expected) {
+-            log_err("ERROR: UTF16_GET_CHAR_SAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, expected, c);
++            log_err("ERROR: UTF16_GET_CHAR_SAFE failed for offset=%d. Expected:%x Got:%x\n", offset, expected, c);
+         }
+ #endif
+         U16_GET(input, 0, offset, UPRV_LENGTHOF(input), c);
+         if(c != expected) {
+-            log_err("ERROR: U16_GET failed for offset=%ld. Expected:%lx Got:%lx\n", offset, expected, c);
++            log_err("ERROR: U16_GET failed for offset=%d. Expected:%x Got:%x\n", offset, expected, c);
+         }
+ 
+         U16_GET_OR_FFFD(input, 0, offset, UPRV_LENGTHOF(input), c);
+         if(U_IS_SURROGATE(expected)) { expected=0xfffd; }
+         if(c != expected) {
+-            log_err("ERROR: U16_GET_OR_FFFD failed for offset=%ld. Expected:%lx Got:%lx\n", offset, expected, c);
++            log_err("ERROR: U16_GET_OR_FFFD failed for offset=%d. Expected:%x Got:%x\n", offset, expected, c);
+         }
+ #if !U_HIDE_OBSOLETE_UTF_OLD_H
+         UTF16_GET_CHAR_SAFE(input, 0, offset, UPRV_LENGTHOF(input), c, true);
+         if(c != result[i+2]){
+-            log_err("ERROR: UTF16_GET_CHAR_SAFE(strict) failed for offset=%ld. Expected:%lx Got:%lx\n", offset, result[i+2], c);
++            log_err("ERROR: UTF16_GET_CHAR_SAFE(strict) failed for offset=%d. Expected:%x Got:%x\n", offset, result[i+2], c);
+         }
+ #endif
+         i=(uint16_t)(i+3);
+@@ -270,7 +270,7 @@ static void TestNextPrevChar(void){
+                  offset, movedOffset[i], setOffset);
+          }
+          if(c != result[i]){
+-             log_err("ERROR: UTF16_NEXT_CHAR_UNSAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, result[i], c);
++             log_err("ERROR: UTF16_NEXT_CHAR_UNSAFE failed for offset=%d. Expected:%x Got:%x\n", offset, result[i], c);
+          }
+ #endif
+          setOffset=offset;
+@@ -280,7 +280,7 @@ static void TestNextPrevChar(void){
+                  offset, movedOffset[i], setOffset);
+          }
+          if(c != result[i]){
+-             log_err("ERROR: U16_NEXT_CHAR_UNSAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, result[i], c);
++             log_err("ERROR: U16_NEXT_CHAR_UNSAFE failed for offset=%d. Expected:%x Got:%x\n", offset, result[i], c);
+          }
+         expected=result[i+1];
+ #if !U_HIDE_OBSOLETE_UTF_OLD_H
+@@ -291,7 +291,7 @@ static void TestNextPrevChar(void){
+                  offset, movedOffset[i+1], setOffset);
+          }
+         if(c != expected) {
+-            log_err("ERROR: UTF16_NEXT_CHAR_SAFE failed for input=%ld. Expected:%lx Got:%lx\n", offset, expected, c);
++            log_err("ERROR: UTF16_NEXT_CHAR_SAFE failed for input=%d. Expected:%x Got:%x\n", offset, expected, c);
+         }
+ #endif
+          setOffset=offset;
+@@ -301,7 +301,7 @@ static void TestNextPrevChar(void){
+                  offset, movedOffset[i+1], setOffset);
+          }
+         if(c != expected){
+-            log_err("ERROR: U16_NEXT failed for input=%ld. Expected:%lx Got:%lx\n", offset, expected, c);
++            log_err("ERROR: U16_NEXT failed for input=%d. Expected:%x Got:%x\n", offset, expected, c);
+         }
+ 
+         setOffset=offset;
+@@ -312,7 +312,7 @@ static void TestNextPrevChar(void){
+         }
+         if(U_IS_SURROGATE(expected)) { expected=0xfffd; }
+         if(c != expected){
+-            log_err("ERROR: U16_NEXT_OR_FFFD failed for input=%ld. Expected:%lx Got:%lx\n", offset, expected, c);
++            log_err("ERROR: U16_NEXT_OR_FFFD failed for input=%d. Expected:%x Got:%x\n", offset, expected, c);
+         }
+ #if !U_HIDE_OBSOLETE_UTF_OLD_H
+          setOffset=offset;
+@@ -322,7 +322,7 @@ static void TestNextPrevChar(void){
+                  offset, movedOffset[i+2], setOffset);
+          }
+          if(c != result[i+2]){
+-             log_err("ERROR: UTF16_NEXT_CHAR_SAFE(strict) failed for input=%ld. Expected:%lx Got:%lx\n", offset, result[i+2], c);
++             log_err("ERROR: UTF16_NEXT_CHAR_SAFE(strict) failed for input=%d. Expected:%x Got:%x\n", offset, result[i+2], c);
+          }
+ #endif
+          i=(uint16_t)(i+6);
+@@ -337,7 +337,7 @@ static void TestNextPrevChar(void){
+                  offset, movedOffset[i+3], setOffset);
+          }
+          if(c != result[i+3]){
+-             log_err("ERROR: UTF16_PREV_CHAR_UNSAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, result[i+3], c);
++             log_err("ERROR: UTF16_PREV_CHAR_UNSAFE failed for offset=%d. Expected:%x Got:%x\n", offset, result[i+3], c);
+          }
+ #endif
+          setOffset=offset;
+@@ -347,7 +347,7 @@ static void TestNextPrevChar(void){
+                  offset, movedOffset[i+3], setOffset);
+          }
+          if(c != result[i+3]){
+-             log_err("ERROR: U16_PREV_CHAR_UNSAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, result[i+3], c);
++             log_err("ERROR: U16_PREV_CHAR_UNSAFE failed for offset=%d. Expected:%x Got:%x\n", offset, result[i+3], c);
+          }
+ #if !U_HIDE_OBSOLETE_UTF_OLD_H
+          setOffset=offset;
+@@ -357,7 +357,7 @@ static void TestNextPrevChar(void){
+                  offset, movedOffset[i+4], setOffset);
+          }
+          if(c != result[i+4]){
+-             log_err("ERROR: UTF16_PREV_CHAR_SAFE failed for input=%ld. Expected:%lx Got:%lx\n", offset, result[i+4], c);
++             log_err("ERROR: UTF16_PREV_CHAR_SAFE failed for input=%d. Expected:%x Got:%x\n", offset, result[i+4], c);
+          }
+ #endif
+          setOffset=offset;
+@@ -368,7 +368,7 @@ static void TestNextPrevChar(void){
+          }
+         expected = result[i+4];
+         if(c != expected) {
+-            log_err("ERROR: U16_PREV failed for input=%ld. Expected:%lx Got:%lx\n", offset, expected, c);
++            log_err("ERROR: U16_PREV failed for input=%d. Expected:%x Got:%x\n", offset, expected, c);
+         }
+ 
+         setOffset=offset;
+@@ -379,7 +379,7 @@ static void TestNextPrevChar(void){
+         }
+         if(U_IS_SURROGATE(expected)) { expected=0xfffd; }
+         if(c != expected) {
+-            log_err("ERROR: U16_PREV_OR_FFFD failed for input=%ld. Expected:%lx Got:%lx\n", offset, expected, c);
++            log_err("ERROR: U16_PREV_OR_FFFD failed for input=%d. Expected:%x Got:%x\n", offset, expected, c);
+         }
+ #if !U_HIDE_OBSOLETE_UTF_OLD_H
+          setOffset=offset;
+@@ -389,7 +389,7 @@ static void TestNextPrevChar(void){
+                  offset, movedOffset[i+5], setOffset);
+          } 
+          if(c != result[i+5]){
+-             log_err("ERROR: UTF16_PREV_CHAR_SAFE(strict) failed for input=%ld. Expected:%lx Got:%lx\n", offset, result[i+5], c);
++             log_err("ERROR: UTF16_PREV_CHAR_SAFE(strict) failed for input=%d. Expected:%x Got:%x\n", offset, result[i+5], c);
+          }
+ #endif
+          i=(uint16_t)(i+6);
+@@ -657,25 +657,25 @@ static void TestSetChar(void){
+          setOffset=offset;
+          UTF16_SET_CHAR_START_UNSAFE(input, setOffset);
+          if(setOffset != start_unsafe[i]){
+-             log_err("ERROR: UTF16_SET_CHAR_START_UNSAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, start_unsafe[i], setOffset);
++             log_err("ERROR: UTF16_SET_CHAR_START_UNSAFE failed for offset=%d. Expected:%x Got:%x\n", offset, start_unsafe[i], setOffset);
+          }
+ #endif
+          setOffset=offset;
+          U16_SET_CP_START_UNSAFE(input, setOffset);
+          if(setOffset != start_unsafe[i]){
+-             log_err("ERROR: U16_SET_CHAR_START_UNSAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, start_unsafe[i], setOffset);
++             log_err("ERROR: U16_SET_CHAR_START_UNSAFE failed for offset=%d. Expected:%x Got:%x\n", offset, start_unsafe[i], setOffset);
+          }
+ #if !U_HIDE_OBSOLETE_UTF_OLD_H
+          setOffset=offset;
+          UTF16_SET_CHAR_START_SAFE(input, 0, setOffset);
+          if(setOffset != start_safe[i]){
+-             log_err("ERROR: UTF16_SET_CHAR_START_SAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, start_safe[i], setOffset);
++             log_err("ERROR: UTF16_SET_CHAR_START_SAFE failed for offset=%d. Expected:%x Got:%x\n", offset, start_safe[i], setOffset);
+          }
+ #endif
+          setOffset=offset;
+          U16_SET_CP_START(input, 0, setOffset);
+          if(setOffset != start_safe[i]){
+-             log_err("ERROR: U16_SET_CHAR_START failed for offset=%ld. Expected:%lx Got:%lx\n", offset, start_safe[i], setOffset);
++             log_err("ERROR: U16_SET_CHAR_START failed for offset=%d. Expected:%x Got:%x\n", offset, start_safe[i], setOffset);
+          }
+ 
+          if (offset > 0) {
+@@ -683,20 +683,20 @@ static void TestSetChar(void){
+              setOffset=offset;
+              UTF16_SET_CHAR_LIMIT_UNSAFE(input, setOffset);
+              if(setOffset != limit_unsafe[i]){
+-                 log_err("ERROR: UTF16_SET_CHAR_LIMIT_UNSAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, limit_unsafe[i], setOffset);
++                 log_err("ERROR: UTF16_SET_CHAR_LIMIT_UNSAFE failed for offset=%d. Expected:%x Got:%x\n", offset, limit_unsafe[i], setOffset);
+              }
+ #endif
+              setOffset=offset;
+              U16_SET_CP_LIMIT_UNSAFE(input, setOffset);
+              if(setOffset != limit_unsafe[i]){
+-                 log_err("ERROR: U16_SET_CHAR_LIMIT_UNSAFE failed for offset=%ld. Expected:%lx Got:%lx\n", offset, limit_unsafe[i], setOffset);
++                 log_err("ERROR: U16_SET_CHAR_LIMIT_UNSAFE failed for offset=%d. Expected:%x Got:%x\n", offset, limit_unsafe[i], setOffset);
+              }
+          }
+ 
+          setOffset=offset; 
+          U16_SET_CP_LIMIT(input,0, setOffset, UPRV_LENGTHOF(input));
+          if(setOffset != limit_safe[i]){
+-             log_err("ERROR: U16_SET_CHAR_LIMIT failed for offset=%ld. Expected:%lx Got:%lx\n", offset, limit_safe[i], setOffset);
++             log_err("ERROR: U16_SET_CHAR_LIMIT failed for offset=%d. Expected:%x Got:%x\n", offset, limit_safe[i], setOffset);
+          }
+ 
+          i++;
+diff --git a/icu/icu4c/source/test/intltest/numfmtst.cpp b/icu/icu4c/source/test/intltest/numfmtst.cpp
+index a3665b1ebe922344381dd6f8d94908d73f1767ad..261eb5b6fdb02c4249dbd76f8ca2137f7e18f199 100644
+--- a/icu/icu4c/source/test/intltest/numfmtst.cpp
++++ b/icu/icu4c/source/test/intltest/numfmtst.cpp
+@@ -3395,7 +3395,7 @@ double NumberFormatTest::checkRound(DecimalFormat* df, double iValue, double las
+     parsed=result.getDouble();
+ 
+     if (lastParsed>parsed) {
+-        errln("Rounding wrong direction! %d > %d", lastParsed, parsed);
++        errln("Rounding wrong direction! %f > %f", lastParsed, parsed);
+     }
+ 
+     return lastParsed;
+@@ -6665,7 +6665,7 @@ void NumberFormatTest::expectPositions(FieldPositionIterator& iter, int32_t *val
+     // is there a logln using printf?
+     char buf[128];
+     snprintf(buf, sizeof(buf), "%24s %3d %3d %3d", attrString(id), id, start, limit);
+-    logln(buf);
++    logln("%s", buf);
+ 
+     for (int i = 0; i < tupleCount; ++i) {
+       if (found[i]) {
+@@ -7059,7 +7059,7 @@ void NumberFormatTest::TestExponentParse() {
+        parsePos.getIndex() != 8
+        )
+     {
+-        errln("ERROR: parse failed - expected 5.06E-27, 8  - returned %d, %i",
++        errln("ERROR: parse failed - expected 5.06E-27, 8  - returned %f, %i",
+               result.getDouble(), parsePos.getIndex());
+     }
+ }
+@@ -7312,13 +7312,13 @@ void NumberFormatTest::TestFormatFastpaths() {
+ 
+ void NumberFormatTest::TestFormattableSize() {
+   if(sizeof(Formattable) > 112) {
+-    errln("Error: sizeof(Formattable)=%d, 112=%d\n",
++    errln("Error: sizeof(Formattable)=%zu, 112=%d\n",
+           sizeof(Formattable), 112);
+   } else if(sizeof(Formattable) < 112) {
+-    logln("Warning: sizeof(Formattable)=%d, 112=%d\n",
++    logln("Warning: sizeof(Formattable)=%zu, 112=%d\n",
+         sizeof(Formattable), 112);
+   } else {
+-    logln("sizeof(Formattable)=%d, 112=%d\n",
++    logln("sizeof(Formattable)=%zu, 112=%d\n",
+         sizeof(Formattable), 112);
+   }
+ }
+@@ -7842,7 +7842,7 @@ void NumberFormatTest::TestParseSignsAndMarks() {
+                 errln(UnicodeString("FAIL: locale ") + itemPtr->locale + ", lenient " + itemPtr->lenient + ", parse of \"" + itemPtr->numString + "\" gives position " + ppos.getIndex());
+             }
+         } else {
+-            dataerrln("FAIL: NumberFormat::createInstance for locale % gives error %s", itemPtr->locale, u_errorName(status));
++            dataerrln("FAIL: NumberFormat::createInstance for locale %s gives error %s", itemPtr->locale, u_errorName(status));
+         }
+         delete numfmt;
+     }
+diff --git a/icu/icu4c/source/test/intltest/rbbitst.cpp b/icu/icu4c/source/test/intltest/rbbitst.cpp
+index ae9ddce5fd97e39519c6ff33bfb9cad8278f9832..f0682d310d594b9107dba2c05e3984ab695d6fb9 100644
+--- a/icu/icu4c/source/test/intltest/rbbitst.cpp
++++ b/icu/icu4c/source/test/intltest/rbbitst.cpp
+@@ -3354,9 +3354,9 @@ void RBBITest::RunMonkey(BreakIterator *bi, RBBIMonkeyKind &mk, const char *name
+ 
+                     // Output the error
+                     if (ci == i) {
+-                        errln(buffer);
++                        errln("%s", buffer);
+                     } else {
+-                        infoln(buffer);
++                        infoln("%s", buffer);
+                     }
+ 
+                     if (ci >= endContext) { break; }
+@@ -3486,7 +3486,7 @@ void RBBITest::TestBug12797() {
+     UParseError parseError;
+     RuleBasedBreakIterator bi(rules, parseError, status);
+     if (U_FAILURE(status)) {
+-        errln("%s:%s status = %s", __FILE__, __LINE__, u_errorName(status));
++        errln("%s:%d status = %s", __FILE__, __LINE__, u_errorName(status));
+         return;
+     }
+     UnicodeString text = "abc";
+@@ -3549,7 +3549,7 @@ void RBBITest::TestEmoji() {
+     testFileName.append(IntlTest::getSourceTestData(status), status);
+     testFileName.appendPathPart("emoji-test.txt", status);
+     if (U_FAILURE(status)) {
+-        errln("%s:%s %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
++        errln("%s:%d %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
+         return;
+     }
+     logln("Opening data file %s\n", testFileName.data());
+@@ -3557,7 +3557,7 @@ void RBBITest::TestEmoji() {
+     int    len;
+     char16_t *testFile = ReadAndConvertFile(testFileName.data(), len, "UTF-8", status);
+     if (U_FAILURE(status) || testFile == nullptr) {
+-        errln("%s:%s %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
++        errln("%s:%d %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
+         return;
+     }
+     UnicodeString testFileAsString(testFile, len);
+diff --git a/icu/icu4c/source/test/intltest/regextst.cpp b/icu/icu4c/source/test/intltest/regextst.cpp
+index 27dbed106618f2882fc4cdc93a0624e8d4d55cba..253011889234f9496b5a0d73b866caa8c2663a4a 100644
+--- a/icu/icu4c/source/test/intltest/regextst.cpp
++++ b/icu/icu4c/source/test/intltest/regextst.cpp
+@@ -327,8 +327,8 @@ static UText* regextst_openUTF8FromInvariant(UText *ut, const char *inv, int64_t
+   return utext_openUTF8(ut, inv, length, status);
+ #else
+   if(inv_next+length+1>INV_BUFSIZ) {
+-    fprintf(stderr, "%s:%d Error: INV_BUFSIZ #defined to be %d but needs to be at least %d.\n",
+-            __FILE__, __LINE__, INV_BUFSIZ, (inv_next+length+1));
++    fprintf(stderr, "%s:%d Error: INV_BUFSIZ #defined to be %d but needs to be at least %lld.\n",
++            __FILE__, __LINE__, INV_BUFSIZ, static_cast<long long>(inv_next+length+1));
+     *status = U_MEMORY_ALLOCATION_ERROR;
+     return nullptr;
+   }
+@@ -338,7 +338,7 @@ static UText* regextst_openUTF8FromInvariant(UText *ut, const char *inv, int64_t
+   inv_next+=length;
+ 
+ #if 0
+-  fprintf(stderr, " Note: INV_BUFSIZ at %d, used=%d\n", INV_BUFSIZ, inv_next);
++  fprintf(stderr, " Note: INV_BUFSIZ at %d, used=%lld\n", INV_BUFSIZ, static_cast<long long>(inv_next));
+ #endif
+ 
+   return utext_openUTF8(ut, (const char*)buf, length, status);
+@@ -5494,10 +5494,10 @@ void RegexTest::Bug9283() {
+ 
+ void RegexTest::CheckInvBufSize() {
+   if(inv_next>=INV_BUFSIZ) {
+-    errln("%s: increase #define of INV_BUFSIZ ( is %d but needs to be at least %d )\n",
+-          __FILE__, INV_BUFSIZ, inv_next);
++    errln("%s: increase #define of INV_BUFSIZ ( is %d but needs to be at least %lld )\n",
++          __FILE__, INV_BUFSIZ, static_cast<long long>(inv_next));
+   } else {
+-    logln("%s: INV_BUFSIZ is %d, usage %d\n", __FILE__, INV_BUFSIZ, inv_next);
++    logln("%s: INV_BUFSIZ is %d, usage %lld\n", __FILE__, INV_BUFSIZ, static_cast<long long>(inv_next));
+   }
+ }
+ 
+diff --git a/icu/icu4c/source/test/intltest/tstnorm.cpp b/icu/icu4c/source/test/intltest/tstnorm.cpp
+index d37b1bd723b254bd6453d40634a6f9a1eb705c67..d63ab0adb7df719035d57298a29e0e2b990a544d 100644
+--- a/icu/icu4c/source/test/intltest/tstnorm.cpp
++++ b/icu/icu4c/source/test/intltest/tstnorm.cpp
+@@ -697,7 +697,7 @@ BasicNormalizerTest::TestPreviousNext(const char16_t *src, int32_t srcLength,
+             uprv_strcpy(history, moves);
+             history[move-moves]=0;
+             dataerrln("error: mismatch in Normalizer iteration (%s) at %s: "
+-                  "got c1=U+%04lx != expected c2=U+%04lx",
++                  "got c1=U+%04x != expected c2=U+%04x",
+                   name, history, c1, c2);
+             break;
+         }
+@@ -709,7 +709,7 @@ BasicNormalizerTest::TestPreviousNext(const char16_t *src, int32_t srcLength,
+             uprv_strcpy(history, moves);
+             history[move-moves]=0;
+             errln("error: index mismatch in Normalizer iteration (%s) at %s: "
+-                  "Normalizer index %ld expected %ld\n",
++                  "Normalizer index %d expected %d\n",
+                   name, history, iter.getIndex(), expectIndex[iter32.getIndex()]);
+             break;
+         }
+@@ -1253,7 +1253,7 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
+     UBool isNFD;
+     UErrorCode errorCode;
+ 
+-    logln("Test if case folding may un-FCD a string (folding options %04lx)", foldingOptions);
++    logln("Test if case folding may un-FCD a string (folding options %04x)", foldingOptions);
+ 
+     count=0;
+     for(c=0; c<=0x10ffff; ++c) {
+@@ -1298,7 +1298,7 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
+ 
+         if (U_FAILURE(errorCode)) {
+             ++count;
+-            dataerrln("U+%04lx: Failed with error %s", c, u_errorName(errorCode));
++            dataerrln("U+%04x: Failed with error %s", c, u_errorName(errorCode));
+         }
+ 
+         // bad:
+@@ -1310,8 +1310,8 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
+             (cc!=foldCC && foldCC!=0) || (trailCC!=foldTrailCC && foldTrailCC!=0)
+         ) {
+             ++count;
+-            dataerrln("U+%04lx: case-folding may un-FCD a string (folding options %04lx)", c, foldingOptions);
+-            dataerrln("  cc %02x trailCC %02x    foldCC(U+%04lx) %02x foldTrailCC(U+%04lx) %02x   quickCheck(folded)=%d", cc, trailCC, d.char32At(0), foldCC, d.char32At(d.length()-1), foldTrailCC, qcResult);
++            dataerrln("U+%04x: case-folding may un-FCD a string (folding options %04x)", c, foldingOptions);
++            dataerrln("  cc %02x trailCC %02x    foldCC(U+%04x) %02x foldTrailCC(U+%04x) %02x   quickCheck(folded)=%d", cc, trailCC, d.char32At(0), foldCC, d.char32At(d.length()-1), foldTrailCC, qcResult);
+             continue;
+         }
+ 
+@@ -1320,11 +1320,11 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
+         // unorm_compare will also fail
+         if(isNFD && UNORM_YES!=Normalizer::quickCheck(s, UNORM_NFD, errorCode)) {
+             ++count;
+-            errln("U+%04lx: case-folding un-NFDs this character (folding options %04lx)", c, foldingOptions);
++            errln("U+%04x: case-folding un-NFDs this character (folding options %04x)", c, foldingOptions);
+         }
+     }
+ 
+-    logln("There are %ld code points for which case-folding may un-FCD a string (folding options %04lx)", count, foldingOptions);
++    logln("There are %d code points for which case-folding may un-FCD a string (folding options %04x)", count, foldingOptions);
+     return count;
+ }
+ 
+@@ -1341,7 +1341,7 @@ BasicNormalizerTest::FindFoldFCDExceptions() {
+          * It currently assumes that one can check for FCD then case-fold
+          * and then still have FCD strings for raw decomposition without reordering.
+          */
+-        dataerrln("error: There are %ld code points for which case-folding may un-FCD a string for all folding options.\n"
++        dataerrln("error: There are %d code points for which case-folding may un-FCD a string for all folding options.\n"
+               "See comment in BasicNormalizerTest::FindFoldFCDExceptions()!", count);
+     }
+ }
+diff --git a/icu/icu4c/source/test/intltest/ustrtest.cpp b/icu/icu4c/source/test/intltest/ustrtest.cpp
+index 8badd250775667387ff39e9e6e6d1fe6b8499a20..9e7aba0ac51f10fb0625c301c425e0cef016ff9d 100644
+--- a/icu/icu4c/source/test/intltest/ustrtest.cpp
++++ b/icu/icu4c/source/test/intltest/ustrtest.cpp
+@@ -414,11 +414,11 @@ UnicodeStringTest::TestCompare()
+         /* test caseCompare() */
+         result=mixed.caseCompare(otherDefault, U_FOLD_CASE_DEFAULT);
+         if(result!=0 || 0!=mixed.caseCompareBetween(0, INT32_MAX, otherDefault, 0, INT32_MAX, U_FOLD_CASE_DEFAULT)) {
+-            errln("error: mixed.caseCompare(other, default)=%ld instead of 0\n", result);
++            errln("error: mixed.caseCompare(other, default)=%d instead of 0\n", result);
+         }
+         result=mixed.caseCompare(otherExcludeSpecialI, U_FOLD_CASE_EXCLUDE_SPECIAL_I);
+         if(result!=0) {
+-            errln("error: mixed.caseCompare(otherExcludeSpecialI, U_FOLD_CASE_EXCLUDE_SPECIAL_I)=%ld instead of 0\n", result);
++            errln("error: mixed.caseCompare(otherExcludeSpecialI, U_FOLD_CASE_EXCLUDE_SPECIAL_I)=%d instead of 0\n", result);
+         }
+         result=mixed.caseCompare(otherDefault, U_FOLD_CASE_EXCLUDE_SPECIAL_I);
+         if(result==0 || 0==mixed.caseCompareBetween(0, INT32_MAX, otherDefault, 0, INT32_MAX, U_FOLD_CASE_EXCLUDE_SPECIAL_I)) {
+@@ -428,19 +428,19 @@ UnicodeStringTest::TestCompare()
+         /* test caseCompare() */
+         result=mixed.caseCompare(different, U_FOLD_CASE_DEFAULT);
+         if(result<=0) {
+-            errln("error: mixed.caseCompare(different, default)=%ld instead of positive\n", result);
++            errln("error: mixed.caseCompare(different, default)=%d instead of positive\n", result);
+         }
+ 
+         /* test caseCompare() - include the folded sharp s (U+00df) with different lengths */
+         result=mixed.caseCompare(1, 4, different, 1, 5, U_FOLD_CASE_DEFAULT);
+         if(result!=0 || 0!=mixed.caseCompareBetween(1, 5, different, 1, 6, U_FOLD_CASE_DEFAULT)) {
+-            errln("error: mixed.caseCompare(mixed, 1, 4, different, 1, 5, default)=%ld instead of 0\n", result);
++            errln("error: mixed.caseCompare(mixed, 1, 4, different, 1, 5, default)=%d instead of 0\n", result);
+         }
+ 
+         /* test caseCompare() - stop in the middle of the sharp s (U+00df) */
+         result=mixed.caseCompare(1, 4, different, 1, 4, U_FOLD_CASE_DEFAULT);
+         if(result<=0) {
+-            errln("error: mixed.caseCompare(1, 4, different, 1, 4, default)=%ld instead of positive\n", result);
++            errln("error: mixed.caseCompare(1, 4, different, 1, 4, default)=%d instead of positive\n", result);
+         }
+     }
+ 
+@@ -564,7 +564,7 @@ UnicodeStringTest::TestExtract()
+         errorCode=U_ZERO_ERROR;
+         length=s.extract((char16_t *)nullptr, 0, errorCode);
+         if(errorCode!=U_BUFFER_OVERFLOW_ERROR || length!=s.length()) {
+-            errln("UnicodeString.extract(nullptr, 0)==%d (%s) expected %d (U_BUFFER_OVERFLOW_ERROR)", length, s.length(), u_errorName(errorCode));
++            errln("UnicodeString.extract(nullptr, 0)==%d (%s) expected %d (U_BUFFER_OVERFLOW_ERROR)", length, u_errorName(errorCode), s.length());
+         }
+ 
+         errorCode=U_ZERO_ERROR;
+@@ -614,14 +614,14 @@ UnicodeStringTest::TestExtract()
+             if( (length=s.extract(nullptr, 0, cnv, errorCode))!=13 ||
+                 errorCode!=U_BUFFER_OVERFLOW_ERROR
+             ) {
+-                errln("UnicodeString::extract(nullptr, UConverter) preflighting failed (length=%ld, %s)",
++                errln("UnicodeString::extract(nullptr, UConverter) preflighting failed (length=%d, %s)",
+                       length, u_errorName(errorCode));
+             }
+             errorCode=U_ZERO_ERROR;
+             if( (length=s.extract(buffer, 2, cnv, errorCode))!=13 ||
+                 errorCode!=U_BUFFER_OVERFLOW_ERROR
+             ) {
+-                errln("UnicodeString::extract(too small, UConverter) preflighting failed (length=%ld, %s)",
++                errln("UnicodeString::extract(too small, UConverter) preflighting failed (length=%d, %s)",
+                       length, u_errorName(errorCode));
+             }
+ 
+@@ -642,7 +642,7 @@ UnicodeStringTest::TestExtract()
+                 buffer[13]!=0 ||
+                 U_FAILURE(errorCode)
+             ) {
+-                errln("UnicodeString::extract(UConverter) conversion failed (length=%ld, %s)",
++                errln("UnicodeString::extract(UConverter) conversion failed (length=%d, %s)",
+                       length, u_errorName(errorCode));
+             }
+             // Test again with just the converter name.
+@@ -651,7 +651,7 @@ UnicodeStringTest::TestExtract()
+                 buffer[13]!=0 ||
+                 U_FAILURE(errorCode)
+             ) {
+-                errln("UnicodeString::extract(\"UTF-8\") conversion failed (length=%ld, %s)",
++                errln("UnicodeString::extract(\"UTF-8\") conversion failed (length=%d, %s)",
+                       length, u_errorName(errorCode));
+             }
+ 
+diff --git a/icu/icu4c/source/tools/makeconv/genmbcs.cpp b/icu/icu4c/source/tools/makeconv/genmbcs.cpp
+index 3983ba35ad503cfa4495a9c4bbde935298628922..7fb115e1d30d35a347b028faa67378334a53a69f 100644
+--- a/icu/icu4c/source/tools/makeconv/genmbcs.cpp
++++ b/icu/icu4c/source/tools/makeconv/genmbcs.cpp
+@@ -1242,7 +1242,7 @@ singleCompactStage3(MBCSData *mbcsData) {
+ 
+     /* begin with the first block after the all-unassigned one */
+     start=newStart=16;
+-    while(start<mbcsData->stage3Top) {
++    while(start<static_cast<uint16_t>(mbcsData->stage3Top)) {
+         prevEnd = static_cast<uint16_t>(newStart - 1);
+ 
+         /* find the size of the overlap */

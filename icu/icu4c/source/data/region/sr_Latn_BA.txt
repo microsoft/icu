@@ -41,7 +41,4 @@ sr_Latn_BA{
         VG{"Britanska Djevičanska ostrva"}
         VI{"Američka Djevičanska ostrva"}
     }
-    Countries%variant{
-        FK{"Folklandska (Malvinska) ostrva"}
-    }
 }

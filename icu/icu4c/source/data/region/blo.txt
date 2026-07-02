@@ -94,17 +94,14 @@ blo{
         CY{"Ciprɔs"}
         CZ{"Cɛk"}
         DE{"Gajaamatǝna"}
-        DG{"Ɖiyego Garsiya"}
         DJ{"Jibutii"}
         DK{"Ɖanǝmark"}
         DM{"Ɖominikaa"}
         DO{"Ɖominikaa kaRepibliiki"}
         DZ{"Aljerii"}
-        EA{"Seyuta na Meliliya"}
         EC{"Ekuwaɖɔɔr"}
         EE{"Ɛstoniya"}
         EG{"Ejipti"}
-        EH{"Sarawii"}
         ER{"Eritree"}
         ES{"Ɛspanyǝ"}
         ET{"Etiyopii"}
@@ -141,7 +138,6 @@ blo{
         HR{"Krowasii"}
         HT{"Hayitii"}
         HU{"Ɔŋgrii"}
-        IC{"Kanarii kaBʊtukǝltǝna"}
         ID{"Ɛnɖonosii"}
         IE{"Irlanɖ"}
         IL{"Yishraɛl"}
@@ -289,8 +285,6 @@ blo{
         VU{"Fanuwatu"}
         WF{"Walis na Futuna"}
         WS{"Samowa"}
-        XA{"sǝɖoo-aksaŋ"}
-        XB{"sǝɖoo-biɖi"}
         XK{"Kɔsofoo"}
         YE{"Yemɛn"}
         YT{"Mayɔɔtɩ"}
@@ -298,24 +292,5 @@ blo{
         ZM{"Sambii"}
         ZW{"Simbabʊwee"}
         ZZ{"gʊsaʊɩ kʊyɔʊ ʊ mana ma"}
-    }
-    Countries%chagos{
-        IO{"Cagɔɔsɩ kaBʊtukǝltǝna"}
-    }
-    Countries%short{
-        GB{"GT"}
-        HK{"Hɔŋ Kɔŋ"}
-        MO{"Makawoo"}
-        PS{"Palɛstiin"}
-        US{"GKA"}
-    }
-    Countries%variant{
-        CD{"Koŋgoo Sayiir"}
-        CG{"Koŋgoo kaRepibliiki"}
-        CI{"Aɩfɔrɩ Kɔɔst"}
-        CZ{"Cɛk kaRepibliiki"}
-        FK{"Fɔklanɖ kaBʊtukǝltǝna (Malfina kaBʊtukǝltǝna)"}
-        NZ{"Awoteyarowa Selanɖ afɔlɩ"}
-        SZ{"Sʊwasilanɖ"}
     }
 }

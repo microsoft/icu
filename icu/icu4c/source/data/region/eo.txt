@@ -94,17 +94,14 @@ eo{
         CY{"Kipro"}
         CZ{"Ĉeĥujo"}
         DE{"Germanujo"}
-        DG{"Diego Garcia"}
         DJ{"Ĝibutio"}
         DK{"Danujo"}
         DM{"Dominiko"}
         DO{"Dominika Respubliko"}
         DZ{"Alĝerio"}
-        EA{"Ceŭto kaj Melilo"}
         EC{"Ekvadoro"}
         EE{"Estonujo"}
         EG{"Egiptujo"}
-        EH{"Okcidenta Saharo"}
         ER{"Eritreo"}
         ES{"Hispanujo"}
         ET{"Etiopujo"}
@@ -141,7 +138,6 @@ eo{
         HR{"Kroatujo"}
         HT{"Haitio"}
         HU{"Hungarujo"}
-        IC{"Kanarioj"}
         ID{"Indonezio"}
         IE{"Irlando"}
         IL{"Israelo"}
@@ -289,8 +285,6 @@ eo{
         VU{"Vanuatuo"}
         WF{"Valiso kaj Futuno"}
         WS{"Samoo"}
-        XA{"pseŭdo-supersignoj"}
-        XB{"pseŭdo-inversdirekta"}
         XK{"Kosovo"}
         YE{"Jemeno"}
         YT{"Majoto"}
@@ -298,16 +292,5 @@ eo{
         ZM{"Zambio"}
         ZW{"Zimbabvo"}
         ZZ{"nekonata regiono"}
-    }
-    Countries%chagos{
-        IO{"Ĉagos-arĥipelago"}
-    }
-    Countries%short{
-        GB{"Britujo"}
-    }
-    Countries%variant{
-        CD{"Demokratia Respubliko Kongo"}
-        CG{"Respubliko Kongo"}
-        CZ{"Ĉeĥa Respubliko"}
     }
 }

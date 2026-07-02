@@ -22,10 +22,4 @@ es_MX{
         SZ{"Eswatini"}
         UM{"Islas menores alejadas de EE. UU."}
     }
-    Countries%short{
-        GB{"RU"}
-    }
-    Countries%variant{
-        TR{"Turquía"}
-    }
 }

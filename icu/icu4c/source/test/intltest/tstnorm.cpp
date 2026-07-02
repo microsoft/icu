@@ -697,7 +697,7 @@ BasicNormalizerTest::TestPreviousNext(const char16_t *src, int32_t srcLength,
             uprv_strcpy(history, moves);
             history[move-moves]=0;
             dataerrln("error: mismatch in Normalizer iteration (%s) at %s: "
-                  "got c1=U+%04lx != expected c2=U+%04lx",
+                  "got c1=U+%04x != expected c2=U+%04x",
                   name, history, c1, c2);
             break;
         }
@@ -709,7 +709,7 @@ BasicNormalizerTest::TestPreviousNext(const char16_t *src, int32_t srcLength,
             uprv_strcpy(history, moves);
             history[move-moves]=0;
             errln("error: index mismatch in Normalizer iteration (%s) at %s: "
-                  "Normalizer index %ld expected %ld\n",
+                  "Normalizer index %d expected %d\n",
                   name, history, iter.getIndex(), expectIndex[iter32.getIndex()]);
             break;
         }
@@ -1253,7 +1253,7 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
     UBool isNFD;
     UErrorCode errorCode;
 
-    logln("Test if case folding may un-FCD a string (folding options %04lx)", foldingOptions);
+    logln("Test if case folding may un-FCD a string (folding options %04x)", foldingOptions);
 
     count=0;
     for(c=0; c<=0x10ffff; ++c) {
@@ -1298,7 +1298,7 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
 
         if (U_FAILURE(errorCode)) {
             ++count;
-            dataerrln("U+%04lx: Failed with error %s", u_errorName(errorCode));
+            dataerrln("U+%04x: Failed with error %s", c, u_errorName(errorCode));
         }
 
         // bad:
@@ -1310,8 +1310,8 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
             (cc!=foldCC && foldCC!=0) || (trailCC!=foldTrailCC && foldTrailCC!=0)
         ) {
             ++count;
-            dataerrln("U+%04lx: case-folding may un-FCD a string (folding options %04lx)", c, foldingOptions);
-            dataerrln("  cc %02x trailCC %02x    foldCC(U+%04lx) %02x foldTrailCC(U+%04lx) %02x   quickCheck(folded)=%d", cc, trailCC, d.char32At(0), foldCC, d.char32At(d.length()-1), foldTrailCC, qcResult);
+            dataerrln("U+%04x: case-folding may un-FCD a string (folding options %04x)", c, foldingOptions);
+            dataerrln("  cc %02x trailCC %02x    foldCC(U+%04x) %02x foldTrailCC(U+%04x) %02x   quickCheck(folded)=%d", cc, trailCC, d.char32At(0), foldCC, d.char32At(d.length()-1), foldTrailCC, qcResult);
             continue;
         }
 
@@ -1320,11 +1320,11 @@ BasicNormalizerTest::countFoldFCDExceptions(uint32_t foldingOptions) {
         // unorm_compare will also fail
         if(isNFD && UNORM_YES!=Normalizer::quickCheck(s, UNORM_NFD, errorCode)) {
             ++count;
-            errln("U+%04lx: case-folding un-NFDs this character (folding options %04lx)", c, foldingOptions);
+            errln("U+%04x: case-folding un-NFDs this character (folding options %04x)", c, foldingOptions);
         }
     }
 
-    logln("There are %ld code points for which case-folding may un-FCD a string (folding options %04lx)", count, foldingOptions);
+    logln("There are %d code points for which case-folding may un-FCD a string (folding options %04x)", count, foldingOptions);
     return count;
 }
 
@@ -1341,7 +1341,7 @@ BasicNormalizerTest::FindFoldFCDExceptions() {
          * It currently assumes that one can check for FCD then case-fold
          * and then still have FCD strings for raw decomposition without reordering.
          */
-        dataerrln("error: There are %ld code points for which case-folding may un-FCD a string for all folding options.\n"
+        dataerrln("error: There are %d code points for which case-folding may un-FCD a string for all folding options.\n"
               "See comment in BasicNormalizerTest::FindFoldFCDExceptions()!", count);
     }
 }

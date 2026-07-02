@@ -169,8 +169,8 @@ root{
         "Asia:Saigon"{
             ec{"Ho Chi Minh"}
         }
-        "Asia:Urumqi"{
-            ec{"Ürümqi"}
+        "Asia:Tashkent"{
+            ec{"Toshkent"}
         }
         "Atlantic:Canary"{
             ec{"Canarias"}

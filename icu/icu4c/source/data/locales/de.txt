@@ -975,19 +975,6 @@ de{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    1{"Minguo"}
-                }
-                narrow{
-                    0{"v. VR China"}
-                }
-                wide{
-                    0{"vor Volksrepublik China"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Aktivitäten"}

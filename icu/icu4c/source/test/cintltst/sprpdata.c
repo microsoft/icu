@@ -161,7 +161,7 @@ compareMapping(UStringPrepProfile* data, uint32_t codepoint, uint32_t* mapping,i
     const uint16_t* mappingData = data->mappingData;
     int32_t realLength =0;
     int32_t j=0;
-    int8_t i=0;
+    int32_t i=0;
 
     UTRIE_GET16(&trie, codepoint, result);
     retType = getValues(result,&value,&isIndex);

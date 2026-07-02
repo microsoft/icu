@@ -1028,14 +1028,6 @@ sk{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"pred ROC"}
-                    1{"ROC"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktivity"}

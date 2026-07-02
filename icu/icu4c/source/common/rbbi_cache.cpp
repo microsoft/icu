@@ -130,7 +130,7 @@ void RuleBasedBreakIterator::DictionaryCache::populateDictionary(int32_t startPo
     int32_t rangeStart = startPos;
     int32_t rangeEnd = endPos;
 
-    uint16_t    category;
+    uint32_t    category;
     int32_t     current;
     UErrorCode  status = U_ZERO_ERROR;
     int32_t     foundBreakCount = 0;
@@ -142,7 +142,7 @@ void RuleBasedBreakIterator::DictionaryCache::populateDictionary(int32_t startPo
 
     utext_setNativeIndex(text, rangeStart);
     UChar32     c = utext_current32(text);
-    category = ucptrie_get(fBI->fData->fTrie, c);
+    category = ucptrie_get(fBI->fData->fTrie, c); // ucptrie_get returns 32bit integer
     uint32_t dictStart = fBI->fData->fForwardTable->fDictCategoriesStart;
 
     while(U_SUCCESS(status)) {

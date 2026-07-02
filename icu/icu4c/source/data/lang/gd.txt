@@ -41,7 +41,6 @@ gd{
         anp{"Angika"}
         apc{"Arabais Levantach"}
         ar{"Arabais"}
-        ar_001{"Nuadh-Arabais Stannardach"}
         arc{"Aramais"}
         arn{"Mapudungun"}
         aro{"Araona"}
@@ -148,8 +147,6 @@ gd{
         dar{"Dargwa"}
         dav{"Taita"}
         de{"Gearmailtis"}
-        de_AT{"Gearmailtis na h-Ostaire"}
-        de_CH{"Àrd-Ghearmailtis na h-Eilbheise"}
         del{"Delaware"}
         den{"Slavey"}
         dgr{"Dogrib"}
@@ -173,23 +170,15 @@ gd{
         el{"Greugais"}
         elx{"Elamais"}
         en{"Beurla"}
-        en_AU{"Beurla Astràilia"}
-        en_CA{"Beurla Chanada"}
-        en_GB{"Beurla Bhreatainn"}
-        en_US{"Beurla na h-Aimeireaga"}
         enm{"Meadhan-Bheurla"}
         eo{"Esperanto"}
         es{"Spàinntis"}
-        es_419{"Spàinntis na h-Aimeireaga Laidinneach"}
-        es_ES{"Spàinntis Eòrpach"}
-        es_MX{"Spàinntis Mheagsagach"}
         esu{"Yupik Mheadhanach"}
         et{"Eastoinis"}
         eu{"Basgais"}
         ewo{"Ewondo"}
         ext{"Cànan na h-Extremadura"}
         fa{"Peirsis"}
-        fa_AF{"Dari"}
         fan{"Fang"}
         fat{"Fanti"}
         ff{"Fulah"}
@@ -200,8 +189,6 @@ gd{
         fo{"Fàrothais"}
         fon{"Fon"}
         fr{"Fraingis"}
-        fr_CA{"Fraingis Chanada"}
-        fr_CH{"Fraingis Eilbheiseach"}
         frc{"Fraingis nan Cajun"}
         frm{"Meadhan-Fhraingis"}
         fro{"Seann-Fhraingis"}
@@ -420,7 +407,6 @@ gd{
         nb{"Bokmål na Nirribhidh"}
         nd{"Ndebele Thuathach"}
         nds{"Gearmailtis Ìochdarach"}
-        nds_NL{"Sagsannais Ìochdarach"}
         ne{"Neapàlais"}
         new{"Newari"}
         ng{"Ndonga"}
@@ -428,7 +414,6 @@ gd{
         niu{"Cànan Niue"}
         njo{"Ao Naga"}
         nl{"Duitsis"}
-        nl_BE{"Flànrais"}
         nmg{"Kwasio"}
         nn{"Nynorsk na Nirribhidh"}
         nnh{"Ngiemboon"}
@@ -481,8 +466,6 @@ gd{
         pro{"Seann-Phrovençal"}
         ps{"Pashto"}
         pt{"Portagailis"}
-        pt_BR{"Portagailis Bhraisileach"}
-        pt_PT{"Portagailis Eòrpach"}
         qu{"Quechua"}
         quc{"K’iche’"}
         qug{"Quichua Àrd-tìr Chimborazo"}
@@ -495,7 +478,6 @@ gd{
         rm{"Rumains"}
         rn{"Kirundi"}
         ro{"Romàinis"}
-        ro_MD{"Moldobhais"}
         rof{"Rombo"}
         rom{"Romanais"}
         ru{"Ruisis"}
@@ -529,7 +511,6 @@ gd{
         sg{"Sango"}
         sga{"Seann-Ghaeilge"}
         sgs{"Samogitis"}
-        sh{"Sèirb-Chròthaisis"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Arabais Seàdach"}
@@ -563,7 +544,6 @@ gd{
         suz{"Sunwar"}
         sv{"Suainis"}
         sw{"Kiswahili"}
-        sw_CD{"Kiswahili na Congo"}
         swb{"Comorais"}
         syc{"Suraidheac Chlasaigeach"}
         syr{"Suraidheac"}
@@ -656,8 +636,6 @@ gd{
         zen{"Zenaga"}
         zgh{"Tamaisich Stannardach Moroco"}
         zh{"Sìnis"}
-        zh_Hans{"Sìnis Shimplichte"}
-        zh_Hant{"Sìnis Thradaiseanta"}
         zu{"Zulu"}
         zun{"Zuñi"}
         zxx{"Susbaint nach eil ’na chànan"}
@@ -668,23 +646,6 @@ gd{
     }
     Languages%extension{
         ku{"Kurmanji"}
-    }
-    Languages%long{
-        zh_Hans{"Mandairinis Shimplichte"}
-        zh_Hant{"Mandairinis Thradaiseanta"}
-    }
-    Languages%menu{
-        yue{"Sìnis, Cantonais"}
-        zh{"Sìnis, Mandairinis"}
-    }
-    Languages%short{
-        az{"Azeri"}
-        en_GB{"Beurla na RA"}
-        en_US{"Beurla nan SA"}
-    }
-    Languages%variant{
-        ckb{"Cùrdais Sorani"}
-        hi_Latn{"Hinglish"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -910,7 +871,6 @@ gd{
             iso8601{"Mìosachan ISO-8601"}
             japanese{"Am Mìosachan Seapanach"}
             persian{"Am Mìosachan Pearsach"}
-            roc{"Mìosachan Poblachd na Sìne"}
         }
         calendar%core{
             buddhist{"Bùdach"}
@@ -928,7 +888,6 @@ gd{
             islamic-umalqura{"Hijri (Umm al-Qura)"}
             japanese{"Seapanach"}
             persian{"Pearsach"}
-            roc{"Poblachd na Sìne"}
         }
         cf{
             account{"Fòrmat airgeadra na cunntasachd"}

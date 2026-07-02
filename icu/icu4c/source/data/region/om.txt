@@ -93,17 +93,14 @@ om{
         CY{"Qoophiroos"}
         CZ{"Cheechiya"}
         DE{"Jarmanii"}
-        DG{"Diyeegoo Gaarshiyaa"}
         DJ{"Jibuutii"}
         DK{"Deenmaark"}
         DM{"Dominiikaa"}
         DO{"Dominikaa Rippaabilik"}
         DZ{"Aljeeriyaa"}
-        EA{"Kewuta fi Mililaa"}
         EC{"Ekuwaador"}
         EE{"Istooniyaa"}
         EG{"Missir"}
-        EH{"Sahaaraa Dhihaa"}
         ER{"Eertiraa"}
         ES{"Ispeen"}
         ET{"Itoophiyaa"}
@@ -140,7 +137,6 @@ om{
         HR{"Kirooshiyaa"}
         HT{"Haayitii"}
         HU{"Hangaarii"}
-        IC{"Odoloota Kanaarii"}
         ID{"Indooneeshiyaa"}
         IE{"Ayeerlaand"}
         IL{"Israa’eel"}
@@ -288,8 +284,6 @@ om{
         VU{"Vanuwaatu"}
         WF{"Waalis fi Futtuuna"}
         WS{"Saamowa"}
-        XA{"Loqoda Sobaa"}
-        XB{"Biidii Sobaa"}
         XK{"Kosoovoo"}
         YE{"Yemen"}
         YT{"Maayootee"}
@@ -297,26 +291,5 @@ om{
         ZM{"Zaambiyaa"}
         ZW{"Zimbaabuwee"}
         ZZ{"Naannoo Hin Beekamne"}
-    }
-    Countries%chagos{
-        IO{"Chagos Arkipeloog"}
-    }
-    Countries%short{
-        GB{"UK"}
-        HK{"Hoong Koong"}
-        MO{"Maka’oo"}
-        PS{"Paalestaayin"}
-        US{"US"}
-    }
-    Countries%variant{
-        CD{"Koongoo (DRC)"}
-        CG{"Koongoo (Rippaabilik)"}
-        CI{"Ayivoorii Koost"}
-        CZ{"Cheek Rippaablik"}
-        FK{"Odoloota Faalklaand (Islaas Malviinas)"}
-        NZ{"Awoteyarowa Neewu Zilaand"}
-        SZ{"Siwaazilaand"}
-        TL{"Tiimoor Bahaa"}
-        TR{"Turkii"}
     }
 }

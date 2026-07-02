@@ -516,7 +516,7 @@ void Test714(void)
     UErrorCode status = U_ZERO_ERROR;
     UDateFormat *fmt;
     UChar *result;
-    const UChar* expect =  u"7:25:43\u202FAM";
+    const UChar* expect =  u"7:25:43 AM";
     
     ctest_setTimeZone(NULL, &status);
 

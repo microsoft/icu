@@ -94,17 +94,14 @@ rm{
         CY{"Cipra"}
         CZ{"Tschechia"}
         DE{"Germania"}
-        DG{"Diego Garcia"}
         DJ{"Dschibuti"}
         DK{"Danemarc"}
         DM{"Dominica"}
         DO{"Republica Dominicana"}
         DZ{"Algeria"}
-        EA{"Ceuta e Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egipta"}
-        EH{"Sahara Occidentala"}
         ER{"Eritrea"}
         ES{"Spagna"}
         ET{"Etiopia"}
@@ -141,7 +138,6 @@ rm{
         HR{"Croazia"}
         HT{"Haiti"}
         HU{"Ungaria"}
-        IC{"Inslas Canarias"}
         ID{"Indonesia"}
         IE{"Irlanda"}
         IL{"Israel"}
@@ -224,7 +220,7 @@ rm{
         PM{"Saint Pierre e Miquelon"}
         PN{"Pitcairn"}
         PR{"Puerto Rico"}
-        PS{"Territori Palestinais"}
+        PS{"Palestinian Authority"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguai"}
@@ -289,8 +285,6 @@ rm{
         VU{"Vanuatu"}
         WF{"Wallis e Futuna"}
         WS{"Samoa"}
-        XA{"pseudo-accents"}
-        XB{"pseudo-bidi"}
         XK{"Cosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -298,25 +292,5 @@ rm{
         ZM{"Sambia"}
         ZW{"Simbabwe"}
         ZZ{"regiun nunenconuschenta"}
-    }
-    Countries%chagos{
-        IO{"Archipel da Chagos"}
-    }
-    Countries%short{
-        GB{"GB"}
-        HK{"Hongkong"}
-        MO{"Macao"}
-        PS{"Palestina"}
-        US{"USA"}
-    }
-    Countries%variant{
-        CD{"Republica Democratica dal Congo"}
-        CG{"Republica dal Congo"}
-        CI{"Côte d’Ivoire"}
-        CZ{"Republica Tscheca"}
-        FK{"Inslas Falkland (Inslas Malvinas)"}
-        NZ{"Aotearoa (Nova Zelanda)"}
-        SZ{"Swasiland"}
-        TL{"Timor-Leste"}
     }
 }

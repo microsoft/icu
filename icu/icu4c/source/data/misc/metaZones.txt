@@ -668,9 +668,6 @@ metaZones:table(nofallback){
         Uruguay{
             001{"America/Montevideo"}
         }
-        Urumqi{
-            001{"Asia/Urumqi"}
-        }
         Uzbekistan{
             001{"Asia/Tashkent"}
         }
@@ -3571,11 +3568,6 @@ metaZones:table(nofallback){
         "Asia:Ulaanbaatar"{
             {
                 "Mongolia",
-            }
-        }
-        "Asia:Urumqi"{
-            {
-                "Urumqi",
             }
         }
         "Asia:Ust-Nera"{

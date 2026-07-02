@@ -852,9 +852,6 @@ shn{
         "Asia:Ulaanbaatar"{
             ec{"ဢူလၼ်ပႃတႃ"}
         }
-        "Asia:Urumqi"{
-            ec{"ဢူႇရုမ်ၶီႇ"}
-        }
         "Asia:Ust-Nera"{
             ec{"ယူးဢိတ်ႉသ်ၼႄႇရႃႇ"}
         }

@@ -153,6 +153,7 @@ static void TestQuotes(void)
         log_err("FAIL: Expected afo'ob123");
 
     free(str);
+    str = NULL;
     unum_close(fmt);
 
 
@@ -264,7 +265,7 @@ static void TestExponential(void)
         }
         lneed= u_strlen(upat) + 1;
         unum_toPattern(fmt, false, pattern, lneed, &status);
-        log_verbose("Pattern \" %s \" -toPattern-> \" %s \" \n", upat, u_austrcpy(tempMsgBug, pattern) );
+        log_verbose("Pattern \" %s \" -toPattern-> \" %s \" \n", austrdup(upat), u_austrcpy(tempMsgBug, pattern) );
         for (v=0; v<val_length; ++v)
         {
             /*format*/
@@ -384,6 +385,7 @@ static void TestCurrencySign(void)
         log_err_status(status, "Error formatting -> %s\n", u_errorName(status));
     }
     free(str);
+    str = NULL;
     free(res);
     free(pat);
 
@@ -733,7 +735,7 @@ static void TestSecondaryGrouping(void) {
         }
     }
     if (!ok) {
-        log_err("FAIL  Expected %s x hi_IN -> \"1,87,65,43,210\" (with Hindi digits), got %s\n", "1876543210L", resultBuffer);
+        log_err("FAIL  Expected %s x hi_IN -> \"1,87,65,43,210\" (with Hindi digits), got %s\n", "1876543210L", austrdup(resultBuffer));
     }
     unum_close(f);
     unum_close(us);
@@ -813,7 +815,7 @@ static void TestGetKeywordValuesForLocale(void) {
             { "und",                "USD", "USN", NULL },
  /*           { "und_ZZ",             "USD", NULL, NULL },  -- temporarily remove as this locale now has 15 entries */
             { "en_US",              "USD", "USN", NULL },
-            { "en_029",             "USD", "USN", NULL },
+            { "en_029",             "XCD", NULL, NULL },
             { "en_TH",              "THB", NULL, NULL },
             { "de",                 "EUR", NULL, NULL },
             { "de_DE",              "EUR", NULL, NULL },
@@ -827,11 +829,11 @@ static void TestGetKeywordValuesForLocale(void) {
             { "en_US@currency=CAD;rg=THZZZZ", "THB", NULL, NULL },
     };
     const int32_t EXPECTED_SIZE[PREFERRED_SIZE] = {
-            2, 2, 2, 2, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 1
+            2, 2, 2, 1, 1, 1, 1, 1, 2, 2, 1, 1, 1, 2, 1
     };
     /* ucurr_forLocale results for same locales; "" if no result expected */
     const char *FORLOCALE[PREFERRED_SIZE] = {
-            "",    "",    "USD", "",
+            "",    "",    "USD", "XCD",
             "THB", "",    "EUR", "",
             "ILS", "CAD", "ZZZ", "DEM",
             "THB", "USD", "CAD"

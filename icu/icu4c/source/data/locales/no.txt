@@ -1760,25 +1760,6 @@ no{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"Før ROC"}
-                    1{"Minguo"}
-                }
-                wide{
-                    0{"Før R.O.C."}
-                }
-            }
-            intervalFormats{
-                h{
-                    a{"h a–h a"}
-                }
-                hv{
-                    a{"h a–h a v"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktiviteter"}

@@ -1190,17 +1190,6 @@ gd{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"Ro PnS"}
-                    1{"Mínguó"}
-                }
-                wide{
-                    0{"Ro Ph. na Sìne"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"gnìomhachd"}

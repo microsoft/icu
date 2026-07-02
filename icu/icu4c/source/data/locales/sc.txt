@@ -1489,66 +1489,6 @@ sc{
                 }
             }
         }
-        roc{
-            DateTimePatterns{
-                "HH:mm:ss zzzz",
-                "HH:mm:ss z",
-                "HH:mm:ss",
-                "HH:mm",
-                "EEEE d 'de' MMMM 'de' 'su' y G",
-                "d 'de' MMMM 'de' 'su' y G",
-                "dd MMM y G",
-                "dd/MM/y GGGGG",
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-            }
-            DateTimePatterns%relative{
-                "{1} 'a' 'sas' {0}",
-                "{1} 'a' 'sas' {0}",
-                "{1}, {0}",
-                "{1}, {0}",
-            }
-            availableFormats{
-                GyM{"MM/y G"}
-                GyMEd{"E dd/MM/y G"}
-            }
-            eras{
-                abbreviated{
-                    0{"a.R.d.T."}
-                    1{"R.d.T"}
-                }
-                wide{
-                    0{"in antis de sa R.d.T."}
-                    1{"R.d.T."}
-                }
-            }
-            intervalFormats{
-                Gy{
-                    G{"y G – y G"}
-                    y{"y – y G"}
-                }
-                H{
-                    H{"HH–HH'o'"}
-                }
-                hm{
-                    a{"hh:mm a – hh:mm a"}
-                    h{"hh:mm–hh:mm a"}
-                    m{"hh:mm–hh:mm a"}
-                }
-                hmv{
-                    a{"hh:mm a – hh:mm a v"}
-                    h{"hh:mm–hh:mm a v"}
-                    m{"hh:mm–hh:mm a v"}
-                }
-                hv{
-                    a{"hh a – hh a v"}
-                    h{"hh–hh a v"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"atividade"}

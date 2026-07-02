@@ -783,14 +783,6 @@ fil{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"Bago ang R.O.C."}
-                    1{"Minguo"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktibidad"}

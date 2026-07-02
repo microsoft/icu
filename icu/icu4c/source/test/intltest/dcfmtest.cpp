@@ -358,8 +358,7 @@ void DecimalFormatTest::execParseTest(int32_t lineNum,
     format.parse(inputText, result, pos);
 
     if (expectedParseEndPosition != pos.getIndex()) {
-        errln("file dcfmtest.txt, line %d: Expected parse position afeter parsing: %d.  "
-              "Actual parse position: %d", expectedParseEndPosition, pos.getIndex());
+        errln("file dcfmtest.txt, line %d: Expected parse position afeter parsing: %d. Actual parse position: %d", lineNum, expectedParseEndPosition, pos.getIndex());
         return;
     }
 

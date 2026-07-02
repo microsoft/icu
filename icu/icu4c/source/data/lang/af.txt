@@ -43,7 +43,6 @@ af{
         ann{"Obolo"}
         anp{"Angika"}
         ar{"Arabies"}
-        ar_001{"Moderne Standaardarabies"}
         arc{"Aramees"}
         arn{"Mapuche"}
         arp{"Arapaho"}
@@ -135,7 +134,6 @@ af{
         eu{"Baskies"}
         ewo{"Ewondo"}
         fa{"Persies"}
-        fa_AF{"Dari"}
         ff{"Fulah"}
         fi{"Fins"}
         fil{"Filippyns"}
@@ -309,14 +307,12 @@ af{
         nb{"Boeknoors"}
         nd{"Noord-Ndebele"}
         nds{"Nederduits"}
-        nds_NL{"Nedersaksies"}
         ne{"Nepalees"}
         new{"Newari"}
         ng{"Ndonga"}
         nia{"Nias"}
         niu{"Niueaans"}
         nl{"Nederlands"}
-        nl_BE{"Vlaams"}
         nmg{"Kwasio"}
         nn{"Nuwe Noors"}
         nnh{"Ngiemboon"}
@@ -381,7 +377,6 @@ af{
         seh{"Sena"}
         ses{"Koyraboro Senni"}
         sg{"Sango"}
-        sh{"Serwo-Kroaties"}
         shi{"Tachelhit"}
         shn{"Shan"}
         si{"Sinhala"}
@@ -486,21 +481,6 @@ af{
     Languages%extension{
         ku{"Koermandji"}
     }
-    Languages%long{
-        zh_Hans{"Mandarynse Chinees (Vereenvoudig)"}
-        zh_Hant{"Mandarynse Chinees (Tradisioneel)"}
-    }
-    Languages%menu{
-        yue{"Kantonese Chinees"}
-        zh{"Mandarynse Chinees"}
-    }
-    Languages%short{
-        az{"Azeri"}
-    }
-    Languages%variant{
-        ckb{"Koerdies Sorani"}
-        hi_Latn{"Hingels"}
-    }
     Scripts{
         Adlm{"Adlam"}
         Arab{"Arabies"}
@@ -583,7 +563,6 @@ af{
             iso8601{"ISO-8601-kalender"}
             japanese{"Japannese kalender"}
             persian{"Persiese kalender"}
-            roc{"Minguo-kalender"}
         }
         calendar%core{
             buddhist{"Boeddhis"}
@@ -599,7 +578,6 @@ af{
             islamic-umalqura{"Hijri (Umm al-Qura)"}
             japanese{"Japannees"}
             persian{"Persies"}
-            roc{"Minguo"}
         }
         cf{
             account{"Rekeningkundige geldeenheidformaat"}
