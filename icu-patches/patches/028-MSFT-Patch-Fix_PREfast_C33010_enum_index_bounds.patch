@@ -1,0 +1,54 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Mon, 13 Jul 2026 13:19:39 +0530
+Subject: Restore PREfast C33010 fixes reverted by ICU 78 upstream import
+ (re-apply #156)
+
+Commit 8520d60a ('Fix Prefast Compiler issues (#156)') added lower-bound guards for enum values used as array indices (PREfast C33010) in DecimalFormatSymbols::getSymbol/getConstSymbol/setSymbol and ucnv_data_unFlattenClone. It was a direct commit, never recorded in icu-patches/, so the ICU 78 upstream source import (73bd9be6) silently reverted it, re-triggering 129 PREfast C33010 build breaks. This re-applies those guards onto the ICU 78 tree (2 files, 4 hunks).
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+Copilot-Session: 62765ca8-1685-457a-8e71-34dd8389afe9
+
+diff --git a/icu/icu4c/source/common/ucnv_bld.cpp b/icu/icu4c/source/common/ucnv_bld.cpp
+index 1e768ae22411de6a6563f1281c73c7ee607854e9..d6d2afa5094cd6be616ee651f01bee4993d11a46 100644
+--- a/icu/icu4c/source/common/ucnv_bld.cpp
++++ b/icu/icu4c/source/common/ucnv_bld.cpp
+@@ -298,6 +298,7 @@ ucnv_data_unFlattenClone(UConverterLoadArgs *pArgs, UDataMemory *pData, UErrorCo
+         return nullptr;
+ 
+     if (static_cast<uint16_t>(type) >= UCNV_NUMBER_OF_SUPPORTED_CONVERTER_TYPES ||
++        type < UCNV_SBCS ||
+         converterData[type] == nullptr ||
+         !converterData[type]->isReferenceCounted ||
+         converterData[type]->referenceCounter != 1 ||
+diff --git a/icu/icu4c/source/i18n/unicode/dcfmtsym.h b/icu/icu4c/source/i18n/unicode/dcfmtsym.h
+index 24bc7693296cb5c19c6d00ac3a53813711853f70..04b0350bc8c253bf3dfc21041e92b56f8a304508 100644
+--- a/icu/icu4c/source/i18n/unicode/dcfmtsym.h
++++ b/icu/icu4c/source/i18n/unicode/dcfmtsym.h
+@@ -523,7 +523,7 @@ class U_I18N_API_CLASS DecimalFormatSymbols : public UObject {
+ inline UnicodeString
+ DecimalFormatSymbols::getSymbol(ENumberFormatSymbol symbol) const {
+     const UnicodeString *strPtr;
+-    if(symbol < kFormatSymbolCount) {
++    if(kDecimalSeparatorSymbol <= symbol && symbol < kFormatSymbolCount) {
+         strPtr = &fSymbols[symbol];
+     } else {
+         strPtr = &fNoSymbol;
+@@ -535,7 +535,7 @@ DecimalFormatSymbols::getSymbol(ENumberFormatSymbol symbol) const {
+ inline const UnicodeString &
+ DecimalFormatSymbols::getConstSymbol(ENumberFormatSymbol symbol) const {
+     const UnicodeString *strPtr;
+-    if(symbol < kFormatSymbolCount) {
++    if(kDecimalSeparatorSymbol <= symbol && symbol < kFormatSymbolCount) {
+         strPtr = &fSymbols[symbol];
+     } else {
+         strPtr = &fNoSymbol;
+@@ -566,7 +566,7 @@ DecimalFormatSymbols::setSymbol(ENumberFormatSymbol symbol, const UnicodeString
+     else if (symbol == kIntlCurrencySymbol) {
+         fIsCustomIntlCurrencySymbol = true;
+     }
+-    if(symbol<kFormatSymbolCount) {
++    if(kDecimalSeparatorSymbol <= symbol && symbol < kFormatSymbolCount) {
+         fSymbols[symbol]=value;
+     }
+ 
