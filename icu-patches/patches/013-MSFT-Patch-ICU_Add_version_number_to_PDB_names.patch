@@ -1,100 +1,114 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
-Date: Fri, 20 Nov 2020 17:55:08 -0800
-Subject: MSFT-PATCH: Include the ICU major version number in the PDB filename.
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Thu, 14 May 2026 11:09:41 +0530
+Subject: patch: apply 013-MSFT-Patch-ICU_Add_version_number_to_PDB_names
 
-Modify the .vcxproj files to add the ICU major version number to the PDB
-filename in order to match the DLL filenames.
+Add ICU major version number to PDB (debug symbol) filenames so they
+match the DLL filenames. Prevents PDB filename collision when two ICU
+versions are deployed side-by-side and lets debuggers correctly
+correlate symbols across versions.
+
+Files updated: common.vcxproj, i18n.vcxproj, stubdata.vcxproj.
+PDBs become icuuc78.pdb / icuuc78d.pdb, icuin78.pdb / icuin78d.pdb,
+icudt78.pdb (matching the existing icuuc78.dll / icuuc78d.dll /
+icuin78.dll / icuin78d.dll / icudt78.dll naming).
+
+Reworked: Used $(IcuMajorVersion) MSBuild macro rather than hardcoding
+78. This is the same pattern ICU 78's <OutputFile> tags already use
+in these vcxproj files, so future ICU upgrades won't need to touch
+these strings.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 
 diff --git a/icu/icu4c/source/common/common.vcxproj b/icu/icu4c/source/common/common.vcxproj
-index ee29c93fc60065536532cfda319f8db2bd90afd5..f8f28ad768ca2b4e7ec93893b213c3b426f294c1 100644
+index b0cb5c178246e0fe59d81cc8140a7f3507449bc2..f0f13aa1e2ec1f953b4b0957763e50560ae3d0a1 100644
 --- a/icu/icu4c/source/common/common.vcxproj
 +++ b/icu/icu4c/source/common/common.vcxproj
-@@ -42,7 +42,8 @@
+@@ -41,7 +41,8 @@
        <PrecompiledHeaderOutputFile>$(OutDir)/icuuc.pch</PrecompiledHeaderOutputFile>
        <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
        <ObjectFileName>$(OutDir)/</ObjectFileName>
 -      <ProgramDataBaseFileName>$(OutDir)/icuuc.pdb</ProgramDataBaseFileName>
 +      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-+      <ProgramDataBaseFileName>$(OutDir)/icuuc68.pdb</ProgramDataBaseFileName>
++      <ProgramDataBaseFileName>$(OutDir)/icuuc$(IcuMajorVersion).pdb</ProgramDataBaseFileName>
      </ClCompile>
      <Link>
        <!-- The icudt.lib is for U_ICUDATA_ENTRY_POINT -->
-@@ -60,7 +61,8 @@
+@@ -58,7 +59,8 @@
      </ClCompile>
      <Link>
-       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc68d.dll</OutputFile>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc$(IcuMajorVersion)d.dll</OutputFile>
 -      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuucd.pdb</ProgramDatabaseFile>
 +      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc68d.pdb</ProgramDatabaseFile>
++      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc$(IcuMajorVersion)d.pdb</ProgramDatabaseFile>
        <ImportLibrary>..\..\$(IcuLibOutputDir)\icuucd.lib</ImportLibrary>
        <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
        <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
-@@ -76,7 +78,8 @@
+@@ -74,7 +76,8 @@
      </ClCompile>
      <Link>
-       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc68.dll</OutputFile>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuuc$(IcuMajorVersion).dll</OutputFile>
 -      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc.pdb</ProgramDatabaseFile>
 +      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc68.pdb</ProgramDatabaseFile>
++      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuuc$(IcuMajorVersion).pdb</ProgramDatabaseFile>
        <ImportLibrary>..\..\$(IcuLibOutputDir)\icuuc.lib</ImportLibrary>
        <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
        <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
 diff --git a/icu/icu4c/source/i18n/i18n.vcxproj b/icu/icu4c/source/i18n/i18n.vcxproj
-index 7f9d0068b26cab09a9be106b42a1a696de373d47..f9bfcda06c28d3b89d8e64042352f984633534b1 100644
+index b7c1cf4fa3e8b15b1aee166fbd6bf4753f60dd9c..2a6747730212ded1e7c59076f643570834c78625 100644
 --- a/icu/icu4c/source/i18n/i18n.vcxproj
 +++ b/icu/icu4c/source/i18n/i18n.vcxproj
-@@ -43,7 +43,8 @@
+@@ -42,7 +42,8 @@
        <PrecompiledHeaderOutputFile>$(OutDir)/icuin.pch</PrecompiledHeaderOutputFile>
        <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
        <ObjectFileName>$(OutDir)/</ObjectFileName>
 -      <ProgramDataBaseFileName>$(OutDir)/icuin.pdb</ProgramDataBaseFileName>
 +      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-+      <ProgramDataBaseFileName>$(OutDir)/icuin68.pdb</ProgramDataBaseFileName>
++      <ProgramDataBaseFileName>$(OutDir)/icuin$(IcuMajorVersion).pdb</ProgramDataBaseFileName>
      </ClCompile>
      <ResourceCompile>
        <AdditionalIncludeDirectories>../common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-@@ -62,7 +63,8 @@
+@@ -60,7 +61,8 @@
      <Link>
        <AdditionalDependencies>icuucd.lib;%(AdditionalDependencies)</AdditionalDependencies>
-       <OutputFile>..\..\$(IcuBinOutputDir)\icuin68d.dll</OutputFile>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuin$(IcuMajorVersion)d.dll</OutputFile>
 -      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuind.pdb</ProgramDatabaseFile>
 +      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin68d.pdb</ProgramDatabaseFile>
++      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin$(IcuMajorVersion)d.pdb</ProgramDatabaseFile>
        <ImportLibrary>..\..\$(IcuLibOutputDir)\icuind.lib</ImportLibrary>
        <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
        <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
-@@ -79,7 +81,8 @@
+@@ -77,7 +79,8 @@
      <Link>
        <AdditionalDependencies>icuuc.lib;%(AdditionalDependencies)</AdditionalDependencies>
-       <OutputFile>..\..\$(IcuBinOutputDir)\icuin68.dll</OutputFile>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icuin$(IcuMajorVersion).dll</OutputFile>
 -      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin.pdb</ProgramDatabaseFile>
 +      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin68.pdb</ProgramDatabaseFile>
++      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icuin$(IcuMajorVersion).pdb</ProgramDatabaseFile>
        <ImportLibrary>..\..\$(IcuLibOutputDir)\icuin.lib</ImportLibrary>
        <!-- MSFT-Change: This forces dynamic linking of the UCRT. -->
        <IgnoreSpecificDefaultLibraries>libucrtd.lib;libucrt.lib</IgnoreSpecificDefaultLibraries>
 diff --git a/icu/icu4c/source/stubdata/stubdata.vcxproj b/icu/icu4c/source/stubdata/stubdata.vcxproj
-index 7c58b7ea274e5f821b9a06b44b23fdc445058142..dae9f78e3067123bb7145c7acdfb4b4437591228 100644
+index 0b2c61cb06b72817e949894483cdf32915fd7921..9c147a57a14b7ca6e47fad5418b7df0dd3f67c78 100644
 --- a/icu/icu4c/source/stubdata/stubdata.vcxproj
 +++ b/icu/icu4c/source/stubdata/stubdata.vcxproj
-@@ -43,7 +43,8 @@
+@@ -42,7 +42,8 @@
        <PrecompiledHeaderOutputFile>$(OutDir)/icudt.pch</PrecompiledHeaderOutputFile>
        <AssemblerListingLocation>$(OutDir)/</AssemblerListingLocation>
        <ObjectFileName>$(OutDir)/</ObjectFileName>
 -      <ProgramDataBaseFileName>$(OutDir)/icudt.pdb</ProgramDataBaseFileName>
 +      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-+      <ProgramDataBaseFileName>$(OutDir)/icudt68.pdb</ProgramDataBaseFileName>
++      <ProgramDataBaseFileName>$(OutDir)/icudt$(IcuMajorVersion).pdb</ProgramDataBaseFileName>
      </ClCompile>
      <ResourceCompile>
        <PreprocessorDefinitions>STUBDATA_BUILD;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-@@ -57,7 +58,8 @@
+@@ -56,7 +57,8 @@
        <TurnOffAssemblyGeneration>true</TurnOffAssemblyGeneration>
        <!-- Note: stubdata is somewhat odd in that it doesn't suffix the Debug output DLL/LIB with a "d" like common/i18n/etc. -->
-       <OutputFile>..\..\$(IcuBinOutputDir)\icudt68.dll</OutputFile>
+       <OutputFile>..\..\$(IcuBinOutputDir)\icudt$(IcuMajorVersion).dll</OutputFile>
 -      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icudt.pdb</ProgramDatabaseFile>
 +      <!-- MSFT-Change: Include the ICU major version number in the PDB filename. -->
-+      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icudt68.pdb</ProgramDatabaseFile>
++      <ProgramDatabaseFile>.\..\..\$(IcuLibOutputDir)\icudt$(IcuMajorVersion).pdb</ProgramDatabaseFile>
        <ImportLibrary>..\..\$(IcuLibOutputDir)\icudt.lib</ImportLibrary>
      </Link>
    </ItemDefinitionGroup>

@@ -1,16 +1,37 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
-Date: Fri, 20 Nov 2020 11:21:05 -0800
-Subject: MSFT-PATCH: Changes to ICU headers for the Windows OS version of ICU.
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Thu, 14 May 2026 10:42:41 +0530
+Subject: patch: apply 004-MSFT-Patch-ICU_Header_Additional_changes_for_Windows
 
-This adds special marker comments to the ICU headers in order to omit
-things we don't want or can't expose in the Windows public SDK headers.
+Add IGNORE_WINDOWS_HEADERS_START/END markers around regions of 4 public
+ICU headers so the Windows SDK header-stripping tool omits them.
+
+Reworked from ICU 72 form (8/12 hunks landed at new offsets, 2 hand-ported,
+2 dropped):
+
+- uchar.h: wraps U_UNICODE_VERSION macro (runtime-variable; SDK consumers
+  should use u_getUnicodeVersion() API instead).
+- uconfig.h: wraps uconfig_local.h include hook and UCONFIG_USE_WINDOWS_
+  LCID_MAPPING_API switch (compile-time settings irrelevant to SDK).
+- utypes.h: wraps ICUDATA naming scheme constants (Windows OS uses a
+  fixed single-data-file layout).
+- uversion.h: wraps U_NAMESPACE_BEGIN/END and C++ namespace plumbing
+  (Windows OS SDK exposes flat C APIs only).
+
+Dropped umachine.h hunks: U_OVERRIDE and U_FINAL macros no longer exist
+in ICU 78 (upstream removed them in favor of using the C++11 keywords
+directly). The patch's intent for that file is resolved by upstream.
+
+No C/C++ semantics change; markers are comments consumed only by the
+Windows SDK header-stripping tool.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 
 diff --git a/icu/icu4c/source/common/unicode/uchar.h b/icu/icu4c/source/common/unicode/uchar.h
-index 1e0f82e706c482f231e14151052584d8c1009f28..a096d097163e0d2be28be91c6c4415264f82b8a3 100644
+index d33b8cf7f3c8ee2ed235ab32ff0a628678363854..047d61c8122005f47d1a2be393bf2711fc12e06a 100644
 --- a/icu/icu4c/source/common/unicode/uchar.h
 +++ b/icu/icu4c/source/common/unicode/uchar.h
-@@ -48,6 +48,10 @@ typedef struct USet USet;
+@@ -49,6 +49,10 @@ typedef struct USet USet;
  
  U_CDECL_BEGIN
  
@@ -21,9 +42,9 @@ index 1e0f82e706c482f231e14151052584d8c1009f28..a096d097163e0d2be28be91c6c441526
  /*==========================================================================*/
  /* Unicode version number                                                   */
  /*==========================================================================*/
-@@ -62,6 +66,8 @@ U_CDECL_BEGIN
+@@ -63,6 +67,8 @@ U_CDECL_BEGIN
   */
- #define U_UNICODE_VERSION "13.0"
+ #define U_UNICODE_VERSION "17.0"
  
 +//IGNORE_WINDOWS_HEADERS_END
 +
@@ -31,7 +52,7 @@ index 1e0f82e706c482f231e14151052584d8c1009f28..a096d097163e0d2be28be91c6c441526
   * \file
   * \brief C API: Unicode Properties
 diff --git a/icu/icu4c/source/common/unicode/uconfig.h b/icu/icu4c/source/common/unicode/uconfig.h
-index bbc232d1ed8fdf94ed8b6f4e5ff9c3aeea7a5e88..c4239fc9997028fb050be43740bb1cb368f514ba 100644
+index c0488d502bfc6456413eb769dbe111148caf7230..3c1182886659252b44db3a0f28407dd994ca1447 100644
 --- a/icu/icu4c/source/common/unicode/uconfig.h
 +++ b/icu/icu4c/source/common/unicode/uconfig.h
 @@ -45,6 +45,10 @@
@@ -54,7 +75,7 @@ index bbc232d1ed8fdf94ed8b6f4e5ff9c3aeea7a5e88..c4239fc9997028fb050be43740bb1cb3
  /**
   * \def U_DEBUG
   * Determines whether to include debugging code.
-@@ -369,6 +375,9 @@
+@@ -379,6 +385,9 @@
  #   define UCONFIG_MSGPAT_DEFAULT_APOSTROPHE_MODE UMSGPAT_APOS_DOUBLE_OPTIONAL
  #endif
  
@@ -64,7 +85,7 @@ index bbc232d1ed8fdf94ed8b6f4e5ff9c3aeea7a5e88..c4239fc9997028fb050be43740bb1cb3
  /**
   * \def UCONFIG_USE_WINDOWS_LCID_MAPPING_API
   * On platforms where U_PLATFORM_HAS_WIN32_API is true, this switch determines
-@@ -381,6 +390,8 @@
+@@ -391,6 +400,8 @@
  #   define UCONFIG_USE_WINDOWS_LCID_MAPPING_API 1
  #endif
  
@@ -73,35 +94,11 @@ index bbc232d1ed8fdf94ed8b6f4e5ff9c3aeea7a5e88..c4239fc9997028fb050be43740bb1cb3
  /* i18n library switches ---------------------------------------------------- */
  
  /**
-diff --git a/icu/icu4c/source/common/unicode/umachine.h b/icu/icu4c/source/common/unicode/umachine.h
-index 09c887c80efd47b2d088129a66a7f16d9be581b5..abaefa2f8025ec4beea17c02e5f5daf6e52761ff 100644
---- a/icu/icu4c/source/common/unicode/umachine.h
-+++ b/icu/icu4c/source/common/unicode/umachine.h
-@@ -119,6 +119,10 @@
- /** Obsolete/same as U_CAPI; was used to declare a function as an internal ICU C API  */
- #define U_INTERNAL U_CAPI
- 
-+//IGNORE_WINDOWS_HEADERS_START
-+// MSFT-Change: These are C++ only constructs. The Windows OS SDK version of ICU only exposes
-+// the flat C APIs.
-+
- /**
-  * \def U_OVERRIDE
-  * Defined to the C++11 "override" keyword if available.
-@@ -141,6 +145,8 @@
- #define U_FINAL final
- #endif
- 
-+//IGNORE_WINDOWS_HEADERS_END
-+
- // Before ICU 65, function-like, multi-statement ICU macros were just defined as
- // series of statements wrapped in { } blocks and the caller could choose to
- // either treat them as if they were actual functions and end the invocation
 diff --git a/icu/icu4c/source/common/unicode/utypes.h b/icu/icu4c/source/common/unicode/utypes.h
-index 7c4ea7ac28dc7b959de93322b6f9d53708fc0474..af8c48fb68f060d2a8941b7a6938b002f26cff0f 100644
+index f53b7536f200e96270c4083e35f3e0f071752868..0f6bc70fd54cb18ec2fe8b31d67fe220ce8e80a7 100644
 --- a/icu/icu4c/source/common/unicode/utypes.h
 +++ b/icu/icu4c/source/common/unicode/utypes.h
-@@ -89,6 +89,11 @@
+@@ -104,6 +104,11 @@
  
  /** @} */
  
@@ -113,7 +110,7 @@ index 7c4ea7ac28dc7b959de93322b6f9d53708fc0474..af8c48fb68f060d2a8941b7a6938b002
  /*===========================================================================*/
  /* ICUDATA naming scheme                                                     */
  /*===========================================================================*/
-@@ -176,6 +181,8 @@
+@@ -191,6 +196,8 @@
  #endif
  #endif  /* U_HIDE_INTERNAL_API */
  
@@ -123,7 +120,7 @@ index 7c4ea7ac28dc7b959de93322b6f9d53708fc0474..af8c48fb68f060d2a8941b7a6938b002
   * \def NULL
   * Define NULL if necessary, to nullptr for C++ and to ((void *)0) for C.
 diff --git a/icu/icu4c/source/common/unicode/uversion.h b/icu/icu4c/source/common/unicode/uversion.h
-index 113568df8c127d39d65805a29af38de0e5cdaf08..baea153060073d77ba863a8579060d17c0165262 100644
+index 450794ac1baed35ec5d2b28726834a9d0f0e2b87..dc5ed687cf51d321707a5814ee5bad3e362ea12d 100644
 --- a/icu/icu4c/source/common/unicode/uversion.h
 +++ b/icu/icu4c/source/common/unicode/uversion.h
 @@ -58,6 +58,10 @@
@@ -137,8 +134,8 @@ index 113568df8c127d39d65805a29af38de0e5cdaf08..baea153060073d77ba863a8579060d17
  /*===========================================================================*/
  /* C++ namespace if supported. Versioned unless versioning is disabled.      */
  /*===========================================================================*/
-@@ -126,6 +130,8 @@ typedef uint8_t UVersionInfo[U_MAX_VERSION_LENGTH];
- #   endif
+@@ -184,6 +188,8 @@ namespace U_HEADER_ONLY_NAMESPACE {}
+ 
  #endif /* __cplusplus */
  
 +//IGNORE_WINDOWS_HEADERS_END
