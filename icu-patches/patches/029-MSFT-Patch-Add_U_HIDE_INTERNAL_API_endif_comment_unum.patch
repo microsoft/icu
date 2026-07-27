@@ -1,0 +1,27 @@
+From 2db0c4a26004315d04ce86637c0703130a78bfcd Mon Sep 17 00:00:00 2001
+From: aoruganti-msft <278938686+aoruganti-msft@users.noreply.github.com>
+Date: Mon, 27 Jul 2026 13:41:10 +0530
+Subject: Add U_HIDE_INTERNAL_API endif comment to unum.h for Windows SDK
+ header tools
+
+The Windows SDK header tools (mergeWindowsHeaders / pruneWindowsHeaders) require the closing #endif of a #ifndef U_HIDE_INTERNAL_API block to carry a matching comment so the tool can pair them. ICU 78's unum.h left this one #endif (closing the UNUM_APPROXIMATELY_SIGN_SYMBOL internal block) unannotated, causing pruneWindowsHeaders.pl to die and aborting i18n header generation. This adds the closing comment. Same class of fix as the retired patch 015 (whose original targets are already annotated upstream in ICU 78).
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+Copilot-Session: 8945ee93-3046-4f96-ab30-254f2dd5fcc3
+---
+ icu/icu4c/source/i18n/unicode/unum.h | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/icu/icu4c/source/i18n/unicode/unum.h b/icu/icu4c/source/i18n/unicode/unum.h
+index 2dd2badc..3e5c05ab 100644
+--- a/icu/icu4c/source/i18n/unicode/unum.h
++++ b/icu/icu4c/source/i18n/unicode/unum.h
+@@ -1410,7 +1410,7 @@ typedef enum UNumberFormatSymbol {
+    * @internal
+    */
+   UNUM_APPROXIMATELY_SIGN_SYMBOL = 28,
+-#endif
++#endif  /* U_HIDE_INTERNAL_API */
+ 
+ #ifndef U_HIDE_DEPRECATED_API
+     /**
