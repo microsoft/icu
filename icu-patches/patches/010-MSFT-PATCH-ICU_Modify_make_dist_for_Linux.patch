@@ -1,16 +1,29 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
-Date: Fri, 20 Nov 2020 17:30:47 -0800
-Subject: MSFT-PATCH: Modify make dist for MS-ICU GitHub paths.
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Thu, 14 May 2026 10:51:27 +0530
+Subject: patch: apply 010-MSFT-PATCH-ICU_Modify_make_dist_for_Linux
 
-Modify `make dist` paths for the MS-ICU GitHub path location, plus omit
-the Doxygen docs as we don't currently build the docs.
+Two Linux make-dist adjustments:
+
+- DISTY_FILES strips DISTY_DOC_ZIP. MS-ICU does not build Doxygen docs
+  in its release pipeline; the dist target would otherwise fail looking
+  for a non-existent docs.zip.
+
+- git archive path adapted for MS-ICU GitHub layout: cd ../.. (two
+  levels up instead of one) and HEAD:icu/icu4c/ (extra icu/ prefix)
+  because microsoft/icu has its icu4c tree at icu/icu4c/ rather than
+  vanilla ICU's top-level icu4c/.
+
+Reworked: ICU 78 fixed an upstream typo (we watn -> we want) and added
+testdata/ copy logic to dist.mk (lines 72-73); both are preserved.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 
 diff --git a/icu/icu4c/source/config/dist.mk b/icu/icu4c/source/config/dist.mk
-index f45133eddb5186839da59067906cb3b494b1b97e..2b4cc161afa8f666e07775d7bc739d78ba8c5bce 100644
+index a8bda27d8cd3d5b75d7822491c9e5c4739194179..319470143c68bb655972863a6d1d3ff05176ea5d 100644
 --- a/icu/icu4c/source/config/dist.mk
 +++ b/icu/icu4c/source/config/dist.mk
-@@ -37,7 +37,9 @@ DISTY_DATA_ZIP=$(DISTY_FILE_DIR)/$(DISTY_PREFIX)-$(DISTY_VER)-$(GITVER)-data.zip
+@@ -37,7 +37,9 @@ DISTY_DATA_ZIP=$(DISTY_FILE_DIR)/$(DISTY_PREFIX)-data.zip
  DISTY_DAT:=$(firstword $(wildcard data/out/tmp/icudt$(SO_TARGET_VERSION_MAJOR)*.dat))
  
  DISTY_FILES_SRC=$(DISTY_FILE_TGZ) $(DISTY_FILE_ZIP)
@@ -18,16 +31,16 @@ index f45133eddb5186839da59067906cb3b494b1b97e..2b4cc161afa8f666e07775d7bc739d78
 +# MSFT-Change: We only want the tgz for now, as we don't currently build the docs.
 +#DISTY_FILES=$(DISTY_FILES_SRC) $(DISTY_DOC_ZIP)
 +DISTY_FILES=$(DISTY_FILES_SRC)
- # colon-equals because we watn to run this once!
+ # colon-equals because we want to run this once!
  EXCLUDES_FILE:=$(shell mktemp)
  
-@@ -65,7 +67,8 @@ $(DISTY_FILE_TGZ) $(DISTY_FILE_ZIP) $(DISTY_DATA_ZIP):  $(DISTY_DAT) $(DISTY_TMP
+@@ -66,7 +68,8 @@ $(DISTY_FILE_TGZ) $(DISTY_FILE_ZIP) $(DISTY_DATA_ZIP):  $(DISTY_DAT) $(DISTY_TMP
  	@echo Export icu4c@$(GITVER) to "$(DISTY_TMP)/icu"
  	-$(RMV) $(DISTY_FILE) $(DISTY_TMP)
  	$(MKINSTALLDIRS) $(DISTY_TMP)
 -	( cd $(ICU4CTOP)/.. && git archive --format=tar --prefix=icu/ HEAD:icu4c/ ) | ( cd "$(DISTY_TMP)" && tar xf - )
 +	# MSFT-Change: Adjust the path for the GitHub repo location.
 +	( cd $(ICU4CTOP)/../.. && git archive --format=tar --prefix=icu/ HEAD:icu/icu4c/ ) | ( cd "$(DISTY_TMP)" && tar xf - )
- 	( cd $(DISTY_TMP)/icu/source ; zip -rlq $(DISTY_DATA_ZIP) data )
- 	$(MKINSTALLDIRS) $(DISTY_IN)
- 	echo DISTY_DAT=$(DISTY_DAT)
+ 	# special handling for LICENSE file. The symlinks will be included as files by tar and zip.
+ 	cp -fv $(ICU4CTOP)/LICENSE "$(DISTY_TMP)/LICENSE"
+ 	# Copy top-level testdata directory so it's a sibling of the source/ directory

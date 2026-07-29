@@ -1,12 +1,25 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
-Date: Fri, 20 Nov 2020 11:42:52 -0800
-Subject: MSFT-PATCH: Make u_cleanup a no-op for the Window OS ICU version, add
- uprv_u_cleanup
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Thu, 14 May 2026 10:45:28 +0530
+Subject: patch: apply 006-MSFT-Patch-ICU_Make_u_cleanup_NOOP_for_OS_ICU
 
+Make u_cleanup() a no-op for the Windows OS ICU build to prevent
+race-condition crashes when multiple threads (Windows.Globalization,
+default OS sort, app code) are concurrently using ICU.
+
+- Real implementation renamed to uprv_u_cleanup() (private; combined DLL
+  can still call it; not exported from DEF).
+- New public u_cleanup() under ICU_DATA_DIR_WINDOWS returns no-op;
+  otherwise delegates to uprv_u_cleanup() so public/Nuget consumers
+  retain the original behavior.
+
+Reworked: ICU 78 modernized the function signature from (void) to ()
+and NULL to nullptr; the rework matches the new style.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 
 diff --git a/icu/icu4c/source/common/ucln_cmn.cpp b/icu/icu4c/source/common/ucln_cmn.cpp
-index f3e07c6b89183f1ec24f8e348548e7fad4f0b588..cea10d1abd90832ca234238823e552ff61b65ad9 100644
+index c63bd221929b3a8ba1e6d12b461dab57decd1a7d..6d7d25363817e42149ac58ed9e0bf79ac7c81903 100644
 --- a/icu/icu4c/source/common/ucln_cmn.cpp
 +++ b/icu/icu4c/source/common/ucln_cmn.cpp
 @@ -36,8 +36,9 @@ static cleanupFunc *gLibCleanupFunctions[UCLN_COMMON];
@@ -15,17 +28,17 @@ index f3e07c6b89183f1ec24f8e348548e7fad4f0b588..cea10d1abd90832ca234238823e552ff
   ************************************************/
 +// MSFT-Change: Make u_cleanup a no-op for the Windows OS ICU version.
  U_CAPI void U_EXPORT2
--u_cleanup(void)
-+uprv_u_cleanup(void)
+-u_cleanup()
++uprv_u_cleanup()
  {
      UTRACE_ENTRY_OC(UTRACE_U_CLEANUP);
-     icu::umtx_lock(NULL);     /* Force a memory barrier, so that we are sure to see   */
-@@ -52,6 +53,31 @@ u_cleanup(void)
+     icu::umtx_lock(nullptr);     /* Force a memory barrier, so that we are sure to see   */
+@@ -52,6 +53,31 @@ u_cleanup()
  /*#endif*/
  }
  
 +U_CAPI void U_EXPORT2
-+u_cleanup(void)
++u_cleanup()
 +{
 +// When ICU is built as an OS component for Windows, we make the public function u_cleanup
 +// effectively a no-op because of the following:

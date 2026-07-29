@@ -1,32 +1,37 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
-From: Jeff Genovy <29107334+jefgen@users.noreply.github.com>
-Date: Fri, 20 Nov 2020 12:30:15 -0800
-Subject: MSFT-PATCH: Don't use the extended ICU data for Windows OS ICU.
+From: Arvind Oruganti <aoruganti@microsoft.com>
+Date: Thu, 14 May 2026 10:49:42 +0530
+Subject: patch: apply 008-MSFT-Patch-ICU_Dont_use_extended_ICU_data_in_Windows
 
-For the Windows OS build of ICU, we only have one data file
-and we don't use the extended data at all. We make this function a no-op
-in order to save a few cycles for perf, but more importantly so that
-we don't try to load a versioned data file (ex: icudt68l.dat) after
-already loading the non-versioned common data file.
+Under ICU_DATA_DIR_WINDOWS, make extendICUData() return early (false).
+Windows OS ICU has only one data file (versionless icudtl.dat from
+patch 000) and never has extended data; running the normal extension
+path would try to load icudt78l.dat on top of the already-loaded common
+data, creating redundant work or load conflicts.
+
+Reworked: ICU 78 modernized FALSE -> false in this file; the new guard
+matches that style.
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
 
 diff --git a/icu/icu4c/source/common/udata.cpp b/icu/icu4c/source/common/udata.cpp
-index ec9c999cea41a6e4c2ab27cf2e6d07e35c43b189..37f7da401c4f8feae4d5380e7903b06e0ef2779d 100644
+index b9b737f177ed1346a6c9286407ba4ea312606d63..38a501719e36382f548edb0beeb7fa00d11bc7ad 100644
 --- a/icu/icu4c/source/common/udata.cpp
 +++ b/icu/icu4c/source/common/udata.cpp
-@@ -820,6 +820,16 @@ openCommonData(const char *path,          /*  Path from OpenChoice?          */
+@@ -809,6 +809,16 @@ openCommonData(const char *path,          /*  Path from OpenChoice?          */
   *----------------------------------------------------------------------*/
  static UBool extendICUData(UErrorCode *pErr)
  {
 +// MSFT-Change: For the Windows OS build of ICU, we only have one data file
 +// and we don't use the extended data at all. We make this function a no-op
 +// in order to save a few cycles for perf, but more importantly so that
-+// we don't try to load a versioned data file (ex: icudt68l.dat) after
++// we don't try to load a versioned data file (ex: icudt78l.dat) after
 +// already loading the non-versioned common data file.
 +#if defined(ICU_DATA_DIR_WINDOWS)
 +    (void)pErr; // suppress unused variable.
-+    return FALSE;
++    return false;
 +#endif
 +
      UDataMemory   *pData;
      UDataMemory   copyPData;
-     UBool         didUpdate = FALSE;
+     UBool         didUpdate = false;

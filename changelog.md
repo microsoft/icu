@@ -1,4 +1,12 @@
 # Changelog
+## ICU 78.3.0.0
+
+- Upgrade ICU4C from 72.1 to 78.3.
+- Update CLDR-to-ICU tooling and generated ICU data for CLDR 48.
+- Reapply and refresh Microsoft-specific patches for Windows builds, SDK-header generation, data loading, CLDR-MS locales, and the Windows preferences library.
+- Add the Saudi Riyal symbol override and regenerate ICU 78 timezone data.
+- Restore CodeQL and PREfast fixes overwritten by the upstream source import.
+
 ## ICU 72.1.0.3
 
 - Disable the dynamic plug-in loading due to security concerns
