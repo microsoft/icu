@@ -5925,7 +5925,7 @@ void CalendarTest::Test22633HebrewLargeNegativeDay() {
         Calendar::createInstance(Locale("en-u-ca-hebrew"), status),
         status);
     calendar->clear();
-    calendar->set(UCAL_DAY_OF_YEAR, -2147483648);
+    calendar->set(UCAL_DAY_OF_YEAR, INT32_MIN);
     calendar->get(UCAL_HOUR, status);
     assertEquals("status return without hang", status, U_ILLEGAL_ARGUMENT_ERROR);
 }
@@ -6067,7 +6067,7 @@ void CalendarTest::Test22962ComputeJulianDayOverflow() {
         Calendar::createInstance(Locale("nds-NL-u-ca-islamic-umalqura"), status),
         status);
     calendar->clear();
-    calendar->set(UCAL_YEAR, -2147483648);
+    calendar->set(UCAL_YEAR, INT32_MIN);
     calendar->set(UCAL_WEEK_OF_YEAR, 33816240);
     calendar->get(UCAL_ERA, status);
     assertEquals("status return without overflow", status, U_ILLEGAL_ARGUMENT_ERROR);
