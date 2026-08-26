@@ -1,0 +1,35 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: Hanumant Shinde <hashinde@microsoft.com>
+Date: Thu, 13 Aug 2026 15:01:56 +0530
+Subject: Fix MSVC C4146 warnings in caltest.cpp
+
+Use INT32_MIN for the two signed 32-bit minimum test inputs so MSVC does not parse the magnitude as unsigned before applying unary minus.
+
+Bug: microsoft/OS#164343
+
+Co-authored-by: Copilot <223556219+Copilot@users.noreply.github.com>
+
+Copilot-Session: 66c0022c-72ad-4331-9459-b0c73c068072
+
+diff --git a/icu/icu4c/source/test/intltest/caltest.cpp b/icu/icu4c/source/test/intltest/caltest.cpp
+index c2fd53ebce310b8d4203c83b12de737a98035885..2cc2017f2c5c2b8c76d29b54869e8609ed802c12 100644
+--- a/icu/icu4c/source/test/intltest/caltest.cpp
++++ b/icu/icu4c/source/test/intltest/caltest.cpp
+@@ -5925,7 +5925,7 @@ void CalendarTest::Test22633HebrewLargeNegativeDay() {
+         Calendar::createInstance(Locale("en-u-ca-hebrew"), status),
+         status);
+     calendar->clear();
+-    calendar->set(UCAL_DAY_OF_YEAR, -2147483648);
++    calendar->set(UCAL_DAY_OF_YEAR, INT32_MIN);
+     calendar->get(UCAL_HOUR, status);
+     assertEquals("status return without hang", status, U_ILLEGAL_ARGUMENT_ERROR);
+ }
+@@ -6067,7 +6067,7 @@ void CalendarTest::Test22962ComputeJulianDayOverflow() {
+         Calendar::createInstance(Locale("nds-NL-u-ca-islamic-umalqura"), status),
+         status);
+     calendar->clear();
+-    calendar->set(UCAL_YEAR, -2147483648);
++    calendar->set(UCAL_YEAR, INT32_MIN);
+     calendar->set(UCAL_WEEK_OF_YEAR, 33816240);
+     calendar->get(UCAL_ERA, status);
+     assertEquals("status return without overflow", status, U_ILLEGAL_ARGUMENT_ERROR);
