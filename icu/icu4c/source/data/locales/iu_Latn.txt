@@ -1,0 +1,8 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
+iu_Latn{
+    %%Parent{"root"}
+    AuxExemplarCharacters{"[b c d e f h o w x y z]"}
+    ExemplarCharacters{"[a g i j k lł m n {ng} {nng} p q r s t u v]"}
+}

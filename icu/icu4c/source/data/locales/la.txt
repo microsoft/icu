@@ -1,0 +1,68 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
+la{
+    NumberElements{
+        latn{
+            patternsShort{
+                currencyFormat{
+                    1000{
+                        one{"¤ 0M"}
+                        other{"¤ 0M"}
+                    }
+                    10000{
+                        one{"¤ 00M"}
+                        other{"¤ 00M"}
+                    }
+                    100000{
+                        one{"¤ 000M"}
+                        other{"¤ 000M"}
+                    }
+                    1000000{
+                        one{"¤ 0 Mn"}
+                        other{"¤ 0 Mn"}
+                    }
+                    10000000{
+                        one{"¤ 00 Mn"}
+                        other{"¤ 00 Mn"}
+                    }
+                    100000000{
+                        one{"¤ 000 Mn"}
+                        other{"¤ 000 Mn"}
+                    }
+                    1000000000{
+                        one{"¤ 0 Md"}
+                        other{"¤ 0 Md"}
+                    }
+                    10000000000{
+                        one{"¤ 00 Md"}
+                        other{"¤ 00 Md"}
+                    }
+                    100000000000{
+                        one{"¤ 000 Md"}
+                        other{"¤ 000 Md"}
+                    }
+                    1000000000000{
+                        one{"¤ 0 mil Md"}
+                        other{"¤ 0 mil Md"}
+                    }
+                    10000000000000{
+                        one{"¤ 00 mil Md"}
+                        other{"¤ 00 mil Md"}
+                    }
+                    100000000000000{
+                        one{"¤ 000 mil Md"}
+                        other{"¤ 000 mil Md"}
+                    }
+                }
+            }
+        }
+    }
+    fields{
+        minute{
+            relative{
+                "0"{"hac minuta"}
+            }
+        }
+    }
+}

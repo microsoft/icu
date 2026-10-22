@@ -1,0 +1,17 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
+ve{
+    ExemplarCharacters{"[a b dḓ e f g h i k lḽ m nṅṋ o p r s tṱ u v w x y z]"}
+    NumberElements{
+        latn{
+            patterns{
+                currencyFormat{"¤#,##0.00"}
+            }
+            symbols{
+                decimal{","}
+                group{" "}
+            }
+        }
+    }
+}

@@ -40,6 +40,7 @@ static void TestAttribute(void);
 static void TestDefault(void);
 static void TestDefaultKeyword(void);
 static void TestBengaliSortKey(void);
+static void TestWindowsCollationCoverage(void);
 
 
 static char* U_EXPORT2 ucol_sortKeyToString(const UCollator *coll, const uint8_t *sortkey, char *buffer, uint32_t len) {
@@ -71,6 +72,7 @@ void addCollAPITest(TestNode** root)
     addTest(root, &TestHashCode,      "tscoll/capitst/TestHashCode");
     addTest(root, &TestElemIter,      "tscoll/capitst/TestElemIter");
     addTest(root, &TestGetAll,        "tscoll/capitst/TestGetAll");
+    addTest(root, &TestWindowsCollationCoverage, "tscoll/capitst/TestWindowsCollationCoverage");
     /*addTest(root, &TestGetDefaultRules, "tscoll/capitst/TestGetDefaultRules");*/
     addTest(root, &TestDecomposition, "tscoll/capitst/TestDecomposition");
     addTest(root, &TestSafeClone, "tscoll/capitst/TestSafeClone");
@@ -1618,6 +1620,41 @@ void TestGetLocale(void) {
   }
 }
 
+
+static void TestWindowsCollationCoverage(void) {
+    static const struct {
+        const char* requested;
+        const char* actual;
+        UChar first[3];
+        UChar second[3];
+    } cases[] = {
+        { "aa", "aa", { 0x0074, 0 }, { 0x0073, 0 } },
+        { "cu", "cu", { 0x0410, 0 }, { 0x0430, 0 } },
+        { "ssy", "ssy", { 0x0074, 0 }, { 0x0073, 0 } },
+        { "vo", "vo", { 0x0061, 0x007a, 0 }, { 0x00e4, 0 } },
+        { "prs", "fa", { 0 }, { 0 } },
+        { "prs_AF", "fa_AF", { 0 }, { 0 } }
+    };
+    for (int32_t i = 0; i < UPRV_LENGTHOF(cases); ++i) {
+        UErrorCode status = U_ZERO_ERROR;
+        UCollator* collator = ucol_open(cases[i].requested, &status);
+        if (U_FAILURE(status) || collator == NULL) {
+            log_data_err("Cannot open Windows collation %s: %s\n",
+                cases[i].requested, u_errorName(status));
+            continue;
+        }
+        const char* actual = ucol_getLocaleByType(collator, ULOC_ACTUAL_LOCALE, &status);
+        if (U_FAILURE(status) || actual == NULL || strcmp(actual, cases[i].actual) != 0) {
+            log_err("Windows collation %s should select %s, got %s\n",
+                cases[i].requested, cases[i].actual, actual == NULL ? "(null)" : actual);
+        }
+        if (cases[i].first[0] != 0 &&
+            ucol_strcoll(collator, cases[i].first, -1, cases[i].second, -1) != UCOL_LESS) {
+            log_err("Windows collation %s lost its shipped ordering\n", cases[i].requested);
+        }
+        ucol_close(collator);
+    }
+}
 
 void TestGetAll(void)
 {

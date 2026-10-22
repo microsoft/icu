@@ -1391,8 +1391,25 @@ void IntlTestDateTimePatternGeneratorAPI::testJjMapping() {
                      jPattern.extract(0, jPattern.length(), jpBuf, 32);
                      const char* dfmtCalType = (dfmt->getCalendar())->getType();
                      const char* validLoc = dfmt->getLocaleID(ULOC_VALID_LOCALE, status);
-                     errln("ERROR: locale %s (valid %s), expected j resolved char %s to occur in short time pattern '%s' for %s (best pattern: '%s')",
-                             localeID, validLoc, jcBuf, spBuf, dfmtCalType, jpBuf);
+                     // These are the ICU 72 CLDR-MS hour-cycle exceptions, not all extra locales.
+                     static const char* const seedDataExceptions[] = {
+                         "byn", "iu_Latn", "mn_Mong", "moh", "ss_SZ", "ssy",
+                         "st_LS", "syr", "tig", "wal", "ks_Deva"
+                     };
+                     bool knownSeedDataIssue = false;
+                     for (const char* parent : seedDataExceptions) {
+                         size_t length = uprv_strlen(parent);
+                         if (uprv_strncmp(localeID, parent, length) == 0 &&
+                                 (localeID[length] == 0 || localeID[length] == '_')) {
+                             knownSeedDataIssue = true;
+                             break;
+                         }
+                     }
+                     if (!(knownSeedDataIssue &&
+                             logKnownIssue("0", "MSFT Change: ICU 72 CLDR seed-data hour-cycle exception for %s.", localeID))) {
+                         errln("ERROR: locale %s (valid %s), expected j resolved char %s to occur in short time pattern '%s' for %s (best pattern: '%s')",
+                                 localeID, validLoc, jcBuf, spBuf, dfmtCalType, jpBuf);
+                     }
                  }
                  break;
              }

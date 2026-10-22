@@ -214,7 +214,7 @@ ceb{
         PE{"Peru"}
         PF{"French Polynesia"}
         PG{"Papua New Guinea"}
-        PH{"Philippines"}
+        PH{"Pilipinas"}
         PK{"Pakistan"}
         PL{"Poland"}
         PM{"St. Pierre & Miquelon"}
