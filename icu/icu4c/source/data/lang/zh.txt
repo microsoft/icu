@@ -11,19 +11,35 @@ zh{
         colCaseLevel{"区分大小写的排序"}
         colNormalization{"规范化排序"}
         colNumeric{"数字排序"}
+        colReorder{"文字/区块顺序重排"}
         colStrength{"排序强度"}
         collation{"排序"}
         currency{"货币"}
+        d0{"切换"}
+        dx{"字典断字例外情况"}
         em{"表情符号表示法"}
+        fw{"一周起始日"}
+        h0{"混合型"}
         hc{"小时制（12或24）"}
+        i0{"输入法"}
+        k0{"键盘"}
+        kv{"最高忽略"}
         lb{"中文、日文及韩语换行规则"}
         lw{"词内换行规则"}
+        m0{"转换规则"}
         ms{"度量衡制"}
+        mu{"度量衡单位"}
         numbers{"数字"}
+        rg{"补充数据的区域"}
+        s0{"转换源"}
+        sd{"区域分区"}
         ss{"在缩写后断句"}
+        t{"转换"}
+        t0{"机器翻译"}
         timezone{"时区"}
-        va{"语言区域别名"}
+        va{"语言区域变体"}
         x{"专用"}
+        x0{"专用转换"}
     }
     Languages{
         aa{"阿法尔语"}
@@ -47,6 +63,7 @@ zh{
         ann{"奥博洛语"}
         anp{"昂加语"}
         ar{"阿拉伯语"}
+        ar_001{"现代标准阿拉伯语"}
         arc{"阿拉米语"}
         arn{"马普切语"}
         arp{"阿拉帕霍语"}
@@ -60,6 +77,7 @@ zh{
         awa{"阿瓦德语"}
         ay{"艾马拉语"}
         az{"阿塞拜疆语"}
+        az_Arab{"南阿塞拜疆语"}
         ba{"巴什基尔语"}
         bal{"俾路支语"}
         ban{"巴厘语"}
@@ -137,6 +155,8 @@ zh{
         dar{"达尔格瓦语"}
         dav{"台塔语"}
         de{"德语"}
+        de_AT{"奥地利德语"}
+        de_CH{"瑞士高地德语"}
         del{"特拉华语"}
         den{"史拉维语"}
         dgr{"多格里布语"}
@@ -159,13 +179,21 @@ zh{
         el{"希腊语"}
         elx{"埃兰语"}
         en{"英语"}
+        en_AU{"澳大利亚英语"}
+        en_CA{"加拿大英语"}
+        en_GB{"英国英语"}
+        en_US{"美国英语"}
         enm{"中古英语"}
         eo{"世界语"}
         es{"西班牙语"}
+        es_419{"拉丁美洲西班牙语"}
+        es_ES{"欧洲西班牙语"}
+        es_MX{"墨西哥西班牙语"}
         et{"爱沙尼亚语"}
         eu{"巴斯克语"}
         ewo{"埃翁多语"}
         fa{"波斯语"}
+        fa_AF{"达里语"}
         fan{"芳格语"}
         fat{"芳蒂语"}
         ff{"富拉语"}
@@ -175,6 +203,8 @@ zh{
         fo{"法罗语"}
         fon{"丰语"}
         fr{"法语"}
+        fr_CA{"加拿大法语"}
+        fr_CH{"瑞士法语"}
         frc{"卡真法语"}
         frm{"中古法语"}
         fro{"古法语"}
@@ -212,6 +242,7 @@ zh{
         hax{"南海达语"}
         he{"希伯来语"}
         hi{"印地语"}
+        hi_Latn{"印地语（拉丁字母）"}
         hil{"希利盖农语"}
         hit{"赫梯语"}
         hmn{"苗语"}
@@ -372,12 +403,14 @@ zh{
         nb{"书面挪威语"}
         nd{"北恩德贝勒语"}
         nds{"低地德语"}
+        nds_NL{"低萨克森语"}
         ne{"尼泊尔语"}
         new{"尼瓦尔语"}
         ng{"恩东加语"}
         nia{"尼亚斯语"}
         niu{"纽埃语"}
         nl{"荷兰语"}
+        nl_BE{"弗拉芒语"}
         nmg{"夸西奥语"}
         nn{"挪威尼诺斯克语"}
         nnh{"恩甘澎语"}
@@ -419,12 +452,15 @@ zh{
         pi{"巴利语"}
         pis{"皮京语"}
         pl{"波兰语"}
+        pms{"皮埃蒙特语"}
         pon{"波纳佩语"}
         pqm{"马利塞-帕萨马科迪语"}
         prg{"普鲁士语"}
         pro{"古普罗文斯语"}
         ps{"普什图语"}
         pt{"葡萄牙语"}
+        pt_BR{"巴西葡萄牙语"}
+        pt_PT{"欧洲葡萄牙语"}
         qu{"克丘亚语"}
         quc{"基切语"}
         raj{"拉贾斯坦语"}
@@ -435,6 +471,7 @@ zh{
         rm{"罗曼什语"}
         rn{"隆迪语"}
         ro{"罗马尼亚语"}
+        ro_MD{"摩尔多瓦语"}
         rof{"兰博语"}
         rom{"吉普赛语"}
         ru{"俄语"}
@@ -462,6 +499,7 @@ zh{
         ses{"东桑海语"}
         sg{"桑戈语"}
         sga{"古爱尔兰语"}
+        sh{"塞尔维亚-克罗地亚语"}
         shi{"希尔哈语"}
         shn{"掸语"}
         shu{"乍得阿拉伯语"}
@@ -494,6 +532,7 @@ zh{
         sux{"苏美尔语"}
         sv{"瑞典语"}
         sw{"斯瓦希里语"}
+        sw_CD{"刚果斯瓦希里语"}
         swb{"科摩罗语"}
         syc{"古典叙利亚语"}
         syr{"叙利亚语"}
@@ -580,6 +619,8 @@ zh{
         zen{"泽纳加语"}
         zgh{"标准摩洛哥塔马塞特语"}
         zh{"中文"}
+        zh_Hans{"简体中文"}
+        zh_Hant{"繁体中文"}
         zu{"祖鲁语"}
         zun{"祖尼语"}
         zxx{"无语言内容"}
@@ -590,6 +631,24 @@ zh{
     }
     Languages%extension{
         ku{"北库尔德语"}
+    }
+    Languages%long{
+        zh_Hans{"现代标准汉语（简体）"}
+        zh_Hant{"现代标准汉语（繁体）"}
+    }
+    Languages%menu{
+        ars{"阿拉伯语（纳吉迪）"}
+        yue{"广东话"}
+        zh{"普通话"}
+    }
+    Languages%short{
+        az{"阿塞语"}
+        en_GB{"英式英语"}
+        en_US{"美式英语"}
+    }
+    Languages%variant{
+        ckb{"索拉尼库尔德语"}
+        hi_Latn{"印地英语"}
     }
     Scripts{
         Adlm{"阿德拉姆文"}
@@ -818,6 +877,7 @@ zh{
             iso8601{"国际标准历法"}
             japanese{"和历"}
             persian{"波斯历"}
+            roc{"民国纪年"}
         }
         calendar%core{
             buddhist{"佛历"}
@@ -828,12 +888,16 @@ zh{
             ethiopic-amete-alem{"埃塞俄比亚阿米特阿莱姆日历"}
             gregorian{"公历"}
             hebrew{"希伯来历"}
+            indian{"印度国定历"}
             islamic{"伊斯兰历"}
             islamic-civil{"表格式伊斯兰历（民用纪元）"}
+            islamic-rgsa{"伊斯兰历（沙特阿拉伯观月）"}
             islamic-tbla{"表格式伊斯兰历（天文纪元）"}
             islamic-umalqura{"伊斯兰历（乌姆库拉）"}
+            iso8601{"阳历"}
             japanese{"和历"}
             persian{"波斯历"}
+            roc{"民国纪年"}
         }
         cf{
             account{"会计货币格式"}
@@ -856,6 +920,11 @@ zh{
             no{"对正常大小写顺序进行排序"}
             upper{"先对大写字母进行排序"}
         }
+        colCaseFirst%core{
+            lower{"小写字母"}
+            no{"小写字母"}
+            upper{"大写字母"}
+        }
         colCaseLevel{
             no{"不区分大小写进行排序"}
             yes{"区分大小写进行排序"}
@@ -868,12 +937,26 @@ zh{
             no{"对数字进行单独排序"}
             yes{"按数字顺序对数字进行排序"}
         }
+        colReorder%core{
+            currency{"货币"}
+            digit{"数字"}
+            punct{"标点符号"}
+            space{"空白字符"}
+            symbol{"符号"}
+        }
         colStrength{
             identical{"对所有内容进行排序"}
             primary{"只对基本字母进行排序"}
             quaternary{"对重音/大小写/长度/假名进行排序"}
             secondary{"对重音进行排序"}
             tertiary{"对重音/大小写/长度进行排序"}
+        }
+        colStrength%core{
+            identical{"全部"}
+            primary{"仅限基础字母"}
+            quaternary{"基础字符、重音、大小写、变体、假名"}
+            secondary{"基础字符、重音"}
+            tertiary{"基础字符、重音、大小写、变体"}
         }
         collation{
             compat{"基于兼容性沿用既往排序"}
@@ -896,10 +979,13 @@ zh{
             compat{"兼容性"}
             dictionary{"字典"}
             ducet{"默认Unicode"}
+            emoji{"表情符号"}
+            eor{"欧洲规则"}
             phonebook{"电话簿"}
             phonetic{"语音"}
             pinyin{"拼音"}
             search{"搜索"}
+            searchjl{"韩语初声"}
             standard{"标准"}
             stroke{"笔画"}
             traditional{"传统"}
@@ -917,16 +1003,26 @@ zh{
             text{"文字"}
         }
         hc{
+            c12{"12小时制"}
+            c24{"24小时制"}
             h11{"12小时制（0–11）"}
             h12{"12小时制（1–12）"}
             h23{"24小时制（0–23）"}
             h24{"24小时制（1–24）"}
         }
         hc%core{
+            c12{"12"}
+            c24{"24"}
             h11{"12 (0–11)"}
             h12{"12 (1–12)"}
             h23{"24 (0–23)"}
             h24{"24 (1–24)"}
+        }
+        kv%core{
+            currency{"Shift+Space、标点符号、所有符号"}
+            punct{"Shift+Space、标点符号"}
+            space{"Shift+Space、标点符号"}
+            symbol{"Shift+Space、标点符号、非货币符号"}
         }
         lb{
             loose{"宽松换行样式"}
@@ -1044,9 +1140,45 @@ zh{
             wara{"瓦郎奇蒂数字"}
             wcho{"万秋数字"}
         }
+        numbers%core{
+            arabext{"扩展阿拉伯-印度数字"}
+            armnlow{"亚美尼亚小写体"}
+            finance{"财务"}
+            fullwide{"全角"}
+            greklow{"希腊小写体"}
+            hanidays{"传统历法的汉字日期编号"}
+            hanidec{"中文数字十进制记数法"}
+            hansfin{"简体中文财务"}
+            hantfin{"繁体中文财务"}
+            jpanfin{"日文财务"}
+            jpanyear{"日本元年纪年法"}
+            lanatham{"傣昙文（宗教用）"}
+            mathbold{"数学粗体"}
+            mathdbl{"数学双线体"}
+            mathmono{"数学等宽体"}
+            mathsanb{"数学无衬线粗体"}
+            mathsans{"数学无衬线体"}
+            mymrepka{"缅甸东波克伦文"}
+            mymrpao{"缅甸勃欧文"}
+            mymrshan{"缅甸掸文"}
+            mymrtlng{"缅甸傣亮文"}
+            native{"当地数字"}
+            outlined{"轮廓体"}
+            roman{"罗马大写体"}
+            romanlow{"罗马小写体"}
+            segment{"数码管"}
+            tamldec{"现代泰米尔文"}
+            traditional{"传统数字"}
+        }
         ss%core{
             none{"关闭"}
             standard{"开启"}
+        }
+        t0{
+            und{"未特别指明的机器翻译"}
+        }
+        va%core{
+            posix{"POSIX 变体"}
         }
     }
     Variants{

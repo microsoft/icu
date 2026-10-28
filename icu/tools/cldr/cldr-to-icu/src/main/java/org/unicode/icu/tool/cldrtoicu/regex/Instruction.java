@@ -14,8 +14,8 @@ enum Instruction {
     BASE_XPATH,
     // TODO: Figure out how to remove this hack (probably by supporting partial matches).
     /**
-     * Defines whether result values should be appended one at a time to a resource bundle
-     * (default) or grouped into a separate array.
+     * Defines whether result values should be appended one at a time to a resource bundle (default)
+     * or grouped into a separate array.
      */
     GROUP;
 

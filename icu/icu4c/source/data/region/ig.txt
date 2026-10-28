@@ -3,7 +3,7 @@
 // Generated using tools/cldr/cldr-to-icu/
 ig{
     Countries{
-        001{"Uwa"}
+        001{"uwa"}
         002{"Afrika"}
         003{"Mpaghara Ugwu Amerịka"}
         005{"Mpaghara Mgbada Ugwu America"}
@@ -94,14 +94,17 @@ ig{
         CY{"Cyprus"}
         CZ{"Czechia"}
         DE{"Germany"}
+        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denmark"}
         DM{"Dominica"}
         DO{"Dominican Republik"}
         DZ{"Algeria"}
+        EA{"Ceuta & Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egypt"}
+        EH{"Ọdịda Anyanwụ Sahara"}
         ER{"Eritrea"}
         ES{"Spain"}
         ET{"Ethiopia"}
@@ -138,6 +141,7 @@ ig{
         HR{"Croatia"}
         HT{"Haiti"}
         HU{"Hungary"}
+        IC{"Canary Islands"}
         ID{"Indonesia"}
         IE{"Ireland"}
         IL{"Israel"}
@@ -285,6 +289,8 @@ ig{
         VU{"Vanuatu"}
         WF{"Wallis & Futuna"}
         WS{"Samoa"}
+        XA{"Pseudo-Accents"}
+        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -292,5 +298,25 @@ ig{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Mpaghara A na-amaghị"}
+    }
+    Countries%chagos{
+        IO{"Chagos Archipelago"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"Macao"}
+        PS{"Palestine"}
+    }
+    Countries%variant{
+        CD{"Congo (DRC)"}
+        CG{"Congo (Republik)"}
+        CI{"Ivory Coast"}
+        CZ{"Czech Republik"}
+        FK{"Falkland Islands (Islas Malvinas)"}
+        NZ{"Aotearoa New Zealand"}
+        SZ{"Swaziland"}
+        TL{"East Timor"}
+        TR{"Turkey"}
     }
 }

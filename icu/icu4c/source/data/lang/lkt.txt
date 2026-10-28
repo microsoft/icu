@@ -42,8 +42,12 @@ lkt{
         doi{"Dogri Iyápi"}
         el{"Greece Iyápi"}
         en{"Wašíčuiyapi"}
+        en_GB{"Šagláša Wašíčuiyapi"}
+        en_US{"Mílahaŋska Wašíčuiyapi"}
         eo{"Esperanto Iyápi"}
         es{"Spayóla Iyápi"}
+        es_419{"Wiyóȟpeyata Spayóla Iyápi"}
+        es_ES{"Spayólaȟča Iyápi"}
         et{"Estonia Iyápi"}
         eu{"Basque Iyápi"}
         fa{"Persian Iyápi"}
@@ -101,6 +105,7 @@ lkt{
         my{"Burmese Iyápi"}
         ne{"Nepal Iyápi"}
         nl{"Dutch Iyápi"}
+        nl_BE{"Flemish Iyápi"}
         nv{"Šináglegleǧa Iyápi"}
         oj{"Ȟaȟátȟuŋwaŋ Iyápi"}
         or{"Oriya Iyápi"}
@@ -143,6 +148,8 @@ lkt{
         xh{"Xhosa Iyápi"}
         yo{"Yoruba Iyápi"}
         zh{"Pȟečhókaŋ Háŋska Iyápi"}
+        zh_Hans{"Pȟečhókaŋ Háŋska Iyápi Ikčéka"}
+        zh_Hant{"Pȟečhókaŋ Háŋska Iyápi Ȟče"}
         zu{"Zulu Iyápi"}
         zza{"Zaza Iyápi"}
     }

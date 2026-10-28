@@ -7,12 +7,17 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.Ordering.natural;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.SetMultimap;
 import java.util.List;
 import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
@@ -22,16 +27,9 @@ import org.unicode.icu.tool.cldrtoicu.PathValueTransformer.Result;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
 import org.unicode.icu.tool.cldrtoicu.RbValue;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.LinkedHashMultimap;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.SetMultimap;
-
 /**
- * An abstract parent class for any mappers based on {@code PathValueTransformer}. This ensures
- * that transformation results are correctly processed when being added to IcuData instances.
+ * An abstract parent class for any mappers based on {@code PathValueTransformer}. This ensures that
+ * transformation results are correctly processed when being added to IcuData instances.
  */
 abstract class AbstractPathValueMapper {
     // Matches "/foo/bar" or "/foo/bar[N]" as a resource bundle path, capturing the path and
@@ -66,8 +64,10 @@ abstract class AbstractPathValueMapper {
         // in them, but the referenced paths have not been transformed yet. Forcing the subclass to
         // implement a single method to generate all results at once ensures that we control the
         // lifecycle of the data and how results are processed as they are added to the IcuData.
-        checkState(resultsByRbPath.isEmpty(),
-            "results must not be added outside the call to addResults(): %s", resultsByRbPath);
+        checkState(
+                resultsByRbPath.isEmpty(),
+                "results must not be added outside the call to addResults(): %s",
+                resultsByRbPath);
         addResults();
         addResultsToIcuData(finalizeResults(), icuData);
         resultsByRbPath.clear();
@@ -75,19 +75,19 @@ abstract class AbstractPathValueMapper {
 
     /**
      * Implemented by sub-classes to return all results to be added to the IcuData instance. The
-     * primary job of this callback is to generate transformed results (typically by calling
-     * {@link #transformValue(CldrValue)}) and then, after optional post-processing, add the
-     * results to this mapper using {@link #addResult(RbPath, Result)}.
+     * primary job of this callback is to generate transformed results (typically by calling {@link
+     * #transformValue(CldrValue)}) and then, after optional post-processing, add the results to
+     * this mapper using {@link #addResult(RbPath, Result)}.
      *
-     * <p>This method is called once for each call to {@link #addIcuData(IcuData)} and
-     * is responsible for adding all necessary results for the returned {@link IcuData}.
+     * <p>This method is called once for each call to {@link #addIcuData(IcuData)} and is
+     * responsible for adding all necessary results for the returned {@link IcuData}.
      */
     abstract void addResults();
 
     /**
      * Returns the CLDR data used for this transformation. Note that a subclass mapper might have
-     * other data for different purposes, but this data instance is the one from which variables
-     * are resolved. A sub-class mapper might access this for additional processing.
+     * other data for different purposes, but this data instance is the one from which variables are
+     * resolved. A sub-class mapper might access this for additional processing.
      */
     final CldrData getCldrData() {
         return cldrData;
@@ -103,8 +103,8 @@ abstract class AbstractPathValueMapper {
     }
 
     /**
-     * Adds a transformed result to the mapper. This should be called by the sub-class mapper in
-     * its implementation of the {@link #addResults()} method.
+     * Adds a transformed result to the mapper. This should be called by the sub-class mapper in its
+     * implementation of the {@link #addResults()} method.
      *
      * <p>Note that the given path will often (but not always) be just the path of the result.
      */
@@ -139,12 +139,12 @@ abstract class AbstractPathValueMapper {
      * processed in list order and handled differently according to whether they are grouped, or
      * represent an alias value.
      *
-     * If the value of an ungrouped result is itself a resource bundle path (including possibly
+     * <p>If the value of an ungrouped result is itself a resource bundle path (including possibly
      * having an array index) then the referenced value is assumed to be an existing path whose
      * value is then substituted.
      */
     private static void addResultsToIcuData(
-        ImmutableListMultimap<RbPath, Result> results, IcuData icuData) {
+            ImmutableListMultimap<RbPath, Result> results, IcuData icuData) {
 
         // Ordering of paths should not matter here (IcuData will re-sort them) and ordering of
         // values for a given key is preserved by list multimaps.
@@ -164,9 +164,16 @@ abstract class AbstractPathValueMapper {
                     // around the fact that RbPath/RbValue is not properly typed and we have to use
                     // heuristics to determine whether to replace a resource bundle path with its
                     // referenced value.
-                    checkArgument(r.getValues().size() == 1,
-                        "explicit aliases must be singleton values: %s", r);
-                    map.put(rbPath, ValueOrAlias.value(Iterables.getOnlyElement(r.getValues())));
+                    checkArgument(
+                            r.getValues().size() == 1,
+                            "explicit aliases must be singleton values: %s",
+                            r);
+                    // An alias path must have exactly one value. If a duplicate arises (e.g. from
+                    // a parent-level dateTimeFormats alias and a child-level appendItems alias both
+                    // emitting the same path), keep the first and skip subsequent duplicates.
+                    if (!map.containsKey(rbPath)) {
+                        map.put(rbPath, ValueOrAlias.value(Iterables.getOnlyElement(r.getValues())));
+                    }
                 } else {
                     // Ungrouped results are one value per entry, but might later be expanded into
                     // grouped results if they are a path referencing a grouped entry.
@@ -175,7 +182,12 @@ abstract class AbstractPathValueMapper {
             }
         }
         // This works because insertion order is maintained for values of each path.
-        map.forEach((p, v) -> icuData.add(p, v.resolve(map)));
+        map.forEach((p, v) -> {
+            RbValue resolved = v.resolve(map);
+            if (resolved != null) {
+                icuData.add(p, resolved);
+            }
+        });
     }
 
     /*
@@ -211,8 +223,10 @@ abstract class AbstractPathValueMapper {
             if (!m.matches()) {
                 return value(valueOrAlias);
             }
-            // The only constraint is that the "path" value starts with a leading '/', but parsing into
-            // the RbPath ignores this. We must use "parse()" here, rather than RbPath.of(), since the
+            // The only constraint is that the "path" value starts with a leading '/', but parsing
+            // into
+            // the RbPath ignores this. We must use "parse()" here, rather than RbPath.of(), since
+            // the
             // captured value contains '/' characters to represent path delimiters.
             RbPath path = RbPath.parse(m.group(1));
             // If no index is given (e.g. "/foo/bar") then treat it as index 0 (i.e. "/foo/bar[0]").
@@ -220,9 +234,18 @@ abstract class AbstractPathValueMapper {
             return src -> {
                 checkState(src != null, "recursive alias resolution is not supported");
                 List<ValueOrAlias> values = src.get(path);
-                checkArgument(!values.isEmpty(), "no such alias value: /%s", path);
-                checkArgument(index < values.size(),
-                    "index for alias /%s[%s] is out of bounds", path, index);
+                // If the referenced path doesn't exist in the map, return null to skip
+                // this entry. This handles unresolvable paths like the whole-calendar
+                // alias marker ("$1lo") whose value "/LOCALE/calendar/<target>" cannot
+                // be resolved against the local map.
+                if (values.isEmpty()) {
+                    return null;
+                }
+                checkArgument(
+                        index < values.size(),
+                        "index for alias /%s[%s] is out of bounds",
+                        path,
+                        index);
                 // By passing 'null' to the recursive call to resolve, we prevent the resolution
                 // from being recursive (*). This could be changed to pass 'src' and achieve
                 // arbitrary recursive resolving if needed, put that's currently unnecessary (and

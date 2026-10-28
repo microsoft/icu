@@ -847,6 +847,9 @@ kxv_Deva{
         "Asia:Ulaanbaatar"{
             ec{"उलानबातर"}
         }
+        "Asia:Urumqi"{
+            ec{"उरूम्की"}
+        }
         "Asia:Ust-Nera"{
             ec{"यूस्ट–नेरा"}
         }
@@ -1732,8 +1735,6 @@ kxv_Deva{
             ls{"सकालिन मानांकॉ बेला"}
         }
         "meta:Samoa"{
-            ld{"समोआ डेलाइट बेला"}
-            lg{"समोआ बेला"}
             ls{"समोआ मानांकॉ बेला"}
         }
         "meta:Seychelles"{

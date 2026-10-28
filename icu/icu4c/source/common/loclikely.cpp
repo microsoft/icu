@@ -418,7 +418,7 @@ GetRegionFromKey(const char* localeID, std::string_view key, UErrorCode& status)
     if (U_SUCCESS(status) && len >= 3 && len <= 6 &&
         uprv_isASCIILetter(kw[0]) && uprv_isASCIILetter(kw[1])) {
         // Additional Check
-        static icu::RegionValidateMap valid;
+        icu::RegionValidateMap valid;
         const char region[] = {kw[0], kw[1], '\0'};
         if (valid.isSet(region)) {
             result.append(uprv_toupper(kw[0]), status);
@@ -462,8 +462,8 @@ namespace {
 // test/intltest/regiontst.cpp from the resource data while
 // the test failed.
 const uint32_t gValidRegionMap[] = {
-    0xeedf597c, 0xdeddbdef, 0x15843f3f, 0x0e005480,
-    0xb0095c00, 0x0015fb9f, 0x7818068d, 0x0340400f,
+    0xeedf597c, 0xdeddbdef, 0x15943f3f, 0x0e00d580, 
+    0xb0095c00, 0x0015fb9f, 0x781c068d, 0x0340400f, 
     0xf42b1d00, 0xfd4f8141, 0x25d7fffc, 0x0100084b, 
     0x538f3c40, 0x40000001, 0xfdf15100, 0x9fbb7ae7, 
     0x0410419a, 0x00408557, 0x00004002, 0x00100001, 

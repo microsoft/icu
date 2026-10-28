@@ -4,11 +4,10 @@ package org.unicode.icu.tool.cldrtoicu.testing;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import org.unicode.icu.tool.cldrtoicu.RbPath;
-
 import com.google.common.truth.BooleanSubject;
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.Subject;
+import org.unicode.icu.tool.cldrtoicu.RbPath;
 
 public final class RbPathSubject extends Subject {
     // For use when chaining from other subjects.

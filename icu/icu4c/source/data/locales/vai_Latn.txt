@@ -119,24 +119,6 @@ vai_Latn{
                     }
                 }
             }
-            monthNames{
-                format{
-                    wide{
-                        "luukao kemã",
-                        "ɓandaɓu",
-                        "vɔɔ",
-                        "fulu",
-                        "goo",
-                        "juŋ",
-                        "julai",
-                        "kɔnde",
-                        "saah",
-                        "galo",
-                        "kenpkato ɓololɔ",
-                        "luukao lɔma",
-                    }
-                }
-            }
         }
     }
     fields{

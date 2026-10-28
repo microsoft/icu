@@ -100,7 +100,7 @@ public class RbPathTest {
 
     private static void assertBadPath(String path, String errorSnippet) {
         IllegalArgumentException e =
-            assertThrows(IllegalArgumentException.class, () -> RbPath.parse(path));
+                assertThrows(IllegalArgumentException.class, () -> RbPath.parse(path));
         assertThat(e).hasMessageThat().contains(errorSnippet);
     }
 }

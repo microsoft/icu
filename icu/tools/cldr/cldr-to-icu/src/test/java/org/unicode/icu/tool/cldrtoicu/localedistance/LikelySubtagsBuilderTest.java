@@ -13,63 +13,69 @@ import static org.unicode.icu.tool.cldrtoicu.localedistance.TestData.alias;
 import static org.unicode.icu.tool.cldrtoicu.localedistance.TestData.likelySubtag;
 import static org.unicode.icu.tool.cldrtoicu.localedistance.TestData.lsr;
 
+import com.google.common.collect.ImmutableMap;
+import com.ibm.icu.impl.locale.LSR;
+import com.ibm.icu.impl.locale.LikelySubtags;
+import com.ibm.icu.util.BytesTrie;
 import org.junit.Test;
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrValue;
 
-import com.google.common.collect.ImmutableMap;
-import com.ibm.icu.impl.locale.LSR;
-import com.ibm.icu.impl.locale.LikelySubtags;
-import com.ibm.icu.util.BytesTrie;
-
 public class LikelySubtagsBuilderTest {
 
     @Test
     public void testLanguageAliases() {
-        LikelySubtags.Data subtags = LikelySubtagsBuilder.build(getTestData(
-                // Minimum mapping (or else code complains).
-                likelySubtag("und", "en_Latn_US"),
-
-                alias(LANGUAGE, DEPRECATED, "in", "id"),
-                alias(LANGUAGE, DEPRECATED, "mo", "ro"),
-                // Overlong languages are ignored.
-                alias(LANGUAGE, OVERLONG, "eng", "en"),
-                // Non-simple languages with script, region or other extensions are ignored.
-                alias(LANGUAGE, LEGACY, "zh_TW", "zh_Hant_TW"),
-                alias(LANGUAGE, LEGACY, "i-default", "en-x-i-default")));
+        LikelySubtags.Data subtags =
+                LikelySubtagsBuilder.build(
+                        getTestData(
+                                // Minimum mapping (or else code complains).
+                                likelySubtag("und", "en_Latn_US"),
+                                alias(LANGUAGE, DEPRECATED, "in", "id"),
+                                alias(LANGUAGE, DEPRECATED, "mo", "ro"),
+                                // Overlong languages are ignored.
+                                alias(LANGUAGE, OVERLONG, "eng", "en"),
+                                // Non-simple languages with script, region or other extensions are
+                                // ignored.
+                                alias(LANGUAGE, LEGACY, "zh_TW", "zh_Hant_TW"),
+                                alias(LANGUAGE, LEGACY, "i-default", "en-x-i-default")));
 
         assertThat(subtags.languageAliases).containsExactly("in", "id", "mo", "ro");
     }
 
     @Test
     public void testTerritoryAliases() {
-        LikelySubtags.Data subtags = LikelySubtagsBuilder.build(getTestData(
-                // Minimum mapping (or else code complains).
-                likelySubtag("und", "en_Latn_US"),
+        LikelySubtags.Data subtags =
+                LikelySubtagsBuilder.build(
+                        getTestData(
+                                // Minimum mapping (or else code complains).
+                                likelySubtag("und", "en_Latn_US"),
 
-                // When more than one replacement exists, take the first.
-                alias(TERRITORY, DEPRECATED, "CS", "RS ME"),
-                alias(TERRITORY, DEPRECATED, "UK", "GB"),
-                // Overlong territories are ignored.
-                alias(TERRITORY, OVERLONG, "eng", "en"),
-                alias(TERRITORY, OVERLONG, "999", "ZZ")));
+                                // When more than one replacement exists, take the first.
+                                alias(TERRITORY, DEPRECATED, "CS", "RS ME"),
+                                alias(TERRITORY, DEPRECATED, "UK", "GB"),
+                                // Overlong territories are ignored.
+                                alias(TERRITORY, OVERLONG, "eng", "en"),
+                                alias(TERRITORY, OVERLONG, "999", "ZZ")));
 
         assertThat(subtags.regionAliases).containsExactly("CS", "RS", "UK", "GB");
     }
 
     @Test
     public void testLikelySubtags() {
-        LikelySubtags.Data subtags = LikelySubtagsBuilder.build(getTestData(
-                likelySubtag("und", "en_Latn_US"),
-                likelySubtag("en", "en_Latn_US"),
-                likelySubtag("pt", "pt_Latn_BR"),
-                likelySubtag("und_BR", "pt_Latn_BR"),
-                likelySubtag("zh", "zh_Hans_CN"),
-                likelySubtag("zh_TW", "zh_Hant_TW"),
-                likelySubtag("zh_Hant", "zh_Hant_TW")));
+        LikelySubtags.Data subtags =
+                LikelySubtagsBuilder.build(
+                        getTestData(
+                                likelySubtag("und", "en_Latn_US"),
+                                likelySubtag("en", "en_Latn_US"),
+                                likelySubtag("pt", "pt_Latn_BR"),
+                                likelySubtag("und_BR", "pt_Latn_BR"),
+                                likelySubtag("zh", "zh_Hans_CN"),
+                                likelySubtag("zh_TW", "zh_Hant_TW"),
+                                likelySubtag("zh_Hant", "zh_Hant_TW")));
 
-        assertThat(subtags.lsrs).asList()
+        assertThat(subtags.lsrs)
+                .asList()
                 .containsExactly(
                         // Special cases (these should never change).
                         lsr(""),

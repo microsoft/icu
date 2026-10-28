@@ -5,15 +5,41 @@ rm{
     Keys{
         calendar{"chalender"}
         cf{"format da valuta"}
+        colAlternate{"zavrar cun ignorar ils simbols"}
+        colBackwards{"zavrar cun invertir l’urden dals accents"}
+        colCaseFirst{"zavrar tenor maiusclas / minusclas"}
+        colCaseLevel{"zavrar cun resguardar maiusclas / minusclas"}
+        colNormalization{"zavrada normalisada"}
+        colNumeric{"zavrada tenor cifras"}
+        colReorder{"rearranschar scrittiras / blocs"}
+        colStrength{"intensitad da zavrada"}
         collation{"zavrada"}
         currency{"valuta"}
+        d0{"destinaziun transfurmaziun"}
+        dx{"exclusiuns da separaziuns tenor il dicziunari"}
         em{"visualisaziun dals emojis"}
+        fw{"emprim di da l’emna"}
+        h0{"entretschà"}
         hc{"ciclus da las uras (12 u 24h)"}
+        i0{"metoda d’endataziun"}
+        k0{"tastatura"}
+        kv{"maximal ignorà"}
         lb{"stil da sigl da lingia"}
         lw{"sigls da lingia entaifer pleds"}
+        m0{"reglas da transfurmaziun"}
         ms{"sistem da mesira"}
+        mu{"unitad da mesira"}
         numbers{"dumbers"}
+        rg{"regiun per datas supplementaras"}
+        s0{"partenza transfurmaziun"}
+        sd{"subdivisiun da la regiun"}
         ss{"Interrupziun da la frasa suenter ina abreviaziun"}
+        t{"transfurmaziun"}
+        t0{"translatà automaticamain"}
+        timezone{"zona d’urari"}
+        va{"varianta locala"}
+        x{"diever privat"}
+        x0{"transfurmaziun utilisaziun privata"}
     }
     Languages{
         aa{"afar"}
@@ -36,6 +62,7 @@ rm{
         ang{"englais vegl"}
         anp{"angika"}
         ar{"arab"}
+        ar_001{"arab standardisà modern"}
         arc{"arameic"}
         arn{"araucanic"}
         arp{"arapaho"}
@@ -107,6 +134,8 @@ rm{
         dar{"dargwa"}
         dav{"taita"}
         de{"tudestg"}
+        de_AT{"tudestg austriac"}
+        de_CH{"tudestg da scrittira svizzer"}
         del{"delaware"}
         den{"slavey"}
         dgr{"dogrib"}
@@ -128,13 +157,21 @@ rm{
         el{"grec"}
         elx{"elamitic"}
         en{"englais"}
+        en_AU{"englais australian"}
+        en_CA{"englais canadais"}
+        en_GB{"englais britannic"}
+        en_US{"englais american"}
         enm{"englais mesaun"}
         eo{"esperanto"}
         es{"spagnol"}
+        es_419{"spagnol latinamerican"}
+        es_ES{"spagnol europeic"}
+        es_MX{"spagnol mexican"}
         et{"eston"}
         eu{"basc"}
         ewo{"ewondo"}
         fa{"persian"}
+        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulah"}
@@ -144,6 +181,8 @@ rm{
         fo{"feroais"}
         fon{"fon"}
         fr{"franzos"}
+        fr_CA{"franzos canadais"}
+        fr_CH{"franzos svizzer"}
         frm{"franzos mesaun"}
         fro{"franzos vegl"}
         frr{"fris dal nord"}
@@ -327,6 +366,7 @@ rm{
         nia{"nias"}
         niu{"niue"}
         nl{"neerlandais"}
+        nl_BE{"flam"}
         nmg{"kwasio"}
         nn{"norvegiais nynorsk"}
         nnh{"ngienboon"}
@@ -362,11 +402,14 @@ rm{
         phn{"fenizian"}
         pi{"pali"}
         pl{"polac"}
+        pms{"piemuntais"}
         pon{"ponapean"}
         prg{"prussian"}
         pro{"provenzal vegl"}
         ps{"paschto"}
         pt{"portugais"}
+        pt_BR{"portugais brasilian"}
+        pt_PT{"portugais europeic"}
         qu{"quechua"}
         raj{"rajasthani"}
         rap{"rapanui"}
@@ -374,6 +417,7 @@ rm{
         rm{"rumantsch"}
         rn{"rundi"}
         ro{"rumen"}
+        ro_MD{"moldav"}
         rof{"rombo"}
         rom{"romani"}
         ru{"russ"}
@@ -398,6 +442,7 @@ rm{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"irlandais vegl"}
+        sh{"serbo-croat"}
         shi{"tachelit"}
         shn{"shan"}
         si{"singalais"}
@@ -499,6 +544,8 @@ rm{
         zen{"zenaga"}
         zgh{"marocan tamazight standardisà"}
         zh{"chinais"}
+        zh_Hans{"chinais simplifitgà"}
+        zh_Hant{"chinais tradiziunal"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"nagin cuntegn linguistic"}
@@ -509,6 +556,24 @@ rm{
     }
     Languages%extension{
         ku{"curd settentriunal"}
+    }
+    Languages%long{
+        zh_Hans{"chinais mandarin simplifitgà"}
+        zh_Hant{"chinais mandarin tradiziunal"}
+    }
+    Languages%menu{
+        ckb{"curd, central"}
+        yue{"chinais, cantonais"}
+        zh{"chinais, mandarin"}
+    }
+    Languages%short{
+        az{"azeri"}
+        en_GB{"englais GB"}
+        en_US{"englais USA"}
+    }
+    Languages%variant{
+        ckb{"curd, sorani"}
+        hi_Latn{"hinglish"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -674,6 +739,7 @@ rm{
             iso8601{"chalender gregorian (cun l’onn al cumenzament)"}
             japanese{"chalender giapunais"}
             persian{"chalender persian"}
+            roc{"chalender minguo"}
         }
         calendar%core{
             buddhist{"budistic"}
@@ -684,11 +750,16 @@ rm{
             ethiopic-amete-alem{"etiopic amete alem"}
             gregorian{"gregorian"}
             hebrew{"ebraic"}
+            indian{"naziunal indic"}
             islamic{"hijri"}
             islamic-civil{"hijri (tabellar, epoca civila)"}
+            islamic-rgsa{"hijri, vista da l’Arabia Saudita"}
+            islamic-tbla{"hijri (tabellar, epoca astronomica)"}
             islamic-umalqura{"hijri (Umm al-Qura)"}
+            iso8601{"gregorian"}
             japanese{"giapunais"}
             persian{"persian"}
+            roc{"minguo"}
         }
         cf{
             account{"format da valuta per la contabilitad"}
@@ -697,6 +768,25 @@ rm{
         cf%core{
             account{"contabilitad"}
             standard{"standard"}
+        }
+        colCaseFirst%core{
+            lower{"minusclas"}
+            no{"minusclas"}
+            upper{"maiusclas"}
+        }
+        colReorder%core{
+            currency{"valuta"}
+            digit{"cifras"}
+            punct{"interpuncziun"}
+            space{"spazi"}
+            symbol{"simbol"}
+        }
+        colStrength%core{
+            identical{"tut"}
+            primary{"mo bustabs da basa"}
+            quaternary{"basa, accents, grond / pitschen, variantas, kana"}
+            secondary{"basa, accents"}
+            tertiary{"basa, accents, grond / pitschen, variantas"}
         }
         collation{
             ducet{"zavrada unicode standard"}
@@ -708,9 +798,25 @@ rm{
             traditional{"reglas tradiziunalas"}
         }
         collation%core{
+            compat{"cumpatibilitad"}
+            dictionary{"dicziunari"}
             ducet{"standard unicode"}
+            emoji{"emoji"}
+            eor{"reglas europeicas"}
+            phonebook{"cudesch da telefon"}
+            phonetic{"fonetic"}
+            pinyin{"pinyin"}
             search{"tschertga"}
+            searchjl{"consonant inizial corean"}
             standard{"standard"}
+            stroke{"stritgs"}
+            traditional{"tradiziunal"}
+            unihan{"radicals e stritgs"}
+            zhuyin{"zhuyin"}
+        }
+        d0{
+            fwidth{"a l’entira largezza"}
+            hwidth{"a mesa largezza"}
         }
         em%core{
             default{"predefinì"}
@@ -718,16 +824,26 @@ rm{
             text{"text"}
         }
         hc{
+            c12{"sistem da 12 uras"}
+            c24{"sistem da 24 uras"}
             h11{"sistem da 12 uras (0–11)"}
             h12{"sistem da 12 uras (1–12)"}
             h23{"sistem da 24 uras (0–23)"}
             h24{"sistem da 24 uras (1–24)"}
         }
         hc%core{
+            c12{"12"}
+            c24{"24"}
             h11{"12 (0–11)"}
             h12{"12 (1–12)"}
             h23{"24 (0–23)"}
             h24{"24 (1–24)"}
+        }
+        kv%core{
+            currency{"spustar spazis, interpuncziun, tut ils simbols"}
+            punct{"spustar spazis, interpuncziun"}
+            space{"spustar spazis, interpuncziun"}
+            symbol{"spustar spazis, interpuncziun, simbols (exclus valutas)"}
         }
         lb{
             loose{"stil da sigl da lingia liber"}
@@ -744,6 +860,10 @@ rm{
             keepall{"preservar tut"}
             normal{"normal"}
             phrase{"preservar en frasas"}
+        }
+        m0{
+            bgn{"translitteraziun US BGN"}
+            ungegn{"translitteraziun UN GEGN"}
         }
         ms{
             metric{"sistem metric"}
@@ -786,6 +906,7 @@ rm{
             mlym{"cifras malayalam"}
             mtei{"cifras meetei mayek"}
             mymr{"cifras dal Myanmar"}
+            native{"cifras nativas"}
             olck{"cifras ol chiki"}
             orya{"cifras oriya"}
             roman{"dumbers romans"}
@@ -797,9 +918,51 @@ rm{
             tibt{"cifras tibetanas"}
             vaii{"cifras vai"}
         }
+        numbers%core{
+            arabext{"indic-arab extendì"}
+            armnlow{"armen en minusclas"}
+            finance{"finanziar"}
+            fullwide{"entira largezza"}
+            greklow{"grec en minusclas"}
+            hanidays{
+                "numeraziun dals dis dal mais en caracters han per chalenders tradizi"
+                "unals"
+            }
+            hanidec{
+                "sistem decimal posiziunal che utilisescha ideografs numerals chinais"
+                " sco cifras"
+            }
+            hansfin{"finanziar en chinais simplifitgà"}
+            hantfin{"finanziar en chinais tradiziunal"}
+            jpanfin{"giapunais finanziar"}
+            jpanyear{"numeraziun giapunaisa da l’emprim onn Gannen"}
+            lanatham{"tai tham tham (ecclesiastic)"}
+            mathbold{"matematic grass"}
+            mathdbl{"matematic cun stritg dubel"}
+            mathmono{"matematic monospazi"}
+            mathsanb{"matematic grass senza serifas"}
+            mathsans{"matematic senza serifas"}
+            mymrepka{"pwo karen oriental dal Myanmar"}
+            mymrpao{"pao dal Myanmar"}
+            mymrshan{"shan dal Myanmar"}
+            mymrtlng{"tai laing dal Myanmar"}
+            native{"cifras nativas"}
+            outlined{"conturà"}
+            roman{"roman en maiusclas"}
+            romanlow{"roman en minusclas"}
+            segment{"segmentà"}
+            tamldec{"tamil modern"}
+            traditional{"numerals tradiziunals"}
+        }
         ss%core{
             none{"Deactivà"}
             standard{"Activà"}
+        }
+        t0{
+            und{"translaziun automatica betg specifitgada"}
+        }
+        va%core{
+            posix{"varianta POSIX"}
         }
     }
     Variants{

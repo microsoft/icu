@@ -13,6 +13,11 @@ import static org.unicode.cldr.api.CldrData.PathOrder.ARBITRARY;
 import static org.unicode.cldr.api.CldrDataSupplier.CldrResolution.RESOLVED;
 import static org.unicode.cldr.api.CldrDataSupplier.CldrResolution.UNRESOLVED;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.Sets;
 import java.util.Arrays;
 import java.util.Set;
 import java.util.function.Function;
@@ -21,7 +26,6 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.IntStream;
-
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrDataSupplier.CldrResolution;
@@ -32,26 +36,22 @@ import org.unicode.cldr.api.CldrValue;
 import org.unicode.cldr.api.FilteredData;
 import org.unicode.cldr.api.PathMatcher;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.Sets;
-
 /**
  * A factory for wrapping data suppliers to add synthetic locales for debugging. The currently
  * supported synthetic locales are:
+ *
  * <ul>
- *     <li>{@code en_XA}: A pseudo locale which generates expanded text with many non-Latin accents.
- *     <li>{@code ar_XB}: A pseudo locale which generates BiDi text for debugging.
+ *   <li>{@code en_XA}: A pseudo locale which generates expanded text with many non-Latin accents.
+ *   <li>{@code ar_XB}: A pseudo locale which generates BiDi text for debugging.
  * </ul>
  *
- * <p>Both pseudo locales are based on {@code "en"} data, and generate values which are readable
- * by English speaking developers. For example, the CLDR value "Hello World" will be turned into
+ * <p>Both pseudo locales are based on {@code "en"} data, and generate values which are readable by
+ * English speaking developers. For example, the CLDR value "Hello World" will be turned into
  * something like:
+ *
  * <ul>
- *     <li>{@code en_XA}: [Ĥéļļö Ŵöŕļð one two]
- *     <li>{@code ar_XB}: dlroW elloH
+ *   <li>{@code en_XA}: [Ĥéļļö Ŵöŕļð one two]
+ *   <li>{@code ar_XB}: dlroW elloH
  * </ul>
  *
  * <p>In the case of BiDi pseudo localization, bi-directional markers are also inserted into the
@@ -74,13 +74,16 @@ public final class PseudoLocales {
     // See getExemplarValue() method for why we don't extract the exemplar list from "en".
     private enum PseudoType {
         BIDI("ar_XB", PseudoLocales::bidi, "abcdefghijklmnopqrstuvwxyz" + ALM + RLO + PDF),
-        EXPAND("en_XA", PseudoLocales::expanding,
-            "a\u00e5b\u0180c\u00e7d\u00f0e\u00e9f\u0192g\u011dh\u0125i\u00eej\u0135k\u0137l\u013cm"
-                + "\u0271n\u00f1o\u00f6p\u00feq\u01ebr\u0155s\u0161t\u0163u\u00fbv\u1e7dw\u0175"
-                + "x\u1e8by\u00fdz\u017e");
+        EXPAND(
+                "en_XA",
+                PseudoLocales::expanding,
+                "a\u00e5b\u0180c\u00e7d\u00f0e\u00e9f\u0192g\u011dh\u0125i\u00eej\u0135k\u0137l\u013cm"
+                        + "\u0271n\u00f1o\u00f6p\u00feq\u01ebr\u0155s\u0161t\u0163u\u00fbv\u1e7dw\u0175"
+                        + "x\u1e8by\u00fdz\u017e");
 
         private static final ImmutableMap<String, PseudoType> ID_MAP =
-            Arrays.stream(values()).collect(toImmutableMap(PseudoType::getLocaleId, identity()));
+                Arrays.stream(values())
+                        .collect(toImmutableMap(PseudoType::getLocaleId, identity()));
 
         private static PseudoType fromId(String localeId) {
             return checkNotNull(ID_MAP.get(localeId), "unknown pseduo locale: %s", localeId);
@@ -141,12 +144,16 @@ public final class PseudoLocales {
             this.pathsToProcess = getUnresolvedPaths(src, "en", "en_001");
             // Just check that we aren't wrapping an already wrapped supplier.
             PseudoType.getLocaleIds()
-                .forEach(id -> checkArgument(!srcIds.contains(id),
-                    "pseudo locale %s already supported by given data supplier", id));
+                    .forEach(
+                            id ->
+                                    checkArgument(
+                                            !srcIds.contains(id),
+                                            "pseudo locale %s already supported by given data supplier",
+                                            id));
         }
 
         private static ImmutableSet<CldrPath> getUnresolvedPaths(
-            CldrDataSupplier src, String... ids) {
+                CldrDataSupplier src, String... ids) {
 
             ImmutableSet.Builder<CldrPath> paths = ImmutableSet.builder();
             for (String id : ids) {
@@ -155,24 +162,28 @@ public final class PseudoLocales {
             return paths.build();
         }
 
-        @Override public CldrDataSupplier withDraftStatusAtLeast(CldrDraftStatus draftStatus) {
+        @Override
+        public CldrDataSupplier withDraftStatusAtLeast(CldrDraftStatus draftStatus) {
             return new PseudoSupplier(src.withDraftStatusAtLeast(draftStatus));
         }
 
-        @Override public CldrData getDataForLocale(String localeId, CldrResolution resolution) {
+        @Override
+        public CldrData getDataForLocale(String localeId, CldrResolution resolution) {
             if (PseudoType.getLocaleIds().contains(localeId)) {
                 return new PseudoLocaleData(
-                    enData, pathsToProcess, resolution, PseudoType.fromId(localeId));
+                        enData, pathsToProcess, resolution, PseudoType.fromId(localeId));
             } else {
                 return src.getDataForLocale(localeId, resolution);
             }
         }
 
-        @Override public Set<String> getAvailableLocaleIds() {
+        @Override
+        public Set<String> getAvailableLocaleIds() {
             return Sets.union(src.getAvailableLocaleIds(), PseudoType.getLocaleIds());
         }
 
-        @Override public CldrData getDataForType(CldrDataType type) {
+        @Override
+        public CldrData getDataForType(CldrDataType type) {
             return src.getDataForType(type);
         }
     }
@@ -185,42 +196,44 @@ public final class PseudoLocales {
         private static final PathMatcher LDML = PathMatcher.of("//ldml");
 
         private static final PathMatcher AUX_EXEMPLARS =
-            ldml("characters/exemplarCharacters[@type=\"auxiliary\"]");
+                ldml("characters/exemplarCharacters[@type=\"auxiliary\"]");
 
-        private static final PathMatcher NUMBERING_SYSTEM =
-            ldml("numbers/defaultNumberingSystem");
+        private static final PathMatcher NUMBERING_SYSTEM = ldml("numbers/defaultNumberingSystem");
 
         private static final PathMatcher GREGORIAN_SHORT_STANDARD_PATTERN =
-            ldml("dates/calendars/calendar[@type=\"gregorian\"]/timeFormats/timeFormatLength[@type=\"short\"]/timeFormat[@type=\"standard\"]/pattern[@type=\"standard\"]");
+                ldml(
+                        "dates/calendars/calendar[@type=\"gregorian\"]/timeFormats/timeFormatLength[@type=\"short\"]/timeFormat[@type=\"standard\"]/pattern[@type=\"standard\"]");
 
         // These paths were mostly derived from looking at the previous implementation's behaviour
         // and can be modified as needed.
         private static final Predicate<CldrPath> IS_PSEUDO_PATH =
-            matchAnyLdmlPrefix(
-                "localeDisplayNames",
-                "delimiters",
-                "dates/calendars/calendar",
-                "dates/fields",
-                "dates/timeZoneNames",
-                "numbers/currencies",
-                "listPatterns",
-                "posix/messages",
-                "characterLabels",
-                "typographicNames",
-                "units")
-                .and(matchAnyLdmlPrefix(
-                    "localeDisplayNames/localeDisplayPattern",
-                    "dates/timeZoneNames/fallbackFormat")
-                    .negate());
+                matchAnyLdmlPrefix(
+                                "localeDisplayNames",
+                                "delimiters",
+                                "dates/calendars/calendar",
+                                "dates/fields",
+                                "dates/timeZoneNames",
+                                "numbers/currencies",
+                                "listPatterns",
+                                "posix/messages",
+                                "characterLabels",
+                                "typographicNames",
+                                "units")
+                        .and(
+                                matchAnyLdmlPrefix(
+                                                "localeDisplayNames/localeDisplayPattern",
+                                                "dates/timeZoneNames/fallbackFormat")
+                                        .negate());
 
         // The expectation is that all non-alias paths with values under these roots are "date/time
         // pattern like" (such as "E h:mm:ss B") in which care must be taken to not pseudo localize
         // the patterns in such as way as to break them. This list must be accurate.
-        private static final Predicate<CldrPath> IS_PATTERN_PATH = matchAnyLdmlPrefix(
-            "dates/calendars/calendar/timeFormats",
-            "dates/calendars/calendar/dateFormats",
-            "dates/calendars/calendar/dateTimeFormats",
-            "dates/timeZoneNames/hourFormat");
+        private static final Predicate<CldrPath> IS_PATTERN_PATH =
+                matchAnyLdmlPrefix(
+                        "dates/calendars/calendar/timeFormats",
+                        "dates/calendars/calendar/dateFormats",
+                        "dates/calendars/calendar/dateTimeFormats",
+                        "dates/timeZoneNames/hourFormat");
 
         private static PathMatcher ldml(String paths) {
             return LDML.withSuffix(paths);
@@ -228,9 +241,9 @@ public final class PseudoLocales {
 
         private static Predicate<CldrPath> matchAnyLdmlPrefix(String... paths) {
             ImmutableList<Predicate<CldrPath>> collect =
-                Arrays.stream(paths)
-                    .map(s -> (Predicate<CldrPath>) ldml(s)::matchesPrefixOf)
-                    .collect(toImmutableList());
+                    Arrays.stream(paths)
+                            .map(s -> (Predicate<CldrPath>) ldml(s)::matchesPrefixOf)
+                            .collect(toImmutableList());
             return p -> collect.stream().anyMatch(e -> e.test(p));
         }
 
@@ -238,7 +251,8 @@ public final class PseudoLocales {
         // have strong expectations of width, we should not expand these (but might alter them
         // otherwise).
         private static final Predicate<String> IS_NARROW =
-            Pattern.compile("\\[@[a-z]+=\"[^\"]*narrow[^\"]*\"]", CASE_INSENSITIVE).asPredicate();
+                Pattern.compile("\\[@[a-z]+=\"[^\"]*narrow[^\"]*\"]", CASE_INSENSITIVE)
+                        .asPredicate();
 
         private static final Pattern NUMERIC_PLACEHOLDER = Pattern.compile("\\{\\d+\\}");
         private static final Pattern QUOTED_TEXT = Pattern.compile("'.*?'");
@@ -248,10 +262,10 @@ public final class PseudoLocales {
         private final ImmutableSet<CldrPath> pathsToProcess;
 
         private PseudoLocaleData(
-            CldrData srcData,
-            ImmutableSet<CldrPath> pathsToProcess,
-            CldrResolution resolution,
-            PseudoType type) {
+                CldrData srcData,
+                ImmutableSet<CldrPath> pathsToProcess,
+                CldrResolution resolution,
+                PseudoType type) {
 
             super(srcData);
             this.isResolved = checkNotNull(resolution) == RESOLVED;
@@ -307,8 +321,9 @@ public final class PseudoLocales {
         // (e.g. "[a b ... z]", "[a-z]", "[{a} {b} ... {z}]")
         private CldrValue getExemplarValue(CldrPath path) {
             StringBuilder exemplarList = new StringBuilder("[");
-            type.getExemplars().codePoints()
-                .forEach(cp -> appendExemplarCodePoint(exemplarList, cp).append(' '));
+            type.getExemplars()
+                    .codePoints()
+                    .forEach(cp -> appendExemplarCodePoint(exemplarList, cp).append(' '));
             exemplarList.setCharAt(exemplarList.length() - 1, ']');
             return CldrValue.parseValue(path.toString(), exemplarList.toString());
         }
@@ -317,8 +332,9 @@ public final class PseudoLocales {
         private static StringBuilder appendExemplarCodePoint(StringBuilder out, int cp) {
             // This could be fixed if needed, but for now it's safer to check.
             checkArgument(
-                Character.isBmpCodePoint(cp),
-                "Only BMP code points are supported for exemplars: 0x%s", Integer.toHexString(cp));
+                    Character.isBmpCodePoint(cp),
+                    "Only BMP code points are supported for exemplars: 0x%s",
+                    Integer.toHexString(cp));
             if (Character.isAlphabetic(cp)) {
                 out.appendCodePoint(cp);
             } else {
@@ -349,28 +365,33 @@ public final class PseudoLocales {
 
     // A map from a string of alternating key/value code-points; e.g. '1' -> '①'.
     // Note that a subset of this is also used to form the "exemplar" set (see PseudoType).
-    private static final IntUnaryOperator CONVERT_CODEPOINT = toCodePointFunction(
-        " \u2003!\u00a1\"\u2033#\u266f$\u20ac%\u2030&\u214b*\u204e+\u207a,\u060c-\u2010.\u00b7"
-            + "/\u20440\u24ea1\u24602\u24613\u24624\u24635\u24646\u24657\u24668\u24679\u2468"
-            + ":\u2236;\u204f<\u2264=\u2242>\u2265?\u00bf@\u055eA\u00c5B\u0181C\u00c7D\u00d0"
-            + "E\u00c9F\u0191G\u011cH\u0124I\u00ceJ\u0134K\u0136L\u013bM\u1e40N\u00d1O\u00d6"
-            + "P\u00deQ\u01eaR\u0154S\u0160T\u0162U\u00dbV\u1e7cW\u0174X\u1e8aY\u00ddZ\u017d"
-            + "[\u2045\\\u2216]\u2046^\u02c4_\u203f`\u2035a\u00e5b\u0180c\u00e7d\u00f0e\u00e9"
-            + "f\u0192g\u011dh\u0125i\u00eej\u0135k\u0137l\u013cm\u0271n\u00f1o\u00f6p\u00fe"
-            + "q\u01ebr\u0155s\u0161t\u0163u\u00fbv\u1e7dw\u0175x\u1e8by\u00fdz\u017e|\u00a6"
-            + "~\u02de");
+    private static final IntUnaryOperator CONVERT_CODEPOINT =
+            toCodePointFunction(
+                    " \u2003!\u00a1\"\u2033#\u266f$\u20ac%\u2030&\u214b*\u204e+\u207a,\u060c-\u2010.\u00b7"
+                            + "/\u20440\u24ea1\u24602\u24613\u24624\u24635\u24646\u24657\u24668\u24679\u2468"
+                            + ":\u2236;\u204f<\u2264=\u2242>\u2265?\u00bf@\u055eA\u00c5B\u0181C\u00c7D\u00d0"
+                            + "E\u00c9F\u0191G\u011cH\u0124I\u00ceJ\u0134K\u0136L\u013bM\u1e40N\u00d1O\u00d6"
+                            + "P\u00deQ\u01eaR\u0154S\u0160T\u0162U\u00dbV\u1e7cW\u0174X\u1e8aY\u00ddZ\u017d"
+                            + "[\u2045\\\u2216]\u2046^\u02c4_\u203f`\u2035a\u00e5b\u0180c\u00e7d\u00f0e\u00e9"
+                            + "f\u0192g\u011dh\u0125i\u00eej\u0135k\u0137l\u013cm\u0271n\u00f1o\u00f6p\u00fe"
+                            + "q\u01ebr\u0155s\u0161t\u0163u\u00fbv\u1e7dw\u0175x\u1e8by\u00fdz\u017e|\u00a6"
+                            + "~\u02de");
 
     // Converts a source/target alternating code-points into a map.
     private static IntUnaryOperator toCodePointFunction(String s) {
         // Not pretty, but there's no nice way to "pair up" successive stream elements without
         // extra library dependencies, so we collect them and then iterate via index.
         int[] codePoints = s.codePoints().toArray();
-        checkArgument((codePoints.length & 1) == 0,
-            "must have an even number of code points (was %s)", codePoints.length);
+        checkArgument(
+                (codePoints.length & 1) == 0,
+                "must have an even number of code points (was %s)",
+                codePoints.length);
         ImmutableMap<Integer, Integer> map =
-            IntStream.range(0, codePoints.length / 2)
-                .boxed()
-                .collect(toImmutableMap(n -> codePoints[2 * n], n -> codePoints[(2 * n) + 1]));
+                IntStream.range(0, codePoints.length / 2)
+                        .boxed()
+                        .collect(
+                                toImmutableMap(
+                                        n -> codePoints[2 * n], n -> codePoints[(2 * n) + 1]));
         return cp -> map.getOrDefault(cp, cp);
     }
 
@@ -386,8 +407,8 @@ public final class PseudoLocales {
             @Override
             public void addFragment(String text, boolean isLocalizable) {
                 text.codePoints()
-                    .map(isLocalizable ? CONVERT_CODEPOINT : cp -> cp)
-                    .forEach(codePoints::add);
+                        .map(isLocalizable ? CONVERT_CODEPOINT : cp -> cp)
+                        .forEach(codePoints::add);
             }
 
             @Override
@@ -449,6 +470,5 @@ public final class PseudoLocales {
         };
     }
 
-    private PseudoLocales() {
-    }
+    private PseudoLocales() {}
 }

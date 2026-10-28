@@ -6,23 +6,27 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.unicode.cldr.api.AttributeKey.keyOf;
 import static org.unicode.cldr.api.CldrData.PathOrder.DTD;
 
+import com.google.common.escape.UnicodeEscaper;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
-
 import org.unicode.cldr.api.AttributeKey;
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataType;
 import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
+import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
 import org.unicode.icu.tool.cldrtoicu.IcuData;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
-import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
-
-import com.google.common.escape.UnicodeEscaper;
+import org.unicode.icu.tool.cldrtoicu.RbValue;
 
 /**
  * A mapper to collect plural data from {@link CldrDataType#LDML LDML} data via the paths:
+ *
  * <pre>{@code
- *   //ldml/rbnf/rulesetGrouping[@type=*]/ruleset[@type=*]
+ * //ldml/rbnf/rulesetGrouping[@type=*]/ruleset[@type=*]
  * }</pre>
  */
 public final class RbnfMapper {
@@ -32,12 +36,12 @@ public final class RbnfMapper {
     private static final RbPath RB_ROOT = RbPath.of("RBNFRules");
 
     private static final CldrDataProcessor<RbnfMapper> RBNF_PROCESSOR;
+
     static {
         CldrDataProcessor.Builder<RbnfMapper> processor = CldrDataProcessor.builder();
         processor
-            .addAction(
-                "//ldml/rbnf/rulesetGrouping[@type=*]", (m, p) -> m.new RbnfRules(p))
-            .addValueAction("rbnfRules", RbnfRules::addRules);
+                .addAction("//ldml/rbnf/rulesetGrouping[@type=*]", (m, p) -> m.new RbnfRules(p))
+                .addValueAction("rbnfRules", RbnfRules::addRules);
         RBNF_PROCESSOR = processor.build();
     }
 
@@ -50,7 +54,7 @@ public final class RbnfMapper {
      * @return IcuData containing RBNF data for the given locale ID.
      */
     public static IcuData process(
-        IcuData icuData, CldrData cldrData, Optional<CldrData> icuSpecialData) {
+            IcuData icuData, CldrData cldrData, Optional<CldrData> icuSpecialData) {
 
         // Using DTD order is essential here because the RBNF paths contain ordered elements,
         // so we must ensure that they appear in sorted order (otherwise we'd have to do more
@@ -58,13 +62,19 @@ public final class RbnfMapper {
         RbnfMapper mapper = new RbnfMapper(icuData);
         icuSpecialData.ifPresent(s -> RBNF_PROCESSOR.process(s, mapper, DTD));
         RBNF_PROCESSOR.process(cldrData, mapper, DTD);
+        mapper.flush();
         return mapper.icuData;
     }
 
     private final IcuData icuData;
+    private final Map<RbPath, List<String>> rulesByPath = new LinkedHashMap<>();
 
     private RbnfMapper(IcuData icuData) {
         this.icuData = checkNotNull(icuData);
+    }
+
+    private void flush() {
+        rulesByPath.forEach((path, lines) -> icuData.add(path, RbValue.of(lines)));
     }
 
     private class RbnfRules {
@@ -75,8 +85,9 @@ public final class RbnfMapper {
         }
 
         void addRules(CldrValue value) {
+            List<String> lines = rulesByPath.computeIfAbsent(rbPath, k -> new ArrayList<>());
             for (String line : value.getValue().strip().split("\n")) {
-                icuData.add(rbPath, ESCAPE_RBNF_DATA.escape(line));
+                lines.add(ESCAPE_RBNF_DATA.escape(line));
             }
         }
     }
@@ -87,16 +98,17 @@ public final class RbnfMapper {
      * using "String.format()", however there's < 100 values that need any escaping, so it's
      * fine.
      */
-    private static final UnicodeEscaper ESCAPE_RBNF_DATA = new UnicodeEscaper() {
-        @Override
-        protected char[] escape(int cp) {
-            // Returning null means "do not escape".
-            if (0x0020 <= cp && cp <= 0x007F) {
-                return null;
-            } else if (cp <= 0xFFFF) {
-                return String.format("\\u%04X", cp).toCharArray();
-            }
-            return String.format("\\U%08X", cp).toCharArray();
-        }
-    };
+    private static final UnicodeEscaper ESCAPE_RBNF_DATA =
+            new UnicodeEscaper() {
+                @Override
+                protected char[] escape(int cp) {
+                    // Returning null means "do not escape".
+                    if (0x0020 <= cp && cp <= 0x007F) {
+                        return null;
+                    } else if (cp <= 0xFFFF) {
+                        return String.format("\\u%04X", cp).toCharArray();
+                    }
+                    return String.format("\\U%08X", cp).toCharArray();
+                }
+            };
 }

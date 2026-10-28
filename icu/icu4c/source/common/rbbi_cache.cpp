@@ -40,6 +40,11 @@ void RuleBasedBreakIterator::DictionaryCache::reset() {
     fFirstRuleStatusIndex = 0;
     fOtherRuleStatusIndex = 0;
     fBreaks.removeAllElements();
+    int32_t maxStatus = 0;
+    for (int32_t i = 0; i < fBI->fData->fStatusMaxIdx; ++i) {
+        maxStatus = std::max(maxStatus, fBI->fData->fRuleStatusTable[i]);
+    }
+    isWordLike = maxStatus > 100;
 }
 
 UBool RuleBasedBreakIterator::DictionaryCache::following(int32_t fromPos, int32_t *result, int32_t *statusIndex) {
@@ -60,7 +65,7 @@ UBool RuleBasedBreakIterator::DictionaryCache::following(int32_t fromPos, int32_
         r = fBreaks.elementAti(fPositionInCache);
         U_ASSERT(r > fromPos);
         *result = r;
-        *statusIndex = fOtherRuleStatusIndex;
+        *statusIndex = isWordLike || r == fLimit ? fOtherRuleStatusIndex : 0;
         return true;
     }
 
@@ -70,7 +75,7 @@ UBool RuleBasedBreakIterator::DictionaryCache::following(int32_t fromPos, int32_
         r= fBreaks.elementAti(fPositionInCache);
         if (r > fromPos) {
             *result = r;
-            *statusIndex = fOtherRuleStatusIndex;
+            *statusIndex = isWordLike || r == fLimit ? fOtherRuleStatusIndex : 0;
             return true;
         }
     }
@@ -97,7 +102,9 @@ UBool RuleBasedBreakIterator::DictionaryCache::preceding(int32_t fromPos, int32_
         r = fBreaks.elementAti(fPositionInCache);
         U_ASSERT(r < fromPos);
         *result = r;
-        *statusIndex = ( r== fStart) ? fFirstRuleStatusIndex : fOtherRuleStatusIndex;
+        *statusIndex = (r == fStart) ? fFirstRuleStatusIndex
+                       : isWordLike  ? fOtherRuleStatusIndex
+                                     : 0;
         return true;
     }
 
@@ -110,7 +117,9 @@ UBool RuleBasedBreakIterator::DictionaryCache::preceding(int32_t fromPos, int32_
         r = fBreaks.elementAti(fPositionInCache);
         if (r < fromPos) {
             *result = r;
-            *statusIndex = ( r == fStart) ? fFirstRuleStatusIndex : fOtherRuleStatusIndex;
+            *statusIndex = (r == fStart) ? fFirstRuleStatusIndex
+                           : isWordLike  ? fOtherRuleStatusIndex
+                                         : 0;
             return true;
         }
     }
@@ -130,7 +139,7 @@ void RuleBasedBreakIterator::DictionaryCache::populateDictionary(int32_t startPo
     int32_t rangeStart = startPos;
     int32_t rangeEnd = endPos;
 
-    uint32_t    category;
+    uint16_t    category;
     int32_t     current;
     UErrorCode  status = U_ZERO_ERROR;
     int32_t     foundBreakCount = 0;
@@ -142,7 +151,7 @@ void RuleBasedBreakIterator::DictionaryCache::populateDictionary(int32_t startPo
 
     utext_setNativeIndex(text, rangeStart);
     UChar32     c = utext_current32(text);
-    category = ucptrie_get(fBI->fData->fTrie, c); // ucptrie_get returns 32bit integer
+    category = ucptrie_get(fBI->fData->fTrie, c);
     uint32_t dictStart = fBI->fData->fForwardTable->fDictCategoriesStart;
 
     while(U_SUCCESS(status)) {

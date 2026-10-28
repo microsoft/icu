@@ -131,6 +131,11 @@ es_419{
                 group{","}
             }
         }
+        minimalPairs{
+            ordinal{
+                one{"El {0}ᵉʳ. equipo clasificado ganó."}
+            }
+        }
         minimumGroupingDigits{"1"}
     }
     calendar{
@@ -271,7 +276,6 @@ es_419{
                 Hv{"HH v"}
                 MMMdd{"dd-MMM"}
                 yMEd{"E d/M/y"}
-                yMMMEd{"E, d MMM y"}
                 yQQQ{"QQQ 'de' y"}
             }
             dayNames{
@@ -385,6 +389,40 @@ es_419{
                     y{"d/M/y–d/M/y"}
                 }
             }
+            monthNames{
+                format{
+                    abbreviated{
+                        "ene",
+                        "feb",
+                        "mar",
+                        "abr",
+                        "may",
+                        "jun",
+                        "jul",
+                        "ago",
+                        "sep",
+                        "oct",
+                        "nov",
+                        "dic",
+                    }
+                }
+                stand-alone{
+                    abbreviated{
+                        "ene",
+                        "feb",
+                        "mar",
+                        "abr",
+                        "may",
+                        "jun",
+                        "jul",
+                        "ago",
+                        "sep",
+                        "oct",
+                        "nov",
+                        "dic",
+                    }
+                }
+            }
             quarters{
                 format{
                     wide{
@@ -474,6 +512,14 @@ es_419{
                         "Dhuʻl-Qiʻdah",
                         "Dhuʻl-Hijjah",
                     }
+                }
+            }
+        }
+        roc{
+            eras{
+                abbreviated{
+                    0{"antes de R.O.C."}
+                    1{"R.O.C."}
                 }
             }
         }

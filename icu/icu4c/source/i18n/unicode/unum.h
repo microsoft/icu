@@ -1410,7 +1410,7 @@ typedef enum UNumberFormatSymbol {
    * @internal
    */
   UNUM_APPROXIMATELY_SIGN_SYMBOL = 28,
-#endif  /* U_HIDE_INTERNAL_API */
+#endif
 
 #ifndef U_HIDE_DEPRECATED_API
     /**

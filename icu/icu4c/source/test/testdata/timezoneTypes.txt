@@ -387,6 +387,7 @@ timezoneTypes:table(nofallback){
             "Asia:Kabul"{"afkbl"}
             "Asia:Kamchatka"{"rupkc"}
             "Asia:Karachi"{"pkkhi"}
+            "Asia:Kashgar"{"cnkhg"}
             "Asia:Katmandu"{"npktm"}
             "Asia:Khandyga"{"rukhndg"}
             "Asia:Krasnoyarsk"{"rukra"}
@@ -423,6 +424,7 @@ timezoneTypes:table(nofallback){
             "Asia:Thimphu"{"btthi"}
             "Asia:Tokyo"{"jptyo"}
             "Asia:Ulaanbaatar"{"mnuln"}
+            "Asia:Urumqi"{"cnurc"}
             "Asia:Ust-Nera"{"ruunera"}
             "Asia:Vientiane"{"lavte"}
             "Asia:Vladivostok"{"ruvvo"}

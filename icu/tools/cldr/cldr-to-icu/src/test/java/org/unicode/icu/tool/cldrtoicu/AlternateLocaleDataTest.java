@@ -8,9 +8,10 @@ import static org.unicode.cldr.api.CldrDataSupplier.CldrResolution.RESOLVED;
 import static org.unicode.cldr.api.CldrDataSupplier.CldrResolution.UNRESOLVED;
 import static org.unicode.icu.tool.cldrtoicu.testing.AssertUtils.assertThrows;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableTable;
 import java.util.HashSet;
 import java.util.Set;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -20,35 +21,34 @@ import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
 import org.unicode.icu.tool.cldrtoicu.testing.FakeDataSupplier;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableTable;
-
 @RunWith(JUnit4.class)
 public class AlternateLocaleDataTest {
     @Test
     public void testLocaleData() {
         // Target and source values.
         CldrValue target =
-            ldml("numbers/currencies/currency[@type=\"USD\"]/displayName", "Full Display Name");
+                ldml("numbers/currencies/currency[@type=\"USD\"]/displayName", "Full Display Name");
         CldrValue source =
-            ldml("numbers/currencies/currency[@type=\"USD\"][@alt=\"short\"]/displayName", "Name");
+                ldml(
+                        "numbers/currencies/currency[@type=\"USD\"][@alt=\"short\"]/displayName",
+                        "Name");
         // The target path with the source value we expect to be seen in the transformed data.
-        CldrValue altValue =
-            ldml("numbers/currencies/currency[@type=\"USD\"]/displayName", "Name");
+        CldrValue altValue = ldml("numbers/currencies/currency[@type=\"USD\"]/displayName", "Name");
 
         // Something that's not transformed.
-        CldrValue other =
-            ldml("numbers/currencies/currency[@type=\"USD\"]/symbol", "US$");
+        CldrValue other = ldml("numbers/currencies/currency[@type=\"USD\"]/symbol", "US$");
         // Something that should only exist in the resolved data.
-        CldrValue inherited =
-            ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "YYY");
+        CldrValue inherited = ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "YYY");
 
-        FakeDataSupplier src = new FakeDataSupplier()
-            .addLocaleData("xx", target, source, other)
-            .addLocaleData("root", inherited);
+        FakeDataSupplier src =
+                new FakeDataSupplier()
+                        .addLocaleData("xx", target, source, other)
+                        .addLocaleData("root", inherited);
         CldrDataSupplier transformed =
-            AlternateLocaleData.transform(
-                src, ImmutableMap.of(target.getPath(), source.getPath()), ImmutableTable.of());
+                AlternateLocaleData.transform(
+                        src,
+                        ImmutableMap.of(target.getPath(), source.getPath()),
+                        ImmutableTable.of());
 
         CldrData unresolved = transformed.getDataForLocale("xx", UNRESOLVED);
         CldrData resolved = transformed.getDataForLocale("xx", RESOLVED);
@@ -62,14 +62,18 @@ public class AlternateLocaleDataTest {
     public void testMissingSource() {
         // Target and source values.
         CldrValue target =
-            ldml("numbers/currencies/currency[@type=\"USD\"]/displayName", "Full Display Name");
+                ldml("numbers/currencies/currency[@type=\"USD\"]/displayName", "Full Display Name");
         CldrValue source =
-            ldml("numbers/currencies/currency[@type=\"USD\"][@alt=\"short\"]/displayName", "Name");
+                ldml(
+                        "numbers/currencies/currency[@type=\"USD\"][@alt=\"short\"]/displayName",
+                        "Name");
 
         FakeDataSupplier src = new FakeDataSupplier().addLocaleData("xx", target);
         CldrDataSupplier transformed =
-            AlternateLocaleData.transform(
-                src, ImmutableMap.of(target.getPath(), source.getPath()), ImmutableTable.of());
+                AlternateLocaleData.transform(
+                        src,
+                        ImmutableMap.of(target.getPath(), source.getPath()),
+                        ImmutableTable.of());
 
         CldrData unresolved = transformed.getDataForLocale("xx", UNRESOLVED);
         CldrData resolved = transformed.getDataForLocale("xx", RESOLVED);
@@ -83,16 +87,19 @@ public class AlternateLocaleDataTest {
     public void testMissingTarget() {
         // Target and source values.
         CldrValue target =
-            ldml("numbers/currencies/currency[@type=\"USD\"]/displayName", "Full Display Name");
+                ldml("numbers/currencies/currency[@type=\"USD\"]/displayName", "Full Display Name");
         CldrValue source =
-            ldml("numbers/currencies/currency[@type=\"USD\"][@alt=\"short\"]/displayName", "Name");
-        CldrValue other =
-            ldml("numbers/currencies/currency[@type=\"EUR\"]/displayName", "Euro");
+                ldml(
+                        "numbers/currencies/currency[@type=\"USD\"][@alt=\"short\"]/displayName",
+                        "Name");
+        CldrValue other = ldml("numbers/currencies/currency[@type=\"EUR\"]/displayName", "Euro");
 
         FakeDataSupplier src = new FakeDataSupplier().addLocaleData("xx", source, other);
         CldrDataSupplier transformed =
-            AlternateLocaleData.transform(
-                src, ImmutableMap.of(target.getPath(), source.getPath()), ImmutableTable.of());
+                AlternateLocaleData.transform(
+                        src,
+                        ImmutableMap.of(target.getPath(), source.getPath()),
+                        ImmutableTable.of());
 
         CldrData unresolved = transformed.getDataForLocale("xx", UNRESOLVED);
         CldrData resolved = transformed.getDataForLocale("xx", RESOLVED);
@@ -106,16 +113,20 @@ public class AlternateLocaleDataTest {
     @Test
     public void testBadPaths() {
         // Target and source values.
-        CldrPath target = CldrPath.parseDistinguishingPath(
-            "//ldml/numbers/currencies/currency[@type=\"USD\"]/displayName");
-        CldrPath source = CldrPath.parseDistinguishingPath(
-            "//ldml/numbers/currencies/currency[@type=\"USD\"]/symbol");
+        CldrPath target =
+                CldrPath.parseDistinguishingPath(
+                        "//ldml/numbers/currencies/currency[@type=\"USD\"]/displayName");
+        CldrPath source =
+                CldrPath.parseDistinguishingPath(
+                        "//ldml/numbers/currencies/currency[@type=\"USD\"]/symbol");
 
         FakeDataSupplier src = new FakeDataSupplier();
-        IllegalArgumentException e = assertThrows(
-            IllegalArgumentException.class,
-            () -> AlternateLocaleData.transform(
-                src, ImmutableMap.of(target, source), ImmutableTable.of()));
+        IllegalArgumentException e =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () ->
+                                AlternateLocaleData.transform(
+                                        src, ImmutableMap.of(target, source), ImmutableTable.of()));
         assertThat(e).hasMessageThat().contains("alternate paths must have the same namespace");
         assertThat(e).hasMessageThat().contains(target.toString());
         assertThat(e).hasMessageThat().contains(source.toString());
@@ -135,16 +146,20 @@ public class AlternateLocaleDataTest {
         // The right way to do this would be to merge the 'territories' attribute and remove the
         // alt territoy from its original list, but that's very complex and depends on the specific
         // meaning of each path in question, and will probably never be supported.
-        CldrPath target = CldrPath.parseDistinguishingPath(
-            "//supplementalData/weekData/firstDay[@day=\"sun\"]");
-        CldrPath source = CldrPath.parseDistinguishingPath(
-            "//supplementalData/weekData/firstDay[@day=\"sun\"][@alt=\"variant\"]");
+        CldrPath target =
+                CldrPath.parseDistinguishingPath(
+                        "//supplementalData/weekData/firstDay[@day=\"sun\"]");
+        CldrPath source =
+                CldrPath.parseDistinguishingPath(
+                        "//supplementalData/weekData/firstDay[@day=\"sun\"][@alt=\"variant\"]");
 
         FakeDataSupplier src = new FakeDataSupplier();
-        IllegalArgumentException e = assertThrows(
-            IllegalArgumentException.class,
-            () -> AlternateLocaleData.transform(
-                src, ImmutableMap.of(target, source), ImmutableTable.of()));
+        IllegalArgumentException e =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () ->
+                                AlternateLocaleData.transform(
+                                        src, ImmutableMap.of(target, source), ImmutableTable.of()));
         assertThat(e).hasMessageThat().contains("only locale data (LDML) is supported");
         // At least one of the paths should be in the error message, so look for common substring.
         assertThat(e).hasMessageThat().contains("/weekData/firstDay[@day=\"sun\"]");

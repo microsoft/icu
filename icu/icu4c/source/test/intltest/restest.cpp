@@ -313,7 +313,7 @@ ResourceBundleTest::TestConstruction()
     char *versionID1 = new char[1+strlen(version1)]; // + 1 for zero byte
     char *versionID2 = new char[1+ strlen(version2)]; // + 1 for zero byte
 
-    strcpy(versionID1, "48.0");  // hardcoded, please change if the default.txt file or ResourceBundle::kVersionSeparater is changed.
+    strcpy(versionID1, "49.0");  // hardcoded, please change if the default.txt file or ResourceBundle::kVersionSeparater is changed.
 
     strcpy(versionID2, "55.0");  // hardcoded, please change if the te_IN.txt file or ResourceBundle::kVersionSeparater is changed.
 
@@ -589,7 +589,7 @@ ResourceBundleTest::TestGetSize()
         ResourceBundle res = rb.get(test[i].key, status);
         if(U_FAILURE(status))
         {
-            err("Couldn't find the key %s. Error: %s\n", test[i].key, u_errorName(status));
+            err("Couldn't find the key %s. Error: %s\n", u_errorName(status));
             return;
         }
         size = res.getSize();

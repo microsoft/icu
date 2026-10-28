@@ -2,16 +2,14 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 package org.unicode.icu.tool.cldrtoicu;
 
+import static com.google.common.base.Preconditions.checkNotNull;
+
+import com.google.common.base.Ascii;
 import java.nio.file.Path;
 import java.util.Map;
 import java.util.Set;
-
 import org.unicode.cldr.api.CldrDraftStatus;
 import org.unicode.icu.tool.cldrtoicu.LdmlConverter.OutputType;
-
-import com.google.common.base.Ascii;
-
-import static com.google.common.base.Preconditions.checkNotNull;
 
 /** API for configuring the LDML converter. */
 public interface LdmlConverterConfig {
@@ -49,9 +47,8 @@ public interface LdmlConverterConfig {
         }
 
         /**
-         * Whether the directory is expected to contain empty data files (used to advertise
-         * the supported set of locales for the "service" provided by the data in that
-         * directory).
+         * Whether the directory is expected to contain empty data files (used to advertise the
+         * supported set of locales for the "service" provided by the data in that directory).
          */
         // TODO: Document why there's a difference between directories for empty files.
         boolean includeEmpty() {
@@ -90,15 +87,14 @@ public interface LdmlConverterConfig {
     Set<OutputType> getOutputTypes();
 
     /**
-     * Returns an additional "specials" directory containing additional ICU specific XML
-     * files depending on the given output type. This is where the converter finds any XML
-     * files using the "icu:" namespace.
+     * Returns an additional "specials" directory containing additional ICU specific XML files
+     * depending on the given output type. This is where the converter finds any XML files using the
+     * "icu:" namespace.
      */
     Path getSpecialsDir();
 
     /**
-     * Returns the root of the ICU output directory hierarchy into which ICU data file are
-     * written.
+     * Returns the root of the ICU output directory hierarchy into which ICU data file are written.
      */
     Path getOutputDir();
 
@@ -144,13 +140,9 @@ public interface LdmlConverterConfig {
     // TODO: Combine this and the force aliases into a single mechanism at this level.
     Map<String, String> getForcedParents(IcuLocaleDir dir);
 
-    /**
-     * Whether to emit a summary report for debug purposes after conversion is complete.
-     */
+    /** Whether to emit a summary report for debug purposes after conversion is complete. */
     boolean emitReport();
 
-    /**
-     * Whether to generate data in parallel (using multithreading).
-     */
+    /** Whether to generate data in parallel (using multithreading). */
     boolean parallel();
 }

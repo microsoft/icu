@@ -9,6 +9,15 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.HashMultiset;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.ListMultimap;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Multiset;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -23,16 +32,6 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
-import com.google.common.base.Joiner;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.HashMultiset;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.ListMultimap;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Multiset;
 
 /**
  * Helper tool to dump the resource bundle paths and values from an IcuData instance in a stable
@@ -50,20 +49,22 @@ final class IcuDataDumper {
         Path fileOrDir;
         Optional<Pattern> name = Optional.empty();
         switch (args.length) {
-        case 2:
-            name = Optional.of(Pattern.compile(args[1]));
-        case 1:
-            fileOrDir = Paths.get(args[0]);
-            break;
-        default:
-            throw new IllegalArgumentException("Usage: <file-or-dir> [<name-pattern>]");
+            case 2:
+                name = Optional.of(Pattern.compile(args[1]));
+            case 1:
+                fileOrDir = Paths.get(args[0]);
+                break;
+            default:
+                throw new IllegalArgumentException("Usage: <file-or-dir> [<name-pattern>]");
         }
 
         if (Files.isDirectory(fileOrDir)) {
             walkDirectory(fileOrDir, name);
         } else {
-            checkArgument(!name.isPresent(),
-                "cannot specificy a name pattern for a non-directory file: %s", fileOrDir);
+            checkArgument(
+                    !name.isPresent(),
+                    "cannot specificy a name pattern for a non-directory file: %s",
+                    fileOrDir);
             IcuDataParser parser = new IcuDataParser(fileOrDir);
             parser.parse();
             dump(parser.icuData);
@@ -72,14 +73,14 @@ final class IcuDataDumper {
 
     private static void walkDirectory(Path fileOrDir, Optional<Pattern> name) throws IOException {
         Predicate<Path> matchesName =
-            f -> name.map(n -> n.matcher(f.getFileName().toString()).matches()).orElse(true);
+                f -> name.map(n -> n.matcher(f.getFileName().toString()).matches()).orElse(true);
         List<IcuDataParser> icuParsers;
         try (Stream<Path> files = Files.walk(fileOrDir)) {
-            icuParsers = files
-                .filter(Files::isRegularFile)
-                .filter(matchesName)
-                .map(IcuDataParser::new)
-                .collect(toImmutableList());
+            icuParsers =
+                    files.filter(Files::isRegularFile)
+                            .filter(matchesName)
+                            .map(IcuDataParser::new)
+                            .collect(toImmutableList());
         }
         ListMultimap<RbPath, RbValue> allPaths = ArrayListMultimap.create();
         for (IcuDataParser p : icuParsers) {
@@ -98,8 +99,8 @@ final class IcuDataDumper {
 
     private static void dump(ListMultimap<RbPath, RbValue> allPaths) {
         allPaths.keySet().stream()
-            .sorted()
-            .forEach(k -> System.out.println(k + " :: " + LIST_JOINER.join(allPaths.get(k))));
+                .sorted()
+                .forEach(k -> System.out.println(k + " :: " + LIST_JOINER.join(allPaths.get(k))));
     }
 
     private static final class IcuDataParser {
@@ -166,8 +167,8 @@ final class IcuDataDumper {
                 processLine(line);
             } catch (RuntimeException e) {
                 throw new RuntimeException(
-                    String.format("[%s:%s] %s (%s)", path, lineNumber, e.getMessage(), line),
-                    e);
+                        String.format("[%s:%s] %s (%s)", path, lineNumber, e.getMessage(), line),
+                        e);
             }
         }
 
@@ -177,82 +178,88 @@ final class IcuDataDumper {
                 return;
             }
             LineMatch match = LineType.match(line, inBlockComment);
-            checkState(match.getType().isValidTransitionFrom(lastType),
-                "invalid state transition: %s --//-> %s", lastType, match.getType());
+            checkState(
+                    match.getType().isValidTransitionFrom(lastType),
+                    "invalid state transition: %s --//-> %s",
+                    lastType,
+                    match.getType());
             switch (match.getType()) {
-            case COMMENT:
-                if (name != null) {
-                    // Comments in data are ignored since they cannot be properly associated with
-                    // paths or values in an IcuData instance (only legacy tooling emits these).
+                case COMMENT:
+                    if (name != null) {
+                        // Comments in data are ignored since they cannot be properly associated
+                        // with
+                        // paths or values in an IcuData instance (only legacy tooling emits these).
+                        break;
+                    }
+                    if (line.startsWith("/*")) {
+                        inBlockComment = true;
+                    }
+                    headerComment.add(match.get(0));
+                    if (inBlockComment && line.contains("*/")) {
+                        checkState(
+                                line.indexOf("*/") == line.length() - 2,
+                                "unexpected end of comment block");
+                        inBlockComment = false;
+                    }
                     break;
-                }
-                if (line.startsWith("/*")) {
-                    inBlockComment = true;
-                }
-                headerComment.add(match.get(0));
-                if (inBlockComment && line.contains("*/")) {
-                    checkState(line.indexOf("*/") == line.length() - 2,
-                        "unexpected end of comment block");
-                    inBlockComment = false;
-                }
-                break;
 
-            case INLINE_VALUE:
-                icuData.put(
-                    getPathFromStack().extendBy(getSegment(match.get(0))),
-                    RbValue.of(unquote(match.get(1))));
-                break;
+                case INLINE_VALUE:
+                    icuData.put(
+                            getPathFromStack().extendBy(getSegment(match.get(0))),
+                            RbValue.of(unquote(match.get(1))));
+                    break;
 
-            case GROUP_START:
-                checkState(currentValue.isEmpty());
-                if (name == null) {
-                    name = match.get(0);
-                    checkState(name != null, "cannot have anonymous top-level group");
-                } else {
-                    pathStack.push(getSegment(match.get(0)));
-                }
-                wrappedValue = "";
-                isLineContinuation = false;
-                break;
-
-            case QUOTED_VALUE:
-                wrappedValue += unquote(match.get(0));
-                isLineContinuation = !line.endsWith(",");
-                if (!isLineContinuation) {
-                    currentValue.add(wrappedValue);
+                case GROUP_START:
+                    checkState(currentValue.isEmpty());
+                    if (name == null) {
+                        name = match.get(0);
+                        checkState(name != null, "cannot have anonymous top-level group");
+                    } else {
+                        pathStack.push(getSegment(match.get(0)));
+                    }
                     wrappedValue = "";
-                }
-                break;
-
-            case VALUE:
-                checkState(!isLineContinuation, "unexpected unquoted value");
-                currentValue.add(match.get(0));
-                break;
-
-            case GROUP_END:
-                // Account for quoted values without trailing ',' just before group end.
-                if (isLineContinuation) {
-                    currentValue.add(wrappedValue);
                     isLineContinuation = false;
-                }
-                // Emit the collection sequence of values for the current path as an RbValue.
-                if (!currentValue.isEmpty()) {
-                    icuData.put(getPathFromStack(), RbValue.of(currentValue));
-                    currentValue.clear();
-                }
-                // Annoyingly the name is outside the stack so the stack will empty before the last
-                // end group.
-                if (!pathStack.isEmpty()) {
-                    pathStack.pop();
-                    indices.setCount(pathStack.size(), 0);
-                } else {
-                    checkState(!inFinalGroup, "unexpected group end");
-                    inFinalGroup = true;
-                }
-                break;
+                    break;
 
-            case UNKNOWN:
-                throw new IllegalStateException("cannot parse line: " + match.get(0));
+                case QUOTED_VALUE:
+                    wrappedValue += unquote(match.get(0));
+                    isLineContinuation = !line.endsWith(",");
+                    if (!isLineContinuation) {
+                        currentValue.add(wrappedValue);
+                        wrappedValue = "";
+                    }
+                    break;
+
+                case VALUE:
+                    checkState(!isLineContinuation, "unexpected unquoted value");
+                    currentValue.add(match.get(0));
+                    break;
+
+                case GROUP_END:
+                    // Account for quoted values without trailing ',' just before group end.
+                    if (isLineContinuation) {
+                        currentValue.add(wrappedValue);
+                        isLineContinuation = false;
+                    }
+                    // Emit the collection sequence of values for the current path as an RbValue.
+                    if (!currentValue.isEmpty()) {
+                        icuData.put(getPathFromStack(), RbValue.of(currentValue));
+                        currentValue.clear();
+                    }
+                    // Annoyingly the name is outside the stack so the stack will empty before the
+                    // last
+                    // end group.
+                    if (!pathStack.isEmpty()) {
+                        pathStack.pop();
+                        indices.setCount(pathStack.size(), 0);
+                    } else {
+                        checkState(!inFinalGroup, "unexpected group end");
+                        inFinalGroup = true;
+                    }
+                    break;
+
+                case UNKNOWN:
+                    throw new IllegalStateException("cannot parse line: " + match.get(0));
             }
             lastType = match.getType();
         }
@@ -333,14 +340,14 @@ final class IcuDataDumper {
             // Table of allowed transitions expected during parsing.
             // key=current state, values=set of permitted previous states
             private static ImmutableSetMultimap<LineType, LineType> TRANSITIONS =
-                ImmutableSetMultimap.<LineType, LineType>builder()
-                    .putAll(COMMENT, COMMENT)
-                    .putAll(INLINE_VALUE, COMMENT, INLINE_VALUE, GROUP_START, GROUP_END)
-                    .putAll(GROUP_START, COMMENT, GROUP_START, GROUP_END, INLINE_VALUE)
-                    .putAll(VALUE, GROUP_START, VALUE, QUOTED_VALUE)
-                    .putAll(QUOTED_VALUE, GROUP_START, VALUE, QUOTED_VALUE)
-                    .putAll(GROUP_END, GROUP_END, INLINE_VALUE, VALUE, QUOTED_VALUE)
-                    .build();
+                    ImmutableSetMultimap.<LineType, LineType>builder()
+                            .putAll(COMMENT, COMMENT)
+                            .putAll(INLINE_VALUE, COMMENT, INLINE_VALUE, GROUP_START, GROUP_END)
+                            .putAll(GROUP_START, COMMENT, GROUP_START, GROUP_END, INLINE_VALUE)
+                            .putAll(VALUE, GROUP_START, VALUE, QUOTED_VALUE)
+                            .putAll(QUOTED_VALUE, GROUP_START, VALUE, QUOTED_VALUE)
+                            .putAll(GROUP_END, GROUP_END, INLINE_VALUE, VALUE, QUOTED_VALUE)
+                            .build();
 
             private final Pattern pattern;
 
@@ -367,10 +374,12 @@ final class IcuDataDumper {
                     // Regex groups start at 1, but we want the getter function to be zero-indexed.
                     Matcher m = type.pattern.matcher(line);
                     if (m.matches()) {
-                        return new LineMatch(type, n -> {
-                            checkElementIndex(n, m.groupCount());
-                            return m.group(n + 1);
-                        });
+                        return new LineMatch(
+                                type,
+                                n -> {
+                                    checkElementIndex(n, m.groupCount());
+                                    return m.group(n + 1);
+                                });
                     }
                 }
                 return new LineMatch(UNKNOWN, ImmutableList.of(line)::get);

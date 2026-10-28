@@ -463,7 +463,9 @@ ucnvsel_swap(const UDataSwapper *ds,
 
 /* unserialize a selector */
 U_CAPI UConverterSelector* U_EXPORT2
-ucnvsel_openFromSerialized(const void* buffer, int32_t length, UErrorCode* status) {
+ucnvsel_openFromSerialized(const void* buffer U_LIFETIME_BOUND,
+                           int32_t length,
+                           UErrorCode* status) {
   // check if already failed
   if (U_FAILURE(*status)) {
     return nullptr;
@@ -690,8 +692,10 @@ static int16_t countOnes(uint32_t* mask, int32_t len) {
 
 
 /* internal function! */
-static UEnumeration *selectForMask(const UConverterSelector* sel,
-                                   uint32_t *theMask, UErrorCode *status) {
+static UEnumeration*
+selectForMask(const UConverterSelector* sel U_LIFETIME_BOUND,
+              uint32_t* theMask,
+              UErrorCode* status) {
   LocalMemory<uint32_t> mask(theMask);
   // this is the context we will use. Store a table of indices to which
   // encodings are legit.
@@ -725,7 +729,7 @@ static UEnumeration *selectForMask(const UConverterSelector* sel,
     int16_t k = 0;
     for (j = 0 ; j < columns; j++) {
       uint32_t v = mask[j];
-      for (i = 0 ; i < 32 && k < static_cast<int16_t>(sel->encodingsCount); i++, k++) {
+      for (i = 0 ; i < 32 && k < sel->encodingsCount; i++, k++) {
         if ((v & 1) != 0) {
           result->index[result->length++] = k;
         }
@@ -739,9 +743,11 @@ static UEnumeration *selectForMask(const UConverterSelector* sel,
 }
 
 /* check a string against the selector - UTF16 version */
-U_CAPI UEnumeration * U_EXPORT2
-ucnvsel_selectForString(const UConverterSelector* sel,
-                        const char16_t *s, int32_t length, UErrorCode *status) {
+U_CAPI UEnumeration* U_EXPORT2
+ucnvsel_selectForString(const UConverterSelector* sel U_LIFETIME_BOUND,
+                        const char16_t* s,
+                        int32_t length,
+                        UErrorCode* status) {
   // check if already failed
   if (U_FAILURE(*status)) {
     return nullptr;
@@ -781,9 +787,11 @@ ucnvsel_selectForString(const UConverterSelector* sel,
 }
 
 /* check a string against the selector - UTF8 version */
-U_CAPI UEnumeration * U_EXPORT2
-ucnvsel_selectForUTF8(const UConverterSelector* sel,
-                      const char *s, int32_t length, UErrorCode *status) {
+U_CAPI UEnumeration* U_EXPORT2
+ucnvsel_selectForUTF8(const UConverterSelector* sel U_LIFETIME_BOUND,
+                      const char* s,
+                      int32_t length,
+                      UErrorCode* status) {
   // check if already failed
   if (U_FAILURE(*status)) {
     return nullptr;

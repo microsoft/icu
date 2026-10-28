@@ -94,14 +94,17 @@ fo{
         CY{"Kýpros"}
         CZ{"Kekkia"}
         DE{"Týskland"}
+        DG{"Diego Garcia"}
         DJ{"Djibuti"}
         DK{"Danmark"}
         DM{"Dominika"}
         DO{"Dominikalýðveldið"}
         DZ{"Algeria"}
+        EA{"Ceuta & Melilla"}
         EC{"Ekvador"}
         EE{"Estland"}
         EG{"Egyptaland"}
+        EH{"Vestursahara"}
         ER{"Eritrea"}
         ES{"Spania"}
         ET{"Etiopia"}
@@ -138,6 +141,7 @@ fo{
         HR{"Kroatia"}
         HT{"Haiti"}
         HU{"Ungarn"}
+        IC{"Kanariuoyggjar"}
         ID{"Indonesia"}
         IE{"Írland"}
         IL{"Ísrael"}
@@ -220,7 +224,7 @@ fo{
         PM{"Saint Pierre & Miquelon"}
         PN{"Pitcairnoyggjar"}
         PR{"Puerto Riko"}
-        PS{"De Palæstinensiske Selvstyreområder"}
+        PS{"Palestinskt landøki"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguai"}
@@ -284,7 +288,9 @@ fo{
         VN{"Vjetnam"}
         VU{"Vanuatu"}
         WF{"Wallis- og Futunaoyggjar"}
-        WS{"Samoa"}
+        WS{"Sámoa"}
+        XA{"óekta tónalag"}
+        XB{"óektaður BIDI tekstur"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -292,5 +298,20 @@ fo{
         ZM{"Sambia"}
         ZW{"Simbabvi"}
         ZZ{"ókent øki"}
+    }
+    Countries%chagos{
+        IO{"Khagosoyggjar"}
+    }
+    Countries%short{
+        GB{"UK"}
+        HK{"Hong Kong"}
+        MO{"Makao"}
+        PS{"Palestina"}
+        US{"USA"}
+    }
+    Countries%variant{
+        FK{"Falklandsoyggjar (Islas Malvinas)"}
+        NZ{"Aotearoa Nýsæland"}
+        SZ{"Svasiland"}
     }
 }

@@ -94,14 +94,17 @@ tr{
         CY{"Kıbrıs"}
         CZ{"Çekya"}
         DE{"Almanya"}
+        DG{"Diego Garcia"}
         DJ{"Cibuti"}
         DK{"Danimarka"}
         DM{"Dominika"}
         DO{"Dominik Cumhuriyeti"}
         DZ{"Cezayir"}
+        EA{"Ceuta ve Melilla"}
         EC{"Ekvador"}
         EE{"Estonya"}
         EG{"Mısır"}
+        EH{"Batı Sahra"}
         ER{"Eritre"}
         ES{"İspanya"}
         ET{"Etiyopya"}
@@ -138,6 +141,7 @@ tr{
         HR{"Hırvatistan"}
         HT{"Haiti"}
         HU{"Macaristan"}
+        IC{"Kanarya Adaları"}
         ID{"Endonezya"}
         IE{"İrlanda"}
         IL{"İsrail"}
@@ -220,7 +224,7 @@ tr{
         PM{"Saint Pierre ve Miquelon"}
         PN{"Pitcairn Adaları"}
         PR{"Porto Riko"}
-        PS{"Filistin Yönetimi"}
+        PS{"Filistin Bölgeleri"}
         PT{"Portekiz"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -285,6 +289,8 @@ tr{
         VU{"Vanuatu"}
         WF{"Wallis ve Futuna"}
         WS{"Samoa"}
+        XA{"Psödo Aksanlar"}
+        XB{"Psödo Bidi"}
         XK{"Kosova"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -292,5 +298,26 @@ tr{
         ZM{"Zambiya"}
         ZW{"Zimbabve"}
         ZZ{"Bilinmeyen Bölge"}
+    }
+    Countries%chagos{
+        IO{"Chagos Takımadaları"}
+    }
+    Countries%short{
+        GB{"BK"}
+        HK{"Hong Kong"}
+        MO{"Makao"}
+        PS{"Filistin"}
+        UN{"BM"}
+        US{"ABD"}
+    }
+    Countries%variant{
+        CD{"Kongo Demokratik Cumhuriyeti"}
+        CG{"Kongo Cumhuriyeti"}
+        CI{"Fildişi Sahili"}
+        CZ{"Çek Cumhuriyeti"}
+        FK{"Falkland Adaları (Malvinas Adaları)"}
+        NZ{"Aotearoa Yeni Zelanda"}
+        SZ{"Svaziland"}
+        TL{"Doğu Timor"}
     }
 }

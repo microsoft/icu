@@ -5,23 +5,23 @@ package org.unicode.icu.tool.cldrtoicu.localedistance;
 import static com.google.common.truth.Truth.assertThat;
 import static java.util.Arrays.asList;
 
+import com.ibm.icu.impl.locale.LSR;
 import org.junit.Test;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrValue;
 
-import com.ibm.icu.impl.locale.LSR;
-
 public class PartitionInfoTest {
     @Test
     public void testPartitionInfo() {
-        TerritoryContainment territories = territories(
-                TestData.territoryGroup("001", "019", "150"),
-                // Americas (simplified): North America + Caribbean
-                TestData.territoryGroup("019", "003", "029"),
-                TestData.territoryGroup("003", "CA", "US"),
-                TestData.territoryGroup("029", "PR", "VI"),
-                // Sort of Europe
-                TestData.territoryGroup("150", "DE", "FR", "GB"));
+        TerritoryContainment territories =
+                territories(
+                        TestData.territoryGroup("001", "019", "150"),
+                        // Americas (simplified): North America + Caribbean
+                        TestData.territoryGroup("019", "003", "029"),
+                        TestData.territoryGroup("003", "CA", "US"),
+                        TestData.territoryGroup("029", "PR", "VI"),
+                        // Sort of Europe
+                        TestData.territoryGroup("150", "DE", "FR", "GB"));
         PartitionInfo.Builder builder = PartitionInfo.builder(territories);
         // "American English" associated with U.S.A and Puerto Rico.
         builder.addVariableExpression("$enUS", "US+PR");
@@ -53,19 +53,21 @@ public class PartitionInfoTest {
 
         // Partition strings are made up of the explicit partition IDs.
         // Indices are also assigned in first encountered region code order.
-        assertThat(info.getPartitionStrings()).asList().containsExactly(
-                // Default (unmapped) special case must be first.
-                ".",      // ??            : index=0
-                // Partitions IDs for "leaf" regions (only one partition per region).
-                "0",      // CA, VI        : index=1
-                "1",      // DE, FR        : index=2
-                "2",      // GB            : index=3
-                "3",      // PR, US        : index=4
-                // Macros regions include paritions of all overlapping regions.
-                "0123",   // 001           : index=5
-                "03",     // 003, 019, 029 : index=6
-                "12")     // 150           : index=7
-            .inOrder();
+        assertThat(info.getPartitionStrings())
+                .asList()
+                .containsExactly(
+                        // Default (unmapped) special case must be first.
+                        ".", // ??            : index=0
+                        // Partitions IDs for "leaf" regions (only one partition per region).
+                        "0", // CA, VI        : index=1
+                        "1", // DE, FR        : index=2
+                        "2", // GB            : index=3
+                        "3", // PR, US        : index=4
+                        // Macros regions include paritions of all overlapping regions.
+                        "0123", // 001           : index=5
+                        "03", // 003, 019, 029 : index=6
+                        "12") // 150           : index=7
+                .inOrder();
 
         // The partition lookup array maps regions to the index of their partition string.
         byte[] lookup = info.getPartitionLookupArray();

@@ -17,6 +17,7 @@ scn{
         an{"aragunisi"}
         apc{"àrabbu livantinu di tramuntana"}
         ar{"àrabbu"}
+        ar_001{"àrabbu nadaru mudernu"}
         arn{"mapuche"}
         as{"assamisi"}
         asa{"asu"}
@@ -59,6 +60,8 @@ scn{
         cy{"gallisi"}
         da{"danisi"}
         de{"tidiscu"}
+        de_AT{"tidiscu austrìacu"}
+        de_CH{"tidiscu autu sbìzziru"}
         doi{"dogri"}
         dsb{"sòrabbu suttanu"}
         dua{"duala"}
@@ -69,8 +72,15 @@ scn{
         ee{"ewe"}
         el{"grecu"}
         en{"ngrisi"}
+        en_AU{"ngrisi australianu"}
+        en_CA{"ngrisi canadisi"}
+        en_GB{"ngrisi britànnicu"}
+        en_US{"ngrisi miricanu"}
         eo{"spirantu"}
         es{"spagnolu"}
+        es_419{"spagnolu dâ mèrica latina"}
+        es_ES{"spagnolu eurupeu"}
+        es_MX{"spagnolu missicanu"}
         et{"èstuni"}
         eu{"bascu"}
         ewo{"ewondo"}
@@ -80,6 +90,8 @@ scn{
         fil{"filippinu"}
         fo{"faruisi"}
         fr{"francisi"}
+        fr_CA{"francisi canadisi"}
+        fr_CH{"francisi sbìzziru"}
         frc{"francisi Cajun"}
         fur{"friulanu"}
         fy{"frìsuni uccidintali"}
@@ -187,8 +199,10 @@ scn{
         naq{"nama"}
         nb{"nurviggisi Bokmål"}
         nds{"tidiscu suttanu"}
+        nds_NL{"sàssuni suttanu"}
         ne{"nipalisi"}
         nl{"ulannisi"}
+        nl_BE{"ciammingu"}
         nmg{"kwasio"}
         nn{"nurbiggisi Nynorsk"}
         nnh{"ngiemboon"}
@@ -204,11 +218,14 @@ scn{
         prg{"prussianu"}
         ps{"pashto"}
         pt{"purtughisi"}
+        pt_BR{"purtughisi brasilianu"}
+        pt_PT{"purtughisi eurupeu"}
         qu{"quechua"}
         quc{"kʼicheʼ"}
         raj{"rajasthani"}
         rm{"rumanciu"}
         ro{"rumenu"}
+        ro_MD{"murdavu"}
         ru{"russu"}
         rw{"kinyarwanda"}
         sa{"sàscritu"}
@@ -258,6 +275,8 @@ scn{
         yue{"cantunisi"}
         za{"zhuang"}
         zh{"cinisi"}
+        zh_Hans{"cinisi simprificatu"}
+        zh_Hant{"cinisi tradizziunali"}
         zu{"zulu"}
         zxx{"nuḍḍu cuntinutu linguìsticu"}
     }
@@ -266,6 +285,22 @@ scn{
     }
     Languages%extension{
         ku{"kurmanji"}
+    }
+    Languages%long{
+        zh_Hans{"cinisi mannarinu simprificatu"}
+        zh_Hant{"cinisi mannarinu tradizziunali"}
+    }
+    Languages%menu{
+        yue{"cinisi cantunisi"}
+        zh{"cinisi, mannarinu"}
+    }
+    Languages%short{
+        en_GB{"ngrisi dû RJ"}
+        en_US{"ngrisi dî SJ"}
+    }
+    Languages%variant{
+        ckb{"curdu Sorani"}
+        hi_Latn{"innianu ngrisi"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -348,6 +383,7 @@ scn{
             iso8601{"Calannariu grigurianu (prima l’annu)"}
             japanese{"Calannariu giappunisi"}
             persian{"Calannariu pirsianu"}
+            roc{"Calannariu minguo"}
         }
         calendar%core{
             gregorian{"Grigurianu"}

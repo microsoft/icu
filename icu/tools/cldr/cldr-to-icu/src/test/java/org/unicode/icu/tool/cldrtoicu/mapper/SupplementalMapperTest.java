@@ -6,7 +6,6 @@ import static org.unicode.cldr.api.CldrValue.parseValue;
 import static org.unicode.icu.tool.cldrtoicu.testing.IcuDataSubjectFactory.assertThat;
 
 import java.util.function.Predicate;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -29,8 +28,8 @@ public class SupplementalMapperTest {
     @Test
     public void testSimple() {
         addExpectedMapping(
-            supplementalData("likelySubtags/likelySubtag[@from=\"Foo\"][@to=\"Bar\"]"),
-            simpleResult("/Foo", "Bar"));
+                supplementalData("likelySubtags/likelySubtag[@from=\"Foo\"][@to=\"Bar\"]"),
+                simpleResult("/Foo", "Bar"));
 
         IcuData icuData = SupplementalMapper.process(src, transformer, "name", p -> true);
 
@@ -48,14 +47,14 @@ public class SupplementalMapperTest {
         // "FIFO" mechanism works on encounter-order, the CldrData is sorted before being
         // transformed (and in this case, is resolved on the currency code USD < USN < USS).
         addExpectedMapping(
-            supplementalData("currencyData/region[@iso3166=\"US\"]/currency[@iso4217=\"USN\"]"),
-            simpleResult("/CurrencyMap/US/<FIFO>/id", "USN"));
+                supplementalData("currencyData/region[@iso3166=\"US\"]/currency[@iso4217=\"USN\"]"),
+                simpleResult("/CurrencyMap/US/<FIFO>/id", "USN"));
         addExpectedMapping(
-            supplementalData("currencyData/region[@iso3166=\"US\"]/currency[@iso4217=\"USS\"]"),
-            simpleResult("/CurrencyMap/US/<FIFO>/id", "USS"));
+                supplementalData("currencyData/region[@iso3166=\"US\"]/currency[@iso4217=\"USS\"]"),
+                simpleResult("/CurrencyMap/US/<FIFO>/id", "USS"));
         addExpectedMapping(
-            supplementalData("currencyData/region[@iso3166=\"US\"]/currency[@iso4217=\"USD\"]"),
-            simpleResult("/CurrencyMap/US/<FIFO>/id", "USD"));
+                supplementalData("currencyData/region[@iso3166=\"US\"]/currency[@iso4217=\"USD\"]"),
+                simpleResult("/CurrencyMap/US/<FIFO>/id", "USD"));
 
         IcuData icuData = SupplementalMapper.process(src, transformer, "name", p -> true);
 
@@ -68,14 +67,14 @@ public class SupplementalMapperTest {
     @Test
     public void testPathFilter() {
         addExpectedMapping(
-            supplementalData("likelySubtags/likelySubtag[@from=\"Foo\"][@to=\"Bar\"]"),
-            simpleResult("/Foo", "Bar"));
+                supplementalData("likelySubtags/likelySubtag[@from=\"Foo\"][@to=\"Bar\"]"),
+                simpleResult("/Foo", "Bar"));
         addExpectedMapping(
-            supplementalData("currencyData/region[@iso3166=\"US\"]/currency[@iso4217=\"USN\"]"),
-            simpleResult("/CurrencyMap/US/<FIFO>/id", "USN"));
+                supplementalData("currencyData/region[@iso3166=\"US\"]/currency[@iso4217=\"USN\"]"),
+                simpleResult("/CurrencyMap/US/<FIFO>/id", "USN"));
 
         Predicate<CldrPath> filter =
-            PathMatcher.of("//supplementalData/likelySubtags")::matchesPrefixOf;
+                PathMatcher.of("//supplementalData/likelySubtags")::matchesPrefixOf;
         IcuData icuData = SupplementalMapper.process(src, transformer, "name", filter);
 
         assertThat(icuData).getPaths().hasSize(1);

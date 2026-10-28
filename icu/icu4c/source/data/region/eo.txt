@@ -94,14 +94,17 @@ eo{
         CY{"Kipro"}
         CZ{"Ĉeĥujo"}
         DE{"Germanujo"}
+        DG{"Diego Garcia"}
         DJ{"Ĝibutio"}
         DK{"Danujo"}
         DM{"Dominiko"}
         DO{"Dominika Respubliko"}
         DZ{"Alĝerio"}
+        EA{"Ceŭto kaj Melilo"}
         EC{"Ekvadoro"}
         EE{"Estonujo"}
         EG{"Egiptujo"}
+        EH{"Okcidenta Saharo"}
         ER{"Eritreo"}
         ES{"Hispanujo"}
         ET{"Etiopujo"}
@@ -138,6 +141,7 @@ eo{
         HR{"Kroatujo"}
         HT{"Haitio"}
         HU{"Hungarujo"}
+        IC{"Kanarioj"}
         ID{"Indonezio"}
         IE{"Irlando"}
         IL{"Israelo"}
@@ -237,7 +241,7 @@ eo{
         SD{"Sudano"}
         SE{"Svedujo"}
         SG{"Singapuro"}
-        SH{"Sankta Heleno"}
+        SH{"Sankta Heleno, Ascension kaj Tristan da Cunha"}
         SI{"Slovenujo"}
         SJ{"Svalbardo kaj Janmajeno"}
         SK{"Slovakujo"}
@@ -255,7 +259,7 @@ eo{
         TA{"Tristan da Cunha"}
         TC{"Turkoj kaj Kajkoj"}
         TD{"Ĉado"}
-        TF{"Francaj Sudaj Teritorioj"}
+        TF{"Francaj Sudaj kaj Antarktaj Teritorioj"}
         TG{"Togolando"}
         TH{"Tajlando"}
         TJ{"Taĝikujo"}
@@ -285,6 +289,8 @@ eo{
         VU{"Vanuatuo"}
         WF{"Valiso kaj Futuno"}
         WS{"Samoo"}
+        XA{"pseŭdo-supersignoj"}
+        XB{"pseŭdo-inversdirekta"}
         XK{"Kosovo"}
         YE{"Jemeno"}
         YT{"Majoto"}
@@ -292,5 +298,18 @@ eo{
         ZM{"Zambio"}
         ZW{"Zimbabvo"}
         ZZ{"nekonata regiono"}
+    }
+    Countries%chagos{
+        IO{"Ĉagos-arĥipelago"}
+    }
+    Countries%short{
+        GB{"Britujo"}
+        MO{"Makao"}
+        PS{"Palestino"}
+    }
+    Countries%variant{
+        CD{"Demokratia Respubliko Kongo"}
+        CG{"Respubliko Kongo"}
+        CZ{"Ĉeĥa Respubliko"}
     }
 }

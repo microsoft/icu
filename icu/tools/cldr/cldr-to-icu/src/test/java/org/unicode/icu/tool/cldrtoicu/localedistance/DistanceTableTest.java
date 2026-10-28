@@ -5,10 +5,9 @@ package org.unicode.icu.tool.cldrtoicu.localedistance;
 import static com.google.common.truth.Truth.assertThat;
 import static org.unicode.icu.tool.cldrtoicu.testing.AssertUtils.assertThrows;
 
-import org.junit.Test;
-
 import com.google.common.collect.ImmutableMap;
 import com.ibm.icu.util.BytesTrie;
+import org.junit.Test;
 
 // NOTE: Remember that here, "region" is synonymous with a "partition group ID".
 public class DistanceTableTest {
@@ -46,8 +45,8 @@ public class DistanceTableTest {
         assertThat(getTrieTable(table))
                 .containsExactly(
                         // Inferred mappings for "parent" locales.
-                        "zh-zh", 0,                 // Equal locales have zero distance.
-                        "zh-zh-*-*", 50,            // Default unknown script distance
+                        "zh-zh", 0, // Equal locales have zero distance.
+                        "zh-zh-*-*", 50, // Default unknown script distance
                         "zh-zh-Hant-Hant", 0,
                         // Trie ordering prefers "*" mapping at the front.
                         "zh-zh-Hant-Hant-*-*", 6,
@@ -81,7 +80,7 @@ public class DistanceTableTest {
         // Duplicate mappings are only expected for "region" where different rules can
         // produce duplicate mappings by virtue of having non-disjoint region partitions.
         builder.addDistance(2, true, "en", "en", "*", "*", "1", "1");
-        builder.addDistance(4, true, "en", "en", "*", "*", "1", "1");  // ignored
+        builder.addDistance(4, true, "en", "en", "*", "*", "1", "1"); // ignored
         builder.addDistance(6, true, "en", "en", "*", "*", "*", "*");
         DistanceTable table = builder.build();
         assertThat(getTrieTable(table))
@@ -94,26 +93,29 @@ public class DistanceTableTest {
 
     @Test
     public void testBadDistance() {
-        IllegalArgumentException e = assertThrows(
-                IllegalArgumentException.class,
-                () -> defaultTable().addDistance(123, true, "en", "fr"));
+        IllegalArgumentException e =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> defaultTable().addDistance(123, true, "en", "fr"));
         assertThat(e).hasMessageThat().contains("distance");
         assertThat(e).hasMessageThat().contains("123");
     }
 
     @Test
     public void testBadParameters() {
-        IllegalArgumentException e = assertThrows(
-                IllegalArgumentException.class,
-                () -> defaultTable().addDistance(1, true, "en", "en", "*"));
+        IllegalArgumentException e =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> defaultTable().addDistance(1, true, "en", "en", "*"));
         assertThat(e).hasMessageThat().contains("invalid number of arguments");
     }
 
     @Test
     public void testBadKeys() {
-        IllegalArgumentException e = assertThrows(
-                IllegalArgumentException.class,
-                () -> defaultTable().addDistance(1, true, "en", "*"));
+        IllegalArgumentException e =
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> defaultTable().addDistance(1, true, "en", "*"));
         assertThat(e).hasMessageThat().contains("invalid mapping key");
         assertThat(e).hasMessageThat().contains("en");
         assertThat(e).hasMessageThat().contains("�");
@@ -159,6 +161,7 @@ public class DistanceTableTest {
     // VisibleForTesting
     public ImmutableMap<String, Integer> getTrieTable(DistanceTable table) {
         // We rebuild the Trie from the byte[] data.
-        return TestData.getTrieTable(new BytesTrie(table.getTrie().toByteArray(), 0), "*-*", i -> i);
+        return TestData.getTrieTable(
+                new BytesTrie(table.getTrie().toByteArray(), 0), "*-*", i -> i);
     }
 }

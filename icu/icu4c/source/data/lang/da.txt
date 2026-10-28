@@ -11,19 +11,35 @@ da{
         colCaseLevel{"Sortering med forskel på små og store bogstaver"}
         colNormalization{"Normaliseret sortering"}
         colNumeric{"Numerisk sortering"}
+        colReorder{"Sorteringsrækkefølge for skriftsystemer og blokke"}
         colStrength{"Sorteringsstyrke"}
         collation{"sorteringsrækkefølge"}
         currency{"valuta"}
+        d0{"omdan destination"}
+        dx{"Undtagelser for ordbogsbaseret opdeling"}
         em{"emojivisning"}
+        fw{"ugens første dag"}
+        h0{"blandet indhold"}
         hc{"timeur (12 vs. 24)"}
+        i0{"Inputmetode"}
+        k0{"Tastatur"}
+        kv{"Højest ignorerede"}
         lb{"linjeskift"}
         lw{"linjeskift midt i ord"}
+        m0{"regler for transformering"}
         ms{"målesystem"}
+        mu{"måleenhed"}
         numbers{"tal"}
+        rg{"region for supplerende data"}
+        s0{"transformeringskilde"}
+        sd{"regional underinddeling"}
         ss{"afsluttende tegnsætning efter fork."}
+        t{"transformering"}
+        t0{"maskinoversat"}
         timezone{"Tidszone"}
         va{"Sprogvariant"}
         x{"Privatbrug"}
+        x0{"brugerdefineret transformering"}
     }
     Languages{
         aa{"afar"}
@@ -47,6 +63,7 @@ da{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabisk"}
+        ar_001{"moderne standardarabisk"}
         arc{"aramæisk"}
         arn{"mapudungun"}
         arp{"arapaho"}
@@ -137,6 +154,8 @@ da{
         dar{"dargwa"}
         dav{"taita"}
         de{"tysk"}
+        de_AT{"østrigsk tysk"}
+        de_CH{"schweizerhøjtysk"}
         del{"delaware"}
         den{"athapaskisk"}
         dgr{"dogrib"}
@@ -159,13 +178,21 @@ da{
         el{"græsk"}
         elx{"elamitisk"}
         en{"engelsk"}
+        en_AU{"australsk engelsk"}
+        en_CA{"canadisk engelsk"}
+        en_GB{"britisk engelsk"}
+        en_US{"amerikansk engelsk"}
         enm{"middelengelsk"}
         eo{"esperanto"}
         es{"spansk"}
+        es_419{"latinamerikansk spansk"}
+        es_ES{"europæisk spansk"}
+        es_MX{"mexicansk spansk"}
         et{"estisk"}
         eu{"baskisk"}
         ewo{"ewondo"}
         fa{"persisk"}
+        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulah"}
@@ -175,6 +202,8 @@ da{
         fo{"færøsk"}
         fon{"fon"}
         fr{"fransk"}
+        fr_CA{"canadisk fransk"}
+        fr_CH{"schweizisk fransk"}
         frc{"cajunfransk"}
         frm{"middelfransk"}
         fro{"oldfransk"}
@@ -377,6 +406,7 @@ da{
         nia{"nias"}
         niu{"niueansk"}
         nl{"nederlandsk"}
+        nl_BE{"flamsk"}
         nmg{"kwasio"}
         nn{"nynorsk"}
         nnh{"ngiemboon"}
@@ -418,12 +448,15 @@ da{
         pi{"pali"}
         pis{"pijin"}
         pl{"polsk"}
+        pms{"piemontesisk"}
         pon{"ponape"}
         pqm{"maliseet-passamaquoddy"}
         prg{"preussisk"}
         pro{"oldprovencalsk"}
         ps{"pashto"}
         pt{"portugisisk"}
+        pt_BR{"brasiliansk portugisisk"}
+        pt_PT{"europæisk portugisisk"}
         qu{"quechua"}
         quc{"quiché"}
         raj{"rajasthani"}
@@ -433,6 +466,7 @@ da{
         rm{"rætoromansk"}
         rn{"rundi"}
         ro{"rumænsk"}
+        ro_MD{"moldovisk"}
         rof{"rombo"}
         rom{"romani"}
         ru{"russisk"}
@@ -460,6 +494,7 @@ da{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"oldirsk"}
+        sh{"serbokroatisk"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"tchadisk arabisk"}
@@ -491,6 +526,7 @@ da{
         sux{"sumerisk"}
         sv{"svensk"}
         sw{"swahili"}
+        sw_CD{"congolesisk swahili"}
         swb{"comorisk"}
         syc{"klassisk syrisk"}
         syr{"syrisk"}
@@ -574,6 +610,8 @@ da{
         zen{"zenaga"}
         zgh{"tamazight"}
         zh{"kinesisk"}
+        zh_Hans{"forenklet kinesisk"}
+        zh_Hant{"traditionelt kinesisk"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"intet sprogligt indhold"}
@@ -584,6 +622,21 @@ da{
     }
     Languages%extension{
         ku{"kurmanji"}
+    }
+    Languages%menu{
+        ars{"arabisk, najdi"}
+        ckb{"kurdisk, sorani"}
+        yue{"kantonesisk (Kina)"}
+        zh{"mandarin (Kina)"}
+    }
+    Languages%short{
+        az{"azeri"}
+    }
+    Languages%variant{
+        ckb{"centralkurdisk"}
+        hi_Latn{"hinglish"}
+        ps{"pushto"}
+        ug{"uighurisk"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -776,6 +829,7 @@ da{
             iso8601{"ISO-8601-kalender"}
             japanese{"japansk kalender"}
             persian{"persisk kalender"}
+            roc{"kalender for Republikken Kina"}
         }
         calendar%core{
             buddhist{"buddhistisk"}
@@ -786,11 +840,16 @@ da{
             ethiopic-amete-alem{"etiopisk amete-alem"}
             gregorian{"gregoriansk"}
             hebrew{"jødisk"}
+            indian{"indisk nationalkalender"}
             islamic{"hijri"}
             islamic-civil{"verdslig hijri"}
+            islamic-rgsa{"hijri, måneobservation i Saudi-Arabien"}
+            islamic-tbla{"hijri (tabellarisk, astronomisk epoke)"}
             islamic-umalqura{"hijri (Umm al-Qura)"}
+            iso8601{"gregoriansk"}
             japanese{"japansk"}
             persian{"persisk"}
+            roc{"Republikken Kina"}
         }
         cf{
             account{"format for regnskabsvaluta"}
@@ -813,6 +872,11 @@ da{
             no{"Sortér efter store og små bogstaver i almindelig rækkefølge"}
             upper{"Sortér med store bogstaver først"}
         }
+        colCaseFirst%core{
+            lower{"Små bogstaver"}
+            no{"Små bogstaver"}
+            upper{"Store bogstaver"}
+        }
         colCaseLevel{
             no{"Sortér uden forskel på store og små bogstaver"}
             yes{"Sortér med skelnen mellem store og små bogstaver"}
@@ -825,12 +889,26 @@ da{
             no{"Sortér efter individuelle cifre"}
             yes{"Sortér tal numerisk"}
         }
+        colReorder%core{
+            currency{"Valuta"}
+            digit{"Cifre"}
+            punct{"Tegnsætning"}
+            space{"Blanktegn"}
+            symbol{"Symbol"}
+        }
         colStrength{
             identical{"Sortér alt"}
             primary{"Sortér kun efter basisbogstaver"}
             quaternary{"Sortér efter accenter/små og store bogstaver/bredde/kana"}
             secondary{"Sortér efter accenter"}
             tertiary{"Sortér efter accenter/store og små bogstaver/bredde"}
+        }
+        colStrength%core{
+            identical{"alle"}
+            primary{"Kun grundbogstaver"}
+            quaternary{"Grundbogstaver, accenter, store/små bogstaver, varianter, kana-tegn"}
+            secondary{"Grundbogstaver, accenter"}
+            tertiary{"Grundbogstaver, accenter, små/store bogstaver, varianter"}
         }
         collation{
             compat{"tidligere sorteringsrækkefølge, kompatibilitet"}
@@ -852,10 +930,13 @@ da{
             compat{"kompatibilitet"}
             dictionary{"ordbog"}
             ducet{"standard-Unicode"}
+            emoji{"Emoji"}
+            eor{"europæiske regler"}
             phonebook{"telefonbog"}
             phonetic{"fonetisk"}
             pinyin{"pinyin"}
             search{"søg"}
+            searchjl{"koreansk initialkonsonant"}
             standard{"standard"}
             stroke{"streg"}
             traditional{"traditionel"}
@@ -873,16 +954,26 @@ da{
             text{"tekst"}
         }
         hc{
+            c12{"12-timersur"}
+            c24{"24-timersur"}
             h11{"12-timersur (0-11)"}
             h12{"12-timersur (1-12)"}
             h23{"24-timersur (0-23)"}
             h24{"24-timersur (1-24)"}
         }
         hc%core{
+            c12{"12"}
+            c24{"24"}
             h11{"12 (0–11)"}
             h12{"12 (1–12)"}
             h23{"24 (0–23)"}
             h24{"24 (1–24)"}
+        }
+        kv%core{
+            currency{"Forskyd mellemrum, tegnsætning og alle symboler"}
+            punct{"Forskyd mellemrum og tegnsætning"}
+            space{"Forskyd mellemrum og tegnsætning"}
+            symbol{"Forskyd mellemrum, tegnsætning og symboler uden valutategn"}
         }
         lb{
             loose{"løst linjeskift"}
@@ -977,9 +1068,45 @@ da{
             traditional{"Traditionelle tal"}
             vaii{"vai-tal"}
         }
+        numbers%core{
+            arabext{"udvidet hindu-arabisk"}
+            armnlow{"armensk med små bogstaver"}
+            finance{"finansielle tal"}
+            fullwide{"fuld bredde"}
+            greklow{"græsk med små bogstaver"}
+            hanidays{"nummerering af månedsdage med han-tegn i traditionelle kalendere"}
+            hanidec{"positionelt decimalsystem med kinesiske talideogrammer som cifre"}
+            hansfin{"forenklede kinesiske finansielle taltegn"}
+            hantfin{"traditionelle kinesiske finansielle taltegn"}
+            jpanfin{"japanske finansielle taltegn"}
+            jpanyear{"japansk nummerering med gannen for første år"}
+            lanatham{"tai tham tham (kirkelig)"}
+            mathbold{"matematisk fed"}
+            mathdbl{"matematisk dobbeltstreget"}
+            mathmono{"matematisk monospatieret"}
+            mathsanb{"matematisk fed sans-serif"}
+            mathsans{"matematisk sans-serif"}
+            mymrepka{"østlig pwo-karen (Myanmar)"}
+            mymrpao{"pao (Myanmar)"}
+            mymrshan{"shan (Myanmar)"}
+            mymrtlng{"tai laing (Myanmar)"}
+            native{"lokale cifre"}
+            outlined{"kontureret"}
+            roman{"romertal med store bogstaver"}
+            romanlow{"romertal med små bogstaver"}
+            segment{"segmenteret"}
+            tamldec{"moderne tamilsk"}
+            traditional{"traditionelle talord"}
+        }
         ss%core{
             none{"Fra"}
             standard{"Til"}
+        }
+        t0{
+            und{"uspecificeret maskinoversættelse"}
+        }
+        va%core{
+            posix{"POSIX-variant"}
         }
     }
     Variants{

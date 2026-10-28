@@ -11,19 +11,35 @@ pt{
         colCaseLevel{"Classificação com distinção entre maiúsculas e minúsculas"}
         colNormalization{"Classificação normalizada"}
         colNumeric{"Classificação numérica"}
+        colReorder{"Reordenação de scripts/blocos"}
         colStrength{"Prioridade da classificação"}
         collation{"Ordenação"}
         currency{"Moeda"}
+        d0{"Alvo da transformação"}
+        dx{"Exclusões de quebra de dicionário"}
         em{"Tipo de emoji"}
+        fw{"Primeiro dia da semana"}
+        h0{"Misturado"}
         hc{"Ciclo de horário (12 vs. 24)"}
+        i0{"Método de entrada"}
+        k0{"Teclado"}
+        kv{"Mais altos ignorados"}
         lb{"Estilo de quebra de linha"}
         lw{"Quebras de linha em palavras"}
+        m0{"Regras de transformação"}
         ms{"Sistema de medição"}
+        mu{"Unidade de medida"}
         numbers{"Números"}
+        rg{"Região para dados complementares"}
+        s0{"Origem da transformação"}
+        sd{"Subdivisão da região"}
         ss{"Espaço após abreviação"}
+        t{"Transformação"}
+        t0{"Tradução automática"}
         timezone{"Fuso horário"}
         va{"Variante de localidade"}
         x{"Uso privado"}
+        x0{"Transformação de uso privado"}
     }
     Languages{
         aa{"afar"}
@@ -47,6 +63,7 @@ pt{
         ann{"obolo"}
         anp{"angika"}
         ar{"árabe"}
+        ar_001{"árabe moderno"}
         arc{"aramaico"}
         arn{"mapudungun"}
         arp{"arapaho"}
@@ -60,6 +77,7 @@ pt{
         awa{"awadhi"}
         ay{"aimará"}
         az{"azerbaijano"}
+        az_Arab{"azeri sul"}
         ba{"bashkir"}
         bal{"balúchi"}
         ban{"balinês"}
@@ -137,6 +155,7 @@ pt{
         dar{"dargwa"}
         dav{"taita"}
         de{"alemão"}
+        de_CH{"alto alemão (Suíça)"}
         del{"delaware"}
         den{"slave"}
         dgr{"dogrib"}
@@ -166,6 +185,7 @@ pt{
         eu{"basco"}
         ewo{"ewondo"}
         fa{"persa"}
+        fa_AF{"dari"}
         fan{"fangue"}
         fat{"fanti"}
         ff{"fula"}
@@ -371,12 +391,14 @@ pt{
         nb{"bokmål norueguês"}
         nd{"ndebele do norte"}
         nds{"baixo alemão"}
+        nds_NL{"baixo saxão"}
         ne{"nepalês"}
         new{"newari"}
         ng{"dongo"}
         nia{"nias"}
         niu{"niueano"}
         nl{"holandês"}
+        nl_BE{"flamengo"}
         nmg{"kwasio"}
         nn{"nynorsk norueguês"}
         nnh{"ngiemboon"}
@@ -418,6 +440,7 @@ pt{
         pi{"páli"}
         pis{"pijin"}
         pl{"polonês"}
+        pms{"piemontês"}
         pon{"pohnpeiano"}
         pqm{"malecite–passamaquoddy"}
         prg{"prussiano"}
@@ -433,6 +456,7 @@ pt{
         rm{"romanche"}
         rn{"rundi"}
         ro{"romeno"}
+        ro_MD{"moldávio"}
         rof{"rombo"}
         rom{"romani"}
         ru{"russo"}
@@ -460,6 +484,7 @@ pt{
         ses{"koyraboro senni"}
         sg{"sango"}
         sga{"irlandês arcaico"}
+        sh{"servo-croata"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"árabe chadiano"}
@@ -491,6 +516,7 @@ pt{
         sux{"sumério"}
         sv{"sueco"}
         sw{"suaíli"}
+        sw_CD{"suaíli do Congo"}
         swb{"comoriano"}
         syc{"siríaco clássico"}
         syr{"siríaco"}
@@ -574,6 +600,8 @@ pt{
         zen{"zenaga"}
         zgh{"tamazirte marroqino padrão"}
         zh{"chinês"}
+        zh_Hans{"chinês simplificado"}
+        zh_Hant{"chinês tradicional"}
         zu{"zulu"}
         zun{"zunhi"}
         zxx{"sem conteúdo linguístico"}
@@ -584,6 +612,20 @@ pt{
     }
     Languages%extension{
         ku{"curmânji"}
+    }
+    Languages%long{
+        zh_Hans{"chinês mandarim (simplificado)"}
+        zh_Hant{"chinês mandarim (tradicional)"}
+    }
+    Languages%menu{
+        ckb{"curdo, central"}
+        yue{"cantonês (tradicional)"}
+        zh{"chinês, mandarim"}
+    }
+    Languages%variant{
+        ckb{"curdo sorâni"}
+        hi_Latn{"hinglish"}
+        ps{"pushto"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -751,6 +793,7 @@ pt{
             iso8601{"Calendário ISO-8601"}
             japanese{"Calendário Japonês"}
             persian{"Calendário Persa"}
+            roc{"Calendário da República da China"}
         }
         calendar%core{
             buddhist{"Budista"}
@@ -761,11 +804,16 @@ pt{
             ethiopic-amete-alem{"Amete Alem Etíope"}
             gregorian{"Gregoriano"}
             hebrew{"Hebraico"}
+            indian{"Nacional Indiano"}
             islamic{"Hegírico"}
             islamic-civil{"Hegírico (tabular, época civil)"}
+            islamic-rgsa{"Hegírico, avistamento na Arábia Saudita"}
+            islamic-tbla{"Hegírico (tabular, época astronômica)"}
             islamic-umalqura{"Hegírico (Umm al‑Qura)"}
+            iso8601{"Gregoriano"}
             japanese{"Japonês"}
             persian{"Persa"}
+            roc{"Minguo"}
         }
         cf{
             account{"Formato de moeda para contabilidade"}
@@ -788,6 +836,11 @@ pt{
             no{"Classificação normal de maiúsculas e minúsculas"}
             upper{"Classificar por maiúsculas"}
         }
+        colCaseFirst%core{
+            lower{"Minúsculas"}
+            no{"Minúsculas"}
+            upper{"Maiúsculas"}
+        }
         colCaseLevel{
             no{"Classificação sem diferenciação de maiúsculas e minúsculas"}
             yes{"Classificação com diferenciação de maiúsculas e minúsculas"}
@@ -800,12 +853,26 @@ pt{
             no{"Classificar dígitos individualmente"}
             yes{"Classificar dígitos numericamente"}
         }
+        colReorder%core{
+            currency{"Moeda"}
+            digit{"Dígitos"}
+            punct{"Pontuação"}
+            space{"Espaço em branco"}
+            symbol{"Símbolo"}
+        }
         colStrength{
             identical{"Classificar tudo"}
             primary{"Classificar somente letras básicas"}
             quaternary{"Classificar acentos/maiúsculas e minúsculas/largura/kana"}
             secondary{"Classificar acentos"}
             tertiary{"Classificar acentos/maiúsculas e minúsculas/largura"}
+        }
+        colStrength%core{
+            identical{"Tudo"}
+            primary{"Apenas alfabeto básico"}
+            quaternary{"Alfabeto básico, acentos, maiúscula e minúscula, variantes, kana"}
+            secondary{"Alfabeto básico, acentos"}
+            tertiary{"Alfabeto básico, acentos, maiúscula e minúscula, variantes"}
         }
         collation{
             compat{"Ordem anterior, para compatibilidade"}
@@ -827,10 +894,13 @@ pt{
             compat{"Compatibilidade"}
             dictionary{"Dicionário"}
             ducet{"Padrão do Unicode"}
+            emoji{"Emoji"}
+            eor{"Regras europeias"}
             phonebook{"Lista telefônica"}
             phonetic{"Fonética"}
             pinyin{"Pinyin"}
             search{"Pesquisa"}
+            searchjl{"Consoante inicial coreana"}
             standard{"Padrão"}
             stroke{"Traços"}
             traditional{"Tradicional"}
@@ -848,16 +918,26 @@ pt{
             text{"Texto"}
         }
         hc{
+            c12{"Sistema de 12 horas"}
+            c24{"Sistema de 24 horas"}
             h11{"Sistema de 12 horas (0–11)"}
             h12{"Sistema de 12 horas (1–12)"}
             h23{"Sistema de 24 horas (0–23)"}
             h24{"Sistema de 24 horas (1–24)"}
         }
         hc%core{
+            c12{"12"}
+            c24{"24"}
             h11{"12 (0–11)"}
             h12{"12 (1–12)"}
             h23{"24 (0–23)"}
             h24{"24 (1–24)"}
+        }
+        kv%core{
+            currency{"Deslocar espaços, pontuação, todos os símbolos"}
+            punct{"Deslocar espaços, pontuação"}
+            space{"Deslocar espaços, pontuação"}
+            symbol{"Deslocar espaços, pontuação, símbolos não monetários"}
         }
         lb{
             loose{"Quebra de linha com estilo solto"}
@@ -893,7 +973,7 @@ pt{
             arab{"Algarismos indo-arábicos"}
             arabext{"Algarismos indo-arábicos estendidos"}
             armn{"Algarismos armênios"}
-            armnlow{"Algarismos armênios minúsculos"}
+            armnlow{"Algarismos armênios em minúsculas"}
             beng{"Algarismos bengali"}
             cakm{"Algarismos chakma"}
             deva{"Algarismos devanágari"}
@@ -935,9 +1015,51 @@ pt{
             traditional{"Numerais tradicionais"}
             vaii{"Algarismos vai"}
         }
+        numbers%core{
+            arabext{"Indo-arábicos estendidos"}
+            armnlow{"Armênios em minúsculas"}
+            finance{"Financeiros"}
+            fullwide{"Extensão total"}
+            greklow{"Gregos em minúsculas"}
+            hanidays{
+                "Numeração de dias do mês em caracteres Han para calendários tradicio"
+                "nais"
+            }
+            hanidec{
+                "Sistema decimal posicional que usa ideogramas numéricos chineses com"
+                "o dígitos"
+            }
+            hansfin{"Chinês simplificado financeiro"}
+            hantfin{"Chinês tradicional financeiro"}
+            jpanfin{"Japonês financeiro"}
+            jpanyear{"Numeração japonesa com Gannen para o primeiro ano"}
+            lanatham{"Tai Tham Tham (eclesiástico)"}
+            mathbold{"Matemático em negrito"}
+            mathdbl{"Matemático contornado"}
+            mathmono{"Matemático monoespaçado"}
+            mathsanb{"Matemático sem serifa em negrito"}
+            mathsans{"Matemático sem serifa"}
+            mymrepka{"Mianmarense karen pwo oriental"}
+            mymrpao{"Mianmarense pao"}
+            mymrshan{"Mianmarense shan"}
+            mymrtlng{"Mianmarense tai laing"}
+            native{"Algarismos nativos"}
+            outlined{"Contornado"}
+            roman{"Romanos em maiúsculas"}
+            romanlow{"Romanos em minúsculas"}
+            segment{"Segmentados"}
+            tamldec{"Tâmil moderno"}
+            traditional{"Algarismos tradicionais"}
+        }
         ss%core{
             none{"Desativado"}
             standard{"Ativado"}
+        }
+        t0{
+            und{"Tradução automática não especificada"}
+        }
+        va%core{
+            posix{"Variante POSIX"}
         }
     }
     Variants{

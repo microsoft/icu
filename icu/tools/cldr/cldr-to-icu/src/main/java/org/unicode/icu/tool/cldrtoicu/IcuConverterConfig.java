@@ -5,17 +5,6 @@ package org.unicode.icu.tool.cldrtoicu;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.Arrays;
-import java.util.Optional;
-import java.util.Set;
-
-import org.unicode.cldr.api.CldrDataSupplier;
-import org.unicode.cldr.api.CldrDraftStatus;
-import org.unicode.icu.tool.cldrtoicu.LdmlConverter.OutputType;
-
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.ImmutableSetMultimap;
@@ -24,6 +13,15 @@ import com.google.common.collect.SetMultimap;
 import com.google.common.collect.Table;
 import com.google.common.collect.TreeBasedTable;
 import com.google.common.collect.TreeMultimap;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
+import java.util.Optional;
+import java.util.Set;
+import org.unicode.cldr.api.CldrDataSupplier;
+import org.unicode.cldr.api.CldrDraftStatus;
+import org.unicode.icu.tool.cldrtoicu.LdmlConverter.OutputType;
 
 /**
  * The converter config intended to generate the standard ICU data files. This used to be something
@@ -31,16 +29,16 @@ import com.google.common.collect.TreeMultimap;
  */
 public final class IcuConverterConfig implements LdmlConverterConfig {
     private static final Optional<Path> DEFAULT_ICU_DIR =
-        Optional.ofNullable(System.getProperty("ICU_DIR", null))
-            .map(d -> Paths.get(d).toAbsolutePath());
+            Optional.ofNullable(System.getProperty("ICU_DIR", null))
+                    .map(d -> Paths.get(d).toAbsolutePath());
 
     /** The builder with which to specify configuration for the {@link LdmlConverter}. */
     @SuppressWarnings("UnusedReturnValue")
     public static final class Builder {
         private Path outputDir =
-            DEFAULT_ICU_DIR.map(d -> d.resolve("icu4c/source/data")).orElse(null);
+                DEFAULT_ICU_DIR.map(d -> d.resolve("icu4c/source/data")).orElse(null);
         private Path specialsDir =
-            DEFAULT_ICU_DIR.map(d -> d.resolve("icu4c/source/data/xml")).orElse(null);
+                DEFAULT_ICU_DIR.map(d -> d.resolve("icu4c/source/data/xml")).orElse(null);
         private ImmutableSet<OutputType> outputTypes = OutputType.ALL;
         private Optional<String> icuVersion = Optional.empty();
         private Optional<String> icuDataVersion = Optional.empty();
@@ -152,20 +150,28 @@ public final class IcuConverterConfig implements LdmlConverterConfig {
 
     private IcuConverterConfig(Builder builder) {
         this.outputDir = checkNotNull(builder.outputDir);
-        checkArgument(!Files.isRegularFile(outputDir),
-            "specified output directory if not a directory: %s", outputDir);
-        this.specialsDir = checkNotNull(builder.specialsDir,
-            "must specify a 'specials' XML directory");
-        checkArgument(Files.isDirectory(specialsDir),
-            "specified specials directory does not exist: %s", specialsDir);
+        checkArgument(
+                !Files.isRegularFile(outputDir),
+                "specified output directory if not a directory: %s",
+                outputDir);
+        this.specialsDir =
+                checkNotNull(builder.specialsDir, "must specify a 'specials' XML directory");
+        checkArgument(
+                Files.isDirectory(specialsDir),
+                "specified specials directory does not exist: %s",
+                specialsDir);
         this.outputTypes = builder.outputTypes;
-        checkArgument(!this.outputTypes.isEmpty(),
-            "must specify at least one output type to be generated (possible values are: %s)",
-            Arrays.asList(OutputType.values()));
-        this.versionInfo = new IcuVersionInfo(
-            builder.icuVersion.orElseThrow(() -> new IllegalStateException("missing ICU version")),
-            builder.icuDataVersion.orElseThrow(() -> new IllegalStateException("missing ICU data version")),
-            builder.cldrVersion.orElse(CldrDataSupplier.getCldrVersionString()));
+        checkArgument(
+                !this.outputTypes.isEmpty(),
+                "must specify at least one output type to be generated (possible values are: %s)",
+                Arrays.asList(OutputType.values()));
+        this.versionInfo =
+                new IcuVersionInfo(
+                        builder.icuVersion.orElseThrow(
+                                () -> new IllegalStateException("missing ICU version")),
+                        builder.icuDataVersion.orElseThrow(
+                                () -> new IllegalStateException("missing ICU data version")),
+                        builder.cldrVersion.orElse(CldrDataSupplier.getCldrVersionString()));
         this.minimumDraftStatus = checkNotNull(builder.minimumDraftStatus);
         this.emitReport = builder.emitReport;
         this.parallel = builder.parallel;
@@ -225,11 +231,13 @@ public final class IcuConverterConfig implements LdmlConverterConfig {
         return forcedParents.row(dir);
     }
 
-    @Override public ImmutableSet<String> getAllLocaleIds() {
+    @Override
+    public ImmutableSet<String> getAllLocaleIds() {
         return allLocaleIds;
     }
 
-    @Override public ImmutableSet<String> getTargetLocaleIds(IcuLocaleDir dir) {
+    @Override
+    public ImmutableSet<String> getTargetLocaleIds(IcuLocaleDir dir) {
         return localeIdsMap.get(dir);
     }
 }

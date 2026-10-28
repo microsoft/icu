@@ -272,6 +272,9 @@ ca{
                 "UMMMd",
                 "yMd",
             }
+            availableFormats{
+                yyyyMd{"dd-MM-r"}
+            }
             monthNames{
                 format{
                     wide{
@@ -428,6 +431,10 @@ ca{
                     M{"E, d MMM – E, d MMM"}
                     d{"E, d – E, d MMM"}
                 }
+                MMMMd{
+                    M{"d MMMM – d MMMM"}
+                    d{"d – d MMMM"}
+                }
                 MMMd{
                     M{"d MMM – d MMM"}
                     d{"d–d MMM"}
@@ -538,6 +545,10 @@ ca{
                 "yMMMMd",
                 "yMMMd",
                 "yyMd",
+            }
+            appendItems{
+                Era{"{0} {1}"}
+                Time-Day-Of-Week{"{1}, {0}"}
             }
             availableFormats{
                 EHm{"E H:mm"}
@@ -732,6 +743,10 @@ ca{
                     M{"E, d MMM – E, d MMM"}
                     d{"E, d – E, d MMM"}
                 }
+                MMMMd{
+                    M{"d MMMM – d MMMM"}
+                    d{"d–d MMMM"}
+                }
                 MMMd{
                     M{"d MMM – d MMM"}
                     d{"d–d MMM"}
@@ -883,6 +898,38 @@ ca{
                         "3r trimestre",
                         "4t trimestre",
                     }
+                }
+            }
+        }
+        roc{
+            DateTimePatterns{
+                "H:mm:ss (zzzz)",
+                "H:mm:ss z",
+                "H:mm:ss",
+                "H:mm",
+                "EEEE d MMMM 'de' y G",
+                "d MMMM 'de' y G",
+                "dd/MM/y G",
+                "dd/MM/y GGGGG",
+                "{1}, {0}",
+                "{1}, {0}",
+                "{1}, {0}",
+                "{1}, {0}",
+                "{1}, {0}",
+            }
+            DateTimeSkeletons{
+                "Hmmsszzzz",
+                "Hmmssz",
+                "Hmmss",
+                "Hmm",
+                "GyMMMMEEEEd",
+                "GyMMMMd",
+                "GyMMdd",
+                "GGGGGyMMdd",
+            }
+            eras{
+                wide{
+                    0{"Abans de ROC"}
                 }
             }
         }

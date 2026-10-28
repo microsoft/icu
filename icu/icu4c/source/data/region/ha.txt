@@ -94,14 +94,17 @@ ha{
         CY{"Saifurus"}
         CZ{"Czechia"}
         DE{"Jamus"}
+        DG{"Tsibirn Diego Garcia"}
         DJ{"Jibuti"}
         DK{"Danmark"}
         DM{"Dominika"}
         DO{"Jamhuriyar Dominika"}
         DZ{"Aljeriya"}
+        EA{"Ceuta da Melilla"}
         EC{"Ekwador"}
         EE{"Estoniya"}
         EG{"Misira"}
+        EH{"Yammacin Sahara"}
         ER{"Eritireya"}
         ES{"Sipen"}
         ET{"Habasha"}
@@ -138,6 +141,7 @@ ha{
         HR{"Kurowaishiya"}
         HT{"Haiti"}
         HU{"Hungari"}
+        IC{"Tsibiran Canary"}
         ID{"Indunusiya"}
         IE{"Ayalan"}
         IL{"Israʼila"}
@@ -285,6 +289,8 @@ ha{
         VU{"Banuwatu"}
         WF{"Walis Da Futuna"}
         WS{"Samoa"}
+        XA{"Gurɓataccen Karin harshe"}
+        XB{"Gurɓataccen Bidi"}
         XK{"Kasar Kosovo"}
         YE{"Yamen"}
         YT{"Mayoti"}
@@ -292,5 +298,18 @@ ha{
         ZM{"Zambiya"}
         ZW{"Zimbabuwe"}
         ZZ{"Yanki da ba a sani ba"}
+    }
+    Countries%short{
+        HK{"Hong Kong"}
+        MO{"Macao"}
+        PS{"Palasɗinu"}
+    }
+    Countries%variant{
+        CD{"Kongo (DRC)"}
+        CG{"Jamhuriyar Kongo"}
+        CZ{"Jamhuriyar Czech"}
+        NZ{"Aotearoa Nuzilan"}
+        SZ{"Suwazilan"}
+        TL{"Timor ta Gabas"}
     }
 }

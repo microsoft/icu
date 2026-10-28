@@ -11,19 +11,35 @@ ca{
         colCaseLevel{"ordre per detecció de majúscules"}
         colNormalization{"ordre normalitzat"}
         colNumeric{"ordre numèric"}
+        colReorder{"reordenació d’escriptures/blocs"}
         colStrength{"força de l’ordre"}
         collation{"ordre"}
         currency{"moneda"}
+        d0{"destinació de transformació"}
+        dx{"exclusions de particions del diccionari"}
         em{"presentació de l’emoji"}
+        fw{"primer dia de la setmana"}
+        h0{"mixt"}
         hc{"sistema horari (12 h o 24 h)"}
+        i0{"mètode d’entrada"}
+        k0{"teclat"}
+        kv{"màxim ignorat"}
         lb{"estil de salt de línia"}
         lw{"salt de línia entre paraules"}
+        m0{"regles de transformació"}
         ms{"sistema de mesures"}
+        mu{"unitat de mesura"}
         numbers{"xifres"}
+        rg{"regió per a dades suplementàries"}
+        s0{"origen de transformació"}
+        sd{"subdivisió de regió"}
         ss{"pausa després de les abreviatures"}
+        t{"transformació"}
+        t0{"traducció automàtica"}
         timezone{"zona horària"}
         va{"variant local"}
         x{"ús privat"}
+        x0{"transformació d’ús privat"}
     }
     Languages{
         aa{"àfar"}
@@ -49,6 +65,7 @@ ca{
         ann{"obolo"}
         anp{"angika"}
         ar{"àrab"}
+        ar_001{"àrab estàndard modern"}
         arc{"arameu"}
         arn{"mapudungu"}
         aro{"araona"}
@@ -145,6 +162,8 @@ ca{
         dar{"darguà"}
         dav{"taita"}
         de{"alemany"}
+        de_AT{"alemany austríac"}
+        de_CH{"alemany estàndard suís"}
         del{"delaware"}
         den{"slavi"}
         dgr{"dogrib"}
@@ -168,14 +187,22 @@ ca{
         el{"grec"}
         elx{"elamita"}
         en{"anglès"}
+        en_AU{"anglès australià"}
+        en_CA{"anglès canadenc"}
+        en_GB{"anglès britànic"}
+        en_US{"anglès americà"}
         enm{"anglès mitjà"}
         eo{"esperanto"}
         es{"espanyol"}
+        es_419{"espanyol llatinoamericà"}
+        es_ES{"espanyol europeu"}
+        es_MX{"espanyol de Mèxic"}
         et{"estonià"}
         eu{"basc"}
         ewo{"ewondo"}
         ext{"extremeny"}
         fa{"persa"}
+        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"ful"}
@@ -185,6 +212,8 @@ ca{
         fo{"feroès"}
         fon{"fon"}
         fr{"francès"}
+        fr_CA{"francès canadenc"}
+        fr_CH{"francès suís"}
         frc{"francès cajun"}
         frm{"francès mitjà"}
         fro{"francès antic"}
@@ -375,7 +404,7 @@ ca{
         ms{"malai"}
         mt{"maltès"}
         mua{"mundang"}
-        mul{"llengües vàries"}
+        mul{"diverses llengües"}
         mus{"creek"}
         mwl{"mirandès"}
         mwr{"marwari"}
@@ -390,12 +419,14 @@ ca{
         nb{"noruec bokmål"}
         nd{"ndebele septentrional"}
         nds{"baix alemany"}
+        nds_NL{"baix saxó"}
         ne{"nepalès"}
         new{"newari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niueà"}
         nl{"neerlandès"}
+        nl_BE{"flamenc"}
         nmg{"bissio"}
         nn{"noruec nynorsk"}
         nnh{"ngiemboon"}
@@ -449,6 +480,8 @@ ca{
         pro{"provençal antic"}
         ps{"paixtu"}
         pt{"portuguès"}
+        pt_BR{"portuguès del Brasil"}
+        pt_PT{"portuguès de Portugal"}
         qu{"quítxua"}
         quc{"k’iche’"}
         raj{"rajasthani"}
@@ -459,6 +492,7 @@ ca{
         rm{"retoromànic"}
         rn{"rundi"}
         ro{"romanès"}
+        ro_MD{"moldau"}
         rof{"rombo"}
         rom{"romaní"}
         ru{"rus"}
@@ -487,6 +521,7 @@ ca{
         ses{"songhai oriental"}
         sg{"sango"}
         sga{"irlandès antic"}
+        sh{"serbocroat"}
         shi{"taixelhit"}
         shn{"xan"}
         shu{"àrab txadià"}
@@ -518,6 +553,7 @@ ca{
         sux{"sumeri"}
         sv{"suec"}
         sw{"suahili"}
+        sw_CD{"suahili del Congo"}
         swb{"comorià"}
         syc{"siríac clàssic"}
         syr{"siríac"}
@@ -608,6 +644,8 @@ ca{
         zen{"zenaga"}
         zgh{"amazic estàndard marroquí"}
         zh{"xinès"}
+        zh_Hans{"xinès simplificat"}
+        zh_Hant{"xinès tradicional"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"sense contingut lingüístic"}
@@ -618,6 +656,25 @@ ca{
     }
     Languages%extension{
         ku{"kurmanji"}
+    }
+    Languages%long{
+        zh_Hans{"xinès mandarí (simplificat)"}
+        zh_Hant{"xinès mandarí (tradicional)"}
+    }
+    Languages%menu{
+        ckb{"sorani"}
+        yue{"xinès, cantonès"}
+        zh{"xinès, mandarí"}
+    }
+    Languages%short{
+        az{"àzeri"}
+        en_GB{"anglès (GB)"}
+        en_US{"anglès (EUA)"}
+    }
+    Languages%variant{
+        ckb{"kurd sorani"}
+        hi_Latn{"hinglish"}
+        ps{"pushtu"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -818,9 +875,10 @@ ca{
             islamic{"calendari islàmic"}
             islamic-civil{"calendari civil islàmic"}
             islamic-umalqura{"calendari islàmic (Umm al-Qura)"}
-            iso8601{"calendari ISO-8601"}
+            iso8601{"calendari gregorià (setmanes ISO 8601)"}
             japanese{"calendari japonès"}
             persian{"calendari persa"}
+            roc{"calendari de la República de Xina"}
         }
         calendar%core{
             buddhist{"budista"}
@@ -831,11 +889,16 @@ ca{
             ethiopic-amete-alem{"etíop amete-alem"}
             gregorian{"gregorià"}
             hebrew{"hebreu"}
+            indian{"nacional hindú"}
             islamic{"civil islàmic"}
             islamic-civil{"civil islàmic"}
+            islamic-rgsa{"calendari islàmic, observació de la lluna a Aràbia Saudí"}
+            islamic-tbla{"calendari islàmic (tabular, època astronòmica)"}
             islamic-umalqura{"islàmic (Umm al-Qura)"}
+            iso8601{"gregorià"}
             japanese{"japonès"}
             persian{"persa"}
+            roc{"de la República de Xina"}
         }
         cf{
             account{"format de moneda comptable"}
@@ -858,6 +921,11 @@ ca{
             no{"Ordena per tipus de lletra normal"}
             upper{"Ordena amb majúscules primer"}
         }
+        colCaseFirst%core{
+            lower{"minúscules"}
+            no{"minúscules"}
+            upper{"majúscules"}
+        }
         colCaseLevel{
             no{"Ordena sense distingir majúscules i minúscules"}
             yes{"Ordena amb detecció de majúscules i minúscules"}
@@ -870,12 +938,26 @@ ca{
             no{"Ordena els dígits individualment"}
             yes{"Ordena els dígits numèricament"}
         }
+        colReorder%core{
+            currency{"moneda"}
+            digit{"dígits"}
+            punct{"puntuació"}
+            space{"espai en blanc"}
+            symbol{"símbol"}
+        }
         colStrength{
             identical{"Ordena-ho tot"}
             primary{"Ordena només les lletres de base"}
             quaternary{"Ordena per accents/majúscules/amplada/kana"}
             secondary{"Ordena els accents"}
             tertiary{"Ordena per accent/majúscules/amplada"}
+        }
+        colStrength%core{
+            identical{"tot"}
+            primary{"només lletres de base"}
+            quaternary{"base, accents, cas, variants, kana"}
+            secondary{"base, accents"}
+            tertiary{"base, accents, cas, variants"}
         }
         collation{
             compat{"ordre anterior, per a compatibilitat"}
@@ -897,10 +979,13 @@ ca{
             compat{"compatibilitat"}
             dictionary{"diccionari"}
             ducet{"unicode predeterminat"}
+            emoji{"emoji"}
+            eor{"normes europees"}
             phonebook{"guia telefònica"}
             phonetic{"fonètic"}
             pinyin{"pinyin"}
             search{"cerca"}
+            searchjl{"consonant inicial coreana"}
             standard{"estàndard"}
             stroke{"traços"}
             traditional{"tradicional"}
@@ -918,16 +1003,26 @@ ca{
             text{"text"}
         }
         hc{
+            c12{"sistema de 12 hores"}
+            c24{"sistema de 24 hores"}
             h11{"sistema de 12 hores (0–11)"}
             h12{"sistema de 12 hores (1–12)"}
             h23{"sistema de 24 hores (0–23)"}
             h24{"sistema de 24 hores (1–24)"}
         }
         hc%core{
+            c12{"12"}
+            c24{"24"}
             h11{"12 (0–11)"}
             h12{"12 (1–12)"}
             h23{"24 (0–23)"}
             h24{"24 (1–24)"}
+        }
+        kv%core{
+            currency{"espais de desplaçament, puntuació, tots els símbols"}
+            punct{"espais de desplaçament, puntuació"}
+            space{"espais de desplaçament, puntuació"}
+            symbol{"espais de desplaçament, puntuació, símbols no monetaris"}
         }
         lb{
             loose{"salt de línia flexible"}
@@ -1017,9 +1112,51 @@ ca{
             traditional{"Numerals tradicionals"}
             vaii{"dígits vai"}
         }
+        numbers%core{
+            arabext{"indoaràbigues ampliades"}
+            armnlow{"armenis en minúscula"}
+            finance{"financers"}
+            fullwide{"amplada completa"}
+            greklow{"grecs en minúscula"}
+            hanidays{
+                "numeració del dia del mes en caràcters Han per als calendaris tradic"
+                "ionals"
+            }
+            hanidec{
+                "sistema decimal posicional que utilitza ideogrames numèrics xinesos "
+                "com a dígits"
+            }
+            hansfin{"financers xinesos simplificats"}
+            hantfin{"financers xinesos tradicionals"}
+            jpanfin{"financers japonesos"}
+            jpanyear{"numeració Gannen del primer any de la nova era imperial del Japó"}
+            lanatham{"Tai Tham Tham (eclesiàstic)"}
+            mathbold{"dígits matemàtics en negreta"}
+            mathdbl{"dígits matemàtics amb ratlla doble"}
+            mathmono{"dígits matemàtics de pal sec monoespaiats"}
+            mathsanb{"dígits matemàtics de pal sec en negreta"}
+            mathsans{"dígits matemàtics de pal sec"}
+            mymrepka{"pwo de l’Est de Myanmar"}
+            mymrpao{"pao de Myanmar"}
+            mymrshan{"shan de Myanmar"}
+            mymrtlng{"tai laing de Myanmar"}
+            native{"dígits natius"}
+            outlined{"delineats"}
+            roman{"nombres romans en majúscula"}
+            romanlow{"nombres romans en minúscula"}
+            segment{"segmentats"}
+            tamldec{"nombres tamils moderns"}
+            traditional{"nombres tradicionals"}
+        }
         ss%core{
             none{"desactivada"}
             standard{"activada"}
+        }
+        t0{
+            und{"traducció automàtica no especificada"}
+        }
+        va%core{
+            posix{"variant POSIX"}
         }
     }
     Variants{

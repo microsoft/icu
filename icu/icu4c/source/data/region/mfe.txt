@@ -164,7 +164,7 @@ mfe{
         PM{"Saint-Pierre-ek-Miquelon"}
         PN{"Pitcairn"}
         PR{"Porto Rico"}
-        PS{"Autorité palestinienne"}
+        PS{"Teritwar Palestinn"}
         PT{"Portigal"}
         PW{"Palau"}
         PY{"Paraguay"}

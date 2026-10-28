@@ -2,6 +2,9 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 package org.unicode.icu.tool.cldrtoicu;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ListMultimap;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -10,10 +13,6 @@ import java.util.List;
 import java.util.NavigableSet;
 import java.util.Set;
 import java.util.TreeSet;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ListMultimap;
 
 /**
  * Mutable ICU data, represented as a mapping from resource bundle paths to a sequence of values.
@@ -30,7 +29,8 @@ public final class IcuData {
     /**
      * IcuData constructor.
      *
-     * @param name The name of the IcuData object, used as the name of the root node in the output file
+     * @param name The name of the IcuData object, used as the name of the root node in the output
+     *     file
      * @param hasFallback true if the output file has another ICU file as a fallback.
      */
     public IcuData(String name, boolean hasFallback) {
@@ -38,7 +38,9 @@ public final class IcuData {
         this.name = name;
     }
 
-    /** @return whether data should fallback on data in other ICU files. */
+    /**
+     * @return whether data should fallback on data in other ICU files.
+     */
     public boolean hasFallback() {
         return hasFallback;
     }
@@ -113,15 +115,17 @@ public final class IcuData {
         return Collections.unmodifiableSet(paths);
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         StringWriter out = new StringWriter();
         PrintWriter w = new PrintWriter(out);
         w.format("IcuData{ name=%s, fallback=%s\n", name, hasFallback);
         commentLines.forEach(c -> w.format("  # %s\n", c));
-        paths.forEach(p -> {
-            w.format("  %s:\n", p);
-            rbPathToValues.get(p).forEach(v -> w.format("    %s\n", v));
-        });
+        paths.forEach(
+                p -> {
+                    w.format("  %s:\n", p);
+                    rbPathToValues.get(p).forEach(v -> w.format("    %s\n", v));
+                });
         w.format("}\n");
         w.flush();
         return out.toString();

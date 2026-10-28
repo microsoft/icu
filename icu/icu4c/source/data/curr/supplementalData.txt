@@ -3,15 +3,6 @@
 // Generated using tools/cldr/cldr-to-icu/
 supplementalData:table(nofallback){
     CurrencyMap{
-        029{
-            {
-                from:intvector{
-                    -507,
-                    95619072,
-                }
-                id{"XCD"}
-            }
-        }
         AC{
             {
                 from:intvector{
@@ -1080,18 +1071,6 @@ supplementalData:table(nofallback){
                     1215944704,
                 }
                 id{"CNY"}
-            }
-            {
-                from:intvector{
-                    66,
-                    528958464,
-                }
-                id{"CNX"}
-                tender{"false"}
-                to:intvector{
-                    213,
-                    320765951,
-                }
             }
             {
                 from:intvector{
@@ -5148,6 +5127,12 @@ supplementalData:table(nofallback){
             0,
             0,
         }
+        MRU:intvector{
+            2,
+            0,
+            2,
+            20,
+        }
         MUR:intvector{
             2,
             0,
@@ -5167,7 +5152,7 @@ supplementalData:table(nofallback){
             0,
         }
         PKR:intvector{
-            0,
+            2,
             0,
             0,
             0,

@@ -1656,7 +1656,7 @@ static UBool testTag(const char* frag,
     UChar* base = NULL;
     UChar* expected_string = NULL;
     const UChar* string = NULL;
-    char buf[5];
+    char buf[12];
     char item_tag[10];
     int32_t i,j,row,col, len;
     int32_t actual_bundle;
@@ -2185,7 +2185,7 @@ static void TestFallback(void)
         UResourceBundle* myResB = ures_open(NULL,"no_NO_NY",&err);
         UResourceBundle* resLocID = ures_getByKey(myResB, "Version", NULL, &err);
         const UChar* version = NULL;
-        static const UChar versionStr[] = u"48"; // 48 in nn_NO or in a parent bundle/root
+        static const UChar versionStr[] = u"49"; // 49 in nn_NO or in a parent bundle/root
 
         if(U_FAILURE(err)) {
             log_data_err("Expected success when trying to test no_NO_NY aliased to nn_NO for Version "
@@ -2715,6 +2715,16 @@ static void TestGetFunctionalEquivalent(void) {
         "f",    "nl_NL@collation=stroke",         "root",
         "f",    "nl_NL_EEXT@collation=stroke",    "root",
         /* Additions to test aliased locales */
+        "f",    "yue_HK",                         "zh@collation=stroke",
+        "f",    "yue_Hant",                       "zh@collation=stroke",
+        "f",    "yue_Hant_HK",                    "zh@collation=stroke",
+        "f",    "yue@collation=stroke",           "zh@collation=stroke",
+        "f",    "yue@collation=pinyin",           "zh",
+        "f",    "yue_CN",                         "zh",
+        "f",    "yue_Hans",                       "zh",
+        "f",    "yue_Hans_CN",                    "zh",
+        "f",    "yue_Hans@collation=pinyin",      "zh",
+        "f",    "yue_Hans@collation=stroke",      "zh@collation=stroke",
         "f",    "mo",                             "mo",
         "t",    "no",                             "no",
         "t",    "nb",                             "no",
@@ -2725,6 +2735,8 @@ static void TestGetFunctionalEquivalent(void) {
         "f",    "zh_Hant_CN",                     "zh@collation=stroke",
         "f",    "zh_Hant_US",                     "zh@collation=stroke",
         "f",    "zh_Hans_US",                     "zh",
+        "f",    "yue_TW",                         "zh@collation=stroke",
+        "f",    "yue_US",                         "zh@collation=stroke",
         "f",    "ja_CN",                          "ja",
         "f",    "ja_US",                          "ja",
         NULL
@@ -2959,7 +2971,7 @@ static void TestCLDRStyleAliases(void) {
       result = tres_getString(a, -1, NULL, &len, &status);
       u_charsToUChars(expects[i], expected, (int32_t)strlen(expects[i])+1);
       if(U_FAILURE(status) || !result || u_strcmp(result, expected)) {
-        log_err("CLDR style aliases failed resource with name \"%s\" resource, exp %s, got %s (%s)\n", resource, expects[i], (result != NULL) ? austrdup(result) : "NULL", myErrorName(status));
+        log_err("CLDR style aliases failed resource with name \"%s\" resource, exp %s, got %S (%s)\n", resource, expects[i], result, myErrorName(status));
         status = U_ZERO_ERROR;
       }
     }

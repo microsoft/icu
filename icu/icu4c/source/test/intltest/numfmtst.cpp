@@ -256,6 +256,7 @@ void NumberFormatTest::runIndexedTest( int32_t index, UBool exec, const char* &n
   TESTCASE_AUTO(Test21556_CurrencyAsDecimal);
   TESTCASE_AUTO(Test22088_Ethiopic);
   TESTCASE_AUTO(Test22983_LongFraction);
+  TESTCASE_AUTO(TestParseCurrencyLongLocale);
   TESTCASE_AUTO_END;
 }
 
@@ -3395,7 +3396,7 @@ double NumberFormatTest::checkRound(DecimalFormat* df, double iValue, double las
     parsed=result.getDouble();
 
     if (lastParsed>parsed) {
-        errln("Rounding wrong direction! %f > %f", lastParsed, parsed);
+        errln("Rounding wrong direction! %d > %d", lastParsed, parsed);
     }
 
     return lastParsed;
@@ -6665,7 +6666,7 @@ void NumberFormatTest::expectPositions(FieldPositionIterator& iter, int32_t *val
     // is there a logln using printf?
     char buf[128];
     snprintf(buf, sizeof(buf), "%24s %3d %3d %3d", attrString(id), id, start, limit);
-    logln("%s", buf);
+    logln(buf);
 
     for (int i = 0; i < tupleCount; ++i) {
       if (found[i]) {
@@ -7059,7 +7060,7 @@ void NumberFormatTest::TestExponentParse() {
        parsePos.getIndex() != 8
        )
     {
-        errln("ERROR: parse failed - expected 5.06E-27, 8  - returned %f, %i",
+        errln("ERROR: parse failed - expected 5.06E-27, 8  - returned %d, %i",
               result.getDouble(), parsePos.getIndex());
     }
 }
@@ -7312,13 +7313,13 @@ void NumberFormatTest::TestFormatFastpaths() {
 
 void NumberFormatTest::TestFormattableSize() {
   if(sizeof(Formattable) > 112) {
-    errln("Error: sizeof(Formattable)=%zu, 112=%d\n",
+    errln("Error: sizeof(Formattable)=%d, 112=%d\n",
           sizeof(Formattable), 112);
   } else if(sizeof(Formattable) < 112) {
-    logln("Warning: sizeof(Formattable)=%zu, 112=%d\n",
+    logln("Warning: sizeof(Formattable)=%d, 112=%d\n",
         sizeof(Formattable), 112);
   } else {
-    logln("sizeof(Formattable)=%zu, 112=%d\n",
+    logln("sizeof(Formattable)=%d, 112=%d\n",
         sizeof(Formattable), 112);
   }
 }
@@ -7329,7 +7330,7 @@ UBool NumberFormatTest::testFormattableAsUFormattable(const char *file, int line
   UFormattable *u = f.toUFormattable();
   logln();
   if (u == nullptr) {
-    errln("%s:%d: Error: f.toUFormattable() retuned nullptr.", file, line);
+    errln("%s:%d: Error: f.toUFormattable() retuned nullptr.");
     return false;
   }
   logln("%s:%d: comparing Formattable with UFormattable", file, line);
@@ -7842,7 +7843,7 @@ void NumberFormatTest::TestParseSignsAndMarks() {
                 errln(UnicodeString("FAIL: locale ") + itemPtr->locale + ", lenient " + itemPtr->lenient + ", parse of \"" + itemPtr->numString + "\" gives position " + ppos.getIndex());
             }
         } else {
-            dataerrln("FAIL: NumberFormat::createInstance for locale %s gives error %s", itemPtr->locale, u_errorName(status));
+            dataerrln("FAIL: NumberFormat::createInstance for locale % gives error %s", itemPtr->locale, u_errorName(status));
         }
         delete numfmt;
     }
@@ -8298,7 +8299,7 @@ void NumberFormatTest::TestCurrencyUsage() {
 
         UnicodeString PKR_changed;
         fmt->format(agent, PKR_changed);
-        assertEquals("Test Currency Usage 6", u"PKR\u00A0124", PKR_changed);
+        assertEquals("Test Currency Usage 6", u"PKR\u00A0123.57", PKR_changed);
         delete fmt;
     }
 }
@@ -10207,6 +10208,26 @@ void NumberFormatTest::Test22088_Ethiopic() {
 void NumberFormatTest::Test22983_LongFraction() {
     IcuTestErrorCode status(*this, "Test22983_LongFraction");
     DecimalFormat df(u"0.0000000000000001", status);
+}
+
+void NumberFormatTest::TestParseCurrencyLongLocale() {
+    IcuTestErrorCode status(*this, "TestParseCurrencyLongLocale");
+    // Locale IDs have no length limit. Parsing a foreign currency looks up
+    // currency names by locale ID, which must not overflow the name cache key.
+    CharString localeID("en_US@x=", status);
+    for (int32_t i = 0; i < 40; i++) {
+        localeID.append("abcdefgh-", status);
+    }
+    localeID.append("abcdefgh", status);
+    Locale locale(localeID.data());
+    assertTrue("Locale ID is longer than ULOC_FULLNAME_CAPACITY",
+               uprv_strlen(locale.getName()) >= ULOC_FULLNAME_CAPACITY);
+    LocalPointer<NumberFormat> nf(NumberFormat::createInstance(locale, UNUM_CURRENCY, status));
+    if (status.errIfFailureAndReset("Could not create currency formatter")) {
+        return;
+    }
+    ParsePosition ppos(0);
+    LocalPointer<CurrencyAmount> result(nf->parseCurrency(u"\u20AC1.00", ppos));
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

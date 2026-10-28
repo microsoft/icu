@@ -6,13 +6,11 @@ import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.truth.Truth.assertThat;
 import static org.unicode.icu.tool.cldrtoicu.testing.AssertUtils.assertThrows;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-
-import org.junit.Test;
-
 import com.google.common.collect.ImmutableMap;
 import com.ibm.icu.util.BytesTrie;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import org.junit.Test;
 
 public class TrieTest {
     @Test
@@ -32,12 +30,24 @@ public class TrieTest {
     @Test
     public void testHierarchyAndOrdering() {
         Trie trie = new Trie();
-        trie.root().with("foo", foo -> {
-            foo.with("two", sub -> sub.putPrefixAndValue(3));
-            foo.with("one", sub -> sub.putPrefixAndValue(2));
-            foo.with("*", sub -> sub.putPrefixAndValue(1));
-        });
-        trie.root().with("bar", bar -> bar.with("baz", baz -> baz.with("quux", quux -> quux.putPrefixAndValue(0))));
+        trie.root()
+                .with(
+                        "foo",
+                        foo -> {
+                            foo.with("two", sub -> sub.putPrefixAndValue(3));
+                            foo.with("one", sub -> sub.putPrefixAndValue(2));
+                            foo.with("*", sub -> sub.putPrefixAndValue(1));
+                        });
+        trie.root()
+                .with(
+                        "bar",
+                        bar ->
+                                bar.with(
+                                        "baz",
+                                        baz ->
+                                                baz.with(
+                                                        "quux",
+                                                        quux -> quux.putPrefixAndValue(0))));
 
         // Order is by "subtag" (left-to-right) with lexicographical order of tags (other
         // than '*' which is always sorted first).
@@ -56,17 +66,24 @@ public class TrieTest {
         // Use '$' which has a lower byte value that '*' in ASCII, but when it terminates a prefix,
         // it has bit-7 set which makes it sort higher than '*'.
         // In other tests it's not clear that '*' is sorted specially since '*' < [a-z] anyway.
-        trie.root().with("$", foo -> {
-            // A single '$' sorts after '*' because '$' will have bit-7 set, and '*' will not.
-            foo.with("$", sub -> sub.putPrefixAndValue(5));
-            // '$$' sorts below * because the leading '$' won't have bit-7 set.
-            foo.with("$$", sub -> sub.putPrefixAndValue(3));
-            foo.with("*", sub -> sub.putPrefixAndValue(4));
-        });
-        trie.root().with("*", foo -> {
-            foo.with("$", sub -> sub.putPrefixAndValue(2));
-            foo.with("*", sub -> sub.putPrefixAndValue(1));
-        });
+        trie.root()
+                .with(
+                        "$",
+                        foo -> {
+                            // A single '$' sorts after '*' because '$' will have bit-7 set, and '*'
+                            // will not.
+                            foo.with("$", sub -> sub.putPrefixAndValue(5));
+                            // '$$' sorts below * because the leading '$' won't have bit-7 set.
+                            foo.with("$$", sub -> sub.putPrefixAndValue(3));
+                            foo.with("*", sub -> sub.putPrefixAndValue(4));
+                        });
+        trie.root()
+                .with(
+                        "*",
+                        foo -> {
+                            foo.with("$", sub -> sub.putPrefixAndValue(2));
+                            foo.with("*", sub -> sub.putPrefixAndValue(1));
+                        });
         trie.root().with("*", sub -> sub.putPrefixAndValue(0));
 
         // Star is definitely sorted before other entries.

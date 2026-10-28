@@ -16,8 +16,6 @@ vi{
                 range{"{0}-{1}"}
             }
             patterns{
-                accountingFormat%alphaNextToNumber{"#,##0.00 ¤"}
-                accountingFormat%noCurrency{"#,##0.00"}
                 currencyFormat{"#,##0.00 ¤"}
                 currencyFormat%alphaNextToNumber{"#,##0.00 ¤"}
             }
@@ -146,10 +144,12 @@ vi{
         }
         minimalPairs{
             ordinal{
+                one{"Rẽ phải tại lối rẽ thứ {0}."}
                 other{"Theo lối rẽ thứ {0} bên phải."}
             }
             plural{
-                other{"{0} ngày"}
+                one{"Bạn có {0} mặt hàng trong giỏ hàng; bạn có muốn mua nó?"}
+                other{"Bạn có {0} mặt hàng trong giỏ hàng; bạn có muốn mua chúng?"}
             }
         }
     }
@@ -668,6 +668,10 @@ vi{
                     M{"E, d MMM – E, d MMM"}
                     d{"E, d MMM – E, d MMM"}
                 }
+                MMMMd{
+                    M{"d MMMM – d MMMM"}
+                    d{"d – d MMMM"}
+                }
                 MMMd{
                     M{"d MMM – d MMM"}
                     d{"d – d MMM"}
@@ -736,10 +740,6 @@ vi{
                 "SA",
                 "CH",
             }
-            AmPmMarkersNarrow{
-                "s",
-                "c",
-            }
             DateTimePatterns{
                 "HH:mm:ss zzzz",
                 "HH:mm:ss z",
@@ -767,6 +767,11 @@ vi{
                 "{0} {1}",
                 "{0} {1}",
             }
+            appendItems{
+                Day-Of-Week{"{1}, {0}"}
+                Era{"{0} {1}"}
+                Time-Day-Of-Week{"{1}, {0}"}
+            }
             availableFormats{
                 Bh{"h 'giờ' B"}
                 EBh{"h 'giờ' B E"}
@@ -783,6 +788,9 @@ vi{
                 GyMEd{"E, d/M/y G"}
                 GyMMM{"MMM y G"}
                 GyMMMEd{"E, d MMM, y G"}
+                GyMMMM{"MMMM y G"}
+                GyMMMMEd{"E, d MMMM y G"}
+                GyMMMMd{"d MMMM y G"}
                 GyMMMd{"d MMM, y G"}
                 GyMd{"d/M/y G"}
                 H{"HH 'giờ'"}
@@ -810,6 +818,8 @@ vi{
                 yMMM{"MMM y"}
                 yMMMEd{"E, d MMM, y"}
                 yMMMM{"MMMM 'năm' y"}
+                yMMMMEd{"E, d MMMM y"}
+                yMMMMd{"d MMMM y"}
                 yMMMd{"d MMM, y"}
                 yMd{"d/M/y"}
                 yQQQ{"QQQ y"}
@@ -973,6 +983,10 @@ vi{
                 MMMEd{
                     M{"E, d MMM – E, d MMM"}
                     d{"E, d MMM – E, d MMM"}
+                }
+                MMMMd{
+                    M{"d MMMM – d MMMM"}
+                    d{"d – d MMMM"}
                 }
                 MMMd{
                     M{"d MMM – d MMM"}
@@ -1240,6 +1254,62 @@ vi{
                 }
             }
         }
+        roc{
+            DateTimePatterns{
+                "HH:mm:ss zzzz",
+                "HH:mm:ss z",
+                "HH:mm:ss",
+                "HH:mm",
+                "EEEE, 'ngày' dd MMMM 'năm' y G",
+                "'ngày' d 'tháng' M 'năm' y G",
+                "d MMM, y G",
+                "d/M/y GGGGG",
+                "{0} {1}",
+                "{0} {1}",
+                "{0} {1}",
+                "{0} {1}",
+                "{0} {1}",
+            }
+            DateTimeSkeletons{
+                "HHmmsszzzz",
+                "HHmmssz",
+                "HHmmss",
+                "HHmm",
+                "GyMMMMEEEEdd",
+                "GyMdd",
+                "GyMMdd",
+                "GGGGGyMMdd",
+            }
+            availableFormats{
+                M{"'tháng' L"}
+                MEd{"E, dd-M"}
+                Md{"dd-M"}
+                d{"'Ngày' dd"}
+            }
+            eras{
+                abbreviated{
+                    0{"Trước R.O.C"}
+                }
+            }
+            intervalFormats{
+                Bh{
+                    B{"h B – h B"}
+                    h{"h – h B"}
+                }
+                GyMEd{
+                    G{"E, dd-MM-y GGGGG – E, dd-MM-y GGGGG"}
+                    M{"E, dd-MM-y – E, dd-MM-y GGGGG"}
+                    d{"E, dd-MM-y – E, dd-MM-y GGGGG"}
+                    y{"E, dd-MM-y – E, dd-MM-y GGGGG"}
+                }
+                GyMd{
+                    G{"dd-MM-y GGGGG – dd-MM-y GGGGG"}
+                    M{"dd-MM-y – dd-MM-y GGGGG"}
+                    d{"dd-MM-y – dd-MM-y GGGGG"}
+                    y{"dd-MM-y – dd-MM-y GGGGG"}
+                }
+            }
+        }
     }
     characterLabel{
         activities{"hoạt động"}
@@ -1335,11 +1405,11 @@ vi{
         day{
             dn{"Ngày"}
             relative{
-                "-1"{"Hôm qua"}
-                "-2"{"Hôm kia"}
-                "0"{"Hôm nay"}
-                "1"{"Ngày mai"}
-                "2"{"Ngày kia"}
+                "-1"{"hôm qua"}
+                "-2"{"hôm kia"}
+                "0"{"hôm nay"}
+                "1"{"ngày mai"}
+                "2"{"ngày kia"}
             }
             relativeTime{
                 future{

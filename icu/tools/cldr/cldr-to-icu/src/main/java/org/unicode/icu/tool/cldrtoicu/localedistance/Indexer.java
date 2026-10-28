@@ -11,8 +11,8 @@ import java.util.Set;
 import java.util.function.Function;
 
 /**
- * Returns a canonicalized value for each unique value encountered, the memoized value is
- * created using the zero-based index of the value and the given transformation function.
+ * Returns a canonicalized value for each unique value encountered, the memoized value is created
+ * using the zero-based index of the value and the given transformation function.
  */
 final class Indexer<T, R> implements Function<T, R> {
     /** Returns a plain indexer which returns the index directly. */

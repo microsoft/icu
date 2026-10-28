@@ -6,35 +6,37 @@ import static org.unicode.cldr.api.AttributeKey.keyOf;
 import static org.unicode.cldr.api.CldrData.PathOrder.NESTED_GROUPING;
 import static org.unicode.cldr.api.CldrDataType.SUPPLEMENTAL;
 
+import com.google.common.annotations.VisibleForTesting;
 import org.unicode.cldr.api.AttributeKey;
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrDataType;
 import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
+import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
 import org.unicode.icu.tool.cldrtoicu.IcuData;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
 import org.unicode.icu.tool.cldrtoicu.RbValue;
-import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
-
-import com.google.common.annotations.VisibleForTesting;
 
 /**
- * A mapper to collect plural data from {@link CldrDataType#SUPPLEMENTAL SUPPLEMENTAL} data via
- * the paths:
+ * A mapper to collect plural data from {@link CldrDataType#SUPPLEMENTAL SUPPLEMENTAL} data via the
+ * paths:
+ *
  * <pre>{@code
- *   //supplementalData/plurals/pluralRanges[@locales=*]/...
+ * //supplementalData/plurals/pluralRanges[@locales=*]/...
  * }</pre>
  */
 public final class PluralRangesMapper {
 
     private static final CldrDataProcessor<PluralRangesMapper> CLDR_PROCESSOR;
+
     static {
         CldrDataProcessor.Builder<PluralRangesMapper> processor = CldrDataProcessor.builder();
         processor
-            .addAction(
-                "//supplementalData/plurals/pluralRanges[@locales=*]", (m, p) -> m.new Ranges(p))
-            .addValueAction("pluralRange[@start=*][@end=*]", Ranges::visitRange);
+                .addAction(
+                        "//supplementalData/plurals/pluralRanges[@locales=*]",
+                        (m, p) -> m.new Ranges(p))
+                .addValueAction("pluralRange[@start=*][@end=*]", Ranges::visitRange);
         CLDR_PROCESSOR = processor.build();
     }
 
@@ -64,26 +66,28 @@ public final class PluralRangesMapper {
     private final IcuData icuData = new IcuData("pluralRanges", false);
     private int setIndex = 0;
 
-    private PluralRangesMapper() { }
+    private PluralRangesMapper() {}
 
     private final class Ranges {
         private final String label;
 
         Ranges(CldrPath prefix) {
             this.label = String.format("set%02d", setIndex++);
-            RANGES_LOCALES.listOfValuesFrom(prefix)
-                .forEach(l -> icuData.add(RB_LOCALES.extendBy(l), label));
+            RANGES_LOCALES
+                    .listOfValuesFrom(prefix)
+                    .forEach(l -> icuData.add(RB_LOCALES.extendBy(l), label));
         }
 
         private void visitRange(CldrValue value) {
             // Note: "range:start" and "range:end" are optional attributes, but the CLDR DTD
             // specifies a default via comments. They should probably be changed to just have a
             // default in the DTD (and possibly converted to use an enum here).
-            icuData.add(RB_RULES.extendBy(label),
-                RbValue.of(
-                    RANGE_START.valueFrom(value, "all"),
-                    RANGE_END.valueFrom(value, "all"),
-                    RANGE_RESULT.valueFrom(value)));
+            icuData.add(
+                    RB_RULES.extendBy(label),
+                    RbValue.of(
+                            RANGE_START.valueFrom(value, "all"),
+                            RANGE_END.valueFrom(value, "all"),
+                            RANGE_RESULT.valueFrom(value)));
         }
     }
 }

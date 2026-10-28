@@ -5,19 +5,18 @@ package org.unicode.icu.tool.cldrtoicu.regex;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Preconditions.checkState;
 
-import java.util.Optional;
-import java.util.function.Function;
-
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSet;
+import java.util.Optional;
+import java.util.function.Function;
 
 /**
- * An immutable representation of a String with placeholders for variable substitution. A
- * VarString can be "resolved" or "partially resolved" by providing a mapping from placeholder
- * characters to strings, and any remaining unresolved variables are tracked. This is a very
- * private bit of implementation detail with a far from ideal API, so it's probably best not to
- * use it elsewhere without careful thought.
+ * An immutable representation of a String with placeholders for variable substitution. A VarString
+ * can be "resolved" or "partially resolved" by providing a mapping from placeholder characters to
+ * strings, and any remaining unresolved variables are tracked. This is a very private bit of
+ * implementation detail with a far from ideal API, so it's probably best not to use it elsewhere
+ * without careful thought.
  */
 final class VarString {
     private static final CharMatcher VAR_CHAR = CharMatcher.inRange('A', 'Z');
@@ -46,9 +45,9 @@ final class VarString {
     private final ImmutableMap<Character, String> varMap;
 
     private VarString(
-        String varString,
-        ImmutableSet<Character> requiredChars,
-        ImmutableMap<Character, String> varMap) {
+            String varString,
+            ImmutableSet<Character> requiredChars,
+            ImmutableMap<Character, String> varMap) {
         this.varString = checkNotNull(varString);
         this.requiredChars = checkNotNull(requiredChars);
         this.varMap = checkNotNull(varMap);
@@ -73,9 +72,10 @@ final class VarString {
     /** Returns a resolved value if all variables are available for substitution. */
     Optional<String> resolve() {
         return varMap.keySet().equals(requiredChars)
-            ? Optional.of(
-                RegexTransformer.substitute(varString, '%', c -> varMap.getOrDefault(c, "%" + c)))
-            : Optional.empty();
+                ? Optional.of(
+                        RegexTransformer.substitute(
+                                varString, '%', c -> varMap.getOrDefault(c, "%" + c)))
+                : Optional.empty();
     }
 
     /** Returns the resolved value or fails if not all variables are available. */
@@ -84,7 +84,8 @@ final class VarString {
         return RegexTransformer.substitute(varString, '%', c -> varMap.getOrDefault(c, "%" + c));
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return varString + ": " + varMap;
     }
 }

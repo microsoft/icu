@@ -74,7 +74,7 @@ ak{
         BZ{"Beliz"}
         CA{"Kanada"}
         CC{"Kokoso Supɔ"}
-        CD{"Congo (DRC)"}
+        CD{"Kongo Kinhyaahya"}
         CF{"Afrika Finimfin Man"}
         CG{"Kongo"}
         CH{"Swetzaland"}
@@ -94,14 +94,17 @@ ak{
         CY{"Saeprɔso"}
         CZ{"Kyɛk"}
         DE{"Gyaaman"}
+        DG{"Diɛgo Gaasia"}
         DJ{"Gyibuti"}
         DK{"Dɛnmak"}
         DM{"Dɔmeneka"}
         DO{"Dɔmeneka Man"}
         DZ{"Ɔlgyeria"}
+        EA{"Ceuta ne Melilla"}
         EC{"Yikuwedɔ"}
         EE{"Ɛstonia"}
         EG{"Misrim"}
+        EH{"Sahara Atɔeɛ"}
         ER{"Ɛritrea"}
         ES{"Spain"}
         ET{"Yitiopia"}
@@ -138,6 +141,7 @@ ak{
         HR{"Krowehyia"}
         HT{"Heiti"}
         HU{"Hangari"}
+        IC{"Canary Islands"}
         ID{"Ndoniihyia"}
         IE{"Aereland"}
         IL{"Israe"}
@@ -220,7 +224,7 @@ ak{
         PM{"Saint Pierre ne Miquelon"}
         PN{"Pitkaan Nsupɔ"}
         PR{"Puɛto Riko"}
-        PS{"Palestinian Authority"}
+        PS{"Palestaen West Bank ne Gaza"}
         PT{"Pɔtugal"}
         PW{"Palau"}
         PY{"Paraguae"}
@@ -285,6 +289,8 @@ ak{
         VU{"Vanuatu"}
         WF{"Wallis ne Futuna"}
         WS{"Samoa"}
+        XA{"Anto Kasa"}
+        XB{"Anto Bidi"}
         XK{"Kosovo"}
         YE{"Yɛmɛn"}
         YT{"Mayɔte"}
@@ -292,5 +298,20 @@ ak{
         ZM{"Zambia"}
         ZW{"Zimbabue"}
         ZZ{"Mantam a Yɛnnim"}
+    }
+    Countries%chagos{
+        IO{"Kyagɔso Akyipalego"}
+    }
+    Countries%short{
+        HK{"Hɔnkɔn"}
+        MO{"Makaw"}
+    }
+    Countries%variant{
+        CD{"DR Kongo"}
+        CG{"Kongo Man"}
+        CZ{"Kyɛk Man"}
+        FK{"Fɔkman Aeland (Islas Maivinas)"}
+        NZ{"Ziland Foforɔ a ɛwɔ Awotiarua"}
+        TL{"Timɔ Apueiɛ"}
     }
 }

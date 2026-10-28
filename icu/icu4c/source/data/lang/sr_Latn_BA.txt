@@ -12,6 +12,7 @@ sr_Latn_BA{
         bn{"bangla"}
         crl{"sjeveroistočni kri"}
         de{"njemački"}
+        de_CH{"švajcarski visoki njemački"}
         frr{"sjevernofrizijski"}
         gsw{"njemački (Švajcarska)"}
         ht{"haićanski kreolski"}

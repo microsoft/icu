@@ -11,4 +11,7 @@ de_CH{
         TL{"Osttimor"}
         ZW{"Zimbabwe"}
     }
+    Countries%variant{
+        TR{"Türkiye"}
+    }
 }

@@ -93,14 +93,17 @@ kea{
         CY{"Xipri"}
         CZ{"Txékia"}
         DE{"Alimanha"}
+        DG{"Diegu Garsia"}
         DJ{"Djibuti"}
         DK{"Dinamarka"}
         DM{"Dominika"}
         DO{"Repúblika Dominikana"}
         DZ{"Arjélia"}
+        EA{"Seuta i Melilha"}
         EC{"Ekuador"}
         EE{"Stónia"}
         EG{"Ejitu"}
+        EH{"Sara Osidental"}
         ER{"Iritreia"}
         ES{"Spanha"}
         ET{"Etiópia"}
@@ -137,6 +140,7 @@ kea{
         HR{"Kroásia"}
         HT{"Aití"}
         HU{"Ungria"}
+        IC{"Kanárias"}
         ID{"Indonézia"}
         IE{"Irlanda"}
         IL{"Israel"}
@@ -219,7 +223,7 @@ kea{
         PM{"San Piere i Mikelon"}
         PN{"Ilhas Pitkairn"}
         PR{"Portu Riku"}
-        PS{"Autoridade Palestiniana"}
+        PS{"Tiritóriu palistinianu"}
         PT{"Purtugal"}
         PW{"Palau"}
         PY{"Paraguai"}
@@ -284,6 +288,8 @@ kea{
         VU{"Vanuatu"}
         WF{"Ualis i Futuna"}
         WS{"Samoa"}
+        XA{"Pseudo-sotakis"}
+        XB{"Pseudo-bidiresional"}
         XK{"Kozovu"}
         YE{"Iémen"}
         YT{"Maiote"}
@@ -291,5 +297,21 @@ kea{
         ZM{"Zámbia"}
         ZW{"Zimbábui"}
         ZZ{"Rejion Diskonxedu"}
+    }
+    Countries%short{
+        GB{"R.U."}
+        HK{"Hong Kong"}
+        MO{"Makau"}
+        PS{"Palistina"}
+        US{"S.U."}
+    }
+    Countries%variant{
+        CD{"Repúblika Dimokrátika di Kongu"}
+        CG{"Repúblika di Kongu"}
+        CI{"Kosta di Marfin (Côte d’Ivoire)"}
+        CZ{"Repúblika Txeka"}
+        FK{"Ilhas Falkland (Ilhas Malvinas)"}
+        SZ{"Suazilándia"}
+        TL{"Timor-Leste"}
     }
 }

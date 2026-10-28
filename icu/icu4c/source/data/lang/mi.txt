@@ -28,6 +28,7 @@ mi{
         ann{"Ōporo"}
         anp{"Anahika"}
         ar{"Ārapi"}
+        ar_001{"Ārapi Moroki"}
         arn{"Mapūte"}
         arp{"Arapaho"}
         ars{"Arapika Nahāri"}
@@ -90,6 +91,8 @@ mi{
         dar{"Tākawa"}
         dav{"Taita"}
         de{"Tiamana"}
+        de_AT{"Tiamana Ateriana"}
+        de_CH{"Tiamana Ōkawa Huiterangi"}
         dgr{"Tōkiripi"}
         dje{"Tāma"}
         doi{"Tōkiri"}
@@ -105,12 +108,20 @@ mi{
         eka{"Ekatika"}
         el{"Kariki"}
         en{"Ingarihi"}
+        en_AU{"Ingarihi Ahitereiriana"}
+        en_CA{"Ingarihi Kānata"}
+        en_GB{"Ingarihi Piritene"}
+        en_US{"Ingarihi Amerikana"}
         eo{"Eheperāto"}
         es{"Pāniora"}
+        es_419{"Pāniora Amerika Rātini"}
+        es_ES{"Pāniora Ūropi"}
+        es_MX{"Pāniora Mehikana"}
         et{"Etōniana"}
         eu{"Pākihi"}
         ewo{"Ewāto"}
         fa{"Pāhiana"}
+        fa_AF{"Tāri"}
         ff{"Whūra"}
         fi{"Whinirānia"}
         fil{"Piripīno"}
@@ -118,6 +129,8 @@ mi{
         fo{"Wharoīhi"}
         fon{"Whāna"}
         fr{"Wīwī"}
+        fr_CA{"Wīwī Kānata"}
+        fr_CH{"Wīwī Huiterangi"}
         frc{"Wīwī Keihana"}
         frr{"Whirīhiana ki te Raki"}
         fur{"Whiriūriana"}
@@ -276,6 +289,7 @@ mi{
         nia{"Niāhi"}
         niu{"Niueana"}
         nl{"Tati"}
+        nl_BE{"Tati Whēmirihi"}
         nmg{"Kuahio"}
         nn{"Nīnōka Nōwei"}
         nnh{"Nekiepūna"}
@@ -308,6 +322,8 @@ mi{
         pqm{"Marahiti-Pehamakoare"}
         ps{"Pāhitō"}
         pt{"Pōtukīhi"}
+        pt_BR{"Pōtukīhi Parīhi"}
+        pt_PT{"Pōtukīhi Potukara"}
         qu{"Kētua"}
         raj{"Ratiahitani"}
         rap{"Rapanui"}
@@ -418,10 +434,26 @@ mi{
         yue{"Katonīhi"}
         zgh{"Moroko Tamatai"}
         zh{"Hainamana"}
+        zh_Hans{"Hainamana Māmā"}
+        zh_Hant{"Hainamana Tukuiho"}
         zu{"Tūru"}
         zun{"Tuni"}
         zxx{"Wetereo kiko kore"}
         zza{"Tātā"}
+    }
+    Languages%menu{
+        ckb{"Kūrihi, Waenga"}
+        yue{"Hainamana, Katonīhi"}
+        zh{"Hainamana Manarini"}
+    }
+    Languages%short{
+        az{"Ahēri"}
+        en_GB{"Ingarihi UK"}
+        en_US{"Ingarihi US"}
+    }
+    Languages%variant{
+        ckb{"Kūrihi, Hōrani"}
+        hi_Latn{"Hīngarihi"}
     }
     Scripts{
         Adlm{"Atarama"}
@@ -503,9 +535,11 @@ mi{
             iso8601{"Maramataka Pākehā (Tau Tuatahi)"}
             japanese{"Maramataka Hapanihi"}
             persian{"Maramataka Pāhia"}
+            roc{"Maramataka Minguo"}
         }
         calendar%core{
             gregorian{"Pākehā"}
+            iso8601{"Pākehā"}
         }
         cf{
             account{"Hōputu Moni Mahi Kaute"}
@@ -520,6 +554,8 @@ mi{
             standard{"Arowhānui"}
         }
         hc{
+            c12{"Pūnaha Haora 12"}
+            c24{"Pūnaha Haora 24"}
             h11{"Pūnaha Haora 12 (0–11)"}
             h12{"Pūnaha Haora 12 (1–12)"}
             h23{"Pūnaha Haora 24 (0–23)"}

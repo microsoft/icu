@@ -462,6 +462,13 @@ zh_Hant_HK{
                 hms{"ah:mm:ss"}
             }
         }
+        roc{
+            availableFormats{
+                MEd{"d-M（E）"}
+                Md{"d-M"}
+                yyyyMEd{"Gy/M/dE"}
+            }
+        }
     }
     characterLabel{
         arrows{"箭嘴"}
@@ -706,12 +713,6 @@ zh_Hant_HK{
             }
         }
         weekday{
-            dn{"星期幾"}
-        }
-        weekday-narrow{
-            dn{"星期幾"}
-        }
-        weekday-short{
             dn{"星期幾"}
         }
         year{

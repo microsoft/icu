@@ -11,19 +11,35 @@ vi{
         colCaseLevel{"Sắp xếp phân biệt chữ hoa/chữ thường"}
         colNormalization{"Sắp xếp theo chuẩn hóa"}
         colNumeric{"Sắp xếp theo số"}
+        colReorder{"Sắp xếp lại thứ tự hệ chữ viết/khối ký tự"}
         colStrength{"Cường độ sắp xếp"}
         collation{"Thứ tự sắp xếp"}
         currency{"Tiền tệ"}
+        d0{"Đích biến đổi"}
+        dx{"Ngoại lệ ngắt từ theo từ điển"}
         em{"Trình bày emoji"}
+        fw{"Ngày đầu tuần"}
+        h0{"Kết hợp"}
         hc{"Chu kỳ giờ (12 với 24)"}
+        i0{"Phương thức nhập liệu"}
+        k0{"Bàn phím"}
+        kv{"Ký tự cao nhất được bỏ qua"}
         lb{"Kiểu xuống dòng"}
         lw{"Ngắt dòng trong từ"}
+        m0{"Quy tắc chuyển đổi"}
         ms{"Hệ thống đo lường"}
+        mu{"Đơn vị đo lường"}
         numbers{"Số"}
+        rg{"Vùng cho dữ liệu bổ trợ"}
+        s0{"Nguồn biến đổi"}
+        sd{"Phân khu của vùng"}
         ss{"Ngắt câu sau khi viết tắt."}
+        t{"Chuyển đổi"}
+        t0{"Dịch máy"}
         timezone{"Múi giờ"}
         va{"Biến thể ngôn ngữ"}
         x{"Sử dụng cá nhân"}
+        x0{"Chuyển đổi sử dụng riêng"}
     }
     Languages{
         aa{"Tiếng Afar"}
@@ -49,6 +65,7 @@ vi{
         ann{"Tiếng Obolo"}
         anp{"Tiếng Angika"}
         ar{"Tiếng Ả Rập"}
+        ar_001{"Tiếng Ả Rập Hiện đại"}
         arc{"Tiếng Aramaic"}
         arn{"Tiếng Mapuche"}
         aro{"Tiếng Araona"}
@@ -152,6 +169,7 @@ vi{
         dar{"Tiếng Dargwa"}
         dav{"Tiếng Taita"}
         de{"Tiếng Đức"}
+        de_CH{"Tiếng Thượng Giéc-man (Thụy Sĩ)"}
         del{"Tiếng Delaware"}
         den{"Tiếng Slave"}
         dgr{"Tiếng Dogrib"}
@@ -176,15 +194,20 @@ vi{
         el{"Tiếng Hy Lạp"}
         elx{"Tiếng Elamite"}
         en{"Tiếng Anh"}
+        en_GB{"Tiếng Anh (Anh)"}
+        en_US{"Tiếng Anh (Mỹ)"}
         enm{"Tiếng Anh Trung cổ"}
         eo{"Tiếng Quốc Tế Ngữ"}
         es{"Tiếng Tây Ban Nha"}
+        es_419{"Tiếng Tây Ban Nha (Mỹ La tinh)"}
+        es_ES{"Tiếng Tây Ban Nha (Châu Âu)"}
         esu{"Tiếng Yupik Miền Trung"}
         et{"Tiếng Estonia"}
         eu{"Tiếng Basque"}
         ewo{"Tiếng Ewondo"}
         ext{"Tiếng Extremadura"}
         fa{"Tiếng Ba Tư"}
+        fa_AF{"Tiếng Dari"}
         fan{"Tiếng Fang"}
         fat{"Tiếng Fanti"}
         ff{"Tiếng Fulah"}
@@ -261,7 +284,7 @@ vi{
         inh{"Tiếng Ingush"}
         io{"Tiếng Ido"}
         is{"Tiếng Iceland"}
-        it{"Tiếng Italy"}
+        it{"Tiếng Ý"}
         iu{"Tiếng Inuktitut"}
         izh{"Tiếng Ingria"}
         ja{"Tiếng Nhật"}
@@ -398,6 +421,7 @@ vi{
         nb{"Tiếng Na Uy (Bokmål)"}
         nd{"Tiếng Ndebele Miền Bắc"}
         nds{"Tiếng Hạ Đức"}
+        nds_NL{"Tiếng Hạ Saxon"}
         ne{"Tiếng Nepal"}
         new{"Tiếng Newari"}
         ng{"Tiếng Ndonga"}
@@ -446,12 +470,14 @@ vi{
         pi{"Tiếng Pali"}
         pis{"Tiếng Pijin"}
         pl{"Tiếng Ba Lan"}
+        pms{"Tiếng Piemonte"}
         pon{"Tiếng Pohnpeian"}
         pqm{"Tiếng Maliseet-Passamaquoddy"}
         prg{"Tiếng Prussia"}
         pro{"Tiếng Provençal cổ"}
         ps{"Tiếng Pashto"}
         pt{"Tiếng Bồ Đào Nha"}
+        pt_PT{"Tiếng Bồ Đào Nha (Châu Âu)"}
         qu{"Tiếng Quechua"}
         quc{"Tiếng Kʼicheʼ"}
         qug{"Tiếng Quechua ở Cao nguyên Chimborazo"}
@@ -462,6 +488,7 @@ vi{
         rm{"Tiếng Romansh"}
         rn{"Tiếng Rundi"}
         ro{"Tiếng Romania"}
+        ro_MD{"Tiếng Moldova"}
         rof{"Tiếng Rombo"}
         rom{"Tiếng Romany"}
         ru{"Tiếng Nga"}
@@ -489,6 +516,7 @@ vi{
         ses{"Tiếng Koyraboro Senni"}
         sg{"Tiếng Sango"}
         sga{"Tiếng Ai-len cổ"}
+        sh{"Tiếng Serbo-Croatia"}
         shi{"Tiếng Tachelhit"}
         shn{"Tiếng Shan"}
         shu{"Tiếng Ả-Rập Chad"}
@@ -520,6 +548,7 @@ vi{
         sux{"Tiếng Sumeria"}
         sv{"Tiếng Thụy Điển"}
         sw{"Tiếng Swahili"}
+        sw_CD{"Tiếng Swahili Congo"}
         swb{"Tiếng Cômo"}
         syc{"Tiếng Syriac cổ"}
         syr{"Tiếng Syriac"}
@@ -614,6 +643,22 @@ vi{
     }
     Languages%extension{
         ku{"Tiếng Kurmanji"}
+    }
+    Languages%long{
+        zh_Hans{"Tiếng Trung Phổ thông (Giản thể)"}
+        zh_Hant{"Tiếng Trung Phổ thông (Phồn thể)"}
+    }
+    Languages%menu{
+        yue{"Tiếng Trung (Tiếng Quảng Đông)"}
+        zh{"Tiếng Trung (Phổ thông)"}
+    }
+    Languages%short{
+        az{"Tiếng Azeri"}
+    }
+    Languages%variant{
+        ckb{"Tiếng Kurd Sorani"}
+        hi_Latn{"Tiếng Hindi (lai tiếng Anh)"}
+        ps{"Tiếng Pushto"}
     }
     Scripts{
         Adlm{"Chữ Adlam"}
@@ -806,6 +851,7 @@ vi{
             iso8601{"Lịch ISO-8601"}
             japanese{"Lịch Nhật Bản"}
             persian{"Lịch Ba Tư"}
+            roc{"Lịch Trung Hoa Dân Quốc"}
         }
         calendar%core{
             buddhist{"Phật giáo"}
@@ -816,11 +862,16 @@ vi{
             ethiopic-amete-alem{"Ethiopic Amete Alem"}
             gregorian{"Gregory"}
             hebrew{"Do Thái"}
+            indian{"Lịch quốc gia Ấn Độ"}
             islamic{"Hồi giáo"}
             islamic-civil{"Hồi giáo (dạng bảng, kỷ nguyên dân sự)"}
+            islamic-rgsa{"Lịch Hồi giáo, Ả Rập Xê Út quan sát trăng non"}
+            islamic-tbla{"Lịch Hồi giáo (theo bảng, kỷ nguyên thiên văn)"}
             islamic-umalqura{"Hồi giáo (Umm al-Qura)"}
+            iso8601{"Dương lịch"}
             japanese{"Nhật Bản"}
             persian{"Ba Tư"}
+            roc{"Trung Hoa Dân Quốc"}
         }
         cf{
             account{"Định dạng tiền tệ kế toán"}
@@ -843,6 +894,11 @@ vi{
             no{"Sắp xếp thứ tự chữ cái bình thường"}
             upper{"Sắp xếp chữ hoa đầu tiên"}
         }
+        colCaseFirst%core{
+            lower{"Chữ thường"}
+            no{"Chữ thường"}
+            upper{"Chữ hoa"}
+        }
         colCaseLevel{
             no{"Sắp xếp không phân biệt chữ hoa/chữ thường"}
             yes{"Sắp xếp phân biệt chữ hoa/chữ thường"}
@@ -855,12 +911,26 @@ vi{
             no{"Sắp xếp từng chữ số"}
             yes{"Sắp xếp chữ số theo số"}
         }
+        colReorder%core{
+            currency{"Đơn vị tiền tệ"}
+            digit{"Chữ số"}
+            punct{"Dấu câu"}
+            space{"Khoảng trắng"}
+            symbol{"Ký hiệu"}
+        }
         colStrength{
             identical{"Sắp xếp tất cả"}
             primary{"Chỉ sắp xếp chữ cái cơ sở"}
             quaternary{"Sắp xếp dấu trọng âm/chữ cái/độ rộng/chữ Kana"}
             secondary{"Sắp xếp dấu trọng âm"}
             tertiary{"Sắp xếp dấu trọng âm/chữ cái/độ rộng"}
+        }
+        colStrength%core{
+            identical{"Tất cả"}
+            primary{"Chỉ các chữ cái cơ sở"}
+            quaternary{"Chữ cơ bản, dấu thanh, chữ hoa chữ thường, biến thể, chữ Kana"}
+            secondary{"Chữ cơ bản, dấu thanh"}
+            tertiary{"Chữ cơ bản, dấu thanh, chữ hoa chữ thường, biến thể"}
         }
         collation{
             compat{"Thứ tự sắp xếp trước đây, để tương thích"}
@@ -876,17 +946,20 @@ vi{
             standard{"Thứ tự sắp xếp chuẩn"}
             stroke{"Thứ tự sắp xếp theo nét chữ"}
             traditional{"Thứ tự sắp xếp truyền thống"}
-            unihan{"Trình tự sắp xếp theo bộ-nét"}
+            unihan{"Thứ tự sắp xếp theo bộ nét"}
             zhuyin{"Thứ tự sắp xếp theo chú âm phù hiệu"}
         }
         collation%core{
             compat{"Khả năng tương thích"}
             dictionary{"Từ điển"}
             ducet{"Unicode mặc định"}
+            emoji{"Biểu tượng cảm xúc"}
+            eor{"quy tắc châu Âu"}
             phonebook{"Danh bạ điện thoại"}
             phonetic{"Ngữ âm"}
             pinyin{"Bính âm"}
             search{"Tìm kiếm"}
+            searchjl{"phụ âm đầu trong tiếng Hàn"}
             standard{"Chuẩn"}
             stroke{"Nét chữ"}
             traditional{"Truyền thống"}
@@ -904,16 +977,26 @@ vi{
             text{"Văn bản"}
         }
         hc{
+            c12{"Hệ thống 12 giờ"}
+            c24{"Hệ thống 24 giờ"}
             h11{"Hệ thống 12 giờ (0–11)"}
             h12{"Hệ thống 12 giờ (1–12)"}
             h23{"Hệ thống 24 giờ (0–23)"}
             h24{"Hệ thống 24 giờ (1–24)"}
         }
         hc%core{
+            c12{"12"}
+            c24{"24"}
             h11{"12 (0–11)"}
             h12{"12 (1–12)"}
             h23{"24 (0–23)"}
             h24{"24 (1–24)"}
+        }
+        kv%core{
+            currency{"Bỏ qua khoảng trắng, dấu câu, tất cả ký hiệu"}
+            punct{"Bỏ qua khoảng trắng, dấu câu"}
+            space{"Bỏ qua khoảng trắng, dấu câu"}
+            symbol{"Bỏ qua khoảng trắng, dấu câu, ký hiệu không phải tiền tệ"}
         }
         lb{
             loose{"Kiểu xuống dòng thoáng"}
@@ -1028,9 +1111,45 @@ vi{
             wara{"Chữ số Wara"}
             wcho{"Chữ số Wancho"}
         }
+        numbers%core{
+            arabext{"Ả Rập-Ấn Độ mở rộng"}
+            armnlow{"Armenia viết thường"}
+            finance{"Tài chính"}
+            fullwide{"Độ rộng đầy đủ"}
+            greklow{"Hy Lạp viết thường"}
+            hanidays{"Cách đánh số ngày bằng Hán tự cho lịch truyền thống"}
+            hanidec{"Hệ thập phân vị trị sử dụng chữ số Trung Quốc làm chữ số"}
+            hansfin{"Tài chính tiếng Trung giản thể"}
+            hantfin{"Tài chính tiếng Trung phồn thể"}
+            jpanfin{"Tài chính tiếng Nhật"}
+            jpanyear{"Cách đánh số năm đầu trong tiếng Nhật"}
+            lanatham{"Chữ Tai Tham (giáo hội)"}
+            mathbold{"Chữ số toán học in đậm"}
+            mathdbl{"Chữ số toán học nét đôi"}
+            mathmono{"Chữ số toán học đơn cách"}
+            mathsanb{"Chữ số toán học sans-serif đậm"}
+            mathsans{"Chữ số toán học sans-serif"}
+            mymrepka{"Chữ số Pwo Karen Đông Myanmar"}
+            mymrpao{"Chữ số Pao Myanmar"}
+            mymrshan{"Chữ số Shan Myanmar"}
+            mymrtlng{"Chữ số Tai Laing Myanmar"}
+            native{"Chữ số tự nhiên"}
+            outlined{"Nét viền"}
+            roman{"La Mã viết hoa"}
+            romanlow{"La Mã viết thường"}
+            segment{"Dạng đoạn"}
+            tamldec{"Tamil hiện đại"}
+            traditional{"Chữ số truyền thống"}
+        }
         ss%core{
             none{"Tắt"}
             standard{"Bật"}
+        }
+        t0{
+            und{"Bản dịch máy không xác định"}
+        }
+        va%core{
+            posix{"biến thể POSIX"}
         }
     }
     Variants{

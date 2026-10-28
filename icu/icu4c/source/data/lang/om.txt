@@ -6,6 +6,7 @@ om{
         af{"Afrikoota"}
         am{"Afaan Amaaraa"}
         ar{"Arabiffaa"}
+        ar_001{"Arabiffa Istaandaardii Ammayyaa"}
         as{"Assamese"}
         ast{"Astuuriyaan"}
         az{"Afaan Azerbaijani"}
@@ -26,11 +27,20 @@ om{
         cy{"Welishiffaa"}
         da{"Afaan Deenmaark"}
         de{"Afaan Jarmanii"}
+        de_AT{"Jarmanii Awustiriyaa"}
+        de_CH{"Jarmanii Siwiiz Haay"}
         doi{"Dogri"}
         el{"Afaan Giriiki"}
         en{"Afaan Ingilizii"}
+        en_AU{"Ingiliffa Awustiraaliyaa"}
+        en_CA{"Ingiliffa Kanaadaa"}
+        en_GB{"Ingliffa Biritishii"}
+        en_US{"Ingliffa Ameekiraa"}
         eo{"Afaan Esperantoo"}
         es{"Afaan Ispeen"}
+        es_419{"Laatinii Ispaanishii Ameerikaa"}
+        es_ES{"Ispaanishii Awurooppaa"}
+        es_MX{"Ispaanishii Meeksiikoo"}
         et{"Afaan Istooniya"}
         eu{"Afaan Baskuu"}
         fa{"Afaan Persia"}
@@ -48,6 +58,7 @@ om{
         ha{"Hawusaa"}
         he{"Afaan Hebrew"}
         hi{"Afaan Hindii"}
+        hi_Latn{"Hindii (Laatiin)"}
         hr{"Afaan Croatian"}
         hu{"Afaan Hangaari"}
         hy{"Armeeniyaa"}
@@ -71,6 +82,7 @@ om{
         my{"Burmeesee"}
         ne{"Afaan Nepalii"}
         nl{"Afaan Dachii"}
+        nl_BE{"Flemish"}
         nn{"Afaan Norwegian"}
         no{"Afaan Norweyii"}
         oc{"Afaan Occit"}
@@ -78,6 +90,8 @@ om{
         pa{"Afaan Punjabii"}
         pl{"Afaan Polandii"}
         pt{"Afaan Porchugaal"}
+        pt_BR{"Afaan Portugali (Braazil)"}
+        pt_PT{"Afaan Protuguese"}
         ro{"Afaan Romaniyaa"}
         ru{"Afaan Rushiyaa"}
         si{"Afaan Sinhalese"}
@@ -103,7 +117,25 @@ om{
         xh{"Afaan Xhosa"}
         yue{"Kantonoosee"}
         zh{"Chinese"}
+        zh_Hans{"Chinese Salphifame"}
+        zh_Hant{"Chinese Durii"}
         zu{"Afaan Zuulu"}
+    }
+    Languages%long{
+        zh_Hans{"Mandariinii Chinese Salphifame"}
+        zh_Hant{"Mandariinii Chinese Durii"}
+    }
+    Languages%menu{
+        yue{"Chaayinisee Kantonoosee"}
+        zh{"Chinese Mandariin"}
+    }
+    Languages%short{
+        az{"Afaan Azeerii"}
+        en_GB{"Ingliffa UK"}
+        en_US{"Ingliffa US"}
+    }
+    Languages%variant{
+        hi_Latn{"Hinglishii"}
     }
     Scripts{
         Arab{"Arabiffa"}

@@ -33,6 +33,7 @@ sc{
         anp{"angika"}
         apc{"àrabu levantinu"}
         ar{"àrabu"}
+        ar_001{"àrabu modernu istandard"}
         arn{"mapudungun"}
         arp{"arapaho"}
         ars{"àrabu najdi"}
@@ -108,6 +109,8 @@ sc{
         dar{"dargua"}
         dav{"taita"}
         de{"tedescu"}
+        de_AT{"tedescu austrìacu"}
+        de_CH{"tedescu artu isvìtzeru"}
         dgr{"dogrib"}
         dje{"zarma"}
         doi{"dogri"}
@@ -123,12 +126,20 @@ sc{
         eka{"ekajuk"}
         el{"grecu"}
         en{"inglesu"}
+        en_AU{"inglesu australianu"}
+        en_CA{"inglesu canadesu"}
+        en_GB{"inglesu britànnicu"}
+        en_US{"inglesu americanu"}
         eo{"esperanto"}
         es{"ispagnolu"}
+        es_419{"ispagnolu latinoamericanu"}
+        es_ES{"ispagnolu europeu"}
+        es_MX{"ispagnolu messicanu"}
         et{"èstone"}
         eu{"bascu"}
         ewo{"ewondo"}
         fa{"persianu"}
+        fa_AF{"dari"}
         ff{"fulah"}
         fi{"finlandesu"}
         fil{"filipinu"}
@@ -136,6 +147,8 @@ sc{
         fo{"faroesu"}
         fon{"fon"}
         fr{"frantzesu"}
+        fr_CA{"frantzesu canadesu"}
+        fr_CH{"frantzesu isvìtzeru"}
         frc{"frantzesu cajun"}
         frr{"frisone setentrionale"}
         fur{"friulanu"}
@@ -159,6 +172,7 @@ sc{
         hax{"haida meridionale"}
         he{"ebràicu"}
         hi{"hindi"}
+        hi_Latn{"hindi (caràteres latinos)"}
         hil{"ilongu"}
         hmn{"hmong"}
         hnj{"hmong njua"}
@@ -301,12 +315,14 @@ sc{
         nb{"norvegesu bokmål"}
         nd{"ndebele de su nord"}
         nds{"tedescu bassu"}
+        nds_NL{"sàssone bassu"}
         ne{"nepalesu"}
         new{"nepal bhasa"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niueanu"}
         nl{"olandesu"}
+        nl_BE{"fiammingu"}
         nmg{"kwasio"}
         nn{"norvegesu nynorsk"}
         nnh{"ngiemboon"}
@@ -343,6 +359,8 @@ sc{
         prg{"prussianu"}
         ps{"pashto"}
         pt{"portoghesu"}
+        pt_BR{"portoghesu brasilianu"}
+        pt_PT{"portoghesu europeu"}
         qu{"quechua"}
         quc{"k’iche’"}
         raj{"rajasthani"}
@@ -353,6 +371,7 @@ sc{
         rm{"romànciu"}
         rn{"rundi"}
         ro{"rumenu"}
+        ro_MD{"moldavu"}
         rof{"rombo"}
         ru{"russu"}
         rup{"arumenu"}
@@ -403,6 +422,7 @@ sc{
         suz{"sunwar"}
         sv{"isvedesu"}
         sw{"swahili"}
+        sw_CD{"swahili de su Congo"}
         swb{"comorianu"}
         syr{"sirìacu"}
         szl{"silesianu"}
@@ -470,6 +490,8 @@ sc{
         za{"zhuang"}
         zgh{"tamazight istandard marochinu"}
         zh{"tzinesu"}
+        zh_Hans{"tzinesu semplificadu"}
+        zh_Hant{"tzinesu traditzionale"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"perunu cuntenutu linguìsticu"}
@@ -480,6 +502,24 @@ sc{
     }
     Languages%extension{
         ku{"curmangi"}
+    }
+    Languages%long{
+        zh_Hans{"tzinesu mandarinu semplificadu"}
+        zh_Hant{"tzinesu mandarinu traditzionale"}
+    }
+    Languages%menu{
+        ckb{"curdu, tzentrale"}
+        yue{"tzinesu, cantonesu"}
+        zh{"tzinesu, mandarinu"}
+    }
+    Languages%short{
+        az{"azeru"}
+        en_GB{"inglesu (RU)"}
+        en_US{"inglesu (USA)"}
+    }
+    Languages%variant{
+        ckb{"curdu, sorani"}
+        hi_Latn{"hinglish"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -683,6 +723,7 @@ sc{
             iso8601{"calendàriu ISO-8601"}
             japanese{"calendàriu giaponesu"}
             persian{"calendàriu persianu"}
+            roc{"calendàriu minguo"}
         }
         calendar%core{
             buddhist{"buddhista"}
@@ -698,8 +739,10 @@ sc{
             islamic-civil{"egirianu (tabulare, època tzivile)"}
             islamic-tbla{"islàmicu (tabulare, època astronòmica)"}
             islamic-umalqura{"egirianu (Umm al-Qura)"}
+            iso8601{"ISO-8601"}
             japanese{"giaponesu"}
             persian{"persianu"}
+            roc{"minguo"}
         }
         cf{
             account{"formadu de valuta contàbile"}
@@ -745,12 +788,16 @@ sc{
             text{"testu"}
         }
         hc{
+            c12{"sistema oràriu a 12 oras"}
+            c24{"sistema oràriu a 24 oras"}
             h11{"sistema oràriu a 12 oras (0–11)"}
             h12{"sistema oràriu a 12 oras (1–12)"}
             h23{"sistema oràriu a 24 oras (0–23)"}
             h24{"sistema oràriu a 24 oras (1–24)"}
         }
         hc%core{
+            c12{"12"}
+            c24{"24"}
             h11{"12 (0–11)"}
             h12{"12 (1–12)"}
             h23{"24 (0–23)"}

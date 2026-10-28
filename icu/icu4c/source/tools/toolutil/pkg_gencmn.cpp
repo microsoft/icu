@@ -22,13 +22,7 @@
 
 #define STRING_STORE_SIZE 200000
 
-// MSFT-Change: In the Windows OS ICU build, we only have one data package, and we use a versionless name in filename.
-#if defined(ICU_DATA_DIR_WINDOWS)
-#  define COMMON_DATA_NAME "icudtl"
-#else
-#  define COMMON_DATA_NAME U_ICUDATA_NAME
-#endif
-
+#define COMMON_DATA_NAME U_ICUDATA_NAME
 #define DATA_TYPE "dat"
 
 /* ICU package data file format (.dat files) ------------------------------- ***

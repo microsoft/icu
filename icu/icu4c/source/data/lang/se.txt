@@ -92,6 +92,7 @@ se{
         scn{"sisiliagiella"}
         se{"davvisámegiella"}
         sel{"selkupagiella"}
+        sh{"serbokroatiagiella"}
         sk{"slovákiagiella"}
         sl{"slovenagiella"}
         sm{"samoagiella"}
@@ -114,6 +115,8 @@ se{
         wa{"vallonagiella"}
         yue{"kantongiella"}
         zh{"kiinnágiella"}
+        zh_Hans{"álki kiinágiella"}
+        zh_Hant{"árbevirolaš kiinnágiella"}
     }
     Scripts{
         Arab{"arába"}

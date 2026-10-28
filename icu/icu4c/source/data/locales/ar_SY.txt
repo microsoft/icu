@@ -4,6 +4,7 @@
 ar_SY{
     NumberElements{
         default{"arab"}
+        default_latn{"latn"}
     }
     calendar{
         gregorian{

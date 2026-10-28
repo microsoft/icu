@@ -5,10 +5,9 @@ package org.unicode.icu.tool.cldrtoicu;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
+import com.google.common.collect.ImmutableList;
 import java.util.Objects;
 import java.util.stream.Stream;
-
-import com.google.common.collect.ImmutableList;
 
 /**
  * A resource bundle value containing a sequence of elements. This is a very thin wrapper over an
@@ -63,15 +62,18 @@ public final class RbValue {
         return elementsPerLine;
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return Objects.hashCode(elements);
     }
 
-    @Override public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         return obj instanceof RbValue && elements.equals(((RbValue) obj).elements);
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return elements.toString();
     }
 }

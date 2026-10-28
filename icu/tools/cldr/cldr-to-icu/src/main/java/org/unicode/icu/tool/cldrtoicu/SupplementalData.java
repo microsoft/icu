@@ -11,6 +11,15 @@ import static java.util.function.Function.identity;
 import static org.unicode.cldr.api.AttributeKey.keyOf;
 import static org.unicode.cldr.api.CldrData.PathOrder.ARBITRARY;
 
+import com.google.common.base.Ascii;
+import com.google.common.base.Splitter;
+import com.google.common.base.Strings;
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Sets;
+import com.google.common.collect.Table;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -22,28 +31,17 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
 import org.unicode.cldr.api.AttributeKey;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrDataType;
 import org.unicode.cldr.api.PathMatcher;
 
-import com.google.common.base.Ascii;
-import com.google.common.base.Splitter;
-import com.google.common.base.Strings;
-import com.google.common.collect.HashBasedTable;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableTable;
-import com.google.common.collect.Sets;
-import com.google.common.collect.Table;
-
 /**
- * Auxiliary APIs for processing locale IDs and other supplemental data needed by business logic
- * in some mapper classes.
+ * Auxiliary APIs for processing locale IDs and other supplemental data needed by business logic in
+ * some mapper classes.
  *
- * When a {@link SupplementalData} instance is used in a mapper class, it is imperative that it is
- * build using the same underlying CLDR data. The only reason mapper classes do not create their
+ * <p>When a {@link SupplementalData} instance is used in a mapper class, it is imperative that it
+ * is build using the same underlying CLDR data. The only reason mapper classes do not create their
  * own instances directly is the relative cost of processing all the supplemental data each time.
  */
 // TODO: This should be moved into the API and leverage some of the existing utility functions.
@@ -53,43 +51,46 @@ public final class SupplementalData {
     // locale. However CLDR cannot represent this currently because calendar defaults are in
     // supplemental data (rather than locale data) and are keyed only on territory.
     private static final ImmutableSet<String> PHANTOM_LOCALE_IDS =
-        ImmutableSet.of("ja_JP_TRADITIONAL", "th_TH_TRADITIONAL");
+            ImmutableSet.of("ja_JP_TRADITIONAL", "th_TH_TRADITIONAL");
 
     private static final Pattern SCRIPT_SUBTAG = Pattern.compile("[A-Z][a-z]{3}");
 
     private static final PathMatcher ALIAS =
-        PathMatcher.of("//supplementalData/metadata/alias/*[@type=*]");
+            PathMatcher.of("//supplementalData/metadata/alias/*[@type=*]");
 
     private static final PathMatcher PARENT_LOCALE =
-        PathMatcher.of("//supplementalData/parentLocales/parentLocale[@parent=*]");
+            PathMatcher.of("//supplementalData/parentLocales/parentLocale[@parent=*]");
     private static final AttributeKey COMPONENT = keyOf("parentLocales", "component");
     private static final AttributeKey PARENT = keyOf("parentLocale", "parent");
     private static final AttributeKey LOCALES = keyOf("parentLocale", "locales");
 
     private static final PathMatcher CALENDER_PREFERENCE =
-        PathMatcher.of("//supplementalData/calendarPreferenceData/calendarPreference[@territories=*]");
+            PathMatcher.of(
+                    "//supplementalData/calendarPreferenceData/calendarPreference[@territories=*]");
     private static final AttributeKey CALENDER_TERRITORIES =
-        keyOf("calendarPreference", "territories");
-    private static final AttributeKey CALENDER_ORDERING =
-        keyOf("calendarPreference", "ordering");
+            keyOf("calendarPreference", "territories");
+    private static final AttributeKey CALENDER_ORDERING = keyOf("calendarPreference", "ordering");
 
     private static final PathMatcher LIKELY_SUBTAGS =
-        PathMatcher.of("//supplementalData/likelySubtags/likelySubtag[@from=*]");
+            PathMatcher.of("//supplementalData/likelySubtags/likelySubtag[@from=*]");
     private static final AttributeKey SUBTAG_FROM = keyOf("likelySubtag", "from");
     private static final AttributeKey SUBTAG_TO = keyOf("likelySubtag", "to");
 
-    private static final Splitter LIST_SPLITTER =
-        Splitter.on(whitespace()).omitEmptyStrings();
+    private static final Splitter LIST_SPLITTER = Splitter.on(whitespace()).omitEmptyStrings();
 
     // Aliases come in three flavours. Note that the TERRITORY aliases map to a _list_ rather than
     // a single value (it's structurally always a list, but only territory aliases have a need for
     // more than one value).
     private enum Alias {
-        LANGUAGE, SCRIPT, TERRITORY;
+        LANGUAGE,
+        SCRIPT,
+        TERRITORY;
 
         private static final ImmutableMap<String, Alias> TYPE_MAP =
-            Arrays.stream(values())
-                .collect(toImmutableMap(a -> Ascii.toLowerCase(a.name()) + "Alias", identity()));
+                Arrays.stream(values())
+                        .collect(
+                                toImmutableMap(
+                                        a -> Ascii.toLowerCase(a.name()) + "Alias", identity()));
 
         private final String elementName = Ascii.toLowerCase(name()) + "Alias";
         final AttributeKey typeKey = AttributeKey.keyOf(elementName, "type");
@@ -112,34 +113,44 @@ public final class SupplementalData {
         Map<String, String> defaultCalendarMap = new HashMap<>();
         Map<String, String> likelySubtagMap = new HashMap<>();
 
-        src.getDataForType(CldrDataType.SUPPLEMENTAL).accept(
-            ARBITRARY,
-            v -> {
-                if (ALIAS.matches(v.getPath())) {
-                    // Territory alias replacements can be a list of values (e.g. when countries
-                    // break up). We use the first (geo-politically most significant) value. This
-                    // doesn't happen for languages or scripts, but could in theory.
-                    Alias.forElementName(v.getPath().getName()).ifPresent(
-                        alias -> aliasTable.put(
-                            alias,
-                            alias.typeKey.valueFrom(v),
-                            alias.replacementKey.valueFrom(v)));
-                } else if (PARENT_LOCALE.matches(v.getPath()) && !COMPONENT.optionalValueFrom(v).isPresent()) {
-                    // CLDR-16253 added component-specific parents, which we ignore for now.
-                    // TODO(ICU-22289): Handle these properly.
-                    String p = PARENT.valueFrom(v);
-                    LOCALES.listOfValuesFrom(v).forEach(c -> parentLocaleMap.put(c, p));
-                } else if (CALENDER_PREFERENCE.matches(v.getPath())) {
-                    String c = CALENDER_ORDERING.listOfValuesFrom(v).get(0);
-                    CALENDER_TERRITORIES.listOfValuesFrom(v).forEach(t -> defaultCalendarMap.put(t, c));
-                } else if (LIKELY_SUBTAGS.matches(v.getPath())) {
-                    likelySubtagMap.put(SUBTAG_FROM.valueFrom(v), SUBTAG_TO.valueFrom(v));
-                }
-            });
+        src.getDataForType(CldrDataType.SUPPLEMENTAL)
+                .accept(
+                        ARBITRARY,
+                        v -> {
+                            if (ALIAS.matches(v.getPath())) {
+                                // Territory alias replacements can be a list of values (e.g. when
+                                // countries
+                                // break up). We use the first (geo-politically most significant)
+                                // value. This
+                                // doesn't happen for languages or scripts, but could in theory.
+                                Alias.forElementName(v.getPath().getName())
+                                        .ifPresent(
+                                                alias ->
+                                                        aliasTable.put(
+                                                                alias,
+                                                                alias.typeKey.valueFrom(v),
+                                                                alias.replacementKey.valueFrom(v)));
+                            } else if (PARENT_LOCALE.matches(v.getPath())
+                                    && !COMPONENT.optionalValueFrom(v).isPresent()) {
+                                // CLDR-16253 added component-specific parents, which we ignore for
+                                // now.
+                                // TODO(ICU-22289): Handle these properly.
+                                String p = PARENT.valueFrom(v);
+                                LOCALES.listOfValuesFrom(v).forEach(c -> parentLocaleMap.put(c, p));
+                            } else if (CALENDER_PREFERENCE.matches(v.getPath())) {
+                                String c = CALENDER_ORDERING.listOfValuesFrom(v).get(0);
+                                CALENDER_TERRITORIES
+                                        .listOfValuesFrom(v)
+                                        .forEach(t -> defaultCalendarMap.put(t, c));
+                            } else if (LIKELY_SUBTAGS.matches(v.getPath())) {
+                                likelySubtagMap.put(
+                                        SUBTAG_FROM.valueFrom(v), SUBTAG_TO.valueFrom(v));
+                            }
+                        });
 
         Set<String> availableIds = Sets.union(src.getAvailableLocaleIds(), PHANTOM_LOCALE_IDS);
         return new SupplementalData(
-            availableIds, aliasTable, parentLocaleMap, defaultCalendarMap, likelySubtagMap);
+                availableIds, aliasTable, parentLocaleMap, defaultCalendarMap, likelySubtagMap);
     }
 
     // A simple-as-possible, mutable, locale ID data "struct" to handle the IDs used during ICU
@@ -174,10 +185,11 @@ public final class SupplementalData {
         //
         // The regex for unambiguously capturing the parts of a locale ID from the CLDR data is:
         private static final Pattern LOCALE_ID =
-            Pattern.compile("([a-z]{2,3})"
-                + "(?:_([A-Z][a-z]{3}))?"
-                + "(?:_([A-Z]{2}|[0-9]{3}))?"
-                + "(?:_([a-zA-Z]{5,}|[0-9][a-zA-Z0-9]{3}))?");
+                Pattern.compile(
+                        "([a-z]{2,3})"
+                                + "(?:_([A-Z][a-z]{3}))?"
+                                + "(?:_([A-Z]{2}|[0-9]{3}))?"
+                                + "(?:_([a-zA-Z]{5,}|[0-9][a-zA-Z0-9]{3}))?");
 
         static LocaleId parse(String localeId) {
             Matcher m = LOCALE_ID.matcher(checkNotNull(localeId, "locale ID cannot be null"));
@@ -233,7 +245,8 @@ public final class SupplementalData {
             return this;
         }
 
-        @Override public String toString() {
+        @Override
+        public String toString() {
             StringBuilder id = new StringBuilder(languageSubtag);
             if (scriptSubtag != null) {
                 id.append("_").append(scriptSubtag);
@@ -247,18 +260,20 @@ public final class SupplementalData {
             return id.toString();
         }
 
-        @Override public boolean equals(Object o) {
+        @Override
+        public boolean equals(Object o) {
             if (!(o instanceof LocaleId)) {
                 return false;
             }
             LocaleId other = (LocaleId) o;
             return Objects.equals(languageSubtag, other.languageSubtag)
-                && Objects.equals(scriptSubtag, other.scriptSubtag)
-                && Objects.equals(regionSubtag, other.regionSubtag)
-                && Objects.equals(variantSubtag, other.variantSubtag);
+                    && Objects.equals(scriptSubtag, other.scriptSubtag)
+                    && Objects.equals(regionSubtag, other.regionSubtag)
+                    && Objects.equals(variantSubtag, other.variantSubtag);
         }
 
-        @Override public int hashCode() {
+        @Override
+        public int hashCode() {
             return Objects.hash(languageSubtag, scriptSubtag, regionSubtag, variantSubtag);
         }
     }
@@ -270,11 +285,11 @@ public final class SupplementalData {
     private final ImmutableMap<String, String> likelySubtagMap;
 
     private SupplementalData(
-        Set<String> availableIds,
-        Table<Alias, String, String> aliasTable,
-        Map<String, String> parentLocaleMap,
-        Map<String, String> defaultCalendarMap,
-        Map<String, String> likelySubtagMap) {
+            Set<String> availableIds,
+            Table<Alias, String, String> aliasTable,
+            Map<String, String> parentLocaleMap,
+            Map<String, String> defaultCalendarMap,
+            Map<String, String> likelySubtagMap) {
 
         this.availableIds = ImmutableSet.copyOf(availableIds);
         this.aliasTable = ImmutableTable.copyOf(aliasTable);
@@ -295,9 +310,9 @@ public final class SupplementalData {
     }
 
     /**
-     * Returns the locale ID with any deprecated elements replaced. This is an
-     * implementation of the algorithm specified in
-     * <a href="http://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">the LDML
+     * Returns the locale ID with any deprecated elements replaced. This is an implementation of the
+     * algorithm specified in <a
+     * href="http://unicode.org/reports/tr35/#Canonical_Unicode_Locale_Identifiers">the LDML
      * specification</a> but without any "minimizing" of the final result (as happens for
      * canonicalization in the CLDR tools).
      */
@@ -344,7 +359,7 @@ public final class SupplementalData {
                         likelyId = likelySubtagMap.get(key.setScript(null).toString());
                     }
                     String likelyRegion =
-                        likelyId != null ? LocaleId.parse(likelyId).getRegion() : null;
+                            likelyId != null ? LocaleId.parse(likelyId).getRegion() : null;
                     if (regions.contains(likelyRegion)) {
                         id.setRegion(likelyRegion);
                     } else {
@@ -361,8 +376,10 @@ public final class SupplementalData {
         if (id.getScript() != null) {
             String replacementScript = aliasTable.get(Alias.SCRIPT, id.getScript());
             if (replacementScript != null) {
-                checkArgument(whitespace().matchesNoneOf(replacementScript),
-                    "unexpected list of replacement scripts: %s", replacementScript);
+                checkArgument(
+                        whitespace().matchesNoneOf(replacementScript),
+                        "unexpected list of replacement scripts: %s",
+                        replacementScript);
                 id.setScript(replacementScript);
             }
         }
@@ -386,19 +403,23 @@ public final class SupplementalData {
         // There is no need to check for "und" however since that's not aliased anything, but since
         // it shares the same code it's harmless to do.
         resolveLocaleId(id, s -> aliasTable.get(Alias.LANGUAGE, s))
-            .ifPresent(resolvedId -> {
-                id.setLanguage(checkNotNull(resolvedId.getLanguage(),
-                     "missing language subtag in language alias: %s", resolvedId));
-                if (id.getScript() == null) {
-                    id.setScript(resolvedId.getScript());
-                }
-                if (id.getRegion() == null) {
-                    id.setRegion(resolvedId.getRegion());
-                }
-                if (id.getVariant() == null) {
-                    id.setVariant(resolvedId.getVariant());
-                }
-            });
+                .ifPresent(
+                        resolvedId -> {
+                            id.setLanguage(
+                                    checkNotNull(
+                                            resolvedId.getLanguage(),
+                                            "missing language subtag in language alias: %s",
+                                            resolvedId));
+                            if (id.getScript() == null) {
+                                id.setScript(resolvedId.getScript());
+                            }
+                            if (id.getRegion() == null) {
+                                id.setRegion(resolvedId.getRegion());
+                            }
+                            if (id.getVariant() == null) {
+                                id.setVariant(resolvedId.getVariant());
+                            }
+                        });
         return id.toString();
     }
 
@@ -444,10 +465,10 @@ public final class SupplementalData {
         Optional<String> maximized = maximize(localeId);
         if (maximized.isPresent()) {
             switch (maximized.get()) {
-            case "ja_Jpan_JP_TRADITIONAL":
-                return Optional.of("japanese");
-            case "th_Thai_TH_TRADITIONAL":
-                return Optional.of("buddhist");
+                case "ja_Jpan_JP_TRADITIONAL":
+                    return Optional.of("japanese");
+                case "th_Thai_TH_TRADITIONAL":
+                    return Optional.of("buddhist");
             }
         }
         return Optional.empty();
@@ -456,17 +477,20 @@ public final class SupplementalData {
     /**
      * Returns the parent of a non-root locale ID. This is more complex than simple truncation for
      * two reasons:
+     *
      * <ul>
-     *     <li>There may be an explicit parent locale ID specified in the CLDR data.
-     *     <li>Removal of non-default script subtags makes the parent locale "root" (unless there
-     *         was an explicit parent specified).
+     *   <li>There may be an explicit parent locale ID specified in the CLDR data.
+     *   <li>Removal of non-default script subtags makes the parent locale "root" (unless there was
+     *       an explicit parent specified).
      * </ul>
+     *
      * Note that all valid locale ID parent "chains" must end up at "root" eventually.
      *
-     * For example (showing parent "chains"):
+     * <p>For example (showing parent "chains"):
+     *
      * <ul>
-     *     <li>{@code en_GB} --> {@code en_001} --> {@code en} --> {@code root}
-     *     <li>{@code en_Cyrl_RU} --> {@code en_Cyrl} --> {@code root}
+     *   <li>{@code en_GB} --> {@code en_001} --> {@code en} --> {@code root}
+     *   <li>{@code en_Cyrl_RU} --> {@code en_Cyrl} --> {@code root}
      * </ul>
      *
      * @throws IllegalArgumentException if the given locale ID is invalid or "root".
@@ -503,7 +527,7 @@ public final class SupplementalData {
     /**
      * Returns the explicit parent of a locale ID if specified in the CLDR data.
      *
-     * Note that this method will not return a value for most locale IDs, since they do not have
+     * <p>Note that this method will not return a value for most locale IDs, since they do not have
      * an explicit parent set. If you just want "normal" parent of a locale ID, use {@link
      * #getParent(String)}.
      */
@@ -513,8 +537,8 @@ public final class SupplementalData {
 
     private String territoryOf(String localeId) {
         return localeId.equals("root")
-            ? "001"
-            : addLikelySubtags(localeId).map(LocaleId::getRegion).orElse("ZZ");
+                ? "001"
+                : addLikelySubtags(localeId).map(LocaleId::getRegion).orElse("ZZ");
     }
 
     private String scriptOf(String localeId) {
@@ -592,23 +616,24 @@ public final class SupplementalData {
         String lang = id.getLanguage();
         String script = id.getScript();
         String region = id.getRegion();
-        Stream<LocaleId> candidateIds = Stream.of(
-            LocaleId.of(lang, script, region),
-            LocaleId.of(lang, null, region),
-            LocaleId.of(lang, script, null),
-            LocaleId.of(lang, null, null));
+        Stream<LocaleId> candidateIds =
+                Stream.of(
+                        LocaleId.of(lang, script, region),
+                        LocaleId.of(lang, null, region),
+                        LocaleId.of(lang, script, null),
+                        LocaleId.of(lang, null, null));
         // Only add "und"_<script> if there's a script, otherwise you end up maximizing "und" on
         // its own ("en_Latn_US") which is not intended.
         if (script != null) {
             candidateIds = Stream.concat(candidateIds, Stream.of(LocaleId.of("und", script, null)));
         }
         return candidateIds
-            // Remove duplicate IDs (keeps the first one encountered).
-            .distinct()
-            .map(Object::toString)
-            .map(fn)
-            .filter(Objects::nonNull)
-            .findFirst()
-            .map(LocaleId::parse);
+                // Remove duplicate IDs (keeps the first one encountered).
+                .distinct()
+                .map(Object::toString)
+                .map(fn)
+                .filter(Objects::nonNull)
+                .findFirst()
+                .map(LocaleId::parse);
     }
 }

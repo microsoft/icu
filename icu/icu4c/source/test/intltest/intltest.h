@@ -283,7 +283,7 @@ public:
 
 
 
-    static const int kMaxProps = 16;
+    enum { kMaxProps = 16 };
 
     virtual void setProperty(const char* propline);
     virtual const char* getProperty(const char* prop);
@@ -535,8 +535,6 @@ public:
     static const char* loadTestData(UErrorCode& err);
     virtual const char* getTestDataPath(UErrorCode& err) override;
     static const char* getSourceTestData(UErrorCode& err);
-    // Gets the path for the top-level testdata/ directory
-    static const char* getSharedTestData(UErrorCode& err);
     static char *getUnidataPath(char path[]);
     char16_t *ReadAndConvertFile(const char *fileName, int &ulen, const char *encoding, UErrorCode &status);
 

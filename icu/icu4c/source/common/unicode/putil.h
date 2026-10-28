@@ -42,9 +42,6 @@
  * functions may have to be re-implemented.
  */
 
-//IGNORE_WINDOWS_HEADERS_START
-// MSFT-Change: The Windows OS version of ICU uses a single fixed data file.
-
 /**
  * Return the ICU data directory. 
  * The data directory is where common format ICU data files (.dat files)
@@ -115,7 +112,7 @@ U_CAPI const char * U_EXPORT2 u_getTimeZoneFilesDirectory(UErrorCode *status);
 U_CAPI void U_EXPORT2 u_setTimeZoneFilesDirectory(const char *path, UErrorCode *status);
 #endif  /* U_HIDE_INTERNAL_API */
 
-// MSFT-TODO: Should these be considered for Windows?
+
 /**
  * @{
  * Filesystem file and path separator characters.
@@ -137,7 +134,6 @@ U_CAPI void U_EXPORT2 u_setTimeZoneFilesDirectory(const char *path, UErrorCode *
 #   define U_FILE_ALT_SEP_STRING "/"
 #   define U_PATH_SEP_STRING ":"
 #endif
-//IGNORE_WINDOWS_HEADERS_END
 
 /** @} */
 

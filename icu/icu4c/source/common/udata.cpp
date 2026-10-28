@@ -809,16 +809,6 @@ openCommonData(const char *path,          /*  Path from OpenChoice?          */
  *----------------------------------------------------------------------*/
 static UBool extendICUData(UErrorCode *pErr)
 {
-// MSFT-Change: For the Windows OS build of ICU, we only have one data file
-// and we don't use the extended data at all. We make this function a no-op
-// in order to save a few cycles for perf, but more importantly so that
-// we don't try to load a versioned data file (ex: icudt78l.dat) after
-// already loading the non-versioned common data file.
-#if defined(ICU_DATA_DIR_WINDOWS)
-    (void)pErr; // suppress unused variable.
-    return false;
-#endif
-
     UDataMemory   *pData;
     UDataMemory   copyPData;
     UBool         didUpdate = false;
@@ -1280,7 +1270,7 @@ doOpenChoice(const char *path, const char *type, const char *name,
 
 #ifdef UDATA_DEBUG
     fprintf(stderr, " tocEntryName = %s\n", tocEntryName.data());
-    fprintf(stderr, " tocEntryPath = %s\n", tocEntryName.data());
+    fprintf(stderr, " tocEntryPath = %s\n", tocEntryPath.data());
 #endif
 
 #if !defined(ICU_DATA_DIR_WINDOWS)
@@ -1301,7 +1291,7 @@ doOpenChoice(const char *path, const char *type, const char *name,
     dataPath = u_getDataDirectory();
 
     /****    Time zone individual files override  */
-    if (isICUData && isTimeZoneFile(name, type)) {
+    if (isICUData && type != nullptr && isTimeZoneFile(name, type)) {
         const char *tzFilesDir = u_getTimeZoneFilesDirectory(pErrorCode);
         if (tzFilesDir[0] != 0) {
 #ifdef UDATA_DEBUG

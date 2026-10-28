@@ -2,6 +2,10 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/
 ar_AE{
+    NumberElements{
+        default{"latn"}
+        default_latn{"latn"}
+    }
     calendar{
         gregorian{
             eras{

@@ -7,9 +7,11 @@ import static org.unicode.cldr.api.AttributeKey.keyOf;
 import static org.unicode.cldr.api.CldrData.PathOrder.NESTED_GROUPING;
 import static org.unicode.cldr.api.CldrDataType.SUPPLEMENTAL;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
 import java.util.List;
-
 import org.unicode.cldr.api.AttributeKey;
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataSupplier;
@@ -18,19 +20,16 @@ import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
 import org.unicode.cldr.api.FilteredData;
 import org.unicode.cldr.api.PathMatcher;
+import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
 import org.unicode.icu.tool.cldrtoicu.IcuData;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
-import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
-
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
 
 /**
- * A mapper to collect plural data from {@link CldrDataType#SUPPLEMENTAL SUPPLEMENTAL} data via
- * the paths:
+ * A mapper to collect plural data from {@link CldrDataType#SUPPLEMENTAL SUPPLEMENTAL} data via the
+ * paths:
+ *
  * <pre>{@code
- *   //supplementalData/plurals[@type=*]/pluralRules[@locales=*]/pluralRule[@count=*]
+ * //supplementalData/plurals[@type=*]/pluralRules[@locales=*]/pluralRule[@count=*]
  * }</pre>
  */
 public final class PluralsMapper {
@@ -40,17 +39,19 @@ public final class PluralsMapper {
     private static final AttributeKey RULE_COUNT = keyOf("pluralRule", "count");
 
     private static final CldrDataProcessor<PluralsMapper> CLDR_PROCESSOR;
+
     static {
         CldrDataProcessor.Builder<PluralsMapper> processor = CldrDataProcessor.builder();
         processor
-            .addAction("//supplementalData/plurals[@type=*]", (m, p) -> m.new Plurals(p))
-            .addAction("pluralRules[@locales=*]", Rules::new, Plurals::addRules)
-            .addValueAction("pluralRule[@count=*]", Rules::addRule);
+                .addAction("//supplementalData/plurals[@type=*]", (m, p) -> m.new Plurals(p))
+                .addAction("pluralRules[@locales=*]", Rules::new, Plurals::addRules)
+                .addValueAction("pluralRule[@count=*]", Rules::addRule);
         CLDR_PROCESSOR = processor.build();
     }
 
     private static final ImmutableMap<String, RbPath> ICU_PREFIX_MAP =
-        ImmutableMap.of("cardinal", RbPath.of("locales"), "ordinal", RbPath.of("locales_ordinals"));
+            ImmutableMap.of(
+                    "cardinal", RbPath.of("locales"), "ordinal", RbPath.of("locales_ordinals"));
 
     /**
      * Processes data from the given supplier to generate plural ICU data.
@@ -142,9 +143,10 @@ public final class PluralsMapper {
     // is the other way round). Once DTD order is the only ordering used, this can be removed.
     private static CldrData filterByType(CldrData data, String pluralType) {
         PathMatcher matcher =
-            PathMatcher.of("//supplementalData/plurals[@type=\"" + pluralType + "\"]");
+                PathMatcher.of("//supplementalData/plurals[@type=\"" + pluralType + "\"]");
         return new FilteredData(data) {
-            @Override protected CldrValue filter(CldrValue value) {
+            @Override
+            protected CldrValue filter(CldrValue value) {
                 return matcher.matchesPrefixOf(value.getPath()) ? value : null;
             }
         };

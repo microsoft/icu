@@ -50,6 +50,7 @@ void IntlTestDateTimePatternGeneratorAPI::runIndexedTest( int32_t index, UBool e
         TESTCASE(14, testISO8601);
         TESTCASE(15, testRegionOverride);
         TESTCASE(16, testAlphabeticSubstitution23114);
+        TESTCASE(17, testTwoDigitYear);
         default: name = ""; break;
     }
 }
@@ -107,14 +108,14 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         UnicodeString("Jan 13"),                              // 05: MMMd
         UnicodeString("January 13"),                          // 06: MMMMd
         UnicodeString("Q1 1999"),                             // 07: yQQQ
-        UnicodeString(u"11:58 PM", -1),                 // 08: hhmm
+        UnicodeString(u"11:58\u202FPM", -1),                 // 08: hhmm
         UnicodeString("23:58"),                               // 09: HHmm
-        UnicodeString(u"11:58 PM", -1),                 // 10: jjmm
+        UnicodeString(u"11:58\u202FPM", -1),                 // 10: jjmm
         UnicodeString("58:59"),                               // 11: mmss
         UnicodeString("January 1999"),                        // 12: yyyyMMMM
         UnicodeString("Wed, Jan 13"),                         // 13: MMMEd -> EEE, MMM d
         UnicodeString("13 Wed"),                              // 14: Ed    -> d EEE
-        UnicodeString(u"11:58:59.123 PM", -1),          // 15: jmmssSSS -> "h:mm:ss.SSS a"
+        UnicodeString(u"11:58:59.123\u202FPM", -1),          // 15: jmmssSSS -> "h:mm:ss.SSS a"
         UnicodeString("11:58"),                               // 16: JJmm
     };
 
@@ -128,14 +129,14 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         UnicodeString("Jan 13"),                              //  5: MMMd
         UnicodeString("January 13"),                          //  6: MMMMd
         UnicodeString("Q1 11 Heisei"),                        //  7: yQQQ
-        UnicodeString(u"11:58 PM", -1),                 //  8: hhmm
+        UnicodeString(u"11:58\u202FPM", -1),                 //  8: hhmm
         UnicodeString("23:58"),                               //  9: HHmm
-        UnicodeString(u"11:58 PM", -1),                 // 10: jjmm
+        UnicodeString(u"11:58\u202FPM", -1),                 // 10: jjmm
         UnicodeString("58:59"),                               // 11: mmss
         UnicodeString("January 11 Heisei"),                   // 12: yyyyMMMM
         UnicodeString("Wed, Jan 13"),                         // 13: MMMEd -> EEE, MMM d"
         UnicodeString("13 Wed"),                              // 14: Ed    -> d EEE
-        UnicodeString(u"11:58:59.123 PM", -1),          // 15: jmmssSSS -> "h:mm:ss.SSS a"
+        UnicodeString(u"11:58:59.123\u202FPM", -1),          // 15: jmmssSSS -> "h:mm:ss.SSS a"
         UnicodeString("11:58"),                               // 16: JJmm
     };
 
@@ -377,14 +378,14 @@ void IntlTestDateTimePatternGeneratorAPI::testAPI(/*char *par*/)
         UnicodeString("O 14, 1999"),
         UnicodeString("T, O 14"),
         UnicodeString("Oct 14"),
-        UnicodeString(u"Oct 14, 6:58 AM", -1),
-        UnicodeString(u"Thu, Oct 14, 6:58:59 AM", -1),
-        UnicodeString(u"10/14, 6:58 AM", -1),
-        UnicodeString(u"Thursday, Oct 14, 6:58:59 AM", -1),
-        UnicodeString(u"Oct 14, 1999, 6:58:59 AM", -1),
-        UnicodeString(u"Thu, Oct 14, 1999, 6:58:59 AM", -1),
-        UnicodeString(u"6:58 AM", -1),
-        UnicodeString(u"6:58 AM", -1),
+        UnicodeString(u"Oct 14, 6:58\u202FAM", -1),
+        UnicodeString(u"Thu, Oct 14, 6:58:59\u202FAM", -1),
+        UnicodeString(u"10/14, 6:58\u202FAM", -1),
+        UnicodeString(u"Thursday, Oct 14, 6:58:59\u202FAM", -1),
+        UnicodeString(u"Oct 14, 1999, 6:58:59\u202FAM", -1),
+        UnicodeString(u"Thu, Oct 14, 1999, 6:58:59\u202FAM", -1),
+        UnicodeString(u"6:58\u202FAM", -1),
+        UnicodeString(u"6:58\u202FAM", -1),
         UnicodeString(u"6:58\u202FAM GMT+00:00", -1),
         UnicodeString(""),
     };
@@ -908,10 +909,10 @@ void IntlTestDateTimePatternGeneratorAPI::testOptions(/*char *par*/)
     //   locale  skel   expectedPattern  options
         { "en", "Hmm",  u"HH:mm",        UDATPG_MATCH_NO_OPTIONS        },
         { "en", "HHmm", u"HH:mm",        UDATPG_MATCH_NO_OPTIONS        },
-        { "en", "hhmm", u"h:mm a",  UDATPG_MATCH_NO_OPTIONS        },
+        { "en", "hhmm", u"h:mm\u202Fa",  UDATPG_MATCH_NO_OPTIONS        },
         { "en", "Hmm",  u"HH:mm",        UDATPG_MATCH_HOUR_FIELD_LENGTH },
         { "en", "HHmm", u"HH:mm",        UDATPG_MATCH_HOUR_FIELD_LENGTH },
-        { "en", "hhmm", u"hh:mm a", UDATPG_MATCH_HOUR_FIELD_LENGTH },
+        { "en", "hhmm", u"hh:mm\u202Fa", UDATPG_MATCH_HOUR_FIELD_LENGTH },
         { "da", "Hmm",  u"HH.mm",        UDATPG_MATCH_NO_OPTIONS        },
         { "da", "HHmm", u"HH.mm",        UDATPG_MATCH_NO_OPTIONS        },
         { "da", "hhmm", u"h.mm\u202Fa",  UDATPG_MATCH_NO_OPTIONS        },
@@ -1540,18 +1541,6 @@ void IntlTestDateTimePatternGeneratorAPI::test_jConsistencyOddLocales() { // ICU
             continue;
         }
         if (dtfShortPattern != dtfSkelPattern || dtfSkelPattern != dtpgPattern) {
-            if (uprv_strcmp(localeID, "en") == 0) {
-                UnicodeString dtfShortPatternForCompare(dtfShortPattern);
-                UnicodeString dtfSkelPatternForCompare(dtfSkelPattern);
-                UnicodeString dtpgPatternForCompare(dtpgPattern);
-                dtfShortPatternForCompare.findAndReplace(u"\u202F", u" ");
-                dtfSkelPatternForCompare.findAndReplace(u"\u202F", u" ");
-                dtpgPatternForCompare.findAndReplace(u"\u202F", u" ");
-                if (dtfShortPatternForCompare == dtfSkelPatternForCompare &&
-                        dtfSkelPatternForCompare == dtpgPatternForCompare) {
-                    continue;
-                }
-            }
             const char* dtfShortValidLoc = dtfShort->getLocaleID(ULOC_VALID_LOCALE, status);
             const char* dtfShortActualLoc = dtfShort->getLocaleID(ULOC_ACTUAL_LOCALE, status);
             errln(UnicodeString("For locale ") + localeID +
@@ -1606,6 +1595,28 @@ void IntlTestDateTimePatternGeneratorAPI::testBestPattern() {
         // ICU-20992: Bad patterns for missing fields
         { "ckb_IR",     "mmSSS",       u"mm:ss\u066bSSS"     },
         { "ckb_IR",     "BSSS",        u"SSS \u251c'Dayperiod': B\u2524" },
+        // ddd (ordinal day-of-month) vs d (numeric) produce different patterns
+        { "en",         "yMMMd",       u"MMM d, y"        },
+        { "en",         "yMMMddd",     u"MMM ddd, y"      },
+        { "en",         "yMMMEd",      u"EEE, MMM d, y"   },
+        { "en",         "yMMMEddd",    u"EEE, MMM ddd, y" },
+        { "en",         "MMMd",        u"MMM d"           },
+        { "en",         "MMMddd",      u"MMM ddd"         },
+        { "en",         "MMMMddd",     u"MMMM ddd"        },
+        { "en",         "MMMMEddd",    u"EEE, MMMM ddd"   },
+        // French now has its own ddd availableFormats (CLDR-19616), which use
+        // the French day-before-month order rather than root's MMM-before-day.
+        { "fr",         "yMMMd",       u"d MMM y"         },
+        { "fr",         "yMMMddd",     u"ddd MMM y"       },
+        { "fr",         "MMMd",        u"d MMM"           },
+        { "fr",         "MMMddd",      u"ddd MMM"         },
+		// We also have to make sure that the presence of new "ddd" patterns didn't
+		// mess up the handling of skeletons that contain "dd"-- if we don't treat
+		// "ddd" correctly, "dd" in the skeleton will match a "ddd" skeleton in
+		// the parent locale instead of a "d" skeleton in the requested locale,
+		// potentially messing up the field order.
+		{ "de",         "MMMd",        u"d. MMM"          },
+		{ "de",         "MMMdd",       u"dd. MMM"         },
     };
     
     for (int32_t i = 0; i < UPRV_LENGTHOF(testCases); i++) {
@@ -1647,16 +1658,16 @@ void IntlTestDateTimePatternGeneratorAPI::testDateTimePatterns() {
     // The following tests some locales in which there are differences between the
     // DateTimePatterns of various length styles.
     DTPLocaleAndResults localeAndResults[] = {
-        { "en", { UnicodeString(u"EEEE, MMMM d, y 'at' h:mm a"), // long != medium
-                  UnicodeString(u"MMMM d, y 'at' h:mm a"),
-                  UnicodeString(u"MMM d, y, h:mm a"),
-                  UnicodeString(u"M/d/y, h:mm a") } },
+        { "en", { UnicodeString(u"EEEE, MMMM d, y 'at' h:mm\u202Fa"), // long != medium
+                  UnicodeString(u"MMMM d, y 'at' h:mm\u202Fa"),
+                  UnicodeString(u"MMM d, y, h:mm\u202Fa"),
+                  UnicodeString(u"M/d/y, h:mm\u202Fa") } },
         { "fr", { UnicodeString(u"EEEE d MMMM y 'à' HH:mm"), // medium != short
                   UnicodeString(u"d MMMM y 'à' HH:mm"),
                   UnicodeString(u"d MMM y, HH:mm"),
                   UnicodeString(u"dd/MM/y HH:mm") } },
         { "ha", { UnicodeString(u"EEEE d MMMM, y 'da' HH:mm"),
-                  UnicodeString(u"d MMMM, y 'da' HH:mm"),
+                  UnicodeString(u"y, MMMM d 'da' HH:mm"),
                   UnicodeString(u"d MMM, y, HH:mm"),
                   UnicodeString(u"y-MM-dd, HH:mm") } },
         { nullptr, { UnicodeString(""), UnicodeString(""), // terminator
@@ -1675,10 +1686,10 @@ void IntlTestDateTimePatternGeneratorAPI::testDateTimePatterns() {
         UnicodeString(u"{1} _2_ {0}"),
         UnicodeString(u"{1} _3_ {0}")
     };
-    DTPLocaleAndResults enModResults = { "en", { UnicodeString(u"EEEE, MMMM d, y _0_ h:mm a"),
-                                                 UnicodeString(u"MMMM d, y _1_ h:mm a"),
-                                                 UnicodeString(u"MMM d, y _2_ h:mm a"),
-                                                 UnicodeString(u"M/d/y _3_ h:mm a") }
+    DTPLocaleAndResults enModResults = { "en", { UnicodeString(u"EEEE, MMMM d, y _0_ h:mm\u202Fa"),
+                                                 UnicodeString(u"MMMM d, y _1_ h:mm\u202Fa"),
+                                                 UnicodeString(u"MMM d, y _2_ h:mm\u202Fa"),
+                                                 UnicodeString(u"M/d/y _3_ h:mm\u202Fa") }
     };
 
     // Test various locales with standard data
@@ -1796,7 +1807,7 @@ void IntlTestDateTimePatternGeneratorAPI::testRegionOverride() {
         const char16_t* expectedPattern;
         UDateFormatHourCycle expectedHourCycle;
     } testCases[] = {
-        { "en_US",           u"h:mm a", UDAT_HOUR_CYCLE_12 },
+        { "en_US",           u"h:mm\u202fa", UDAT_HOUR_CYCLE_12 },
         { "en_GB",           u"HH:mm",       UDAT_HOUR_CYCLE_23 },
         { "en_US@rg=GBZZZZ", u"HH:mm",       UDAT_HOUR_CYCLE_23 },
         { "en_US@hours=h23", u"HH:mm",       UDAT_HOUR_CYCLE_23 },
@@ -1858,6 +1869,59 @@ void IntlTestDateTimePatternGeneratorAPI::testAlphabeticSubstitution23114() {
     UnicodeString bestPattern = dtpg->getBestPattern(u"GyMEd", status);
     status.assertSuccess();
     assertEquals("Should not substitute numeric for alpha", u"EEE, MMM d, y G", bestPattern);
+}
+
+/**
+ * Test that a two-digit year in the requested skeleton produces a two-digit year in
+ * the resulting pattern (and that other year field lengths are preserved as well).
+ */
+typedef struct DTPtnGenTwoDigitYearData {
+    const char *locale;
+    const char *skel;
+    const char16_t *expectedPattern;
+} DTPtnGenTwoDigitYearData;
+void IntlTestDateTimePatternGeneratorAPI::testTwoDigitYear()
+{
+    DTPtnGenTwoDigitYearData testData[] = {
+        //   locale  skel   expectedPattern
+        { "en", "yMMMd",    u"MMM d, y"    },
+        { "en", "yyMMMd",   u"MMM d, ’yy"  },
+        { "en", "yyyyMMMd", u"MMM d, yyyy" }, // NOT "MMM d,’yyyy"
+        { "de", "yMMMd",    u"d. MMM y"    },
+        { "de", "yyMMMd",   u"d. MMM yy"   },
+        { "de", "yyyyMMMd", u"d. MMM yyyy" },
+    };
+
+    int count = UPRV_LENGTHOF(testData);
+    const DTPtnGenTwoDigitYearData * testDataPtr = testData;
+
+    for (; count-- > 0; ++testDataPtr) {
+        UErrorCode status = U_ZERO_ERROR;
+
+        Locale locale(testDataPtr->locale);
+        UnicodeString skel(testDataPtr->skel);
+        UnicodeString expectedPattern(testDataPtr->expectedPattern, -1);
+
+        LocalPointer<DateTimePatternGenerator> dtpgen(
+            DateTimePatternGenerator::createInstance(locale, status));
+        if (U_FAILURE(status)) {
+            dataerrln("Unable to create DateTimePatternGenerator instance for locale(%s): %s",
+                      locale.getName(), u_errorName(status));
+            continue;
+        }
+        UnicodeString pattern = dtpgen->getBestPattern(skel, UDATPG_MATCH_NO_OPTIONS, status);
+        if (U_FAILURE(status)) {
+            errln("ERROR in getBestPattern, locale %s, skeleton %s: %s",
+                  testDataPtr->locale, testDataPtr->skel, u_errorName(status));
+            continue;
+        }
+        if (pattern.compare(expectedPattern) != 0) {
+            errln( UnicodeString("ERROR in getBestPattern, locale ") + UnicodeString(testDataPtr->locale) +
+                   UnicodeString(", skeleton ") + skel +
+                   UnicodeString(", expected pattern ") + expectedPattern +
+                   UnicodeString(", got ") + pattern );
+        }
+    }
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

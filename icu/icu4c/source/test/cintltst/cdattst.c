@@ -52,6 +52,9 @@ static void TestExtraneousCharacters(void);
 static void TestParseTooStrict(void);
 static void TestHourCycle(void);
 static void TestLocaleNameCrash(void);
+static void TestInvalidStyles(void);
+static void TestDayNames(void);
+static void TestBadErasMakesBadMonthNamesBug(void);
 
 void addDateForTest(TestNode** root);
 
@@ -78,6 +81,9 @@ void addDateForTest(TestNode** root)
     TESTCASE(TestParseTooStrict);
     TESTCASE(TestHourCycle);
     TESTCASE(TestLocaleNameCrash);
+    TESTCASE(TestInvalidStyles);
+    TESTCASE(TestDayNames);
+    TESTCASE(TestBadErasMakesBadMonthNamesBug);
 }
 /* Testing the DateFormat API */
 static void TestDateFormat(void)
@@ -176,7 +182,7 @@ static void TestDateFormat(void)
 
     /*Testing udat_format()*/
     log_verbose("\nTesting the udat_format() function of date format\n");
-    u_strcpy(temp, u"7/10/96, 4:05 PM");
+    u_strcpy(temp, u"7/10/96, 4:05\u202FPM");
     /*format using def */
     resultlength=0;
     resultlengthneeded=udat_format(def, d, NULL, resultlength, NULL, &status);
@@ -245,7 +251,7 @@ static void TestDateFormat(void)
 
     /*Testing parsing using udat_parse()*/
     log_verbose("\nTesting parsing using udat_parse()\n");
-    u_strcpy(temp, u"2/3/76, 2:50 AM");
+    u_strcpy(temp, u"2/3/76, 2:50\u202FAM");
     parsepos=0;
     status=U_ZERO_ERROR;
 
@@ -735,7 +741,6 @@ static void TestSymbols(void)
         result = NULL;
     }
 free(pattern);
-pattern = NULL;
 
     log_verbose("\nTesting setSymbols\n");
     /*applying the pattern so that setSymbolss works */
@@ -967,7 +972,7 @@ static void TestDateFormatCalendar(void) {
                 u_errorName(ec));
         goto FAIL;
     }
-    u_strcpy(uExpected, u"5:45 PM");
+    u_strcpy(uExpected, u"5:45\u202FPM");
     u_austrcpy(cbuf, uExpected);
     if (u_strlen(uExpected) != len1 || u_strncmp(uExpected, buf1, len1) != 0) {
         log_err("FAIL: udat_formatCalendar(17:45), expected: %s", cbuf);
@@ -2102,10 +2107,10 @@ static void TestHourCycle(void) {
     static const UDate date = -845601267742; // March 16, 1943 at 3:45 PM
     const UChar* testCases[] = {
         // test some locales for which we have data
-        u"en_US", u"Tuesday, March 16, 1943 at 3:45:32 PM",
-        u"en_CA", u"Tuesday, March 16, 1943 at 3:45:32 p.m.",
+        u"en_US", u"Tuesday, March 16, 1943 at 3:45:32 PM",
+        u"en_CA", u"Tuesday, March 16, 1943 at 3:45:32 p.m.",
         u"en_GB", u"Tuesday, 16 March 1943 at 15:45:32",
-        u"en_AU", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+        u"en_AU", u"Tuesday, 16 March 1943 at 3:45:32 pm",
         // test a couple locales for which we don't have specific locale files (we should still get the correct hour cycle)
         u"en_CO", u"Tuesday, March 16, 1943 at 3:45:32 PM",
         u"en_MX", u"Tuesday, March 16, 1943 at 3:45:32 PM",
@@ -2113,12 +2118,12 @@ static void TestHourCycle(void) {
         u"en_US@rg=GBzzzz", u"Tuesday, March 16, 1943 at 15:45:32",
         u"en_US@rg=CAzzzz", u"Tuesday, March 16, 1943 at 3:45:32 PM",
         u"en_CA@rg=USzzzz", u"Tuesday, March 16, 1943 at 3:45:32 p.m.",
-        u"en_GB@rg=USzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
-        u"en_GB@rg=CAzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
-        u"en_GB@rg=AUzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+        u"en_GB@rg=USzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+        u"en_GB@rg=CAzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+        u"en_GB@rg=AUzzzz", u"Tuesday, 16 March 1943 at 3:45:32 pm",
         // test that the hc ("hours") subtag does the right thing
         u"en_US@hours=h23", u"Tuesday, March 16, 1943 at 15:45:32",
-        u"en_GB@hours=h12", u"Tuesday, 16 March 1943 at 3:45:32 pm",
+        u"en_GB@hours=h12", u"Tuesday, 16 March 1943 at 3:45:32 pm",
         // test that the rg and hc subtags do the right thing when used together
         u"en_US@rg=GBzzzz;hours=h12", u"Tuesday, March 16, 1943 at 3:45:32 PM",
         u"en_GB@rg=USzzzz;hours=h23", u"Tuesday, 16 March 1943 at 15:45:32",
@@ -2157,6 +2162,125 @@ static void TestLocaleNameCrash(void) {
         log_err("FAIL: didn't crash on udat_open(locale=\"notalanguage\"), but got %s.\n", u_errorName(status));
     }
     udat_close(icudf);
+}
+
+static void TestInvalidStyles(void) {
+    UErrorCode status = U_ZERO_ERROR;
+    UDateFormat* df = udat_open((UDateFormatStyle)543976820, (UDateFormatStyle)1748765246, "en", NULL, 0, NULL, 0, &status);
+    if (df != NULL) {
+        log_err("FAIL: udat_open with invalid styles should return NULL\n");
+        udat_close(df);
+    } else if (status != U_ILLEGAL_ARGUMENT_ERROR) {
+        log_err("FAIL: udat_open with invalid styles should set status to U_ILLEGAL_ARGUMENT_ERROR, but got %s\n", u_errorName(status));
+    } else {
+        log_verbose("PASS: udat_open with invalid styles returned NULL and set status to U_ILLEGAL_ARGUMENT_ERROR\n");
+    }
+}
+
+static void TestDayNames(void) {
+    struct TestCase {
+        const char* locale;
+        const UChar* skeleton;
+        int32_t year;
+        int32_t month;
+        int32_t day;
+        const UChar* expectedResult;
+    } testCases[] = {
+        // test ordinal dates in English
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  1,  u"Jan 1st, 2026"  },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  2,  u"Jan 2nd, 2026"  },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  3,  u"Jan 3rd, 2026"  },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  4,  u"Jan 4th, 2026"  },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  5,  u"Jan 5th, 2026"  },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  7,  u"Jan 7th, 2026"  },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  9,  u"Jan 9th, 2026"  },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  11, u"Jan 11th, 2026" },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  12, u"Jan 12th, 2026" },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  13, u"Jan 13th, 2026" },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  21, u"Jan 21st, 2026" },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  22, u"Jan 22nd, 2026" },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  23, u"Jan 23rd, 2026" },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  30, u"Jan 30th, 2026" },
+        { "en", u"yMMMddd", 2026, UCAL_JANUARY,  31, u"Jan 31st, 2026" },
+        // test partial ordinal dates in French
+        // French ordinal "one" applies to day 1 only ("1er"); all others are plain numeric
+        { "fr", u"yMMMddd", 2026, UCAL_APRIL,    1,  u"1er avr. 2026" },
+        { "fr", u"yMMMddd", 2026, UCAL_APRIL,    2,  u"2 avr. 2026"   },
+        { "fr", u"yMMMddd", 2026, UCAL_APRIL,    3,  u"3 avr. 2026"   },
+        { "fr", u"yMMMddd", 2026, UCAL_APRIL,    5,  u"5 avr. 2026"   },
+        { "fr", u"yMMMddd", 2026, UCAL_APRIL,    10, u"10 avr. 2026"  },
+        { "fr", u"yMMMddd", 2026, UCAL_APRIL,    11, u"11 avr. 2026"  },
+        { "fr", u"yMMMddd", 2026, UCAL_APRIL,    21, u"21 avr. 2026"  },
+    };
+
+    for (int32_t i = 0; i < UPRV_LENGTHOF(testCases); i++) {
+        UErrorCode err = U_ZERO_ERROR;
+        UCalendar* cal = ucal_open(u"GMT", -1, testCases[i].locale, UCAL_DEFAULT, &err);
+        ucal_clear(cal);
+        ucal_set(cal, UCAL_EXTENDED_YEAR, testCases[i].year);
+        ucal_set(cal, UCAL_MONTH, testCases[i].month);
+        ucal_set(cal, UCAL_DAY_OF_MONTH, testCases[i].day);
+        UDate date = ucal_getMillis(cal, &err);
+        ucal_close(cal);
+
+        UDateTimePatternGenerator* dtpg = udatpg_open(testCases[i].locale, &err);
+        UChar pattern[200];
+        udatpg_getBestPattern(dtpg, testCases[i].skeleton, -1, pattern, 200, &err);
+        UDateFormat* df = udat_open(UDAT_PATTERN, UDAT_PATTERN, testCases[i].locale,
+                                    u"GMT", -1, pattern, -1, &err);
+        if (assertSuccess("Error creating date formatter", &err)) {
+            UChar result[200];
+            udat_format(df, date, result, 200, NULL, &err);
+            if (assertSuccess("Error formatting date", &err)) {
+                char errorMessage[200];
+                snprintf(errorMessage, 200, "Wrong formatting result for %s/%s %d/%d/%d",
+                         testCases[i].locale, austrdup(testCases[i].skeleton),
+                         testCases[i].year, testCases[i].month + 1, testCases[i].day);
+                assertUEquals(errorMessage, testCases[i].expectedResult, result);
+
+                // parse the formatted result back and verify it round-trips
+                int32_t parsePos = 0;
+                UDate parsedDate = udat_parse(df, result, -1, &parsePos, &err);
+                if (assertSuccess("Error parsing date", &err)) {
+                    snprintf(errorMessage, 200, "Round-trip parse failed for %s/%s %d/%d/%d",
+                             testCases[i].locale, austrdup(testCases[i].skeleton),
+                             testCases[i].year, testCases[i].month + 1, testCases[i].day);
+                    assertTrue(errorMessage, parsedDate == date);
+                }
+            }
+            udat_close(df);
+        }
+        udatpg_close(dtpg);
+    }
+}
+
+// Test case for ICU-23262
+static void TestBadErasMakesBadMonthNamesBug(void) {
+    struct TestCase {
+        const UChar* pattern;
+        const UChar* expectedResult;
+    } testCases[] = {
+        { u"EEEE MMMM d, y G 'at' h:mm:ss a z",     u"Monday June 10, 1996 AD at 4:05:00 PM GMT" },
+        { u"EEEE MMMM d, y GGGG 'at' h:mm:ss a z",  u"Monday June 10, 1996 Anno Domini at 4:05:00 PM GMT" },
+        { u"EEEE MMMM d, y GGGGG 'at' h:mm:ss a z", u"Monday June 10, 1996 A at 4:05:00 PM GMT" },
+        { u"EEEE MMMM d, y 'at' h:mm:ss a z", u"Monday June 10, 1996 at 4:05:00 PM GMT" },
+    };
+    UDate dateToFormat = 834422700000.0; // July 10, 1996 4:05 PM GMT
+    for (int32_t i = 0; i < UPRV_LENGTHOF(testCases); i++) {
+        UErrorCode err = U_ZERO_ERROR;
+        UChar result[2000];
+        UDateFormat* df = udat_open(UDAT_PATTERN, UDAT_PATTERN,
+                "en-US-u-ca-iso8601", u"GMT", -1, testCases[i].pattern, -1, &err);
+        udat_format(df, dateToFormat, result, UPRV_LENGTHOF(result), NULL, &err);
+        udat_close(df);
+
+        char errorMessage[2000];
+        snprintf(errorMessage, UPRV_LENGTHOF(errorMessage),
+                 "Wrong formatting result for %s (%d %s)",
+                 austrdup(testCases[i].pattern), err, u_errorName(err));
+        assertTrue(errorMessage, U_SUCCESS(err));
+        assertUEquals(errorMessage, testCases[i].expectedResult, result);
+    }
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

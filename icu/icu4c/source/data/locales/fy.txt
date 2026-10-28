@@ -423,6 +423,8 @@ fy{
                 yMMM{"MMM y"}
                 yMMMEd{"E d MMM y"}
                 yMMMM{"MMMM y"}
+                yMMMMEd{"E d MMMM y"}
+                yMMMMd{"d MMMM y"}
                 yMMMd{"d MMM y"}
                 yMd{"d-M-y"}
                 yQQQ{"QQQ y"}
@@ -705,6 +707,13 @@ fy{
                         "Doe al kaʻaba",
                         "Doe al hizja",
                     }
+                }
+            }
+        }
+        roc{
+            eras{
+                abbreviated{
+                    1{"Minguo"}
                 }
             }
         }

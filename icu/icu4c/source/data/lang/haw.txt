@@ -9,9 +9,15 @@ haw{
         de{"Kelemānia"}
         el{"Helene"}
         en{"Pelekānia"}
+        en_AU{"Pelekāne Nū Hōlani"}
+        en_CA{"Pelekāne Kanakā"}
+        en_GB{"Pelekānia Pekekāne"}
+        en_US{"Pelekānia ʻAmelika"}
         es{"Paniolo"}
         fj{"Pīkī"}
         fr{"Palani"}
+        fr_CA{"Palani Kanakā"}
+        fr_CH{"Kuikilani"}
         ga{"ʻAiliki"}
         gsw{"Kuikilani Kelemānia"}
         haw{"ʻŌlelo Hawaiʻi"}
@@ -23,6 +29,7 @@ haw{
         mi{"Māori"}
         nl{"Hōlani"}
         pt{"Pukikī"}
+        pt_BR{"Pukikī Palakila"}
         ru{"Lūkia"}
         sm{"Kāmoa"}
         sv{"Kuekene"}
@@ -31,5 +38,7 @@ haw{
         und{"ʻIke ʻole ‘ia a kūpono ʻole paha ka ʻōlelo"}
         vi{"Wiekanama"}
         zh{"Pākē"}
+        zh_Hans{"Pākē Hoʻomaʻalahi ʻia"}
+        zh_Hant{"Pākē Kuʻuna"}
     }
 }

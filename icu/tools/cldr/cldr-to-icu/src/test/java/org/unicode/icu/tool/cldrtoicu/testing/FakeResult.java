@@ -4,23 +4,21 @@ package org.unicode.icu.tool.cldrtoicu.testing;
 
 import static com.google.common.base.Preconditions.checkState;
 
+import com.google.common.collect.ImmutableList;
 import java.util.Comparator;
 import java.util.Objects;
-
 import org.unicode.icu.tool.cldrtoicu.PathValueTransformer.Result;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
 
-import com.google.common.collect.ImmutableList;
-
 /**
- * A fake result, primarily for testing mappers. This implementation does not "play well" with
- * other result implementations.
+ * A fake result, primarily for testing mappers. This implementation does not "play well" with other
+ * result implementations.
  */
 public final class FakeResult extends Result {
     private static final Comparator<FakeResult> ORDERING =
-        Comparator.comparing(FakeResult::getKey)
-            .thenComparing(r -> r.index)
-            .thenComparing(r -> r.isFallback);
+            Comparator.comparing(FakeResult::getKey)
+                    .thenComparing(r -> r.index)
+                    .thenComparing(r -> r.isFallback);
 
     /**
      * Returns a primary result. Care must be taken to ensure that multiple "equal()" results are
@@ -34,7 +32,7 @@ public final class FakeResult extends Result {
      */
     public static Result of(String path, int index, boolean isGrouped, String... values) {
         return new FakeResult(
-            RbPath.parse(path), ImmutableList.copyOf(values), isGrouped, index, false);
+                RbPath.parse(path), ImmutableList.copyOf(values), isGrouped, index, false);
     }
 
     /**
@@ -54,7 +52,11 @@ public final class FakeResult extends Result {
     private final int index;
 
     private FakeResult(
-        RbPath path, ImmutableList<String> values, boolean grouped, int index, boolean isFallback) {
+            RbPath path,
+            ImmutableList<String> values,
+            boolean grouped,
+            int index,
+            boolean isFallback) {
         super(path);
         this.grouped = grouped;
         this.values = values;
@@ -66,41 +68,55 @@ public final class FakeResult extends Result {
         return isFallback;
     }
 
-    @Override public boolean isGrouped() {
+    @Override
+    public boolean isGrouped() {
         return grouped;
     }
 
-    @Override public ImmutableList<String> getValues() {
+    @Override
+    public ImmutableList<String> getValues() {
         return values;
     }
 
-    @Override public boolean isFallbackFor(Result r) {
+    @Override
+    public boolean isFallbackFor(Result r) {
         FakeResult other = (FakeResult) r;
-        return isFallback && !other.isFallback
-            && getKey().equals(r.getKey())
-            && index == (other).index;
+        return isFallback
+                && !other.isFallback
+                && getKey().equals(r.getKey())
+                && index == (other).index;
     }
 
-    @Override public int compareTo(Result other) {
+    @Override
+    public int compareTo(Result other) {
         int signum = ORDERING.compare(this, (FakeResult) other);
-        checkState(signum != 0 || this == other,
-            "equivalent but non-identical results found in test data: %s / %s", this, other);
+        checkState(
+                signum != 0 || this == other,
+                "equivalent but non-identical results found in test data: %s / %s",
+                this,
+                other);
         return signum;
     }
 
     // We really don't want to pretend to support mixing implementations of Result in tests.
     @SuppressWarnings("EqualsWhichDoesntCheckParameterClass")
-    @Override public boolean equals(Object obj) {
+    @Override
+    public boolean equals(Object obj) {
         FakeResult other = (FakeResult) obj;
-        boolean isEqual = getKey().equals(other.getKey())
-            && index == other.index
-            && isFallback == other.isFallback;
-        checkState(!isEqual || this == other,
-            "equivalent but non-identical results found in test data: %s / %s", this, other);
+        boolean isEqual =
+                getKey().equals(other.getKey())
+                        && index == other.index
+                        && isFallback == other.isFallback;
+        checkState(
+                !isEqual || this == other,
+                "equivalent but non-identical results found in test data: %s / %s",
+                this,
+                other);
         return isEqual;
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return Objects.hash(getKey(), index, isFallback);
     }
 }

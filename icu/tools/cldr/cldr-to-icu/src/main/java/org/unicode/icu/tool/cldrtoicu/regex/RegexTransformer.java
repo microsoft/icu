@@ -9,6 +9,9 @@ import static com.google.common.collect.ImmutableListMultimap.toImmutableListMul
 import static com.google.common.collect.ImmutableSetMultimap.toImmutableSetMultimap;
 import static java.util.function.Function.identity;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
+import com.google.common.collect.ImmutableSetMultimap;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.util.Arrays;
@@ -19,21 +22,16 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.regex.Pattern;
-
 import org.unicode.cldr.api.CldrDataType;
 import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
 import org.unicode.icu.tool.cldrtoicu.PathValueTransformer;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
 
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
-import com.google.common.collect.ImmutableSetMultimap;
-
 /**
  * Path/value transformer configured by {@code ldml2icu_xxx.txt} mapping and configuration files.
- * See {@code ldml2icu_readme.txt} for details on the configuration file format and
- * {@link PathValueTransformer} for the public API description and usage.
+ * See {@code ldml2icu_readme.txt} for details on the configuration file format and {@link
+ * PathValueTransformer} for the public API description and usage.
  *
  * <p>This class is thread safe.
  */
@@ -44,7 +42,7 @@ public final class RegexTransformer extends PathValueTransformer {
      * file contents, and using the specified functions for resolving ICU values.
      */
     public static PathValueTransformer fromConfigLines(
-        List<String> lines, NamedFunction... functions) {
+            List<String> lines, NamedFunction... functions) {
         return new RegexTransformer(RuleParser.parseConfig(lines, Arrays.asList(functions)));
     }
 
@@ -53,18 +51,20 @@ public final class RegexTransformer extends PathValueTransformer {
     // Transformation rules loading from the configuration file, grouped by path prefix.
     private final ImmutableListMultimap<String, Rule> rulesMap;
     // Functions which can generate a fallback value from a given resource bundle path.
-    private final ImmutableList<BiFunction<RbPath, DynamicVars, Optional<Result>>> fallbackFunctions;
+    private final ImmutableList<BiFunction<RbPath, DynamicVars, Optional<Result>>>
+            fallbackFunctions;
     // Records the total set of rules, removing them as they are matched. Used for reporting any
     // unused rules for debugging purposes.
     private final Set<Rule> unusedRules = new LinkedHashSet<>();
 
     private RegexTransformer(List<Rule> rules) {
         this.prefixMap =
-            rules.stream().collect(toImmutableSetMultimap(Rule::getDataType, Rule::getPathPrefix));
+                rules.stream()
+                        .collect(toImmutableSetMultimap(Rule::getDataType, Rule::getPathPrefix));
         this.rulesMap =
-            rules.stream().collect(toImmutableListMultimap(Rule::getPathPrefix, identity()));
+                rules.stream().collect(toImmutableListMultimap(Rule::getPathPrefix, identity()));
         this.fallbackFunctions =
-            rules.stream().flatMap(Rule::getFallbackFunctions).collect(toImmutableList());
+                rules.stream().flatMap(Rule::getFallbackFunctions).collect(toImmutableList());
         // Add all rules first and remove as they are matched.
         this.unusedRules.addAll(rules);
     }
@@ -134,13 +134,14 @@ public final class RegexTransformer extends PathValueTransformer {
     @Override
     public ImmutableList<Result> getFallbackResultsFor(RbPath rbPath, DynamicVars varLookupFn) {
         return fallbackFunctions.stream()
-            .map(f -> f.apply(rbPath, varLookupFn))
-            .filter(Optional::isPresent)
-            .map(Optional::get)
-            .collect(toImmutableList());
+                .map(f -> f.apply(rbPath, varLookupFn))
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(toImmutableList());
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         StringWriter buf = new StringWriter();
         PrintWriter out = new PrintWriter(buf);
         out.println(getClass().getName() + "{");
@@ -148,7 +149,7 @@ public final class RegexTransformer extends PathValueTransformer {
         if (!unusedRules.isEmpty()) {
             out.println("  Unused Rules:");
             unusedRules.forEach(
-                r -> out.format("    [line=%3d] %s\n", r.getLineNumber(), r.getXpathSpec()));
+                    r -> out.format("    [line=%3d] %s\n", r.getLineNumber(), r.getXpathSpec()));
         }
         out.println('}');
         out.flush();
@@ -165,7 +166,7 @@ public final class RegexTransformer extends PathValueTransformer {
         for (int j = s.indexOf(token); j != -1; i = j + 2, j = s.indexOf(token, i)) {
             char varChar = s.charAt(j + 1);
             String replacement =
-                checkNotNull(replaceFn.apply(varChar), "no such variable %s%s", token, varChar);
+                    checkNotNull(replaceFn.apply(varChar), "no such variable %s%s", token, varChar);
             out.append(s, i, j).append(replacement);
         }
         return out.append(s.substring(i)).toString();

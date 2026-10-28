@@ -5,6 +5,15 @@ package org.unicode.icu.tool.cldrtoicu.localedistance;
 import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableSetMultimap;
+import com.google.common.collect.SetMultimap;
+import com.google.common.collect.Sets;
+import com.google.common.collect.SortedSetMultimap;
+import com.google.common.collect.TreeMultimap;
+import com.ibm.icu.impl.locale.LSR;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -16,36 +25,25 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
-import com.google.common.base.CharMatcher;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableSetMultimap;
-import com.google.common.collect.SetMultimap;
-import com.google.common.collect.Sets;
-import com.google.common.collect.SortedSetMultimap;
-import com.google.common.collect.TreeMultimap;
-import com.ibm.icu.impl.locale.LSR;
-
 /**
- * Provides mapping arrays to quickly lookup partition information for any region
- * code in client libraries.
+ * Provides mapping arrays to quickly lookup partition information for any region code in client
+ * libraries.
  *
- * <p>A region's partition is defined by the set of region variables (e.g. "$enUS")
- * in the CLDR data. Each unique combination of variables forms a partition, and
- * groups of partitions uniquely define language distance groupings. In slightly
- * mathematical terms, partition groups form an "equivalence class" for regions
- * with respect to language distance.
+ * <p>A region's partition is defined by the set of region variables (e.g. "$enUS") in the CLDR
+ * data. Each unique combination of variables forms a partition, and groups of partitions uniquely
+ * define language distance groupings. In slightly mathematical terms, partition groups form an
+ * "equivalence class" for regions with respect to language distance.
  *
- * <p>So by determining the minimum set of partitions and partition groups, and
- * assigning short IDs to them, it's possibe to create data structures which
- * support all region pairings while being small and fast to access in client code.
+ * <p>So by determining the minimum set of partitions and partition groups, and assigning short IDs
+ * to them, it's possibe to create data structures which support all region pairings while being
+ * small and fast to access in client code.
  */
 final class PartitionInfo {
     private static final Logger logger = Logger.getLogger(PartitionInfo.class.getName());
 
     /**
-     * A builder, to which region variables are added in order to define partitions
-     * and partition groups based on territory containment.
+     * A builder, to which region variables are added in order to define partitions and partition
+     * groups based on territory containment.
      */
     static final class Builder {
         // Possible operations to parse from a region expression (e.g. "US+005-BR").
@@ -67,21 +65,23 @@ final class PartitionInfo {
         }
 
         /**
-         * Adds a variable expression (e.g. "$foo = "US+005-BR") from CLDR data and
-         * fully resolves all macro regions to their contained leaf regions.
+         * Adds a variable expression (e.g. "$foo = "US+005-BR") from CLDR data and fully resolves
+         * all macro regions to their contained leaf regions.
          *
          * <p>The syntax is simple for now:
+         *
          * <pre>
          *     regionSet := region ([-+] region)*
          * </pre>
-         * There is no precedence, so "x+y-y+z" is "(((x+y)-y)+z)", and <em>not</em>
-         * "(x+y)-(y+z)".
+         *
+         * There is no precedence, so "x+y-y+z" is "(((x+y)-y)+z)", and <em>not</em> "(x+y)-(y+z)".
          */
         public void addVariableExpression(String variable, String expr) {
-            checkState(variable.startsWith("$") && !variable.startsWith("$!"),
-                    "invalid variable: %s", variable);
-            checkState(!isKnownVariableOrWildcard(variable),
-                    "duplicate variable: %s", variable);
+            checkState(
+                    variable.startsWith("$") && !variable.startsWith("$!"),
+                    "invalid variable: %s",
+                    variable);
+            checkState(!isKnownVariableOrWildcard(variable), "duplicate variable: %s", variable);
             // Parsing also flattens the list to the corresponding leaf regions,
             // so there should be no macro regions here.
             Set<String> regions = parseAndFlattenRegionExpression(expr, territories);
@@ -108,8 +108,11 @@ final class PartitionInfo {
         }
 
         private void addVariable(String variable, Iterable<String> regions) {
-            checkArgument(variables.add(variable),
-                    "variable '%s' already present in: %s", variable, regions);
+            checkArgument(
+                    variables.add(variable),
+                    "variable '%s' already present in: %s",
+                    variable,
+                    regions);
             for (String region : regions) {
                 checkArgument(!region.isEmpty(), "%s", regions);
                 regionToVariables.put(region, variable);
@@ -164,7 +167,10 @@ final class PartitionInfo {
             // Here we either have a "raw" region (e.g. "GB") or an unknown variable (e.g. "$foo").
             // However all explicit variables should have already been registered, so if this does
             // start with '$', then it's an error.
-            checkArgument(!regionOrVariable.startsWith("$"), "unregistered variable: %s", regionOrVariable);
+            checkArgument(
+                    !regionOrVariable.startsWith("$"),
+                    "unregistered variable: %s",
+                    regionOrVariable);
 
             // This is an implicit variable, referenced by its region code, so we know that it
             // can never be referenced in the negated form (i.e. "$!GB"), so we don't need to add
@@ -205,7 +211,8 @@ final class PartitionInfo {
 
             // Check that the region-to-partition map covers every leaf region (this
             // is important to ensure partitions form a disjoint covering).
-            checkArgument(regionToVariables.keySet().equals(territories.getLeafRegions()),
+            checkArgument(
+                    regionToVariables.keySet().equals(territories.getLeafRegions()),
                     "unexpected variable grouping (should cover all leaf regions): %s",
                     regionToVariables);
             ImmutableMap<String, String> regionToPartitionId =
@@ -224,7 +231,8 @@ final class PartitionInfo {
             //   "$americas" -> { X, Y }
             ImmutableSetMultimap<String, String> variableToPartitionIds =
                     mapVariablesToPartitionIds(regionToPartitionId, regionToVariables);
-            logger.fine(() -> String.format("variable to partition IDs: %s", variableToPartitionIds));
+            logger.fine(
+                    () -> String.format("variable to partition IDs: %s", variableToPartitionIds));
 
             // A sorted mapping of each macro region to the partitions it intersects
             // with. Unlike leaf regions, macro regions can map to groups of partitions
@@ -248,10 +256,12 @@ final class PartitionInfo {
             // all possible regions, not just ones which exist. This is a space/time
             // trade-off (and the array is compressed in the ICU data files anyway).
             byte[] partitionLookupArray = new byte[LSR.REGION_INDEX_LIMIT];
-            String[] partitionStrings = writePartitionLookupTable(
-                    partitionLookupArray, regionToPartitionId, macroRegionToPartitionIds);
+            String[] partitionStrings =
+                    writePartitionLookupTable(
+                            partitionLookupArray, regionToPartitionId, macroRegionToPartitionIds);
 
-            return new PartitionInfo(variableToPartitionIds, partitionLookupArray, partitionStrings);
+            return new PartitionInfo(
+                    variableToPartitionIds, partitionLookupArray, partitionStrings);
         }
 
         private static ImmutableMap<String, String> mapLeafRegionsToPartitionIds(
@@ -262,21 +272,25 @@ final class PartitionInfo {
             // Partition IDs are emitted into the ICU data, so it's important they are
             // small and compatible with the ICU data file format.
             Function<Collection<String>, String> partitionToId =
-                    Indexer.create(i -> {
-                        // Must be a single 7-bit ASCII value and not '*'. This is NOT
-                        // used as a numeric value anywhere and could end up being a non
-                        // digit character if the number of unique partitions is > 10.
-                        // As of June 2020, there are only 7 unique paritions.
-                        char partitionChar = (char) ('0' + i);
-                        checkState(partitionChar < 0x7f, "too many partitions: %s", i);
-                        return String.valueOf(partitionChar);
-                    });
+                    Indexer.create(
+                            i -> {
+                                // Must be a single 7-bit ASCII value and not '*'. This is NOT
+                                // used as a numeric value anywhere and could end up being a non
+                                // digit character if the number of unique partitions is > 10.
+                                // As of June 2020, there are only 7 unique paritions.
+                                char partitionChar = (char) ('0' + i);
+                                checkState(partitionChar < 0x7f, "too many partitions: %s", i);
+                                return String.valueOf(partitionChar);
+                            });
 
             // For each region, find its partition ID (based on the unique combination
             // of variables that define it).
             ImmutableMap.Builder<String, String> regionToId = ImmutableMap.builder();
-            regionToVariables.asMap().forEach(
-                    (region, variables) -> regionToId.put(region, partitionToId.apply(variables)));
+            regionToVariables
+                    .asMap()
+                    .forEach(
+                            (region, variables) ->
+                                    regionToId.put(region, partitionToId.apply(variables)));
             return regionToId.build();
         }
 
@@ -288,12 +302,15 @@ final class PartitionInfo {
             // since the values are later indexed and turned into partition strings
             // (so stability of ID order in values is necessary).
             SortedSetMultimap<String, String> variableToPartitionIds = TreeMultimap.create();
-            regionToVariables.asMap().forEach((region, variables) -> {
-                String partitionId = regionToPartitionId.get(region);
-                for (String variable : variables) {
-                    variableToPartitionIds.put(variable, partitionId);
-                }
-            });
+            regionToVariables
+                    .asMap()
+                    .forEach(
+                            (region, variables) -> {
+                                String partitionId = regionToPartitionId.get(region);
+                                for (String variable : variables) {
+                                    variableToPartitionIds.put(variable, partitionId);
+                                }
+                            });
             return ImmutableSetMultimap.copyOf(variableToPartitionIds);
         }
 
@@ -322,11 +339,12 @@ final class PartitionInfo {
             SortedSetMultimap<String, String> macroToPartitions = TreeMultimap.create();
             for (String macro : territories.getMacroRegions()) {
                 ImmutableSet<String> leaves = territories.getLeafRegionsOf(macro);
-                partitionToRegions.forEach((partition, regions) -> {
-                    if (!Collections.disjoint(leaves, regions)) {
-                        macroToPartitions.put(macro, partition);
-                    }
-                });
+                partitionToRegions.forEach(
+                        (partition, regions) -> {
+                            if (!Collections.disjoint(leaves, regions)) {
+                                macroToPartitions.put(macro, partition);
+                            }
+                        });
             }
             return ImmutableSetMultimap.copyOf(macroToPartitions);
         }
@@ -341,13 +359,14 @@ final class PartitionInfo {
             // For leaf regions this generates a one-to-one mapping with the single
             // partition ID, but macro regions can overlap multiple partitions.
             Indexer<Collection<String>, Byte> partitionGroupIndexer =
-                    Indexer.create(i -> {
-                        // The partition group index must fit in a byte.
-                        // For Java code simplicity, we want it to also be non-negative.
-                        // As of June 2020, there are 15 partition groups.
-                        checkState(i <= 0x7f, "too many partition groups: %s", i);
-                        return (byte) i.intValue();
-                    });
+                    Indexer.create(
+                            i -> {
+                                // The partition group index must fit in a byte.
+                                // For Java code simplicity, we want it to also be non-negative.
+                                // As of June 2020, there are 15 partition groups.
+                                checkState(i <= 0x7f, "too many partition groups: %s", i);
+                                return (byte) i.intValue();
+                            });
 
             // The default value in the partition lookup array (index 0) is mapped to by
             // any unsupported region (since "LSR.indexForRegion(<invalid region>)" is 0).
@@ -359,8 +378,9 @@ final class PartitionInfo {
             // to the LSR region index (which must correspond to how regions are indexed in
             // the client side code).
             BiConsumer<String, Collection<String>> writePartitionIndex =
-                    (region, ids) -> partitionLookupArray[LSR.indexForRegion(region)] =
-                            partitionGroupIndexer.apply(ids);
+                    (region, ids) ->
+                            partitionLookupArray[LSR.indexForRegion(region)] =
+                                    partitionGroupIndexer.apply(ids);
 
             // Write leaf regions first (mostly to match the original code behaviour)
             // and then macro regions.
@@ -378,13 +398,14 @@ final class PartitionInfo {
             // have a single partition ID, but macro regions can overlap with multiple
             // partitions.
             return partitionGroupIndexer.getValues().stream()
-                    .map(ids -> String.join("", ids)).toArray(String[]::new);
+                    .map(ids -> String.join("", ids))
+                    .toArray(String[]::new);
         }
     }
 
     /**
-     * Returns a builder to which variable mappings are added, from which partition
-     * information is derived.
+     * Returns a builder to which variable mappings are added, from which partition information is
+     * derived.
      */
     public static Builder builder(TerritoryContainment territories) {
         return new Builder(territories);
@@ -404,9 +425,9 @@ final class PartitionInfo {
     }
 
     /**
-     * Returns the set of partition IDs for the given variable, or {@code {"*"}} if the
-     * speical '*' variable was given. The returned set must be non-empty because every
-     * variable includes at least one region, and all regions map to a partition ID.
+     * Returns the set of partition IDs for the given variable, or {@code {"*"}} if the speical '*'
+     * variable was given. The returned set must be non-empty because every variable includes at
+     * least one region, and all regions map to a partition ID.
      */
     public ImmutableSet<String> getPartitionIds(String variable) {
         if (variable.equals("*")) {
@@ -423,8 +444,7 @@ final class PartitionInfo {
     }
 
     /**
-     * Returns the partition group lookup array from partition group index to partition
-     * ID string.
+     * Returns the partition group lookup array from partition group index to partition ID string.
      */
     public String[] getPartitionStrings() {
         return partitionStrings;

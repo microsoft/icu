@@ -8,10 +8,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-
 import org.unicode.icu.tool.cldrtoicu.CodeGenerator;
 import org.unicode.icu.tool.cldrtoicu.generator.ResourceFallbackCodeGenerator;
 
@@ -26,7 +26,8 @@ public final class GenerateCodeTask extends Task {
         String javaRelativePath;
         CodeGenerator generator;
 
-        public GeneratedFileDef(String cRelativePath, String javaRelativePath, CodeGenerator generator) {
+        public GeneratedFileDef(
+                String cRelativePath, String javaRelativePath, CodeGenerator generator) {
             this.cRelativePath = cRelativePath;
             this.javaRelativePath = javaRelativePath;
             this.generator = generator;
@@ -34,26 +35,33 @@ public final class GenerateCodeTask extends Task {
     }
 
     private GeneratedFileDef[] generatedFileDefs = {
-        new GeneratedFileDef("common/localefallback_data.h", "src/main/java/com/ibm/icu/impl/LocaleFallbackData.java", new ResourceFallbackCodeGenerator()),
+        new GeneratedFileDef(
+                "common/localefallback_data.h",
+                "src/main/java/com/ibm/icu/impl/LocaleFallbackData.java",
+                new ResourceFallbackCodeGenerator()),
     };
 
     public void setCldrDir(String path) {
-        // Use String here since on some systems Ant doesn't support automatically converting Path instances.
+        // Use String here since on some systems Ant doesn't support automatically converting Path
+        // instances.
         this.cldrPath = checkNotNull(Paths.get(path));
     }
 
     public void setCOutDir(String path) {
-        // Use String here since on some systems Ant doesn't support automatically converting Path instances.
+        // Use String here since on some systems Ant doesn't support automatically converting Path
+        // instances.
         this.cOutDir = Paths.get(path);
     }
 
     public void setJavaOutDir(String path) {
-        // Use String here since on some systems Ant doesn't support automatically converting Path instances.
+        // Use String here since on some systems Ant doesn't support automatically converting Path
+        // instances.
         this.javaOutDir = Paths.get(path);
     }
 
     public void setAction(String action) {
-        // Use String here since on some systems Ant doesn't support automatically converting Path instances.
+        // Use String here since on some systems Ant doesn't support automatically converting Path
+        // instances.
         this.action = action;
     }
 
@@ -71,8 +79,10 @@ public final class GenerateCodeTask extends Task {
                     Files.createDirectories(cOutPath.getParent());
                     Files.createDirectories(javaOutPath.getParent());
 
-                    try (PrintWriter cOut = new PrintWriter(new OutputStreamWriter(new FileOutputStream(cOutPath.toFile())));
-                         PrintWriter javaOut = new PrintWriter(new OutputStreamWriter(new FileOutputStream(javaOutPath.toFile())))) {
+                    try (PrintWriter cOut =
+                                    new PrintWriter(cOutPath.toFile(), StandardCharsets.UTF_8);
+                            PrintWriter javaOut =
+                                    new PrintWriter(javaOutPath.toFile(), StandardCharsets.UTF_8)) {
 
                         log("Generating " + cOutPath + " and " + javaOutPath + "...");
                         task.generator.generateCode(cldrPath, cOut, javaOut);

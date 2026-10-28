@@ -303,11 +303,11 @@ static void TestCalendar(void)
     } else {
         if (u_strcmp(AMERICA_LOS_ANGELES, canonicalID) != 0) {
             log_data_err("FAIL: ucal_getCanonicalTimeZoneID(%s) returned %s : expected - %s (Are you missing data?)\n",
-                austrdup(PST), austrdup(canonicalID), austrdup(AMERICA_LOS_ANGELES));
+                PST, canonicalID, AMERICA_LOS_ANGELES);
         }
         if (!isSystemID) {
             log_data_err("FAIL: ucal_getCanonicalTimeZoneID(%s) set %d to isSystemID (Are you missing data?)\n",
-                austrdup(PST), isSystemID);
+                PST, isSystemID);
         }
     }
 
@@ -644,7 +644,7 @@ static void TestGetSetDateAPI(void)
     if (U_FAILURE(status)) {
         log_err("Error in getTimeZoneID : %s\n", u_errorName(status));
     } else if (u_strcmp(id, fgGMTID) != 0) {
-        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%s, expected=%s\n", austrdup(id), austrdup(fgGMTID));
+        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%d, expected=%s\n", austrdup(id), austrdup(fgGMTID));
     } else {
         log_verbose("PASS: getTimeZoneID works fine\n");
     }
@@ -667,7 +667,7 @@ static void TestGetSetDateAPI(void)
     if (U_FAILURE(status)) {
         log_err("Error in getTimeZoneID : %s\n", u_errorName(status));
     } else if (u_strcmp(id, tzID) != 0) {
-        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%s, expected=%s\n", austrdup(id), austrdup(tzID));
+        log_err("FAIL: getTimeZoneID returns a wrong ID: actual=%d, expected=%s\n", austrdup(id), austrdup(tzID));
     } else {
         log_verbose("PASS: getTimeZoneID works fine\n");
     }
@@ -724,7 +724,7 @@ static void TestGetSetDateAPI(void)
 
     /*Testing  if setDate works fine  */
     log_verbose("\nTesting the ucal_setDate() function \n");
-    u_strcpy(temp, u"Dec 17, 1971, 11:05:28 PM");
+    u_strcpy(temp, u"Dec 17, 1971, 11:05:28\u202FPM");
     ucal_setDate(caldef,1971, UCAL_DECEMBER, 17, &status);
     if(U_FAILURE(status)){
         log_err("error in setting the calendar date : %s\n", u_errorName(status));
@@ -755,7 +755,7 @@ static void TestGetSetDateAPI(void)
 
     /*Testing if setDateTime works fine */
     log_verbose("\nTesting the ucal_setDateTime() function \n");
-    u_strcpy(temp, u"May 3, 1972, 4:30:42 PM");
+    u_strcpy(temp, u"May 3, 1972, 4:30:42\u202FPM");
     ucal_setDateTime(caldef,1972, UCAL_MAY, 3, 16, 30, 42, &status);
     if(U_FAILURE(status)){
         log_err("error in setting the calendar date : %s\n", u_errorName(status));
@@ -2167,6 +2167,10 @@ static const UChar zoneGMT[] = { 0x47,0x4D,0x54,0 };
 void TestAddRollEra0AndEraBounds(void) {
     const EraTestItem * eraTestItemPtr;
     for (eraTestItemPtr = eraTestItems; eraTestItemPtr->locale != NULL; eraTestItemPtr++) {
+        if (uprv_strstr(eraTestItemPtr->locale, "calendar=japanese") != NULL &&
+                log_knownIssue("ICU-23108", "ICU needs to implement era inheritance")) {
+            continue;
+        }
         UErrorCode status = U_ZERO_ERROR;
         UCalendar *ucalTest = ucal_open(zoneGMT, -1, eraTestItemPtr->locale, UCAL_DEFAULT, &status);
         if ( U_SUCCESS(status) ) {
@@ -2922,7 +2926,7 @@ TestGetIanaTimeZoneID(void) {
         {u"Europe/Zaporozhye",  u"Europe/Kyiv"},
         {u"Etc/GMT-1",          u"Etc/GMT-1"},
         {u"Etc/GMT+20",         UNKNOWN},
-        {u"PST8PDT",            u"America/Los_Angeles"},
+        {u"PST8PDT",            u"PST8PDT"},
         {u"GMT-08:00",          UNKNOWN},
         {0,                     0}
     };
@@ -2947,7 +2951,7 @@ TestGetIanaTimeZoneID(void) {
             int32_t ianaLen2 = 0;
             ianaLen2 = ucal_getIanaTimeZoneID(ianaID, ianaLen, ianaID2, sizeof(ianaID2), &sts);
             if (U_FAILURE(sts) || ianaLen != ianaLen2 || u_strncmp(ianaID, ianaID2, ianaLen) != 0) {
-                    log_err("Error: IANA ID for IANA ID %s", austrdup(ianaID));
+                    log_err("Error: IANA ID for IANA ID %s", ianaID);
                 }
         }
     }

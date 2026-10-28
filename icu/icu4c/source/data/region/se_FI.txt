@@ -20,9 +20,11 @@ se_FI{
         BA{"Bosnia ja Hercegovina"}
         EZ{"Euroavádat"}
         KH{"Kamboža"}
-        PS{"Palestiinalaishallinto"}
         SD{"Sudan"}
         TD{"Chad"}
         UN{"Ovttastuvvan Našuvnnat"}
+    }
+    Countries%variant{
+        CI{"Côte d’Ivoire"}
     }
 }

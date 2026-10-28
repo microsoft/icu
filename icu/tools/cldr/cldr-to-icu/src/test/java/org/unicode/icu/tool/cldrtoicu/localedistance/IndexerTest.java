@@ -4,9 +4,8 @@ package org.unicode.icu.tool.cldrtoicu.localedistance;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import org.junit.Test;
-
 import com.google.common.collect.ImmutableList;
+import org.junit.Test;
 
 public class IndexerTest {
     @Test
@@ -26,7 +25,6 @@ public class IndexerTest {
         assertThat(indexer.apply("bar")).isEqualTo("TWO");
         assertThat(indexer.apply("baz")).isEqualTo("THREE");
         assertThat(indexer.apply("foo")).isEqualTo("ONE");
-
     }
 
     @Test
