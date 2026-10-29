@@ -11,4 +11,23 @@ quc{
         "[AÄ {Bʼ} {CH} {CHʼ} E I J K {Kʼ} L M N O P Q {Qʼ} R S T {TZ} {TZʼ} {Tʼ} U V "
         "W X Y]"
     }
+    calendar{
+        gregorian{
+            DateTimePatterns{
+                "h:mm:ss a zzzz",
+                "h:mm:ss a z",
+                "h:mm:ss a",
+                "h:mm a",
+                "y MMMM d, EEEE",
+                "y MMMM d",
+                "y MMM d",
+                "y-MM-dd",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+            }
+        }
+    }
 }
