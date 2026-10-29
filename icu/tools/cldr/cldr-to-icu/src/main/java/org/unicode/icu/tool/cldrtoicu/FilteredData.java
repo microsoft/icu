@@ -6,14 +6,13 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import javax.annotation.Nullable;
-
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
 
 /**
- * A class which allows data from some underlying {@link CldrData} source to be filtered or
- * removed (but not added).
+ * A class which allows data from some underlying {@link CldrData} source to be filtered or removed
+ * (but not added).
  */
 // TODO: Once DTD ordering is the only allowed order, this can be extended to allow adding paths.
 abstract class FilteredData implements CldrData {
@@ -30,8 +29,8 @@ abstract class FilteredData implements CldrData {
 
     /**
      * Returns a filtered CLDR value, replacing or removing the original value during visitation.
-     * The filtered value can only differ in it's base value or value attributes, and must have
-     * the same {@link CldrPath} associated with it.
+     * The filtered value can only differ in it's base value or value attributes, and must have the
+     * same {@link CldrPath} associated with it.
      *
      * @return the filtered to be replaced, or {@code null} to remove the value.
      */
@@ -59,9 +58,11 @@ abstract class FilteredData implements CldrData {
     @Nullable
     private CldrValue checkFiltered(CldrValue value) {
         CldrValue filteredValue = filter(value);
-        checkArgument(filteredValue == null || filteredValue.getPath().equals(value.getPath()),
-            "filtering is not permitted to modify distinguishing paths: source=%s, filtered=%s",
-            value, filteredValue);
+        checkArgument(
+                filteredValue == null || filteredValue.getPath().equals(value.getPath()),
+                "filtering is not permitted to modify distinguishing paths: source=%s, filtered=%s",
+                value,
+                filteredValue);
         return filteredValue;
     }
 }

@@ -10,6 +10,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static java.nio.file.StandardOpenOption.TRUNCATE_EXISTING;
 import static java.util.stream.Collectors.joining;
 
+import com.google.common.collect.Iterables;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.Writer;
@@ -20,39 +21,45 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.google.common.collect.Iterables;
-
 /**
  * Writes an IcuData object to a text file. A lot of this class was copied directly from the
  * original {@code IcuTextWriter} in the CLDR project and has a number of very idiosyncratic
- * behaviours. The behaviour of this class is currently tuned to produce perfect parity with
- * the original conversion tools, but once migration of the tools is complete, it should
- * probably be revisited and tidied up.
+ * behaviours. The behaviour of this class is currently tuned to produce perfect parity with the
+ * original conversion tools, but once migration of the tools is complete, it should probably be
+ * revisited and tidied up.
  */
 // TODO: Link to a definitive specification for the ICU data files and remove the hacks!
 final class IcuTextWriter {
     private static final String INDENT = "    ";
     // List of characters to escape in UnicodeSets
     // ('\' followed by any of '\', '[', ']', '{', '}', '-', '&', ':', '^', '=').
-    private static final Pattern UNICODESET_ESCAPE =
-        Pattern.compile("\\\\[\\\\\\[\\]{}\\-&:^=]");
+    private static final Pattern UNICODESET_ESCAPE = Pattern.compile("\\\\[\\\\\\[\\]{}\\-&:^=]");
     // Only escape \ and " from other strings.
     private static final Pattern STRING_ESCAPE = Pattern.compile("(?!')\\\\\\\\(?!')");
     private static final Pattern QUOTE_ESCAPE = Pattern.compile("\\\\?\"");
 
-    private static final OpenOption[] ONLY_NEW_FILES = { CREATE_NEW };
-    private static final OpenOption[] OVERWRITE_FILES = { CREATE, TRUNCATE_EXISTING };
+    private static final OpenOption[] ONLY_NEW_FILES = {CREATE_NEW};
+    private static final OpenOption[] OVERWRITE_FILES = {CREATE, TRUNCATE_EXISTING};
 
     /** Write a file in ICU data format with the specified header. */
     static void writeToFile(
-        IcuData icuData, Path outDir, List<String> header, boolean allowOverwrite) {
+            IcuData icuData, Path outDir, List<String> header, boolean allowOverwrite) {
 
         try {
-            Files.createDirectories(outDir);
+            try {
+                Files.createDirectories(outDir);
+            } catch (IOException e) {
+                // On Windows, concurrent directory creation by parallel threads can transiently
+                // produce AccessDeniedException even when the directory already exists. If the
+                // directory is now present (created by another thread), treat it as success.
+                if (!Files.isDirectory(outDir)) {
+                    throw e;
+                }
+            }
             Path file = outDir.resolve(icuData.getName() + ".txt");
             OpenOption[] fileOptions = allowOverwrite ? OVERWRITE_FILES : ONLY_NEW_FILES;
             try (Writer w = Files.newBufferedWriter(file, UTF_8, fileOptions);
-                PrintWriter out = new PrintWriter(w)) {
+                    PrintWriter out = new PrintWriter(w)) {
                 new IcuTextWriter(icuData).writeTo(out, header);
             }
         } catch (IOException e) {
@@ -162,24 +169,24 @@ final class IcuTextWriter {
     // Currently the "header" uses '//' line comments but the comments are in a block.
     // TODO: Sort this out so there isn't a messy mix of comment styles in the data files.
     private static void writeHeaderAndComments(
-        PrintWriter out, List<String> header, List<String> comments) {
+            PrintWriter out, List<String> header, List<String> comments) {
 
         header.forEach(s -> out.println("// " + s));
         if (!comments.isEmpty()) {
             // TODO: Don't use /* */ block quotes, just use inline // quotes.
-            out.println(
-                comments.stream().collect(joining("\n * ", "/**\n * ", "\n */")));
+            out.println(comments.stream().collect(joining("\n * ", "/**\n * ", "\n */")));
         }
     }
 
     private static final class FormatOptions {
         // Only the indent flag is used
-        final static FormatOptions PATH_FORMAT = new FormatOptions(true, true, true);
+        static final FormatOptions PATH_FORMAT = new FormatOptions(true, true, true);
 
         static FormatOptions forPath(RbPath rbPath) {
             return new FormatOptions(
                     !rbPath.isIntPath() && !rbPath.isBinPath(),
-                    !rbPath.endsWith(RB_SEQUENCE) && !rbPath.isBinPath(),
+                    !rbPath.endsWith(RB_SEQUENCE) && !rbPath.isBinPath()
+                            && !rbPath.startsWith(RB_RBNF_RULES),
                     !rbPath.isBinPath());
         }
 
@@ -197,7 +204,7 @@ final class IcuTextWriter {
     /** Inserts padding and values between braces. */
     // TODO: Get rid of the need for icuDataName by adding type information to RbPath.
     private boolean appendValues(
-        String icuDataName, RbPath rbPath, List<RbValue> values, PrintWriter out) {
+            String icuDataName, RbPath rbPath, List<RbValue> values, PrintWriter out) {
 
         RbValue onlyValue;
         boolean wasSingular = false;
@@ -255,6 +262,7 @@ final class IcuTextWriter {
     private static final RbPath RB_NAMED = RbPath.of("named");
     private static final RbPath RB_CALENDAR_PREFERENCE_DATA = RbPath.of("calendarPreferenceData");
     private static final RbPath RB_METAZONE_INFO = RbPath.of("metazoneInfo");
+    private static final RbPath RB_RBNF_RULES = RbPath.of("RBNFRules");
 
     /**
      * Wrapper for a hack to determine if the given rb path should always present its values as an
@@ -265,12 +273,12 @@ final class IcuTextWriter {
         if (topValues) {
             // matches "rules/setNN" (hence the mucking about with raw segments).
             return name.equals("pluralRanges")
-                && rbPath.startsWith(RB_RULES)
-                && rbPath.getSegment(1).startsWith("set");
+                    && rbPath.startsWith(RB_RULES)
+                    && rbPath.getSegment(1).startsWith("set");
         }
         return rbPath.equals(RB_LOCALE_SCRIPT)
-            || rbPath.startsWith(RB_CALENDAR_PREFERENCE_DATA)
-            || rbPath.startsWith(RB_METAZONE_INFO);
+                || rbPath.startsWith(RB_CALENDAR_PREFERENCE_DATA)
+                || rbPath.startsWith(RB_METAZONE_INFO);
     }
 
     private void printElements(PrintWriter out, RbValue rbValue, FormatOptions format) {
@@ -313,11 +321,12 @@ final class IcuTextWriter {
         }
         // Don't break escaped Unicode characters.
         // Need to handle both e.g. \u4E00 and \U00020000
-        for (int i = end - 1; i > end - 10;) {
+        for (int i = end - 1; i > end - 10; ) {
             char current = quoted.charAt(i--);
             if (!Character.toString(current).matches("[0-9A-Fa-f]")) {
-                if ((current == 'u' || current == 'U') && i > end - 10
-                    && quoted.charAt(i) == '\\') {
+                if ((current == 'u' || current == 'U')
+                        && i > end - 10
+                        && quoted.charAt(i) == '\\') {
                     return i;
                 }
                 break;
@@ -339,7 +348,7 @@ final class IcuTextWriter {
         item = QUOTE_ESCAPE.matcher(item).replaceAll("\\\\u0022");
         // Double up on backslashes, ignoring Unicode-escaped characters.
         Pattern pattern =
-            item.startsWith("[") && item.endsWith("]") ? UNICODESET_ESCAPE : STRING_ESCAPE;
+                item.startsWith("[") && item.endsWith("]") ? UNICODESET_ESCAPE : STRING_ESCAPE;
         Matcher matcher = pattern.matcher(item);
 
         if (!matcher.find()) {

@@ -53,7 +53,6 @@ sw_KE{
         ilo{"Kiiloko"}
         inh{"Kiingushi"}
         is{"Kiaisilandi"}
-        jbo{"Kilojbani"}
         kac{"Kikachini"}
         kbd{"Kikabadi"}
         kea{"Kikabuvedi"}
@@ -105,7 +104,6 @@ sw_KE{
         sc{"Kisadini"}
         scn{"Kisisilia"}
         ses{"Kikoyraborosenni"}
-        shn{"Kishani"}
         shu{"Kiarabu cha Chadi"}
         slh{"Kilushootseed cha Kusini"}
         srn{"Kisranantongo"}
@@ -113,7 +111,6 @@ sw_KE{
         str{"Kisali cha Straits"}
         su{"Kisundani"}
         swb{"Kikomoro"}
-        syr{"Kisiria"}
         tce{"Kituchone cha Kusini"}
         tem{"Kitimne"}
         tgx{"Kitagi"}
@@ -122,7 +119,6 @@ sw_KE{
         tok{"Kitokipona"}
         ts{"Kisonga"}
         ttm{"Kituchone cha Kaskazini"}
-        tw{"Kitwi"}
         tzm{"Kitamazight cha Atlas ya Kati"}
         udm{"Kiudumurti"}
         ug{"Kiuiguri"}
@@ -147,7 +143,6 @@ sw_KE{
         Ethi{"Kihabeshi"}
         Hanb{"Kihan chenye Kibopomofo"}
         Hans{"Kilichorahisishwa"}
-        Hira{"Kihiragana"}
         Hrkt{"Silabi za Kijapani"}
         Jamo{"Kijamo"}
         Khmr{"Kikhema"}

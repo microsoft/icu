@@ -9,20 +9,18 @@ import static com.google.common.collect.Maps.filterValues;
 import static com.google.common.collect.Maps.transformValues;
 import static java.util.function.Function.identity;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import org.unicode.cldr.api.CldrDataType;
-import org.unicode.cldr.api.CldrPath;
-
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.escape.CharEscaperBuilder;
 import com.google.common.escape.Escaper;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import org.unicode.cldr.api.CldrDataType;
+import org.unicode.cldr.api.CldrPath;
 
 /** Parser for rule specifications in the regex transformer configuration files. */
 final class RuleParser {
@@ -38,25 +36,31 @@ final class RuleParser {
 
     // Splitter for the resource bundle / value declarations.
     private static final Splitter RULE_PARTS_SPLITTER =
-        Splitter.on(RULE_PARTS_SEPERATOR).trimResults(whitespace()).omitEmptyStrings();
+            Splitter.on(RULE_PARTS_SEPERATOR).trimResults(whitespace()).omitEmptyStrings();
 
     // Splitter for instruction name/expressions.
     private static final Splitter INSTRUCTION_SPLITTER =
-        Splitter.on('=').trimResults(whitespace()).limit(2);
+            Splitter.on('=').trimResults(whitespace()).limit(2);
 
     // Only '[',']' need escaping in path specifications (so we can write "foo{@bar="baz"]").
     private static final Escaper SPECIAL_CHARS_ESCAPER =
-        new CharEscaperBuilder().addEscape('[', "\\[").addEscape(']', "\\]").toEscaper();
+            new CharEscaperBuilder().addEscape('[', "\\[").addEscape(']', "\\]").toEscaper();
 
     /** Parses a configuration file to create a sequence of transformation rules. */
     static ImmutableList<Rule> parseConfig(
-        List<String> configLines, List<NamedFunction> functions) {
+            List<String> configLines, List<NamedFunction> functions) {
         // Extract '%X' variable declarations in the first pass.
-        ImmutableMap<Character, String> varMap = configLines.stream()
-            .filter(s -> s.startsWith("%"))
-            .map(VAR::matcher)
-            .peek(m -> checkArgument(m.matches(), "invalid argument declaration: %s", m))
-            .collect(ImmutableMap.toImmutableMap(m -> m.group(1).charAt(0), m -> m.group(2)));
+        ImmutableMap<Character, String> varMap =
+                configLines.stream()
+                        .filter(s -> s.startsWith("%"))
+                        .map(VAR::matcher)
+                        .peek(
+                                m ->
+                                        checkArgument(
+                                                m.matches(), "invalid argument declaration: %s", m))
+                        .collect(
+                                ImmutableMap.toImmutableMap(
+                                        m -> m.group(1).charAt(0), m -> m.group(2)));
         return new RuleParser(varMap, functions).parseLines(configLines);
     }
 
@@ -66,12 +70,12 @@ final class RuleParser {
 
     private RuleParser(ImmutableMap<Character, String> varMap, List<NamedFunction> functions) {
         this.staticVarMap = ImmutableMap.copyOf(filterValues(varMap, s -> !s.startsWith("//")));
-        this.dynamicVarMap = ImmutableMap.copyOf(
-            transformValues(
-                filterValues(varMap, s -> s.startsWith("//")),
-                CldrPath::parseDistinguishingPath));
-        this.fnMap =
-            functions.stream().collect(toImmutableMap(NamedFunction::getName, identity()));
+        this.dynamicVarMap =
+                ImmutableMap.copyOf(
+                        transformValues(
+                                filterValues(varMap, s -> s.startsWith("//")),
+                                CldrPath::parseDistinguishingPath));
+        this.fnMap = functions.stream().collect(toImmutableMap(NamedFunction::getName, identity()));
     }
 
     private ImmutableList<Rule> parseLines(List<String> configLines) {
@@ -95,7 +99,9 @@ final class RuleParser {
                     } else {
                         xpath = line;
                         while (++lineIndex < configLines.size()
-                            && RULE_PARTS_SEPERATOR.matcher(configLines.get(lineIndex)).lookingAt()) {
+                                && RULE_PARTS_SEPERATOR
+                                        .matcher(configLines.get(lineIndex))
+                                        .lookingAt()) {
                             specs.add(parseResultSpec(configLines.get(lineIndex), lineIndex + 1));
                         }
                         // The loop above moved us past the last line of the rule, so readjust.
@@ -105,7 +111,7 @@ final class RuleParser {
                 }
             } catch (Exception e) {
                 throw new RuntimeException(
-                    String.format("parse error at line %d: %s", lineIndex + 1, line), e);
+                        String.format("parse error at line %d: %s", lineIndex + 1, line), e);
             }
         }
         return ImmutableList.copyOf(rules);
@@ -118,12 +124,16 @@ final class RuleParser {
         String rbPathSpec = rbPathAndInstructions.get(0);
 
         ImmutableMap<Instruction, VarString> instructions =
-            rbPathAndInstructions.stream()
-                .skip(1)
-                .map(INSTRUCTION_SPLITTER::splitToList)
-                .collect(toImmutableMap(
-                    p -> Instruction.forId(p.get(0)),
-                    p -> VarString.of(p.size() > 1 ? p.get(1) : "", staticVarMap::get)));
+                rbPathAndInstructions.stream()
+                        .skip(1)
+                        .map(INSTRUCTION_SPLITTER::splitToList)
+                        .collect(
+                                toImmutableMap(
+                                        p -> Instruction.forId(p.get(0)),
+                                        p ->
+                                                VarString.of(
+                                                        p.size() > 1 ? p.get(1) : "",
+                                                        staticVarMap::get)));
         return new ResultSpec(rbPathSpec, instructions, lineNumber, fnMap, dynamicVarMap::get);
     }
 
@@ -144,9 +154,15 @@ final class RuleParser {
         // Don't turn this into a "map().orElse()" chain (despite what your IDE might suggest)
         // because we don't want to create lots of unused dynamic rules!
         return resolved.isPresent()
-            ? Rule.staticRule(
-                dtdType, pathPrefix, resultSpecs, resolved.get(), xpathSpec, lineNumber)
-            : Rule.dynamicRule(
-                dtdType, pathPrefix, resultSpecs, varString, dynamicVarMap::get, xpathSpec, lineNumber);
+                ? Rule.staticRule(
+                        dtdType, pathPrefix, resultSpecs, resolved.get(), xpathSpec, lineNumber)
+                : Rule.dynamicRule(
+                        dtdType,
+                        pathPrefix,
+                        resultSpecs,
+                        varString,
+                        dynamicVarMap::get,
+                        xpathSpec,
+                        lineNumber);
     }
 }

@@ -12,9 +12,11 @@ import static org.unicode.icu.tool.cldrtoicu.mapper.PluralsMapperTest.PluralType
 import static org.unicode.icu.tool.cldrtoicu.mapper.PluralsMapperTest.PluralType.ORDINAL;
 import static org.unicode.icu.tool.cldrtoicu.testing.IcuDataSubjectFactory.assertThat;
 
+import com.google.common.base.Ascii;
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableSet;
 import java.util.Arrays;
 import java.util.Set;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -23,25 +25,29 @@ import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrValue;
 import org.unicode.icu.tool.cldrtoicu.IcuData;
 
-import com.google.common.base.Ascii;
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableSet;
-
 @RunWith(JUnit4.class)
 public class PluralsMapperTest {
     enum PluralType {
-        ORDINAL, CARDINAL;
+        ORDINAL,
+        CARDINAL;
 
-        @Override public String toString() {
+        @Override
+        public String toString() {
             return Ascii.toLowerCase(name());
         }
     }
 
     // Possible rule names (these are the value attributes).
     enum PluralCount {
-        ZERO, ONE, TWO, FEW, MANY, OTHER;
+        ZERO,
+        ONE,
+        TWO,
+        FEW,
+        MANY,
+        OTHER;
 
-        @Override public String toString() {
+        @Override
+        public String toString() {
             return Ascii.toLowerCase(name());
         }
     }
@@ -49,20 +55,20 @@ public class PluralsMapperTest {
     @Test
     public void testSimple() {
         Set<String> locales = ImmutableSet.of("en_GB", "en_NZ");
-        CldrData cldrData = cldrData(
-            pluralRule(ORDINAL, locales, ZERO, "zero"),
-            pluralRule(ORDINAL, locales, ONE, "one"),
-            pluralRule(ORDINAL, locales, TWO, "two"),
-            pluralRule(ORDINAL, locales, FEW, "few"),
-            pluralRule(ORDINAL, locales, MANY, "many"),
-            pluralRule(ORDINAL, locales, OTHER, "other"),
-
-            pluralRule(CARDINAL, locales, ZERO, "!zero!"),
-            pluralRule(CARDINAL, locales, ONE, "!one!"),
-            pluralRule(CARDINAL, locales, TWO, "!two!"),
-            pluralRule(CARDINAL, locales, FEW, "!few!"),
-            pluralRule(CARDINAL, locales, MANY, "!many!"),
-            pluralRule(CARDINAL, locales, OTHER, "!other!"));
+        CldrData cldrData =
+                cldrData(
+                        pluralRule(ORDINAL, locales, ZERO, "zero"),
+                        pluralRule(ORDINAL, locales, ONE, "one"),
+                        pluralRule(ORDINAL, locales, TWO, "two"),
+                        pluralRule(ORDINAL, locales, FEW, "few"),
+                        pluralRule(ORDINAL, locales, MANY, "many"),
+                        pluralRule(ORDINAL, locales, OTHER, "other"),
+                        pluralRule(CARDINAL, locales, ZERO, "!zero!"),
+                        pluralRule(CARDINAL, locales, ONE, "!one!"),
+                        pluralRule(CARDINAL, locales, TWO, "!two!"),
+                        pluralRule(CARDINAL, locales, FEW, "!few!"),
+                        pluralRule(CARDINAL, locales, MANY, "!many!"),
+                        pluralRule(CARDINAL, locales, OTHER, "!other!"));
 
         IcuData icuData = PluralsMapper.process(cldrData);
 
@@ -94,16 +100,17 @@ public class PluralsMapperTest {
     public void testGroupDeduplication_subsets() {
         Set<String> locales1 = ImmutableSet.of("en_GB");
         Set<String> locales2 = ImmutableSet.of("en_NZ");
-        CldrData cldrData = cldrData(
-            // One group is a subset of the other, but this does not trigger deduplication.
-            pluralRule(CARDINAL, locales1, ZERO, "zero"),
-            pluralRule(CARDINAL, locales1, ONE, "one"),
-            pluralRule(CARDINAL, locales1, TWO, "two"),
-
-            pluralRule(CARDINAL, locales2, ZERO, "zero"),
-            pluralRule(CARDINAL, locales2, ONE, "one"),
-            pluralRule(CARDINAL, locales2, TWO, "two"),
-            pluralRule(CARDINAL, locales2, FEW, "few"));
+        CldrData cldrData =
+                cldrData(
+                        // One group is a subset of the other, but this does not trigger
+                        // deduplication.
+                        pluralRule(CARDINAL, locales1, ZERO, "zero"),
+                        pluralRule(CARDINAL, locales1, ONE, "one"),
+                        pluralRule(CARDINAL, locales1, TWO, "two"),
+                        pluralRule(CARDINAL, locales2, ZERO, "zero"),
+                        pluralRule(CARDINAL, locales2, ONE, "one"),
+                        pluralRule(CARDINAL, locales2, TWO, "two"),
+                        pluralRule(CARDINAL, locales2, FEW, "few"));
 
         IcuData icuData = PluralsMapper.process(cldrData);
 
@@ -123,15 +130,15 @@ public class PluralsMapperTest {
     @Test
     public void testGroupDeduplication_type() {
         Set<String> locales = ImmutableSet.of("en_GB");
-        CldrData cldrData = cldrData(
-            // Groups are the same, but assigned separately to different types.
-            pluralRule(CARDINAL, locales, ZERO, "zero"),
-            pluralRule(CARDINAL, locales, ONE, "one"),
-            pluralRule(CARDINAL, locales, TWO, "two"),
-
-            pluralRule(ORDINAL, locales, ZERO, "zero"),
-            pluralRule(ORDINAL, locales, ONE, "one"),
-            pluralRule(ORDINAL, locales, TWO, "two"));
+        CldrData cldrData =
+                cldrData(
+                        // Groups are the same, but assigned separately to different types.
+                        pluralRule(CARDINAL, locales, ZERO, "zero"),
+                        pluralRule(CARDINAL, locales, ONE, "one"),
+                        pluralRule(CARDINAL, locales, TWO, "two"),
+                        pluralRule(ORDINAL, locales, ZERO, "zero"),
+                        pluralRule(ORDINAL, locales, ONE, "one"),
+                        pluralRule(ORDINAL, locales, TWO, "two"));
 
         IcuData icuData = PluralsMapper.process(cldrData);
 
@@ -144,20 +151,19 @@ public class PluralsMapperTest {
         assertThat(icuData).hasValuesFor("/rules/set0/two", "two");
     }
 
-
     @Test
     public void testGroupDeduplication_locales() {
         Set<String> locales1 = ImmutableSet.of("en_GB");
         Set<String> locales2 = ImmutableSet.of("en_NZ");
-        CldrData cldrData = cldrData(
-            // Groups are the same, but assigned separately to different locales.
-            pluralRule(CARDINAL, locales1, ZERO, "zero"),
-            pluralRule(CARDINAL, locales1, ONE, "one"),
-            pluralRule(CARDINAL, locales1, TWO, "two"),
-
-            pluralRule(CARDINAL, locales2, ZERO, "zero"),
-            pluralRule(CARDINAL, locales2, ONE, "one"),
-            pluralRule(CARDINAL, locales2, TWO, "two"));
+        CldrData cldrData =
+                cldrData(
+                        // Groups are the same, but assigned separately to different locales.
+                        pluralRule(CARDINAL, locales1, ZERO, "zero"),
+                        pluralRule(CARDINAL, locales1, ONE, "one"),
+                        pluralRule(CARDINAL, locales1, TWO, "two"),
+                        pluralRule(CARDINAL, locales2, ZERO, "zero"),
+                        pluralRule(CARDINAL, locales2, ONE, "one"),
+                        pluralRule(CARDINAL, locales2, TWO, "two"));
 
         IcuData icuData = PluralsMapper.process(cldrData);
 
@@ -175,7 +181,7 @@ public class PluralsMapperTest {
     }
 
     private static CldrValue pluralRule(
-        PluralType type, Set<String> locales, PluralCount count, String value) {
+            PluralType type, Set<String> locales, PluralCount count, String value) {
 
         StringBuilder cldrPath = new StringBuilder("//supplementalData");
         appendAttribute(cldrPath.append("/plurals"), "type", type);

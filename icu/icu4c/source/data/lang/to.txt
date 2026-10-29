@@ -825,15 +825,19 @@ to{
             dangi{"fakataniki"}
             ethiopic{"fakaʻītiōpia"}
             ethiopic-amete-alem{"fakaʻītiōpia-ʻamete-ʻalemi"}
-            gregorian{"fakakelekolia"}
+            gregorian{"tohi māhina fakakelekolia"}
             hebrew{"fakahepelū"}
             indian{"fakaʻinitia"}
             islamic{"fakamohameti"}
             islamic-civil{"fakamohameti-sivile"}
             islamic-umalqura{"fakamohameti-ʻumalakula"}
-            iso8601{"faka-iso8601"}
+            iso8601{"tohi māhina faka-iso8601"}
             japanese{"fakasiapani"}
             persian{"fakapēsia"}
+        }
+        calendar%core{
+            gregorian{"fakakelekolia"}
+            iso8601{"fakakelekolia (iso8601)"}
         }
         cf{
             account{"anga paʻanga-kalake"}
@@ -843,8 +847,11 @@ to{
             ducet{"ʻunikōti"}
             phonebook{"fika telefoni"}
             search{"fakakumi ʻi hono anga lahi"}
-            standard{"fakasīpinga"}
+            standard{"fili fakasīpinga"}
             traditional{"tukufakaholo"}
+        }
+        collation%core{
+            standard{"fakasīpinga"}
         }
         hc{
             h11{"takai houa 0–11"}

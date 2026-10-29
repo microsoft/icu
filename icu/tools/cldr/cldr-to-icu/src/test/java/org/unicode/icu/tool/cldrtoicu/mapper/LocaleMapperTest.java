@@ -12,7 +12,6 @@ import static org.unicode.icu.tool.cldrtoicu.testing.IcuDataSubjectFactory.asser
 
 import java.util.Arrays;
 import java.util.Optional;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -33,10 +32,11 @@ public class LocaleMapperTest {
 
     @Test
     public void testSimple() {
-        //ldml/units/durationUnit[@type="(%A)"]/durationUnitPattern ; /durationUnits/$1
-        addMapping("xx",
-            ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "Bar"),
-            simpleResult("/durationUnits/foo", "Bar"));
+        // ldml/units/durationUnit[@type="(%A)"]/durationUnitPattern ; /durationUnits/$1
+        addMapping(
+                "xx",
+                ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "Bar"),
+                simpleResult("/durationUnits/foo", "Bar"));
 
         IcuData icuData = process("xx");
         assertThat(icuData).getPaths().hasSize(1);
@@ -46,12 +46,13 @@ public class LocaleMapperTest {
     @Test
     public void testCorrectLocaleIsUsed() {
         src.addLocaleData(
-            "xx", ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "XX"));
+                "xx", ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "XX"));
         addMapping(
-            "yy", ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "YY"),
-            simpleResult("/durationUnits/foo", "YY"));
+                "yy",
+                ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "YY"),
+                simpleResult("/durationUnits/foo", "YY"));
         src.addLocaleData(
-            "zz", ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "ZZ"));
+                "zz", ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "ZZ"));
 
         IcuData icuData = process("yy");
         assertThat(icuData).getPaths().hasSize(1);
@@ -60,14 +61,15 @@ public class LocaleMapperTest {
 
     @Test
     public void testInheritedValuesNotIncludedByDefault() {
-        //ldml/units/durationUnit[@type="(%A)"]/durationUnitPattern ; /durationUnits/$1
-        addMapping("xx",
-            ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "Bar"),
-            simpleResult("/durationUnits/foo", "Bar"));
-        //ldml/localeDisplayNames/keys/key[@type="(%A)"] ; /Keys/$1
+        // ldml/units/durationUnit[@type="(%A)"]/durationUnitPattern ; /durationUnits/$1
+        addMapping(
+                "xx",
+                ldml("units/durationUnit[@type=\"foo\"]/durationUnitPattern", "Bar"),
+                simpleResult("/durationUnits/foo", "Bar"));
+        // ldml/localeDisplayNames/keys/key[@type="(%A)"] ; /Keys/$1
         addRootMapping(
-            ldml("localeDisplayNames/keys/key[@type=\"sometype\"]", "Value"),
-            simpleResult("/Keys/sometype", "Value"));
+                ldml("localeDisplayNames/keys/key[@type=\"sometype\"]", "Value"),
+                simpleResult("/Keys/sometype", "Value"));
 
         IcuData icuData = process("xx");
 
@@ -78,17 +80,18 @@ public class LocaleMapperTest {
 
     @Test
     public void testInheritedValuesIncludedWhenSameResourceBundle() {
-        //ldml/numbers/currencies/currency[@type="(%W)"]/symbol ; /Currencies/$1 ; fallback=$1
-        //ldml/numbers/currencies/currency[@type="(%W)"]/displayName ; /Currencies/$1 ; fallback=$1
-        addMapping("xx",
-            ldml("numbers/currencies/currency[@type=\"USD\"]/symbol", "US$"),
-            simpleResult("/Currencies/USD", 1, "US$"));
+        // ldml/numbers/currencies/currency[@type="(%W)"]/symbol ; /Currencies/$1 ; fallback=$1
+        // ldml/numbers/currencies/currency[@type="(%W)"]/displayName ; /Currencies/$1 ; fallback=$1
+        addMapping(
+                "xx",
+                ldml("numbers/currencies/currency[@type=\"USD\"]/symbol", "US$"),
+                simpleResult("/Currencies/USD", 1, "US$"));
         // This is included because the resource bundle path is the same as above. Note that we
         // have to use the index to distinguish results here (this corresponds to the line number
         // or the real when the real regex based config is used and determines result ordering).
         addRootMapping(
-            ldml("numbers/currencies/currency[@type=\"USD\"]/displayName", "US Dollar"),
-            simpleResult("/Currencies/USD", 2, "US Dollar"));
+                ldml("numbers/currencies/currency[@type=\"USD\"]/displayName", "US Dollar"),
+                simpleResult("/Currencies/USD", 2, "US Dollar"));
 
         IcuData icuData = process("xx");
 
@@ -102,18 +105,23 @@ public class LocaleMapperTest {
         // Tests that in the case that one path is the child of another path (rare) the existence
         // of the parent path will not trigger the child path to be included.
         //
-        //ldml/.../dateTimeFormats/availableFormats/dateFormatItem[@id="(%A)"]
+        // ldml/.../dateTimeFormats/availableFormats/dateFormatItem[@id="(%A)"]
         //   ; /calendar/$1/availableFormats/$2
-        //ldml/.../dateTimeFormats/availableFormats/dateFormatItem[@id="(%A)"][@count="(%A)"]
+        // ldml/.../dateTimeFormats/availableFormats/dateFormatItem[@id="(%A)"][@count="(%A)"]
         //   ; /calendar/$1/availableFormats/$2/$3
-        addMapping("xx",
-            ldml("dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
-                + "/availableFormats/dateFormatItem[@id=\"bar\"]", "Foo"),
-            simpleResult("/calendar/foo/availableFormats/bar", "Foo"));
+        addMapping(
+                "xx",
+                ldml(
+                        "dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
+                                + "/availableFormats/dateFormatItem[@id=\"bar\"]",
+                        "Foo"),
+                simpleResult("/calendar/foo/availableFormats/bar", "Foo"));
         addRootMapping(
-            ldml("dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
-                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"one\"]", "Bar"),
-            simpleResult("/calendar/foo/availableFormats/bar/one", "Bar"));
+                ldml(
+                        "dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
+                                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"one\"]",
+                        "Bar"),
+                simpleResult("/calendar/foo/availableFormats/bar/one", "Bar"));
 
         IcuData icuData = process("xx");
 
@@ -126,13 +134,18 @@ public class LocaleMapperTest {
     public void testParentPathsNotIncludedByDefault() {
         // Same as above but swapping inherited vs explicit mappings.
         addRootMapping(
-            ldml("dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
-                + "/availableFormats/dateFormatItem[@id=\"bar\"]", "Foo"),
-            simpleResult("/calendar/foo/availableFormats/bar", "Foo"));
-        addMapping("xx",
-            ldml("dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
-                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"one\"]", "Bar"),
-            simpleResult("/calendar/foo/availableFormats/bar/one", "Bar"));
+                ldml(
+                        "dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
+                                + "/availableFormats/dateFormatItem[@id=\"bar\"]",
+                        "Foo"),
+                simpleResult("/calendar/foo/availableFormats/bar", "Foo"));
+        addMapping(
+                "xx",
+                ldml(
+                        "dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
+                                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"one\"]",
+                        "Bar"),
+                simpleResult("/calendar/foo/availableFormats/bar/one", "Bar"));
 
         IcuData icuData = process("xx");
 
@@ -155,27 +168,35 @@ public class LocaleMapperTest {
         // Testing that the existence of a child element using a hidden label *does* trigger the
         // parent element to be included.
         addRootMapping(
-            ldml("dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
-                + "/availableFormats/dateFormatItem[@id=\"bar\"]", "Parent"),
-            simpleResult("/calendar/foo/availableFormats/bar", "Parent"));
+                ldml(
+                        "dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
+                                + "/availableFormats/dateFormatItem[@id=\"bar\"]",
+                        "Parent"),
+                simpleResult("/calendar/foo/availableFormats/bar", "Parent"));
         addRootMapping(
-            ldml("dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
-                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"one\"]", "Child-1"),
-            simpleResult("/calendar/foo/availableFormats/bar/<HIDDEN>", 1, "Child-1"));
+                ldml(
+                        "dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
+                                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"one\"]",
+                        "Child-1"),
+                simpleResult("/calendar/foo/availableFormats/bar/<HIDDEN>", 1, "Child-1"));
 
         // This is the only explicit mapping and it triggers the sibling _and_ the parent.
-        addMapping("xx",
-            ldml("dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
-                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"many\"]", "Child-2"),
-            simpleResult("/calendar/foo/availableFormats/bar/<HIDDEN>", 2, "Child-2"));
+        addMapping(
+                "xx",
+                ldml(
+                        "dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
+                                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"many\"]",
+                        "Child-2"),
+                simpleResult("/calendar/foo/availableFormats/bar/<HIDDEN>", 2, "Child-2"));
 
         IcuData icuData = process("xx");
 
         assertThat(icuData).getPaths().hasSize(2);
         assertThat(icuData).hasValuesFor("/calendar/foo/availableFormats/bar", "Parent");
         assertThat(icuData)
-            .hasValuesFor("/calendar/foo/availableFormats/bar/<HIDDEN>",
-                singletonValues("Child-1", "Child-2"));
+                .hasValuesFor(
+                        "/calendar/foo/availableFormats/bar/<HIDDEN>",
+                        singletonValues("Child-1", "Child-2"));
     }
 
     // This is strange behaviour given the test above, since it means that it's impossible to
@@ -222,20 +243,27 @@ public class LocaleMapperTest {
     @Test
     public void testHiddenLabelsAreNotIncludedAutomatically() {
         // As above, but now only the parent path is included explicitly.
-        addMapping("xx",
-            ldml("dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
-                + "/availableFormats/dateFormatItem[@id=\"bar\"]", "Parent"),
-            simpleResult("/calendar/foo/availableFormats/bar", "Parent"));
+        addMapping(
+                "xx",
+                ldml(
+                        "dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
+                                + "/availableFormats/dateFormatItem[@id=\"bar\"]",
+                        "Parent"),
+                simpleResult("/calendar/foo/availableFormats/bar", "Parent"));
         addRootMapping(
-            ldml("dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
-                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"one\"]", "Child-1"),
-            simpleResult("/calendar/foo/availableFormats/bar/<HIDDEN>", 1, "Child-1"));
+                ldml(
+                        "dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
+                                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"one\"]",
+                        "Child-1"),
+                simpleResult("/calendar/foo/availableFormats/bar/<HIDDEN>", 1, "Child-1"));
 
         // This is the only explicit mapping and it triggers the sibling _and_ the parent.
         addRootMapping(
-            ldml("dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
-                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"many\"]", "Child-2"),
-            simpleResult("/calendar/foo/availableFormats/bar/<HIDDEN>", 2, "Child-2"));
+                ldml(
+                        "dates/calendars/calendar[@type=\"foo\"]/dateTimeFormats"
+                                + "/availableFormats/dateFormatItem[@id=\"bar\"][@count=\"many\"]",
+                        "Child-2"),
+                simpleResult("/calendar/foo/availableFormats/bar/<HIDDEN>", 2, "Child-2"));
 
         IcuData icuData = process("xx");
 
@@ -252,104 +280,129 @@ public class LocaleMapperTest {
 
     @Test
     public void testDateTimeHack() {
-        //calendar/$1/DateTimePatterns
-        addMapping("xx",
-            format("time", "full", "one"),
-            simpleResult("/calendar/foo/DateTimePatterns", 1, "one"));
-        addMapping("xx",
-            format("time", "long", "two"),
-            simpleResult("/calendar/foo/DateTimePatterns", 2, "two"));
-        addMapping("xx",
-            format("time", "medium", "three"),
-            simpleResult("/calendar/foo/DateTimePatterns", 3, "three"));
-        addMapping("xx",
-            format("time", "short", "four"),
-            simpleResult("/calendar/foo/DateTimePatterns", 4, "four"));
-        addMapping("xx",
-            format("date", "full", "five"),
-            simpleResult("/calendar/foo/DateTimePatterns", 5, "five"));
-        addMapping("xx",
-            format("date", "long", "six"),
-            simpleResult("/calendar/foo/DateTimePatterns", 6, "six"));
-        addMapping("xx",
-            format("date", "medium", "seven"),
-            simpleResult("/calendar/foo/DateTimePatterns", 7, "seven"));
-        addMapping("xx",
-            format("date", "short", "eight"),
-            simpleResult("/calendar/foo/DateTimePatterns", 8, "eight"));
-        addMapping("xx",
-            format("dateTime", "full", "nine"),
-            simpleResult("/calendar/foo/DateTimePatterns", 9, "nine"));
-        addMapping("xx",
-            format("dateTime", "long", "ten"),
-            simpleResult("/calendar/foo/DateTimePatterns", 10, "ten"));
-        addMapping("xx",
-            format("dateTime", "medium", "eleven"),
-            simpleResult("/calendar/foo/DateTimePatterns", 11, "eleven"));
-        addMapping("xx",
-            format("dateTime", "short", "twelve"),
-            simpleResult("/calendar/foo/DateTimePatterns", 12, "twelve"));
+        // calendar/$1/DateTimePatterns
+        addMapping(
+                "xx",
+                format("time", "full", "one"),
+                simpleResult("/calendar/foo/DateTimePatterns", 1, "one"));
+        addMapping(
+                "xx",
+                format("time", "long", "two"),
+                simpleResult("/calendar/foo/DateTimePatterns", 2, "two"));
+        addMapping(
+                "xx",
+                format("time", "medium", "three"),
+                simpleResult("/calendar/foo/DateTimePatterns", 3, "three"));
+        addMapping(
+                "xx",
+                format("time", "short", "four"),
+                simpleResult("/calendar/foo/DateTimePatterns", 4, "four"));
+        addMapping(
+                "xx",
+                format("date", "full", "five"),
+                simpleResult("/calendar/foo/DateTimePatterns", 5, "five"));
+        addMapping(
+                "xx",
+                format("date", "long", "six"),
+                simpleResult("/calendar/foo/DateTimePatterns", 6, "six"));
+        addMapping(
+                "xx",
+                format("date", "medium", "seven"),
+                simpleResult("/calendar/foo/DateTimePatterns", 7, "seven"));
+        addMapping(
+                "xx",
+                format("date", "short", "eight"),
+                simpleResult("/calendar/foo/DateTimePatterns", 8, "eight"));
+        addMapping(
+                "xx",
+                format("dateTime", "full", "nine"),
+                simpleResult("/calendar/foo/DateTimePatterns", 9, "nine"));
+        addMapping(
+                "xx",
+                format("dateTime", "long", "ten"),
+                simpleResult("/calendar/foo/DateTimePatterns", 10, "ten"));
+        addMapping(
+                "xx",
+                format("dateTime", "medium", "eleven"),
+                simpleResult("/calendar/foo/DateTimePatterns", 11, "eleven"));
+        addMapping(
+                "xx",
+                format("dateTime", "short", "twelve"),
+                simpleResult("/calendar/foo/DateTimePatterns", 12, "twelve"));
 
         IcuData icuData = process("xx");
 
         assertThat(icuData).getPaths().hasSize(1);
-        assertThat(icuData).hasValuesFor("/calendar/foo/DateTimePatterns",
-            singletonValues(
-                "one", "two", "three", "four",
-                "five", "six", "seven", "eight",
-                "eleven",  // <-- legacy reasons, don't ask!
-                "nine", "ten", "eleven", "twelve"));
+        assertThat(icuData)
+                .hasValuesFor(
+                        "/calendar/foo/DateTimePatterns",
+                        singletonValues(
+                                "one", "two", "three", "four", "five", "six", "seven", "eight",
+                                "eleven", // <-- legacy reasons, don't ask!
+                                "nine", "ten", "eleven", "twelve"));
     }
 
     @Test
     public void testDateTimeHack_wrongNumberofElements() {
         // One missing pattern from the start.
-        addMapping("xx",
-            format("time", "long", "two"),
-            simpleResult("/calendar/foo/DateTimePatterns", 2, "two"));
-        addMapping("xx",
-            format("time", "medium", "three"),
-            simpleResult("/calendar/foo/DateTimePatterns", 3, "three"));
-        addMapping("xx",
-            format("time", "short", "four"),
-            simpleResult("/calendar/foo/DateTimePatterns", 4, "four"));
-        addMapping("xx",
-            format("date", "full", "five"),
-            simpleResult("/calendar/foo/DateTimePatterns", 5, "five"));
-        addMapping("xx",
-            format("date", "long", "six"),
-            simpleResult("/calendar/foo/DateTimePatterns", 6, "six"));
-        addMapping("xx",
-            format("date", "medium", "seven"),
-            simpleResult("/calendar/foo/DateTimePatterns", 7, "seven"));
-        addMapping("xx",
-            format("date", "short", "eight"),
-            simpleResult("/calendar/foo/DateTimePatterns", 8, "eight"));
-        addMapping("xx",
-            format("dateTime", "full", "nine"),
-            simpleResult("/calendar/foo/DateTimePatterns", 9, "nine"));
-        addMapping("xx",
-            format("dateTime", "long", "ten"),
-            simpleResult("/calendar/foo/DateTimePatterns", 10, "ten"));
-        addMapping("xx",
-            format("dateTime", "medium", "eleven"),
-            simpleResult("/calendar/foo/DateTimePatterns", 11, "eleven"));
-        addMapping("xx",
-            format("dateTime", "short", "twelve"),
-            simpleResult("/calendar/foo/DateTimePatterns", 12, "twelve"));
+        addMapping(
+                "xx",
+                format("time", "long", "two"),
+                simpleResult("/calendar/foo/DateTimePatterns", 2, "two"));
+        addMapping(
+                "xx",
+                format("time", "medium", "three"),
+                simpleResult("/calendar/foo/DateTimePatterns", 3, "three"));
+        addMapping(
+                "xx",
+                format("time", "short", "four"),
+                simpleResult("/calendar/foo/DateTimePatterns", 4, "four"));
+        addMapping(
+                "xx",
+                format("date", "full", "five"),
+                simpleResult("/calendar/foo/DateTimePatterns", 5, "five"));
+        addMapping(
+                "xx",
+                format("date", "long", "six"),
+                simpleResult("/calendar/foo/DateTimePatterns", 6, "six"));
+        addMapping(
+                "xx",
+                format("date", "medium", "seven"),
+                simpleResult("/calendar/foo/DateTimePatterns", 7, "seven"));
+        addMapping(
+                "xx",
+                format("date", "short", "eight"),
+                simpleResult("/calendar/foo/DateTimePatterns", 8, "eight"));
+        addMapping(
+                "xx",
+                format("dateTime", "full", "nine"),
+                simpleResult("/calendar/foo/DateTimePatterns", 9, "nine"));
+        addMapping(
+                "xx",
+                format("dateTime", "long", "ten"),
+                simpleResult("/calendar/foo/DateTimePatterns", 10, "ten"));
+        addMapping(
+                "xx",
+                format("dateTime", "medium", "eleven"),
+                simpleResult("/calendar/foo/DateTimePatterns", 11, "eleven"));
+        addMapping(
+                "xx",
+                format("dateTime", "short", "twelve"),
+                simpleResult("/calendar/foo/DateTimePatterns", 12, "twelve"));
 
         IllegalStateException e = assertThrows(IllegalStateException.class, () -> process("xx"));
         assertThat(e).hasMessageThat().contains("unexpected");
         assertThat(e).hasMessageThat().contains("/calendar/foo/DateTimePatterns");
     }
 
-    private static CldrValue format(String type,String length, String pattern) {
-        return ldml(String.format(
-            "dates/calendars/calendar[@type=\"foo\"]"
-                + "/%1$sFormats"
-                + "/%1$sFormatLength[@type=\"%2$s\"]"
-                + "/%1$sFormat[@type=\"standard\"]/pattern[@type=\"%3$s\"]",
-            type, length, pattern));
+    private static CldrValue format(String type, String length, String pattern) {
+        return ldml(
+                String.format(
+                        "dates/calendars/calendar[@type=\"foo\"]"
+                                + "/%1$sFormats"
+                                + "/%1$sFormatLength[@type=\"%2$s\"]"
+                                + "/%1$sFormat[@type=\"standard\"]/pattern[@type=\"%3$s\"]",
+                        type, length, pattern));
     }
 
     // ---- Helper methods ----
@@ -361,12 +414,12 @@ public class LocaleMapperTest {
     IcuData process(String localeId, Optional<String> defCalendar) {
         IcuData icuData = new IcuData(localeId, true);
         LocaleMapper.process(
-            icuData,
-            src.getDataForLocale(localeId, UNRESOLVED),
-            src.getDataForLocale(localeId, RESOLVED),
-            empty(),
-            transformer,
-            defCalendar);
+                icuData,
+                src.getDataForLocale(localeId, UNRESOLVED),
+                src.getDataForLocale(localeId, RESOLVED),
+                empty(),
+                transformer,
+                defCalendar);
         return icuData;
     }
 

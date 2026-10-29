@@ -16,10 +16,11 @@ public class TerritoryContainmentTest {
 
     @Test
     public void testSimple() {
-        CldrData testData = getTestData(
-                territoryGroup("001", "002", "003"),
-                territoryGroup("002", "GB", "FR"),
-                territoryGroup("003", "US", "CA"));
+        CldrData testData =
+                getTestData(
+                        territoryGroup("001", "002", "003"),
+                        territoryGroup("002", "GB", "FR"),
+                        territoryGroup("003", "US", "CA"));
         TerritoryContainment containment = TerritoryContainment.getContainment(testData);
         assertThat(containment.getMacroRegions()).containsExactly("001", "002", "003").inOrder();
         assertThat(containment.getLeafRegions()).containsExactly("CA", "FR", "GB", "US").inOrder();
@@ -29,11 +30,12 @@ public class TerritoryContainmentTest {
 
     @Test
     public void testOverlappingContainment() {
-        CldrData testData = getTestData(
-                territoryGroup("001", "002", "003", "004"),
-                territoryGroup("002", "GB", "FR"),
-                territoryGroup("003", "US", "CA"),
-                territoryGroup("004", "CA", "GB"));
+        CldrData testData =
+                getTestData(
+                        territoryGroup("001", "002", "003", "004"),
+                        territoryGroup("002", "GB", "FR"),
+                        territoryGroup("003", "US", "CA"),
+                        territoryGroup("004", "CA", "GB"));
         TerritoryContainment containment = TerritoryContainment.getContainment(testData);
         assertThat(containment.getLeafRegions()).containsExactly("CA", "FR", "GB", "US").inOrder();
         assertThat(containment.getLeafRegionsOf("002")).containsExactly("FR", "GB").inOrder();
@@ -42,12 +44,15 @@ public class TerritoryContainmentTest {
 
     @Test
     public void testMultipleRootsFails() {
-        CldrData testData = getTestData(
-                territoryGroup("001", "002"),
-                territoryGroup("002", "GB", "FR"),
-                territoryGroup("003", "US", "CA"));
+        CldrData testData =
+                getTestData(
+                        territoryGroup("001", "002"),
+                        territoryGroup("002", "GB", "FR"),
+                        territoryGroup("003", "US", "CA"));
         IllegalArgumentException err =
-                assertThrows(IllegalArgumentException.class, () -> TerritoryContainment.getContainment(testData));
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> TerritoryContainment.getContainment(testData));
         assertThat(err).hasMessageThat().contains("001");
         assertThat(err).hasMessageThat().contains("003");
         assertThat(err).hasMessageThat().doesNotContain("002");
@@ -55,11 +60,11 @@ public class TerritoryContainmentTest {
 
     @Test
     public void testCyclicGraphFails() {
-        CldrData testData = getTestData(
-                territoryGroup("001", "002"),
-                territoryGroup("002", "001"));
+        CldrData testData = getTestData(territoryGroup("001", "002"), territoryGroup("002", "001"));
         IllegalArgumentException err =
-                assertThrows(IllegalArgumentException.class, () -> TerritoryContainment.getContainment(testData));
+                assertThrows(
+                        IllegalArgumentException.class,
+                        () -> TerritoryContainment.getContainment(testData));
         assertThat(err).hasMessageThat().contains("world region");
         assertThat(err).hasMessageThat().contains("001");
     }

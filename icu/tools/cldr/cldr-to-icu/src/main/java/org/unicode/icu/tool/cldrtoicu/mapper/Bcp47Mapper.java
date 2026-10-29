@@ -8,34 +8,32 @@ import static org.unicode.cldr.api.AttributeKey.keyOf;
 import static org.unicode.cldr.api.CldrData.PathOrder.DTD;
 import static org.unicode.cldr.api.CldrDataType.BCP47;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.base.Ascii;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Optional;
 import java.util.Set;
-
 import org.unicode.cldr.api.AttributeKey;
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrDataType;
 import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
+import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
 import org.unicode.icu.tool.cldrtoicu.IcuData;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
-import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
-
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.base.Ascii;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Sets;
 
 /**
- * A mapper to collect BCP-47 data from {@link CldrDataType#BCP47 BCP47} data under paths
- * matching:
+ * A mapper to collect BCP-47 data from {@link CldrDataType#BCP47 BCP47} data under paths matching:
+ *
  * <pre>{@code
- *   //ldmlBCP47/keyword/key[@name=*]/type[@name=*]
+ * //ldmlBCP47/keyword/key[@name=*]/type[@name=*]
  * }</pre>
  */
 public final class Bcp47Mapper {
@@ -62,7 +60,7 @@ public final class Bcp47Mapper {
     // to determine the default for implicit values via the DTD. Ideally this would be automatic
     // and the AttributeKey class would be able to have a method like "isDefault(String value)".
     private static final ImmutableMap<AttributeKey, String> INFO_ATTRIBUTES =
-        ImmutableMap.of(KEY_VALUE_TYPE, "", KEY_DEPRECATED, "false", TYPE_DEPRECATED, "false");
+            ImmutableMap.of(KEY_VALUE_TYPE, "", KEY_DEPRECATED, "false", TYPE_DEPRECATED, "false");
 
     private static final RbPath RB_KEYMAP = RbPath.of("keyMap");
     private static final RbPath RB_TYPE_ALIAS = RbPath.of("typeAlias", "timezone:alias");
@@ -71,11 +69,12 @@ public final class Bcp47Mapper {
     private static final RbPath RB_IANAMAP_ALIAS = RbPath.of("ianaMap", "timezone:alias");
 
     private static final CldrDataProcessor<Bcp47Mapper> BCP47_PROCESSOR;
+
     static {
         CldrDataProcessor.Builder<Bcp47Mapper> processor = CldrDataProcessor.builder();
         processor
-            .addAction("//ldmlBCP47/keyword/key[@name=*]", (m, p) -> m.new ValueCollector(p))
-            .addValueAction("type[@name=*]", ValueCollector::collect);
+                .addAction("//ldmlBCP47/keyword/key[@name=*]", (m, p) -> m.new ValueCollector(p))
+                .addValueAction("type[@name=*]", ValueCollector::collect);
         BCP47_PROCESSOR = processor.build();
     }
 
@@ -105,7 +104,7 @@ public final class Bcp47Mapper {
     // TODO: Convert this to a Map<RbPath, String> which involves removing the '@' prefix hack.
     private Map<String, String> keyMap = new LinkedHashMap<>();
 
-    private Bcp47Mapper() { }
+    private Bcp47Mapper() {}
 
     // Post processing to add additional captured attribute values and some special cases.
     private void addKeyMapValues() {
@@ -150,9 +149,11 @@ public final class Bcp47Mapper {
             // always be explicitly deprecated.
             Optional<String> prefName = PREFERRED_TYPE_NAME.optionalValueFrom(value);
             if (prefName.isPresent()) {
-                checkState(KEY_DEPRECATED.booleanValueFrom(value, false)
-                        || TYPE_DEPRECATED.booleanValueFrom(value, false),
-                    "unexpected 'preferred' attribute for non-deprecated value: %s", value);
+                checkState(
+                        KEY_DEPRECATED.booleanValueFrom(value, false)
+                                || TYPE_DEPRECATED.booleanValueFrom(value, false),
+                        "unexpected 'preferred' attribute for non-deprecated value: %s",
+                        value);
                 icuData.add(RbPath.of("bcpTypeAlias", keyName, typeName), prefName.get());
                 return;
             }
@@ -181,9 +182,9 @@ public final class Bcp47Mapper {
                 // Put additional aliases as secondary aliases referencing the main alias.
                 RbPath typeAliasPrefix = RbPath.of("typeAlias", keyAlias);
                 typeAliases.stream()
-                    .skip(1)
-                    .map(Bcp47Mapper::quoteAlias)
-                    .forEach(a -> icuData.add(typeAliasPrefix.extendBy(a), mainAlias));
+                        .skip(1)
+                        .map(Bcp47Mapper::quoteAlias)
+                        .forEach(a -> icuData.add(typeAliasPrefix.extendBy(a), mainAlias));
                 icuTypeName = mainAlias;
             }
 
@@ -210,11 +211,11 @@ public final class Bcp47Mapper {
         // maps.
         // TODO: Remove the use of '@' and simplify the logic for "info" attributes (infoMap?).
         private void addInfoAttributes(
-            String keyName, String typeName, ImmutableMap<AttributeKey, String> attributes) {
+                String keyName, String typeName, ImmutableMap<AttributeKey, String> attributes) {
             // Only emit deprecation for the "key" level, even if all types below that are also
             // marked as deprecated. Only do this for a subset of attributes (INFO_ATTRIBUTES).
             Set<AttributeKey> keys =
-                Sets.intersection(attributes.keySet(), INFO_ATTRIBUTES.keySet());
+                    Sets.intersection(attributes.keySet(), INFO_ATTRIBUTES.keySet());
             for (AttributeKey a : keys) {
                 String value = attributes.get(a);
                 // Skip empty or default values in attributes.
@@ -226,11 +227,10 @@ public final class Bcp47Mapper {
                 // bit of reconstruction based on the element name of the attribute we are
                 // processing. This relies on explicit knowledge that the paths are "<key>" or
                 // "<key>/<type>". This all gets less messy if we switch to RbPath.
-                String id =
-                    a.getElementName().equals("key") ? keyName : keyName + "/" + typeName;
+                String id = a.getElementName().equals("key") ? keyName : keyName + "/" + typeName;
                 keyMap.put(
-                    "@" + a.getElementName() + "Info/" + a.getAttributeName() + "/" + id,
-                    value);
+                        "@" + a.getElementName() + "Info/" + a.getAttributeName() + "/" + id,
+                        value);
             }
         }
     }
@@ -239,8 +239,8 @@ public final class Bcp47Mapper {
      * Escapes alias values containing '/' so they can appear in resource bundle paths. This
      * function replaces '/' with ':' and quotes the result (e.g. foo/bar -> "foo:bar").
      *
-     * <p>This is needed for timezone "metazone" ID strings which are of the form 'Foo/Bar'
-     * in the CLDR data.
+     * <p>This is needed for timezone "metazone" ID strings which are of the form 'Foo/Bar' in the
+     * CLDR data.
      */
     // TODO: Switch to RbPath and do quoting automatically when ICU data is written out.
     private static String quoteAlias(String str) {

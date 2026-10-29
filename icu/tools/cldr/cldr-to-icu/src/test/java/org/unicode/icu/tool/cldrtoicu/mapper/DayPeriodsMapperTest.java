@@ -10,10 +10,13 @@ import static org.unicode.icu.tool.cldrtoicu.mapper.DayPeriodsMapperTest.RuleTyp
 import static org.unicode.icu.tool.cldrtoicu.mapper.DayPeriodsMapperTest.RuleType.NOON;
 import static org.unicode.icu.tool.cldrtoicu.testing.IcuDataSubjectFactory.assertThat;
 
+import com.google.common.base.Ascii;
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -22,27 +25,31 @@ import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrValue;
 import org.unicode.icu.tool.cldrtoicu.IcuData;
 
-import com.google.common.base.Ascii;
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-
 @RunWith(JUnit4.class)
 public class DayPeriodsMapperTest {
     // A subset of rule types for testing.
     enum RuleType {
-        MORNING1, NOON, AFTERNOON1, EVENING1, NIGHT1, MIDNIGHT;
+        MORNING1,
+        NOON,
+        AFTERNOON1,
+        EVENING1,
+        NIGHT1,
+        MIDNIGHT;
 
-        @Override public String toString() {
+        @Override
+        public String toString() {
             return Ascii.toLowerCase(name());
         }
     }
 
     // Possible rule names (these are the value attributes).
     enum RuleName {
-        AT, BEFORE, FROM;
+        AT,
+        BEFORE,
+        FROM;
 
-        @Override public String toString() {
+        @Override
+        public String toString() {
             return Ascii.toLowerCase(name());
         }
     }
@@ -50,13 +57,14 @@ public class DayPeriodsMapperTest {
     @Test
     public void testSimple() {
         Set<String> locales = ImmutableSet.of("en_GB", "en_AU", "en_NZ");
-        CldrData cldrData = cldrData(
-            dayPeriodRule(locales, MORNING1, isBetween("04:00", "12:00")),
-            dayPeriodRule(locales, NOON, isAt("12:00")),
-            dayPeriodRule(locales, AFTERNOON1, isBetween("12:00", "18:00")),
-            dayPeriodRule(locales, EVENING1, isBetween("18:00", "21:00")),
-            dayPeriodRule(locales, NIGHT1, isBetween("21:00", "04:00")),
-            dayPeriodRule(locales, MIDNIGHT, isAt("00:00")));
+        CldrData cldrData =
+                cldrData(
+                        dayPeriodRule(locales, MORNING1, isBetween("04:00", "12:00")),
+                        dayPeriodRule(locales, NOON, isAt("12:00")),
+                        dayPeriodRule(locales, AFTERNOON1, isBetween("12:00", "18:00")),
+                        dayPeriodRule(locales, EVENING1, isBetween("18:00", "21:00")),
+                        dayPeriodRule(locales, NIGHT1, isBetween("21:00", "04:00")),
+                        dayPeriodRule(locales, MIDNIGHT, isAt("00:00")));
 
         IcuData icuData = DayPeriodsMapper.process(cldrData);
 
@@ -82,11 +90,12 @@ public class DayPeriodsMapperTest {
     public void testMultipleRuleSets() {
         Set<String> locales1 = ImmutableSet.of("en_GB");
         Set<String> locales2 = ImmutableSet.of("en_AU", "en_NZ");
-        CldrData cldrData = cldrData(
-            dayPeriodRule(locales1, MORNING1, isBetween("04:00", "12:00")),
-            dayPeriodRule(locales1, NOON, isAt("12:00")),
-            dayPeriodRule(locales2, MORNING1, isBetween("06:00", "13:00")),
-            dayPeriodRule(locales2, NOON, isAt("13:00")));
+        CldrData cldrData =
+                cldrData(
+                        dayPeriodRule(locales1, MORNING1, isBetween("04:00", "12:00")),
+                        dayPeriodRule(locales1, NOON, isAt("12:00")),
+                        dayPeriodRule(locales2, MORNING1, isBetween("06:00", "13:00")),
+                        dayPeriodRule(locales2, NOON, isAt("13:00")));
 
         IcuData icuData = DayPeriodsMapper.process(cldrData);
 
@@ -112,9 +121,10 @@ public class DayPeriodsMapperTest {
         Set<String> locales = ImmutableSet.of("en_GB");
         // Note that there's an implicit assumption in the mapper that the ruleset label is the
         // same for all of the rules of any given locale (since it comes from the parent element).
-        CldrData cldrData = cldrData(
-            dayPeriodRule(locales, MORNING1, isBetween("04:00", "12:00"), "foo"),
-            dayPeriodRule(locales, NOON, isAt("12:00"), "foo"));
+        CldrData cldrData =
+                cldrData(
+                        dayPeriodRule(locales, MORNING1, isBetween("04:00", "12:00"), "foo"),
+                        dayPeriodRule(locales, NOON, isAt("12:00"), "foo"));
 
         IcuData icuData = DayPeriodsMapper.process(cldrData);
 
@@ -128,9 +138,10 @@ public class DayPeriodsMapperTest {
     @Test
     public void testNoDataValidation() {
         Set<String> locales = ImmutableSet.of("foo", "bar");
-        CldrData cldrData = cldrData(
-            dayPeriodRule(locales, MORNING1, isBetween("start", "end")),
-            dayPeriodRule(locales, NOON, isAt("moment")));
+        CldrData cldrData =
+                cldrData(
+                        dayPeriodRule(locales, MORNING1, isBetween("start", "end")),
+                        dayPeriodRule(locales, NOON, isAt("moment")));
 
         IcuData icuData = DayPeriodsMapper.process(cldrData);
 
@@ -151,19 +162,20 @@ public class DayPeriodsMapperTest {
     }
 
     private static CldrValue dayPeriodRule(
-        Set<String> locales, RuleType type, Map<RuleName, String> rules) {
+            Set<String> locales, RuleType type, Map<RuleName, String> rules) {
 
         return dayPeriodRule(locales, type, rules, null);
     }
 
     private static CldrValue dayPeriodRule(
-        Set<String> locales, RuleType type, Map<RuleName, String> rules, String label) {
+            Set<String> locales, RuleType type, Map<RuleName, String> rules, String label) {
 
         StringBuilder cldrPath = new StringBuilder("//supplementalData/dayPeriodRuleSet");
         if (label != null) {
             appendAttribute(cldrPath, "type", label);
         }
-        appendAttribute(cldrPath.append("/dayPeriodRules"), "locales", Joiner.on(' ').join(locales));
+        appendAttribute(
+                cldrPath.append("/dayPeriodRules"), "locales", Joiner.on(' ').join(locales));
         appendAttribute(cldrPath.append("/dayPeriodRule"), "type", type);
         rules.forEach((k, v) -> cldrPath.append(String.format("[@%s=\"%s\"]", k, v)));
         return CldrValue.parseValue(cldrPath.toString(), "");

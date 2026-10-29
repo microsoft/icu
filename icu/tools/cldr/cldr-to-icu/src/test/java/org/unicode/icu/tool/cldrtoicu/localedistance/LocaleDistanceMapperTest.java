@@ -20,28 +20,26 @@ import static org.unicode.icu.tool.cldrtoicu.localedistance.TestData.territoryGr
 import static org.unicode.icu.tool.cldrtoicu.localedistance.TestData.territoryGrouping;
 import static org.unicode.icu.tool.cldrtoicu.testing.IcuDataSubjectFactory.assertThat;
 
-import java.io.ByteArrayOutputStream;
-import java.util.List;
-
-import org.junit.Test;
-import org.unicode.cldr.api.CldrData;
-import org.unicode.icu.tool.cldrtoicu.IcuData;
-import org.unicode.icu.tool.cldrtoicu.RbPath;
-import org.unicode.icu.tool.cldrtoicu.RbValue;
-
 import com.google.common.base.CharMatcher;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.ImmutableSetMultimap;
 import com.ibm.icu.impl.locale.LSR;
 import com.ibm.icu.util.BytesTrie;
+import java.io.ByteArrayOutputStream;
+import java.util.List;
+import org.junit.Test;
+import org.unicode.cldr.api.CldrData;
+import org.unicode.icu.tool.cldrtoicu.IcuData;
+import org.unicode.icu.tool.cldrtoicu.RbPath;
+import org.unicode.icu.tool.cldrtoicu.RbValue;
 
 /**
- * Higher level tests for {@link LocaleDistanceMapper} to demonstrate that CLDR values
- * are matched and processed, and the IcuData is written as expected.
+ * Higher level tests for {@link LocaleDistanceMapper} to demonstrate that CLDR values are matched
+ * and processed, and the IcuData is written as expected.
  *
- * <p>Most of the separate parts which make up this mapper are already tested at a
- * lower level in the other tests in this package.
+ * <p>Most of the separate parts which make up this mapper are already tested at a lower level in
+ * the other tests in this package.
  */
 public class LocaleDistanceMapperTest {
     @Test
@@ -55,77 +53,75 @@ public class LocaleDistanceMapperTest {
         //    This demonstrates the way that special case mappings are handled.
         // 2: Chinese, Simplified and Traditional
         //    This demonstrates languages with multiple scripts.
-        CldrData testData = cldrData(
-                paradigms("en", "en_GB", "es", "es_419"),
-                matchVariable("$enUS", "PR+US+VI"),
-                matchVariable("$cnsar", "HK+MO"),
+        CldrData testData =
+                cldrData(
+                        paradigms("en", "en_GB", "es", "es_419"),
+                        matchVariable("$enUS", "PR+US+VI"),
+                        matchVariable("$cnsar", "HK+MO"),
 
-                // The <languageMatch> element is marked "ORDERED" in the DTD, so
-                // ordering of match rules can can affect output (when paths are
-                // otherwise equal). DTD ordering will not re-order this data.
-                languageMatch("yue", "zh", 10, true, ++idx),
-                languageMatch("*", "*", 80, false, ++idx),
+                        // The <languageMatch> element is marked "ORDERED" in the DTD, so
+                        // ordering of match rules can can affect output (when paths are
+                        // otherwise equal). DTD ordering will not re-order this data.
+                        languageMatch("yue", "zh", 10, true, ++idx),
+                        languageMatch("*", "*", 80, false, ++idx),
+                        languageMatch("zh_Hans", "zh_Hant", 15, true, ++idx),
+                        languageMatch("zh_Hant", "zh_Hans", 19, true, ++idx),
+                        languageMatch("zh_Latn", "zh_Hans", 20, true, ++idx),
+                        languageMatch("*_*", "*_*", 50, false, ++idx),
+                        languageMatch("en_*_$enUS", "en_*_$enUS", 4, false, ++idx),
+                        languageMatch("en_*_$!enUS", "en_*_GB", 3, false, ++idx),
+                        languageMatch("en_*_$!enUS", "en_*_$!enUS", 4, false, ++idx),
+                        languageMatch("en_*_*", "en_*_*", 5, false, ++idx),
+                        languageMatch("zh_Hant_$cnsar", "zh_Hant_$cnsar", 4, false, ++idx),
+                        languageMatch("zh_Hant_$!cnsar", "zh_Hant_$!cnsar", 4, false, ++idx),
+                        languageMatch("zh_Hant_*", "zh_Hant_*", 5, false, ++idx),
+                        languageMatch("*_*_*", "*_*_*", 4, false, ++idx),
 
-                languageMatch("zh_Hans", "zh_Hant", 15, true, ++idx),
-                languageMatch("zh_Hant", "zh_Hans", 19, true, ++idx),
-                languageMatch("zh_Latn", "zh_Hans", 20, true, ++idx),
-                languageMatch("*_*", "*_*", 50, false, ++idx),
+                        // NOTE: This is deliberately NOT in DTD order to demonstrate that the
+                        // mapper will reorder these (putting "und" last) which means that the
+                        // ICU data here is NOT affected by changes in the likely subtag order).
+                        likelySubtag("und", "en_Latn_US"),
+                        likelySubtag("und_HK", "zh_Hant_HK"),
+                        likelySubtag("und_MO", "zh_Hant_MO"),
+                        likelySubtag("und_TW", "zh_Hant_TW"),
+                        likelySubtag("und_030", "zh_Hans_CN"),
+                        likelySubtag("und_142", "zh_Hans_CN"),
+                        likelySubtag("und_CN", "zh_Hans_CN"),
+                        likelySubtag("und_Hans", "zh_Hans_CN"),
+                        likelySubtag("und_Hant", "zh_Hant_TW"),
+                        likelySubtag("zh", "zh_Hans_CN"),
+                        likelySubtag("zh_Hant", "zh_Hant_TW"),
+                        likelySubtag("zh_TW", "zh_Hant_TW"),
 
-                languageMatch("en_*_$enUS", "en_*_$enUS", 4, false, ++idx),
-                languageMatch("en_*_$!enUS", "en_*_GB", 3, false, ++idx),
-                languageMatch("en_*_$!enUS", "en_*_$!enUS", 4, false, ++idx),
-                languageMatch("en_*_*", "en_*_*", 5, false, ++idx),
+                        // NOT in DTD order (to demonstrate order invariance later).
+                        alias(LANGUAGE, LEGACY, "zh_SG", "zh_Hans_SG"),
+                        alias(LANGUAGE, LEGACY, "zh_HK", "zh_Hant_HK"),
+                        alias(LANGUAGE, LEGACY, "zh_TW", "zh_Hant_TW"),
+                        alias(LANGUAGE, LEGACY, "zh_MO", "zh_Hant_MO"),
+                        alias(LANGUAGE, LEGACY, "zh_CN", "zh_Hans_CN"),
+                        alias(LANGUAGE, MACRO, "cmn", "zh"),
 
-                languageMatch("zh_Hant_$cnsar", "zh_Hant_$cnsar", 4, false, ++idx),
-                languageMatch("zh_Hant_$!cnsar", "zh_Hant_$!cnsar", 4, false, ++idx),
-                languageMatch("zh_Hant_*", "zh_Hant_*", 5, false, ++idx),
-                languageMatch("*_*_*", "*_*_*", 4, false, ++idx),
+                        // NOT in DTD order (to demonstrate order invariance later).
+                        alias(TERRITORY, DEPRECATED, "UK", "GB"),
+                        alias(TERRITORY, DEPRECATED, "AN", "CW", "SX", "BQ"),
 
-                // NOTE: This is deliberately NOT in DTD order to demonstrate that the
-                // mapper will reorder these (putting "und" last) which means that the
-                // ICU data here is NOT affected by changes in the likely subtag order).
-                likelySubtag("und", "en_Latn_US"),
-                likelySubtag("und_HK", "zh_Hant_HK"),
-                likelySubtag("und_MO", "zh_Hant_MO"),
-                likelySubtag("und_TW", "zh_Hant_TW"),
-                likelySubtag("und_030", "zh_Hans_CN"),
-                likelySubtag("und_142", "zh_Hans_CN"),
-                likelySubtag("und_CN", "zh_Hans_CN"),
-                likelySubtag("und_Hans", "zh_Hans_CN"),
-                likelySubtag("und_Hant", "zh_Hant_TW"),
-                likelySubtag("zh", "zh_Hans_CN"),
-                likelySubtag("zh_Hant", "zh_Hant_TW"),
-                likelySubtag("zh_TW", "zh_Hant_TW"),
-
-                // NOT in DTD order (to demonstrate order invariance later).
-                alias(LANGUAGE, LEGACY, "zh_SG", "zh_Hans_SG"),
-                alias(LANGUAGE, LEGACY, "zh_HK", "zh_Hant_HK"),
-                alias(LANGUAGE, LEGACY, "zh_TW", "zh_Hant_TW"),
-                alias(LANGUAGE, LEGACY, "zh_MO", "zh_Hant_MO"),
-                alias(LANGUAGE, LEGACY, "zh_CN", "zh_Hans_CN"),
-                alias(LANGUAGE, MACRO, "cmn", "zh"),
-
-                // NOT in DTD order (to demonstrate order invariance later).
-                alias(TERRITORY, DEPRECATED, "UK", "GB"),
-                alias(TERRITORY, DEPRECATED, "AN", "CW", "SX", "BQ"),
-
-                // Rather trimmed down containment hierarchy. It still retains macro
-                // regions and grouping to demonstrate that these work as expected.
-                territoryGroup("001", "019", "142", "150"),          // World
-                territoryGrouping("001", "EU"),
-                territoryGroup("019", "021", "419"),                 // Americas
-                territoryGroup("142", "030", "035"),                 // Asia
-                territoryGroup("150", "154", "155"),                 // Europe
-                territoryGrouping("EU", "DE", "FR", "IE"),           // European Union (no CH or GB)
-                territoryGroup("021", "CA", "PM", "US"),             // Northern America
-                territoryGroup("419", "013", "029"),                 // Latin America and the Caribbean
-                territoryGroup("030", "CN", "HK", "MO", "TW"),       // Eastern Asia
-                territoryGroup("035", "PH", "SG", "TH", "VN"),       // South-Eastern Asia
-                territoryGroup("154", "GB", "IE"),                   // Northern Europe
-                territoryGroup("155", "CH", "DE", "FR"),             // Western Europe
-                territoryGroup("013", "CR", "MX", "PA"),             // Central America
-                territoryGroup("029", "BQ", "CW", "PR", "SX", "VI"), // Caribbean
-                deprecatedTerritory("029", "AN"));                   // Antilles (=> BQ, CW, SX)
+                        // Rather trimmed down containment hierarchy. It still retains macro
+                        // regions and grouping to demonstrate that these work as expected.
+                        territoryGroup("001", "019", "142", "150"), // World
+                        territoryGrouping("001", "EU"),
+                        territoryGroup("019", "021", "419"), // Americas
+                        territoryGroup("142", "030", "035"), // Asia
+                        territoryGroup("150", "154", "155"), // Europe
+                        territoryGrouping("EU", "DE", "FR", "IE"), // European Union (no CH or GB)
+                        territoryGroup("021", "CA", "PM", "US"), // Northern America
+                        territoryGroup("419", "013", "029"), // Latin America and the Caribbean
+                        territoryGroup("030", "CN", "HK", "MO", "TW"), // Eastern Asia
+                        territoryGroup("035", "PH", "SG", "TH", "VN"), // South-Eastern Asia
+                        territoryGroup("154", "GB", "IE"), // Northern Europe
+                        territoryGroup("155", "CH", "DE", "FR"), // Western Europe
+                        territoryGroup("013", "CR", "MX", "PA"), // Central America
+                        territoryGroup("029", "BQ", "CW", "PR", "SX", "VI"), // Caribbean
+                        deprecatedTerritory("029", "AN")); // Antilles (=> BQ, CW, SX)
 
         IcuData icuData = LocaleDistanceMapper.process(testData);
         // Aliases come in (deprecated, replacement) pairs.
@@ -135,15 +131,17 @@ public class LocaleDistanceMapperTest {
         // LSR values come in (language, script, region) tuples. They are the mapped-to
         // values for the likely subtag mappings, ordered by the DTD order in which the
         // mapping keys were encountered.
-        assertThat(icuData).hasValuesFor("likely/lsrnum:intvector",
-                "0", // "", "", ""
-                "1", // "skip", "script", ""
-                "1232236233", // "zh", "Hans", "CN"
-                "1254131029", // "zh", "Hant", "TW"
-                "429941505", // "en", "Latn", "US"
-                "1247517541", // "zh", "Hant", "HK"
-                "1249741720" // "zh", "Hant", "MO"
-        );
+        assertThat(icuData)
+                .hasValuesFor(
+                        "likely/lsrnum:intvector",
+                        "0", // "", "", ""
+                        "1", // "skip", "script", ""
+                        "1232236233", // "zh", "Hans", "CN"
+                        "1254131029", // "zh", "Hant", "TW"
+                        "429941505", // "en", "Latn", "US"
+                        "1247517541", // "zh", "Hant", "HK"
+                        "1249741720" // "zh", "Hant", "MO"
+                        );
 
         // It's a bit easier to see how match keys are grouped against the partitions.
         ImmutableSetMultimap<Integer, String> likelyTrie =
@@ -157,17 +155,28 @@ public class LocaleDistanceMapperTest {
         assertThat(likelyTrie).valuesForKey(4).containsExactly("*-Latn-*", "*-Latn-US", "*-*-*");
 
         // Index 2: zh-Hans-CN (default for zh, Hans and CN separately).
-        assertThat(likelyTrie).valuesForKey(2).containsExactly(
-                "*-*-030", "*-*-142",               // macro regions
-                "*-*-CN", "*-Hans-*", "*-Hans-CN",  // unknown language match
-                "cmn-*-*",                          // language alias
-                "zh-*-*");                          // default for language
+        assertThat(likelyTrie)
+                .valuesForKey(2)
+                .containsExactly(
+                        "*-*-030",
+                        "*-*-142", // macro regions
+                        "*-*-CN",
+                        "*-Hans-*",
+                        "*-Hans-CN", // unknown language match
+                        "cmn-*-*", // language alias
+                        "zh-*-*"); // default for language
 
         // Index 2: zh-Hant-TW (default for zh if Hant or TW is given).
-        assertThat(likelyTrie).valuesForKey(3).containsExactly(
-                "*-*-TW", "*-Hant-*", "*-Hant-TW",  // unknown language match
-                "cmn-*-TW", "cmn-Hant",             // language alias with specific script/region
-                "zh-*-TW", "zh-Hant");              // default for script/region
+        assertThat(likelyTrie)
+                .valuesForKey(3)
+                .containsExactly(
+                        "*-*-TW",
+                        "*-Hant-*",
+                        "*-Hant-TW", // unknown language match
+                        "cmn-*-TW",
+                        "cmn-Hant", // language alias with specific script/region
+                        "zh-*-TW",
+                        "zh-Hant"); // default for script/region
 
         // Other zh languages (zh-Hant-HK, zh-Hant-MO) require an explicit region match.
         assertThat(likelyTrie).valuesForKey(5).containsExactly("*-*-HK", "*-Hant-HK");
@@ -175,16 +184,19 @@ public class LocaleDistanceMapperTest {
 
         // Pairs of expanded paradigm locales (using LSR tuples) in declaration order.
         // This is just the list from the CLDR data with no processing.
-        assertThat(icuData).hasValuesFor("match/paradigmnum:intvector",
-                "429941505", // "en", "Latn", "US"
-                "420631446", // "en", "Latn", "GB"
-                "429626712", // "es", "Latn", "ES"
-                "419470284" // "es", "Latn", "419"
-        );
+        assertThat(icuData)
+                .hasValuesFor(
+                        "match/paradigmnum:intvector",
+                        "429941505", // "en", "Latn", "US"
+                        "420631446", // "en", "Latn", "GB"
+                        "429626712", // "es", "Latn", "ES"
+                        "419470284" // "es", "Latn", "419"
+                        );
 
         // See PartitionInfoTest for a description of the ordering of these strings.
-        assertThat(icuData).hasValuesFor("match/partitions",
-                ".", "0", "1", "2", "3", "0123", "03", "02", "01");
+        assertThat(icuData)
+                .hasValuesFor(
+                        "match/partitions", ".", "0", "1", "2", "3", "0123", "03", "02", "01");
 
         ImmutableMap<String, Integer> matchTrie = getTrieMap(icuData, "match/trie:bin", "*-*");
         byte[] regionLookup = getBytes(icuData, "match/regionToPartitions:bin");
@@ -197,7 +209,7 @@ public class LocaleDistanceMapperTest {
         assertThat(matchTrie).doesNotContainKey("*-*-*-*-*-*");
 
         // Some zh specific tests.
-        assertThat(matchTrie).containsEntry("yue-zh", 10);  // Encapsulated language
+        assertThat(matchTrie).containsEntry("yue-zh", 10); // Encapsulated language
         assertThat(matchTrie).containsEntry("zh-zh-Hant-Hant-*-*", 5);
 
         // Special marker that means "en-en" matches don't use script information.
@@ -233,7 +245,8 @@ public class LocaleDistanceMapperTest {
             ImmutableMap<String, Integer> matchTrie,
             byte[] regionLookup,
             ImmutableList<String> paritions,
-            String regionA, String regionB,
+            String regionA,
+            String regionB,
             int distance) {
         // Three step lookup for each region:
         // 1: Find LSR index from region string.
@@ -244,8 +257,11 @@ public class LocaleDistanceMapperTest {
 
         // For now only support cases where there's a single partition ID associated
         // with the region (this is all non-macro regions and *some* macro regions).
-        checkArgument(partitionA.length() == 1 && partitionB.length() == 1,
-                "multiple partitions unsupported in test: %s %s", regionA, regionB);
+        checkArgument(
+                partitionA.length() == 1 && partitionB.length() == 1,
+                "multiple partitions unsupported in test: %s %s",
+                regionA,
+                regionB);
 
         // This is a depth 2 key because we know that "en" skips scripts. This will
         // not work the same for "zh" because that needs scripts information.
@@ -259,7 +275,8 @@ public class LocaleDistanceMapperTest {
 
     // Returns the mapping for a Trie from a ":bin" suffixed resource value.
     // "star" defines what the Trie wildcard should be expanded to (for readability).
-    private static ImmutableMap<String, Integer> getTrieMap(IcuData icuData, String path, String star) {
+    private static ImmutableMap<String, Integer> getTrieMap(
+            IcuData icuData, String path, String star) {
         return TestData.getTrieTable(getTrie(icuData, path), star, i -> i);
     }
 
@@ -271,7 +288,8 @@ public class LocaleDistanceMapperTest {
     // Reads a byte array from a ":bin" suffixed resource value.
     private static byte[] getBytes(IcuData icuData, String path) {
         RbPath rbPath = RbPath.parse(path);
-        checkArgument(rbPath.isBinPath(), "only binary paths (:bin) should have binary data: %s", path);
+        checkArgument(
+                rbPath.isBinPath(), "only binary paths (:bin) should have binary data: %s", path);
         List<RbValue> rbValues = icuData.get(rbPath);
         checkArgument(rbValues != null, "missing value for: %s", rbPath);
         checkArgument(rbValues.size() == 1, "expect single RbValue: %s", rbValues);

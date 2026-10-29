@@ -7,10 +7,13 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 import static org.unicode.cldr.api.CldrDataType.LDML;
 
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableTable;
+import com.google.common.collect.Table;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrDataType;
@@ -18,27 +21,22 @@ import org.unicode.cldr.api.CldrDraftStatus;
 import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
 
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.ImmutableSet;
-import com.google.common.collect.ImmutableTable;
-import com.google.common.collect.Table;
-
 /**
- * A factory for data suppliers which can filter CLDR values by substituting values from one path
- * to another. The replaced value must retain the original "target" path but will have the value
- * and value attributes of the "source". A value will only be replaced if both the source and
- * target paths have associated values. The replacement retains its original position in the value
+ * A factory for data suppliers which can filter CLDR values by substituting values from one path to
+ * another. The replaced value must retain the original "target" path but will have the value and
+ * value attributes of the "source". A value will only be replaced if both the source and target
+ * paths have associated values. The replacement retains its original position in the value
  * ordering.
  *
- * <p>This class DOES NOT transform supplemental or BCP-47 data, because the use of "alt" values
- * is completely different for that data (it would require merging specific attributes together).
+ * <p>This class DOES NOT transform supplemental or BCP-47 data, because the use of "alt" values is
+ * completely different for that data (it would require merging specific attributes together).
  *
- * <p>Note that this is not a general purpose transformation of CLDR data, since it is generally
- * not possible to "move" values between arbitrary paths. Target and source paths must be in the
- * same "namespace" (i.e. share the same element names) but attributes can differ.
+ * <p>Note that this is not a general purpose transformation of CLDR data, since it is generally not
+ * possible to "move" values between arbitrary paths. Target and source paths must be in the same
+ * "namespace" (i.e. share the same element names) but attributes can differ.
  *
- * <p>Note also that the mapping is not recursive, so mapping {@code A -> B} and {@code B -> C}
- * will NOT cause {@code A} to be mapped to {@code C}.
+ * <p>Note also that the mapping is not recursive, so mapping {@code A -> B} and {@code B -> C} will
+ * NOT cause {@code A} to be mapped to {@code C}.
  *
  * <p>Typically this class is expected to be used for selecting alternate values of locale data
  * based on the {@code "alt"} path attribute (e.g. selecting the short form of a region name).
@@ -52,9 +50,9 @@ public final class AlternateLocaleData {
      * namespace (i.e. have the same path element names).
      */
     public static CldrDataSupplier transform(
-        CldrDataSupplier src,
-        Map<CldrPath, CldrPath> globalAltPaths,
-        Table<String, CldrPath, CldrPath> localeAltPaths) {
+            CldrDataSupplier src,
+            Map<CldrPath, CldrPath> globalAltPaths,
+            Table<String, CldrPath, CldrPath> localeAltPaths) {
         return new CldrDataFilter(src, globalAltPaths, localeAltPaths);
     }
 
@@ -66,26 +64,37 @@ public final class AlternateLocaleData {
         private final ImmutableTable<String, CldrPath, CldrPath> localeAltPaths;
 
         CldrDataFilter(
-        CldrDataSupplier src,
-        Map<CldrPath, CldrPath> globalAltPaths,
-        Table<String, CldrPath, CldrPath> localeAltPaths) {
+                CldrDataSupplier src,
+                Map<CldrPath, CldrPath> globalAltPaths,
+                Table<String, CldrPath, CldrPath> localeAltPaths) {
             this.src = checkNotNull(src);
             this.globalAltPaths = ImmutableMap.copyOf(globalAltPaths);
             this.localeAltPaths = ImmutableTable.copyOf(localeAltPaths);
-            this.globalAltPaths
-                .forEach((t, s) -> checkArgument(hasSameNamespace(checkLdml(t), checkLdml(s)),
-                "alternate paths must have the same namespace: target=%s, source=%s", t, s));
-            this.localeAltPaths.cellSet()
-                .forEach(c -> checkArgument(
-                    hasSameNamespace(checkLdml(c.getColumnKey()), checkLdml(c.getValue())),
-                "alternate paths must have the same namespace: locale=%s, target=%s, source=%s",
-                    c.getRowKey(), c.getColumnKey(), c.getValue()));
+            this.globalAltPaths.forEach(
+                    (t, s) ->
+                            checkArgument(
+                                    hasSameNamespace(checkLdml(t), checkLdml(s)),
+                                    "alternate paths must have the same namespace: target=%s, source=%s",
+                                    t,
+                                    s));
+            this.localeAltPaths
+                    .cellSet()
+                    .forEach(
+                            c ->
+                                    checkArgument(
+                                            hasSameNamespace(
+                                                    checkLdml(c.getColumnKey()),
+                                                    checkLdml(c.getValue())),
+                                            "alternate paths must have the same namespace: locale=%s, target=%s, source=%s",
+                                            c.getRowKey(),
+                                            c.getColumnKey(),
+                                            c.getValue()));
         }
 
         @Override
         public CldrDataSupplier withDraftStatusAtLeast(CldrDraftStatus draftStatus) {
             return new CldrDataFilter(
-                src.withDraftStatusAtLeast(draftStatus), globalAltPaths, localeAltPaths);
+                    src.withDraftStatusAtLeast(draftStatus), globalAltPaths, localeAltPaths);
         }
 
         @Override
@@ -114,7 +123,7 @@ public final class AlternateLocaleData {
 
             AltData(CldrData srcData, String localeId) {
                 super(srcData);
-                ImmutableMap<CldrPath, CldrPath> altPaths  = globalAltPaths;
+                ImmutableMap<CldrPath, CldrPath> altPaths = globalAltPaths;
                 if (!localeAltPaths.row(localeId).isEmpty()) {
                     Map<CldrPath, CldrPath> combinedPaths = new HashMap<>();
                     // Locale specific path mappings overwrite global ones.
@@ -123,14 +132,17 @@ public final class AlternateLocaleData {
                     altPaths = ImmutableMap.copyOf(combinedPaths);
                 }
                 this.altPaths = altPaths;
-                this.toRemove = altPaths.entrySet().stream()
-                    // Only remove source paths that are not also target paths...
-                    .filter(e -> !this.altPaths.containsKey(e.getValue()))
-                    // ... and if the target path it will be transformed to actually exists.
-                    .filter(e -> getSourceData().get(e.getKey()) != null)
-                    // The value in the mapping is the source path (it's target->source for lookup).
-                    .map(Map.Entry::getValue)
-                    .collect(toImmutableSet());
+                this.toRemove =
+                        altPaths.entrySet().stream()
+                                // Only remove source paths that are not also target paths...
+                                .filter(e -> !this.altPaths.containsKey(e.getValue()))
+                                // ... and if the target path it will be transformed to actually
+                                // exists.
+                                .filter(e -> getSourceData().get(e.getKey()) != null)
+                                // The value in the mapping is the source path (it's target->source
+                                // for lookup).
+                                .map(Map.Entry::getValue)
+                                .collect(toImmutableSet());
             }
 
             @Override

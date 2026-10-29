@@ -1280,7 +1280,7 @@ doOpenChoice(const char *path, const char *type, const char *name,
 
 #ifdef UDATA_DEBUG
     fprintf(stderr, " tocEntryName = %s\n", tocEntryName.data());
-    fprintf(stderr, " tocEntryPath = %s\n", tocEntryName.data());
+    fprintf(stderr, " tocEntryPath = %s\n", tocEntryPath.data());
 #endif
 
 #if !defined(ICU_DATA_DIR_WINDOWS)
@@ -1301,7 +1301,7 @@ doOpenChoice(const char *path, const char *type, const char *name,
     dataPath = u_getDataDirectory();
 
     /****    Time zone individual files override  */
-    if (isICUData && isTimeZoneFile(name, type)) {
+    if (isICUData && type != nullptr && isTimeZoneFile(name, type)) {
         const char *tzFilesDir = u_getTimeZoneFilesDirectory(pErrorCode);
         if (tzFilesDir[0] != 0) {
 #ifdef UDATA_DEBUG

@@ -12,6 +12,10 @@ import static java.util.Comparator.comparing;
 import static java.util.Comparator.nullsLast;
 import static org.unicode.cldr.api.CldrPath.parseDistinguishingPath;
 
+import com.google.common.base.Splitter;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -23,22 +27,16 @@ import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
-
 import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
 import org.unicode.icu.tool.cldrtoicu.PathValueTransformer.DynamicVars;
 import org.unicode.icu.tool.cldrtoicu.PathValueTransformer.Result;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
 
-import com.google.common.base.Splitter;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Lists;
-
 /**
- * A specification for building a result from the arguments in a matched xpath. Results always
- * hold a reference to their originating specification to allow them to be ordered in the same
- * order as the corresponding specifications in the configuration file.
+ * A specification for building a result from the arguments in a matched xpath. Results always hold
+ * a reference to their originating specification to allow them to be ordered in the same order as
+ * the corresponding specifications in the configuration file.
  */
 final class ResultSpec {
     // Subtle ordering for results to ensure "config file order" for things in the same
@@ -65,9 +63,9 @@ final class ResultSpec {
     // while it should be safe, must be done with caution.
     // TODO: Fix this to use RbPath ordering and NOT the String representation
     private static final Comparator<AbstractResult> RESULT_ORDERING =
-        Comparator.<AbstractResult, String>comparing(r -> r.getKey().toString())
-            .thenComparing(r -> r.getSpec().lineNumber)
-            .thenComparing(nullsLast(comparing(r -> r.getPath().orElse(null))));
+            Comparator.<AbstractResult, String>comparing(r -> r.getKey().toString())
+                    .thenComparing(r -> r.getSpec().lineNumber)
+                    .thenComparing(nullsLast(comparing(r -> r.getPath().orElse(null))));
 
     // Splitter for any values (either in CLDR data or results specifications). The only time
     // values are split differently is when quoting exists in the "values" instruction.
@@ -104,11 +102,11 @@ final class ResultSpec {
     private final Function<Character, CldrPath> dynamicVarFn;
 
     ResultSpec(
-        String rbPathSpec,
-        Map<Instruction, VarString> instructions,
-        int lineNumber,
-        Map<String, NamedFunction> icuFunctions,
-        Function<Character, CldrPath> dynamicVarFn) {
+            String rbPathSpec,
+            Map<Instruction, VarString> instructions,
+            int lineNumber,
+            Map<String, NamedFunction> icuFunctions,
+            Function<Character, CldrPath> dynamicVarFn) {
         this.rbPathSpec = checkNotNull(rbPathSpec);
         this.instructions = ImmutableMap.copyOf(instructions);
         this.splitArgIndex = getSplitArgIndex(rbPathSpec);
@@ -119,19 +117,21 @@ final class ResultSpec {
 
     /**
      * Transforms a path/value into a sequence of results. The given matcher has successfully
-     * matched the path and contains the captured arguments corresponding to $1..$N in the
-     * various result specification strings.
+     * matched the path and contains the captured arguments corresponding to $1..$N in the various
+     * result specification strings.
      */
-    Stream<Result> transform(
-        CldrValue value, Matcher m, DynamicVars varLookupFn) {
+    Stream<Result> transform(CldrValue value, Matcher m, DynamicVars varLookupFn) {
         // Discard group(0) since that's always the full xpath that was matched, and we don't
         // need that any more (so "$N" is args.get(N - 1)).
         List<String> args = new ArrayList<>();
         for (int i = 1; i <= m.groupCount(); i++) {
             // Important since we turn this into an ImmutableList (which is null-hostile).
-            args.add(checkNotNull(m.group(i),
-                "captured regex arguments must always be present\n"
-                    + "(use an non-capturing groups for optional arguments): %s", m.pattern()));
+            args.add(
+                    checkNotNull(
+                            m.group(i),
+                            "captured regex arguments must always be present\n"
+                                    + "(use an non-capturing groups for optional arguments): %s",
+                            m.pattern()));
         }
 
         // The first unquoted argument in any resource bundle path declaration, is defined as
@@ -153,10 +153,12 @@ final class ResultSpec {
             List<String> splitArgs = VALUE_SPLITTER.splitToList(args.get(splitArgIndex));
             // Only bother if there was more than one argument there anyway.
             if (splitArgs.size() > 1) {
-                return splitArgs.stream().map(a -> {
-                    args.set(splitArgIndex, a);
-                    return matchedResult(value, args, varLookupFn);
-                });
+                return splitArgs.stream()
+                        .map(
+                                a -> {
+                                    args.set(splitArgIndex, a);
+                                    return matchedResult(value, args, varLookupFn);
+                                });
             }
         }
         // No splittable argument, or a splittable argument with only one value.
@@ -164,12 +166,11 @@ final class ResultSpec {
     }
 
     // Simple helper to make results.
-    private Result matchedResult(
-        CldrValue value, List<String> args, DynamicVars varLookupFn) {
+    private Result matchedResult(CldrValue value, List<String> args, DynamicVars varLookupFn) {
         return new MatchedResult(
-            getRbPath(args),
-            getValues(value.getValue(), args),
-            getResultPath(value.getPath(), args, varLookupFn));
+                getRbPath(args),
+                getValues(value.getValue(), args),
+                getResultPath(value.getPath(), args, varLookupFn));
     }
 
     // Resource bundle paths are a bit special (unsurprisingly). The captured arguments can
@@ -265,10 +266,10 @@ final class ResultSpec {
     }
 
     /**
-     * Returns a fallback function if this specification has the "fallback=" instruction.
-     * The function takes a resolved resource bundle path and returns the possible fallback
-     * values for it. Note that currently fallback values do not support either quoting or
-     * grouping (but they easily could).
+     * Returns a fallback function if this specification has the "fallback=" instruction. The
+     * function takes a resolved resource bundle path and returns the possible fallback values for
+     * it. Note that currently fallback values do not support either quoting or grouping (but they
+     * easily could).
      */
     Optional<BiFunction<RbPath, DynamicVars, Optional<Result>>> getFallbackFunction() {
         VarString fallbackSpec = instructions.get(Instruction.FALLBACK);
@@ -294,11 +295,11 @@ final class ResultSpec {
         // Just copying here to make it effectively final.
         VarString finalFallbackSpec = fallbackSpec;
         return Optional.of(
-            (p, varFn) -> getFallbackResult(p, varFn, rbPathMatcher, finalFallbackSpec));
+                (p, varFn) -> getFallbackResult(p, varFn, rbPathMatcher, finalFallbackSpec));
     }
 
     private Optional<Result> getFallbackResult(
-        RbPath rbPath, DynamicVars varFn, Pattern rbPathMatcher, VarString fallbackSpec) {
+            RbPath rbPath, DynamicVars varFn, Pattern rbPathMatcher, VarString fallbackSpec) {
         // Check is the given rbPath could be associated with this fallback (most are not).
         Matcher matcher = rbPathMatcher.matcher(rbPath.toString());
         if (!matcher.matches()) {
@@ -316,10 +317,10 @@ final class ResultSpec {
         // behaviour but could cause all sorts of subtle issues if values contained quotes.
         // TODO: Rework transformation rules to make quoting behaviour deterministic.
         Iterable<String> values =
-            VALUE_SPLITTER.splitToList(specStr).stream()
-                // Fallback values that "look like" CLDR paths are auto-magically resolved.
-                .map(v -> v.startsWith("//") ? varFn.apply(parseDistinguishingPath(v)) : v)
-                .collect(toImmutableList());
+                VALUE_SPLITTER.splitToList(specStr).stream()
+                        // Fallback values that "look like" CLDR paths are auto-magically resolved.
+                        .map(v -> v.startsWith("//") ? varFn.apply(parseDistinguishingPath(v)) : v)
+                        .collect(toImmutableList());
         return Optional.of(new FallbackResult(rbPath, values));
     }
 
@@ -342,8 +343,7 @@ final class ResultSpec {
     // "natural order" (i.e. "/Baz/(...)/(...)") so we have to rewrite the order of the
     // placeholders in the fallback specification to match (e.g. "Foo$2/Bar$1").
     // TODO: Figure out a way to remove all of this extreme complexity.
-    private VarString maybeRewriteFallbackSpec(
-        VarString fallbackSpec) {
+    private VarString maybeRewriteFallbackSpec(VarString fallbackSpec) {
         Optional<String> fallback = fallbackSpec.resolve();
         // If the fallback string is not present, it's because the VarString still has
         // unresolved "dynamic" variables for late binding. This is okay, but should not
@@ -360,9 +360,10 @@ final class ResultSpec {
 
         // Fallback spec has $N in it, triggering super hacky behaviour.
         Matcher pathMatcher = ARG_PLACEHOLDER.matcher(rbPathSpec);
-        checkState(pathMatcher.find(),
-            "$N arguments in fallback must be present in the resource bundle path: %s",
-            rbPathSpec);
+        checkState(
+                pathMatcher.find(),
+                "$N arguments in fallback must be present in the resource bundle path: %s",
+                rbPathSpec);
         // Explicit group characters ("1"..."9") in the order they appear in the
         // resource bundle path. There can be duplicates (e.g. "/Foo/$1/Bar$1").
         List<Character> groupIds = new ArrayList<>();
@@ -374,8 +375,10 @@ final class ResultSpec {
         // placeholders (essentially impossible with current data). If it did happen,
         // the returned index below would be >= 9 and we would get "$X", where 'X' was
         // not a numeric value.
-        checkState(groupIds.size() < 10,
-            "too many placeholders in resource bundle path: %s", rbPathSpec);
+        checkState(
+                groupIds.size() < 10,
+                "too many placeholders in resource bundle path: %s",
+                rbPathSpec);
 
         // Now find each placeholder in the fallback specification string and map it to
         // the equivalent index for the path matcher we just created.
@@ -385,10 +388,11 @@ final class ResultSpec {
             // The new ID is the index of the corresponding placeholder offset by '1'.
             char placeholderDigit = rewrittenFallbackSpec.charAt(placeholderPos);
             int newPlaceholderIndex = groupIds.indexOf(placeholderDigit);
-            checkState(newPlaceholderIndex != -1,
-                "fallback values may only contain arguments from the resource bundle path: %s",
-                fallback.get());
-            rewrittenFallbackSpec.setCharAt(placeholderPos, (char)('1' + newPlaceholderIndex));
+            checkState(
+                    newPlaceholderIndex != -1,
+                    "fallback values may only contain arguments from the resource bundle path: %s",
+                    fallback.get());
+            rewrittenFallbackSpec.setCharAt(placeholderPos, (char) ('1' + newPlaceholderIndex));
         } while (fallbackMatcher.find());
         return VarString.of(rewrittenFallbackSpec.toString());
     }
@@ -437,8 +441,8 @@ final class ResultSpec {
 
         @Override
         public final int compareTo(Result other) {
-            checkArgument(other instanceof AbstractResult,
-                "unknown result type: %s", other.getClass());
+            checkArgument(
+                    other instanceof AbstractResult, "unknown result type: %s", other.getClass());
             return RESULT_ORDERING.compare(this, (AbstractResult) other);
         }
 
@@ -459,10 +463,10 @@ final class ResultSpec {
             // DO NOT test the result specifier here. Equal results can be generated from
             // different result specifications (if "base_xpath" was used).
             return getKey().equals(other.getKey())
-                && getPath().equals(other.getPath())
-                && isGrouped() == other.isGrouped()
-                // Alternatively assert that values are equal if everything else is.
-                && getValues().equals(other.getValues());
+                    && getPath().equals(other.getPath())
+                    && isGrouped() == other.isGrouped()
+                    // Alternatively assert that values are equal if everything else is.
+                    && getValues().equals(other.getValues());
         }
     }
 
@@ -555,7 +559,7 @@ final class ResultSpec {
     // function (i.e. "$N" --> args(N - 1)).
     private static String substituteArgs(String spec, Function<Integer, String> args, int size) {
         return RegexTransformer.substitute(
-            spec, '$', c -> args.apply(checkElementIndex(c - '1', size, "argument index")));
+                spec, '$', c -> args.apply(checkElementIndex(c - '1', size, "argument index")));
     }
 
     // Matches arguments with or without enclosing quotes.
@@ -573,14 +577,16 @@ final class ResultSpec {
             // Splitting occurs for the first unquoted placeholder, so ignore <$1> and "$N".
             // Q: Why two different "quoting" schemes?
             // A: It's complex and relates the something called "hidden labels".
-            boolean shouldSplit = !((startChar == '"' && endChar == '"') ||
-                (startChar == '<' && endChar == '>'));
+            boolean shouldSplit =
+                    !((startChar == '"' && endChar == '"') || (startChar == '<' && endChar == '>'));
             if (shouldSplit) {
                 // Allowed "$N" argument placeholders go from $1 to $9 ($0 is disallowed) and
                 // arguments are zero-indexed, so we expect an index from 0 to 8.
                 int groupNumber = Integer.parseInt(matcher.group(1));
-                checkArgument(groupNumber >= 1 && groupNumber <= 9,
-                    "invalid split argument: %s", groupNumber);
+                checkArgument(
+                        groupNumber >= 1 && groupNumber <= 9,
+                        "invalid split argument: %s",
+                        groupNumber);
                 return groupNumber - 1;
             }
         }
@@ -595,7 +601,7 @@ final class ResultSpec {
     // This mimics the original RegexManager behaviour where spaces in and quotes in
     // substituted values are _not_ escaped.
     private static ImmutableList<String> splitValues(String value) {
-        int qstart = nextBareQuoteIndex(value,  0);
+        int qstart = nextBareQuoteIndex(value, 0);
         if (qstart == -1) {
             return ImmutableList.copyOf(VALUE_SPLITTER.split(value));
         }
@@ -603,12 +609,12 @@ final class ResultSpec {
         int rawStart = 0;
         do {
             values.addAll(VALUE_SPLITTER.split(value.substring(rawStart, qstart)));
-            int qend = nextBareQuoteIndex(value,  qstart + 1);
+            int qend = nextBareQuoteIndex(value, qstart + 1);
             checkArgument(qend != -1, "mismatched quotes in splittable value: %s", value);
             // Remember to unescape any '"' found in the quoted regions.
             values.add(value.substring(qstart + 1, qend).replace("\\\"", "\""));
             rawStart = qend + 1;
-            qstart = nextBareQuoteIndex(value,  qend + 1);
+            qstart = nextBareQuoteIndex(value, qend + 1);
         } while (qstart != -1);
         values.addAll(VALUE_SPLITTER.split(value.substring(rawStart)));
         return values.build();

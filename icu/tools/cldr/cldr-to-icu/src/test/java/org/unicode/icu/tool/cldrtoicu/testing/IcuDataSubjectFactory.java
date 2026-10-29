@@ -2,11 +2,10 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 package org.unicode.icu.tool.cldrtoicu.testing;
 
-import org.unicode.icu.tool.cldrtoicu.IcuData;
-
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.Subject;
 import com.google.common.truth.Truth;
+import org.unicode.icu.tool.cldrtoicu.IcuData;
 
 /** Truth subject for asserting about ICU data instances (makes tests much more readable). */
 public final class IcuDataSubjectFactory implements Subject.Factory<IcuDataSubject, IcuData> {

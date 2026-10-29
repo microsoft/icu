@@ -5,48 +5,46 @@ package org.unicode.icu.tool.cldrtoicu.mapper;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static org.unicode.cldr.api.AttributeKey.keyOf;
 
+import com.google.common.escape.UnicodeEscaper;
 import java.util.Optional;
-
 import org.unicode.cldr.api.AttributeKey;
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataType;
 import org.unicode.cldr.api.CldrValue;
-import org.unicode.icu.tool.cldrtoicu.IcuData;
-import org.unicode.icu.tool.cldrtoicu.RbPath;
 import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
 import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor.SubProcessor;
-
-import com.google.common.escape.UnicodeEscaper;
+import org.unicode.icu.tool.cldrtoicu.IcuData;
+import org.unicode.icu.tool.cldrtoicu.RbPath;
 
 /**
- * A mapper to collect break-iterator data from {@link CldrDataType#LDML LDML} data under
- * paths matching:
+ * A mapper to collect break-iterator data from {@link CldrDataType#LDML LDML} data under paths
+ * matching:
+ *
  * <pre>{@code
- *   //ldml/segmentations/segmentation/suppressions/suppression
- *   //ldml/special/icu:breakIteratorData/...
+ * //ldml/segmentations/segmentation/suppressions/suppression
+ * //ldml/special/icu:breakIteratorData/...
  * }</pre>
  */
 // TODO: This class can almost certainly be replace with a small RegexTransformer config.
 public final class BreakIteratorMapper {
 
     private static final CldrDataProcessor<BreakIteratorMapper> CLDR_PROCESSOR;
+
     static {
         CldrDataProcessor.Builder<BreakIteratorMapper> processor = CldrDataProcessor.builder();
         // The "type" attribute in /suppressions/ is not required so cannot be in the matcher. And
         // its default (and only) value is "standard".
         // TODO: Understand and document why this is the case.
         processor.addValueAction(
-            "//ldml/segmentations/segmentation[@type=*]/suppressions/suppression",
-            BreakIteratorMapper::addSuppression);
+                "//ldml/segmentations/segmentation[@type=*]/suppressions/suppression",
+                BreakIteratorMapper::addSuppression);
         SubProcessor<BreakIteratorMapper> specials =
-            processor.addSubprocessor("//ldml/special/icu:breakIteratorData");
+                processor.addSubprocessor("//ldml/special/icu:breakIteratorData");
         specials.addValueAction("icu:boundaries/*", BreakIteratorMapper::addBoundary);
         specials.addValueAction(
-            "icu:dictionaries/icu:dictionary", BreakIteratorMapper::addDictionary);
-        specials.addValueAction(
-            "icu:extensions/icu:extension", BreakIteratorMapper::addExtension);
-        specials.addValueAction(
-            "icu:lstm/icu:lstmdata", BreakIteratorMapper::addLstmdata);
+                "icu:dictionaries/icu:dictionary", BreakIteratorMapper::addDictionary);
+        specials.addValueAction("icu:extensions/icu:extension", BreakIteratorMapper::addExtension);
+        specials.addValueAction("icu:lstm/icu:lstmdata", BreakIteratorMapper::addLstmdata);
         CLDR_PROCESSOR = processor.build();
     }
 
@@ -66,7 +64,7 @@ public final class BreakIteratorMapper {
      * @return IcuData containing break-iterator data for the given locale ID.
      */
     public static IcuData process(
-        IcuData icuData, CldrData cldrData, Optional<CldrData> icuSpecialData) {
+            IcuData icuData, CldrData cldrData, Optional<CldrData> icuSpecialData) {
 
         BreakIteratorMapper mapper = new BreakIteratorMapper(icuData);
         icuSpecialData.ifPresent(d -> CLDR_PROCESSOR.process(d, mapper));
@@ -82,54 +80,62 @@ public final class BreakIteratorMapper {
     }
 
     private void addSuppression(CldrValue v) {
-        //System.out.println("addSuppression: " + v.toString()); // debug
+        // System.out.println("addSuppression: " + v.toString()); // debug
         String type = SEGMENTATION_TYPE.valueFrom(v);
         // TODO: Understand and document why we escape values here, but not for collation data.
         icuData.add(
-            RbPath.of("exceptions", type + ":array"), ESCAPE_NON_ASCII.escape(v.getValue()));
+                RbPath.of("exceptions", type + ":array"), ESCAPE_NON_ASCII.escape(v.getValue()));
     }
 
     private void addBoundary(CldrValue v) {
-        //System.out.println("addBoundary: " + v.toString()); // debug
+        // System.out.println("addBoundary: " + v.toString()); // debug
         addDependency(getDependencyName(v), getBoundaryType(v), getBoundaryDependency(v));
     }
 
     private void addDictionary(CldrValue v) {
-        //System.out.println("addDictionary: " + v.toString()); // debug
+        // System.out.println("addDictionary: " + v.toString()); // debug
         addDependency(
-            getDependencyName(v),
-            DICTIONARY_TYPE.valueFrom(v),
-            DICTIONARY_DEP.optionalValueFrom(v));
+                getDependencyName(v),
+                DICTIONARY_TYPE.valueFrom(v),
+                DICTIONARY_DEP.optionalValueFrom(v));
     }
 
     private void addExtension(CldrValue v) {
-        //System.out.println("addExtension: " + v.toString()); // debug
-        icuData.add(
-            RbPath.of("extensions"), v.getValue());
+        // System.out.println("addExtension: " + v.toString()); // debug
+        icuData.add(RbPath.of("extensions"), v.getValue());
     }
 
     private void addLstmdata(CldrValue v) {
-        //System.out.println("addLstmdata: " + v.toString()); // debug
+        // System.out.println("addLstmdata: " + v.toString()); // debug
         addLstmDependency(
-            getDependencyName(v),
-            LSTMDATA_TYPE.valueFrom(v),
-            LSTMDATA_DEP.optionalValueFrom(v));
+                getDependencyName(v),
+                LSTMDATA_TYPE.valueFrom(v),
+                LSTMDATA_DEP.optionalValueFrom(v));
     }
 
     private void addDependency(String name, String type, Optional<String> dependency) {
-        //System.out.println("addDependency: name " + name + ", type " + type + ", dependency " + dependency);
+        // System.out.println("addDependency: name " + name + ", type " + type + ", dependency " +
+        // dependency);
         icuData.add(
-            RbPath.of(name, type + ":process(dependency)"),
-            dependency.orElseThrow(() -> new IllegalArgumentException("missing dependency")));
+                RbPath.of(name, type + ":process(dependency)"),
+                dependency.orElseThrow(() -> new IllegalArgumentException("missing dependency")));
     }
 
     private void addLstmDependency(String name, String type, Optional<String> dependency) {
         // this should be :process(dependency) but that's not what ICU expects
         // BUILDRULES.py hard codes the inclusion of the .res files, see the TODO ticket.
-        System.out.println("addLstmDependency: name " + name + ", type " + type + ", dependency " + dependency + " - see ICU-23215");
+        System.out.println(
+                "addLstmDependency: name "
+                        + name
+                        + ", type "
+                        + type
+                        + ", dependency "
+                        + dependency
+                        + " - see ICU-23215");
         icuData.add(
-            RbPath.of(name, type /* + ":process(dependency)") */), // TODO ICU-23215
-            dependency.orElseThrow(() -> new IllegalArgumentException("missing lstm dependency")));
+                RbPath.of(name, type /* + ":process(dependency)") */), // TODO ICU-23215
+                dependency.orElseThrow(
+                        () -> new IllegalArgumentException("missing lstm dependency")));
     }
 
     // Must match the BOUNDARIES or DICTIONARY path.
@@ -142,7 +148,9 @@ public final class BreakIteratorMapper {
         String elementName = value.getPath().getName();
         String type = stripXmlNamespace(elementName);
         return keyOf(elementName, "alt")
-            .optionalValueFrom(value).map(a -> type + "_" + a).orElse(type);
+                .optionalValueFrom(value)
+                .map(a -> type + "_" + a)
+                .orElse(type);
     }
 
     // Must match the BOUNDARIES path.
@@ -160,18 +168,19 @@ public final class BreakIteratorMapper {
      * backslash to a double backslash. This class is super slow for non-ASCII escaping due to
      * using "String.format()", however there's < 100 values that need any escaping, so it's fine.
      */
-    private static final UnicodeEscaper ESCAPE_NON_ASCII = new UnicodeEscaper() {
-        private final char[] DOUBLE_BACKSLASH = "\\\\".toCharArray();
+    private static final UnicodeEscaper ESCAPE_NON_ASCII =
+            new UnicodeEscaper() {
+                private final char[] DOUBLE_BACKSLASH = "\\\\".toCharArray();
 
-        @Override
-        protected char[] escape(int cp) {
-            // Returning null means "do not escape".
-            if (0x0020 <= cp && cp <= 0x007F) {
-                return cp == '\\' ? DOUBLE_BACKSLASH : null;
-            } else if (cp <= 0xFFFF) {
-                return String.format("\\u%04X", cp).toCharArray();
-            }
-            return String.format("\\U%08X", cp).toCharArray();
-        }
-    };
+                @Override
+                protected char[] escape(int cp) {
+                    // Returning null means "do not escape".
+                    if (0x0020 <= cp && cp <= 0x007F) {
+                        return cp == '\\' ? DOUBLE_BACKSLASH : null;
+                    } else if (cp <= 0xFFFF) {
+                        return String.format("\\u%04X", cp).toCharArray();
+                    }
+                    return String.format("\\U%08X", cp).toCharArray();
+                }
+            };
 }

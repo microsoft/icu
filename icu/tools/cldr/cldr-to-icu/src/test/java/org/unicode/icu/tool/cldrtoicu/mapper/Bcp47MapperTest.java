@@ -4,8 +4,10 @@ package org.unicode.icu.tool.cldrtoicu.mapper;
 
 import static org.unicode.icu.tool.cldrtoicu.testing.IcuDataSubjectFactory.assertThat;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 import java.util.Arrays;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
@@ -16,30 +18,28 @@ import org.unicode.icu.tool.cldrtoicu.IcuData;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
 import org.unicode.icu.tool.cldrtoicu.RbValue;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableMap;
-
 @RunWith(JUnit4.class)
 public class Bcp47MapperTest {
-    private static final ImmutableMap<RbPath, RbValue> EXPECTED_ALIAS_MAP = ImmutableMap.of(
-        RbPath.of("bcpTypeAlias", "tz:alias"),
-        RbValue.of("/ICUDATA/timezoneTypes/bcpTypeAlias/tz"),
-        RbPath.of("typeAlias", "timezone:alias"),
-        RbValue.of("/ICUDATA/timezoneTypes/typeAlias/timezone"),
-        RbPath.of("typeMap", "timezone:alias"),
-        RbValue.of("/ICUDATA/timezoneTypes/typeMap/timezone"),
-        RbPath.of("ianaMap", "timezone:alias"),
-        RbValue.of("/ICUDATA/timezoneTypes/ianaMap/timezone"));
+    private static final ImmutableMap<RbPath, RbValue> EXPECTED_ALIAS_MAP =
+            ImmutableMap.of(
+                    RbPath.of("bcpTypeAlias", "tz:alias"),
+                    RbValue.of("/ICUDATA/timezoneTypes/bcpTypeAlias/tz"),
+                    RbPath.of("typeAlias", "timezone:alias"),
+                    RbValue.of("/ICUDATA/timezoneTypes/typeAlias/timezone"),
+                    RbPath.of("typeMap", "timezone:alias"),
+                    RbValue.of("/ICUDATA/timezoneTypes/typeMap/timezone"),
+                    RbPath.of("ianaMap", "timezone:alias"),
+                    RbValue.of("/ICUDATA/timezoneTypes/ianaMap/timezone"));
 
     @Test
     public void testSimple() {
-        CldrData cldrData = cldrData(
-            simpleType("foo", "one"),
-            simpleType("foo", "two"),
-            simpleType("foo", "three"),
-            simpleType("bar", "four"),
-            simpleType("bar", "five"));
+        CldrData cldrData =
+                cldrData(
+                        simpleType("foo", "one"),
+                        simpleType("foo", "two"),
+                        simpleType("foo", "three"),
+                        simpleType("bar", "four"),
+                        simpleType("bar", "five"));
 
         ImmutableList<IcuData> icuData = Bcp47Mapper.process(cldrData);
 
@@ -68,12 +68,13 @@ public class Bcp47MapperTest {
 
     @Test
     public void testSimpleTimezone() {
-        CldrData cldrData = cldrData(
-            simpleType("tz", "one"),
-            simpleType("tz", "two"),
-            simpleType("tz", "three"),
-            simpleType("bar", "four"),
-            simpleType("bar", "five"));
+        CldrData cldrData =
+                cldrData(
+                        simpleType("tz", "one"),
+                        simpleType("tz", "two"),
+                        simpleType("tz", "three"),
+                        simpleType("bar", "four"),
+                        simpleType("bar", "five"));
 
         ImmutableList<IcuData> icuData = Bcp47Mapper.process(cldrData);
 
@@ -104,8 +105,7 @@ public class Bcp47MapperTest {
 
     @Test
     public void testKeyAliases() {
-        CldrData cldrData = cldrData(
-            alias("key", "ALIAS", "type"));
+        CldrData cldrData = cldrData(alias("key", "ALIAS", "type"));
 
         ImmutableList<IcuData> icuData = Bcp47Mapper.process(cldrData);
         IcuData bcp47Data = icuData.get(0);
@@ -117,8 +117,7 @@ public class Bcp47MapperTest {
 
     @Test
     public void testTypeAliases_single() {
-        CldrData cldrData = cldrData(
-            alias("key", null, "type", "main"));
+        CldrData cldrData = cldrData(alias("key", null, "type", "main"));
 
         ImmutableList<IcuData> icuData = Bcp47Mapper.process(cldrData);
         IcuData bcp47Data = icuData.get(0);
@@ -129,8 +128,8 @@ public class Bcp47MapperTest {
 
     @Test
     public void testTypeAliases_multiple() {
-        CldrData cldrData = cldrData(
-            alias("key", null, "type", "main", "alias1", "alias2", "alias3"));
+        CldrData cldrData =
+                cldrData(alias("key", null, "type", "main", "alias1", "alias2", "alias3"));
 
         ImmutableList<IcuData> icuData = Bcp47Mapper.process(cldrData);
         IcuData bcp47Data = icuData.get(0);
@@ -147,8 +146,7 @@ public class Bcp47MapperTest {
 
     @Test
     public void testKeyAndTypeAliases() {
-        CldrData cldrData = cldrData(
-            alias("key", "key-alias", "type", "main", "type-alias"));
+        CldrData cldrData = cldrData(alias("key", "key-alias", "type", "main", "type-alias"));
 
         ImmutableList<IcuData> icuData = Bcp47Mapper.process(cldrData);
         IcuData bcp47Data = icuData.get(0);
@@ -160,9 +158,10 @@ public class Bcp47MapperTest {
 
     @Test
     public void testPreferredTypeName() {
-        CldrData cldrData = cldrData(
-            deprecated("deprecated-key", true, "type", false, "/preferred/path1"),
-            deprecated("key", false, "deprecated-type", true, "/preferred/path2"));
+        CldrData cldrData =
+                cldrData(
+                        deprecated("deprecated-key", true, "type", false, "/preferred/path1"),
+                        deprecated("key", false, "deprecated-type", true, "/preferred/path2"));
 
         ImmutableList<IcuData> icuData = Bcp47Mapper.process(cldrData);
         IcuData bcp47Data = icuData.get(0);
@@ -173,11 +172,12 @@ public class Bcp47MapperTest {
 
     @Test
     public void testInfoAttributes() {
-        CldrData cldrData = cldrData(
-            // Deprecated without a replacement.
-            deprecated("deprecated-key", true, "type", false, null),
-            deprecated("key", false, "deprecated-type", true, null),
-            valueType("info-key", "info-type", "value-type"));
+        CldrData cldrData =
+                cldrData(
+                        // Deprecated without a replacement.
+                        deprecated("deprecated-key", true, "type", false, null),
+                        deprecated("key", false, "deprecated-type", true, null),
+                        valueType("info-key", "info-type", "value-type"));
 
         ImmutableList<IcuData> icuData = Bcp47Mapper.process(cldrData);
         IcuData bcp47Data = icuData.get(0);
@@ -198,9 +198,10 @@ public class Bcp47MapperTest {
     // This will hopefully one day be the responsibility of the IcuTextWriter.
     @Test
     public void testTimezonePathQuotingForAliases() {
-        CldrData cldrData = cldrData(
-            alias("tz", null, "escaped", "foo/bar", "hello/world"),
-            alias("tz", null, "unescaped", "foo_bar", "hello_world"));
+        CldrData cldrData =
+                cldrData(
+                        alias("tz", null, "escaped", "foo/bar", "hello/world"),
+                        alias("tz", null, "unescaped", "foo_bar", "hello_world"));
 
         ImmutableList<IcuData> icuData = Bcp47Mapper.process(cldrData);
         IcuData tzData = icuData.get(1);
@@ -229,7 +230,7 @@ public class Bcp47MapperTest {
     }
 
     private static CldrValue alias(
-        String keyName, String keyAlias, String typeName, String... typeAliases) {
+            String keyName, String keyAlias, String typeName, String... typeAliases) {
 
         StringBuilder cldrPath = new StringBuilder("//ldmlBCP47/keyword");
         cldrPath.append("/key");
@@ -246,11 +247,11 @@ public class Bcp47MapperTest {
     }
 
     private static CldrValue deprecated(
-        String keyName,
-        boolean keyDeprecated,
-        String typeName,
-        boolean typeDeprecated,
-        String preferred) {
+            String keyName,
+            boolean keyDeprecated,
+            String typeName,
+            boolean typeDeprecated,
+            String preferred) {
 
         StringBuilder cldrPath = new StringBuilder("//ldmlBCP47/keyword");
         cldrPath.append("/key");

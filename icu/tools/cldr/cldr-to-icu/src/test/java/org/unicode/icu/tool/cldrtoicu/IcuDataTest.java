@@ -5,12 +5,10 @@ package org.unicode.icu.tool.cldrtoicu;
 import static com.google.common.truth.Truth.assertThat;
 import static org.unicode.icu.tool.cldrtoicu.testing.AssertUtils.assertThrows;
 
+import com.google.common.collect.ImmutableList;
 import java.util.Arrays;
 import java.util.Set;
-
 import org.junit.Test;
-
-import com.google.common.collect.ImmutableList;
 
 public class IcuDataTest {
     @Test

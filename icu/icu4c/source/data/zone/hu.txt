@@ -306,9 +306,6 @@ hu{
         "Europe:Copenhagen"{
             ec{"Koppenhága"}
         }
-        "Europe:Dublin"{
-            ld{"ír nyári idő"}
-        }
         "Europe:Gibraltar"{
             ec{"Gibraltár"}
         }
@@ -326,9 +323,6 @@ hu{
         }
         "Europe:Lisbon"{
             ec{"Lisszabon"}
-        }
-        "Europe:London"{
-            ld{"brit nyári idő"}
         }
         "Europe:Luxembourg"{
             ec{"Luxemburg"}
@@ -481,11 +475,6 @@ hu{
             lg{"alaszkai idő"}
             ls{"alaszkai zónaidő"}
         }
-        "meta:Almaty"{
-            ld{"Almati nyári idő"}
-            lg{"Almati idő"}
-            ls{"Almati zónaidő"}
-        }
         "meta:Amazon"{
             ld{"amazóniai nyári idő"}
             lg{"amazóniai idő"}
@@ -520,16 +509,6 @@ hu{
             ld{"apiai nyári idő"}
             lg{"apiai idő"}
             ls{"apiai téli idő"}
-        }
-        "meta:Aqtau"{
-            ld{"Aqtaui nyári idő"}
-            lg{"Aqtaui idő"}
-            ls{"Aqtaui zónaidő"}
-        }
-        "meta:Aqtobe"{
-            ld{"Aqtobei nyári idő"}
-            lg{"Aqtobei idő"}
-            ls{"Aqtobei zónaidő"}
         }
         "meta:Arabian"{
             ld{"arab nyári idő"}
@@ -601,6 +580,10 @@ hu{
             ld{"brazíliai nyári idő"}
             lg{"brazíliai idő"}
             ls{"brazíliai téli idő"}
+        }
+        "meta:British"{
+            ld{"brit nyári idő"}
+            lg{"brit időzóna"}
         }
         "meta:Brunei"{
             ls{"Brunei Darussalam-i idő"}
@@ -730,6 +713,11 @@ hu{
         "meta:Gilbert_Islands"{
             ls{"gilbert-szigeteki idő"}
         }
+        "meta:Greenland"{
+            ld{"grönlandi nyári idő"}
+            lg{"grönlandi idő"}
+            ls{"grönlandi téli idő"}
+        }
         "meta:Greenland_Eastern"{
             ld{"kelet-grönlandi nyári idő"}
             lg{"kelet-grönlandi időzóna"}
@@ -740,9 +728,6 @@ hu{
             lg{"nyugat-grönlandi időzóna"}
             ls{"nyugat-grönlandi téli idő"}
         }
-        "meta:Guam"{
-            ls{"Guami zónaidő"}
-        }
         "meta:Gulf"{
             ls{"öbölbeli téli idő"}
         }
@@ -750,7 +735,7 @@ hu{
             ls{"guyanai téli idő"}
         }
         "meta:Hawaii"{
-            ls{"hawaii-aleuti téli idő"}
+            ls{"hawaii idő"}
         }
         "meta:Hawaii_Aleutian"{
             ld{"hawaii-aleuti nyári idő"}
@@ -790,6 +775,10 @@ hu{
             lg{"iráni idő"}
             ls{"iráni téli idő"}
         }
+        "meta:Irish"{
+            ld{"ír nyári idő"}
+            lg{"ír időzóna"}
+        }
         "meta:Irkutsk"{
             ld{"irkutszki nyári idő"}
             lg{"irkutszki idő"}
@@ -806,9 +795,9 @@ hu{
             ls{"japán téli idő"}
         }
         "meta:Kamchatka"{
-            ld{"Petropavlovszk-kamcsatkai nyári idő"}
-            lg{"Petropavlovszk-kamcsatkai idő"}
-            ls{"Petropavlovszk-kamcsatkai zónaidő"}
+            ld{"kamcsatkai nyári idő"}
+            lg{"kamcsatkai idő"}
+            ls{"kamcsatkai téli idő"}
         }
         "meta:Kazakhstan"{
             ls{"kazahsztáni idő"}
@@ -835,9 +824,6 @@ hu{
         "meta:Kyrgystan"{
             ls{"kirgizisztáni idő"}
         }
-        "meta:Lanka"{
-            ls{"Lankai idő"}
-        }
         "meta:Line_Islands"{
             ls{"sor-szigeteki idő"}
         }
@@ -845,11 +831,6 @@ hu{
             ld{"Lord Howe-szigeti nyári idő"}
             lg{"Lord Howe-szigeti idő"}
             ls{"Lord Howe-szigeti téli idő"}
-        }
-        "meta:Macau"{
-            ld{"Macaui nyári idő"}
-            lg{"Macaui idő"}
-            ls{"Macaui zónaidő"}
         }
         "meta:Magadan"{
             ld{"magadáni nyári idő"}
@@ -928,9 +909,6 @@ hu{
             lg{"Fernando de Noronha-i idő"}
             ls{"Fernando de Noronha-i téli idő"}
         }
-        "meta:North_Mariana"{
-            ls{"Észak-mariana-szigeteki idő"}
-        }
         "meta:Novosibirsk"{
             ld{"novoszibirszki nyári idő"}
             lg{"novoszibirszki idő"}
@@ -984,11 +962,6 @@ hu{
         "meta:Pyongyang"{
             ls{"phenjani idő"}
         }
-        "meta:Qyzylorda"{
-            ld{"Qyzylordai nyári idő"}
-            lg{"Qyzylordai idő"}
-            ls{"Qyzylordai zónaidő"}
-        }
         "meta:Reunion"{
             ls{"réunioni idő"}
         }
@@ -1006,8 +979,6 @@ hu{
             ls{"Szamarai zónaidő"}
         }
         "meta:Samoa"{
-            ld{"szamoai nyári idő"}
-            lg{"szamoai idő"}
             ls{"szamoai téli idő"}
         }
         "meta:Seychelles"{
@@ -1067,6 +1038,9 @@ hu{
             ld{"uruguayi nyári idő"}
             lg{"uruguayi idő"}
             ls{"uruguayi téli idő"}
+        }
+        "meta:Urumqi"{
+            ls{"ürümcsi idő"}
         }
         "meta:Uzbekistan"{
             ld{"üzbegisztáni nyári idő"}

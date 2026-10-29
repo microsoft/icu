@@ -9,6 +9,9 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 import static org.unicode.cldr.api.AttributeKey.keyOf;
 import static org.unicode.cldr.api.CldrDataType.SUPPLEMENTAL;
 
+import com.google.common.annotations.VisibleForTesting;
+import com.google.common.collect.ImmutableList;
+import com.ibm.icu.text.Transliterator;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Files;
@@ -17,26 +20,22 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
 import java.util.function.Function;
-
 import org.unicode.cldr.api.AttributeKey;
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrDataType;
 import org.unicode.cldr.api.CldrValue;
+import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
 import org.unicode.icu.tool.cldrtoicu.IcuData;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
 import org.unicode.icu.tool.cldrtoicu.RbValue;
-import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
-
-import com.google.common.annotations.VisibleForTesting;
-import com.google.common.collect.ImmutableList;
-import com.ibm.icu.text.Transliterator;
 
 /**
- * A mapper to collect transliteration data from {@link CldrDataType#SUPPLEMENTAL SUPPLEMENTAL}
- * data via the paths:
+ * A mapper to collect transliteration data from {@link CldrDataType#SUPPLEMENTAL SUPPLEMENTAL} data
+ * via the paths:
+ *
  * <pre>{@code
- *   //supplementalData/transforms/transform/tRule
+ * //supplementalData/transforms/transform/tRule
  * }</pre>
  *
  * <p>This mapper also writes out the transform rule files into a specified directory.
@@ -44,10 +43,11 @@ import com.ibm.icu.text.Transliterator;
 public final class TransformsMapper {
 
     private static final CldrDataProcessor<TransformsMapper> CLDR_PROCESSOR;
+
     static {
         CldrDataProcessor.Builder<TransformsMapper> processor = CldrDataProcessor.builder();
         processor.addValueAction(
-            "//supplementalData/transforms/transform/tRule", TransformsMapper::processRule);
+                "//supplementalData/transforms/transform/tRule", TransformsMapper::processRule);
         CLDR_PROCESSOR = processor.build();
     }
 
@@ -73,8 +73,16 @@ public final class TransformsMapper {
     private static final Transliterator FIXUP = Transliterator.getInstance("[:Mn:]any-hex/java");
 
     // Don't rename these enum constants, they need to match the data directly.
-    private enum Direction { forward, backward, both }
-    private enum Visibility { internal, external }
+    private enum Direction {
+        forward,
+        backward,
+        both
+    }
+
+    private enum Visibility {
+        internal,
+        external
+    }
 
     /**
      * Processes data from the given supplier to generate transliteration ICU data, writing
@@ -86,24 +94,25 @@ public final class TransformsMapper {
      * @return the IcuData instance to be written to a file.
      */
     public static IcuData process(
-        CldrDataSupplier src, Path ruleFileOutputDir, List<String> header) {
+            CldrDataSupplier src, Path ruleFileOutputDir, List<String> header) {
 
-        Function<Path, PrintWriter> fileWriterFn = p -> {
-            Path file = ruleFileOutputDir.resolve(p);
-            try {
-                // Specify "CREATE_NEW" since we don't want to overwrite any existing files.
-                return new PrintWriter(Files.newBufferedWriter(file, UTF_8, CREATE_NEW));
-            } catch (IOException e) {
-                throw new RuntimeException("error opening file: " + file, e);
-            }
-        };
+        Function<Path, PrintWriter> fileWriterFn =
+                p -> {
+                    Path file = ruleFileOutputDir.resolve(p);
+                    try {
+                        // Specify "CREATE_NEW" since we don't want to overwrite any existing files.
+                        return new PrintWriter(Files.newBufferedWriter(file, UTF_8, CREATE_NEW));
+                    } catch (IOException e) {
+                        throw new RuntimeException("error opening file: " + file, e);
+                    }
+                };
         CldrData cldrData = src.getDataForType(SUPPLEMENTAL);
         return process(cldrData, fileWriterFn, header);
     }
 
     @VisibleForTesting // It's easier to supply a fake data instance than a fake supplier.
     static IcuData process(
-        CldrData cldrData, Function<Path, PrintWriter> fileWriterFn, List<String> header) {
+            CldrData cldrData, Function<Path, PrintWriter> fileWriterFn, List<String> header) {
 
         TransformsMapper mapper = new TransformsMapper(fileWriterFn, header);
         CLDR_PROCESSOR.process(cldrData, mapper);
@@ -146,7 +155,11 @@ public final class TransformsMapper {
     }
 
     private void writeRootIndexEntry(
-        CldrValue value, String source, String target, Optional<String> variant, String filename) {
+            CldrValue value,
+            String source,
+            String target,
+            Optional<String> variant,
+            String filename) {
         Visibility visibility = TRANSFORM_VISIBILITY.valueFrom(value, Visibility.class);
         String status = visibility == Visibility.internal ? "internal" : "file";
 
@@ -154,16 +167,18 @@ public final class TransformsMapper {
         // TODO: Consider checks for unused data (e.g. forward aliases in a backward rule).
         if (dir != Direction.backward) {
             String id = getId(source, target, variant);
-            TRANSFORM_ALIAS.listOfValuesFrom(value)
-                .forEach(a -> icuData.add(RB_TRANSLITERATOR_IDS.extendBy(a, "alias"), id));
+            TRANSFORM_ALIAS
+                    .listOfValuesFrom(value)
+                    .forEach(a -> icuData.add(RB_TRANSLITERATOR_IDS.extendBy(a, "alias"), id));
             RbPath rbPrefix = RB_TRANSLITERATOR_IDS.extendBy(id, status);
             icuData.add(rbPrefix.extendBy("resource:process(transliterator)"), filename);
             icuData.add(rbPrefix.extendBy("direction"), "FORWARD");
         }
         if (dir != Direction.forward) {
             String id = getId(target, source, variant);
-            TRANSFORM_BACKALIAS.listOfValuesFrom(value)
-                .forEach(a -> icuData.add(RB_TRANSLITERATOR_IDS.extendBy(a, "alias"), id));
+            TRANSFORM_BACKALIAS
+                    .listOfValuesFrom(value)
+                    .forEach(a -> icuData.add(RB_TRANSLITERATOR_IDS.extendBy(a, "alias"), id));
             RbPath rbPrefix = RB_TRANSLITERATOR_IDS.extendBy(id, status);
             icuData.add(rbPrefix.extendBy("resource:process(transliterator)"), filename);
             icuData.add(rbPrefix.extendBy("direction"), "REVERSE");
@@ -185,12 +200,8 @@ public final class TransformsMapper {
         // Special case, where Latin is a no-op.
         icuData.add(RbPath.of("TransliterateLATIN"), RbValue.of("", ""));
         // Some hard-coded special case mappings.
-        icuData.add(
-            RB_TRANSLITERATOR_IDS.extendBy("Tone-Digit", "alias"),
-            "Pinyin-NumericPinyin");
-        icuData.add(
-            RB_TRANSLITERATOR_IDS.extendBy("Digit-Tone", "alias"),
-            "NumericPinyin-Pinyin");
+        icuData.add(RB_TRANSLITERATOR_IDS.extendBy("Tone-Digit", "alias"), "Pinyin-NumericPinyin");
+        icuData.add(RB_TRANSLITERATOR_IDS.extendBy("Digit-Tone", "alias"), "NumericPinyin-Pinyin");
     }
 
     // It is important to note that this ID contains a '/' but this is a literal in the path
@@ -203,7 +214,10 @@ public final class TransformsMapper {
     }
 
     private static String getExpectedOptionalAttribute(CldrValue value, AttributeKey key) {
-        return key.optionalValueFrom(value).orElseThrow(() ->
-            new IllegalArgumentException(String.format("missing data for %s in: %s", key, value)));
+        return key.optionalValueFrom(value)
+                .orElseThrow(
+                        () ->
+                                new IllegalArgumentException(
+                                        String.format("missing data for %s in: %s", key, value)));
     }
 }

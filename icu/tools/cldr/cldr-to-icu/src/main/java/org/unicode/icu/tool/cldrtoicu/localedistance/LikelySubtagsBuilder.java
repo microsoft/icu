@@ -2,6 +2,10 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 package org.unicode.icu.tool.cldrtoicu.localedistance;
 
+import static com.google.common.base.Preconditions.*;
+import static com.google.common.base.Strings.nullToEmpty;
+import static org.unicode.cldr.api.CldrData.PathOrder.DTD;
+
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableSet;
@@ -9,43 +13,36 @@ import com.google.common.collect.ImmutableSetMultimap;
 import com.google.common.collect.ImmutableSortedMap;
 import com.ibm.icu.impl.locale.LSR;
 import com.ibm.icu.impl.locale.LikelySubtags;
-import org.unicode.cldr.api.AttributeKey;
-import org.unicode.cldr.api.CldrData;
-import org.unicode.cldr.api.CldrPath;
-import org.unicode.cldr.api.PathMatcher;
-
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import static com.google.common.base.Preconditions.*;
-import static com.google.common.base.Strings.nullToEmpty;
-import static org.unicode.cldr.api.CldrData.PathOrder.DTD;
+import org.unicode.cldr.api.AttributeKey;
+import org.unicode.cldr.api.CldrData;
+import org.unicode.cldr.api.CldrPath;
+import org.unicode.cldr.api.PathMatcher;
 
 /**
  * Generates likely subtag information from CLDR supplemental data.
  *
- * <p>Likely subtag information and language aliases are combined to produce a
- * Trie table of lookup data to canonicalize any incoming language ID to its
- * most likely fully qualified form.
+ * <p>Likely subtag information and language aliases are combined to produce a Trie table of lookup
+ * data to canonicalize any incoming language ID to its most likely fully qualified form.
  */
 final class LikelySubtagsBuilder {
     private static final Logger logger = Logger.getLogger(LikelySubtagsBuilder.class.getName());
 
     private static final PathMatcher ALIAS =
-        PathMatcher.of("//supplementalData/metadata/alias/*[@type=*]");
+            PathMatcher.of("//supplementalData/metadata/alias/*[@type=*]");
 
     private static final PathMatcher LIKELY_SUBTAG =
-        PathMatcher.of("//supplementalData/likelySubtags/likelySubtag[@from=*]");
+            PathMatcher.of("//supplementalData/likelySubtags/likelySubtag[@from=*]");
     private static final AttributeKey SUBTAG_FROM = AttributeKey.keyOf("likelySubtag", "from");
     private static final AttributeKey SUBTAG_TO = AttributeKey.keyOf("likelySubtag", "to");
 
     // NOTE: You must omit empty strings, since otherwise " foo " becomes ("", "foo", "").
-    private static final Splitter LIST_SPLITTER =
-            Splitter.on(' ').trimResults().omitEmptyStrings();
+    private static final Splitter LIST_SPLITTER = Splitter.on(' ').trimResults().omitEmptyStrings();
 
     // A language identifier is "xx", "xx_Yyyy", "xx_ZZ" or "xx_Yyyy_ZZ".
     private static final Pattern LOCALE_ID =
@@ -96,27 +93,34 @@ final class LikelySubtagsBuilder {
     /** Alias mappings for base languages and territories. */
     private static final class Aliases {
         /**
-         * Returns the alias mapping for the given type. Note that for language aliases,
-         * only "simple" aliases (between base languages) are mapped.
+         * Returns the alias mapping for the given type. Note that for language aliases, only
+         * "simple" aliases (between base languages) are mapped.
          */
         public static Aliases getAliases(CldrData supplementalData, AliasType type) {
             ImmutableSortedMap.Builder<String, String> canonicalMap =
                     ImmutableSortedMap.naturalOrder();
-            supplementalData.accept(DTD, v -> {
-                CldrPath path = v.getPath();
-                if (ALIAS.matches(path) && path.getName().equals(type.elementName)) {
-                    // TODO: Find out why we ignore "overlong" aliases?
-                    String aliasFrom = v.get(type.typeKey);
-                    if (isSimpleAlias(aliasFrom) && !v.get(type.reasonKey).equals("overlong")) {
-                        // Replacement locale IDs must be non-empty (but can be a list) and we
-                        // use only the first (default) mapping.
-                        String aliasTo = LIST_SPLITTER.splitToList(v.get(type.replacementKey)).get(0);
-                        if (isSimpleAlias(aliasTo)) {
-                            canonicalMap.put(aliasFrom, aliasTo);
+            supplementalData.accept(
+                    DTD,
+                    v -> {
+                        CldrPath path = v.getPath();
+                        if (ALIAS.matches(path) && path.getName().equals(type.elementName)) {
+                            // TODO: Find out why we ignore "overlong" aliases?
+                            String aliasFrom = v.get(type.typeKey);
+                            if (isSimpleAlias(aliasFrom)
+                                    && !v.get(type.reasonKey).equals("overlong")) {
+                                // Replacement locale IDs must be non-empty (but can be a list) and
+                                // we
+                                // use only the first (default) mapping.
+                                String aliasTo =
+                                        LIST_SPLITTER
+                                                .splitToList(v.get(type.replacementKey))
+                                                .get(0);
+                                if (isSimpleAlias(aliasTo)) {
+                                    canonicalMap.put(aliasFrom, aliasTo);
+                                }
+                            }
                         }
-                    }
-                }
-            });
+                    });
             return new Aliases(canonicalMap.build());
         }
 
@@ -140,8 +144,8 @@ final class LikelySubtagsBuilder {
         }
 
         /**
-         * Returns the aliases for a given canonical value (if there are no aliases
-         * then a singleton set containing the given canonical value is returned).
+         * Returns the aliases for a given canonical value (if there are no aliases then a singleton
+         * set containing the given canonical value is returned).
          */
         public ImmutableSet<String> getAliases(String canonical) {
             ImmutableSet<String> aliases = toAliases.get(canonical);
@@ -154,7 +158,7 @@ final class LikelySubtagsBuilder {
         Aliases languageAliases = Aliases.getAliases(supplementalData, AliasType.LANGUAGE);
         Aliases regionAliases = Aliases.getAliases(supplementalData, AliasType.TERRITORY);
         Map<String, Map<String, Map<String, LSR>>> lsrTable =
-            makeTable(languageAliases, regionAliases, supplementalData);
+                makeTable(languageAliases, regionAliases, supplementalData);
 
         // In the output Trie we must reference LSR instance by their special index
         // (which is calculated by client code in order to lookup values).
@@ -194,14 +198,15 @@ final class LikelySubtagsBuilder {
         Trie trie = new Trie();
         Trie.Span rootSpan = trie.root();
         languages.forEach(
-                (language, scripts) -> rootSpan.with(
-                        language,
-                        span -> writeScripts(span, scripts, lsrToIndex)));
+                (language, scripts) ->
+                        rootSpan.with(language, span -> writeScripts(span, scripts, lsrToIndex)));
         return trie;
     }
 
     private static void writeScripts(
-            Trie.Span languageSpan, Map<String, Map<String, LSR>> scripts, Indexer<LSR, Integer> lsrToIndex) {
+            Trie.Span languageSpan,
+            Map<String, Map<String, LSR>> scripts,
+            Indexer<LSR, Integer> lsrToIndex) {
         checkArgument(!scripts.isEmpty(), "invalid script table: %s", scripts);
         // If we only have '*' for scripts, but there is more than one region then we can prune
         // the Trie at the script level and just write "<language><region>:<value>". However in
@@ -219,14 +224,16 @@ final class LikelySubtagsBuilder {
             writeRegions(languageSpan, regions, lsrToIndex);
         } else {
             scripts.forEach(
-                    (script, regions) -> languageSpan.with(
-                            script,
-                            span -> writeRegions(span, regions, lsrToIndex)));
+                    (script, regions) ->
+                            languageSpan.with(
+                                    script, span -> writeRegions(span, regions, lsrToIndex)));
         }
     }
 
     private static void writeRegions(
-            Trie.Span languageOrScriptSpan, Map<String, LSR> regions, Indexer<LSR, Integer> lsrToIndex) {
+            Trie.Span languageOrScriptSpan,
+            Map<String, LSR> regions,
+            Indexer<LSR, Integer> lsrToIndex) {
         checkArgument(!regions.isEmpty(), "invalid region table: %s", regions);
         // Prune anything ending with '*' (either <language-*-*> or <language-script-*>)
         // by writing the value immediately and omitting the '*' from the Trie.
@@ -235,38 +242,41 @@ final class LikelySubtagsBuilder {
             languageOrScriptSpan.putPrefixAndValue(lsrToIndex.apply(regions.get("*")));
         } else {
             regions.forEach(
-                    (region, lsr) -> languageOrScriptSpan.with(
-                            region,
-                            span -> span.putPrefixAndValue(lsrToIndex.apply(lsr))));
+                    (region, lsr) ->
+                            languageOrScriptSpan.with(
+                                    region, span -> span.putPrefixAndValue(lsrToIndex.apply(lsr))));
         }
     }
 
     private static Map<String, Map<String, Map<String, LSR>>> makeTable(
-        Aliases languageAliases, Aliases regionAliases, CldrData supplementalData) {
+            Aliases languageAliases, Aliases regionAliases, CldrData supplementalData) {
 
         Map<String, Map<String, Map<String, LSR>>> lsrTable = new TreeMap<>(LSR_TABLE_ORDER);
 
         // set the base data
-        supplementalData.accept(DTD, v -> {
-            CldrPath path = v.getPath();
-            if (LIKELY_SUBTAG.matches(path)) {
-                // Add the canonical subtag mapping.
-                LSR source = lsrFromLocaleID(v.get(SUBTAG_FROM));
-                LSR target = lsrFromLocaleID(v.get(SUBTAG_TO));
-                set(lsrTable, source, target);
+        supplementalData.accept(
+                DTD,
+                v -> {
+                    CldrPath path = v.getPath();
+                    if (LIKELY_SUBTAG.matches(path)) {
+                        // Add the canonical subtag mapping.
+                        LSR source = lsrFromLocaleID(v.get(SUBTAG_FROM));
+                        LSR target = lsrFromLocaleID(v.get(SUBTAG_TO));
+                        set(lsrTable, source, target);
 
-                // Add all combinations of language and region aliases. This lets the
-                // matcher process aliases in locales in a single step.
-                for (String languageAlias : languageAliases.getAliases(source.language)) {
-                    for (String regionAlias : regionAliases.getAliases(source.region)) {
-                        if (languageAlias.equals(source.language) && regionAlias.equals(source.region)) {
-                            continue;
+                        // Add all combinations of language and region aliases. This lets the
+                        // matcher process aliases in locales in a single step.
+                        for (String languageAlias : languageAliases.getAliases(source.language)) {
+                            for (String regionAlias : regionAliases.getAliases(source.region)) {
+                                if (languageAlias.equals(source.language)
+                                        && regionAlias.equals(source.region)) {
+                                    continue;
+                                }
+                                set(lsrTable, languageAlias, source.script, regionAlias, target);
+                            }
                         }
-                        set(lsrTable, languageAlias, source.script, regionAlias, target);
                     }
-                }
-            }
-        });
+                });
 
         logger.fine(lsrTable::toString);
 
@@ -281,25 +291,37 @@ final class LikelySubtagsBuilder {
         // more mappings which then need to be checked. However realistically, the only
         // time the mapping "*" -> "*" would not appear is if the likely subtag data was
         // completely broken (since it implies no region-only mappings).
-        checkState(lsrTable.containsKey("*") && lsrTable.get("*").containsKey("*"),
-                "missing likely subtag data (no default region mappings): %s", lsrTable);
-        lsrTable.get("*").get("*").forEach((key, lsr) -> set(lsrTable, "und", lsr.script, lsr.region, lsr));
+        checkState(
+                lsrTable.containsKey("*") && lsrTable.get("*").containsKey("*"),
+                "missing likely subtag data (no default region mappings): %s",
+                lsrTable);
+        lsrTable.get("*")
+                .get("*")
+                .forEach((key, lsr) -> set(lsrTable, "und", lsr.script, lsr.region, lsr));
 
         // Check that every level has "*" (mapped from "und" or "").
-        lsrTable.forEach((lang, scripts) -> {
-            checkArgument(asLocale(lang).equals("und_Latn") || scripts.containsKey("*"), "missing likely subtag mapping for: %s", asLocale(lang));
-            scripts.forEach(
-                    (script, regions) -> checkArgument(
-                        (asLocale(lang, script).equals("und_Latn")) || regions.containsKey("*"),
-                        "missing likely subtag mapping for: %s", asLocale(lang, script)));
-        });
+        lsrTable.forEach(
+                (lang, scripts) -> {
+                    checkArgument(
+                            asLocale(lang).equals("und_Latn") || scripts.containsKey("*"),
+                            "missing likely subtag mapping for: %s",
+                            asLocale(lang));
+                    scripts.forEach(
+                            (script, regions) ->
+                                    checkArgument(
+                                            (asLocale(lang, script).equals("und_Latn"))
+                                                    || regions.containsKey("*"),
+                                            "missing likely subtag mapping for: %s",
+                                            asLocale(lang, script)));
+                });
         return lsrTable;
     }
 
     // Converts subtable key sequence into original locale ID (for debugging).
     // asLocale("*", *", "GB") -> "und_GB"
     private static String asLocale(String... parts) {
-        return String.format("%s%s%s",
+        return String.format(
+                "%s%s%s",
                 !parts[0].equals("*") ? parts[0] : "und",
                 parts.length > 1 && !parts[1].equals("*") ? "_" + parts[1] : "",
                 parts.length > 2 && !parts[2].equals("*") ? "_" + parts[2] : "");
@@ -310,14 +332,19 @@ final class LikelySubtagsBuilder {
         set(langTable, key.language, key.script, key.region, newValue);
     }
 
-    private static void set(Map<String, Map<String, Map<String, LSR>>> langTable,
-            String language, String script, String region, LSR lsr) {
+    private static void set(
+            Map<String, Map<String, Map<String, LSR>>> langTable,
+            String language,
+            String script,
+            String region,
+            LSR lsr) {
         Map<String, Map<String, LSR>> scriptTable = getSubtable(langTable, subtagOrStar(language));
         Map<String, LSR> regionTable = getSubtable(scriptTable, subtagOrStar(script));
         regionTable.put(subtagOrStar(region), lsr);
     }
 
-    private static <T> Map<String, T> getSubtable(Map<String, Map<String, T>> table, String subtag) {
+    private static <T> Map<String, T> getSubtable(
+            Map<String, Map<String, T>> table, String subtag) {
         return table.computeIfAbsent(subtag, k -> new TreeMap<>(SUBTABLE_ORDER));
     }
 
@@ -335,6 +362,10 @@ final class LikelySubtagsBuilder {
 
     // Lenient factory method which accepts null for missing script or region (but not language).
     private static LSR lsr(String language, String script, String region) {
-        return new LSR(checkNotNull(language), nullToEmpty(script), nullToEmpty(region), LSR.DONT_CARE_FLAGS);
+        return new LSR(
+                checkNotNull(language),
+                nullToEmpty(script),
+                nullToEmpty(region),
+                LSR.DONT_CARE_FLAGS);
     }
 }

@@ -2,15 +2,13 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 package org.unicode.icu.tool.cldrtoicu.testing;
 
-import java.util.List;
-
-import org.unicode.icu.tool.cldrtoicu.IcuData;
-import org.unicode.icu.tool.cldrtoicu.RbPath;
-import org.unicode.icu.tool.cldrtoicu.RbValue;
-
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.IterableSubject;
 import com.google.common.truth.Subject;
+import java.util.List;
+import org.unicode.icu.tool.cldrtoicu.IcuData;
+import org.unicode.icu.tool.cldrtoicu.RbPath;
+import org.unicode.icu.tool.cldrtoicu.RbValue;
 
 public final class IcuDataSubject extends Subject {
     private final IcuData actual;

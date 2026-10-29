@@ -6,7 +6,6 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.unicode.cldr.api.CldrData.PathOrder.NESTED_GROUPING;
 
 import java.util.function.Predicate;
-
 import org.unicode.cldr.api.CldrDataSupplier;
 import org.unicode.cldr.api.CldrDataType;
 import org.unicode.cldr.api.CldrPath;
@@ -38,10 +37,10 @@ public final class SupplementalMapper extends AbstractPathValueMapper {
      */
     // TODO: Improve external data splitting and remove need for a PathMatcher here.
     public static IcuData process(
-        CldrDataSupplier src,
-        PathValueTransformer transformer,
-        String icuName,
-        Predicate<CldrPath> paths) {
+            CldrDataSupplier src,
+            PathValueTransformer transformer,
+            String icuName,
+            Predicate<CldrPath> paths) {
 
         IcuData icuData = new IcuData(icuName, false);
         new SupplementalMapper(src, transformer, paths).addIcuData(icuData);
@@ -52,7 +51,9 @@ public final class SupplementalMapper extends AbstractPathValueMapper {
     private int fifoCounter = 0;
 
     private SupplementalMapper(
-        CldrDataSupplier src, PathValueTransformer transformer, Predicate<CldrPath> pathFilter) {
+            CldrDataSupplier src,
+            PathValueTransformer transformer,
+            Predicate<CldrPath> pathFilter) {
 
         super(src.getDataForType(CldrDataType.SUPPLEMENTAL), transformer);
         this.paths = checkNotNull(pathFilter);
@@ -84,8 +85,9 @@ public final class SupplementalMapper extends AbstractPathValueMapper {
         RbPath rbPath = r.getKey();
         if (rbPath.contains(RB_FIFO)) {
             // The fifo counter needs to be formatted with leading zeros for sorting.
-            rbPath = rbPath.mapSegments(
-                s -> s.equals("<FIFO>") ? String.format("<%04d>", fifoCounter) : s);
+            rbPath =
+                    rbPath.mapSegments(
+                            s -> s.equals("<FIFO>") ? String.format("<%04d>", fifoCounter) : s);
         }
         addResult(rbPath, r);
     }

@@ -4,6 +4,8 @@ package org.unicode.icu.tool.cldrtoicu;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.BiConsumer;
@@ -11,7 +13,6 @@ import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
-
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrData.PathOrder;
 import org.unicode.cldr.api.CldrData.PrefixVisitor;
@@ -19,9 +20,6 @@ import org.unicode.cldr.api.CldrData.PrefixVisitor.Context;
 import org.unicode.cldr.api.CldrPath;
 import org.unicode.cldr.api.CldrValue;
 import org.unicode.cldr.api.PathMatcher;
-
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.Lists;
 
 /**
  * An immutable processor which can be configured to process CLDR data according to a series of
@@ -32,8 +30,8 @@ import com.google.common.collect.Lists;
  * once for each {@link CldrData} instance.
  *
  * <p>A processor is built by adding a mixture of "actions" to a builder. An action either defines
- * how to handle a single value (see {@link SubProcessor#addValueAction addValueAction()}) or how
- * to start a new sub-processor at a specific point in the data hierarchy (see {@link
+ * how to handle a single value (see {@link SubProcessor#addValueAction addValueAction()}) or how to
+ * start a new sub-processor at a specific point in the data hierarchy (see {@link
  * SubProcessor#addAction addAction()} or {@link SubProcessor#addSubprocessor addSubprocessor()}).
  *
  * @param <T> the main "state" type used by the processor for the top-level processing.
@@ -49,20 +47,20 @@ public class CldrDataProcessor<T> {
      *
      * @param <T> the "state" type used by the processor.
      */
-    public static abstract class SubProcessor<T> {
+    public abstract static class SubProcessor<T> {
         final List<PrefixBuilder<?, T>> prefixActions = new ArrayList<>();
         final List<ValueAction<T>> valueActions = new ArrayList<>();
 
-        private SubProcessor() { }
+        private SubProcessor() {}
 
         /**
          * Binds a subtype action to a {@link PathMatcher} prefix pattern, returning a new builder
          * for the sub-hierarchy.
          *
          * <p>This method is intended for cases where the subtype state does not depend on the
-         * parent state or the path prefix, but needs some post-processing. For example, the
-         * subtype state might just be a {@code List} and the elements added to it must be
-         * combined with the parent state after sub-hierarchy is processing is complete.
+         * parent state or the path prefix, but needs some post-processing. For example, the subtype
+         * state might just be a {@code List} and the elements added to it must be combined with the
+         * parent state after sub-hierarchy is processing is complete.
          *
          * <pre>{@code
          * processor
@@ -75,7 +73,7 @@ public class CldrDataProcessor<T> {
          * @param doneFn called after each sub-processing step.
          */
         public <S> SubProcessor<S> addAction(
-            String pattern, Supplier<S> newStateFn, BiConsumer<T, ? super S> doneFn) {
+                String pattern, Supplier<S> newStateFn, BiConsumer<T, ? super S> doneFn) {
             return addAction(pattern, (t, p) -> newStateFn.get(), doneFn);
         }
 
@@ -97,7 +95,7 @@ public class CldrDataProcessor<T> {
          * @param doneFn called after each sub-processing step.
          */
         public <S> SubProcessor<S> addAction(
-            String pattern, Function<CldrPath, S> newStateFn, BiConsumer<T, ? super S> doneFn) {
+                String pattern, Function<CldrPath, S> newStateFn, BiConsumer<T, ? super S> doneFn) {
             return addAction(pattern, (t, p) -> newStateFn.apply(p), doneFn);
         }
 
@@ -140,7 +138,7 @@ public class CldrDataProcessor<T> {
          * @param newStateFn a supplier of subtype state instances for each sub-processing step.
          */
         public <S> SubProcessor<S> addAction(
-            String pattern, BiFunction<T, CldrPath, S> newStateFn) {
+                String pattern, BiFunction<T, CldrPath, S> newStateFn) {
             return addAction(pattern, newStateFn, (t, y) -> {});
         }
 
@@ -149,9 +147,9 @@ public class CldrDataProcessor<T> {
          * for the sub-hierarchy.
          *
          * <p>This method is the most general purpose way to add a sub-hierarchy action and is
-         * intended for the most complex cases, where subtype state depends on parent state and
-         * path prefix, and post processing is required. All other implementations of {@code
-         * addAction} simply delegate to this one in one way or another.
+         * intended for the most complex cases, where subtype state depends on parent state and path
+         * prefix, and post processing is required. All other implementations of {@code addAction}
+         * simply delegate to this one in one way or another.
          *
          * <pre>{@code
          * processor
@@ -164,23 +162,23 @@ public class CldrDataProcessor<T> {
          * @param doneFn called after each sub-processing step.
          */
         public <S> SubProcessor<S> addAction(
-            String pattern,
-            BiFunction<T, CldrPath, S> newStateFn,
-            BiConsumer<T, ? super S> doneFn) {
+                String pattern,
+                BiFunction<T, CldrPath, S> newStateFn,
+                BiConsumer<T, ? super S> doneFn) {
 
             PrefixBuilder<S, T> action =
-                new PrefixBuilder<>(getMatcher(pattern), newStateFn, doneFn);
+                    new PrefixBuilder<>(getMatcher(pattern), newStateFn, doneFn);
             prefixActions.add(action);
             return action;
         }
 
         /**
-         * Returns a new sub-processor for the specified sub-hierarchy rooted at the given
-         * {@link PathMatcher} prefix pattern. The new processor builder has the same state type as
-         * the parent.
+         * Returns a new sub-processor for the specified sub-hierarchy rooted at the given {@link
+         * PathMatcher} prefix pattern. The new processor builder has the same state type as the
+         * parent.
          *
-         * <p>This method is intended for the case where multiple sub-processors are needed below
-         * a certain point in the hierarchy, but they all operate on the same state instance.
+         * <p>This method is intended for the case where multiple sub-processors are needed below a
+         * certain point in the hierarchy, but they all operate on the same state instance.
          *
          * <pre>{@code
          * SubBuilder<MyCollector> subprocessor = processor.addSubprocessor("//parent/path");
@@ -195,9 +193,9 @@ public class CldrDataProcessor<T> {
         }
 
         /**
-         * Returns a new sub-processor for the specified sub-hierarchy rooted at the given
-         * {@link PathMatcher} prefix pattern. The new processor builder has the same state type as
-         * the parent.
+         * Returns a new sub-processor for the specified sub-hierarchy rooted at the given {@link
+         * PathMatcher} prefix pattern. The new processor builder has the same state type as the
+         * parent.
          *
          * <p>This method is intended for the case where a some setup is required before a
          * sub-hierarchy is processed, but the sub-processor state is the same.
@@ -212,19 +210,21 @@ public class CldrDataProcessor<T> {
          * @param pattern the path pattern for the prefix where sub-processing starts.
          */
         public SubProcessor<T> addSubprocessor(String pattern, BiConsumer<T, CldrPath> startFn) {
-            return addAction(pattern, (t, p) -> {
-                startFn.accept(t, p);
-                return t;
-            });
+            return addAction(
+                    pattern,
+                    (t, p) -> {
+                        startFn.accept(t, p);
+                        return t;
+                    });
         }
 
         /**
-         * Adds an action to handle {@link CldrValue}s found in the current sub-hierarchy
-         * visitation which match the given {@link PathMatcher} leaf-path pattern.
+         * Adds an action to handle {@link CldrValue}s found in the current sub-hierarchy visitation
+         * which match the given {@link PathMatcher} leaf-path pattern.
          *
-         * <p>This method is expected to be called at least once for each sub-hierarchy processor
-         * in order to handle the actual CLDR values being processed, and the path pattern should
-         * match leaf-paths in the CLDR data hierarchy, rather than path prefixes.
+         * <p>This method is expected to be called at least once for each sub-hierarchy processor in
+         * order to handle the actual CLDR values being processed, and the path pattern should match
+         * leaf-paths in the CLDR data hierarchy, rather than path prefixes.
          *
          * <p>Multiple value actions can be added to a sub-hierarchy processor, and paths are
          * matched in the order the actions are added. It is also possible to mix sub-hierarchy
@@ -232,7 +232,8 @@ public class CldrDataProcessor<T> {
          * will take precedence, so you cannot try to match the same value in both a sub-hierarchy
          * processor and a value action.
          *
-         * For example:
+         * <p>For example:
+         *
          * <pre>{@code
          * processor
          *     .addAction("//parent/path", ...)
@@ -257,12 +258,12 @@ public class CldrDataProcessor<T> {
      * @param <T> the processor state type.
      */
     public static final class Builder<T> extends SubProcessor<T> {
-        private Builder() { }
+        private Builder() {}
 
         /** Returns the immutable CLDR data processor. */
         public CldrDataProcessor<T> build() {
             return new CldrDataProcessor<>(
-                Lists.transform(prefixActions, PrefixBuilder::build), valueActions);
+                    Lists.transform(prefixActions, PrefixBuilder::build), valueActions);
         }
 
         @Override
@@ -283,9 +284,9 @@ public class CldrDataProcessor<T> {
         private final BiConsumer<T, ? super S> doneFn;
 
         PrefixBuilder(
-            PathMatcher matcher,
-            BiFunction<T, CldrPath, S> newStateFn,
-            BiConsumer<T, ? super S> doneFn) {
+                PathMatcher matcher,
+                BiFunction<T, CldrPath, S> newStateFn,
+                BiConsumer<T, ? super S> doneFn) {
             this.matcher = checkNotNull(matcher);
             this.newStateFn = checkNotNull(newStateFn);
             this.doneFn = checkNotNull(doneFn);
@@ -296,7 +297,8 @@ public class CldrDataProcessor<T> {
             return new PrefixAction<>(actions, valueActions, matcher, newStateFn, doneFn);
         }
 
-        @Override PathMatcher getMatcher(String pattern) {
+        @Override
+        PathMatcher getMatcher(String pattern) {
             return matcher.withSuffix(pattern);
         }
     }
@@ -305,8 +307,7 @@ public class CldrDataProcessor<T> {
     private final ImmutableList<ValueAction<T>> valueActions;
 
     private CldrDataProcessor(
-        List<PrefixAction<?, T>> prefixActions,
-        List<ValueAction<T>> valueActions) {
+            List<PrefixAction<?, T>> prefixActions, List<ValueAction<T>> valueActions) {
         this.prefixActions = ImmutableList.copyOf(prefixActions);
         this.valueActions = ImmutableList.copyOf(valueActions);
     }
@@ -322,7 +323,9 @@ public class CldrDataProcessor<T> {
      * <pre>{@code
      * MyResult result = CLDR_PROCESSOR.process(data, new MyResult(), DTD);
      * }</pre>
+     *
      * <p>or:*
+     *
      * <pre>{@code
      * MyResult result = CLDR_PROCESSOR.process(data, MyResult.newBuilder(), DTD).build();
      * }</pre>
@@ -386,11 +389,11 @@ public class CldrDataProcessor<T> {
         private final BiConsumer<T, ? super S> doneFn;
 
         PrefixAction(
-            List<PrefixAction<?, S>> prefixActions,
-            List<ValueAction<S>> valueActions,
-            PathMatcher matcher,
-            BiFunction<T, CldrPath, S> newStateFn,
-            BiConsumer<T, ? super S> doneFn) {
+                List<PrefixAction<?, S>> prefixActions,
+                List<ValueAction<S>> valueActions,
+                PathMatcher matcher,
+                BiFunction<T, CldrPath, S> newStateFn,
+                BiConsumer<T, ? super S> doneFn) {
             super(prefixActions, valueActions);
             this.matcher = checkNotNull(matcher);
             this.newStateFn = checkNotNull(newStateFn);
@@ -401,8 +404,8 @@ public class CldrDataProcessor<T> {
             if (matcher.locallyMatches(prefix)) {
                 Consumer<S> doneFn = childState -> this.doneFn.accept(state, childState);
                 context.install(
-                    new DispatchingVisitor<>(this, newStateFn.apply(state, prefix), doneFn),
-                    DispatchingVisitor::done);
+                        new DispatchingVisitor<>(this, newStateFn.apply(state, prefix), doneFn),
+                        DispatchingVisitor::done);
                 return true;
             }
             return false;

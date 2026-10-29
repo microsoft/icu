@@ -4,13 +4,12 @@ package org.unicode.icu.tool.cldrtoicu.testing;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-import org.unicode.icu.tool.cldrtoicu.PathValueTransformer.Result;
-import org.unicode.icu.tool.cldrtoicu.RbPath;
-
 import com.google.common.truth.ComparableSubject;
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.IterableSubject;
 import com.google.common.truth.Subject;
+import org.unicode.icu.tool.cldrtoicu.PathValueTransformer.Result;
+import org.unicode.icu.tool.cldrtoicu.RbPath;
 
 public final class ResultSubject extends ComparableSubject<Result> {
     // For use when chaining from other subjects.

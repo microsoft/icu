@@ -4,10 +4,9 @@ package org.unicode.icu.tool.cldrtoicu.testing;
 
 import static com.google.common.base.Preconditions.checkArgument;
 
-import org.unicode.icu.tool.cldrtoicu.RbValue;
-
 import com.google.common.truth.FailureMetadata;
 import com.google.common.truth.Subject;
+import org.unicode.icu.tool.cldrtoicu.RbValue;
 
 public final class RbValueSubject extends Subject {
     // For use when chaining from other subjects.
@@ -29,7 +28,10 @@ public final class RbValueSubject extends Subject {
 
     /** Asserts the value of the path, as segments (use this if a segment can contain '/'). */
     public final void hasValues(String... values) {
-        check("getElements()").that(actual.getElements()).containsExactlyElementsIn(values).inOrder();
+        check("getElements()")
+                .that(actual.getElements())
+                .containsExactlyElementsIn(values)
+                .inOrder();
     }
 
     public final void hasSize(int n) {

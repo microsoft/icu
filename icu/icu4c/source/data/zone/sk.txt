@@ -306,9 +306,6 @@ sk{
         "Europe:Copenhagen"{
             ec{"Kodaň"}
         }
-        "Europe:Dublin"{
-            ld{"írsky štandardný čas"}
-        }
         "Europe:Gibraltar"{
             ec{"Gibraltár"}
         }
@@ -326,7 +323,6 @@ sk{
         }
         "Europe:London"{
             ec{"Londýn"}
-            ld{"britský letný čas"}
         }
         "Europe:Luxembourg"{
             ec{"Luxembursko"}
@@ -428,11 +424,6 @@ sk{
             lg{"aljašský čas"}
             ls{"aljašský štandardný čas"}
         }
-        "meta:Almaty"{
-            ld{"almaatský letný čas"}
-            lg{"almaatský čas"}
-            ls{"almaatský štandardný čas"}
-        }
         "meta:Amazon"{
             ld{"amazonský letný čas"}
             lg{"amazonský čas"}
@@ -467,16 +458,6 @@ sk{
             ld{"apijský letný čas"}
             lg{"apijský čas"}
             ls{"apijský štandardný čas"}
-        }
-        "meta:Aqtau"{
-            ld{"aktauský letný čas"}
-            lg{"aktauský čas"}
-            ls{"aktauský štandardný čas"}
-        }
-        "meta:Aqtobe"{
-            ld{"aktobský letný čas"}
-            lg{"aktobský čas"}
-            ls{"aktobský štandardný čas"}
         }
         "meta:Arabian"{
             ld{"arabský letný čas"}
@@ -548,6 +529,10 @@ sk{
             ld{"brazílsky letný čas"}
             lg{"brazílsky čas"}
             ls{"brazílsky štandardný čas"}
+        }
+        "meta:British"{
+            ld{"britský letný čas"}
+            lg{"britský čas"}
         }
         "meta:Brunei"{
             ls{"brunejský čas"}
@@ -670,6 +655,11 @@ sk{
         "meta:Gilbert_Islands"{
             ls{"čas Gilbertových ostrovov"}
         }
+        "meta:Greenland"{
+            ld{"grónsky letný čas"}
+            lg{"grónsky čas"}
+            ls{"grónsky štandardný čas"}
+        }
         "meta:Greenland_Eastern"{
             ld{"východogrónsky letný čas"}
             lg{"východogrónsky čas"}
@@ -680,9 +670,6 @@ sk{
             lg{"západogrónsky čas"}
             ls{"západogrónsky štandardný čas"}
         }
-        "meta:Guam"{
-            ls{"guamský čas"}
-        }
         "meta:Gulf"{
             ls{"štandardný čas Perzského zálivu"}
         }
@@ -690,7 +677,7 @@ sk{
             ls{"guyanský čas"}
         }
         "meta:Hawaii"{
-            ls{"havajsko-aleutský štandardný čas"}
+            ls{"havajský čas"}
         }
         "meta:Hawaii_Aleutian"{
             ld{"havajsko-aleutský letný čas"}
@@ -730,6 +717,10 @@ sk{
             lg{"iránsky čas"}
             ls{"iránsky štandardný čas"}
         }
+        "meta:Irish"{
+            ld{"írsky štandardný čas"}
+            lg{"írsky čas"}
+        }
         "meta:Irkutsk"{
             ld{"irkutský letný čas"}
             lg{"irkutský čas"}
@@ -746,9 +737,9 @@ sk{
             ls{"japonský štandardný čas"}
         }
         "meta:Kamchatka"{
-            ld{"Petropavlovsk-Kamčatskijský letný čas"}
-            lg{"Petropavlovsk-Kamčatský čas"}
-            ls{"Petropavlovsk-Kamčatský štandardný čas"}
+            ld{"kamčatský letný čas"}
+            lg{"kamčatský čas"}
+            ls{"kamčatský štandardný čas"}
         }
         "meta:Kazakhstan"{
             ls{"kazachstanský čas"}
@@ -775,9 +766,6 @@ sk{
         "meta:Kyrgystan"{
             ls{"kirgizský čas"}
         }
-        "meta:Lanka"{
-            ls{"srílanský čas"}
-        }
         "meta:Line_Islands"{
             ls{"čas Rovníkových ostrovov"}
         }
@@ -785,11 +773,6 @@ sk{
             ld{"letný čas ostrova lorda Howa"}
             lg{"čas ostrova lorda Howa"}
             ls{"štandardný čas ostrova lorda Howa"}
-        }
-        "meta:Macau"{
-            ld{"macajský letný čas"}
-            lg{"macajský čas"}
-            ls{"macajský štandardný čas"}
         }
         "meta:Magadan"{
             ld{"magadanský letný čas"}
@@ -868,9 +851,6 @@ sk{
             lg{"čas súostrovia Fernando de Noronha"}
             ls{"štandardný čas súostrovia Fernando de Noronha"}
         }
-        "meta:North_Mariana"{
-            ls{"severomariánsky čas"}
-        }
         "meta:Novosibirsk"{
             ld{"novosibirský letný čas"}
             lg{"novosibirský čas"}
@@ -924,11 +904,6 @@ sk{
         "meta:Pyongyang"{
             ls{"pchjongjanský čas"}
         }
-        "meta:Qyzylorda"{
-            ld{"kyzylordský letný čas"}
-            lg{"kyzylordský čas"}
-            ls{"kyzylordský štandardný čas"}
-        }
         "meta:Reunion"{
             ls{"réunionský čas"}
         }
@@ -941,13 +916,11 @@ sk{
             ls{"sachalinský štandardný čas"}
         }
         "meta:Samara"{
-            ld{"Samarský letný čas"}
-            lg{"Samarský čas"}
-            ls{"Samarský štandardný čas"}
+            ld{"samarský letný čas"}
+            lg{"samarský čas"}
+            ls{"samarský štandardný čas"}
         }
         "meta:Samoa"{
-            ld{"samojský letný čas"}
-            lg{"samojský čas"}
             ls{"samojský štandardný čas"}
         }
         "meta:Seychelles"{
@@ -990,6 +963,11 @@ sk{
         "meta:Truk"{
             ls{"chuukský čas"}
         }
+        "meta:Turkey"{
+            ld{"turecký letný čas"}
+            lg{"turecký čas"}
+            ls{"turecký štandardný čas"}
+        }
         "meta:Turkmenistan"{
             ld{"turkménsky letný čas"}
             lg{"turkménsky čas"}
@@ -1002,6 +980,9 @@ sk{
             ld{"uruguajský letný čas"}
             lg{"uruguajský čas"}
             ls{"uruguajský štandardný čas"}
+        }
+        "meta:Urumqi"{
+            ls{"čas Urumči"}
         }
         "meta:Uzbekistan"{
             ld{"uzbecký letný čas"}

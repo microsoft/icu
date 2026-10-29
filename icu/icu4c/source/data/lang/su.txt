@@ -4,7 +4,7 @@
 su{
     Languages{
         de{"Jérman"}
-        en{"Inggris"}
+        en{"Basa Inggris"}
         es{"Spanyol"}
         fr{"Prancis"}
         it{"Italia"}
@@ -19,7 +19,7 @@ su{
         Cyrl{"Sirilik"}
         Hans{"Sederhana"}
         Hant{"Tradisional"}
-        Latn{"Latin"}
+        Latn{"Basa Latin"}
         Zxxx{"Non-tulisan"}
         Zzzz{"Tulisan Teu Dikenal"}
     }

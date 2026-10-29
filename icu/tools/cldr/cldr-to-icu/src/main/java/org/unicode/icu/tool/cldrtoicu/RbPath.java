@@ -7,16 +7,15 @@ import static com.google.common.base.Preconditions.checkArgument;
 import static com.google.common.base.Preconditions.checkState;
 import static com.google.common.collect.ImmutableList.toImmutableList;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Objects;
-import java.util.function.Function;
-
 import com.google.common.base.CharMatcher;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Comparators;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Iterables;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.function.Function;
 
 /**
  * A resource bundle path, used to identify entries in ICU data.
@@ -30,14 +29,14 @@ public final class RbPath implements Comparable<RbPath> {
     // If there's ever a reason to have a different "natural" order for paths, this Comparator
     // should be moved into the ICU file writer class(es).
     private static final Comparator<RbPath> ORDERING =
-        Comparator.comparing(
-            p -> p.segments,
-            Comparators.lexicographical(Comparator.<String>naturalOrder()));
+            Comparator.comparing(
+                    p -> p.segments,
+                    Comparators.lexicographical(Comparator.<String>naturalOrder()));
 
     // Matches the definition of invariant characters in "uinvchar.cpp". We can make this all much
     // faster if needed with a custom matcher (it's just a 128 way bit lookup via 2 longs).
     private static final CharMatcher INVARIANT_CHARS =
-        CharMatcher.ascii().and(CharMatcher.anyOf("!#$@[\\]^`{|}~").negate());
+            CharMatcher.ascii().and(CharMatcher.anyOf("!#$@[\\]^`{|}~").negate());
 
     // Note that we must also prohibit double-quote from appearing anywhere other than surrounding
     // segment values. This is because some segment values can contain special ICU data characters
@@ -48,25 +47,23 @@ public final class RbPath implements Comparable<RbPath> {
     // complexity in RbPath, since suffixes like ":intvector" must not be quoted and must somehow
     // be distinguished from timezone "metazone" names which also contain ':'.
     private static final CharMatcher QUOTED_SEGMENT_CHARS =
-        INVARIANT_CHARS
-            .and(CharMatcher.javaIsoControl().negate())
-            .and(CharMatcher.isNot('"'));
+            INVARIANT_CHARS.and(CharMatcher.javaIsoControl().negate()).and(CharMatcher.isNot('"'));
     private static final CharMatcher UNQUOTED_SEGMENT_CHARS =
-        QUOTED_SEGMENT_CHARS.and(whitespace().negate());
+            QUOTED_SEGMENT_CHARS.and(whitespace().negate());
 
     /**
-     * Returns a path with the specified segments in (possibly empty). Note that unlike
-     * {@link #parse(String)}, {@code '/'} is not treated specially and can be present in a path
-     * element constructed by this method.
+     * Returns a path with the specified segments in (possibly empty). Note that unlike {@link
+     * #parse(String)}, {@code '/'} is not treated specially and can be present in a path element
+     * constructed by this method.
      */
     public static RbPath of(String... segments) {
         return of(Arrays.asList(segments));
     }
 
     /**
-     * Returns a path with the specified segments in (possibly empty). Note that unlike
-     * {@link #parse(String)}, {@code '/'} is not treated specially and can be present in a path
-     * element constructed by this method.
+     * Returns a path with the specified segments in (possibly empty). Note that unlike {@link
+     * #parse(String)}, {@code '/'} is not treated specially and can be present in a path element
+     * constructed by this method.
      */
     public static RbPath of(Iterable<String> segments) {
         return new RbPath(segments);
@@ -105,26 +102,31 @@ public final class RbPath implements Comparable<RbPath> {
             // contain double quotes at either end, or not at all. If the string is quoted, only
             // validate the content, and not the quotes themselves.
             switch (segment.charAt(0)) {
-            case '<':
-                // Allow anything in hidden labels, since they will be removed later and never
-                // appear in the final ICU data.
-                checkArgument(segment.endsWith(">"),
-                    "mismatched quoting for hidden label: %s", segment);
-                continue;
+                case '<':
+                    // Allow anything in hidden labels, since they will be removed later and never
+                    // appear in the final ICU data.
+                    checkArgument(
+                            segment.endsWith(">"),
+                            "mismatched quoting for hidden label: %s",
+                            segment);
+                    continue;
 
-            case '"':
-                checkArgument(segment.endsWith("\""),
-                    "mismatched quoting for segment: %s", segment);
-                checkArgument(
-                    QUOTED_SEGMENT_CHARS.matchesAllOf(segment.substring(1, segment.length() - 1)),
-                    "invalid character in unquoted resource bundle path segment: %s", segment);
-                break;
+                case '"':
+                    checkArgument(
+                            segment.endsWith("\""), "mismatched quoting for segment: %s", segment);
+                    checkArgument(
+                            QUOTED_SEGMENT_CHARS.matchesAllOf(
+                                    segment.substring(1, segment.length() - 1)),
+                            "invalid character in unquoted resource bundle path segment: %s",
+                            segment);
+                    break;
 
-            default:
-                checkArgument(
-                    UNQUOTED_SEGMENT_CHARS.matchesAllOf(segment),
-                    "invalid character in unquoted resource bundle path segment: %s", segment);
-                break;
+                default:
+                    checkArgument(
+                            UNQUOTED_SEGMENT_CHARS.matchesAllOf(segment),
+                            "invalid character in unquoted resource bundle path segment: %s",
+                            segment);
+                    break;
             }
         }
     }
@@ -213,19 +215,23 @@ public final class RbPath implements Comparable<RbPath> {
         return false;
     }
 
-    @Override public int compareTo(RbPath other) {
+    @Override
+    public int compareTo(RbPath other) {
         return ORDERING.compare(this, other);
     }
 
-    @Override public boolean equals(Object other) {
+    @Override
+    public boolean equals(Object other) {
         return (other instanceof RbPath) && segments.equals(((RbPath) other).segments);
     }
 
-    @Override public int hashCode() {
+    @Override
+    public int hashCode() {
         return hashCode;
     }
 
-    @Override public String toString() {
+    @Override
+    public String toString() {
         return String.join("/", segments);
     }
 }

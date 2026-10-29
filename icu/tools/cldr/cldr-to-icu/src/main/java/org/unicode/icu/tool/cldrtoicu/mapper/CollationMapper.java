@@ -7,32 +7,32 @@ import static com.google.common.base.Preconditions.checkNotNull;
 import static org.unicode.cldr.api.AttributeKey.keyOf;
 import static org.unicode.cldr.api.CldrData.PathOrder.DTD;
 
+import com.google.common.base.CharMatcher;
+import com.google.common.base.Splitter;
 import java.util.Optional;
-
 import org.unicode.cldr.api.AttributeKey;
 import org.unicode.cldr.api.CldrData;
 import org.unicode.cldr.api.CldrDataType;
 import org.unicode.cldr.api.CldrValue;
+import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
+import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor.SubProcessor;
 import org.unicode.icu.tool.cldrtoicu.IcuData;
 import org.unicode.icu.tool.cldrtoicu.RbPath;
 import org.unicode.icu.tool.cldrtoicu.RbValue;
-import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor;
-import org.unicode.icu.tool.cldrtoicu.CldrDataProcessor.SubProcessor;
-
-import com.google.common.base.CharMatcher;
-import com.google.common.base.Splitter;
 
 /**
  * A mapper to collect collation data from {@link CldrDataType#LDML LDML} data via the paths:
+ *
  * <pre>{@code
- *   //ldml/collations/*
- *   //ldml/special/icu:UCARules
- *   //ldml/special/icu:depends
+ * //ldml/collations/*
+ * //ldml/special/icu:UCARules
+ * //ldml/special/icu:depends
  * }</pre>
  */
 public final class CollationMapper {
 
     private static final CldrDataProcessor<CollationMapper> CLDR_PROCESSOR;
+
     static {
         CldrDataProcessor.Builder<CollationMapper> processor = CldrDataProcessor.builder();
         SubProcessor<CollationMapper> collations = processor.addSubprocessor("//ldml/collations");
@@ -52,12 +52,12 @@ public final class CollationMapper {
 
     private static final RbPath RB_COLLATIONS_DEFAULT = RbPath.of("collations", "default");
     private static final RbPath RB_STANDARD_SEQUENCE =
-        RbPath.of("collations", "standard", "Sequence");
+            RbPath.of("collations", "standard", "Sequence");
     private static final RbPath RB_STANDARD_VERSION =
-        RbPath.of("collations", "standard", "Version");
+            RbPath.of("collations", "standard", "Version");
 
     private static final Splitter LINE_SPLITTER =
-        Splitter.on('\n').trimResults().omitEmptyStrings();
+            Splitter.on('\n').trimResults().omitEmptyStrings();
 
     /**
      * Processes data from the given supplier to generate collation data for a set of locale IDs.
@@ -69,7 +69,10 @@ public final class CollationMapper {
      * @return IcuData containing RBNF data for the given locale ID.
      */
     public static IcuData process(
-        IcuData icuData, CldrData cldrData, Optional<CldrData> icuSpecialData, String cldrVersion) {
+            IcuData icuData,
+            CldrData cldrData,
+            Optional<CldrData> icuSpecialData,
+            String cldrVersion) {
 
         CollationMapper mapper = new CollationMapper(icuData, cldrVersion);
         icuSpecialData.ifPresent(specialData -> CLDR_PROCESSOR.process(specialData, mapper, DTD));
@@ -109,10 +112,12 @@ public final class CollationMapper {
         // from which this was derived is largely undocumented and this check could have
         // been overly defensive (perhaps a duplicate key should be an error?).
         if (isShort || !icuData.getPaths().contains(rbPath)) {
-            RbValue rules = RbValue.of(
-                LINE_SPLITTER.splitToList(v.getValue()).stream()
-                    .map(CollationMapper::removeComment)
-                    .filter(s -> !s.isEmpty())::iterator);
+            RbValue rules =
+                    RbValue.of(
+                            LINE_SPLITTER.splitToList(v.getValue()).stream()
+                                            .map(CollationMapper::removeComment)
+                                            .filter(s -> !s.isEmpty())
+                                    ::iterator);
             icuData.replace(rbPath, rules);
             icuData.replace(RbPath.of("collations", type, "Version"), cldrVersion);
         }
@@ -127,19 +132,22 @@ public final class CollationMapper {
     private void maybeAddSpecial(CldrValue value) {
         AttributeKey key;
         switch (value.getPath().getName()) {
-        case "icu:UCARules":
-            key = SPECIAL_RULES;
-            break;
-        case "icu:depends":
-            key = SPECIAL_DEP;
-            break;
-        default:
-            return;
+            case "icu:UCARules":
+                key = SPECIAL_RULES;
+                break;
+            case "icu:depends":
+                key = SPECIAL_DEP;
+                break;
+            default:
+                return;
         }
         // substring(4) just removes the "icu:" prefix (which we know is present in the key).
-        RbPath rbPath = RbPath.of(
-            String.format("%s:process(%s)",
-                key.getElementName().substring(4), key.getAttributeName().substring(4)));
+        RbPath rbPath =
+                RbPath.of(
+                        String.format(
+                                "%s:process(%s)",
+                                key.getElementName().substring(4),
+                                key.getAttributeName().substring(4)));
         icuData.add(rbPath, key.valueFrom(value));
     }
 
@@ -163,24 +171,24 @@ public final class CollationMapper {
         boolean quoted = false;
         for (int i = 0; i < s.length(); i++) {
             switch (s.charAt(i)) {
-            case '\'':
-                quoted = !quoted;
-                break;
+                case '\'':
+                    quoted = !quoted;
+                    break;
 
-            case '\\':
-                if (quoted) {
-                    i++;
-                }
-                break;
+                case '\\':
+                    if (quoted) {
+                        i++;
+                    }
+                    break;
 
-            case '#':
-                if (!quoted) {
-                    return i;
-                }
-                break;
+                case '#':
+                    if (!quoted) {
+                        return i;
+                    }
+                    break;
 
-            default:
-                // Do nothing and consume the character
+                default:
+                    // Do nothing and consume the character
             }
         }
         checkArgument(!quoted, "mismatched quotes in: %s", s);

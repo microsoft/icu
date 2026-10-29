@@ -8,25 +8,23 @@ package org.unicode.icu.tool.cldrtoicu.ant;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.collect.ImmutableSet.toImmutableSet;
 
-import java.util.Set;
-import java.util.TreeSet;
-import java.util.function.Predicate;
-import java.util.regex.Pattern;
-
-import org.unicode.icu.tool.cldrtoicu.SupplementalData;
-
 import com.google.common.base.Ascii;
 import com.google.common.collect.ImmutableListMultimap;
 import com.google.common.collect.ImmutableSet;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimaps;
 import com.google.common.collect.Sets;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.function.Predicate;
+import java.util.regex.Pattern;
+import org.unicode.icu.tool.cldrtoicu.SupplementalData;
 
 /** Helper class to reslove ID configuration. */
 final class LocaleIdResolver {
     /** Returns the expanded set of target locale IDs based on the given ID specifications. */
     public static ImmutableSet<String> expandTargetIds(
-        Set<String> idSpecs, SupplementalData supplementalData) {
+            Set<String> idSpecs, SupplementalData supplementalData) {
         return new LocaleIdResolver(supplementalData).resolve(idSpecs);
     }
 
@@ -43,11 +41,12 @@ final class LocaleIdResolver {
     private ImmutableSet<String> resolve(Set<String> idSpecs) {
         ImmutableSet<String> allAvailableIds = supplementalData.getAvailableLocaleIds();
         // Get the minimized wildcard set, converting things like "en_Latn" --> "en".
-        ImmutableSet<String> wildcardIds = idSpecs.stream()
-            .filter(supplementalData.getAvailableLocaleIds()::contains)
-            .filter(id -> WILDCARD_LOCALE.matcher(id).matches())
-            .map(this::removeDefaultScript)
-            .collect(toImmutableSet());
+        ImmutableSet<String> wildcardIds =
+                idSpecs.stream()
+                        .filter(supplementalData.getAvailableLocaleIds()::contains)
+                        .filter(id -> WILDCARD_LOCALE.matcher(id).matches())
+                        .map(this::removeDefaultScript)
+                        .collect(toImmutableSet());
 
         // Get the set of IDs which are implied by the wildcard IDs.
         Set<String> targetIds = new TreeSet<>();
@@ -59,19 +58,19 @@ final class LocaleIdResolver {
             System.err.println("Configuration lists redundant locale IDs");
             System.err.println("The following IDs should be removed from the configuration:");
             Iterables.partition(redundant, 16)
-                .forEach(ids -> System.err.println(String.join(", ", ids)));
+                    .forEach(ids -> System.err.println(String.join(", ", ids)));
 
             // Note that the minimal configuration includes aliases.
             Set<String> minimalConfigIds = new TreeSet<>(Sets.difference(idSpecs, targetIds));
             minimalConfigIds.remove("root");
             ImmutableListMultimap<Character, String> idsByFirstChar =
-                Multimaps.index(minimalConfigIds, s -> s.charAt(0));
+                    Multimaps.index(minimalConfigIds, s -> s.charAt(0));
 
             System.err.println("Canonical ID list is:");
-            for (char c: idsByFirstChar.keySet()) {
+            for (char c : idsByFirstChar.keySet()) {
                 System.err.println("    // " + Ascii.toUpperCase(c));
                 Iterables.partition(idsByFirstChar.get(c), 16)
-                    .forEach(ids -> System.err.println("    " + String.join(", ", ids)));
+                        .forEach(ids -> System.err.println("    " + String.join(", ", ids)));
                 System.err.println();
             }
             System.err.flush();
@@ -92,9 +91,13 @@ final class LocaleIdResolver {
     private String removeDefaultScript(String id) {
         if (id.contains("_")) {
             String lang = id.substring(0, id.indexOf("_"));
-            String maxId = supplementalData.maximize(lang)
-                .orElseThrow(
-                    () -> new IllegalStateException("cannot maximize language subtag: " + lang));
+            String maxId =
+                    supplementalData
+                            .maximize(lang)
+                            .orElseThrow(
+                                    () ->
+                                            new IllegalStateException(
+                                                    "cannot maximize language subtag: " + lang));
             if (maxId.startsWith(id)) {
                 return lang;
             }
@@ -110,18 +113,19 @@ final class LocaleIdResolver {
         }
     }
 
-    private boolean addWildcardMatches(
-        String id, Predicate<String> isWildcard, Set<String> dst) {
+    private boolean addWildcardMatches(String id, Predicate<String> isWildcard, Set<String> dst) {
         if (id.equals("root")) {
             return false;
         }
         String parentId = supplementalData.getParent(id);
         int index = parentId.indexOf("_");
-        String parentIdLang = (index < 0)? parentId: parentId.substring(0, index);
+        String parentIdLang = (index < 0) ? parentId : parentId.substring(0, index);
         index = id.indexOf("_");
-        String idLang = (index < 0)? id: id.substring(0, index);
-        if (parentIdLang.equals(idLang) && (isWildcard.test(parentId) || addWildcardMatches(parentId, isWildcard, dst))) {
-            // Only add child locales here if their language matches their parent; need this to handle nn (child of no)
+        String idLang = (index < 0) ? id : id.substring(0, index);
+        if (parentIdLang.equals(idLang)
+                && (isWildcard.test(parentId) || addWildcardMatches(parentId, isWildcard, dst))) {
+            // Only add child locales here if their language matches their parent; need this to
+            // handle nn (child of no)
             dst.add(id);
             return true;
         }
