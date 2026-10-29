@@ -1,0 +1,64 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
+gn{
+    AuxExemplarCharacters{"[b c d f q w x z]"}
+    ExemplarCharacters{
+        "[aã {ch} eẽ g{g̃} h iĩ j k l m {mb} nñ {nd} {ng} {nt} oõ p r {rr} s t uũ v y"
+        "ỹ ʼ]"
+    }
+    ExemplarCharactersIndex{
+        "[AÃ {CH} EẼ G{G̃} H IĨ J K L M {MB} NÑ {ND} {NG} {NT} OÕ P R {RR} S T UŨ V Y"
+        "Ỹ ʼ]"
+    }
+    calendar{
+        gregorian{
+            DateTimePatterns{
+                "h:mm:ss a zzzz",
+                "h:mm:ss a z",
+                "h:mm:ss a",
+                "h:mm a",
+                "y MMMM d, EEEE",
+                "y MMMM d",
+                "y MMM d",
+                "y-MM-dd",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+                "{1} {0}",
+            }
+            dayNames{
+                format{
+                    wide{
+                        "Arateĩ",
+                        "Arakõi",
+                        "Araapy",
+                        "Ararundy",
+                        "Arapo",
+                        "Arapoteĩ",
+                        "Arapokõi",
+                    }
+                }
+            }
+            monthNames{
+                format{
+                    wide{
+                        "Jasyteĩ",
+                        "Jasykõi",
+                        "Jasyapy",
+                        "Jasyrundy",
+                        "Jasypo",
+                        "Jasypoteĩ",
+                        "Jasypokõi",
+                        "Jasypoapy",
+                        "Jasyporundy",
+                        "Jasypa",
+                        "Jasypateĩ",
+                        "Jasypakõi",
+                    }
+                }
+            }
+        }
+    }
+}

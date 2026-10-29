@@ -244,7 +244,7 @@ mi{
         mgh{"Makuwa-Mēto"}
         mgo{"Meta"}
         mh{"Mararīhi"}
-        mi{"Māori"}
+        mi{"te reo Māori"}
         mic{"Mīkamā"}
         min{"Minākapao"}
         mk{"Makerōnia"}

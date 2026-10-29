@@ -19,16 +19,16 @@
         -->
         <localeIds>
             // A
-            af, agq, ak, am, ar, ars, as, asa, ast, az, az_AZ, az_Cyrl
+            aa, af, agq, ak, am, ar, arn, ars, as, asa, ast, az, az_AZ, az_Cyrl
 
             // B
-            ba, bas, be, bem, bez, bg, bgc, bho, blo, bm, bn, bo, br, brx, bs, bs_BA, bs_Cyrl, bua
+            ba, bas, be, bem, bez, bg, bgc, bho, bin, blo, bm, bn, bo, br, brx, bs, bs_BA, bs_Cyrl, bua, byn
 
             // C
-            ca, ccp, ce, ceb, cgg, chr, ckb, cs, csw, cv, cy
+            ca, ccp, ce, ceb, cgg, chr, ckb, co, cs, csw, cu, cv, cy
 
             // D
-            da, dav, de, dje, doi, dsb, dua, dyo, dz
+            da, dav, de, dje, doi, dsb, dua, dv, dyo, dz
 
             // E
             ebu, ee, el, en, en_NH, en_RH, eo, es, et, eu, ewo
@@ -37,65 +37,65 @@
             fa, ff, ff_Adlm, ff_CM, ff_GN, ff_MR, ff_SN, fi, fil, fo, fr, fur, fy
 
             // G
-            ga, gaa, gd, gl, gsw, gu, guz, gv
+            ga, gaa, gd, gl, gn, gsw, gu, guz, gv
 
             // H
             ha, haw, he, hi, hi_Latn, hr, hsb, hu, hy
 
             // I
-            ia, id, ie, ig, ii, in, in_ID, is, it, iw, iw_IL
+            ia, ibb, id, ie, ig, ii, in, in_ID, is, it, iu, iu_Cans, iu_Cans_CA, iu_Latn, iw, iw_IL
 
             // J
-            ja, jgo, jmc, jv
+            ja, jgo, jmc, jv, jv_Java
 
             // K
             ka, kab, kam, kde, kea, kgp, khq, ki, kk, kk_Arab, kkj, kl, kln, km, kn, ko, kok, kok_Latn, ks
-            ks_Deva, ks_IN, ksb, ksf, ksh, ku, ku_SY, kw, kxv, kxv_Deva, kxv_IN, kxv_Orya, kxv_Telu, ky
+            kr, ks_Deva, ks_IN, ksb, ksf, ksh, ku, ku_SY, kw, kxv, kxv_Deva, kxv_IN, kxv_Orya, kxv_Telu, ky
 
             // L
-            lag, lb, lg, lij, lkt, lmo, ln, lo, lrc, lt, lu, luo, luy, lv
+            la, lag, lb, lg, lij, lkt, lmo, ln, lo, lrc, lt, lu, luo, luy, lv
 
             // M
-            mai, mas, mer, mfe, mg, mgh, mgo, mi, mk, ml, mn, mni, mni_IN, mo, mr, ms
+            mai, mas, mer, mfe, mg, mgh, mgo, mi, mk, ml, mn, mn_Mong, mni, mni_IN, mo, moh, mr, ms
             mt, mua, my, mzn
 
             // N
-            naq, nb, nd, nds, ne, nl, nmg, nn, nnh, no, no_NO, no_NO_NY, nqo, nso, nus, nyn
+            naq, nb, nd, nds, ne, nl, nmg, nn, nnh, no, no_NO, no_NO_NY, nqo, nr, nso, nus, nyn
 
             // O
             oc, om, or, os
 
             // P
-            pa, pa_Arab, pa_IN, pa_PK, pcm, pl, pms, prg, ps, pt
+            pa, pa_Arab, pa_IN, pa_PK, pap, pcm, pl, pms, prg, prs, prs_AF, ps, pt
 
             // Q
-            qu
+            qu, quc, qut, qut_GT, qut_Latn, qut_Latn_GT, quz, quz_BO, quz_EC, quz_PE
 
             // R
             raj, rm, rn, ro, rof, ru, rw, rwk
 
             // S
             sa, sah, saq, sat, sat_IN, sbp, sc, scn, sd, sd_Deva, sd_IN, sd_PK, se, seh, ses, sg, sh, sh_BA, sh_CS, sh_YU
-            shi, shi_Latn, shi_MA, shn, si, sk, sl, smn, sn, so, sq, sr, sr_BA, sr_CS, sr_Cyrl_CS, sr_Cyrl_YU, sr_Latn
-            sr_Latn_CS, sr_Latn_YU, sr_ME, sr_RS, sr_XK, sr_YU, st, su, su_ID, sv, sw, syr, szl
+            shi, shi_Latn, shi_MA, shn, si, sk, sl, sma, smj, smn, sms, sn, so, sq, sr, sr_BA, sr_CS, sr_Cyrl_CS, sr_Cyrl_YU, sr_Latn
+            sr_Latn_CS, sr_Latn_YU, sr_ME, sr_RS, sr_XK, sr_YU, ss, ssy, st, su, su_ID, sv, sw, syr, szl
 
             // T
-            ta, te, teo, tg, th, ti, tk, tl, tl_PH, tn, to, tok, tr, tt, twq, tyv, tzm
+            ta, te, teo, tg, th, ti, tig, tk, tl, tl_PH, tn, to, tok, tr, ts, tt, twq, tyv, tzm, tzm_Arab, tzm_Tfng
 
             // U
             ug, uk, ur, uz, uz_AF, uz_Arab, uz_Cyrl, uz_UZ
 
             // V
-            vai, vai_LR, vai_Latn, vec, vi, vmw, vun
+            vai, vai_LR, vai_Latn, ve, vec, vi, vmw, vo, vun
 
             // W
-            wae, wo
+            wae, wal, wo
 
             // X
             xh, xnr, xog
 
             // Y
-            yav, yi, yo, yrl, yue, yue_CN, yue_HK, yue_Hans
+            yav, yi, yo, yrl
 
             // Z
             za, zgh, zh, zh_CN, zh_HK, zh_Hant, zh_MO, zh_SG, zh_TW, zu
@@ -124,26 +124,20 @@
         <!-- Collation data is large, but also more sharable than other data, which is why there
              are a number of aliases and parent remappings for this directory. -->
         <directory dir="coll" inheritLanguageSubtag="bs_Cyrl, sr_Latn, zh_Hant">
-            <!-- These aliases are to avoid needing to copy and maintain the same collation data
-                 for "zh" and "yue". The maximized versions of "yue_Hans" is "yue_Hans_CN" (vs
-                 "zh_Hans_CN"), and for "yue" it's "yue_Hant_HK" (vs "zh_Hant_HK"), so the
-                 aliases are effectively just rewriting the base language. -->
-            <forcedAlias source="yue" target="zh_Hant"/>
-            <forcedAlias source="yue_Hant" target="zh_Hant"/>
-            <forcedAlias source="yue_CN" target="zh_Hans"/>
-            <forcedAlias source="yue_Hans" target="zh_Hans"/>
-            <forcedAlias source="yue_Hans_CN" target="zh_Hans"/>
             <!-- TODO: Find out and document this properly. -->
             <forcedAlias source="sr_ME" target="sr_Cyrl_ME"/>
+            <!-- NLS Dari names preserve the shipped collation-specific Persian mappings. -->
+            <forcedAlias source="prs" target="fa"/>
+            <forcedAlias source="prs_AF" target="fa_AF"/>
 
             <localeIds>
                 root,
 
                 // A-B
-                af, am, ars, ar, as, az, be, bg, blo, bn, bo, br, bs_Cyrl, bs,
+                aa, af, am, ars, ar, as, az, be, bg, blo, bn, bo, br, bs_Cyrl, bs,
 
                 // C-F
-                ca, ceb, chr, cs, cy, da, de_AT, de, dsb, dz, ee, el, en,
+                ca, ceb, chr, cs, cu, cy, da, de_AT, de, dsb, dz, ee, el, en,
                 en_US_POSIX, en_US, eo, es, et, fa_AF, fa, ff_Adlm, ff, fil, fi, fo, fr_CA, fr, fy,
 
                 // G-J
@@ -153,26 +147,21 @@
                 // K-P
                 ka, kk, kk_Arab, kl, km, kn, kok, ko, ku, ky, lb, lij, lkt, ln, lo, lt, lv,
                 mk, ml, mn, mo, mr, ms, mt, my, nb, nb_NO, ne, nl, nn, no, no_NO, nso,
-                om, or, pa_IN, pa, pa_Guru, pl, ps, pt,
+                om, or, pa_IN, pa, pa_Guru, pl, prs, prs_AF, ps, pt,
 
                 // R-T
                 ro, ru, sa, se, sh_BA, sh_CS, sh, sh_YU, si, sk, sl, smn, sq,
-                sr_BA, sr_Cyrl_ME, sr_Latn, sr_ME, sr_RS, sr, st, sv, sw,
+                sr_BA, sr_Cyrl_ME, sr_Latn, sr_ME, sr_RS, sr, ssy, st, sv, sw,
                 ta, te, th, tk, tn, to, tr,
 
                 // U-Z
-                ug, uk, ur, uz, vi, wae, wo, xh, yi, yo, yue_CN, yue_Hans_CN, yue_Hans
-                yue_Hant, yue, zh_CN, zh_Hans, zh_Hant, zh_HK, zh_MO, zh_SG, zh_TW, zh, zu
+                ug, uk, ur, uz, vi, vo, wae, wo, xh, yi, yo,
+                zh_CN, zh_Hans, zh_Hant, zh_HK, zh_MO, zh_SG, zh_TW, zh, zu
             </localeIds>
         </directory>
 
         <directory dir="rbnf">
-            <!-- It is not at all clear why this is being done. It's certainly not exactly the
-                 same as above, since (a) the alias is reversed (b) "zh_Hant" does exist, with
-                 different data than "yue", so this alias is not just rewriting the base
-                 language. -->
-            <!-- TODO: Find out and document this properly. -->
-            <forcedAlias source="zh_Hant_HK" target="yue"/>
+            <!-- MS-ICU blocks yue; preserve the ICU 72 Hong Kong resource fallback. -->
 
             <localeIds>
                 root,
@@ -189,7 +178,7 @@
 
                 // Q-Z
                 qu, ro, ru, se, sh, sk, sl, sq, sr_Latn, sr, su, sv, sw, ta, th, tr,
-                uk, vec, vi, yue_Hans, yue, zh_Hant_HK, zh_Hant, zh_HK, zh_MO, zh_TW, zh
+                uk, vec, vi, zh_Hant_HK, zh_Hant, zh_HK, zh_MO, zh_TW, zh
             </localeIds>
         </directory>
 
@@ -201,6 +190,14 @@
         </directory>
 
         <!-- GLOBAL ALIASES -->
+
+        <!-- These Windows names are not supplied by CLDR's deprecated-language aliases. -->
+        <forcedAlias source="iu_Cans" target="iu"/>
+        <forcedAlias source="iu_Cans_CA" target="iu_CA"/>
+        <forcedAlias source="qut" target="quc"/>
+        <forcedAlias source="qut_GT" target="quc_GT"/>
+        <forcedAlias source="qut_Latn" target="quc"/>
+        <forcedAlias source="qut_Latn_GT" target="quc_GT"/>
 
         <!-- Some spoken languages (e.g. "ars") inherit all their data from a written language
              (e.g. "ar_SA"). However CLDR doesn't currently support a way to represent that
@@ -292,4 +289,3 @@
         </dir>
     </outputDirectories>
 </config>
-

@@ -70,6 +70,7 @@ static void TestVariousStylesAndAttributes(void);
 static void TestParseCurrPatternWithDecStyle(void);
 static void TestFormatForFields(void);
 static void TestRBNFRounding(void);
+static void TestHongKongRBNFFallback(void);
 static void Test12052_NullPointer(void);
 static void TestParseCases(void);
 static void TestSetMaxFracAndRoundIncr(void);
@@ -98,6 +99,7 @@ void addNumForTest(TestNode** root)
     TESTCASE(TestTextAttributeCrash);
     TESTCASE(TestRBNFFormat);
     TESTCASE(TestRBNFRounding);
+    TESTCASE(TestHongKongRBNFFallback);
     TESTCASE(TestNBSPInPattern);
     TESTCASE(TestInt64Parse);
     TESTCASE(TestParseZero);
@@ -1838,6 +1840,45 @@ static void TestRBNFFormat(void) {
 
     for (i = 0; i < COUNT; ++i) {
         unum_close(formats[i]);
+    }
+}
+
+static void TestHongKongRBNFFallback(void) {
+    static const char* locales[] = { "zh_Hant_HK", "zh_HK" };
+    static const UNumberFormatStyle styles[] = { UNUM_SPELLOUT, UNUM_ORDINAL };
+    static const double values[] = { 0, 21, -21, 1001, 10000, 21.5 };
+
+    /* Preserve the ICU 72 fallback without depending on blocked yue resources. */
+    for (int32_t s = 0; s < UPRV_LENGTHOF(styles); ++s) {
+        UErrorCode status = U_ZERO_ERROR;
+        UNumberFormat* parent = unum_open(styles[s], NULL, 0, "zh_Hant", NULL, &status);
+        if (U_FAILURE(status)) {
+            log_data_err("Cannot open zh_Hant RBNF: %s\n", u_errorName(status));
+            return;
+        }
+        for (int32_t l = 0; l < UPRV_LENGTHOF(locales); ++l) {
+            status = U_ZERO_ERROR;
+            UNumberFormat* format = unum_open(styles[s], NULL, 0, locales[l], NULL, &status);
+            if (U_FAILURE(status)) {
+                log_data_err("Cannot open %s RBNF: %s\n", locales[l], u_errorName(status));
+                continue;
+            }
+            for (int32_t v = 0; v < UPRV_LENGTHOF(values); ++v) {
+                UChar expected[256], actual[256];
+                status = U_ZERO_ERROR;
+                int32_t expectedLength = unum_formatDouble(
+                    parent, values[v], expected, UPRV_LENGTHOF(expected), NULL, &status);
+                int32_t actualLength = unum_formatDouble(
+                    format, values[v], actual, UPRV_LENGTHOF(actual), NULL, &status);
+                if (U_FAILURE(status) || actualLength != expectedLength ||
+                    u_memcmp(actual, expected, expectedLength) != 0) {
+                    log_err("RBNF fallback differs for %s, style %d, value %g: %s\n",
+                        locales[l], styles[s], values[v], u_errorName(status));
+                }
+            }
+            unum_close(format);
+        }
+        unum_close(parent);
     }
 }
 
