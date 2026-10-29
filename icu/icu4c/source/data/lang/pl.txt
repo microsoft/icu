@@ -66,7 +66,6 @@ pl{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabski"}
-        ar_001{"współczesny arabski"}
         arc{"aramejski"}
         arn{"mapudungun"}
         aro{"araona"}
@@ -172,8 +171,6 @@ pl{
         dar{"dargwijski"}
         dav{"taita"}
         de{"niemiecki"}
-        de_AT{"niemiecki austriacki"}
-        de_CH{"wysokoniemiecki szwajcarski"}
         del{"delaware"}
         den{"slave"}
         dgr{"dogrib"}
@@ -198,23 +195,15 @@ pl{
         el{"grecki"}
         elx{"elamicki"}
         en{"angielski"}
-        en_AU{"angielski australijski"}
-        en_CA{"angielski kanadyjski"}
-        en_GB{"angielski brytyjski"}
-        en_US{"angielski amerykański"}
         enm{"średnioangielski"}
         eo{"esperanto"}
         es{"hiszpański"}
-        es_419{"amerykański hiszpański"}
-        es_ES{"europejski hiszpański"}
-        es_MX{"meksykański hiszpański"}
         esu{"yupik środkowosyberyjski"}
         et{"estoński"}
         eu{"baskijski"}
         ewo{"ewondo"}
         ext{"estremadurski"}
         fa{"perski"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulani"}
@@ -225,8 +214,6 @@ pl{
         fo{"farerski"}
         fon{"fon"}
         fr{"francuski"}
-        fr_CA{"francuski kanadyjski"}
-        fr_CH{"francuski szwajcarski"}
         frc{"cajuński"}
         frm{"średniofrancuski"}
         fro{"starofrancuski"}
@@ -269,7 +256,6 @@ pl{
         hax{"haida południowy"}
         he{"hebrajski"}
         hi{"hindi"}
-        hi_Latn{"hindi (alfabet łaciński)"}
         hif{"hindi fidżyjskie"}
         hil{"hiligaynon"}
         hit{"hetycki"}
@@ -445,7 +431,6 @@ pl{
         nb{"norweski (bokmål)"}
         nd{"ndebele północny"}
         nds{"dolnoniemiecki"}
-        nds_NL{"dolnosaksoński"}
         ne{"nepalski"}
         new{"newarski"}
         ng{"ndonga"}
@@ -453,7 +438,6 @@ pl{
         niu{"niue"}
         njo{"ao"}
         nl{"niderlandzki"}
-        nl_BE{"flamandzki"}
         nmg{"ngumba"}
         nn{"norweski (nynorsk)"}
         nnh{"ngiemboon"}
@@ -508,8 +492,6 @@ pl{
         pro{"staroprowansalski"}
         ps{"paszto"}
         pt{"portugalski"}
-        pt_BR{"brazylijski portugalski"}
-        pt_PT{"europejski portugalski"}
         qu{"keczua"}
         quc{"kicze"}
         qug{"keczua górski (Chimborazo)"}
@@ -522,7 +504,6 @@ pl{
         rm{"retoromański"}
         rn{"rundi"}
         ro{"rumuński"}
-        ro_MD{"mołdawski"}
         rof{"rombo"}
         rom{"cygański"}
         rtm{"rotumański"}
@@ -557,7 +538,6 @@ pl{
         sg{"sango"}
         sga{"staroirlandzki"}
         sgs{"żmudzki"}
-        sh{"serbsko-chorwacki"}
         shi{"tashelhiyt"}
         shn{"szan"}
         shu{"arabski (Czad)"}
@@ -592,7 +572,6 @@ pl{
         sux{"sumeryjski"}
         sv{"szwedzki"}
         sw{"suahili"}
-        sw_CD{"kongijski suahili"}
         swb{"komoryjski"}
         syc{"syriacki"}
         syr{"syryjski"}
@@ -689,8 +668,6 @@ pl{
         zen{"zenaga"}
         zgh{"standardowy marokański tamazight"}
         zh{"chiński"}
-        zh_Hans{"chiński uproszczony"}
-        zh_Hant{"chiński tradycyjny"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"brak treści o charakterze językowym"}
@@ -701,24 +678,6 @@ pl{
     }
     Languages%extension{
         ku{"kurmandżi"}
-    }
-    Languages%long{
-        zh_Hans{"standardowy chiński uproszczony"}
-        zh_Hant{"standardowy chiński tradycyjny"}
-    }
-    Languages%menu{
-        ckb{"kurdyjski sorani"}
-        yue{"chiński kantoński"}
-        zh{"chiński mandaryński"}
-    }
-    Languages%short{
-        az{"azerski"}
-        en_GB{"angielski (Wlk. Bryt.)"}
-        en_US{"angielski (USA)"}
-    }
-    Languages%variant{
-        hi_Latn{"hinglish"}
-        ps{"pasztuński"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -886,7 +845,6 @@ pl{
             iso8601{"kalendarz ISO-8601"}
             japanese{"kalendarz japoński"}
             persian{"kalendarz perski"}
-            roc{"kalendarz Republiki Chińskiej"}
         }
         calendar%core{
             buddhist{"buddyjski"}
@@ -906,7 +864,6 @@ pl{
             iso8601{"gregoriański"}
             japanese{"japoński"}
             persian{"perski"}
-            roc{"Republiki Chińskiej"}
         }
         cf{
             account{"księgowy format waluty"}

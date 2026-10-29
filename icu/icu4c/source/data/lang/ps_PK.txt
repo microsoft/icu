@@ -3,7 +3,6 @@
 // Generated using tools/cldr/cldr-to-icu/
 ps_PK{
     Languages{
-        ar_001{"نوے معياري عربي"}
         dsb{"لوړے سربي"}
         fo{"فاروئے"}
         kha{"خاسے"}

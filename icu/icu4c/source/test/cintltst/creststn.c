@@ -2715,16 +2715,6 @@ static void TestGetFunctionalEquivalent(void) {
         "f",    "nl_NL@collation=stroke",         "root",
         "f",    "nl_NL_EEXT@collation=stroke",    "root",
         /* Additions to test aliased locales */
-        "f",    "yue_HK",                         "zh@collation=stroke",
-        "f",    "yue_Hant",                       "zh@collation=stroke",
-        "f",    "yue_Hant_HK",                    "zh@collation=stroke",
-        "f",    "yue@collation=stroke",           "zh@collation=stroke",
-        "f",    "yue@collation=pinyin",           "zh",
-        "f",    "yue_CN",                         "zh",
-        "f",    "yue_Hans",                       "zh",
-        "f",    "yue_Hans_CN",                    "zh",
-        "f",    "yue_Hans@collation=pinyin",      "zh",
-        "f",    "yue_Hans@collation=stroke",      "zh@collation=stroke",
         "f",    "mo",                             "mo",
         "t",    "no",                             "no",
         "t",    "nb",                             "no",
@@ -2735,8 +2725,6 @@ static void TestGetFunctionalEquivalent(void) {
         "f",    "zh_Hant_CN",                     "zh@collation=stroke",
         "f",    "zh_Hant_US",                     "zh@collation=stroke",
         "f",    "zh_Hans_US",                     "zh",
-        "f",    "yue_TW",                         "zh@collation=stroke",
-        "f",    "yue_US",                         "zh@collation=stroke",
         "f",    "ja_CN",                          "ja",
         "f",    "ja_US",                          "ja",
         NULL
@@ -2971,7 +2959,7 @@ static void TestCLDRStyleAliases(void) {
       result = tres_getString(a, -1, NULL, &len, &status);
       u_charsToUChars(expects[i], expected, (int32_t)strlen(expects[i])+1);
       if(U_FAILURE(status) || !result || u_strcmp(result, expected)) {
-        log_err("CLDR style aliases failed resource with name \"%s\" resource, exp %s, got %S (%s)\n", resource, expects[i], result, myErrorName(status));
+        log_err("CLDR style aliases failed resource with name \"%s\" resource, exp %s, got %s (%s)\n", resource, expects[i], (result != NULL) ? austrdup(result) : "NULL", myErrorName(status));
         status = U_ZERO_ERROR;
       }
     }

@@ -63,7 +63,6 @@ ro{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabă"}
-        ar_001{"arabă standard modernă"}
         arc{"aramaică"}
         arn{"mapuche"}
         arp{"arapaho"}
@@ -154,7 +153,6 @@ ro{
         dar{"dargwa"}
         dav{"taita"}
         de{"germană"}
-        de_CH{"germană standard (Elveția)"}
         del{"delaware"}
         den{"slave"}
         dgr{"dogrib"}
@@ -180,12 +178,10 @@ ro{
         enm{"engleză medie"}
         eo{"esperanto"}
         es{"spaniolă"}
-        es_ES{"spaniolă (Europa)"}
         et{"estonă"}
         eu{"bască"}
         ewo{"ewondo"}
         fa{"persană"}
-        fa_AF{"dari"}
         fan{"fang"}
         fat{"fanti"}
         ff{"fulah"}
@@ -391,14 +387,12 @@ ro{
         nb{"norvegiană bokmål"}
         nd{"ndebele de nord"}
         nds{"germana de jos"}
-        nds_NL{"saxona de jos"}
         ne{"nepaleză"}
         new{"newari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niueană"}
         nl{"neerlandeză"}
-        nl_BE{"flamandă"}
         nmg{"kwasio"}
         nn{"norvegiană nynorsk"}
         nnh{"ngiemboon"}
@@ -447,7 +441,6 @@ ro{
         pro{"provensală veche"}
         ps{"paștună"}
         pt{"portugheză"}
-        pt_PT{"portugheză (Europa)"}
         qu{"quechua"}
         quc{"quiché"}
         raj{"rajasthani"}
@@ -484,7 +477,6 @@ ro{
         ses{"koyraboro Senni"}
         sg{"sango"}
         sga{"irlandeză veche"}
-        sh{"sârbo-croată"}
         shi{"tachelhit"}
         shn{"shan"}
         shu{"arabă ciadiană"}
@@ -516,7 +508,6 @@ ro{
         sux{"sumeriană"}
         sv{"suedeză"}
         sw{"swahili"}
-        sw_CD{"swahili (R.D. Congo)"}
         swb{"comoreză"}
         syc{"siriacă clasică"}
         syr{"siriacă"}
@@ -600,8 +591,6 @@ ro{
         zen{"zenaga"}
         zgh{"tamazight standard marocană"}
         zh{"chineză"}
-        zh_Hans{"chineză simplificată"}
-        zh_Hant{"chineză tradițională"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"fară conținut lingvistic"}
@@ -612,23 +601,6 @@ ro{
     }
     Languages%extension{
         ku{"kurmangi"}
-    }
-    Languages%long{
-        zh_Hans{"chineză mandarină simplificată"}
-        zh_Hant{"chineză mandarină tradițională"}
-    }
-    Languages%menu{
-        ckb{"kurdă, centrală"}
-        yue{"chineză, cantoneză"}
-        zh{"chineză, mandarină"}
-    }
-    Languages%short{
-        en_GB{"engleză (UK)"}
-    }
-    Languages%variant{
-        ckb{"kurdă sorani"}
-        hi_Latn{"hinglish"}
-        ps{"pushto"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -843,7 +815,6 @@ ro{
             iso8601{"calendar ISO-8601"}
             japanese{"calendar japonez"}
             persian{"calendar persan"}
-            roc{"calendarul Republicii Chineze"}
         }
         calendar%core{
             buddhist{"budist"}
@@ -863,7 +834,6 @@ ro{
             iso8601{"gregorian"}
             japanese{"japonez"}
             persian{"persan"}
-            roc{"al Republicii Chineze"}
         }
         cf{
             account{"Format monedă contabilitate"}

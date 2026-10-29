@@ -94,17 +94,14 @@ jv{
         CY{"Siprus"}
         CZ{"Ceko"}
         DE{"Jerman"}
-        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denmark"}
         DM{"Dominika"}
         DO{"Republik Dominika"}
         DZ{"Aljazair"}
-        EA{"Ceuta & Melilla"}
         EC{"Ekuador"}
         EE{"Estonia"}
         EG{"Mesir"}
-        EH{"Sahara Kulon"}
         ER{"Eritrea"}
         ES{"Spanyol"}
         ET{"Ethiopia"}
@@ -141,7 +138,6 @@ jv{
         HR{"Kroasia"}
         HT{"Haiti"}
         HU{"Hungaria"}
-        IC{"Kapuloan Kanaria"}
         ID{"Indonesia"}
         IE{"Republik Irlandia"}
         IL{"Israel"}
@@ -289,8 +285,6 @@ jv{
         VU{"Vanuatu"}
         WF{"Wallis lan Futuna"}
         WS{"Samoa"}
-        XA{"Logat Semu"}
-        XB{"Bidi Semu"}
         XK{"Kosovo"}
         YE{"Yaman"}
         YT{"Mayotte"}
@@ -298,24 +292,5 @@ jv{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Daerah Ora Dikenali"}
-    }
-    Countries%chagos{
-        IO{"Kapuloan Chagos"}
-    }
-    Countries%short{
-        GB{"Inggris Raya"}
-        HK{"Hong Kong"}
-        MO{"Makau"}
-        PS{"Palestina"}
-        US{"AS"}
-    }
-    Countries%variant{
-        CD{"Republik Demokratik Kongo"}
-        CG{"Republik Kongo"}
-        CZ{"Republik Ceko"}
-        FK{"Kapuloan Falkland (Islas Malvinas)"}
-        NZ{"Aotearoa Selandia Anyar"}
-        SZ{"Swaziland"}
-        TL{"Timor Timur"}
     }
 }

@@ -842,13 +842,6 @@ ms{
                 }
             }
         }
-        roc{
-            eras{
-                wide{
-                    0{"Sebelum R.O.C"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"Aktiviti"}

@@ -93,17 +93,14 @@ scn{
         CY{"Cipru"}
         CZ{"Cechia"}
         DE{"Girmania"}
-        DG{"Diego Garcia"}
         DJ{"Gibbuti"}
         DK{"Danimarca"}
         DM{"Dumìnica"}
         DO{"Ripùbblica Duminicana"}
         DZ{"Algirìa"}
-        EA{"Ceuta e Miliḍḍa"}
         EC{"Ècuador"}
         EE{"Estonia"}
         EG{"Eggittu"}
-        EH{"Sahara punintinu"}
         ER{"Eritrea"}
         ES{"Spagna"}
         ET{"Etiopia"}
@@ -140,7 +137,6 @@ scn{
         HR{"Cruazzia"}
         HT{"Haiti"}
         HU{"Ungarìa"}
-        IC{"Ìsuli Canari"}
         ID{"Innunesia"}
         IE{"Irlanna"}
         IL{"Isdraeli"}
@@ -288,8 +284,6 @@ scn{
         VU{"Vanuatu"}
         WF{"Wallis e Futuna"}
         WS{"Samoa"}
-        XA{"Accenti fausi"}
-        XB{"Bidirizziunali fausu"}
         XK{"Kòssuvu"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -297,24 +291,5 @@ scn{
         ZM{"Zammia"}
         ZW{"Zimbabwe"}
         ZZ{"Riggiuni scanusciuta"}
-    }
-    Countries%chagos{
-        IO{"Arcipèlagu Chagos"}
-    }
-    Countries%short{
-        GB{"RJ"}
-        HK{"Hong Kong"}
-        MO{"Macau"}
-        PS{"Palistina"}
-        US{"SJ"}
-    }
-    Countries%variant{
-        CD{"Congu (RDC)"}
-        CG{"Congu (Ripùbblica)"}
-        CZ{"Ripùbblica Ceca"}
-        FK{"Ìsuli Falkland (Ìsuli Marvini)"}
-        NZ{"Aotearoa Nova Zilannia"}
-        SZ{"Swazzilannia"}
-        TL{"Timor di Livanti"}
     }
 }

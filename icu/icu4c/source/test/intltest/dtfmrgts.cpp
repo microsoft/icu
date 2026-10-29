@@ -144,8 +144,8 @@ void DateFormatRegressionTest::Test4052408()
     str = fmt->format(dt, str);
     logln(str);
     
-    if(str != u"5/3/97, 8:55\u202FAM")
-        errln(UnicodeString(u"Fail: Test broken; Want 5/3/97, 8:55\u202FAM Got ", -1) + str);
+    if(str != u"5/3/97, 8:55 AM")
+        errln(UnicodeString(u"Fail: Test broken; Want 5/3/97, 8:55 AM Got ", -1) + str);
     
     UnicodeString expected[] = {
         UnicodeString(""),   //"ERA_FIELD",
@@ -1227,7 +1227,7 @@ void DateFormatRegressionTest::Test714()
     }
 
     UnicodeString s;
-        UnicodeString tests = UnicodeString(u"7:25:43\u202FAM");
+        UnicodeString tests = UnicodeString(u"7:25:43 AM");
         UErrorCode status = U_ZERO_ERROR;
         fmt->format (d,s);
         if(U_FAILURE(status))
@@ -1725,7 +1725,7 @@ void DateFormatRegressionTest::TestT10855() {
         } else {
             errln("Parse Succeeded...should have failed. Index is %d - ErrorIndex is %d", position.getIndex(), position.getErrorIndex());
         }
-        logln("Parsed date returns %d\n", d);
+        logln("Parsed date returns %f\n", d);
 
         ++x;
     }

@@ -237,9 +237,6 @@ hu{
         "Asia:Ulaanbaatar"{
             ec{"Ulánbátor"}
         }
-        "Asia:Urumqi"{
-            ec{"Ürümcsi"}
-        }
         "Asia:Ust-Nera"{
             ec{"Uszty-Nyera"}
         }

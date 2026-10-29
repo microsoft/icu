@@ -66,7 +66,6 @@ lt{
         ann{"obolų"}
         anp{"angikų"}
         ar{"arabų"}
-        ar_001{"šiuolaikinė standartinė arabų"}
         arc{"aramaikų"}
         arn{"mapudungunų"}
         aro{"araonų"}
@@ -172,8 +171,6 @@ lt{
         dar{"dargva"}
         dav{"taitų"}
         de{"vokiečių"}
-        de_AT{"Austrijos vokiečių"}
-        de_CH{"Šveicarijos aukštutinė vokiečių"}
         del{"delavero"}
         den{"slave"}
         dgr{"dogribų"}
@@ -198,10 +195,6 @@ lt{
         el{"graikų"}
         elx{"elamitų"}
         en{"anglų"}
-        en_AU{"Australijos anglų"}
-        en_CA{"Kanados anglų"}
-        en_GB{"Didžiosios Britanijos anglų"}
-        en_US{"Jungtinių Valstijų anglų"}
         enm{"Vidurio Anglijos"}
         eo{"esperanto"}
         es{"ispanų"}
@@ -221,8 +214,6 @@ lt{
         fo{"farerų"}
         fon{"fon"}
         fr{"prancūzų"}
-        fr_CA{"Kanados prancūzų"}
-        fr_CH{"Šveicarijos prancūzų"}
         frc{"kadžunų prancūzų"}
         frm{"Vidurio Prancūzijos"}
         fro{"senoji prancūzų"}
@@ -440,7 +431,6 @@ lt{
         nb{"norvegų bukmolas"}
         nd{"šiaurės ndebelų"}
         nds{"Žemutinės Vokietijos"}
-        nds_NL{"Žemutinės Saksonijos (Nyderlandai)"}
         ne{"nepaliečių"}
         new{"nevari"}
         ng{"ndongų"}
@@ -448,7 +438,6 @@ lt{
         niu{"niujiečių"}
         njo{"ao naga"}
         nl{"olandų"}
-        nl_BE{"flamandų"}
         nmg{"kvasių"}
         nn{"naujoji norvegų"}
         nnh{"ngiembūnų"}
@@ -515,7 +504,6 @@ lt{
         rm{"retoromanų"}
         rn{"rundi"}
         ro{"rumunų"}
-        ro_MD{"moldavų"}
         rof{"rombo"}
         rom{"romų"}
         rtm{"rotumanų"}
@@ -550,7 +538,6 @@ lt{
         sg{"sango"}
         sga{"senoji airių"}
         sgs{"žemaičių"}
-        sh{"serbų-kroatų"}
         shi{"tachelhitų"}
         shn{"šan"}
         shu{"chadian arabų"}
@@ -585,7 +572,6 @@ lt{
         sux{"šumerų"}
         sv{"švedų"}
         sw{"suahilių"}
-        sw_CD{"Kongo suahilių"}
         swb{"komorų"}
         syc{"klasikinė sirų"}
         syr{"sirų"}
@@ -681,8 +667,6 @@ lt{
         zen{"zenaga"}
         zgh{"standartinė Maroko tamazigtų"}
         zh{"kinų"}
-        zh_Hans{"supaprastintoji kinų"}
-        zh_Hant{"tradicinė kinų"}
         zu{"zulų"}
         zun{"Zuni"}
         zxx{"nėra kalbinio turinio"}
@@ -693,18 +677,6 @@ lt{
     }
     Languages%extension{
         ku{"šiaurės kurdų"}
-    }
-    Languages%long{
-        zh_Hans{"supaprastintoji mandarinų kinų"}
-        zh_Hant{"tradicinė mandarinų kinų"}
-    }
-    Languages%menu{
-        zh{"kinų, mandarinų"}
-    }
-    Languages%short{
-        az{"azeri"}
-        en_GB{"anglų (JK)"}
-        en_US{"anglų (JAV)"}
     }
     Languages%variant{
         hi_Latn{"hindi anglų"}
@@ -906,7 +878,6 @@ lt{
             iso8601{"ISO 8601 kalendorius"}
             japanese{"japonų kalendorius"}
             persian{"persų kalendorius"}
-            roc{"Kinijos Respublikos kalendorius"}
         }
         calendar%core{
             buddhist{"budistų"}
@@ -926,7 +897,6 @@ lt{
             iso8601{"Grigaliaus"}
             japanese{"japonų"}
             persian{"persų"}
-            roc{"Kinijos Respublikos"}
         }
         cf{
             account{"apskaitos valiutos formatas"}

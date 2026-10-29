@@ -853,9 +853,6 @@ kk_Arab{
         "Asia:Ulaanbaatar"{
             ec{"ۇلانباتىر"}
         }
-        "Asia:Urumqi"{
-            ec{"ءۇرىمشى"}
-        }
         "Asia:Ust-Nera"{
             ec{"ۋست-نەرا"}
         }

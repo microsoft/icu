@@ -78,7 +78,7 @@ units_data_test.o units_router_test.o units_test.o displayoptions_test.o \
 numbertest_simple.o \
 cplusplus_header_api_build_test.o uchar_type_build_test.o \
 ucolheaderonlytest.o usetheaderonlytest.o utfiteratortest.o utfstringtest.o \
-intltesttest.o
+intltesttest.o uprefstest.o
 
 DEPS = $(OBJECTS:.o=.d)
 

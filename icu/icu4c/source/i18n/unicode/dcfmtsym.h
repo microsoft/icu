@@ -523,7 +523,7 @@ private:
 inline UnicodeString
 DecimalFormatSymbols::getSymbol(ENumberFormatSymbol symbol) const {
     const UnicodeString *strPtr;
-    if(symbol < kFormatSymbolCount) {
+    if(kDecimalSeparatorSymbol <= symbol && symbol < kFormatSymbolCount) {
         strPtr = &fSymbols[symbol];
     } else {
         strPtr = &fNoSymbol;
@@ -535,7 +535,7 @@ DecimalFormatSymbols::getSymbol(ENumberFormatSymbol symbol) const {
 inline const UnicodeString &
 DecimalFormatSymbols::getConstSymbol(ENumberFormatSymbol symbol) const {
     const UnicodeString *strPtr;
-    if(symbol < kFormatSymbolCount) {
+    if(kDecimalSeparatorSymbol <= symbol && symbol < kFormatSymbolCount) {
         strPtr = &fSymbols[symbol];
     } else {
         strPtr = &fNoSymbol;
@@ -566,7 +566,7 @@ DecimalFormatSymbols::setSymbol(ENumberFormatSymbol symbol, const UnicodeString 
     else if (symbol == kIntlCurrencySymbol) {
         fIsCustomIntlCurrencySymbol = true;
     }
-    if(symbol<kFormatSymbolCount) {
+    if(kDecimalSeparatorSymbol <= symbol && symbol < kFormatSymbolCount) {
         fSymbols[symbol]=value;
     }
 

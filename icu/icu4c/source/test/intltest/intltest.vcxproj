@@ -247,6 +247,7 @@
     <ClCompile Include="uchar_type_build_test.cpp" />
     <ClCompile Include="ucolheaderonlytest.cpp" />
     <ClCompile Include="usetheaderonlytest.cpp" />
+    <ClCompile Include="uprefstest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="colldata.h" />
@@ -378,6 +379,7 @@
     <ClInclude Include="csdetest.h" />
     <ClInclude Include="listformattertest.h" />
     <ClInclude Include="localebuildertest.h" />
+    <ClInclude Include="uprefstest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

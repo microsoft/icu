@@ -95,17 +95,14 @@ kok_Latn{
         CY{"Siprus"}
         CZ{"Chekia"}
         DE{"Jermon"}
-        DG{"Diego Garcia"}
         DJ{"Djibuti"}
         DK{"Denmark"}
         DM{"Dominika"}
         DO{"Dominican Porjeraj"}
         DZ{"Algeria"}
-        EA{"Ceuta ani Meliya"}
         EC{"Equador"}
         EE{"Estonia"}
         EG{"Ejipt"}
-        EH{"Ostonti Sahara"}
         ER{"Eritrea"}
         ES{"Ispania"}
         ET{"Ethiopia"}
@@ -142,7 +139,6 @@ kok_Latn{
         HR{"Croaxia"}
         HT{"Haiti"}
         HU{"Hungary"}
-        IC{"Canarias Zunve"}
         ID{"Indonesia"}
         IE{"Ayerland"}
         IL{"Israel"}
@@ -297,16 +293,5 @@ kok_Latn{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Onollkhi Prant"}
-    }
-    Countries%chagos{
-        IO{"Xagos Zunve"}
-    }
-    Countries%short{
-        PS{"Palestini Prant"}
-    }
-    Countries%variant{
-        FK{"Malvinas Zunve"}
-        NZ{"Aoteroa"}
-        TL{"Udent Timor"}
     }
 }

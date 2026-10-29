@@ -1199,13 +1199,6 @@ cs{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"před ROC"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"aktivity"}

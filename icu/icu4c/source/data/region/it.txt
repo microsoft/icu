@@ -94,17 +94,14 @@ it{
         CY{"Cipro"}
         CZ{"Cechia"}
         DE{"Germania"}
-        DG{"Diego Garcia"}
         DJ{"Gibuti"}
         DK{"Danimarca"}
         DM{"Dominica"}
         DO{"Repubblica Dominicana"}
         DZ{"Algeria"}
-        EA{"Ceuta e Melilla"}
         EC{"Ecuador"}
         EE{"Estonia"}
         EG{"Egitto"}
-        EH{"Sahara Occidentale"}
         ER{"Eritrea"}
         ES{"Spagna"}
         ET{"Etiopia"}
@@ -141,7 +138,6 @@ it{
         HR{"Croazia"}
         HT{"Haiti"}
         HU{"Ungheria"}
-        IC{"Isole Canarie"}
         ID{"Indonesia"}
         IE{"Irlanda"}
         IL{"Israele"}
@@ -224,7 +220,7 @@ it{
         PM{"Saint-Pierre e Miquelon"}
         PN{"Isole Pitcairn"}
         PR{"Portorico"}
-        PS{"Territori Palestinesi"}
+        PS{"Autorità Palestinese"}
         PT{"Portogallo"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -289,8 +285,6 @@ it{
         VU{"Vanuatu"}
         WF{"Wallis e Futuna"}
         WS{"Samoa"}
-        XA{"Pseudo-accenti"}
-        XB{"Pseudo-bidi"}
         XK{"Kosovo"}
         YE{"Yemen"}
         YT{"Mayotte"}
@@ -298,27 +292,5 @@ it{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"Regione sconosciuta"}
-    }
-    Countries%chagos{
-        IO{"Arcipelago Chagos"}
-    }
-    Countries%short{
-        GB{"UK"}
-        HK{"Hong Kong"}
-        MO{"Macao"}
-        PS{"Palestina"}
-        UN{"ONU"}
-        US{"USA"}
-    }
-    Countries%variant{
-        CD{"Congo (RDC)"}
-        CG{"Congo (Repubblica)"}
-        CI{"Côte d’Ivoire"}
-        CZ{"Repubblica Ceca"}
-        FK{"Isole Falkland (Isole Malvine)"}
-        NZ{"Nuova Zelanda (Aotearoa)"}
-        SZ{"Regno di Eswatini"}
-        TL{"Timor Leste"}
-        TR{"Türkiye"}
     }
 }

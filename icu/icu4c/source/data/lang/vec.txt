@@ -30,7 +30,6 @@ vec{
         anp{"angika"}
         apc{"àrabo levantin"}
         ar{"àrabo"}
-        ar_001{"àrabo moderno standard"}
         arn{"mapudungun"}
         arp{"arapào"}
         ars{"àrabo najdi"}
@@ -103,8 +102,6 @@ vec{
         dar{"dargwa"}
         dav{"taita"}
         de{"todesco"}
-        de_AT{"todesco austrìago"}
-        de_CH{"alto todesco zvìsaro"}
         dgr{"dogrib"}
         dje{"zarma"}
         doi{"dogri"}
@@ -120,17 +117,12 @@ vec{
         eka{"ekajuk"}
         el{"grego"}
         en{"ingleze"}
-        en_AU{"ingleze australian"}
-        en_CA{"ingleze canadeze"}
-        en_GB{"ingleze britànego"}
-        en_US{"ingleze meregan"}
         eo{"esperanto"}
         es{"spagnolo"}
         et{"estonian"}
         eu{"basco"}
         ewo{"ewondo"}
         fa{"persian"}
-        fa_AF{"dari"}
         ff{"fula"}
         fi{"filandeze"}
         fil{"filipin"}
@@ -138,8 +130,6 @@ vec{
         fo{"faroeze"}
         fon{"fon"}
         fr{"franseze"}
-        fr_CA{"franseze canadeze"}
-        fr_CH{"franseze zvìsaro"}
         frc{"cadian"}
         frr{"frìzone setentrionale"}
         fur{"furlan"}
@@ -302,14 +292,12 @@ vec{
         nb{"norvejeze bokmal"}
         nd{"ndebele de’l nord"}
         nds{"baso todesco"}
-        nds_NL{"sàsone baso"}
         ne{"nepaleze"}
         new{"newari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"niuean"}
         nl{"olandeze"}
-        nl_BE{"fiamingo"}
         nmg{"kwazio"}
         nn{"norvejeze nynorsk"}
         nnh{"ngienbon"}
@@ -344,8 +332,6 @@ vec{
         prg{"prusian"}
         ps{"pashto"}
         pt{"portogheze"}
-        pt_BR{"portogheze braziłian"}
-        pt_PT{"portogheze europèo"}
         qu{"cuechua"}
         quc{"kish"}
         raj{"rajastani"}
@@ -356,7 +342,6 @@ vec{
         rm{"romancio"}
         rn{"rundi"}
         ro{"romen"}
-        ro_MD{"moldavo"}
         rof{"ronbo"}
         ru{"ruso"}
         rup{"aromen"}
@@ -405,7 +390,6 @@ vec{
         suk{"sukuma"}
         sv{"zvedeze"}
         sw{"suaili"}
-        sw_CD{"suaili de’l Congo"}
         swb{"comorian"}
         syr{"sirìago"}
         szl{"silezian"}
@@ -477,22 +461,6 @@ vec{
         zun{"zuni"}
         zxx{"gnaun contegnùo lenguìstego"}
         zza{"zazaki"}
-    }
-    Languages%long{
-        zh_Hans{"mandarin (senpio)"}
-        zh_Hant{"mandarin (tradisionale)"}
-    }
-    Languages%menu{
-        zh{"sineze mandarin"}
-    }
-    Languages%short{
-        az{"azero"}
-        en_GB{"ingleze (Regno Unìo)"}
-        en_US{"ingleze (Stadi Unìi)"}
-    }
-    Languages%variant{
-        ckb{"curdo sorani"}
-        hi_Latn{"hingleze"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -706,7 +674,6 @@ vec{
             iso8601{"lunaro ISO-8601"}
             japanese{"lunaro japoneze"}
             persian{"lunaro persian"}
-            roc{"lunaro mìnguo"}
         }
         calendar%core{
             gregorian{"gregorian"}

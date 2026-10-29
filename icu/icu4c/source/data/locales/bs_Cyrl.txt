@@ -840,14 +840,6 @@ bs_Cyrl{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"Пре РК"}
-                    1{"РК"}
-                }
-            }
-        }
     }
     delimiters{
         alternateQuotationEnd{"‘"}

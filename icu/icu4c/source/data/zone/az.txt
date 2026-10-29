@@ -651,9 +651,6 @@ az{
         "Asia:Ulaanbaatar"{
             ec{"Ulanbator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumçi"}
-        }
         "Asia:Vientiane"{
             ec{"Vyentyan"}
         }

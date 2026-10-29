@@ -1220,14 +1220,6 @@ fa{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    0{"قبل از R.O.C."}
-                    1{"تقویم مینگو"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"فعالیت"}

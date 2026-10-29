@@ -729,7 +729,7 @@ selectForMask(const UConverterSelector* sel U_LIFETIME_BOUND,
     int16_t k = 0;
     for (j = 0 ; j < columns; j++) {
       uint32_t v = mask[j];
-      for (i = 0 ; i < 32 && k < sel->encodingsCount; i++, k++) {
+      for (i = 0 ; i < 32 && k < static_cast<int16_t>(sel->encodingsCount); i++, k++) {
         if ((v & 1) != 0) {
           result->index[result->length++] = k;
         }

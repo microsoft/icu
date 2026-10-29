@@ -66,7 +66,6 @@ tr{
         ann{"Obolo dili"}
         anp{"Angika"}
         ar{"Arapça"}
-        ar_001{"Modern Standart Arapça"}
         arc{"Aramice"}
         arn{"Mapuçe dili"}
         aro{"Araona"}
@@ -86,7 +85,6 @@ tr{
         awa{"Awadhi"}
         ay{"Aymara"}
         az{"Azerbaycan dili"}
-        az_Arab{"Güney Azerice"}
         ba{"Başkırtça"}
         bal{"Beluçça"}
         ban{"Bali dili"}
@@ -173,8 +171,6 @@ tr{
         dar{"Dargince"}
         dav{"Taita"}
         de{"Almanca"}
-        de_AT{"Avusturya Almancası"}
-        de_CH{"İsviçre Yüksek Almancası"}
         del{"Delaware"}
         den{"Slavey dili"}
         dgr{"Dogrib"}
@@ -199,23 +195,15 @@ tr{
         el{"Yunanca"}
         elx{"Elam"}
         en{"İngilizce"}
-        en_AU{"Avustralya İngilizcesi"}
-        en_CA{"Kanada İngilizcesi"}
-        en_GB{"İngiliz İngilizcesi"}
-        en_US{"Amerikan İngilizcesi"}
         enm{"Ortaçağ İngilizcesi"}
         eo{"Esperanto"}
         es{"İspanyolca"}
-        es_419{"Latin Amerika İspanyolcası"}
-        es_ES{"Avrupa İspanyolcası"}
-        es_MX{"Meksika İspanyolcası"}
         esu{"Merkezi Yupikçe"}
         et{"Estonca"}
         eu{"Baskça"}
         ewo{"Ewondo"}
         ext{"Ekstremadura Dili"}
         fa{"Farsça"}
-        fa_AF{"Darice"}
         fan{"Fang"}
         fat{"Fanti"}
         ff{"Fula dili"}
@@ -226,8 +214,6 @@ tr{
         fo{"Faroe dili"}
         fon{"Fon"}
         fr{"Fransızca"}
-        fr_CA{"Kanada Fransızcası"}
-        fr_CH{"İsviçre Fransızcası"}
         frc{"Cajun Fransızcası"}
         frm{"Ortaçağ Fransızcası"}
         fro{"Eski Fransızca"}
@@ -446,7 +432,6 @@ tr{
         nb{"Norveççe Bokmål"}
         nd{"Kuzey Ndebele"}
         nds{"Aşağı Almanca"}
-        nds_NL{"Aşağı Saksonca"}
         ne{"Nepalce"}
         new{"Nevari"}
         ng{"Ndonga"}
@@ -454,7 +439,6 @@ tr{
         niu{"Niue dili"}
         njo{"Ao Naga"}
         nl{"Felemenkçe"}
-        nl_BE{"Flamanca"}
         nmg{"Kwasio"}
         nn{"Norveççe Nynorsk"}
         nnh{"Ngiemboon"}
@@ -509,8 +493,6 @@ tr{
         pro{"Eski Provensal"}
         ps{"Peştuca"}
         pt{"Portekizce"}
-        pt_BR{"Brezilya Portekizcesi"}
-        pt_PT{"Avrupa Portekizcesi"}
         qu{"Keçuva dili"}
         quc{"Kiçece"}
         qug{"Chimborazo Highland Quichua"}
@@ -523,7 +505,6 @@ tr{
         rm{"Romanşça"}
         rn{"Kirundi"}
         ro{"Rumence"}
-        ro_MD{"Moldovaca"}
         rof{"Rombo"}
         rom{"Romanca"}
         rtm{"Rotuman"}
@@ -558,7 +539,6 @@ tr{
         sg{"Sango"}
         sga{"Eski İrlandaca"}
         sgs{"Samogitçe"}
-        sh{"Sırp-Hırvat Dili"}
         shi{"Taşelit"}
         shn{"Shan dili"}
         shu{"Çad Arapçası"}
@@ -593,7 +573,6 @@ tr{
         sux{"Sümerce"}
         sv{"İsveççe"}
         sw{"Svahili dili"}
-        sw_CD{"Kongo Svahili"}
         swb{"Komorca"}
         syc{"Klasik Süryanice"}
         syr{"Süryanice"}
@@ -690,8 +669,6 @@ tr{
         zen{"Zenaga dili"}
         zgh{"Standart Fas Tamazigti"}
         zh{"Çince"}
-        zh_Hans{"Basitleştirilmiş Çince"}
-        zh_Hant{"Geleneksel Çince"}
         zu{"Zuluca"}
         zun{"Zunice"}
         zxx{"Dilbilim içeriği yok"}
@@ -702,24 +679,6 @@ tr{
     }
     Languages%extension{
         ku{"Kurmanci"}
-    }
-    Languages%long{
-        zh_Hans{"Basitleştirilmiş Çince (Mandarin)"}
-        zh_Hant{"Geleneksel Çince (Mandarin)"}
-    }
-    Languages%menu{
-        ars{"Arapça, Necd"}
-        ckb{"Kürtçe, Orta"}
-        yue{"Çince, Kantonca"}
-        zh{"Çince, Mandarin"}
-    }
-    Languages%short{
-        en_GB{"Birleşik Krallık İngilizcesi"}
-        en_US{"ABD İngilizcesi"}
-    }
-    Languages%variant{
-        ckb{"Kürtçe, Sorani"}
-        hi_Latn{"Hindilizce"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -917,7 +876,6 @@ tr{
             iso8601{"ISO-8601 Takvimi"}
             japanese{"Japon Takvimi"}
             persian{"İran Takvimi"}
-            roc{"Çin Cumhuriyeti Takvimi"}
         }
         calendar%core{
             buddhist{"Budist"}
@@ -937,7 +895,6 @@ tr{
             iso8601{"Miladi"}
             japanese{"Japon"}
             persian{"İran"}
-            roc{"Çin Cumhuriyeti"}
         }
         cf{
             account{"Muhasebe Para Biçimi"}

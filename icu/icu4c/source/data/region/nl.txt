@@ -64,7 +64,7 @@ nl{
         BM{"Bermuda"}
         BN{"Brunei"}
         BO{"Bolivia"}
-        BQ{"Caribisch Nederland"}
+        BQ{"Bonaire, Sint Eustatius en Saba"}
         BR{"Brazilië"}
         BS{"Bahama’s"}
         BT{"Bhutan"}
@@ -94,17 +94,14 @@ nl{
         CY{"Cyprus"}
         CZ{"Tsjechië"}
         DE{"Duitsland"}
-        DG{"Diego Garcia"}
         DJ{"Djibouti"}
         DK{"Denemarken"}
         DM{"Dominica"}
         DO{"Dominicaanse Republiek"}
         DZ{"Algerije"}
-        EA{"Ceuta en Melilla"}
         EC{"Ecuador"}
         EE{"Estland"}
         EG{"Egypte"}
-        EH{"Westelijke Sahara"}
         ER{"Eritrea"}
         ES{"Spanje"}
         ET{"Ethiopië"}
@@ -141,7 +138,6 @@ nl{
         HR{"Kroatië"}
         HT{"Haïti"}
         HU{"Hongarije"}
-        IC{"Canarische Eilanden"}
         ID{"Indonesië"}
         IE{"Ierland"}
         IL{"Israël"}
@@ -224,7 +220,7 @@ nl{
         PM{"Saint-Pierre en Miquelon"}
         PN{"Pitcairneilanden"}
         PR{"Puerto Rico"}
-        PS{"Palestijnse gebieden"}
+        PS{"Palestijnse Autoriteit"}
         PT{"Portugal"}
         PW{"Palau"}
         PY{"Paraguay"}
@@ -289,8 +285,6 @@ nl{
         VU{"Vanuatu"}
         WF{"Wallis en Futuna"}
         WS{"Samoa"}
-        XA{"Pseudo-Accenten"}
-        XB{"Pseudo-Bidi"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Mayotte"}
@@ -298,27 +292,5 @@ nl{
         ZM{"Zambia"}
         ZW{"Zimbabwe"}
         ZZ{"onbekend gebied"}
-    }
-    Countries%chagos{
-        IO{"Chagoseilanden"}
-    }
-    Countries%short{
-        GB{"VK"}
-        HK{"Hongkong"}
-        MO{"Macau"}
-        PS{"Palestina"}
-        UN{"VN"}
-        US{"VS"}
-    }
-    Countries%variant{
-        CD{"Congo (DRC)"}
-        CG{"Congo (Republiek)"}
-        CI{"Côte d’Ivoire"}
-        CZ{"Tsjechische Republiek"}
-        FK{"Falklandeilanden (Islas Malvinas)"}
-        NZ{"Aotearoa Nieuw-Zeeland"}
-        SZ{"Swaziland"}
-        TL{"Democratische Republiek Oost-Timor"}
-        TR{"Türkiye"}
     }
 }

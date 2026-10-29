@@ -3351,9 +3351,9 @@ void RBBITest::RunMonkey(BreakIterator *bi, RBBIMonkeyKind &mk, const char *name
 
                     // Output the error
                     if (ci == i) {
-                        errln(buffer);
+                        errln("%s", buffer);
                     } else {
-                        infoln(buffer);
+                        infoln("%s", buffer);
                     }
 
                     if (ci >= endContext) { break; }
@@ -3483,7 +3483,7 @@ void RBBITest::TestBug12797() {
     UParseError parseError;
     RuleBasedBreakIterator bi(rules, parseError, status);
     if (U_FAILURE(status)) {
-        errln("%s:%s status = %s", __FILE__, __LINE__, u_errorName(status));
+        errln("%s:%d status = %s", __FILE__, __LINE__, u_errorName(status));
         return;
     }
     UnicodeString text = "abc";
@@ -3546,7 +3546,7 @@ void RBBITest::TestEmoji() {
     testFileName.append(IntlTest::getSourceTestData(status), status);
     testFileName.appendPathPart("emoji-test.txt", status);
     if (U_FAILURE(status)) {
-        errln("%s:%s %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
+        errln("%s:%d %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
         return;
     }
     logln("Opening data file %s\n", testFileName.data());
@@ -3554,7 +3554,7 @@ void RBBITest::TestEmoji() {
     int    len;
     char16_t *testFile = ReadAndConvertFile(testFileName.data(), len, "UTF-8", status);
     if (U_FAILURE(status) || testFile == nullptr) {
-        errln("%s:%s %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
+        errln("%s:%d %s while opening emoji-test.txt", __FILE__, __LINE__, u_errorName(status));
         return;
     }
     UnicodeString testFileAsString(testFile, len);
@@ -4135,7 +4135,7 @@ void RBBITest::testTrieStateTable(int32_t numChar, bool expectedTrieWidthIn8Bits
     }
     // Generate rules which result in numChar+4 character classes and numChar+3 states.
     UnicodeString rules(u"!!quoted_literals_only;");
-    for (char16_t c = 0x4e00; c < 0x4e00 + numChar; c++) {
+    for (char16_t c = 0x4e00; c < static_cast<char16_t>(0x4e00 + numChar); c++) {
         // Each rule in this loop creates a new class [c] and a new state (reached by transitioning
         // on [c] from the start state).
         rules.append(u'\'').append(c).append(c).append(u"';");

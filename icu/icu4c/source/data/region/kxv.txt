@@ -61,17 +61,14 @@ kxv{
         CY{"saipras"}
         CZ{"cekiya"}
         DE{"jermanī"}
-        DG{"ḍiego garsia"}
         DJ{"jibutī"}
         DK{"ḍenmark"}
         DM{"dominika"}
         DO{"dominikan republik"}
         DZ{"aljīriaa"}
-        EA{"seuṭa aḍe melila"}
         EC{"ekvaḍor"}
         EE{"esṭoniya"}
         EG{"ījipṭ"}
-        EH{"vedakuṇpu sahara"}
         ER{"īriṭriaa"}
         ES{"spein"}
         ET{"ītiyopiya"}
@@ -105,7 +102,6 @@ kxv{
         HR{"kroesia"}
         HT{"haiti"}
         HU{"hungarī"}
-        IC{"kanari dīp"}
         ID{"inḍonesiya"}
         IE{"aayarlanḍ"}
         IL{"israel"}
@@ -256,21 +252,5 @@ kxv{
         ZA{"dkīṇ aaprika"}
         ZM{"jambiya"}
         ZW{"jimbabve"}
-    }
-    Countries%short{
-        GB{"yuke"}
-        HK{"hong kong"}
-        MO{"makao"}
-        PS{"palesṭain"}
-        US{"yu.es."}
-    }
-    Countries%variant{
-        CD{"kongo (drc)"}
-        CG{"kongo republik"}
-        CI{"aivrī kosṭ"}
-        CZ{"cek republik"}
-        FK{"paklaṇd dīp (āislas malvinas)"}
-        SZ{"svajilanḍ"}
-        TL{"īst ṭimor"}
     }
 }

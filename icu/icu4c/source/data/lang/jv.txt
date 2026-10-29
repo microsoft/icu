@@ -57,7 +57,6 @@ jv{
         ann{"Obolo"}
         anp{"Angika"}
         ar{"Arab"}
-        ar_001{"Arab Standar Modern"}
         arn{"Mapushe"}
         arp{"Arapaho"}
         ars{"Arab Najdi"}
@@ -123,8 +122,6 @@ jv{
         dar{"Dargwa"}
         dav{"Taita"}
         de{"Jerman"}
-        de_AT{"Jerman Austria"}
-        de_CH{"Swiss Standar Jerman"}
         dgr{"Dogrib"}
         dje{"Zarma"}
         doi{"Dogri"}
@@ -140,15 +137,8 @@ jv{
         eka{"Ekajuk"}
         el{"Yunani"}
         en{"Inggris"}
-        en_AU{"Inggris Australia"}
-        en_CA{"Inggris Kanada"}
-        en_GB{"Inggris Britania Raya"}
-        en_US{"Inggris Amerika Serikat"}
         eo{"Esperanto"}
         es{"Spanyol"}
-        es_419{"Spanyol Amerika Latin"}
-        es_ES{"Spanyol Eropa"}
-        es_MX{"Spanyol Meksiko"}
         et{"Estonia"}
         eu{"Basque"}
         ewo{"Ewondo"}
@@ -160,8 +150,6 @@ jv{
         fo{"Faroe"}
         fon{"Fon"}
         fr{"Prancis"}
-        fr_CA{"Prancis Kanada"}
-        fr_CH{"Prancis Swiss"}
         frc{"Prancis Cajun"}
         frr{"Frisian Lor Segara"}
         fur{"Friulian"}
@@ -324,7 +312,6 @@ jv{
         nia{"Nias"}
         niu{"Niuean"}
         nl{"Walanda"}
-        nl_BE{"Flemish"}
         nmg{"Kwasio"}
         nn{"Nynorsk Norwegia"}
         nnh{"Ngiemboon"}
@@ -359,8 +346,6 @@ jv{
         prg{"Prusia"}
         ps{"Pashto"}
         pt{"Portugis"}
-        pt_BR{"Portugis Brasil"}
-        pt_PT{"Portugis Eropa"}
         qu{"Quechua"}
         raj{"Rajasthani"}
         rap{"Rapanui"}
@@ -477,7 +462,6 @@ jv{
         za{"Zhuang"}
         zgh{"Tamazight Moroko Standar"}
         zh{"Tyonghwa"}
-        zh_Hans{"Tyonghwa (Ringkes)"}
         zu{"Zulu"}
         zun{"Zuni"}
         zxx{"Konten tanpa linguistik"}
@@ -488,18 +472,6 @@ jv{
     }
     Languages%extension{
         ku{"Kurmanji"}
-    }
-    Languages%long{
-        zh_Hans{"Tyonghwa Mandarin (Ringkes)"}
-        zh_Hant{"Tyonghwa Mandarin Tradhisional"}
-    }
-    Languages%menu{
-        yue{"Tyonghwa, Kanton"}
-        zh{"Tyonghwa, Mandarin"}
-    }
-    Languages%short{
-        en_GB{"Inggris (Britania)"}
-        en_US{"Inggris (AS)"}
     }
     Languages%variant{
         hi_Latn{"Inggris India"}
@@ -584,7 +556,6 @@ jv{
             iso8601{"Tanggalan ISO-8601"}
             japanese{"Tanggalan Jepang"}
             persian{"Tanggalan Persia"}
-            roc{"Tanggalan Minguo"}
         }
         calendar%core{
             buddhist{"Buddha"}
@@ -604,7 +575,6 @@ jv{
             iso8601{"Masehi"}
             japanese{"Jepang"}
             persian{"Persia"}
-            roc{"Minguo"}
         }
         cf{
             account{"Format Mata Uang Akuntansi"}

@@ -94,17 +94,14 @@ mi{
         CY{"Haipara"}
         CZ{"Tiekia"}
         DE{"Tiamana"}
-        DG{"Tieko Kāhia"}
         DJ{"Tipūti"}
         DK{"Tenemāka"}
         DM{"Tominika"}
         DO{"Te Whenua Tūhake o Tominika"}
         DZ{"Aratiria"}
-        EA{"Hūta me Merera"}
         EC{"Ekuatoa"}
         EE{"Etōnia"}
         EG{"Īhipa"}
-        EH{"Hahāra ki te Tonga"}
         ER{"Eritēria"}
         ES{"Peina"}
         ET{"Etiopia"}
@@ -141,7 +138,6 @@ mi{
         HR{"Koroātia"}
         HT{"Haiti"}
         HU{"Hanekari"}
-        IC{"Motu Kanēre"}
         ID{"Initonīhia"}
         IE{"Airani"}
         IL{"Iharaira"}
@@ -289,8 +285,6 @@ mi{
         VU{"Whenuatū"}
         WF{"Warihi me Whutuna"}
         WS{"Hāmoa"}
-        XA{"Mita kikoika"}
-        XB{"Piri Kikoika"}
         XK{"Kōhoro"}
         YE{"Īmene"}
         YT{"Māiota"}
@@ -298,20 +292,5 @@ mi{
         ZM{"Tāmipia"}
         ZW{"Timuwawe"}
         ZZ{"Rohe Tē Mōhiotia"}
-    }
-    Countries%chagos{
-        IO{"Te Rohe o te Moana Īnia Piritene"}
-    }
-    Countries%short{
-        HK{"Hongipua"}
-        MO{"Makau"}
-        PS{"Parihitini"}
-    }
-    Countries%variant{
-        CD{"Kōngo"}
-        CG{"Kōngo (Whenua Tūhake)"}
-        CZ{"Te Whenua Tūhake o Tieke"}
-        FK{"Motu Whākana (Ira Māwina)"}
-        SZ{"Warerangi"}
     }
 }

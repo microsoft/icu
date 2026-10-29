@@ -14,7 +14,6 @@ xh{
         ak{"IsiAkan"}
         am{"IsiAmharic"}
         ar{"Isi-Arabhu"}
-        ar_001{"Isi-Arabhu (Sale mihla)"}
         as{"IsiAssamese"}
         ast{"IsiAsturian"}
         az{"Isi-Azerbaijani"}
@@ -38,22 +37,13 @@ xh{
         cy{"Isi-Welsh"}
         da{"Isi-Danish"}
         de{"IsiJamani"}
-        de_AT{"IsiJamani Sase-Austria"}
-        de_CH{"IsiJamani Esiyi-High Swiss"}
         doi{"IsiDogri"}
         dsb{"IsiLower Sorbian"}
         ee{"IsiEwe"}
         el{"Isi-Greek"}
         en{"IsiNgesi"}
-        en_AU{"IsiNgesi Sase-Australia"}
-        en_CA{"IsiNgesi SaseKhanada"}
-        en_GB{"IsiNgesi SaseBritane"}
-        en_US{"Isingesi SaseMelika"}
         eo{"Isi-Esperanto"}
         es{"Isi-Spanish"}
-        es_419{"IsiSpanish SaseLatin America"}
-        es_ES{"IsiSpanish SaseYurophu"}
-        es_MX{"IsiSpanish SaseMexico"}
         et{"Isi-Estonian"}
         eu{"Isi-Basque"}
         fa{"Isi-Persia"}
@@ -62,8 +52,6 @@ xh{
         fil{"Isi-Taglog"}
         fo{"Isi-Faroese"}
         fr{"IsiFrentshi"}
-        fr_CA{"IsiFrentshi SaseKhanada"}
-        fr_CH{"IsiFrentshi SaseSwitzerland"}
         fy{"Isi-Frisian"}
         ga{"Isi-Irish"}
         gaa{"IsiGa"}
@@ -73,7 +61,6 @@ xh{
         ha{"IsiHausa"}
         he{"Isi-Hebrew"}
         hi{"IsiHindi"}
-        hi_Latn{"IsiHindi (Latin)"}
         hr{"Isi-Croatia"}
         hsb{"IsiUpper Sorbian"}
         hu{"Isi-Hungarian"}
@@ -119,7 +106,6 @@ xh{
         nds{"IsiLow German"}
         ne{"Isi-Nepali"}
         nl{"IsiDatshi"}
-        nl_BE{"IsiFlemish"}
         nn{"Isi-Norwegia (Nynorsk)"}
         no{"Isi-Norwegian"}
         nqo{"IsiN’Ko"}
@@ -134,8 +120,6 @@ xh{
         prg{"IsiPrussian"}
         ps{"IsiPashto"}
         pt{"IsiPhuthukezi"}
-        pt_BR{"IsiPhuthukezi SaseBrazil"}
-        pt_PT{"IsiPhuthukezi SasePortugal"}
         qu{"IsiQuechua"}
         raj{"IsiRajasthani"}
         rm{"IsiRomansh"}
@@ -188,8 +172,6 @@ xh{
         yue{"IsiCantonese"}
         za{"IsiZhuang"}
         zh{"IsiMandarin"}
-        zh_Hans{"IsiTshayina Esenziwe Lula"}
-        zh_Hant{"IsiTshayina Esiqhelekileyo"}
         zu{"IsiZulu"}
         zxx{"Akukho Khontenti"}
     }
@@ -198,21 +180,6 @@ xh{
     }
     Languages%extension{
         ku{"IsiKurmanji"}
-    }
-    Languages%long{
-        zh_Hans{"IsiMandarin Esenziwe Lula"}
-        zh_Hant{"IsiMandarin Esiqhelekileyo"}
-    }
-    Languages%menu{
-        yue{"IsiTshayina, isiCantonse"}
-        zh{"IsiTshayina, IsiMandarin"}
-    }
-    Languages%short{
-        en_GB{"IsiNgesi sase-UK"}
-        en_US{"IsiNgesi Sase-US"}
-    }
-    Languages%variant{
-        hi_Latn{"IsiHinglish"}
     }
     Scripts{
         Adlm{"IsiAdlam"}

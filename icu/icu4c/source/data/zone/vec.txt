@@ -387,9 +387,6 @@ vec{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bàtor"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumchi"}
-        }
         "Asia:Ust-Nera"{
             ec{"Ust-Gnera"}
         }

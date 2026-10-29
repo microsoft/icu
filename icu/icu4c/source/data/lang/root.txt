@@ -31,4 +31,9 @@ root{
         pattern{"{0} ({1})"}
         separator{"{0}, {1}"}
     }
+    Types{
+        calendar{
+            roc{"Taiwan Calendar"}
+        }
+    }
 }

@@ -852,9 +852,6 @@ uk{
         "Asia:Ulaanbaatar"{
             ec{"Улан-Батор"}
         }
-        "Asia:Urumqi"{
-            ec{"Урумчі"}
-        }
         "Asia:Ust-Nera"{
             ec{"Усть-Нера"}
         }

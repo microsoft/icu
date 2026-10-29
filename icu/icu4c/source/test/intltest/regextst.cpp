@@ -327,8 +327,8 @@ static UText* regextst_openUTF8FromInvariant(UText *ut, const char *inv, int64_t
   return utext_openUTF8(ut, inv, length, status);
 #else
   if(inv_next+length+1>INV_BUFSIZ) {
-    fprintf(stderr, "%s:%d Error: INV_BUFSIZ #defined to be %d but needs to be at least %d.\n",
-            __FILE__, __LINE__, INV_BUFSIZ, (inv_next+length+1));
+    fprintf(stderr, "%s:%d Error: INV_BUFSIZ #defined to be %d but needs to be at least %lld.\n",
+            __FILE__, __LINE__, INV_BUFSIZ, static_cast<long long>(inv_next+length+1));
     *status = U_MEMORY_ALLOCATION_ERROR;
     return nullptr;
   }
@@ -338,7 +338,7 @@ static UText* regextst_openUTF8FromInvariant(UText *ut, const char *inv, int64_t
   inv_next+=length;
 
 #if 0
-  fprintf(stderr, " Note: INV_BUFSIZ at %d, used=%d\n", INV_BUFSIZ, inv_next);
+  fprintf(stderr, " Note: INV_BUFSIZ at %d, used=%lld\n", INV_BUFSIZ, static_cast<long long>(inv_next));
 #endif
 
   return utext_openUTF8(ut, (const char*)buf, length, status);
@@ -3663,7 +3663,7 @@ void RegexTest::regex_find(const UnicodeString &pattern,
         UTF8Matcher->setTrace(false);
     }
     if (U_FAILURE(status)) {
-        errln("Error at line %d. ICU ErrorCode is %s", u_errorName(status));
+        errln("Error at line %d. ICU ErrorCode is %s", line, u_errorName(status));
     }
 
     //
@@ -5494,10 +5494,10 @@ void RegexTest::Bug9283() {
 
 void RegexTest::CheckInvBufSize() {
   if(inv_next>=INV_BUFSIZ) {
-    errln("%s: increase #define of INV_BUFSIZ ( is %d but needs to be at least %d )\n",
-          __FILE__, INV_BUFSIZ, inv_next);
+    errln("%s: increase #define of INV_BUFSIZ ( is %d but needs to be at least %lld )\n",
+          __FILE__, INV_BUFSIZ, static_cast<long long>(inv_next));
   } else {
-    logln("%s: INV_BUFSIZ is %d, usage %d\n", __FILE__, INV_BUFSIZ, inv_next);
+    logln("%s: INV_BUFSIZ is %d, usage %lld\n", __FILE__, INV_BUFSIZ, static_cast<long long>(inv_next));
   }
 }
 

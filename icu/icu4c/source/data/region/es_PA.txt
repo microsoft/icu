@@ -8,7 +8,4 @@ es_PA{
         TL{"Timor-Leste"}
         UM{"Islas menores alejadas de EE. UU."}
     }
-    Countries%short{
-        GB{"RU"}
-    }
 }

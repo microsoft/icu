@@ -59,7 +59,6 @@ fil{
         ann{"Obolo"}
         anp{"Angika"}
         ar{"Arabic"}
-        ar_001{"Modern Standard Arabic"}
         arn{"Mapuche"}
         arp{"Arapaho"}
         ars{"Najdi Arabic"}
@@ -147,17 +146,12 @@ fil{
         en_AU{"Australian English"}
         en_CA{"Canadian English"}
         en_GB{"British English"}
-        en_US{"American English"}
         eo{"Esperanto"}
         es{"Spanish"}
-        es_419{"Latin American na Espanyol"}
-        es_ES{"European Spanish"}
-        es_MX{"Mexican na Espanyol"}
         et{"Estonian"}
         eu{"Basque"}
         ewo{"Ewondo"}
         fa{"Persian"}
-        fa_AF{"Dari"}
         ff{"Fula"}
         fi{"Finnish"}
         fil{"Filipino"}
@@ -326,14 +320,12 @@ fil{
         nb{"Norwegian Bokmål"}
         nd{"Hilagang Ndebele"}
         nds{"Low German"}
-        nds_NL{"Low Saxon"}
         ne{"Nepali"}
         new{"Newari"}
         ng{"Ndonga"}
         nia{"Nias"}
         niu{"Niuean"}
         nl{"Dutch"}
-        nl_BE{"Flemish"}
         nmg{"Kwasio"}
         nn{"Norwegian Nynorsk"}
         nnh{"Ngiemboon"}
@@ -368,7 +360,6 @@ fil{
         prg{"Prussian"}
         ps{"Pashto"}
         pt{"Portuguese"}
-        pt_PT{"European Portuguese"}
         qu{"Quechua"}
         quc{"Kʼicheʼ"}
         raj{"Rajasthani"}
@@ -378,7 +369,6 @@ fil{
         rm{"Romansh"}
         rn{"Rundi"}
         ro{"Romanian"}
-        ro_MD{"Moldavian"}
         rof{"Rombo"}
         ru{"Russian"}
         rup{"Aromanian"}
@@ -400,7 +390,6 @@ fil{
         seh{"Sena"}
         ses{"Koyraboro Senni"}
         sg{"Sango"}
-        sh{"Serbo-Croatian"}
         shi{"Tachelhit"}
         shn{"Shan"}
         si{"Sinhala"}
@@ -426,7 +415,6 @@ fil{
         suk{"Sukuma"}
         sv{"Swedish"}
         sw{"Swahili"}
-        sw_CD{"Congo Swahili"}
         swb{"Comorian"}
         syr{"Syriac"}
         szl{"Silesian"}
@@ -496,8 +484,6 @@ fil{
         za{"Zhuang"}
         zgh{"Standard Moroccan Tamazight"}
         zh{"Chinese"}
-        zh_Hans{"Simplified Chinese"}
-        zh_Hant{"Traditional Chinese"}
         zu{"Zulu"}
         zun{"Zuni"}
         zxx{"Walang nilalaman na ukol sa wika"}
@@ -508,26 +494,6 @@ fil{
     }
     Languages%extension{
         ku{"Kurmanji"}
-    }
-    Languages%long{
-        zh_Hans{"Simplified Mandarin Chinese"}
-        zh_Hant{"Tradisyonal na Mandarin Chinese"}
-    }
-    Languages%menu{
-        ckb{"Kurdish, Central"}
-        yue{"Chinese, Cantonese"}
-        zh{"Chinese, Mandarin"}
-    }
-    Languages%short{
-        az{"Azeri"}
-        en_GB{"Ingles sa UK"}
-        en_US{"US English"}
-    }
-    Languages%variant{
-        ckb{"Kurdish, Sorani"}
-        hi_Latn{"Hinglish"}
-        ps{"Pushto"}
-        ug{"Uighur"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -613,7 +579,6 @@ fil{
             iso8601{"Gregorian Calendar (ISO 8601 Weeks)"}
             japanese{"Japanese Calendar"}
             persian{"Persian Calendar"}
-            roc{"Minguo Calendar"}
         }
         calendar%core{
             buddhist{"Buddhist"}
@@ -633,7 +598,6 @@ fil{
             iso8601{"Gregorian"}
             japanese{"Japanese"}
             persian{"Persian"}
-            roc{"Minguo"}
         }
         cf{
             account{"Format ng Pera sa Accounting"}

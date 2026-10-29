@@ -4873,6 +4873,15 @@ supplementalData:table(nofallback){
                 tender{"false"}
             }
         }
+        029{
+            {
+                from:intvector{
+                    -507,
+                    95619072,
+                }
+                id{"XCD"}
+            }
+        }
     }
     CurrencyMeta{
         ADP:intvector{

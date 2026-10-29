@@ -2,4 +2,22 @@
 // License & terms of use: http://www.unicode.org/copyright.html
 // Generated using tools/cldr/cldr-to-icu/
 zh_Hant_TW{
+    calendar{
+        roc{
+            eras{
+                abbreviated{
+                    0{"民國前"}
+                    1{"民國"}
+                }
+                narrow{
+                    0{"民國前"}
+                    1{"民國"}
+                }
+                wide{
+                    0{"民國前"}
+                    1{"民國"}
+                }
+            }
+        }
+    }
 }

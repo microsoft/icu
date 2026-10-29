@@ -3,7 +3,6 @@
 // Generated using tools/cldr/cldr-to-icu/
 ar_LY{
     Countries{
-        EA{"سبتة ومليلية"}
         MS{"مونتيسيرات"}
         UY{"أوروغواي"}
     }

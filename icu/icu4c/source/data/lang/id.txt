@@ -65,7 +65,6 @@ id{
         ann{"Obolo"}
         anp{"Angika"}
         ar{"Arab"}
-        ar_001{"Arab Standar Modern"}
         arc{"Aram"}
         arn{"Mapuche"}
         arp{"Arapaho"}
@@ -164,7 +163,6 @@ id{
         dar{"Dargwa"}
         dav{"Taita"}
         de{"Jerman"}
-        de_CH{"Jerman Tinggi (Swiss)"}
         del{"Delaware"}
         den{"Slave"}
         dgr{"Dogrib"}
@@ -187,16 +185,13 @@ id{
         el{"Yunani"}
         elx{"Elam"}
         en{"Inggris"}
-        en_GB{"Inggris (Britania)"}
         enm{"Inggris Abad Pertengahan"}
         eo{"Esperanto"}
         es{"Spanyol"}
-        es_ES{"Spanyol (Eropa)"}
         et{"Estonia"}
         eu{"Basque"}
         ewo{"Ewondo"}
         fa{"Persia"}
-        fa_AF{"Persia Dari"}
         fan{"Fang"}
         fat{"Fanti"}
         ff{"Fula"}
@@ -461,7 +456,6 @@ id{
         pro{"Provencal Lama"}
         ps{"Pashto"}
         pt{"Portugis"}
-        pt_PT{"Portugis (Eropa)"}
         qu{"Quechua"}
         quc{"Kʼicheʼ"}
         raj{"Rajasthani"}
@@ -471,7 +465,6 @@ id{
         rm{"Reto-Roman"}
         rn{"Rundi"}
         ro{"Rumania"}
-        ro_MD{"Moldavia"}
         rof{"Rombo"}
         rom{"Romani"}
         rtm{"Rotuma"}
@@ -501,7 +494,6 @@ id{
         ses{"Koyraboro Senni"}
         sg{"Sango"}
         sga{"Irlandia Kuno"}
-        sh{"Serbo-Kroasia"}
         shi{"Tachelhit"}
         shn{"Shan"}
         shu{"Arab Suwa"}
@@ -535,7 +527,6 @@ id{
         sux{"Sumeria"}
         sv{"Swedia"}
         sw{"Swahili"}
-        sw_CD{"Swahili (Kongo)"}
         swb{"Komoria"}
         syc{"Suriah Klasik"}
         syr{"Suriah"}
@@ -633,24 +624,6 @@ id{
     }
     Languages%extension{
         ku{"Kurmanji"}
-    }
-    Languages%long{
-        zh_Hans{"Tionghoa Mandarin (Sederhana)"}
-        zh_Hant{"Tionghoa Mandarin (Tradisional)"}
-    }
-    Languages%menu{
-        yue{"Tionghoa, Kanton"}
-        zh{"Tionghoa, Mandarin"}
-    }
-    Languages%short{
-        az{"Azeri"}
-        en_GB{"Inggris (UK)"}
-    }
-    Languages%variant{
-        ckb{"Kurdi, Sorani"}
-        hi_Latn{"Hinglish"}
-        ps{"Pushto"}
-        ug{"Uighur"}
     }
     Scripts{
         Adlm{"Adlam"}
@@ -872,7 +845,6 @@ id{
             iso8601{"Kalender ISO-8601"}
             japanese{"Kalender Jepang"}
             persian{"Kalender Persia"}
-            roc{"Kalender Min-guo"}
         }
         calendar%core{
             buddhist{"Buddha"}
@@ -892,7 +864,6 @@ id{
             iso8601{"Masehi"}
             japanese{"Jepang"}
             persian{"Persia"}
-            roc{"Min-guo"}
         }
         cf{
             account{"Format Mata Uang Akuntansi"}

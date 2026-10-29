@@ -288,7 +288,7 @@ void TestMessageFormat::PatternTest()
         u"Quotes ', {, 'a' 1 {0}",
         u"Quotes ', {, 'a' 1 {0}",
         u"{1,number,'#',##} #34,56",
-        u"There are 3,456 files on Disk at 1/12/70, 5:46\u202FAM.",
+        u"There are 3,456 files on Disk at 1/12/70, 5:46 AM.",
         u"On Disk, there are 3,456 files, with $1.00.",
         u"{1,number,percent}, 345,600%,",
         u"{1,date,full}, Wednesday, December 31, 1969,",
@@ -419,7 +419,7 @@ void TestMessageFormat::testStaticFormat()
     }
 
     const UnicodeString expected(
-            u"At 12:20:00\u202FPM on Aug 8, 1997, there was a disturbance in the Force on planet 7.");
+            u"At 12:20:00 PM on Aug 8, 1997, there was a disturbance in the Force on planet 7.");
     if (result != expected) {
         errln(UnicodeString("TestMessageFormat::testStaticFormat failed on test") +
             UnicodeString("\n     Result: ") + result +
@@ -1502,7 +1502,7 @@ void TestMessageFormat::TestUnlimitedArgsAndSubformats() {
 
     UnicodeString expected =
         u"On Nov 20, 2286 (aka 11/20/86, aka November 20, 2286) "
-        u"at 9:46:40\u202FAM (aka 9:46\u202FAM, aka 9:46:40\u202FAM PST) "
+        u"at 9:46:40 AM (aka 9:46 AM, aka 9:46:40 AM PST) "
         u"there were 1,303 werjes "
         u"(a 8% increase over 1,202) "
         u"despite the Glimmung's efforts "

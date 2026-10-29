@@ -411,9 +411,6 @@ ak{
         "Asia:Ulaanbaatar"{
             ec{"Yulanbata"}
         }
-        "Asia:Urumqi"{
-            ec{"Yurymki"}
-        }
         "Asia:Vientiane"{
             ec{"Vienhyiane"}
         }

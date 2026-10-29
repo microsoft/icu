@@ -4,7 +4,6 @@
 pms{
     Languages{
         ar{"arabich"}
-        ar_001{"arabich modern stàndar"}
         en{"inglèis"}
         pms{"piemontèis"}
     }

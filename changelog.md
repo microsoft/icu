@@ -1,4 +1,11 @@
 # Changelog
+## ICU 79.1.0.0
+
+- Upgrade ICU4C from 78.3 to 79.1 (upstream `release-79.1`, `ddc6b669`).
+- Reapply Microsoft-specific changes (Windows build/SDK-header changes, data loading, CLDR-MS locales, uprefs library, Saudi Riyal override, CodeQL/PREfast fixes) on top of the ICU 79.1 source.
+- Microsoft data changes (removed blocked entries, extra CLDR-MS locales) were merged onto the upstream CLDR 49 data rather than regenerated from CLDR-MS.
+- Timezone data is the IANA tzdb version shipped with ICU 79.1.
+
 ## ICU 78.3.0.0
 
 - Upgrade ICU4C from 72.1 to 78.3.

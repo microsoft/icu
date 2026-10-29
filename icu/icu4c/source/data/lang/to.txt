@@ -174,7 +174,6 @@ to{
         ewo{"lea fakaʻeuōnito"}
         ext{"lea fakaʻekisitematula"}
         fa{"lea fakapēsia"}
-        fa_AF{"lea fakapēsia (ʻtalī)"}
         fan{"lea fakafangi"}
         fat{"lea fakafanitē"}
         ff{"lea fakafulā"}
@@ -402,7 +401,6 @@ to{
         nb{"lea fakanouaē-pokimali"}
         nd{"lea fakanetepele-tokelau"}
         nds{"lea fakasiamane-hifo"}
-        nds_NL{"lea fakasakisoni-hifo"}
         ne{"lea fakanepali"}
         new{"lea fakaneuali"}
         ng{"lea fakanetongikā"}
@@ -476,7 +474,6 @@ to{
         rm{"lea fakalaito-lomēnia"}
         rn{"lea fakaluaniti"}
         ro{"lea fakalōmenia"}
-        ro_MD{"lea fakamolitāvia"}
         rof{"lea fakalomipō"}
         rom{"lea fakalomani"}
         rtm{"lea fakalotuma"}
@@ -511,7 +508,6 @@ to{
         sg{"lea fakasangikō"}
         sga{"lea fakaʻaelani-motuʻa"}
         sgs{"lea fakasamositia"}
-        sh{"lea fakakuloisia-sēpia"}
         shi{"lea fakataselihiti"}
         shn{"lea fakasiani"}
         shu{"lea fakaʻalepea-sāti"}
@@ -546,7 +542,6 @@ to{
         sux{"lea fakasumelia"}
         sv{"lea fakasuēteni"}
         sw{"lea fakasuahili"}
-        sw_CD{"lea fakasuahili-kongikō"}
         swb{"lea fakakomolo"}
         syc{"lea fakasuliāiā-muʻa"}
         syr{"lea fakasuliāiā"}
@@ -641,26 +636,10 @@ to{
         zen{"lea fakasenaka"}
         zgh{"lea fakatamasaiti-moloko"}
         zh{"lea fakasiaina"}
-        zh_Hant{"lea fakasiaina-tukufakaholo"}
         zu{"lea fakasulu"}
         zun{"lea fakasuni"}
         zxx{"ʻikai ha lea"}
         zza{"lea fakasāsā"}
-    }
-    Languages%long{
-        zh_Hans{"lea fakasiaina-mānitali (fakafaingofua)"}
-        zh_Hant{"lea fakasiaina-mānitali (tukufakaholo)"}
-    }
-    Languages%menu{
-        yue{"lea fakakuangitongi (Siaina)"}
-        zh{"lea fakasiaina-mānitali"}
-    }
-    Languages%short{
-        az{"lea fakaʻaseli"}
-        en_US{"lea fakapālangi-ʻAmelika"}
-    }
-    Languages%variant{
-        ckb{"lea fakakūtisi-solani"}
     }
     Scripts{
         Adlm{"tohinima fakaʻatilami"}
@@ -855,7 +834,6 @@ to{
             iso8601{"tohi māhina faka-iso8601"}
             japanese{"fakasiapani"}
             persian{"fakapēsia"}
-            roc{"fakalepupelika siaina"}
         }
         calendar%core{
             gregorian{"fakakelekolia"}

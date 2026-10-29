@@ -169,9 +169,6 @@ root{
         "Asia:Saigon"{
             ec{"Ho Chi Minh"}
         }
-        "Asia:Urumqi"{
-            ec{"Ürümqi"}
-        }
         "Atlantic:Canary"{
             ec{"Canarias"}
         }
@@ -231,5 +228,8 @@ root{
         regionFormat{"{0}"}
         regionFormatDaylight{"{0} (+1)"}
         regionFormatStandard{"{0} (+0)"}
+        "Asia:Tashkent"{
+            ec{"Toshkent"}
+        }
     }
 }

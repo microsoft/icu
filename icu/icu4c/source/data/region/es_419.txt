@@ -22,19 +22,11 @@ es_419{
         CI{"Costa de Marfil"}
         EZ{"Eurozona"}
         GS{"Islas Georgia del Sur y Sándwich del Sur"}
-        IC{"Islas Canarias"}
         QO{"Islas Ultramarinas"}
         RO{"Rumania"}
         SA{"Arabia Saudita"}
         TL{"Timor Oriental"}
         UM{"Islas Ultramarinas de EE.UU."}
         VI{"Islas Vírgenes de EE.UU."}
-    }
-    Countries%short{
-        GB{"R.U."}
-        US{"EE.UU."}
-    }
-    Countries%variant{
-        TR{"Türkiye"}
     }
 }

@@ -29,7 +29,6 @@ es_419{
         shu{"árabe (Chad)"}
         sma{"sami del sur"}
         st{"sesotho del sur"}
-        sw_CD{"swahili (Congo)"}
         syr{"siríaco"}
         tet{"tetun"}
         tyv{"tuvano"}
@@ -45,10 +44,6 @@ es_419{
     Languages%extension{
         ku{"kurmanyi"}
     }
-    Languages%variant{
-        ps{"pasto"}
-        ug{"uighur"}
-    }
     Scripts{
         Hrkt{"katakana o hiragana"}
         Latn{"latín"}
@@ -60,10 +55,6 @@ es_419{
         calendar{
             islamic-rgsa{"calendario islámico (Arabia Saudita)"}
             islamic-tbla{"calendario islámico tabular"}
-        }
-        calendar%core{
-            islamic-rgsa{"hijri (avistamiento en Arabia Saudita)"}
-            roc{"calendario chino"}
         }
         colAlternate{
             non-ignorable{"ordenar símbolos"}

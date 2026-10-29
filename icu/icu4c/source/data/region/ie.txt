@@ -113,12 +113,7 @@ ie{
         VA{"Cité de Vatican"}
         VU{"Vanuatu"}
         WS{"Samoa"}
-        XA{"pseudo-diacritica"}
-        XB{"pseudo-bidi"}
         XK{"Kosovo"}
         ZZ{"ínconosset region"}
-    }
-    Countries%short{
-        GB{"UR"}
     }
 }

@@ -1122,7 +1122,7 @@ static void VerifyTranslation(void) {
                if (U_FAILURE(errorCode)) {
                    log_err("ulocdata_getMeasurementSystem failed for locale %s with error: %s \n", currLoc, u_errorName(errorCode));
                } else {
-                   if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_LR")!=NULL ) {
+                   if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_LR")!=NULL || strstr(fullLoc, "_029")!=NULL ) {
                        if(measurementSystem != UMS_US){
                             log_err("ulocdata_getMeasurementSystem did not return expected data for locale %s \n", currLoc);
                        }
@@ -1143,7 +1143,7 @@ static void VerifyTranslation(void) {
                    if ( strstr(fullLoc, "_US")!=NULL || strstr(fullLoc, "_BZ")!=NULL || strstr(fullLoc, "_CA")!=NULL || strstr(fullLoc, "_CL")!=NULL ||
                         strstr(fullLoc, "_CO")!=NULL || strstr(fullLoc, "_CR")!=NULL || strstr(fullLoc, "_GT")!=NULL || strstr(fullLoc, "_MX")!=NULL ||
                         strstr(fullLoc, "_NI")!=NULL || strstr(fullLoc, "_PA")!=NULL || strstr(fullLoc, "_PH")!=NULL || strstr(fullLoc, "_PR")!=NULL ||
-                        strstr(fullLoc, "_SV")!=NULL || strstr(fullLoc, "_VE")!=NULL ) {
+                         strstr(fullLoc, "_SV")!=NULL || strstr(fullLoc, "_VE")!=NULL || strstr(fullLoc, "_029")!=NULL ) {
                        if (height != 279 || width != 216) {
                             log_err("ulocdata_getPaperSize did not return expected data for locale %s \n", currLoc);
                        }

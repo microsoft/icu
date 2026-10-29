@@ -7,7 +7,6 @@ en_AU{
         001{"World"}
         AG{"Antigua and Barbuda"}
         BA{"Bosnia and Herzegovina"}
-        EA{"Ceuta and Melilla"}
         GS{"South Georgia and South Sandwich Islands"}
         HM{"Heard Island and McDonald Islands"}
         KN{"St Kitts and Nevis"}

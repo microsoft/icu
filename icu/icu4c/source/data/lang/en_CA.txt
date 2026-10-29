@@ -8,14 +8,8 @@ en_CA{
         t0{"Machine-Translated"}
     }
     Languages{
-        ar_001{"Arabic (Modern Standard)"}
         bn{"Bengali"}
         mfe{"Mauritian Creole"}
-        nds_NL{"West Low German"}
-        ro_MD{"Moldovan"}
-    }
-    Languages%variant{
-        my{"Myanmar language"}
     }
     Types{
         calendar{
@@ -35,7 +29,6 @@ en_CA{
             iso8601{"ISO-8601 calendar"}
             japanese{"Japanese calendar"}
             persian{"Persian calendar"}
-            roc{"Minguo calendar"}
         }
         colNormalization{
             no{"Sort Without Normalisation"}

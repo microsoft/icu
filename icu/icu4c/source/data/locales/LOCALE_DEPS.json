@@ -19,7 +19,6 @@
         "iw": "he",
         "iw_IL": "he_IL",
         "ks_IN": "ks_Arab_IN",
-        "ku_SY": "ku_Latn_SY",
         "kxv_IN": "kxv_Latn_IN",
         "mni_IN": "mni_Beng_IN",
         "mo": "ro",
@@ -51,8 +50,6 @@
         "uz_AF": "uz_Arab_AF",
         "uz_UZ": "uz_Latn_UZ",
         "vai_LR": "vai_Vaii_LR",
-        "yue_CN": "yue_Hans_CN",
-        "yue_HK": "yue_Hant_HK",
         "zh_CN": "zh_Hans_CN",
         "zh_HK": "zh_Hant_HK",
         "zh_MO": "zh_Hant_MO",
@@ -81,7 +78,6 @@
         "en_CY": "en_001",
         "en_CZ": "en_150",
         "en_DE": "en_150",
-        "en_DG": "en_001",
         "en_DK": "en_150",
         "en_DM": "en_001",
         "en_EE": "en_150",
@@ -221,7 +217,6 @@
         "uz_Arab": "root",
         "uz_Cyrl": "root",
         "vai_Latn": "root",
-        "yue_Hans": "root",
         "zh_Hant": "root",
         "zh_Hant_MO": "zh_Hant_HK"
     }

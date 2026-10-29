@@ -22,7 +22,6 @@ fr_CA{
         FK{"îles Malouines"}
         FO{"îles Féroé"}
         HM{"îles Heard et McDonald"}
-        IC{"îles Canaries"}
         IM{"île de Man"}
         KG{"Kirghizistan"}
         KN{"Saint‑Kitts‑et‑Nevis"}
@@ -43,15 +42,5 @@ fr_CA{
         VG{"îles Vierges britanniques"}
         VI{"îles Vierges américaines"}
         VN{"Vietnam"}
-    }
-    Countries%biot{
-        IO{"territoire britannique de l’océan Indien"}
-    }
-    Countries%chagos{
-        IO{"archipel Chagos"}
-    }
-    Countries%variant{
-        FK{"îles Falkland (Malouines)"}
-        TL{"Timor oriental"}
     }
 }

@@ -43,7 +43,8 @@
         </condition>
         <fail unless="is.cldr.classes.set" message="CLDR classes not found in ${cldrtools.dir}/cldr-code/target/classes. Please either set the CLDR_CLASSES environment variable or build cldr-code.jar."/>
 
-        <property name="env.CLDR_TMP_DIR" location="${env.CLDR_DIR}/../cldr-aux" /> <!-- Hack: see CLDRPaths -->
+        <!-- MSFT-Change: Modify the CLDR_TMP_DIR path. -->
+        <property name="env.CLDR_TMP_DIR" location="${env.CLDR_DIR}/../cldr-staging" /> <!-- Hack: see CLDRPaths -->
         <property name="cldr.prod.dir" location="${env.CLDR_TMP_DIR}/production/" />
         <echo message="java home: ${java.home}"/>
         <echo message="java version: ${java.version}"/>

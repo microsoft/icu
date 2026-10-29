@@ -22,6 +22,8 @@ en_JP{
             availableFormats{
                 EHm{"E H:mm"}
                 EHms{"E H:mm:ss"}
+                Ehm{"E h:mm a"}
+                Ehms{"E h:mm:ss a"}
                 Gy{"G y"}
                 GyMd{"GGGGG y/MM/dd"}
                 H{"H"}
@@ -29,6 +31,9 @@ en_JP{
                 Hms{"H:mm:ss"}
                 MEd{"E, MM/dd"}
                 Md{"MM/dd"}
+                h{"h a"}
+                hm{"h:mm a"}
+                hms{"h:mm:ss a"}
                 y{"G y"}
                 yyyy{"G y"}
                 yyyyM{"GGGGG y/MM"}

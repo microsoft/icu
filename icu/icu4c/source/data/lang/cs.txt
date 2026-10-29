@@ -66,7 +66,6 @@ cs{
         ann{"obolo"}
         anp{"angika"}
         ar{"arabština"}
-        ar_001{"arabština (moderní standardní)"}
         arc{"aramejština"}
         arn{"mapudungun"}
         aro{"araonština"}
@@ -173,7 +172,6 @@ cs{
         dar{"dargština"}
         dav{"taita"}
         de{"němčina"}
-        de_CH{"němčina standardní (Švýcarsko)"}
         del{"delawarština"}
         den{"slejvština (athabaský jazyk)"}
         dgr{"dogrib"}
@@ -198,19 +196,15 @@ cs{
         el{"řečtina"}
         elx{"elamitština"}
         en{"angličtina"}
-        en_GB{"angličtina (Velká Británie)"}
-        en_US{"angličtina (USA)"}
         enm{"angličtina (středověká)"}
         eo{"esperanto"}
         es{"španělština"}
-        es_ES{"španělština (Evropa)"}
         esu{"jupikština (středoaljašská)"}
         et{"estonština"}
         eu{"baskičtina"}
         ewo{"ewondo"}
         ext{"extremadurština"}
         fa{"perština"}
-        fa_AF{"darí"}
         fan{"fang"}
         fat{"fantština"}
         ff{"fulbština"}
@@ -440,7 +434,6 @@ cs{
         nb{"norština (bokmål)"}
         nd{"ndebele (Zimbabwe)"}
         nds{"dolnoněmčina"}
-        nds_NL{"dolnosaština"}
         ne{"nepálština"}
         new{"névárština"}
         ng{"ndondština"}
@@ -448,7 +441,6 @@ cs{
         niu{"niueština"}
         njo{"ao (jazyky Nágálandu)"}
         nl{"nizozemština"}
-        nl_BE{"vlámština"}
         nmg{"kwasio"}
         nn{"norština (nynorsk)"}
         nnh{"ngiemboon"}
@@ -503,7 +495,6 @@ cs{
         pro{"provensálština"}
         ps{"paštština"}
         pt{"portugalština"}
-        pt_PT{"portugalština (Evropa)"}
         qu{"kečuánština"}
         quc{"kičé"}
         qug{"kečuánština (chimborazo)"}
@@ -516,7 +507,6 @@ cs{
         rm{"rétorománština"}
         rn{"kirundština"}
         ro{"rumunština"}
-        ro_MD{"moldavština"}
         rof{"rombo"}
         rom{"romština"}
         rtm{"rotumanština"}
@@ -551,7 +541,6 @@ cs{
         sg{"sangština"}
         sga{"irština (stará)"}
         sgs{"žemaitština"}
-        sh{"srbochorvatština"}
         shi{"tašelhit"}
         shn{"šanština"}
         shu{"arabština (čadská)"}
@@ -586,7 +575,6 @@ cs{
         sux{"sumerština"}
         sv{"švédština"}
         sw{"svahilština"}
-        sw_CD{"svahilština (Kongo)"}
         swb{"komorština"}
         syc{"syrština (klasická)"}
         syr{"syrština"}
@@ -682,7 +670,6 @@ cs{
         zen{"zenaga"}
         zgh{"tamazight (standardní marocký)"}
         zh{"čínština"}
-        zh_Hans{"čínština (zjednodušená)"}
         zu{"zuluština"}
         zun{"zunijština"}
         zxx{"žádný jazykový obsah"}
@@ -693,22 +680,6 @@ cs{
     }
     Languages%extension{
         ku{"kurmándží"}
-    }
-    Languages%long{
-        zh_Hans{"standardní čínština (zjednodušená)"}
-        zh_Hant{"standardní čínština (tradiční)"}
-    }
-    Languages%menu{
-        ckb{"kurdština (centrální)"}
-        yue{"čínština (kantonština)"}
-        zh{"standardní čínština"}
-    }
-    Languages%short{
-        az{"azerština"}
-        en_GB{"angličtina (VB)"}
-    }
-    Languages%variant{
-        hi_Latn{"hingliš"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -909,7 +880,6 @@ cs{
             iso8601{"Kalendář ISO-8601"}
             japanese{"Japonský kalendář"}
             persian{"Perský kalendář"}
-            roc{"Kalendář Čínské republiky"}
         }
         calendar%core{
             buddhist{"Buddhistický"}
@@ -929,7 +899,6 @@ cs{
             iso8601{"Gregoriánský"}
             japanese{"Japonský"}
             persian{"Perský"}
-            roc{"Čínské republiky"}
         }
         cf{
             account{"Účetní měnový formát"}

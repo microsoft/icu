@@ -56,7 +56,6 @@ eo{
         anp{"angika"}
         apc{"araba levantenia"}
         ar{"araba"}
-        ar_001{"araba moderna norma"}
         arn{"mapuĉa"}
         arp{"arapaha"}
         ars{"araba naĝda"}
@@ -125,8 +124,6 @@ eo{
         dar{"dargva"}
         dav{"taitaa"}
         de{"germana"}
-        de_AT{"germana aŭstra"}
-        de_CH{"germana svisa"}
         dgr{"dogriba"}
         dje{"zarmaa"}
         doi{"dogra"}
@@ -142,15 +139,8 @@ eo{
         eka{"ekaĝuka"}
         el{"greka"}
         en{"angla"}
-        en_AU{"angla aŭstralia"}
-        en_CA{"angla kanada"}
-        en_GB{"angla brita"}
-        en_US{"angla usona"}
         eo{"Esperanto"}
         es{"hispana"}
-        es_419{"hispana amerika"}
-        es_ES{"hispana eŭropa"}
-        es_MX{"hispana meksika"}
         et{"estona"}
         eu{"eŭska"}
         ewo{"eunda"}
@@ -162,8 +152,6 @@ eo{
         fo{"feroa"}
         fon{"fonua"}
         fr{"franca"}
-        fr_CA{"franca kanada"}
-        fr_CH{"franca svisa"}
         frc{"kaĵun-franca"}
         frr{"nord-frisa"}
         fur{"friula"}
@@ -323,7 +311,6 @@ eo{
         nia{"niasa"}
         niu{"niua"}
         nl{"nederlanda"}
-        nl_BE{"flandra"}
         nn{"novnorvega"}
         no{"norvega"}
         nog{"nogaja"}
@@ -356,8 +343,6 @@ eo{
         prg{"prusa"}
         ps{"paŝtua"}
         pt{"portugala"}
-        pt_BR{"portugala brazila"}
-        pt_PT{"portugala eŭropa"}
         qu{"keĉua"}
         quc{"kiĉea"}
         raj{"raĝastana"}
@@ -368,7 +353,6 @@ eo{
         rm{"romanĉa"}
         rn{"burunda"}
         ro{"rumana"}
-        ro_MD{"moldava"}
         rof{"ĉaga (Kirombo)"}
         ru{"rusa"}
         rup{"arumana"}
@@ -389,7 +373,6 @@ eo{
         se{"nord-samea"}
         sg{"sangoa"}
         sgs{"ĵemajtia"}
-        sh{"serbokroata"}
         shi{"ŝelha"}
         shn{"ŝana"}
         si{"sinhala"}
@@ -482,8 +465,6 @@ eo{
         za{"ĝuanga"}
         zgh{"tamaziĥta maroka norma"}
         zh{"ĉina"}
-        zh_Hans{"ĉina simpligita"}
-        zh_Hant{"ĉina tradicia"}
         zu{"zulua"}
         zun{"zunjia"}
         zxx{"nelingvaĵo"}
@@ -494,21 +475,6 @@ eo{
     }
     Languages%extension{
         ku{"kurmanĉa"}
-    }
-    Languages%long{
-        zh_Hans{"ĉina normlingvo simpligita"}
-        zh_Hant{"ĉina normlingvo tradicia"}
-    }
-    Languages%menu{
-        ckb{"kurda, centra"}
-        yue{"ĉina kantona"}
-        zh{"ĉina, normlingvo"}
-    }
-    Languages%short{
-        az{"azera"}
-    }
-    Languages%variant{
-        ckb{"kurda, sorana"}
     }
     Scripts{
         Adlm{"adlam"}
@@ -590,7 +556,6 @@ eo{
             iso8601{"gregoria kalendaro ISO 8601"}
             japanese{"japana kalendaro"}
             persian{"persa kalendaro"}
-            roc{"kalendaro de Respubliko Ĉinujo"}
         }
         calendar%core{
             buddhist{"budaisma"}
@@ -610,7 +575,6 @@ eo{
             iso8601{"gregoria"}
             japanese{"japana"}
             persian{"persa"}
-            roc{"respublik-ĉina"}
         }
         cf{
             account{"kontista formo de valuto"}

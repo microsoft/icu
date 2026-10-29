@@ -1213,20 +1213,6 @@ ru{
                 }
             }
         }
-        roc{
-            eras{
-                abbreviated{
-                    1{"Minguo"}
-                }
-                narrow{
-                    1{"Миньго"}
-                }
-                wide{
-                    0{"до основания Китайской республики"}
-                    1{"Миньго"}
-                }
-            }
-        }
     }
     characterLabel{
         activities{"занятия"}

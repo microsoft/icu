@@ -30,7 +30,6 @@ ia{
         anp{"angika"}
         apc{"arabe levantin"}
         ar{"arabe"}
-        ar_001{"arabe standard moderne"}
         arn{"mapuche"}
         arp{"arapaho"}
         ars{"arabe najdi"}
@@ -128,7 +127,6 @@ ia{
         eu{"basco"}
         ewo{"ewondo"}
         fa{"persa"}
-        fa_AF{"dari"}
         ff{"fula"}
         fi{"finnese"}
         fil{"filipino"}
@@ -301,14 +299,12 @@ ia{
         nb{"norvegiano bokmål"}
         nd{"ndebele del nord"}
         nds{"basse germano"}
-        nds_NL{"basse saxone"}
         ne{"nepalese"}
         new{"newari"}
         ng{"ndonga"}
         nia{"nias"}
         niu{"nieuano"}
         nl{"nederlandese"}
-        nl_BE{"flamingo"}
         nmg{"kwasio"}
         nn{"norvegiano nynorsk"}
         nnh{"ngiemboon"}
@@ -355,7 +351,6 @@ ia{
         rm{"romanche"}
         rn{"rundi"}
         ro{"romaniano"}
-        ro_MD{"moldavo"}
         rof{"rombo"}
         ru{"russo"}
         rup{"aromaniano"}
@@ -378,7 +373,6 @@ ia{
         ses{"koyraboro senni"}
         sg{"sango"}
         sgs{"samogitiano"}
-        sh{"serbocroato"}
         shi{"tachelhit"}
         shn{"shan"}
         si{"cingalese"}
@@ -407,7 +401,6 @@ ia{
         suz{"sunuwar"}
         sv{"svedese"}
         sw{"swahili"}
-        sw_CD{"swahili del Congo"}
         swb{"comoriano"}
         syr{"syriaco"}
         szl{"silesiano"}
@@ -476,8 +469,6 @@ ia{
         za{"zhuang"}
         zgh{"tamazight marocchin standard"}
         zh{"chinese"}
-        zh_Hans{"chinese simplificate"}
-        zh_Hant{"chinese traditional"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"sin contento linguistic"}
@@ -488,22 +479,6 @@ ia{
     }
     Languages%extension{
         ku{"kurmanji"}
-    }
-    Languages%long{
-        zh_Hans{"chinese mandarin simplificate"}
-        zh_Hant{"chinese mandarin traditional"}
-    }
-    Languages%menu{
-        yue{"chinese cantonese"}
-        zh{"chinese mandarin"}
-    }
-    Languages%short{
-        az{"azeri"}
-        en_GB{"anglese (RU)"}
-        en_US{"anglese (SUA)"}
-    }
-    Languages%variant{
-        ckb{"kurdo sorani"}
     }
     Scripts{
         Arab{"arabe"}
@@ -575,7 +550,6 @@ ia{
             iso8601{"calendario ISO-8601"}
             japanese{"calendario japonese"}
             persian{"calendario persa"}
-            roc{"calendario del Republica de China"}
         }
         calendar%core{
             gregorian{"gregorian"}

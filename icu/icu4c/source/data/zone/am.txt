@@ -849,9 +849,6 @@ am{
         "Asia:Ulaanbaatar"{
             ec{"ኡላአንባአታር"}
         }
-        "Asia:Urumqi"{
-            ec{"ኡሩምኪ"}
-        }
         "Asia:Ust-Nera"{
             ec{"ኡስት-ኔራ"}
         }

@@ -20,12 +20,5 @@ hi_Latn{
         UM{"U.S. Outlying Islands"}
         VC{"St. Vincent & Grenadines"}
         VI{"U.S. Virgin Islands"}
-        XB{"Pseudo-Bidirectional"}
-    }
-    Countries%short{
-        US{"America"}
-    }
-    Countries%variant{
-        TR{"Turkiye"}
     }
 }

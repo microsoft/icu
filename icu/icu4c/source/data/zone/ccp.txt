@@ -834,9 +834,6 @@ ccp{
         "Asia:Ulaanbaatar"{
             ec{"𑄃𑄪𑄣𑄚𑄴𑄝𑄖𑄢𑄴"}
         }
-        "Asia:Urumqi"{
-            ec{"𑄃𑄪𑄢𑄪𑄟𑄴𑄇𑄨"}
-        }
         "Asia:Ust-Nera"{
             ec{"𑄅𑄪𑄌𑄴𑄖𑄧 𑄚𑄬𑄢"}
         }

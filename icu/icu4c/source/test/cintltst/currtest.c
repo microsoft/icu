@@ -298,6 +298,26 @@ static void TestNumericCode(void) {
     }
 }
 
+static void TestSaudiRiyalSymbol(void) {
+    UErrorCode status = U_ZERO_ERROR;
+    UChar currency[4];
+    UBool isChoiceFormat = false;
+    int32_t len = 0;
+    static const UChar expectedSymbol[] = {0x20C1, 0};
+    const UChar* symbol;
+
+    u_charsToUChars("SAR", currency, UPRV_LENGTHOF(currency));
+    symbol = ucurr_getName(currency, "ar_SA", UCURR_SYMBOL_NAME, &isChoiceFormat, &len, &status);
+    if (U_FAILURE(status)) {
+        log_data_err("Error: ucurr_getName returned %s (Are you missing data?)\n", u_errorName(status));
+        return;
+    }
+    if (isChoiceFormat || len != 1 || symbol == NULL || u_strncmp(symbol, expectedSymbol, len) != 0) {
+        log_err("Error: SAR symbol for ar_SA should be U+20C1. Got length=%d first=U+%04X choice=%s\n",
+            len, (len > 0 && symbol != NULL) ? symbol[0] : 0, isChoiceFormat ? "true" : "false");
+    }
+}
+
 void addCurrencyTest(TestNode** root);
 
 #define TESTCASE(x) addTest(root, &x, "tsformat/currtest/" #x)
@@ -310,6 +330,7 @@ void addCurrencyTest(TestNode** root)
     TESTCASE(TestFractionDigitOverride);
     TESTCASE(TestPrefixSuffix);
     TESTCASE(TestNumericCode);
+    TESTCASE(TestSaudiRiyalSymbol);
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */

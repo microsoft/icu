@@ -29,7 +29,6 @@ hi_Latn{
         mus{"Muscogee"}
         nan{"Min Nan"}
         nb{"Norwegian Bokmal"}
-        nds_NL{"Low Saxon"}
         ug{"Uighur"}
         wal{"walamo"}
     }

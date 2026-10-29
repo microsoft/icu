@@ -246,9 +246,6 @@ sl{
         "Asia:Ulaanbaatar"{
             ec{"Ulan Bator"}
         }
-        "Asia:Urumqi"{
-            ec{"Urumči"}
-        }
         "Asia:Yakutsk"{
             ec{"Jakutsk"}
         }

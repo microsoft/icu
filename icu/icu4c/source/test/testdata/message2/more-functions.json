@@ -48,17 +48,17 @@
     },
     {
       "src": "Testing date formatting: {$date :time style=long}.",
-      "exp": "Testing date formatting: 7:42:37\u202FPM PST.",
+      "exp": "Testing date formatting: 7:42:37 PM PST.",
       "params": [{ "name": "date", "value": { "date": 1669261357000 } }]
     },
     {
       "src": "Testing date formatting: {$date :time style=medium}.",
-      "exp": "Testing date formatting: 7:42:37\u202FPM.",
+      "exp": "Testing date formatting: 7:42:37 PM.",
       "params": [{ "name": "date", "value": { "date": 1669261357000 } }]
     },
     {
       "src": "Testing date formatting: {$date :time style=short}.",
-      "exp": "Testing date formatting: 7:42\u202FPM.",
+      "exp": "Testing date formatting: 7:42 PM.",
       "params": [{ "name": "date", "value": { "date": 1669261357000 } }]
     },
     {
@@ -138,7 +138,7 @@
         ".local $zooExp = {$exp :datetime dateStyle=short timeStyle=$tsOver}\n",
         "{{Hello John, you want '{$exp}', '{$longExp}', or '{$zooExp}' or even '{$exp :datetime dateStyle=full}'?}}"
       ],
-      "exp": "Hello John, you want '9:43 PM', 'August 3, 2024 at 9:43 PM', or '8/3/24, 9:43:57 PM Pacific Daylight Time' or even 'Saturday, August 3, 2024 at 9:43 PM'?",
+      "exp": "Hello John, you want '9:43 PM', 'August 3, 2024 at 9:43 PM', or '8/3/24, 9:43:57 PM Pacific Daylight Time' or even 'Saturday, August 3, 2024 at 9:43 PM'?",
       "params": [{"name": "exp", "value": { "date": 1722746637000 }},
                  {"name": "user", "value": "John"},
                  {"name": "tsOver", "value" : "full" }]
