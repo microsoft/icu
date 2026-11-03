@@ -52,6 +52,8 @@ static void TestIllegalArgumentWhenNoDataWithNoSubstitute(void);
 static void Test21157CorrectTerminating(void);
 
 static void TestUnicodeDefines(void);
+static void TestWindowsLocaleCoverage(void);
+static void TestWindowsDisplayNames(void);
 
 static void TestIsRightToLeft(void);
 static void TestBadLocaleIDs(void);
@@ -262,6 +264,8 @@ void addLocaleTest(TestNode** root)
     TESTCASE(TestCollation);
     TESTCASE(TestULocale);
     TESTCASE(TestUResourceBundle);
+    TESTCASE(TestWindowsLocaleCoverage);
+    TESTCASE(TestWindowsDisplayNames);
     TESTCASE(TestDisplayName); 
     TESTCASE(TestAcceptLanguage); 
     TESTCASE(TestGetLocaleForLCID);
@@ -3572,6 +3576,95 @@ static void  TestULocale(void) {
     }
     ures_close(resIndex);
 
+}
+
+static void TestWindowsLocaleCoverage(void) {
+    static const char* const locales[] = {
+        "aa", "arn", "bin", "byn", "co", "cu", "dv", "gn", "ibb",
+        "iu", "iu_Latn", "jv_Java", "kr", "la", "mn_Mong", "moh",
+        "nr", "pap", "quc", "sma", "smj", "sms", "ss", "ssy",
+        "tig", "ts", "tzm_Arab", "tzm_Tfng", "ve", "vo", "wal"
+    };
+    static const char* const aliases[][2] = {
+        { "iu_Cans", "iu" }, { "iu_Cans_CA", "iu_CA" },
+        { "qut", "quc" }, { "qut_GT", "quc_GT" },
+        { "qut_Latn", "quc" }, { "qut_Latn_GT", "quc_GT" },
+        { "quz", "qu" }, { "quz_BO", "qu_BO" },
+        { "quz_EC", "qu_EC" }, { "quz_PE", "qu_PE" },
+        { "prs", "fa_AF" }, { "prs_AF", "fa_AF" }
+    };
+
+    /* Use the shipped Windows contract, not the candidate's own available-locale list. */
+    for (int32_t i = 0; i < UPRV_LENGTHOF(locales); ++i) {
+        UErrorCode status = U_ZERO_ERROR;
+        UResourceBundle* bundle = ures_openDirect(NULL, locales[i], &status);
+        if (U_FAILURE(status) || bundle == NULL) {
+            log_data_err("Missing Windows locale resource %s: %s\n", locales[i], u_errorName(status));
+        }
+        ures_close(bundle);
+    }
+    for (int32_t i = 0; i < UPRV_LENGTHOF(aliases); ++i) {
+        UErrorCode status = U_ZERO_ERROR;
+        UResourceBundle* source = ures_open(NULL, aliases[i][0], &status);
+        if (U_FAILURE(status) || status == U_USING_DEFAULT_WARNING || source == NULL) {
+            log_data_err("Missing Windows locale alias %s: %s\n", aliases[i][0], u_errorName(status));
+            ures_close(source);
+            continue;
+        }
+        status = U_ZERO_ERROR;
+        UResourceBundle* target = ures_open(NULL, aliases[i][1], &status);
+        if (U_FAILURE(status) || status == U_USING_DEFAULT_WARNING || target == NULL) {
+            log_data_err("Missing Windows locale alias target %s: %s\n", aliases[i][1], u_errorName(status));
+        } else {
+            const char* actualSource = ures_getLocaleByType(source, ULOC_ACTUAL_LOCALE, &status);
+            const char* actualTarget = ures_getLocaleByType(target, ULOC_ACTUAL_LOCALE, &status);
+            if (U_FAILURE(status) || actualSource == NULL || actualTarget == NULL ||
+                strcmp(actualSource, actualTarget) != 0) {
+                log_err("Windows locale alias %s does not resolve like %s\n", aliases[i][0], aliases[i][1]);
+            }
+        }
+        ures_close(target);
+        ures_close(source);
+    }
+}
+
+static void TestWindowsDisplayNames(void) {
+    static const struct {
+        const char* locale;
+        const char* display;
+        const UChar* expected[3];
+    } cases[] = {
+        { "en_NR", "en_NR", { u"English", u"Naoero", u"English (Naoero)" } },
+        { "en_NR", "en", { u"English", u"Naoero", u"English (Naoero)" } },
+        { "ha_Latn_NG", "ha_Latn_NG", { u"Hausa", u"Najeriya", u"Hausa (Latin, Najeriya)" } },
+        { "ha_Latn_NG", "en", { u"Hausa", u"Nigeria", u"Hausa (Latin, Nigeria)" } },
+        { "tr_TR", "tr_TR", { u"T\u00fcrk\u00e7e", u"T\u00fcrkiye", u"T\u00fcrk\u00e7e (T\u00fcrkiye)" } },
+        { "tr_TR", "en", { u"Turkish", u"T\u00fcrkiye", u"Turkish (T\u00fcrkiye)" } },
+        { "mi_NZ", "mi_NZ", { u"te reo M\u0101ori", u"Aotearoa", u"te reo M\u0101ori (Aotearoa)" } },
+        { "mi_NZ", "en", { u"M\u0101ori", u"New Zealand", u"M\u0101ori (New Zealand)" } },
+        { "ceb_Latn_PH", "ceb_Latn_PH", { u"Binisaya", u"Pilipinas", u"Binisaya (Latin, Pilipinas)" } },
+        { "ceb_Latn_PH", "en", { u"Cebuano", u"Philippines", u"Cebuano (Latin, Philippines)" } }
+    };
+    static const struct {
+        const char* name;
+        int32_t (U_EXPORT2 *get)(const char*, const char*, UChar*, int32_t, UErrorCode*);
+    } getters[] = {
+        { "language", uloc_getDisplayLanguage },
+        { "country", uloc_getDisplayCountry },
+        { "locale", uloc_getDisplayName }
+    };
+    for (int32_t i = 0; i < UPRV_LENGTHOF(cases); ++i) {
+        for (int32_t j = 0; j < UPRV_LENGTHOF(getters); ++j) {
+            UErrorCode status = U_ZERO_ERROR;
+            UChar actual[256];
+            getters[j].get(cases[i].locale, cases[i].display, actual, UPRV_LENGTHOF(actual), &status);
+            if (U_FAILURE(status) || status == U_USING_DEFAULT_WARNING ||
+                    u_strcmp(actual, cases[i].expected[j]) != 0) {
+                log_err("Unexpected Windows %s name for %s displayed in %s: %s\n",
+                    getters[j].name, cases[i].locale, cases[i].display, u_errorName(status));
+            }
+        }
+    }
 }
 
 static void TestUResourceBundle(void) {

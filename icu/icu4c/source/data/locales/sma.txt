@@ -1,0 +1,8 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
+sma{
+    AuxExemplarCharacters{"[c ï q w x z]"}
+    ExemplarCharacters{"[aåä b d e f g h i j k l m n oö p r s t u v y]"}
+    ExemplarCharactersIndex{"[AÅÄ B D E F G H I J K L M N OÖ P R S T U V Y]"}
+}

@@ -201,7 +201,7 @@ ha{
         NC{"Kaledoniya Sabuwa"}
         NE{"Nijar"}
         NF{"Tsibirin Narfalk"}
-        NG{"Nijeriya"}
+        NG{"Najeriya"}
         NI{"Nikaraguwa"}
         NL{"Holan"}
         NO{"Norwe"}

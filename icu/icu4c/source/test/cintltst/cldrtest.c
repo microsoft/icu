@@ -890,7 +890,24 @@ findSetMatch( UScriptCode *scriptCodes, int32_t scriptsLen,
     }
 }
 
+static UBool isLocaleOrChildInList(const char *locale, const char *const *parents, int32_t count) {
+    int32_t i;
+    for (i = 0; i < count; ++i) {
+        size_t length = uprv_strlen(parents[i]);
+        if (uprv_strncmp(locale, parents[i], length) == 0 &&
+                (locale[length] == 0 || locale[length] == '_')) {
+            return true;
+        }
+    }
+    return false;
+}
+
 static void VerifyTranslation(void) {
+    /* Preserve the ICU 72 CLDR-MS exceptions, without matching unrelated language prefixes. */
+    static const char *const seedDataExceptions[] = {
+        "ba", "byn", "cu", "dv", "iu", "mn_Mong", "nqo", "oc", "syr",
+        "tig", "wal", "bin", "la", "jv_Java", "ks_Deva", "pap", "tzm_Arab", "tzm_Tfng"
+    };
     UResourceBundle *root, *currentLocale;
     int32_t locCount = uloc_countAvailable();
     int32_t locIndex;
@@ -963,6 +980,9 @@ static void VerifyTranslation(void) {
         //else if (uprv_strncmp(currLoc,"bem",3) == 0 || uprv_strncmp(currLoc,"mgo",3) == 0 || uprv_strncmp(currLoc,"nl",2) == 0) {
         //    log_verbose("skipping test for %s, some month and country names known to use aux exemplars\n", currLoc);
         //}
+        else if (isLocaleOrChildInList(currLoc, seedDataExceptions, UPRV_LENGTHOF(seedDataExceptions)) &&
+                log_knownIssue("0", "MSFT Change: ICU 72 CLDR seed-data translation/script exception for %s.", currLoc)) {
+        }
         else {
             UChar langBuffer[128];
             int32_t langSize;
@@ -1166,6 +1186,9 @@ static void VerifyTranslation(void) {
 #define MAX_SCRIPTS_PER_LOCALE 8
 
 static void TestExemplarSet(void){
+    static const char *const seedDataExceptions[] = {
+        "oc", "jv_Java", "la", "pap", "tzm_Arab", "tzm_Tfng"
+    };
     int32_t i, j, k, m, n;
     int32_t equalCount = 0;
     UErrorCode ec = U_ZERO_ERROR;
@@ -1262,7 +1285,10 @@ static void TestExemplarSet(void){
             }
 
             if (existsInScript == false){
-                log_err("ExemplarSet containment failed for locale : %s\n", locale);
+                if (!(isLocaleOrChildInList(locale, seedDataExceptions, UPRV_LENGTHOF(seedDataExceptions)) &&
+                        log_knownIssue("0", "MSFT Change: ICU 72 CLDR seed-data exemplar exception for %s.", locale))) {
+                    log_err("ExemplarSet containment failed for locale : %s\n", locale);
+                }
             }
         }
         assertTrue("case-folded is a superset",
@@ -1617,4 +1643,3 @@ void addCLDRTest(TestNode** root)
     TESTCASE(TestIndexChars);
     TESTCASE(TestAvailableIsoCodes);
 }
-

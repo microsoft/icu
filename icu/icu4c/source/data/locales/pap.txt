@@ -1,0 +1,99 @@
+﻿// © 2016 and later: Unicode, Inc. and others.
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
+pap{
+    AuxExemplarCharacters{"[á é í ó ú]"}
+    ExemplarCharacters{"[a b c d eè f g h i j k l m nñ oò p q r s t uùü v w x y z]"}
+    ExemplarCharactersPunctuation{"[\\- ‑ , ; \\: ! ? . … '‘’ \u0022“” ( ) \\[ \\] § @ / \\& # % ′ ″]"}
+    NumberElements{
+        latn{
+            patternsShort{
+                currencyFormat{
+                    1000{
+                        one{"¤ 0mil"}
+                        other{"¤ 0mil"}
+                    }
+                    10000{
+                        one{"¤ 00mil"}
+                        other{"¤ 00mil"}
+                    }
+                    100000{
+                        one{"¤ 000mil"}
+                        other{"¤ 000mil"}
+                    }
+                    1000000{
+                        one{"¤ 0mion"}
+                        other{"¤ 0mion"}
+                    }
+                    10000000{
+                        one{"¤ 00mion"}
+                        other{"¤ 00mion"}
+                    }
+                    100000000{
+                        one{"¤ 000mion"}
+                        other{"¤ 000mion"}
+                    }
+                    1000000000{
+                        one{"¤ 0bion"}
+                        other{"¤ 0bion"}
+                    }
+                    10000000000{
+                        one{"¤ 00bion"}
+                        other{"¤ 00bion"}
+                    }
+                    100000000000{
+                        one{"¤ 000bion"}
+                        other{"¤ 000bion"}
+                    }
+                    1000000000000{
+                        one{"¤ 0trion"}
+                        other{"¤ 0trion"}
+                    }
+                    10000000000000{
+                        one{"¤ 00trion"}
+                        other{"¤ 00trion"}
+                    }
+                    100000000000000{
+                        one{"¤ 000trion"}
+                        other{"¤ 000trion"}
+                    }
+                }
+            }
+        }
+    }
+    calendar{
+        gregorian{
+            dayNames{
+                format{
+                    wide{
+                        "djadumingu",
+                        "djaluna",
+                        "djamars",
+                        "djarason",
+                        "djaweps",
+                        "djabièrnè",
+                        "djasabra",
+                    }
+                }
+            }
+            monthNames{
+                format{
+                    wide{
+                        "Yanüari",
+                        "Febrüari",
+                        "Mart",
+                        "Aprel",
+                        "Mei",
+                        "Yüni",
+                        "Yüli",
+                        "Ougùstùs",
+                        "Sèptèmber",
+                        "Òktober",
+                        "Novèmber",
+                        "Desèmber",
+                    }
+                }
+            }
+        }
+    }
+}

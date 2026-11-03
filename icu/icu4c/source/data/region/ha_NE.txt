@@ -3,6 +3,7 @@
 // Generated using tools/cldr/cldr-to-icu/
 ha_NE{
     Countries{
+        NG{"Nijeriya"}
         PS{"Hukumar Falasɗinawan"}
     }
 }
