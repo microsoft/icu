@@ -11,133 +11,580 @@
     }
   },
   "results": {
-    "941661d3da28368b4d4e761122663a42b014931506501e823b0bf4deb14325b2": {
-      "signature": "941661d3da28368b4d4e761122663a42b014931506501e823b0bf4deb14325b2",
+    "58e6430e5b4d8f43250c4d00271698523721344146584bc491b06f8f7c886cbd": {
+      "signature": "58e6430e5b4d8f43250c4d00271698523721344146584bc491b06f8f7c886cbd",
       "alternativeSignatures": [
-        "4f29a3665ba2078ceae51734acf7bb79a5ce9b229ec5064104b77b6a328b33de"
+        "7644a508e3bdd4cf2ea40805918cb4b0aa2fcb9d272289192fa3184540de87f1",
+        "d3d5ef3f7c38a48a761f8719a347a265d84b0a37e51659a93b802ee71d39722c",
+        "9d3ce0bd34d6774888dc6b782cd13e2698dcf296c06207a7f83aee735bf81fc8"
       ],
-      "target": "x86/icuin72.dll",
+      "target": "bits/binaries-x64/icuin78.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-09-03 08:06:29Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "fdf317be178fd901f5dddf5d37f4fb075403b5fe9bdfc7fd5915deed150646ee": {
+      "signature": "fdf317be178fd901f5dddf5d37f4fb075403b5fe9bdfc7fd5915deed150646ee",
+      "alternativeSignatures": [
+        "6a1dfb69703847c31937adce177ed6ac5b14645af36a9c0eae881aedd7c8778c",
+        "d4aada32c4b8482569205a8b6cac91c345aefad994145d53e21df43d198c678e",
+        "9ba72fa95104ddcc2d0ab7e6b952296266d24193689e6679356cdb19e3cafbee"
+      ],
+      "target": "bits/binaries-x64/icuuc78.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-09-03 08:06:29Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "63b1a2cd9a22a3ee928afbbc3c986adbb93d5d5609125f18950b8a4d1f689af2": {
+      "signature": "63b1a2cd9a22a3ee928afbbc3c986adbb93d5d5609125f18950b8a4d1f689af2",
+      "alternativeSignatures": [
+        "fd07e115a11f793352cf523cc37cf9be27335e38e1b38fd8c7ca632efc9aacf0",
+        "869335ba51284cb17652b6c2b4e60b23d8bf8cec2ae417a2a98fd6942eb7bc28",
+        "79595f82bdeb746e8d50b0d14841fab81326fef8cc8aa3034b634e46ab623e03"
+      ],
+      "target": "bits/binaries-x86/icuin78.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-09-03 08:06:44Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "a235b3c049a95cbb02c04fb48b38c1e27215df27023eedfca7f8cc55d9b9ace8": {
+      "signature": "a235b3c049a95cbb02c04fb48b38c1e27215df27023eedfca7f8cc55d9b9ace8",
+      "alternativeSignatures": [
+        "d66fe1cfc02f8999de4223e1e5ee0fe4c70e7f81d48bd0a390036ff2a508638a",
+        "d6797408f47f1fae71ef6273831326e7ef01fd74cd2437344cfdc10933827bcb",
+        "65883eb729f945fa2fba35047d5a7bc08c0d22661fd29dbf37f0d07f63bf95dd"
+      ],
+      "target": "bits/binaries-x86/icuuc78.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-09-03 08:06:44Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "b450f5c4f86d2f101ffc837ccc4c3506835322f5103e27f11e8eef40b0fc89e8": {
+      "signature": "b450f5c4f86d2f101ffc837ccc4c3506835322f5103e27f11e8eef40b0fc89e8",
+      "alternativeSignatures": [
+        "f748d858e6b1f7a29e8ebaf3bf9349e3022e4594d376d97ca92b70ee183dbfb8",
+        "2ed0443b6942ab2952a597e06163edf9cd1a2a19e7b33d3861c9e7384a3177c8",
+        "a4d53b5db391dc2aa0e4e9ae88b164c96b56149a23b2acdd17aac01a4dc29cdd"
+      ],
+      "target": "x64/icuin78.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "a8db14631f4978c040c6f9f105bf78f632b6ae2cf7c7b7999cd592bde8e21f41": {
+      "signature": "a8db14631f4978c040c6f9f105bf78f632b6ae2cf7c7b7999cd592bde8e21f41",
+      "alternativeSignatures": [
+        "a1f46a16dec982a9c80863164b114cf250594951775c8b47728fad7d2cf32b87",
+        "ad5a52c6c15e80056c965cfc714c37274e163ca245957d9b2284a58de6a0d72e",
+        "4fc62f0ddeb76eef6dad520a6f91deef96034515e42dbd64dcbe06d12f828db3"
+      ],
+      "target": "x64/icuuc78.dll",
+      "uriBaseId": "file:///D:/a/_work/1/a/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "binskim",
+      "ruleId": "BA2008",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "f2d03e5dbdec61716177fcd58b29f772dbbf02108c0f0536b3afe0fcde553862": {
+      "signature": "f2d03e5dbdec61716177fcd58b29f772dbbf02108c0f0536b3afe0fcde553862",
+      "alternativeSignatures": [
+        "777d421909afbe3877e9d39373d0cfcfad32dc1f1fb523f65c187ee9479c181f",
+        "ed38a1ba701db46b863152e265688fe3dc014cab0e5952acd6d07b51dcb09a5a",
+        "2475be290aa571d8455878546894f7c3c6db3ff4a5c4f0fbff568ec0834fa2bb"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/cdattst.c",
+      "line": 2012,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6201",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "01f6c9ee995c982d2e6fda32daa0d998c837f017a14174c9a7dcebd132688fc7": {
+      "signature": "01f6c9ee995c982d2e6fda32daa0d998c837f017a14174c9a7dcebd132688fc7",
+      "alternativeSignatures": [
+        "4718005b6f0db49c4a28c3a71a44182a20b33ac61f930d1d7b38ab770c25d640",
+        "57b834c975fe6d7abf31e42a859a5dad0fd38a2b29d2ea31141b5848ba6493c1",
+        "8c3fa1b1f29b50df3d493177345a42eb8359a00b6a64eb6967bc5393f359ba6d"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/cdattst.c",
+      "line": 2013,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6201",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "c527055d2a29c49c177bd952621a72b90b24ff86282091678eb3ce8798bee29c": {
+      "signature": "c527055d2a29c49c177bd952621a72b90b24ff86282091678eb3ce8798bee29c",
+      "alternativeSignatures": [
+        "dc6acd99b4b55fc37848e1c22c115ea0cf9a1bd1bc470a8d583dbee96a57ef72",
+        "c834cbad43e91e11fb58ab8c132c65f679d7346f6417a2c2c2ab0a2260f91d0f",
+        "1d6e7046fe979c42a7a4c3a86bc068c00170a4967df3c74334a000fa37a96caa"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/cdattst.c",
+      "line": 2141,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6201",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "0729c3ffe2cbd498822fe66e9193acfa3aa23e17149341454de18f9ae332533d": {
+      "signature": "0729c3ffe2cbd498822fe66e9193acfa3aa23e17149341454de18f9ae332533d",
+      "alternativeSignatures": [
+        "d6be8cd88b2b7e6981150078bc9e2345e92e2faa87ce9a058ab950abd99dcef1",
+        "fd285b5674c5a78580de7882ca4524f680d4e25c8671dde8e75fdaf39a9edad4",
+        "4fd3b5d52b1e98ab897d2520e9d07e996a85e62ce6f0a7aa4712bdf30e256bca"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/cloctst.c",
+      "line": 345,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6308",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "e47779f9f435d44889dbf794ee6ea8cda988ea19820f294448cabeb890d37841": {
+      "signature": "e47779f9f435d44889dbf794ee6ea8cda988ea19820f294448cabeb890d37841",
+      "alternativeSignatures": [
+        "5a9f71b6ef1f995d30a936d7d3138974e0a185822395071de40df5d75229b2a6",
+        "f73e727b9fef800e5f0804dd4ddeb51390cd1680a6a5ecbf1d08cdd9e34f8d57",
+        "92d84dc332344e5540b7c08efa73eff5e424d96e7611401c3e43049cd2375708"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/cloctst.c",
+      "line": 667,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6308",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "7340743b676b669a0de4b91f6107e3d3405fa3cb93b4ea6da80977691e555969": {
+      "signature": "7340743b676b669a0de4b91f6107e3d3405fa3cb93b4ea6da80977691e555969",
+      "alternativeSignatures": [
+        "920adfa17a6d5713b03464c6e8f53b05c67099cab77f667f25b7d463009bcc58",
+        "1f5f44c57b36f2f196b65e9a7b37e950a0e5e8ee985b49f3917be0624b647034",
+        "8b59ba6a197b077a825e75ce4c2985f402dc0e173a4c2e99773c2e59c6edf308"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/cloctst.c",
+      "line": 681,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6308",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "3937f5404af11cbc2f04238c214e26b2d7100a1343465ccdead149ff65244c37": {
+      "signature": "3937f5404af11cbc2f04238c214e26b2d7100a1343465ccdead149ff65244c37",
+      "alternativeSignatures": [
+        "eea924ba9101e305a84086945775f3c5e1b44336b9b912b2751605e23d6c87e7",
+        "d239de2700b8f65fde55070bec0c77b7022b3112a31d51166c0098abe58c95cc",
+        "e5e279ae05d06abe30ce7f4c34ed45be8edf91402256e23739986e8ead332be8"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/cloctst.c",
+      "line": 1761,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6308",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "9277690c07ae39784fc2cbb5068892593083d710ea0e659cf87181f2975ce93e": {
+      "signature": "9277690c07ae39784fc2cbb5068892593083d710ea0e659cf87181f2975ce93e",
+      "alternativeSignatures": [
+        "4343818ea878a7be4694135bd11d57203e61d00893210d022d9f59803a0baab9",
+        "dfc65de0cf3c73fd35691fcf91336f331a7dd8156822c3ba41ed15ca631dc79c",
+        "a2f93154c4ffa690bafb6b1e2af1e84e2c0ab33b2f6c7124970027b08cf40cb4"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/cmsgtst.c",
+      "line": 334,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6308",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "699b83c9fe04beffad699a6a1ab7bdb517d806f3571c260b19060cc68df4068d": {
+      "signature": "699b83c9fe04beffad699a6a1ab7bdb517d806f3571c260b19060cc68df4068d",
+      "alternativeSignatures": [
+        "8ad0f956d11873425fb1dea6637d04a107f907bb3537882c5de26686b1d5e875",
+        "bf6febcbd99819ea91ed050e73d80d25ff5f8d906a79a6dad3f360f990fc469a",
+        "545bcb3a64f43571e7c0b5453eb71fb3d1368ad36d6236fee45734e57d859cad"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/cmsgtst.c",
+      "line": 624,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6308",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "333f030c56d21b91a71140060e2f3a0c885f762df19123910d6895e6e050f189": {
+      "signature": "333f030c56d21b91a71140060e2f3a0c885f762df19123910d6895e6e050f189",
+      "alternativeSignatures": [
+        "dd751d3c577e79a9c90cf112765cefe7dcf774cb88d210d0a80c469eaebd59e7",
+        "d6123c27d655988198016f7a8e4228d280d0b3a6fbd7d9407d894edf43886729",
+        "d363665e2f86abe1e5977b0931e57c88424bb4a8145cfa3635780eb55cde6a17"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/cmsgtst.c",
+      "line": 922,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6308",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "d28c030f5e478e74c98d260fc4f9cdce35eb561ca8648f4d530c5b37ce1bd2e9": {
+      "signature": "d28c030f5e478e74c98d260fc4f9cdce35eb561ca8648f4d530c5b37ce1bd2e9",
+      "alternativeSignatures": [
+        "2c58525a7be7ef3c8c13750d376b7caa0e67f833e6ef1ade023c6a2952c275d7",
+        "6336cc509fdf288166d63e7b68e641b31995b5fbeb9a879d36290876894aac8c",
+        "30bd77d7327c95137ba254cab3c81a106caf07345040ccc41d3474e5528bc6fd"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/crestst.c",
+      "line": 1089,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6201",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "9b2af20699ac928042e77675cb6ade37266bf75df257f2936fd8c837d12ad720": {
+      "signature": "9b2af20699ac928042e77675cb6ade37266bf75df257f2936fd8c837d12ad720",
+      "alternativeSignatures": [
+        "ad517fef50b7b7c31cc39720ec42963d6c2b1a158491fe9040a3eb97727434c4",
+        "a33dab5e0e7dbe7e6424b71a4ad716c46c13f33402c84cc1b94261c759e94900",
+        "79cd92e6785897ec918582803ad1b85a395dce6b72d109bc24ba037990c91699"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/crestst.c",
+      "line": 1090,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6201",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "d30f0eaa199b84dd9e0c54c1d355fdf0ee87b68878072595b940634e08c18e33": {
+      "signature": "d30f0eaa199b84dd9e0c54c1d355fdf0ee87b68878072595b940634e08c18e33",
+      "alternativeSignatures": [
+        "3d8a6074886106710914d2275601982350dd946b30be186a6f06a40f56fa291d",
+        "fd191f56b068d0c43ba1b73572635921148bd667a1ea1040302fc4268759b336",
+        "4b51a1c7d046c045e73aaf229b4532821aa298ad27a1b7578f073f3fd279bd3d"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/ulocbuildertst.c",
+      "line": 891,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6200",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "5cb087b892d13d1cf77cdde1c6b8ab6c87ca299dd6b9c74618dcc6b6b585f843": {
+      "signature": "5cb087b892d13d1cf77cdde1c6b8ab6c87ca299dd6b9c74618dcc6b6b585f843",
+      "alternativeSignatures": [
+        "3b36f8f06ab16ed7bd95c8b41a00a22e52a493d998a98d0c568a67e5998436ae",
+        "ec127b74cf8551eecd033e8b9edaded0158c7813735bade91cd075d78749b719",
+        "a35386f370b1e96e1825e785b1c1406f7b7de99fbac9899cc59550bd85c853c1"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/ulocbuildertst.c",
+      "line": 897,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6200",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "4546247eb75bd8d29714f05e78238b842535eb7d2bba41aa0500723b1ac0887e": {
+      "signature": "4546247eb75bd8d29714f05e78238b842535eb7d2bba41aa0500723b1ac0887e",
+      "alternativeSignatures": [
+        "835a18928f99b97d3bfe20d8c4eb24b5dca970c398e33b23e75c17df0b29f407",
+        "09acb9962eaef8fe06f5aa9d7f6efdcbcf8be1a3d5b3c8c5c2b98d7cbd1d4798",
+        "752d30dc051c07c36c0761055bd1ad3236b545205862a4e9766e4c93cdf94911"
+      ],
+      "target": "icu/icu4c/source/test/cintltst/uregiontest.c",
+      "line": 426,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6201",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "4d7c37fc46e1ee9ac899e89fa77ccc811d94413b3ed1df986ad33751628be35d": {
+      "signature": "4d7c37fc46e1ee9ac899e89fa77ccc811d94413b3ed1df986ad33751628be35d",
+      "alternativeSignatures": [
+        "5b50b0e6f3b2450a572b80b35ce03a0302366ca1f953c6a6ebc7aa4ac306a4ea",
+        "7c4444e04b0f74fd8a92fe03fb29ffbe4b36a5fa3dae23d54213c9e948b7b5a8",
+        "25c9131ebbf0001662626978c8219774c557a1e3d4d9a093702e0c134fc2e4a4"
+      ],
+      "target": "icu/icu4c/source/test/intltest/calregts.cpp",
+      "line": 1711,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6200",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "6fb5d1b76ed073a5e69164f1984ef8158b16cfd428a870292d6fcee30a6cbd50": {
+      "signature": "6fb5d1b76ed073a5e69164f1984ef8158b16cfd428a870292d6fcee30a6cbd50",
+      "alternativeSignatures": [
+        "9f21123fea49f759333a61899f7dfd0faa654cf92c42810c0a2d93af4ba29d94",
+        "1b3ae87d7194cc70d47f04afc24b64cf3f22788409577155f388d32197e79461",
+        "f2aaeefbaa2be7bfe9aa656aa42abab9170baf8e81d48e676d3a2b1e904d2d11"
+      ],
+      "target": "icu/icu4c/source/tools/toolutil/package.cpp",
+      "line": 1292,
+      "uriBaseId": "file:///D:/a/_work/1/s/",
+      "memberOf": [
+        "default"
+      ],
+      "tool": "prefast",
+      "ruleId": "C6328",
+      "createdDate": "2026-09-03 06:16:19Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
+    },
+    "e800bd8cfb23d5735b4e5fca1ffd7e1a30a0419064d975da935436a1b96720e6": {
+      "signature": "e800bd8cfb23d5735b4e5fca1ffd7e1a30a0419064d975da935436a1b96720e6",
+      "alternativeSignatures": [
+        "221c3562f80a2d767adf67aa0e30212b78ef8e8b132156c5b7528eddf9565f79",
+        "02ad1e34b30b40c696c5be8e2b379cb2d2aad0f89a4539eb781fcf3c10eefaf3",
+        "e631f3648d67d1acfa7cd3223d25508c6ee655475a116be0a5c088833f8a2f97"
+      ],
+      "target": "x86/icuin78.dll",
       "uriBaseId": "file:///D:/a/_work/1/a/",
       "memberOf": [
         "default"
       ],
       "tool": "binskim",
       "ruleId": "BA2007",
-      "createdDate": "2026-03-03 07:51:30Z",
-      "expirationDate": "2026-08-20 08:26:48Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+      "createdDate": "2026-09-03 05:55:09Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
     },
-    "1572924866f7a2cf8a3415eb94e4d6a2f6f191827224016608d668c50310dc56": {
-      "signature": "1572924866f7a2cf8a3415eb94e4d6a2f6f191827224016608d668c50310dc56",
+    "a33c9e3542bd068349caa79087d84751acab0f251879b517878a02411607281a": {
+      "signature": "a33c9e3542bd068349caa79087d84751acab0f251879b517878a02411607281a",
       "alternativeSignatures": [
-        "9c706376a3a8affe69c2e037be0b50c8f9c472220738e76bd1e1f1b4ae201a79"
+        "424eb398f1034df7b1abedf5413e4407ea46b6001e0a0306e2d87a715fcaac6e",
+        "e487814ade2e1315fc009d8228200898ebe75a7e867c289cd1c212b527b2d865",
+        "9a61516aeb61c55ad0875d5dbc73717d57cf40985381b606452fe3f6ba09aa2f"
       ],
-      "target": "x86/icuin72.dll",
+      "target": "x86/icuin78.dll",
       "uriBaseId": "file:///D:/a/_work/1/a/",
       "memberOf": [
         "default"
       ],
       "tool": "binskim",
       "ruleId": "BA2008",
-      "createdDate": "2026-03-03 07:51:30Z",
-      "expirationDate": "2026-08-20 08:26:48Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+      "createdDate": "2026-09-03 05:55:09Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
     },
-    "fe6c547bfb2d6b7c87d1bf712881dc299d3f95e029086dc2b3284c070630c0b7": {
-      "signature": "fe6c547bfb2d6b7c87d1bf712881dc299d3f95e029086dc2b3284c070630c0b7",
+    "a95ba0f29a15be67b72afe2173b46e3563fc83fb277426750002b72ccc768eb5": {
+      "signature": "a95ba0f29a15be67b72afe2173b46e3563fc83fb277426750002b72ccc768eb5",
       "alternativeSignatures": [
-        "d2403a3ff88373f028f0af67ca2ac3ff42e7beecefd4aa6f9df38c2709e818cb"
+        "451739c4c97b904593f8d62d96236336c5f58cc05ed0e65fcf590507de0aeafc",
+        "c3f3481d51906577c524c9e11a0023dccbfa1ae0c5e2e11c9398bafcda86fd76",
+        "f06cdb338d814101b0a6374032a2b8e15cba2d886c062e67f8d8cac0e7501721"
       ],
-      "target": "x86/icuuc72.dll",
+      "target": "x86/icuuc78.dll",
       "uriBaseId": "file:///D:/a/_work/1/a/",
       "memberOf": [
         "default"
       ],
       "tool": "binskim",
       "ruleId": "BA2007",
-      "createdDate": "2026-03-03 07:51:30Z",
-      "expirationDate": "2026-08-20 08:26:48Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+      "createdDate": "2026-09-03 05:55:09Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
     },
-    "c4ab46bb8b8aeb0db1fd1d275532dccfb2fdf3efb3e2e374a84c506d6d584b1e": {
-      "signature": "c4ab46bb8b8aeb0db1fd1d275532dccfb2fdf3efb3e2e374a84c506d6d584b1e",
+    "91b6274863ea6be6568b0a3acfc5b4d1418cce4e24b39cd10bd1fa931cf1dc63": {
+      "signature": "91b6274863ea6be6568b0a3acfc5b4d1418cce4e24b39cd10bd1fa931cf1dc63",
       "alternativeSignatures": [
-        "5bb205f55cab5644dfc1d54b3e0e47d6b018ffd70cd347dd6d91138fee2b2425"
+        "96e2ef2cd81f7ce066dd6846cc8c3128c935e05456aa930c1ff1067f5027a504",
+        "7eff1e32342062035d4120d7065fbb8e58d4082a07e4cd5f12d4b78aa2b978f9",
+        "0b8f13a6f63f701ebbeab855905a024e72a6162d0f14d9cb7f5f9c3571d8ed96"
       ],
-      "target": "x86/icuuc72.dll",
+      "target": "x86/icuuc78.dll",
       "uriBaseId": "file:///D:/a/_work/1/a/",
       "memberOf": [
         "default"
       ],
       "tool": "binskim",
       "ruleId": "BA2008",
-      "createdDate": "2026-03-03 07:51:30Z",
-      "expirationDate": "2026-08-20 08:26:48Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+      "createdDate": "2026-09-03 05:55:09Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
     },
-    "92664f65fd1eb0bf87eea9fba45587407c3bddbb86758c69ea11a38cb58b0e31": {
-      "signature": "92664f65fd1eb0bf87eea9fba45587407c3bddbb86758c69ea11a38cb58b0e31",
+    "2d4c806b453e208ac774fa51f3d541a6910ba871d529d1037b251750db07c559": {
+      "signature": "2d4c806b453e208ac774fa51f3d541a6910ba871d529d1037b251750db07c559",
       "alternativeSignatures": [
-        "d69bafb20e95e35246982f3d6f986564db56ce5f4a50791ff9ae374a23b567c4"
+        "3af0a75c91770e8711073773d633fba3545743a7866d4f3f86e4a15a2ff6fceb",
+        "d10eef623d6af738f369192a455f9c60617958500054ac3c06a625cfeccbd584",
+        "6110319a56e143064e5f5f30c796e93b323bb68253920f430db094c7da66349f"
       ],
-      "target": "x64/icuin72.dll",
+      "target": "bits/binaries-ARM64/icuin78.dll",
       "uriBaseId": "file:///D:/a/_work/1/a/",
       "memberOf": [
         "default"
       ],
       "tool": "binskim",
       "ruleId": "BA2008",
-      "createdDate": "2026-03-03 07:52:30Z",
-      "expirationDate": "2026-08-20 08:26:48Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+      "createdDate": "2026-09-03 08:06:37Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
     },
-    "2ee7537b500f106f57aa0d3bba79be3e92439cf907f55c8bd222fb8c1913a1de": {
-      "signature": "2ee7537b500f106f57aa0d3bba79be3e92439cf907f55c8bd222fb8c1913a1de",
+    "672a465b0d8d260c100c801af363b0b15ad0b3b2d83dd2ae7788b979a3f27df0": {
+      "signature": "672a465b0d8d260c100c801af363b0b15ad0b3b2d83dd2ae7788b979a3f27df0",
       "alternativeSignatures": [
-        "8f191268155b131b5fde186dd7800c79c933d890afbc561f7db4ad9605d44267"
+        "216eaecc488c78e63cb4c48f4aa3439d3ab29a7f1ff17e7496398d1368eef512",
+        "70ea15b323c9dec3f394c3ac98eaa3ccdd5fecf99352ca7d30ef889535aec74a",
+        "ef927e691054e101ae39418ec6e92b68156b3808835b43b8195e6fafd66535cf"
       ],
-      "target": "x64/icuuc72.dll",
+      "target": "bits/binaries-ARM64/icuuc78.dll",
       "uriBaseId": "file:///D:/a/_work/1/a/",
       "memberOf": [
         "default"
       ],
       "tool": "binskim",
       "ruleId": "BA2008",
-      "createdDate": "2026-03-03 07:52:30Z",
-      "expirationDate": "2026-08-20 08:26:48Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+      "createdDate": "2026-09-03 08:06:37Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
     },
-    "23948d7513d6531dc69b4068d921f20d52d783e6ef403ec9e61e789b5156c37c": {
-      "signature": "23948d7513d6531dc69b4068d921f20d52d783e6ef403ec9e61e789b5156c37c",
+    "0fc8f117fce27d65dc69beb4048bb8cc6f4baaa72a1b357d966730f50c669832": {
+      "signature": "0fc8f117fce27d65dc69beb4048bb8cc6f4baaa72a1b357d966730f50c669832",
       "alternativeSignatures": [
-        "9f636a16caf86b51330a1e728c797c689151a4f95be9825213591b8f668d0d02"
+        "1e2905176fab28d9a49bd2efa3f5aee50b089edd92b4339eadd21a4f0cc9f3df",
+        "5cca6814ed5fd85053ced5adb4f3cfbf87881af05b789d2e689c30da3865b2fc",
+        "7101a24f0fd1c975aa01d6e75ec47d78a56522e434e815e6642289a96e22944c"
       ],
-      "target": "ARM64/icuin72.dll",
+      "target": "ARM64/icuin78.dll",
       "uriBaseId": "file:///D:/a/_work/1/a/",
       "memberOf": [
         "default"
       ],
       "tool": "binskim",
       "ruleId": "BA2008",
-      "createdDate": "2026-03-03 08:08:23Z",
-      "expirationDate": "2026-08-20 08:26:48Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+      "createdDate": "2026-09-03 06:16:48Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
     },
-    "176a2feeb7bfd529267227a141274bdf56bb775abf41b92e2d848c188b08fba9": {
-      "signature": "176a2feeb7bfd529267227a141274bdf56bb775abf41b92e2d848c188b08fba9",
+    "ea996d4f625fbeae2c452cdfb51ccd7095042f35f70ae5dc9688656057e1b44c": {
+      "signature": "ea996d4f625fbeae2c452cdfb51ccd7095042f35f70ae5dc9688656057e1b44c",
       "alternativeSignatures": [
-        "3cb997d252d8eeddd45612c0664fb0d28dd389b598cb15cd07d2927876ec24fd"
+        "0615684fbc3134d9eba6040d34d6aff683f3cfc3cb211d8b535b5d4ba8c47aae",
+        "64efa6e62c9901b37618cb65411087676964a6644c1ea831e5a01da468cf4767",
+        "481d68e5ac10d1df277fc89c58d9f5c9b86058bd012e06083fd64974fa6d0f82"
       ],
-      "target": "ARM64/icuuc72.dll",
+      "target": "ARM64/icuuc78.dll",
       "uriBaseId": "file:///D:/a/_work/1/a/",
       "memberOf": [
         "default"
       ],
       "tool": "binskim",
       "ruleId": "BA2008",
-      "createdDate": "2026-03-03 08:08:23Z",
-      "expirationDate": "2026-08-20 08:26:48Z",
-      "justification": "This error is baselined with an expiration date of 180 days from 2026-03-03 08:26:48Z"
+      "createdDate": "2026-09-03 06:16:48Z",
+      "expirationDate": "2027-02-20 08:39:45Z",
+      "justification": "This error is baselined with an expiration date of 180 days from 2026-09-03 08:39:45Z"
     }
   }
 }
