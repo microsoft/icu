@@ -207,9 +207,10 @@ static void TestNumberFormat(void)
     int32_t newvalue;
     UErrorCode status=U_ZERO_ERROR;
     UNumberFormatStyle style= UNUM_DEFAULT;
-    UNumberFormat *pattern;
-    UNumberFormat *def, *fr, *cur_def, *cur_fr, *per_def, *per_fr,
-                  *cur_frpattern, *myclone, *spellout_def;
+    UNumberFormat *pattern = NULL;
+    UNumberFormat *def = NULL, *fr = NULL, *cur_def = NULL, *cur_fr = NULL,
+                  *per_def = NULL, *per_fr = NULL, *cur_frpattern = NULL,
+                  *myclone = NULL, *spellout_def = NULL;
 
     /* Testing unum_open() with various Numberformat styles and locales*/
     status = U_ZERO_ERROR;
@@ -301,15 +302,20 @@ static void TestNumberFormat(void)
         status=U_ZERO_ERROR;
         resultlength=resultlengthneeded+1;
         result=(UChar*)malloc(sizeof(UChar) * resultlength);
+        if (result == NULL) {
+            log_err("Unable to allocate number format result\n");
+            goto cleanup;
+        }
 /*        for (i = 0; i < 100000; i++) */
         {
             unum_format(cur_def, l, result, resultlength, &pos1, &status);
         }
     }
 
-    if(U_FAILURE(status))
+    if(U_FAILURE(status) || result == NULL)
     {
         log_err("Error in formatting using unum_format(.....): %s\n", myErrorName(status) );
+        goto cleanup;
     }
     if(u_strcmp(result, temp1)==0)
         log_verbose("Pass: Number formatting using unum_format() successful\n");
@@ -334,14 +340,19 @@ static void TestNumberFormat(void)
         status=U_ZERO_ERROR;
         resultlength=resultlengthneeded+1;
         result=(UChar*)malloc(sizeof(UChar) * resultlength);
+        if (result == NULL) {
+            log_err("Unable to allocate number format result\n");
+            goto cleanup;
+        }
 /*        for (i = 0; i < 100000; i++) */
         {
             unum_formatDouble(cur_def, d, result, resultlength, &pos2, &status);
         }
     }
-    if(U_FAILURE(status))
+    if(U_FAILURE(status) || result == NULL)
     {
         log_err("Error in formatting using unum_formatDouble(.....): %s\n", myErrorName(status));
+        goto cleanup;
     }
     if(result && u_strcmp(result, temp1)==0)
         log_verbose("Pass: Number Formatting using unum_formatDouble() Successful\n");
@@ -390,10 +401,15 @@ static void TestNumberFormat(void)
         status=U_ZERO_ERROR;
         resultlength=resultlengthneeded+1;
         result=(UChar*)malloc(sizeof(UChar) * resultlength);
+        if (result == NULL) {
+            log_err("Unable to allocate number format result\n");
+            goto cleanup;
+        }
         unum_formatDoubleCurrency(cur_def, a, temp, result, resultlength, &pos2, &status);
     }
-    if (U_FAILURE(status)) {
+    if (U_FAILURE(status) || result == NULL) {
         log_err("Error in formatting using unum_formatDoubleCurrency(.....): %s\n", myErrorName(status));
+        goto cleanup;
     }
     if (result && u_strcmp(result, temp1)==0) {
         log_verbose("Pass: Number Formatting using unum_formatDoubleCurrency() Successful\n");
@@ -460,14 +476,12 @@ static void TestNumberFormat(void)
     else
         log_verbose("Pass: parsing successful\n");
 
-free(result);
-
     u_uastrcpy(temp1, "($10,456.3E1])");
     parsepos=0;
     d1=unum_parseDouble(cur_def, temp1, u_strlen(temp1), &parsepos, &status);
     if(U_SUCCESS(status))
     {
-        log_err("Error in unum_parseDouble(..., %s, ...): %s\n", temp1, myErrorName(status));
+        log_err("Error in unum_parseDouble(..., %s, ...): %s\n", aescstrdup(temp1, -1), myErrorName(status));
     }
 
 
@@ -481,14 +495,19 @@ free(result);
         status=U_ZERO_ERROR;
         resultlength=resultlengthneeded+1;
         result=(UChar*)malloc(sizeof(UChar) * resultlength);
+        if (result == NULL) {
+            log_err("Unable to allocate number format result\n");
+            goto cleanup;
+        }
 /*        for (i = 0; i < 100000; i++)*/
         {
             unum_format(per_fr, l, result, resultlength, &pos1, &status);
         }
     }
-    if(U_FAILURE(status))
+    if(U_FAILURE(status) || result == NULL)
     {
         log_err("Error in formatting using unum_format(.....): %s\n", myErrorName(status));
+        goto cleanup;
     }
 
 
@@ -508,7 +527,8 @@ free(result);
     else
         log_verbose("Pass: parsing successful\n");
 
-free(result);
+    free(result);
+    result = NULL;
 
     /* create a number format using unum_openPattern(....)*/
     log_verbose("\nTesting unum_openPattern()\n");
@@ -517,12 +537,14 @@ free(result);
     if(U_FAILURE(status))
     {
         log_err("error in unum_openPattern(): %s\n", myErrorName(status) );
+        goto cleanup;
     }
     else
         log_verbose("Pass: unum_openPattern() works fine\n");
 
     /*test for unum_toPattern()*/
     log_verbose("\nTesting unum_toPattern()\n");
+    status=U_ZERO_ERROR;
     resultlength=0;
     resultlengthneeded=unum_toPattern(pattern, false, NULL, resultlength, &status);
     if(status==U_BUFFER_OVERFLOW_ERROR)
@@ -530,11 +552,16 @@ free(result);
         status=U_ZERO_ERROR;
         resultlength=resultlengthneeded+1;
         result=(UChar*)malloc(sizeof(UChar) * resultlength);
+        if (result == NULL) {
+            log_err("Unable to allocate number format result\n");
+            goto cleanup;
+        }
         unum_toPattern(pattern, false, result, resultlength, &status);
     }
-    if(U_FAILURE(status))
+    if(U_FAILURE(status) || result == NULL)
     {
         log_err("error in extracting the pattern from UNumberFormat: %s\n", myErrorName(status));
+        goto cleanup;
     }
     else
     {
@@ -542,12 +569,14 @@ free(result);
             log_err("FAIL: Error in extracting the pattern using unum_toPattern()\n");
         else
             log_verbose("Pass: extracted the pattern correctly using unum_toPattern()\n");
-free(result);
     }
+    free(result);
+    result = NULL;
 
     /*Testing unum_getSymbols() and unum_setSymbols()*/
     log_verbose("\nTesting unum_getSymbols and unum_setSymbols()\n");
     /*when we try to change the symbols of french to default we need to apply the pattern as well to fetch correct results */
+    status=U_ZERO_ERROR;
     resultlength=0;
     resultlengthneeded=unum_toPattern(cur_def, false, NULL, resultlength, &status);
     if(status==U_BUFFER_OVERFLOW_ERROR)
@@ -555,11 +584,16 @@ free(result);
         status=U_ZERO_ERROR;
         resultlength=resultlengthneeded+1;
         result=(UChar*)malloc(sizeof(UChar) * resultlength);
+        if (result == NULL) {
+            log_err("Unable to allocate number format result\n");
+            goto cleanup;
+        }
         unum_toPattern(cur_def, false, result, resultlength, &status);
     }
-    if(U_FAILURE(status))
+    if(U_FAILURE(status) || result == NULL)
     {
         log_err("error in extracting the pattern from UNumberFormat: %s\n", myErrorName(status));
+        goto cleanup;
     }
 
     status=U_ZERO_ERROR;
@@ -567,9 +601,11 @@ free(result);
     if(U_FAILURE(status))
     {
         log_err("error in unum_openPattern(): %s\n", myErrorName(status));
+        goto cleanup;
     }
 
-free(result);
+    free(result);
+    result = NULL;
 
     /*getting the symbols of cur_def */
     /*set the symbols of cur_frpattern to cur_def */
@@ -584,6 +620,7 @@ free(result);
     }
 
     /*format to check the result */
+    status=U_ZERO_ERROR;
     resultlength=0;
     resultlengthneeded=unum_format(cur_def, l, NULL, resultlength, &pos1, &status);
     if(status==U_BUFFER_OVERFLOW_ERROR)
@@ -591,11 +628,16 @@ free(result);
         status=U_ZERO_ERROR;
         resultlength=resultlengthneeded+1;
         result=(UChar*)malloc(sizeof(UChar) * resultlength);
+        if (result == NULL) {
+            log_err("Unable to allocate number format result\n");
+            goto cleanup;
+        }
         unum_format(cur_def, l, result, resultlength, &pos1, &status);
     }
-    if(U_FAILURE(status))
+    if(U_FAILURE(status) || result == NULL)
     {
         log_err("Error in formatting using unum_format(.....): %s\n", myErrorName(status));
+        goto cleanup;
     }
 
     if(U_FAILURE(status)){
@@ -638,14 +680,16 @@ free(result);
      * For the next release, we need to fix this.
      * Then, remove the uprv_strcmp("1.5", ...) and this comment, and the include "cstring.h" at the beginning of this file.
      */
-    if(u_strcmp(result, temp1) != 0) {
-        log_err("Formatting failed after setting symbols. result=%s temp1=%s\n", result, temp1);
+    if(U_SUCCESS(status) && u_strcmp(result, temp1) != 0) {
+        log_err("Formatting failed after setting symbols. result=%s temp1=%s\n",
+                aescstrdup(result, -1), aescstrdup(temp1, -1));
     }
 
 
     /*----------- */
 
-free(result);
+    free(result);
+    result = NULL;
 
     /* Testing unum_get/setSymbol() */
     for(i = 0; i < UNUM_FORMAT_SYMBOL_COUNT; ++i) {
@@ -1010,6 +1054,8 @@ free(result);
 
 
     /*closing the NumberFormat() using unum_close(UNumberFormat*)")*/
+cleanup:
+    free(result);
     unum_close(def);
     unum_close(fr);
     unum_close(cur_def);
@@ -1335,7 +1381,7 @@ static void TestNumberFormatPadding(void)
     pattern=unum_open(UNUM_IGNORE,temp1, u_strlen(temp1), NULL, NULL,&status);
     if(U_SUCCESS(status))
     {
-        log_err("error in unum_openPattern(%s): %s\n", temp1, myErrorName(status) );
+        log_err("error in unum_openPattern(%s): %s\n", aescstrdup(temp1, -1), myErrorName(status) );
     }
     else
     {
@@ -1349,7 +1395,7 @@ static void TestNumberFormatPadding(void)
     pattern=unum_open(UNUM_IGNORE,temp1, u_strlen(temp1), "en_US",NULL, &status);
     if(U_FAILURE(status))
     {
-        log_err_status(status, "error in padding unum_openPattern(%s): %s\n", temp1, myErrorName(status) );
+        log_err_status(status, "error in padding unum_openPattern(%s): %s\n", aescstrdup(temp1, -1), myErrorName(status) );
     }
     else {
         log_verbose("Pass: padding unum_openPattern() works fine\n");
@@ -1363,11 +1409,16 @@ static void TestNumberFormatPadding(void)
             status=U_ZERO_ERROR;
             resultlength=resultlengthneeded+1;
             result=(UChar*)malloc(sizeof(UChar) * resultlength);
+            if (result == NULL) {
+                log_err("Unable to allocate padding result\n");
+                goto cleanup;
+            }
             unum_toPattern(pattern, false, result, resultlength, &status);
         }
-        if(U_FAILURE(status))
+        if(U_FAILURE(status) || result == NULL)
         {
             log_err("error in extracting the padding pattern from UNumberFormat: %s\n", myErrorName(status));
+            goto cleanup;
         }
         else
         {
@@ -1382,8 +1433,10 @@ static void TestNumberFormatPadding(void)
             }
         }
         free(result);
+        result = NULL;
 /*        u_uastrcpy(temp1, "(xxxxxxx10,456.37)"); */
         u_uastrcpy(temp1, "xxxxx(10,456.37)");
+        status=U_ZERO_ERROR;
         resultlength=0;
         pos1.field = UNUM_FRACTION_FIELD;
         resultlengthneeded=unum_formatDouble(pattern, d, NULL, resultlength, &pos1, &status);
@@ -1392,11 +1445,16 @@ static void TestNumberFormatPadding(void)
             status=U_ZERO_ERROR;
             resultlength=resultlengthneeded+1;
             result=(UChar*)malloc(sizeof(UChar) * resultlength);
+            if (result == NULL) {
+                log_err("Unable to allocate padding result\n");
+                goto cleanup;
+            }
             unum_formatDouble(pattern, d, result, resultlength, NULL, &status);
         }
-        if(U_FAILURE(status))
+        if(U_FAILURE(status) || result == NULL)
         {
             log_err("Error in formatting using unum_formatDouble(.....) with padding : %s\n", myErrorName(status));
+            goto cleanup;
         }
         else
         {
@@ -1424,10 +1482,11 @@ static void TestNumberFormatPadding(void)
                 log_err("Fail: Error in padding parsing\n");
             else
                 log_verbose("Pass: padding parsing successful\n");
-free(result);
         }
     }
 
+cleanup:
+    free(result);
     unum_close(pattern);
 }
 
@@ -1461,7 +1520,7 @@ static void TestInt64Format(void) {
         if (U_FAILURE(status)) {
             log_err("error in unum_format(): %s\n", myErrorName(status));
         } else {
-            log_verbose("format int64max: '%s'\n", result);
+            log_verbose("format int64max: '%s'\n", aescstrdup(result, -1));
             parsepos = 0;
             val32 = unum_parse(fmt, result, u_strlen(result), &parsepos, &status);
             if (status != U_INVALID_FORMAT_ERROR) {
@@ -1493,7 +1552,7 @@ static void TestInt64Format(void) {
         if (U_FAILURE(status)) {
             log_err("error in unum_format(): %s\n", myErrorName(status));
         } else {
-            log_verbose("format int64min: '%s'\n", result);
+            log_verbose("format int64min: '%s'\n", aescstrdup(result, -1));
             parsepos = 0;
             val32 = unum_parse(fmt, result, u_strlen(result), &parsepos, &status);
             if (status != U_INVALID_FORMAT_ERROR) {
@@ -1525,7 +1584,7 @@ static void TestInt64Format(void) {
         if (U_FAILURE(status)) {
             log_err("error in unum_format(): %s\n", myErrorName(status));
         } else {
-            log_verbose("format doubleBig: '%s'\n", result);
+            log_verbose("format doubleBig: '%s'\n", aescstrdup(result, -1));
             parsepos = 0;
             val32 = unum_parse(fmt, result, u_strlen(result), &parsepos, &status);
             if (status != U_INVALID_FORMAT_ERROR) {

@@ -1147,7 +1147,7 @@ void TestOpenVsOpenRules(void){
             }
             /* terminate the string */
             str[strSize-1] = '\0';
-            log_verbose("String used: %S\n", str);
+            log_verbose("String used: %s\n", aescstrdup(str, -1));
 
             /* get sort keys for both of them, and check that the keys are identicle */
             sortKeyLen1 = ucol_getSortKey(c1, str, u_strlen(str),  NULL, 0);
@@ -1165,13 +1165,13 @@ void TestOpenVsOpenRules(void){
             /* Check that the lengths are the same */
             if (sortKeyLen1 != sortKeyLen2) {
                 log_err("ERROR : Sort key lengths %d and %d for text '%s' in locale '%s' do not match.\n",
-                    sortKeyLen1, sortKeyLen2, str, curLoc);
+                    sortKeyLen1, sortKeyLen2, aescstrdup(str, -1), curLoc);
             }
 
             /* check that the keys are the same */
             if (memcmp(sortKey1, sortKey2, sortKeyLen1) != 0) {
                 log_err("ERROR : Sort keys '%s' and '%s' for text '%s' in locale '%s' are not equivalent.\n",
-                    sortKeyStr1, sortKeyStr2, str, curLoc);
+                    sortKeyStr1, sortKeyStr2, aescstrdup(str, -1), curLoc);
             }
 
             /* clean up after each string */
